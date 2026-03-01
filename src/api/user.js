@@ -12,7 +12,7 @@ export function getUserInfo() {
 
 export function getIpLocationInfo() {
   return request({
-    url: 'https://ipwho.is/',
+    url: 'https://ipinfo.io/json',
     method: 'get',
     baseURL: '' 
   });
