@@ -54,25 +54,7 @@ export const isXboard = () => {
 export const getApiBaseUrl = () => {
     // 完全依赖config.js中的配置
     if (typeof window !== 'undefined' && window.EZ_CONFIG) {
-        // 首先检查是否启用中间件代理
-        if (window.EZ_CONFIG.API_MIDDLEWARE_ENABLED === true && window.EZ_CONFIG.API_MIDDLEWARE_URL) {
-            // 使用中间件URL和路径
-            const middlewareUrl = window.EZ_CONFIG.API_MIDDLEWARE_URL.trim();
-            const middlewarePath = window.EZ_CONFIG.API_MIDDLEWARE_PATH;
-
-            // 确保URL末尾没有斜杠，且路径开头有斜杠，防止出现重复或缺少斜杠
-            const formattedUrl = middlewareUrl.endsWith('/') ? middlewareUrl.slice(0, -1) : middlewareUrl;
-            const formattedPath = middlewarePath.startsWith('/') ? middlewarePath : `/${middlewarePath}`;
-
-            const middlewareKey = window.EZ_CONFIG.API_MIDDLEWARE_KEY;
-            
-            if(middlewareKey) {
-              return formattedUrl;
-            }
-            return formattedUrl + formattedPath;
-        }
-
-        // 然后检查是否存在API_CONFIG
+        // 检查是否存在API_CONFIG
         if (window.EZ_CONFIG.API_CONFIG) {
             const apiConfig = window.EZ_CONFIG.API_CONFIG;
 
