@@ -526,8 +526,12 @@ export default {
 
     watch(
       () => currentLanguage.value,
-      () => {
-        console.log("语言变化为:", currentLanguage.value);
+      (newLanguage, oldLanguage) => {
+        if (!oldLanguage || newLanguage === oldLanguage) {
+          return;
+        }
+
+        fetchPlanData();
       }
     );
 
@@ -539,7 +543,7 @@ export default {
       loading.plans = true;
 
       try {
-        const response = await fetchPlans();
+        const response = await fetchPlans(currentLanguage.value);
 
         if (response.data) {
           plans.value = response.data;

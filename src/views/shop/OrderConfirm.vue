@@ -326,7 +326,7 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed, watch } from "vue";
 
 import { useI18n } from "vue-i18n";
 
@@ -379,7 +379,7 @@ export default {
   },
 
   setup() {
-    const { t } = useI18n();
+    const { t, locale } = useI18n();
 
     const { showToast } = useToast();
 
@@ -784,7 +784,7 @@ export default {
           return;
         }
 
-        const response = await fetchPlanById(route.query.id);
+        const response = await fetchPlanById(route.query.id, locale.value);
 
         if (response.data) {
           plan.value = response.data;
@@ -883,6 +883,17 @@ export default {
       );
     });
 
+
+    watch(
+      () => locale.value,
+      (newLanguage, oldLanguage) => {
+        if (!oldLanguage || newLanguage === oldLanguage) {
+          return;
+        }
+
+        fetchPlanData();
+      }
+    );
     onMounted(async () => {
       await Promise.all([fetchPlanData(), fetchUserInfo(), fetchConfig()]);
     });

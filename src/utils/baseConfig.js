@@ -232,11 +232,8 @@ export const SITE_CONFIG = mergeDeep(
   getConfig("SITE_CONFIG")
 );
 
-// 默认语言和主题配置
+// 默认主题配置
 const DEFAULT_BASE_CONFIG = {
-  // 默认语言 ('zh-CN' 或 'en-US') TODO
-  defaultLanguage: "zh-CN",
-
   // 默认主题 ('light' 或 'dark') TODO
   defaultTheme: "dark",
 

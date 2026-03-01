@@ -2,7 +2,12 @@
 
 import { createI18n } from 'vue-i18n';
 
-import { SITE_CONFIG, DEFAULT_CONFIG } from '@/utils/baseConfig';
+import { SITE_CONFIG } from '@/utils/baseConfig';
+import {
+  SUPPORTED_LOCALES as supportedLocales,
+  getStoredLanguage,
+  normalizeLanguage
+} from '@/utils/language';
 
 import { checkLoginStatus } from '@/api/auth';
 
@@ -32,75 +37,6 @@ const injectSiteName = (messages) => {
 
 
 
-const getBrowserLanguage = () => {
-
-  const browserLang = navigator.language || navigator.userLanguage;
-
-  if (browserLang === 'zh-CN') return 'zh-CN';
-
-  if (browserLang === 'vi-VN' || browserLang === 'vi') return 'vi-VN';
-
-  if (browserLang === 'zh-TW' || browserLang === 'zh-HK') return 'zh-TW';
-
-  if (browserLang === 'ja' || browserLang === 'ja-JP') return 'ja-JP';
-
-  if (browserLang === 'ko' || browserLang === 'ko-KR') return 'ko-KR';
-
-  if (browserLang === 'ru' || browserLang === 'ru-RU') return 'ru-RU';
-
-  if (browserLang === 'fa' || browserLang === 'fa-IR') return 'fa-IR';
-
-  
-
-  if (browserLang.startsWith('zh')) return 'zh-CN';
-
-  if (browserLang.startsWith('vi')) return 'vi-VN';
-
-  if (browserLang.startsWith('ja')) return 'ja-JP';
-
-  if (browserLang.startsWith('ko')) return 'ko-KR';
-
-  if (browserLang.startsWith('ru')) return 'ru-RU';
-
-  if (browserLang.startsWith('fa')) return 'fa-IR';
-
-  
-
-  return 'en-US';
-
-};
-
-
-
-const getStoredLanguage = () => {
-
-  const storedLanguage = localStorage.getItem('language');
-
-  if (storedLanguage) {
-
-    return storedLanguage;
-
-  }
-
-  
-
-  const browserLanguage = getBrowserLanguage();
-
-  if (browserLanguage) {
-
-    return browserLanguage;
-
-  }
-
-  
-
-  return DEFAULT_CONFIG.defaultLanguage;
-
-};
-
-
-
-const supportedLocales = ['zh-CN', 'vi-VN', 'en-US', 'zh-TW', 'ja-JP', 'ko-KR', 'ru-RU', 'fa-IR'];
 
 
 
@@ -270,10 +206,7 @@ const i18n = createI18n({
 
 export const setLanguage = async (lang) => {
 
-  if (!supportedLocales.includes(lang)) {
-
-    lang = 'en-US';
-  }
+  lang = normalizeLanguage(lang);
 
   
 

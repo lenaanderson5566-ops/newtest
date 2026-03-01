@@ -72,11 +72,8 @@ export const config = {
     customLandingPage: "",
   },
 
-  // 默认语言和主题配置
+  // 默认主题配置
   DEFAULT_CONFIG: {
-    // 默认语言 ('zh-CN' 或 'en-US')
-    defaultLanguage: "zh-CN",
-
     // 默认主题 ('light' 或 'dark')
     defaultTheme: "light",
 
