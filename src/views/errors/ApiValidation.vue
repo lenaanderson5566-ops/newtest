@@ -50,7 +50,22 @@ export default {
     const redirectInfo = computed(() => {
       const query = { ...route.query };
       delete query.redirect;
-      const path = (route.query.redirect || "/").toString().split("?")[0] || "/";
+
+      let path = "/";
+      const redirect = (route.query.redirect || "/").toString();
+
+      if (redirect.includes("?")) {
+        const [pathPart, queryPart] = redirect.split("?");
+        path = pathPart || "/";
+
+        const redirectSearchParams = new URLSearchParams(queryPart || "");
+        redirectSearchParams.forEach((value, key) => {
+          query[key] = value;
+        });
+      } else {
+        path = redirect || "/";
+      }
+
       return { path, query };
     });
 
