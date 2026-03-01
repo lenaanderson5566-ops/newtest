@@ -676,7 +676,7 @@ export default {
           showToast(response.message || t("order.coupon_invalid"), "error");
         }
       } catch (error) {
-        console.error("验证优惠码失败:", error);
+        console.error("Failed to verify coupon:", error);
 
         couponApplied.value = false;
 
@@ -743,7 +743,7 @@ export default {
           showToast(response.message || t("order.order_failed"), "error");
         }
       } catch (error) {
-        console.error("提交订单失败:", error);
+        console.error("Failed to submit order:", error);
 
         showToast(
           error.response?.message || error.message || t("order.order_failed"),
@@ -802,7 +802,7 @@ export default {
           router.push("/shop");
         }
       } catch (error) {
-        console.error("获取套餐数据失败:", error);
+        console.error("Failed to fetch plan data:", error);
 
         showToast(
           error.response?.message ||
@@ -827,7 +827,7 @@ export default {
           showToast(response.message, "warning");
         }
       } catch (error) {
-        console.error("获取用户信息失败:", error);
+        console.error("Failed to fetch user info:", error);
 
         showToast(
           error.response?.message ||
@@ -852,7 +852,7 @@ export default {
           showToast(response.message, "warning");
         }
       } catch (error) {
-        console.error("获取系统配置失败:", error);
+        console.error("Failed to fetch system config:", error);
 
         showToast(
           error.response?.message || error.message || t("shop.config_error"),

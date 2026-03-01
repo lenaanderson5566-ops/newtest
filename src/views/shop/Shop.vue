@@ -410,11 +410,11 @@ export default {
     const filterToggle = ref(null);
 
     const filters = [
-      { label: "全部", value: "all" },
+      { label: "All", value: "all" },
 
-      { label: "周期性", value: "recurring" },
+      { label: "Recurring", value: "recurring" },
 
-      { label: "一次性", value: "onetime" },
+      { label: "One-time", value: "onetime" },
     ];
 
     const showPopup = ref(false);
@@ -520,7 +520,7 @@ export default {
     watch(
       () => selectedFilter.value,
       () => {
-        console.log("筛选条件变化为:", selectedFilter.value);
+        console.log("Filter changed:", selectedFilter.value);
       }
     );
 
@@ -588,7 +588,7 @@ export default {
           }
         }
       } catch (error) {
-        showToast("获取套餐数据失败", "error");
+        showToast(t("shop.failed_to_fetch_plan"), "error");
       } finally {
         loading.plans = false;
       }
@@ -606,7 +606,7 @@ export default {
           currencySymbol.value = response.data.currency_symbol || "¥";
         }
       } catch (error) {
-        console.error("获取系统配置失败:", error);
+        console.error("Failed to fetch system config:", error);
       } finally {
         loading.config = false;
       }
@@ -652,46 +652,6 @@ export default {
       };
 
       return keyMap[type] || "";
-    };
-
-    const getPriceTypeName = (type) => {
-      const nameMap = {
-        month_price: "月付",
-
-        quarter_price: "季付",
-
-        half_year_price: "半年付",
-
-        year_price: "年付",
-
-        two_year_price: "两年付",
-
-        three_year_price: "三年付",
-
-        onetime_price: "一次性",
-      };
-
-      return nameMap[type] || "";
-    };
-
-    const getPeriodText = (type) => {
-      const textMap = {
-        month_price: "/ 月",
-
-        quarter_price: "/ 季",
-
-        half_year_price: "/ 半年",
-
-        year_price: "/ 年",
-
-        two_year_price: "/ 两年",
-
-        three_year_price: "/ 三年",
-
-        onetime_price: "",
-      };
-
-      return textMap[type] || "";
     };
 
     const selectPriceType = (planId, type) => {
@@ -845,7 +805,7 @@ export default {
           initPopup();
         });
       } catch (error) {
-        console.error("加载数据失败:", error);
+        console.error("Failed to load shop data:", error);
 
         loading.plans = false;
       }
@@ -950,10 +910,6 @@ export default {
       getPlanPrices,
 
       getPriceTypeKey,
-
-      getPriceTypeName,
-
-      getPeriodText,
 
       selectPriceType,
 
