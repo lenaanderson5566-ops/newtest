@@ -1,9 +1,8 @@
-﻿import request from "./request";
+import request from "./request";
 
 export function getUserInfo() {
   return request({
     url: "/user/info",
-
     method: "get",
   });
 }
@@ -11,9 +10,7 @@ export function getUserInfo() {
 export function getIpLocationInfo() {
   return request({
     url: "https://ipapi.co/json",
-
     method: "get",
-
     baseURL: "",
   });
 }
@@ -21,9 +18,7 @@ export function getIpLocationInfo() {
 export function redeemGiftCard(giftcard) {
   return request({
     url: "/user/redeemgiftcard",
-
     method: "post",
-
     data: { giftcard },
   });
 }
@@ -31,9 +26,7 @@ export function redeemGiftCard(giftcard) {
 export function changePassword(data) {
   return request({
     url: "/user/changePassword",
-
     method: "post",
-
     data,
   });
 }
@@ -41,7 +34,6 @@ export function changePassword(data) {
 export function resetSecurity() {
   return request({
     url: "/user/resetSecurity",
-
     method: "get",
   });
 }
@@ -49,9 +41,7 @@ export function resetSecurity() {
 export function updateRemindSettings(data) {
   return request({
     url: "/user/update",
-
     method: "post",
-
     data,
   });
 }
@@ -59,7 +49,6 @@ export function updateRemindSettings(data) {
 export function getActiveSession() {
   return request({
     url: "/user/getActiveSession",
-
     method: "get",
   });
 }
@@ -67,7 +56,6 @@ export function getActiveSession() {
 export function getCommConfig() {
   return request({
     url: "/user/comm/config",
-
     method: "get",
   });
 }
@@ -75,7 +63,6 @@ export function getCommConfig() {
 export function getTelegramBotInfo() {
   return request({
     url: "/user/telegram/getBotInfo",
-
     method: "get",
   });
 }
@@ -83,7 +70,6 @@ export function getTelegramBotInfo() {
 export function getUserSubscribe() {
   return request({
     url: "/user/getSubscribe",
-
     method: "get",
   });
 }
