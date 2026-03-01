@@ -6,11 +6,7 @@
 
 export const config  = {
     // 面板类型配置 - 请选择您使用的面板类型
-    PANEL_TYPE: 'Xiao-V2board', // 可选值: 'V2board', 'Xiao-V2board' 或 'Xboard'
-    // 说明:
-    // 1. V2board: 标准V2board面板，使用默认请求格式
-    // 2. Xiao-V2board: Xiao修改版面板，使用特殊格式的请求参数
-    // 3. Xboard: Xboard面板
+    PANEL_TYPE: 'Xiao-V2board', // 固定使用 Xiao-V2board
 
     // =======================================================
 
@@ -47,22 +43,6 @@ export const config  = {
         }
     },
 
-    // 是否启用中间件代理API请求
-    // 设置为true时，所有API请求将通过中间件转发
-    API_MIDDLEWARE_ENABLED: true,
-  
-    //=======================================================
-    // 中间件服务器URL (不含路径) 开源地址 https://github.com/codeman857/EZ-Encrypt-Middleware
-    API_MIDDLEWARE_URL: 'https://d2ijw202als7c.ezdemo.xyz',
-  
-    // 中间件加密KEY必须是16位的16进制字符串，必须和中间件key保持一致 在线生成地址 https://www.bejson.com/math/hex_gen/
-    API_MIDDLEWARE_KEY: '4c6f8e5f9467dc71',
-    //=======================================================
-
-    // 中间件路由前缀 (与中间件服务器配置保持一致)
-    API_MIDDLEWARE_PATH: '/ez/ez',
-
-    //=======================================================
 
     // ====================  网站基础配置  ====================
     SITE_CONFIG: {
@@ -499,10 +479,6 @@ export const config  = {
             // 等待时间（秒），用户需要等待多少秒才能关闭弹窗，设为0表示无需等待
             closeWaitSeconds: 0
         },
-        // 工单图片设置
-        isImageHosting: false, // 是否启用工单图片上传功能
-        // imgBB 图床 api 设置 前往imgBB注册账号 https://imgbb.com/ 获取 apiKey
-        imgbbApiKey: '',
     },
 
     // 流量明细配置

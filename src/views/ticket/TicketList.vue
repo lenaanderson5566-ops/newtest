@@ -278,69 +278,11 @@
                             v-if="selectedTicket.status === 0"
                         >
                             <textarea
-                                ref="replyTextarea"
-                                v-model="replyMessage"
+                                                                v-model="replyMessage"
                                 :placeholder="$t('tickets.replyPlaceholder')"
                                 rows="3"
                                 @keydown.ctrl.enter="sendReply"
-                                @keyup="updateReplyCaret"
-                                @click="updateReplyCaret"
                             ></textarea>
-
-                            <!-- 上传图片按钮 -->
-                            <div
-                                class="reply-tools"
-                                style="
-                                    display: flex;
-                                    gap: 8px;
-                                    align-items: center;
-                                "
-                            >
-                                <button
-                                    class="send-reply-btn"
-                                    type="button"
-                                    @click="triggerReplyImageInput"
-                                    :disabled="uploadingReplyImages"
-                                >
-                                    <IconPhotoPlus
-                                        :size="18"
-                                        v-if="!uploadingReplyImages"
-                                    />
-                                    <span v-else class="loader"></span>
-                                    <span v-if="!uploadingReplyImages">{{
-                                        $t('tickets.upPictures') || '上传图片'
-                                    }}</span>
-                                    <span v-else>{{
-                                        $t('tickets.uploadingImages') ||
-                                        '上传中'
-                                    }}</span>
-                                </button>
-
-                                <button
-                                    class="send-reply-btn"
-                                    @click="sendReply"
-                                    :disabled="
-                                        !replyMessage.trim() || sendingReply
-                                    "
-                                >
-                                    <span
-                                        v-if="sendingReply"
-                                        class="loader"
-                                    ></span>
-                                    <IconSend v-else :size="18" />
-                                    {{ $t('tickets.send') }}
-                                </button>
-                            </div>
-
-                            <!-- 隐藏的文件选择框 -->
-                            <input
-                                ref="replyImageInput"
-                                type="file"
-                                accept="image/*"
-                                multiple
-                                style="display: none"
-                                @change="handleReplyImageUpload"
-                            />
                         </div>
 
                         <div class="ticket-closed-notice" v-else>
@@ -473,107 +415,14 @@
                                 <label>{{ $t('tickets.message') }}</label>
 
                                 <textarea
-                                    ref="newTicketTextarea"
-                                    v-model="newTicket.message"
+                                                                        v-model="newTicket.message"
                                     :placeholder="
                                         $t('tickets.messagePlaceholder')
                                     "
                                     rows="5"
-                                    @keyup="updateCaret"
-                                    @click="updateCaret"
                                 ></textarea>
-
-                                <div
-                                    v-if="TICKET_CONFIG.isImageHosting"
-                                    class="image-upload-area"
-                                    :class="{ dragging: draggingImage }"
-                                    @dragover.prevent="draggingImage = true"
-                                    @dragleave.prevent="draggingImage = false"
-                                    @drop.prevent="onDropImage"
-                                    @click="triggerImageInput"
-                                >
-                                    <div class="upload-icon">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="48"
-                                            height="48"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-cloud-up"
-                                        >
-                                            <path
-                                                stroke="none"
-                                                d="M0 0h24v24H0z"
-                                                fill="none"
-                                            />
-                                            <path
-                                                d="M12 18.004h-5.343c-2.572 -.004 -4.657 -2.011 -4.657 -4.487c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.38 0 2.57 .811 3.128 1.986"
-                                            />
-                                            <path d="M19 22v-6" />
-                                            <path d="M22 19l-3 -3l-3 3" />
-                                        </svg>
-                                    </div>
-                                    <div class="upload-tip">
-                                        <span class="upload-tip-text">{{
-                                            $t('tickets.uploadTipText') ||
-                                            '拖拽图片到此处或点击上传'
-                                        }}</span
-                                        ><br />
-                                        <span class="upload-desc">{{
-                                            $t('tickets.uploadDescText') ||
-                                            '支持 JPG、PNG、GIF 格式，最大 5 MB'
-                                        }}</span>
-                                    </div>
-                                    <input
-                                        ref="imageInput"
-                                        type="file"
-                                        accept="image/*"
-                                        multiple
-                                        style="display: none"
-                                        @change="handleImageUpload"
-                                    />
-                                </div>
-                                <div
-                                    v-if="uploadingImages"
-                                    style="margin-top: 8px; color: #2196f3"
-                                >
-                                    {{
-                                        $t('tickets.uploadingImages') ||
-                                        '图片上传中...'
-                                    }}
-                                </div>
-                                <div
-                                    v-if="uploadedImages.length"
-                                    style="margin-top: 8px"
-                                >
-                                    <span
-                                        v-for="img in uploadedImages"
-                                        :key="img"
-                                        class="thumb"
-                                        @click="insertImage(img)"
-                                        title="点击插入到内容"
-                                        style="
-                                            display: inline-block;
-                                            margin-right: 8px;
-                                            cursor: pointer;
-                                        "
-                                    >
-                                        <img
-                                            :src="img"
-                                            style="
-                                                max-width: 60px;
-                                                max-height: 60px;
-                                                border-radius: 6px;
-                                                border: 1px solid #eee;
-                                            "
-                                        />
-                                    </span>
-                                </div>
                             </div>
+
                         </div>
 
                         <div class="modal-footer">
@@ -659,7 +508,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 import { useI18n } from 'vue-i18n';
 
@@ -682,8 +531,7 @@ import {
     IconLock,
     IconCircleCheck,
     IconCircle,
-    IconDeviceMobile,
-    IconPhotoPlus
+    IconDeviceMobile
 } from '@tabler/icons-vue';
 
 import {
@@ -710,6 +558,7 @@ import { useToast } from '@/composables/useToast';
 import TicketPopup from '@/components/ticket/TicketPopup.vue';
 
 import { TICKET_CONFIG } from '@/utils/baseConfig';
+
 
 const { t } = useI18n();
 
@@ -741,192 +590,7 @@ const loadingTickets = ref(false);
 
 const refreshInterval = ref(null);
 
-// 上传相关
-const uploadedImages = ref([]);
-const uploadingImages = ref(false);
-const draggingImage = ref(false);
-const imageInput = ref(null);
-
-const newTicketTextarea = ref(null);
 const caretPos = ref(0);
-
-// 记录光标位置
-const updateCaret = () => {
-    const ta = newTicketTextarea.value;
-    if (!ta) return;
-    caretPos.value = ta.selectionStart ?? newTicket.value.message.length;
-};
-
-// 在光标处插入文本（支持选中覆盖）
-const insertAtCursor = async (text) => {
-    const ta = newTicketTextarea.value;
-    const value = newTicket.value.message || '';
-    if (!ta) {
-        // 没有拿到DOM，直接末尾追加
-        newTicket.value.message =
-            value + (value && !value.endsWith('\n') ? '\n' : '') + text + '\n';
-        return;
-    }
-    const start = ta.selectionStart ?? caretPos.value ?? value.length;
-    const end = ta.selectionEnd ?? start;
-    newTicket.value.message = value.slice(0, start) + text + value.slice(end);
-    await nextTick();
-    const pos = start + text.length;
-    ta.focus();
-    ta.setSelectionRange(pos, pos);
-    caretPos.value = pos;
-};
-
-// 点击缩略图时插入 Markdown
-const insertImage = (url) => {
-    const md = `![image](${url})`;
-    // 避免重复插入同一URL（可选）
-    if ((newTicket.value.message || '').includes(url)) return;
-    insertAtCursor(md);
-};
-
-const IMGBB_API_URL = 'https://api.imgbb.com/1/upload';
-const IMGBB_API_KEY = TICKET_CONFIG.imgbbApiKey;
-
-const triggerImageInput = () => {
-    imageInput.value && imageInput.value.click();
-};
-
-const onDropImage = async (e) => {
-    draggingImage.value = false;
-    const files = Array.from(e.dataTransfer.files).filter((f) =>
-        f.type.startsWith('image/')
-    );
-    if (files.length) {
-        await handleImageUpload({ target: { files } });
-    }
-};
-
-const handleImageUpload = async (e) => {
-    const files = Array.from(e.target.files);
-    if (!files.length) return;
-    uploadingImages.value = true;
-
-    for (const file of files) {
-        if (file.size > 5 * 1024 * 1024) {
-            showToast('图片不能超过 5MB', 'error');
-            continue;
-        }
-
-        try {
-            // 转成 base64
-            const base64 = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result.split(',')[1]);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-
-            const formData = new FormData();
-            formData.append('image', base64);
-
-            const res = await fetch(`${IMGBB_API_URL}?key=${IMGBB_API_KEY}`, {
-                method: 'POST',
-                body: formData
-            });
-
-            const result = await res.json();
-            if (result.success && result.data && result.data.url) {
-                uploadedImages.value.push(result.data.url);
-                newTicket.value.message += `\n![image](${result.data.url})`;
-            } else {
-                showToast(result.error?.message || '图片上传失败', 'error');
-            }
-        } catch (err) {
-            console.error(err);
-            showToast('图片上传异常', 'error');
-        }
-    }
-
-    uploadingImages.value = false;
-};
-
-// ========= 回复区上传图片 =========
-const replyImageInput = ref(null);
-const replyTextarea = ref(null);
-const uploadingReplyImages = ref(false);
-const replyCaretPos = ref(0);
-
-const triggerReplyImageInput = () => {
-    replyImageInput.value && replyImageInput.value.click();
-};
-
-const updateReplyCaret = () => {
-    const ta = replyTextarea.value;
-    if (!ta) return;
-    replyCaretPos.value = ta.selectionStart ?? replyMessage.value.length;
-};
-
-const insertAtCursorToReply = async (text) => {
-    const ta = replyTextarea.value;
-    const value = replyMessage.value || '';
-    if (!ta) {
-        replyMessage.value =
-            value + (value && !value.endsWith('\n') ? '\n' : '') + text + '\n';
-        return;
-    }
-    const start = ta.selectionStart ?? replyCaretPos.value ?? value.length;
-    const end = ta.selectionEnd ?? start;
-    replyMessage.value = value.slice(0, start) + text + value.slice(end);
-    await nextTick();
-    const pos = start + text.length;
-    ta.focus();
-    ta.setSelectionRange(pos, pos);
-    replyCaretPos.value = pos;
-};
-
-const fileToBase64 = (file) =>
-    new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result.split(',')[1]);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-
-const uploadToImgbb = async (file) => {
-    const b64 = await fileToBase64(file);
-    const fd = new FormData();
-    fd.append('image', b64);
-    const res = await fetch(`${IMGBB_API_URL}?key=${IMGBB_API_KEY}`, {
-        method: 'POST',
-        body: fd
-    });
-    const json = await res.json();
-    if (json.success && json.data?.url) return json.data.url;
-    throw new Error(json.error?.message || 'imgbb 上传失败');
-};
-
-const handleReplyImageUpload = async (e) => {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
-    uploadingReplyImages.value = true;
-
-    try {
-        for (const file of files) {
-            if (file.size > 5 * 1024 * 1024) {
-                showToast('图片不能超过 5MB', 'error');
-                continue;
-            }
-            const url = await uploadToImgbb(file);
-            const md = `![image](${url})`;
-            await insertAtCursorToReply(md);
-        }
-        showToast($t?.('tickets.uploadSuccess') || '图片上传成功', 'success');
-    } catch (err) {
-        console.error(err);
-        showToast(err.message || '图片上传异常', 'error');
-    } finally {
-        uploadingReplyImages.value = false;
-        // 清空 input 值，避免同一文件无法再次触发 change
-        if (replyImageInput.value) replyImageInput.value.value = '';
-    }
-};
-// ==================
 
 const errors = ref({
     subject: '',
@@ -2900,50 +2564,6 @@ onUnmounted(() => {
     }
 }
 
-.image-upload-area {
-    border: 2px dashed #2196f3;
-    border-radius: 12px;
-    background: rgba(33, 150, 243, 0.03);
-    padding: 24px 0;
-    text-align: center;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: border-color 0.2s, background 0.2s;
-    position: relative;
-    .upload-icon {
-        margin-bottom: 8px;
-    }
-    .upload-tip {
-        font-size: 1rem;
-        margin-bottom: 4px;
-        .upload-tip-text {
-            color: var(--text-color);
-            font-weight: 500;
-            font-size: 1.08rem;
-            transition: color 0.2s;
-        }
-        .upload-desc {
-            display: block;
-            font-size: 0.92rem;
-            color: #888;
-            margin-top: 2px;
-        }
-        .upload-method {
-            display: block;
-            font-size: 0.9rem;
-            color: #2196f3;
-            margin-top: 2px;
-            a {
-                color: #2196f3;
-                text-decoration: underline;
-            }
-        }
-    }
-    &.dragging {
-        border-color: #1976d2;
-        background: rgba(33, 150, 243, 0.08);
-    }
-}
 .reply-tools {
     display: flex;
     flex-direction: column; /* 竖排按钮 */

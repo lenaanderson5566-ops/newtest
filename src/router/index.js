@@ -2,7 +2,7 @@
 
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, TRAFFICLOG_CONFIG, isXiaoV2board, AUTH_LAYOUT_CONFIG } from '@/utils/baseConfig';
+import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, TRAFFICLOG_CONFIG, AUTH_LAYOUT_CONFIG } from '@/utils/baseConfig';
 
 import i18n from '@/i18n';
 
@@ -584,20 +584,6 @@ const routes = [
 
           get activeNav() { return getActiveNavForRoute('Deposit'); } 
         },
-
-        beforeEnter: (to, from, next) => {
-
-          if (!isXiaoV2board()) {
-
-            next('/dashboard');
-
-          } else {
-
-            next();
-
-          }
-
-        }
 
       }
 

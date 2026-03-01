@@ -36,43 +36,17 @@ const isObject = item => {
 };
 
 
-// 获取面板类型的常量
-// 可选值: 'V2board', 'Xiao-V2board' 或 'Xboard'
-export const PANEL_TYPE = getConfig('PANEL_TYPE', 'V2board');
+// 当前仅保留 Xiao-V2board
+export const PANEL_TYPE = 'Xiao-V2board';
 
 // 判断是否为Xiao-V2board面板
-export const isXiaoV2board = () => {
-    return PANEL_TYPE === 'Xiao-V2board';
-};
-
-// 判断是否为Xboard面板
-export const isXboard = () => {
-    return PANEL_TYPE === 'Xboard';
-};
+export const isXiaoV2board = () => true;
 
 // 获取API基础URL的函数
 export const getApiBaseUrl = () => {
     // 完全依赖config.js中的配置
     if (typeof window !== 'undefined' && window.EZ_CONFIG) {
-        // 首先检查是否启用中间件代理
-        if (window.EZ_CONFIG.API_MIDDLEWARE_ENABLED === true && window.EZ_CONFIG.API_MIDDLEWARE_URL) {
-            // 使用中间件URL和路径
-            const middlewareUrl = window.EZ_CONFIG.API_MIDDLEWARE_URL.trim();
-            const middlewarePath = window.EZ_CONFIG.API_MIDDLEWARE_PATH;
-
-            // 确保URL末尾没有斜杠，且路径开头有斜杠，防止出现重复或缺少斜杠
-            const formattedUrl = middlewareUrl.endsWith('/') ? middlewareUrl.slice(0, -1) : middlewareUrl;
-            const formattedPath = middlewarePath.startsWith('/') ? middlewarePath : `/${middlewarePath}`;
-
-            const middlewareKey = window.EZ_CONFIG.API_MIDDLEWARE_KEY;
-            
-            if(middlewareKey) {
-              return formattedUrl;
-            }
-            return formattedUrl + formattedPath;
-        }
-
-        // 然后检查是否存在API_CONFIG
+        // 检查是否存在 API_CONFIG
         if (window.EZ_CONFIG.API_CONFIG) {
             const apiConfig = window.EZ_CONFIG.API_CONFIG;
 

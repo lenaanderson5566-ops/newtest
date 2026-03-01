@@ -146,16 +146,9 @@ import { useToast } from '@/composables/useToast';
 import { IconAlertCircle, IconShoppingCart } from '@tabler/icons-vue';
 import { getUserInfo, updateRemindSettings as apiUpdateRemind } from '@/api/user';
 import { createOrderDeposit, getUserConfig } from '@/api/wallet';
-import { isXiaoV2board } from '@/utils/baseConfig';
-import { useRouter } from 'vue-router';
 import { WALLET_CONFIG } from '@/utils/baseConfig';
 const { t } = useI18n();
 const { showToast } = useToast();
-const router = useRouter();
-const isXiaoPanel = isXiaoV2board();
-if (!isXiaoPanel) {
-  router.push('/dashboard');
-}
 const userBalance = ref(0);
 const currencySymbol = ref('$');
 const presetAmounts = ref(WALLET_CONFIG.presetAmounts || [6, 30, 68, 128, 256, 328, 648, 1280]);
