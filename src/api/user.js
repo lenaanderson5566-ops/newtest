@@ -1,173 +1,92 @@
-﻿
-
-import request from './request';
-
-
-
-
+﻿import request from "./request";
 
 export function getUserInfo() {
-
   return request({
+    url: "/user/info",
 
-    url: '/user/info',
-
-    method: 'get'
-
+    method: "get",
   });
-
 }
-
-
-
-
 
 export function getIpLocationInfo() {
-
   return request({
+    url: "https://ipapi.co/json",
 
-    url: 'https://ipapi.co/json',
+    method: "get",
 
-    method: 'get',
-
-    baseURL: '' 
+    baseURL: "",
   });
-
 }
-
-
-
-
 
 export function redeemGiftCard(giftcard) {
-
   return request({
+    url: "/user/redeemgiftcard",
 
-    url: '/user/redeemgiftcard',
+    method: "post",
 
-    method: 'post',
-
-    data: { giftcard }
-
+    data: { giftcard },
   });
-
 }
-
-
-
-
 
 export function changePassword(data) {
-
   return request({
+    url: "/user/changePassword",
 
-    url: '/user/changePassword',
+    method: "post",
 
-    method: 'post',
-
-    data
-
+    data,
   });
-
 }
-
-
-
-
 
 export function resetSecurity() {
-
   return request({
+    url: "/user/resetSecurity",
 
-    url: '/user/resetSecurity',
-
-    method: 'get'
-
+    method: "get",
   });
-
 }
-
-
-
-
 
 export function updateRemindSettings(data) {
-
   return request({
+    url: "/user/update",
 
-    url: '/user/update',
+    method: "post",
 
-    method: 'post',
-
-    data
-
+    data,
   });
-
 }
-
-
-
-
 
 export function getActiveSession() {
-
   return request({
+    url: "/user/getActiveSession",
 
-    url: '/user/getActiveSession',
-
-    method: 'get'
-
+    method: "get",
   });
-
 }
-
-
-
-
 
 export function getCommConfig() {
-
   return request({
+    url: "/user/comm/config",
 
-    url: '/user/comm/config',
-
-    method: 'get'
-
+    method: "get",
   });
-
 }
-
-
-
-
 
 export function getTelegramBotInfo() {
-
   return request({
+    url: "/user/telegram/getBotInfo",
 
-    url: '/user/telegram/getBotInfo',
-
-    method: 'get'
-
+    method: "get",
   });
-
 }
 
-
-
-
-
 export function getUserSubscribe() {
-
   return request({
+    url: "/user/getSubscribe",
 
-    url: '/user/getSubscribe',
-
-    method: 'get'
-
+    method: "get",
   });
-
-} 
+}
 
 }
 

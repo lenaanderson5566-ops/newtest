@@ -1,46 +1,39 @@
-﻿
+﻿import { createRouter, createWebHashHistory } from "vue-router";
 
-import { createRouter, createWebHashHistory } from 'vue-router';
+import {
+  SITE_CONFIG,
+  DEFAULT_CONFIG,
+  isBrowserRestricted,
+  TRAFFICLOG_CONFIG,
+  AUTH_LAYOUT_CONFIG,
+} from "@/utils/baseConfig";
 
-import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, TRAFFICLOG_CONFIG, AUTH_LAYOUT_CONFIG } from '@/utils/baseConfig';
+import i18n from "@/i18n";
 
-import i18n from '@/i18n';
+import pageCache from "@/utils/pageCache";
 
-import pageCache from '@/utils/pageCache';
+const LandingPage = () => import("@/views/landing/LandingPage.vue");
 
+const CustomLandingPage = () => import("@/views/landing/CustomLandingPage.vue");
 
-
-const LandingPage = () => import('@/views/landing/LandingPage.vue');
-
-const CustomLandingPage = () => import('@/views/landing/CustomLandingPage.vue');
-
-const ApiValidation = () => import('@/views/errors/ApiValidation.vue');
-
-
+const ApiValidation = () => import("@/views/errors/ApiValidation.vue");
 
 const getAuthComponent = (componentName) => {
-
-  const layoutType = AUTH_LAYOUT_CONFIG?.layoutType || 'center';
+  const layoutType = AUTH_LAYOUT_CONFIG?.layoutType || "center";
 
   return () => import(`@/views/auth/${layoutType}/${componentName}.vue`);
-
 };
 
-
-
 const getThirdNavItem = () => {
+  const { NAVIGATION_CONFIG } = require("@/utils/baseConfig");
 
-  const { NAVIGATION_CONFIG } = require('@/utils/baseConfig');
-
-  return NAVIGATION_CONFIG?.thirdNavItem || 'docs';
+  return NAVIGATION_CONFIG?.thirdNavItem || "docs";
 };
 
 const getFourthNavItem = () => {
-  const { NAVIGATION_CONFIG } = require('@/utils/baseConfig');
-  return NAVIGATION_CONFIG?.fourthNavItem || '';
+  const { NAVIGATION_CONFIG } = require("@/utils/baseConfig");
+  return NAVIGATION_CONFIG?.fourthNavItem || "";
 };
-
-
 
 const getActiveNavForRoute = (routeName) => {
   const thirdNavItem = getThirdNavItem();
@@ -48,745 +41,581 @@ const getActiveNavForRoute = (routeName) => {
 
   // 导航项对应的路由名称映射
   const routeMap = {
+    docs: "Docs",
 
-    docs: 'Docs',
+    invite: "Invite",
 
-    invite: 'Invite',
+    tickets: "TicketList",
 
-    tickets: 'TicketList',
+    nodes: "NodeList",
 
-    nodes: 'NodeList',
+    orders: "OrderList",
 
-    orders: 'OrderList',
+    traffic: "TrafficLog",
 
-    traffic: 'TrafficLog',
+    wallet: "Deposit",
 
-    wallet: 'Deposit',
-
-    profile: 'Profile'
-    
+    profile: "Profile",
   };
 
   // 路由名称 -> 导航名称 映射（与 SlideTabsNav 中的 item.name 对齐）
   const navNameMap = {
-    Docs: 'Docs',
-    Invite: 'Invite',
-    TicketList: 'Tickets',
-    NodeList: 'Nodes',
-    OrderList: 'Orders',
-    TrafficLog: 'Traffic',
-    Deposit: 'Wallet',
-    Profile: 'Profile'
+    Docs: "Docs",
+    Invite: "Invite",
+    TicketList: "Tickets",
+    NodeList: "Nodes",
+    OrderList: "Orders",
+    TrafficLog: "Traffic",
+    Deposit: "Wallet",
+    Profile: "Profile",
   };
 
   // 如果当前路由匹配第三个导航项，则返回第三项对应的导航名
   const thirdNavRouteName = routeMap[thirdNavItem];
   if (thirdNavRouteName && routeName === thirdNavRouteName) {
-    return navNameMap[thirdNavRouteName] || 'More';
+    return navNameMap[thirdNavRouteName] || "More";
   }
 
   // 如果当前路由匹配第四个导航项（且第四项存在且有效），返回第四项对应的导航名
-  const fourthNavRouteName = fourthNavItem ? routeMap[fourthNavItem] : '';
+  const fourthNavRouteName = fourthNavItem ? routeMap[fourthNavItem] : "";
   if (fourthNavRouteName && routeName === fourthNavRouteName) {
-    return navNameMap[fourthNavRouteName] || 'More';
+    return navNameMap[fourthNavRouteName] || "More";
   }
 
   // 其他情况归类为“更多”
-  return 'More';
+  return "More";
 };
 
+const Login = getAuthComponent("Login");
 
+const Register = getAuthComponent("Register");
 
-const Login = getAuthComponent('Login');
+const ForgotPassword = getAuthComponent("ForgotPassword");
 
-const Register = getAuthComponent('Register');
+const Dashboard = () => import("@/views/dashboard/Dashboard.vue");
 
-const ForgotPassword = getAuthComponent('ForgotPassword');
+const MainBoard = () => import("@/views/layout/MainBoard.vue");
 
-const Dashboard = () => import('@/views/dashboard/Dashboard.vue');
+const Profile = () => import("@/views/profile/UserProfile.vue");
 
-const MainBoard = () => import('@/views/layout/MainBoard.vue');
+const BrowserRestricted = () => import("@/views/errors/BrowserRestricted.vue");
 
-const Profile = () => import('@/views/profile/UserProfile.vue');
+const NotFound = () => import("@/views/errors/NotFound.vue");
 
-const BrowserRestricted = () => import('@/views/errors/BrowserRestricted.vue');
-
-const NotFound = () => import('@/views/errors/NotFound.vue');
-
-const CustomerService = () => import('@/views/service/CustomerService.vue');
-
-
+const CustomerService = () => import("@/views/service/CustomerService.vue");
 
 const routes = [
-
   {
+    path: "/",
 
-    path: '/',
-
-    redirect: DEFAULT_CONFIG.enableLandingPage ? '/landing' : '/login'
-
+    redirect: DEFAULT_CONFIG.enableLandingPage ? "/landing" : "/login",
   },
 
   {
+    path: "/api-validation",
 
-    path: '/api-validation',
-
-    name: 'ApiValidation',
+    name: "ApiValidation",
 
     component: ApiValidation,
 
     meta: {
+      titleKey: "common.apiChecking",
 
-      titleKey: 'common.apiChecking',
-
-      requiresAuth: false
-
-    }
-
+      requiresAuth: false,
+    },
   },
 
   {
+    path: "/landing",
 
-    path: '/landing',
-
-    name: 'Landing',
+    name: "Landing",
 
     component: getCustomOrDefaultLandingPage(),
 
     meta: {
+      titleKey: "landing.mainText",
 
-      titleKey: 'landing.mainText',
-
-      requiresAuth: false
-
+      requiresAuth: false,
     },
 
     beforeEnter: (to, from, next) => {
-
       if (!DEFAULT_CONFIG.enableLandingPage) {
-
-        next('/login');
-
+        next("/login");
       } else {
-
         next();
-
       }
-
-    }
-
+    },
   },
 
   {
+    path: "/login",
 
-    path: '/login',
-
-    name: 'Login',
+    name: "Login",
 
     component: Login,
 
     meta: {
+      titleKey: "common.login",
 
-      titleKey: 'common.login',
-
-      requiresAuth: false
-
-    }
-
+      requiresAuth: false,
+    },
   },
 
   {
+    path: "/register",
 
-    path: '/register',
-
-    name: 'Register',
+    name: "Register",
 
     component: Register,
 
     meta: {
-
-      titleKey: 'common.register',
+      titleKey: "common.register",
 
       requiresAuth: false,
 
-      keepAlive: true
-
-    }
-
+      keepAlive: true,
+    },
   },
 
   {
+    path: "/forgot-password",
 
-    path: '/forgot-password',
-
-    name: 'ForgotPassword',
+    name: "ForgotPassword",
 
     component: ForgotPassword,
 
     meta: {
-
-      titleKey: 'common.forgotPassword',
+      titleKey: "common.forgotPassword",
 
       requiresAuth: false,
 
-      keepAlive: true
-
-    }
-
+      keepAlive: true,
+    },
   },
 
   {
+    path: "/browser-restricted",
 
-    path: '/browser-restricted',
-
-    name: 'BrowserRestricted',
+    name: "BrowserRestricted",
 
     component: BrowserRestricted,
 
     meta: {
+      titleKey: "errors.browserRestricted",
 
-      titleKey: 'errors.browserRestricted',
-
-      requiresAuth: false
-
-    }
-
+      requiresAuth: false,
+    },
   },
 
   {
+    path: "/customer-service",
 
-    path: '/customer-service',
-
-    name: 'CustomerService',
+    name: "CustomerService",
 
     component: CustomerService,
 
     meta: {
+      titleKey: "service.title",
 
-      titleKey: 'service.title',
-
-      requiresAuth: false 
-    }
-
+      requiresAuth: false,
+    },
   },
 
   {
-
-    path: '/',
+    path: "/",
 
     component: MainBoard,
 
-    meta: { 
-
-      requiresAuth: true 
-
+    meta: {
+      requiresAuth: true,
     },
 
     children: [
-
       {
+        path: "dashboard",
 
-        path: 'dashboard',
-
-        name: 'Dashboard',
+        name: "Dashboard",
 
         component: Dashboard,
 
         meta: {
-
-          titleKey: 'menu.dashboard',
-
-          requiresAuth: true,
-
-          keepAlive: true
-
-        }
-
-      },
-
-      {
-
-        path: 'shop',
-
-        name: 'Shop',
-
-        component: () => import('@/views/shop/Shop.vue'),
-
-        meta: {
-
-          titleKey: 'menu.shop',
+          titleKey: "menu.dashboard",
 
           requiresAuth: true,
 
-          keepAlive: true
-
-        }
-
+          keepAlive: true,
+        },
       },
 
       {
+        path: "shop",
 
-        path: 'order-confirm',
+        name: "Shop",
 
-        name: 'OrderConfirm',
-
-        component: () => import('@/views/shop/OrderConfirm.vue'),
+        component: () => import("@/views/shop/Shop.vue"),
 
         meta: {
-
-          titleKey: 'orders.confirmOrder',
+          titleKey: "menu.shop",
 
           requiresAuth: true,
 
-          activeNav: 'Shop' 
-        }
-
+          keepAlive: true,
+        },
       },
 
       {
+        path: "order-confirm",
 
-        path: 'payment',
+        name: "OrderConfirm",
 
-        name: 'Payment',
-
-        component: () => import('@/views/shop/Payment.vue'),
+        component: () => import("@/views/shop/OrderConfirm.vue"),
 
         meta: {
-
-          titleKey: 'orders.payment',
+          titleKey: "orders.confirmOrder",
 
           requiresAuth: true,
 
-          activeNav: 'Shop' 
-        }
-
+          activeNav: "Shop",
+        },
       },
 
       {
+        path: "payment",
 
-        path: 'invite',
+        name: "Payment",
 
-        name: 'Invite',
-
-        component: () => import('@/views/invite/Invite.vue'),
+        component: () => import("@/views/shop/Payment.vue"),
 
         meta: {
+          titleKey: "orders.payment",
 
-          titleKey: 'menu.invite',
+          requiresAuth: true,
+
+          activeNav: "Shop",
+        },
+      },
+
+      {
+        path: "invite",
+
+        name: "Invite",
+
+        component: () => import("@/views/invite/Invite.vue"),
+
+        meta: {
+          titleKey: "menu.invite",
 
           requiresAuth: true,
 
           keepAlive: true,
 
-          get activeNav() { return getActiveNavForRoute('Invite'); }
-
-        }
-
+          get activeNav() {
+            return getActiveNavForRoute("Invite");
+          },
+        },
       },
 
       {
+        path: "more",
 
-        path: 'more',
+        name: "More",
 
-        name: 'More',
-
-        component: () => import('@/views/more/MoreOptions.vue'),
+        component: () => import("@/views/more/MoreOptions.vue"),
 
         meta: {
+          titleKey: "menu.more",
 
-          titleKey: 'menu.more',
-
-          requiresAuth: true
-
-        }
-
+          requiresAuth: true,
+        },
       },
 
       {
+        path: "docs",
 
-        path: 'docs',
+        name: "Docs",
 
-        name: 'Docs',
-
-        component: () => import('@/views/docs/DocsPage.vue'),
+        component: () => import("@/views/docs/DocsPage.vue"),
 
         meta: {
-
-          titleKey: 'menu.docs',
+          titleKey: "menu.docs",
 
           requiresAuth: true,
 
-          get activeNav() { return getActiveNavForRoute('Docs'); } 
-        }
-
+          get activeNav() {
+            return getActiveNavForRoute("Docs");
+          },
+        },
       },
 
       {
+        path: "docs/:id",
 
-        path: 'docs/:id',
+        name: "DocDetail",
 
-        name: 'DocDetail',
-
-        component: () => import('@/views/docs/DocDetail.vue'),
+        component: () => import("@/views/docs/DocDetail.vue"),
 
         meta: {
-
-          titleKey: 'more.viewHelp',
+          titleKey: "more.viewHelp",
 
           requiresAuth: true,
 
-          get activeNav() { return getActiveNavForRoute('Docs'); } 
-        }
-
+          get activeNav() {
+            return getActiveNavForRoute("Docs");
+          },
+        },
       },
 
       {
+        path: "nodes",
 
-        path: 'nodes',
+        name: "NodeList",
 
-        name: 'NodeList',
-
-        component: () => import('@/views/servers/NodeList.vue'),
+        component: () => import("@/views/servers/NodeList.vue"),
 
         meta: {
-
-          titleKey: 'nodes.title',
+          titleKey: "nodes.title",
 
           requiresAuth: true,
 
-          get activeNav() { return getActiveNavForRoute('NodeList'); } 
-        }
-
+          get activeNav() {
+            return getActiveNavForRoute("NodeList");
+          },
+        },
       },
 
       {
+        path: "orders",
 
-        path: 'orders',
+        name: "OrderList",
 
-        name: 'OrderList',
-
-        component: () => import('@/views/orders/OrderList.vue'),
+        component: () => import("@/views/orders/OrderList.vue"),
 
         meta: {
-
-          titleKey: 'orders.title',
+          titleKey: "orders.title",
 
           requiresAuth: true,
 
-          get activeNav() { return getActiveNavForRoute('OrderList'); } 
-        }
-
+          get activeNav() {
+            return getActiveNavForRoute("OrderList");
+          },
+        },
       },
 
       {
+        path: "tickets",
 
-        path: 'tickets',
+        name: "TicketList",
 
-        name: 'TicketList',
-
-        component: () => import('@/views/ticket/TicketList.vue'),
+        component: () => import("@/views/ticket/TicketList.vue"),
 
         meta: {
-
-          titleKey: 'tickets.title',
+          titleKey: "tickets.title",
 
           requiresAuth: true,
 
-          get activeNav() { return getActiveNavForRoute('TicketList'); } 
-        }
-
+          get activeNav() {
+            return getActiveNavForRoute("TicketList");
+          },
+        },
       },
 
       {
+        path: "mobile/tickets",
 
-        path: 'mobile/tickets',
+        name: "MobileTickets",
 
-        name: 'MobileTickets',
-
-        component: () => import('@/views/ticket/MobileTicketList.vue'),
+        component: () => import("@/views/ticket/MobileTicketList.vue"),
 
         meta: {
-
-          titleKey: 'tickets.title',
+          titleKey: "tickets.title",
 
           requiresAuth: true,
 
-          get activeNav() { return getActiveNavForRoute('TicketList'); } 
-        }
-
+          get activeNav() {
+            return getActiveNavForRoute("TicketList");
+          },
+        },
       },
 
       {
+        path: "profile",
 
-        path: 'profile',
-
-        name: 'Profile',
+        name: "Profile",
 
         component: Profile,
 
         meta: {
-
-          titleKey: 'profile.title',
+          titleKey: "profile.title",
 
           requiresAuth: true,
 
-          get activeNav() { return getActiveNavForRoute('Profile'); } 
-        }
-
+          get activeNav() {
+            return getActiveNavForRoute("Profile");
+          },
+        },
       },
 
       {
+        path: "trafficlog",
 
-        path: 'trafficlog',
+        name: "TrafficLog",
 
-        name: 'TrafficLog',
-
-        component: () => import('@/views/trafficLog/TrafficLog.vue'),
+        component: () => import("@/views/trafficLog/TrafficLog.vue"),
 
         meta: {
-
-          titleKey: 'trafficLog.title',
+          titleKey: "trafficLog.title",
 
           requiresAuth: true,
 
-          get activeNav() { return getActiveNavForRoute('TrafficLog'); } 
+          get activeNav() {
+            return getActiveNavForRoute("TrafficLog");
+          },
         },
 
         beforeEnter: (to, from, next) => {
-
           if (!TRAFFICLOG_CONFIG.enableTrafficLog) {
-
-            next('/dashboard');
-
+            next("/dashboard");
           } else {
-
             next();
-
           }
-
-        }
-
+        },
       },
 
       {
+        path: "wallet/deposit",
 
-        path: 'wallet/deposit',
+        name: "Deposit",
 
-        name: 'Deposit',
-
-        component: () => import('@/views/wallet/WalletDeposit.vue'),
+        component: () => import("@/views/wallet/WalletDeposit.vue"),
 
         meta: {
-
-          titleKey: 'wallet.deposit.title',
+          titleKey: "wallet.deposit.title",
 
           requiresAuth: true,
 
-          get activeNav() { return getActiveNavForRoute('Deposit'); } 
+          get activeNav() {
+            return getActiveNavForRoute("Deposit");
+          },
         },
-
-      }
-
-    ]
-
+      },
+    ],
   },
 
   {
+    path: "/:pathMatch(.*)*",
 
-    path: '/:pathMatch(.*)*',
-
-    name: 'NotFound',
+    name: "NotFound",
 
     component: NotFound,
 
     meta: {
+      titleKey: "errors.notFound",
 
-      titleKey: 'errors.notFound',
-
-      requiresAuth: false
-
-    }
-
-  }
-
+      requiresAuth: false,
+    },
+  },
 ];
 
-
-
 const router = createRouter({
-
   history: createWebHashHistory(),
 
   routes,
 
   scrollBehavior() {
-
     return { top: 0 };
-
-  }
-
+  },
 });
 
-
-
 router.beforeEach(async (to, from, next) => {
-
-  if (to.name !== 'BrowserRestricted' && isBrowserRestricted()) {
-
-    next({ name: 'BrowserRestricted' });
+  if (to.name !== "BrowserRestricted" && isBrowserRestricted()) {
+    next({ name: "BrowserRestricted" });
 
     return;
-
   }
 
-  
+  const { shouldCheckApiAvailability } = await import(
+    "@/utils/apiAvailabilityChecker"
+  );
 
-  const { shouldCheckApiAvailability } = await import('@/utils/apiAvailabilityChecker');
-
-  if (shouldCheckApiAvailability() && to.name !== 'ApiValidation') {
-
-    const availableUrl = sessionStorage.getItem('ez_api_available_url');
+  if (shouldCheckApiAvailability() && to.name !== "ApiValidation") {
+    const availableUrl = sessionStorage.getItem("ez_api_available_url");
 
     if (!availableUrl) {
-
       const apiRedirectQuery = {
-
         redirect: to.path,
 
-        ...to.query
-
+        ...to.query,
       };
 
-      next({ 
+      next({
+        name: "ApiValidation",
 
-        name: 'ApiValidation',
-
-        query: apiRedirectQuery
-
+        query: apiRedirectQuery,
       });
 
       return;
-
     }
-
   }
 
-  
-
   const getTitle = () => {
-
     if (to.meta.titleKey) {
-
       try {
-
         const title = i18n.global.t(to.meta.titleKey);
 
         return `${title} - ${SITE_CONFIG.siteName}`;
-
       } catch (error) {
-
         return SITE_CONFIG.siteName;
-
       }
-
     }
 
     return SITE_CONFIG.siteName;
-
   };
-
-  
 
   document.title = getTitle();
 
-  
+  const token = localStorage.getItem("token");
 
-  const token = localStorage.getItem('token');
-
-  
-
-  const loginStatusChanged = 
-
-    (from.meta.requiresAuth && !to.meta.requiresAuth) || 
-
+  const loginStatusChanged =
+    (from.meta.requiresAuth && !to.meta.requiresAuth) ||
     (!from.meta.requiresAuth && to.meta.requiresAuth);
 
-  
-
   if (loginStatusChanged) {
-
     try {
-
-      const { reloadMessages } = await import('@/i18n');
+      const { reloadMessages } = await import("@/i18n");
 
       await reloadMessages();
-
-    } catch (error) {
-
-    }
-
+    } catch (error) {}
   }
-
-  
 
   if (to.meta.requiresAuth && !token) {
-
-    next({ name: 'Login' });
-
-  } else if (to.path === '/login' && token) {
-
-    next({ path: '/dashboard' });
-
+    next({ name: "Login" });
+  } else if (to.path === "/login" && token) {
+    next({ path: "/dashboard" });
   } else {
-
-    document.body.classList.add('page-transitioning');
-
-    
+    document.body.classList.add("page-transitioning");
 
     if (to.meta.keepAlive && to.name) {
-
       pageCache.addRouteToCache(to.name);
-
     } else if (to.name && to.meta.keepAlive === false) {
-
       pageCache.removeRouteFromCache(to.name);
-
     }
 
-    
-
     next();
-
   }
-
 });
-
-
 
 router.afterEach(() => {
-
   setTimeout(() => {
-
-    document.body.classList.remove('page-transitioning');
-
+    document.body.classList.remove("page-transitioning");
   }, 400);
-
 });
 
-
-
 function getCustomOrDefaultLandingPage() {
-
   if (!SITE_CONFIG.customLandingPage) {
-
     return LandingPage;
-
   }
 
   return CustomLandingPage;
-
 }
 
-
-
-export default router; 
+export default router;
