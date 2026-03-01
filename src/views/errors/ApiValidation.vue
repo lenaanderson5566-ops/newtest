@@ -1,4 +1,4 @@
-﻿<template>
+<template>
 
   <div class="api-validation-page">
 
@@ -165,6 +165,9 @@ export default {
         return;
 
       }
+
+      
+
       const apiConfig = window.EZ_CONFIG.API_CONFIG;
 
       if (!apiConfig || apiConfig.urlMode !== 'static') {
