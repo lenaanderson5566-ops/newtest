@@ -29,24 +29,17 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { SITE_CONFIG } from '@/utils/baseConfig';
-import { useTheme } from '@/composables/useTheme';
+import { computed, onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   name: 'ApiValidation',
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const siteConfig = ref(SITE_CONFIG);
-    const { theme } = useTheme();
 
-    const isDarkTheme = computed(() => theme.value === 'dark');
-    const isChecking = ref(true);
     const checkedCount = ref(0);
     const totalApis = ref(0);
-    const availableApiUrl = ref(null);
 
     const circumference = 2 * Math.PI * 45;
     const dashOffset = computed(() => {
@@ -101,8 +94,6 @@ export default {
     };
 
     const navigateToTarget = () => {
-      isChecking.value = false;
-
       try {
         let targetPath = redirectInfo.value.path;
         let targetQuery = { ...redirectInfo.value.query };
@@ -123,8 +114,8 @@ export default {
             const parsedParams = JSON.parse(originalQueryParams);
             targetQuery = { ...targetQuery, ...parsedParams };
             sessionStorage.removeItem('ez_original_query_params');
-          } catch (e) {
-            console.error('解析存储的查询参数失败:', e);
+          } catch (error) {
+            console.error('解析存储的查询参数失败:', error);
           }
         }
 
@@ -159,7 +150,6 @@ export default {
       const storedUrl = sessionStorage.getItem('ez_api_available_url');
       if (storedUrl) {
         console.log('使用已验证的API URL');
-        availableApiUrl.value = storedUrl;
         navigateToTarget();
         return;
       }
@@ -176,7 +166,6 @@ export default {
           if (isAvailable) {
             console.log('找到可用的API节点');
             sessionStorage.setItem('ez_api_available_url', url);
-            availableApiUrl.value = url;
 
             if (window.EZ_CONFIG) {
               window.EZ_CONFIG._AVAILABLE_API_URL = url;
@@ -198,7 +187,6 @@ export default {
       const defaultUrl = apiConfig.staticBaseUrl[0];
       console.log('使用默认API节点');
       sessionStorage.setItem('ez_api_available_url', defaultUrl);
-      availableApiUrl.value = defaultUrl;
       checkedCount.value = totalApis.value;
 
       setTimeout(() => {
@@ -211,23 +199,21 @@ export default {
       delete originalQuery.redirect;
 
       if (Object.keys(originalQuery).length > 0) {
-        sessionStorage.setItem('ez_original_query_params', JSON.stringify(originalQuery));
+        sessionStorage.setItem(
+          'ez_original_query_params',
+          JSON.stringify(originalQuery)
+        );
       }
 
       checkApiAvailability();
     });
 
     return {
-      siteConfig,
-      isChecking,
       checkedCount,
       totalApis,
-      availableApiUrl,
       circumference,
       dashOffset,
-      progressPercent,
-      isDarkTheme,
-      redirectInfo
+      progressPercent
     };
   }
 };
@@ -249,8 +235,17 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 30% 30%, rgba(var(--theme-color-rgb, 45, 85, 255), 0.05), transparent 30%),
-      radial-gradient(circle at 70% 70%, rgba(var(--theme-color-rgb, 45, 85, 255), 0.03), transparent 40%);
+    background:
+      radial-gradient(
+        circle at 30% 30%,
+        rgba(var(--theme-color-rgb, 45, 85, 255), 0.05),
+        transparent 30%
+      ),
+      radial-gradient(
+        circle at 70% 70%,
+        rgba(var(--theme-color-rgb, 45, 85, 255), 0.03),
+        transparent 40%
+      );
     z-index: 0;
   }
 }
@@ -304,7 +299,9 @@ export default {
         stroke-width: 4;
         stroke-linecap: round;
         transition: stroke-dashoffset 0.5s ease;
-        filter: drop-shadow(0 0 6px rgba(var(--theme-color-rgb, 61, 126, 255), 0.4));
+        filter: drop-shadow(
+          0 0 6px rgba(var(--theme-color-rgb, 61, 126, 255), 0.4)
+        );
       }
 
       .progress-text {
@@ -347,7 +344,8 @@ export default {
     background-color: #f8f9fc;
 
     &::before {
-      background: radial-gradient(circle at 30% 30%, rgba(45, 85, 255, 0.05), transparent 30%),
+      background:
+        radial-gradient(circle at 30% 30%, rgba(45, 85, 255, 0.05), transparent 30%),
         radial-gradient(circle at 70% 70%, rgba(45, 85, 255, 0.03), transparent 40%);
     }
   }
