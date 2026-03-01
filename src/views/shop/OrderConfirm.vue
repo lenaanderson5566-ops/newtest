@@ -343,7 +343,7 @@ import {
 
 import { getUserInfo } from "@/api/dashboard";
 
-import { isXboard, ORDER_CONFIG } from "@/utils/baseConfig";
+import { ORDER_CONFIG } from "@/utils/baseConfig";
 
 import CommonDialog from "@/components/popup/CommonDialog.vue";
 
@@ -649,15 +649,6 @@ export default {
             }
           } else if (response.data.type === 2) {
             discountPercent.value = couponInfo.value.value;
-
-            if (isXboard()) {
-              const calculatedDiscountAmount = Math.round(
-                originalPrice.value * (discountPercent.value / 100)
-              );
-
-              couponInfo.value.calculatedDiscountAmount =
-                calculatedDiscountAmount;
-            }
 
             if (!response.message) {
               showToast(

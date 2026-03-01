@@ -41,7 +41,7 @@ const isObject = (item) => {
 
 // 获取面板类型的常量
 // 可选值: 'V2board', 'Xiao-V2board' 或 'Xboard'
-export const PANEL_TYPE = getConfig("PANEL_TYPE", "V2board");
+export const PANEL_TYPE = getConfig("PANEL_TYPE", "Xiao-V2board");
 
 // 判断是否为Xiao-V2board面板
 export const isXiaoV2board = () => {

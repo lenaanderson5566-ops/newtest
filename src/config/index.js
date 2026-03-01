@@ -6,11 +6,9 @@
 
 export const config = {
   // 面板类型配置 - 请选择您使用的面板类型
-  PANEL_TYPE: "Xiao-V2board", // 可选值: 'V2board', 'Xiao-V2board' 或 'Xboard'
+  PANEL_TYPE: "Xiao-V2board", // 当前仅适配 Xiao-V2board
   // 说明:
-  // 1. V2board: 标准V2board面板，使用默认请求格式
-  // 2. Xiao-V2board: Xiao修改版面板，使用特殊格式的请求参数
-  // 3. Xboard: Xboard面板
+  // 当前实现仅面向 Xiao-V2board 面板
 
   // =======================================================
 

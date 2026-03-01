@@ -3,7 +3,6 @@ import {
   API_BASE_URL,
   getApiBaseUrl,
   isXiaoV2board,
-  isXboard,
   CUSTOM_HEADERS_CONFIG,
 } from "@/utils/baseConfig";
 import { getAvailableApiUrl } from "@/utils/apiAvailabilityChecker";
@@ -31,11 +30,7 @@ request.interceptors.request.use(
       }
     }
 
-    if (
-      (isXiaoV2board() || isXboard()) &&
-      config.method === "post" &&
-      config.data
-    ) {
+    if (isXiaoV2board() && config.method === "post" && config.data) {
       const formData = new URLSearchParams();
       for (const key in config.data) {
         if (Object.prototype.hasOwnProperty.call(config.data, key)) {
