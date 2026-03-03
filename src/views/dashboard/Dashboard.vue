@@ -503,48 +503,35 @@
         </template>
 
         <template v-else>
-          <div class="stats-card traffic-board-card"
-               :class="{
-              'card-animate': !loading.userStats,
-              'warning-card': isLowTraffic && !isTrafficDepleted,
-              'danger-card': isTrafficDepleted
-            }"
-               style="animation-delay: 0.5s">
-            <div class="stats-icon traffic-board-icon">
-              <IconTransferVertical :size="28"/>
-            </div>
-            <div class="stats-info">
-              <div class="stats-value">{{ $t('dashboard.trafficBoardTitle') }}</div>
-              <div class="stats-label">{{ $t('dashboard.trafficBoardSubtitle') }}</div>
-            </div>
-
-            <div class="traffic-package-status" :class="{ active: hasPurchasedTrafficPackage }">
+          <div class="usage-panel-title-row" style="grid-column: 1 / -1; animation-delay: 0.46s">
+            <h3>{{ $t('dashboard.usagePanel') }}</h3>
+            <span class="traffic-package-status" :class="{ active: hasPurchasedTrafficPackage }">
               {{ hasPurchasedTrafficPackage ? $t('dashboard.packagePurchased') : $t('dashboard.packageNotPurchased') }}
-            </div>
+            </span>
+          </div>
 
-            <div class="traffic-sections">
-              <div class="traffic-section" v-for="section in trafficBoardSections" :key="section.key">
-                <div class="section-header">
-                  <div class="section-title">{{ section.title }}</div>
-                  <div class="section-percent">{{ section.percentage }}%</div>
-                </div>
-                <div class="section-metrics">
-                  <span>{{ $t('dashboard.used') }}: {{ formatTraffic(section.used) }}</span>
-                  <span>{{ $t('dashboard.total') }}: {{ formatTraffic(section.total) }}</span>
-                  <span>{{ $t('dashboard.remaining') }}: {{ formatTraffic(section.remaining) }}</span>
-                </div>
-                <div class="section-progress-track">
-                  <div class="section-progress-fill" :style="{ width: `${section.percentage}%` }"></div>
-                </div>
-              </div>
+          <div
+            class="stats-card traffic-board-card"
+            v-for="(card, idx) in trafficBoardSections"
+            :key="card.key"
+            :class="{ 'card-animate': !loading.userStats }"
+            :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
+          >
+            <div class="usage-card-title">{{ card.title }}</div>
+            <div class="usage-card-main">
+              <span class="usage-percent">{{ card.remainingPercentage }}%</span>
+              <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
             </div>
-
-            <!-- 水流进度条效果 -->
-            <div class="water-container">
-              <div class="water-progress"
-                   :class="{'animate-water': waterAnimationState.canAnimate}"
-                   :style="{ height: waterAnimationState.canAnimate ? `${trafficPercentage}%` : '0%' }">
-              </div>
+            <div class="section-progress-track">
+              <div class="section-progress-fill" :style="{ width: `${card.remainingPercentage}%` }"></div>
+            </div>
+            <div class="usage-card-meta">
+              <span>{{ $t('dashboard.used') }}: {{ formatTraffic(card.used) }}</span>
+              <span>{{ $t('dashboard.total') }}: {{ formatTraffic(card.total) }}</span>
+            </div>
+            <div class="usage-card-meta">
+              <span>{{ $t('dashboard.remaining') }}: {{ formatTraffic(card.remaining) }}</span>
+              <span v-if="card.key === 'subscription'">{{ $t('dashboard.resetHint', { day: userPlan.resetDay || '-' }) }}</span>
             </div>
           </div>
 
@@ -1004,20 +991,6 @@ export default {
       userPlan: true,
       subscribe: true
     });
-
-    const waterAnimationState = reactive({
-      canAnimate: false,
-      initialized: false
-    });
-
-    watch(() => [loading.userStats, loading.userInfo], ([userStatsLoading, userInfoLoading]) => {
-      if (!userStatsLoading && !userInfoLoading) {
-        setTimeout(() => {
-          waterAnimationState.canAnimate = true;
-          waterAnimationState.initialized = true;
-        }, 500);
-      }
-    }, {immediate: false, flush: 'post'});
 
     watch(() => locale.value, () => {
       if (userPlan.value.isExpireDatePermanent) {
@@ -1933,36 +1906,6 @@ export default {
 
     const needRefreshData = ref(false);
 
-    const trafficPercentage = computed(() => {
-      const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
-
-      if (!userPlan.value || !userPlan.value.totalTraffic || !remainingMatch) return 0;
-
-      const totalMatch = userPlan.value.totalTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
-      if (!totalMatch) return 0;
-
-      const remainingValue = parseFloat(remainingMatch[1]);
-      const remainingUnit = remainingMatch[3].toUpperCase();
-
-      const totalValue = parseFloat(totalMatch[1]);
-      const totalUnit = totalMatch[3].toUpperCase();
-
-      const unitToBytes = {
-        'B': 1,
-        'KB': 1024,
-        'MB': 1024 * 1024,
-        'GB': 1024 * 1024 * 1024,
-        'TB': 1024 * 1024 * 1024 * 1024
-      };
-
-      const remainingBytes = remainingValue * unitToBytes[remainingUnit];
-      const totalBytes = totalValue * unitToBytes[totalUnit];
-
-      if (totalBytes === 0) return 0;
-
-      return Math.min(Math.max(Math.round((remainingBytes / totalBytes) * 100), 0), 100);
-    });
-
     const hasPurchasedTrafficPackage = computed(() => {
       const packageUsed = Math.max(
         trafficMetrics.totalUsedBytes - trafficMetrics.subscriptionQuotaUsedBytes,
@@ -2003,10 +1946,11 @@ export default {
       ];
 
       return rows.map((row) => {
-        const percentage = row.total > 0 ? Math.round((row.used / row.total) * 100) : 0;
+        const usedPercentage = row.total > 0 ? Math.round((row.used / row.total) * 100) : 0;
         return {
           ...row,
-          percentage: Math.min(Math.max(percentage, 0), 100)
+          usedPercentage: Math.min(Math.max(usedPercentage, 0), 100),
+          remainingPercentage: Math.min(Math.max(100 - usedPercentage, 0), 100)
         };
       });
     });
@@ -2099,10 +2043,8 @@ export default {
       navigateToDeposit,
       showDeviceLimit,
       needRefreshData,
-      trafficPercentage,
       trafficBoardSections,
       hasPurchasedTrafficPackage,
-      waterAnimationState,
       DASHBOARD_CONFIG,
       allowNewPeriod,
       showImportSubscription,
@@ -2272,6 +2214,34 @@ export default {
       grid-template-columns: repeat(4, 1fr);
     }
 
+    .usage-panel-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 2px;
+
+      h3 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text-color);
+      }
+
+      .traffic-package-status {
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 6px 10px;
+        background: rgba(108, 117, 125, 0.16);
+        color: var(--secondary-text-color);
+
+        &.active {
+          background: rgba(40, 167, 69, 0.15);
+          color: #28a745;
+        }
+      }
+    }
+
     .stats-card {
       position: relative;
       background-color: var(--card-bg-color);
@@ -2343,90 +2313,64 @@ export default {
         }
       }
 
-      .traffic-board-icon {
-        width: 52px;
-        height: 52px;
-        margin-right: 8px;
-      }
-
-      .traffic-package-status {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        z-index: 1;
-        font-size: 11px;
-        font-weight: 600;
-        border-radius: 999px;
-        padding: 4px 9px;
-        background: rgba(108, 117, 125, 0.16);
-        color: var(--secondary-text-color);
-
-        &.active {
-          background: rgba(40, 167, 69, 0.15);
-          color: #28a745;
-        }
-      }
-
-      .traffic-sections {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        margin-top: 10px;
-        display: flex;
+      &.traffic-board-card {
         flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
         gap: 10px;
-      }
 
-      .traffic-section {
-        border: 1px solid rgba(var(--theme-color-rgb), 0.14);
-        border-radius: 10px;
-        padding: 8px 10px;
-        background: rgba(var(--theme-color-rgb), 0.03);
-      }
-
-      .section-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 4px;
-
-        .section-title {
-          font-size: 12px;
+        .usage-card-title {
+          font-size: 15px;
+          font-weight: 600;
           color: var(--text-color);
-          font-weight: 600;
         }
 
-        .section-percent {
-          font-size: 12px;
-          color: var(--theme-color);
-          font-weight: 600;
+        .usage-card-main {
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
         }
-      }
 
-      .section-metrics {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 12px;
-        margin-bottom: 6px;
+        .usage-percent {
+          font-size: 40px;
+          line-height: 1;
+          font-weight: 700;
+          color: var(--text-color);
+        }
 
-        span {
-          font-size: 11px;
+        .usage-percent-label {
+          font-size: 20px;
           color: var(--secondary-text-color);
         }
-      }
 
-      .section-progress-track {
-        height: 6px;
-        background: rgba(var(--theme-color-rgb), 0.14);
-        border-radius: 999px;
-        overflow: hidden;
-      }
+        .usage-card-meta {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
 
-      .section-progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.5), rgba(var(--theme-color-rgb), 0.95));
-        border-radius: inherit;
-        transition: width 0.35s ease;
+          span {
+            font-size: 12px;
+            color: var(--secondary-text-color);
+            white-space: nowrap;
+          }
+        }
+
+        .section-progress-track {
+          width: 100%;
+          height: 9px;
+          background: rgba(var(--theme-color-rgb), 0.14);
+          border-radius: 999px;
+          overflow: hidden;
+        }
+
+        .section-progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #22c55e, #22c55e);
+          border-radius: inherit;
+          transition: width 0.35s ease;
+        }
       }
 
       &.warning-card .water-progress {
