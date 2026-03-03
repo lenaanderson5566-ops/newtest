@@ -154,6 +154,18 @@
                 <span class="info-label">{{ $t('dashboard.planTraffic') }}</span>
                 <span class="info-value">{{ userPlan.totalTraffic || '0 GB' }}</span>
               </div>
+              <div class="info-item" v-if="userPlan.subscriptionQuotaUsed !== null">
+                <span class="info-label">{{ $t('dashboard.subscriptionQuotaUsed') }}</span>
+                <span class="info-value">{{ userPlan.subscriptionQuotaUsed }}</span>
+              </div>
+              <div class="info-item" v-if="userPlan.subscriptionQuotaRemaining !== null">
+                <span class="info-label">{{ $t('dashboard.subscriptionQuotaRemaining') }}</span>
+                <span class="info-value">{{ userPlan.subscriptionQuotaRemaining }}</span>
+              </div>
+              <div class="info-item" v-if="userPlan.packageQuotaRemaining !== null">
+                <span class="info-label">{{ $t('dashboard.packageQuotaRemaining') }}</span>
+                <span class="info-value">{{ userPlan.packageQuotaRemaining }}</span>
+              </div>
               <!-- 添加下次重置时间，只有当resetDay存在时才显示 -->
               <div class="info-item" v-if="userPlan.resetDay">
                 <span class="info-label">{{ $t('dashboard.nextResetTime') }}</span>
@@ -865,7 +877,10 @@ export default {
     const userPlan = ref({
       deviceLimit: null,
       aliveIp: 0,
-      resetDay: null
+      resetDay: null,
+      subscriptionQuotaUsed: null,
+      subscriptionQuotaRemaining: null,
+      packageQuotaRemaining: null
     });
     const qrCodeLoading = ref(true);
     const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription)
@@ -1362,6 +1377,24 @@ export default {
           }
           userPlan.value.totalTraffic = formatTraffic(totalTrafficBytes);
           userStats.remainingTraffic = formatTraffic(remainingTrafficBytes);
+
+          const subscriptionQuotaUsedBytes =
+            toNumberOrNull(subscribe.subscription_quota_used_bytes) ??
+            toNumberOrNull(subscribe.monthly_used_bytes);
+          const subscriptionQuotaRemainingBytes =
+            toNumberOrNull(subscribe.subscription_quota_remaining_bytes) ??
+            toNumberOrNull(subscribe.monthly_remaining_bytes);
+          const packageQuotaRemainingBytes =
+            toNumberOrNull(subscribe.quota_package_remaining_bytes) ??
+            toNumberOrNull(subscribe.package_remaining_bytes);
+
+          userPlan.value.subscriptionQuotaUsed =
+            subscriptionQuotaUsedBytes === null ? null : formatTraffic(Math.max(subscriptionQuotaUsedBytes, 0));
+          userPlan.value.subscriptionQuotaRemaining =
+            subscriptionQuotaRemainingBytes === null ? null : formatTraffic(Math.max(subscriptionQuotaRemainingBytes, 0));
+          userPlan.value.packageQuotaRemaining =
+            packageQuotaRemainingBytes === null ? null : formatTraffic(Math.max(packageQuotaRemainingBytes, 0));
+
           if (subscribe.reset_day) {
             userPlan.value.resetDay = subscribe.reset_day;
           }
@@ -4094,4 +4127,3 @@ a.eztheme-btn {
   color: var(--theme-color);
 }
 </style>
-
