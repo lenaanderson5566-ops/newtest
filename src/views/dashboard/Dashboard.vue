@@ -34,18 +34,6 @@
                 <IconChevronRight :size="16"/>
               </div>
             </div>
-
-            <div v-if="userStats.pendingTickets > 0" class="pending-item" @click="goToSupport">
-              <div class="pending-icon">
-                <IconMessage :size="20"/>
-              </div>
-              <div class="pending-info">
-                <span class="">{{ $t('dashboard.pendingTickets') }} ({{ userStats.pendingTickets }})</span>
-              </div>
-              <div class="pending-action">
-                <IconChevronRight :size="16"/>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -150,36 +138,6 @@
                   }}
                 </span>
               </div>
-              <div class="info-item">
-                <span class="info-label">{{ $t('dashboard.planTraffic') }}</span>
-                <span class="info-value">{{ userPlan.totalTraffic || '0 GB' }}</span>
-              </div>
-              <div class="info-item" v-if="userPlan.subscriptionQuotaUsed !== null">
-                <span class="info-label">{{ $t('dashboard.subscriptionQuotaUsed') }}</span>
-                <span class="info-value">{{ userPlan.subscriptionQuotaUsed }}</span>
-              </div>
-              <div class="info-item" v-if="userPlan.subscriptionQuotaRemaining !== null">
-                <span class="info-label">{{ $t('dashboard.subscriptionQuotaRemaining') }}</span>
-                <span class="info-value">{{ userPlan.subscriptionQuotaRemaining }}</span>
-              </div>
-              <div class="info-item" v-if="userPlan.packageQuotaRemaining !== null">
-                <span class="info-label">{{ $t('dashboard.packageQuotaRemaining') }}</span>
-                <span class="info-value">{{ userPlan.packageQuotaRemaining }}</span>
-              </div>
-              <!-- 添加下次重置时间，只有当resetDay存在时才显示 -->
-              <div class="info-item" v-if="userPlan.resetDay">
-                <span class="info-label">{{ $t('dashboard.nextResetTime') }}</span>
-                <span class="info-value">{{ userPlan.resetDay }} {{ $t('dashboard.days') }}</span>
-              </div>
-              <!-- 添加在线设备信息，仅当面板类型为 Xiao-board 时显示 -->
-              <div class="info-item" v-if="showDeviceLimit">
-                <span class="info-label">{{ $t('dashboard.deviceLimit') }}</span>
-                <span class="info-value">
-                  {{
-                    userPlan.deviceLimit === null ? `${userPlan.aliveIp} / ${$t('dashboard.unlimited')}` : `${userPlan.aliveIp} / ${userPlan.deviceLimit}`
-                  }}
-                </span>
-              </div>
             </div>
             <div class="subscription-actions">
               <button v-if="showImportSubscription" class="btn-outline" :class="{
@@ -218,10 +176,6 @@
               <button class="btn-outline" v-if="allowNewPeriod==='1'&&showResetTrafficButton" @click="showPopup=true">
                 <IconCalendarPlus :size="16" class="btn-icon"/>
                 <span>{{ $t('dashboard.activateDataCycleInAdvance') }}</span>
-              </button>
-              <button class="btn-outline" @click="goToSupport">
-                <IconMessage :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.ticketSupport') }}</span>
               </button>
             </div>
           </div>
@@ -492,10 +446,6 @@
                     <IconShoppingBag :size="18" class="btn-icon"/>
                     <span>{{ $t('dashboard.purchasePlan') }}</span>
                   </button>
-                  <button class="action-button secondary" @click="goToSupport">
-                    <IconMessage :size="18" class="btn-icon"/>
-                    <span>{{ $t('dashboard.ticketSupport') }}</span>
-                  </button>
                 </div>
               </div>
             </div>
@@ -535,58 +485,7 @@
             </div>
           </div>
 
-          <div class="stats-card"
-               :class="{
-              'card-animate': !loading.userStats,
-              'warning-card': isExpiringSoon && !isExpired,
-              'danger-card': isExpired
-            }"
-               style="animation-delay: 0.6s">
-            <div class="stats-icon">
-              <IconCalendar :size="32"/>
-            </div>
-            <div class="stats-info">
-              <div class="stats-value">
-                {{
-                  userStats.isRemainingDaysPermanent ? $t('dashboard.permanent') : userStats.remainingDays + $t('dashboard.days')
-                }}
-              </div>
-              <div class="stats-label">{{ $t('dashboard.remainingDays') }}</div>
-            </div>
-          </div>
 
-          <div class="stats-card"
-               :class="{'card-animate': !loading.userStats, 'balance-card': true, 'clickable': isXiaoPanel}"
-               style="animation-delay: 0.7s"
-               @click="isXiaoPanel ? navigateToDeposit() : null"
-               :style="isXiaoPanel ? { cursor: 'pointer' } : {}">
-            <div class="stats-icon">
-              <IconWallet :size="32"/>
-            </div>
-            <div class="stats-info">
-              <div class="stats-value">{{ userStats.accountBalance }}</div>
-              <div class="stats-label">{{ $t('dashboard.accountBalance') }}</div>
-            </div>
-            <div v-if="isXiaoPanel" class="chevron-icon">
-              <IconChevronRight :size="20"/>
-            </div>
-          </div>
-
-          <div class="stats-card doc-card"
-               :class="{'card-animate': !loading.userStats}"
-               @click="openDocumentation"
-               style="animation-delay: 0.8s">
-            <div class="stats-icon">
-              <IconFileText :size="32"/>
-            </div>
-            <div class="stats-info">
-              <div class="stats-value">{{ $t('dashboard.viewHelp') }}</div>
-              <div class="stats-label">{{ $t('dashboard.documentation') }}</div>
-            </div>
-            <div class="chevron-icon">
-              <IconChevronRight :size="20"/>
-            </div>
-          </div>
         </template>
       </div>
 
@@ -742,7 +641,6 @@ import {
   IconFileText,
   IconHelpCircle,
   IconMail,
-  IconMessage,
   IconMoon,
   IconPackage,
   IconQrcode,
@@ -851,7 +749,6 @@ export default {
     IconChevronRight,
     IconTransferVertical,
     IconShare,
-    IconMessage,
     IconMail,
     IconChevronLeft,
     IconCopy,
@@ -997,10 +894,6 @@ export default {
         userPlan.value.expireDate = t('dashboard.permanent');
       }
     });
-
-    const openDocumentation = () => {
-      router.push('/docs');
-    };
 
     const downloadClient = (platform) => {
       const downloadUrl = clientConfig.clientLinks[platform];
@@ -1515,7 +1408,7 @@ export default {
     };
 
     const hasPendingItems = computed(() => {
-      return userStats.pendingOrders > 0 || userStats.pendingTickets > 0;
+      return userStats.pendingOrders > 0;
     });
 
     const prevNotice = () => {
@@ -1707,14 +1600,6 @@ export default {
         }
       } catch (error) {
         console.error('导入客户端失败:', error);
-      }
-    };
-
-    const goToSupport = () => {
-      if (window.innerWidth < 905) {
-        router.push('/mobile/tickets');
-      } else {
-        router.push('/tickets');
       }
     };
 
@@ -1965,7 +1850,6 @@ export default {
       loading,
       languageChangedSignal,
       goToShop,
-      openDocumentation,
       downloadClient,
       hasPendingItems,
       router,
@@ -1975,7 +1859,6 @@ export default {
       showImportCard,
       showQrCode,
       importToClient,
-      goToSupport,
       formatDate,
       formatTraffic,
       toggleImportCard,
