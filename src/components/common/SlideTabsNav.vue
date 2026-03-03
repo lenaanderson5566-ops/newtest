@@ -1019,13 +1019,13 @@ function debounce(fn, delay) {
 
     .nav-item {
 
-      padding: 6px 16px;
+      padding: 5px 14px;
 
       border-radius: 26px;
 
       font-weight: 500;
 
-      font-size: 14px;
+      font-size: 13px;
 
       color: var(--secondary-text-color);
 
@@ -1045,7 +1045,7 @@ function debounce(fn, delay) {
 
       align-items: center;
 
-      gap: 5px;
+      gap: 4px;
 
       
 
@@ -1131,9 +1131,9 @@ function debounce(fn, delay) {
 
         svg {
 
-          width: 18px;
+          width: 16px;
 
-          height: 18px;
+          height: 16px;
 
           transition: color 0.3s ease, transform 0.3s ease;
 
@@ -1155,7 +1155,7 @@ function debounce(fn, delay) {
 
           color: var(--theme-color);
 
-          transform: scale(1.15);
+          transform: scale(1.1);
 
         }
 

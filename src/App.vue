@@ -20,7 +20,7 @@
           class="gift-btn" 
           @click="$router.push('/profile')"
         >
-          <IconGift :size="20" />
+          <IconGift :size="18" />
         </button>
         <UserAvatar :username="username" :avatarUrl="avatarUrl" />
       </div>
@@ -287,7 +287,7 @@ export default {
   position: fixed;
   top: 20px;  
   left: 25px;
-  font-size: 20px;  
+  font-size: 18px;  
   font-weight: 700;
   color: var(--theme-color);
   z-index: 110;
@@ -305,8 +305,8 @@ export default {
   gap: 10px;
   
   .site-logo-img {
-    height: 24px;
-    width: 24px;
+    height: 20px;
+    width: 20px;
     border-radius: 6px;
     object-fit: cover;
   }
@@ -323,15 +323,15 @@ export default {
   top: 20px;
   right: 25px;
   display: flex;
-  gap: 12px;
+  gap: 10px;
   z-index: 110;
   
   .gift-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background-color: rgba(var(--theme-color-rgb), 0.1);
     border: 1px solid rgba(var(--theme-color-rgb), 0.3);
@@ -351,7 +351,7 @@ export default {
   .site-logo {
     top: 12px;  
     left: 20px;
-    font-size: 20px;  
+    font-size: 18px;  
     padding: 5px 10px;
     border-radius: 8px;
   }
@@ -443,6 +443,11 @@ export default {
 
 html {
   scroll-behavior: smooth;
+  font-size: 15px;
+}
+
+body {
+  font-size: 0.95rem;
 }
 
 
@@ -457,7 +462,7 @@ html {
     top: 20px;
     right: 25px;
     display: flex;
-    gap: 12px;
+    gap: 10px;
     z-index: 110;
   }
 }
