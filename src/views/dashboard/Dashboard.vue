@@ -1284,6 +1284,37 @@ export default {
     });
 
 
+    const toNumberOrNull = (value) => {
+      if (value === null || value === undefined || value === '') return null;
+      const num = Number(value);
+      return Number.isFinite(num) ? num : null;
+    };
+
+    const getSubscribeTrafficMetrics = (subscribe) => {
+      const totalTrafficBytes =
+        toNumberOrNull(subscribe.transfer_enable) ??
+        toNumberOrNull(subscribe.subscription_quota_total_bytes) ??
+        toNumberOrNull(subscribe.base_quota_bytes) ??
+        0;
+
+      const usedTrafficBytes =
+        toNumberOrNull(subscribe.total_used_bytes) ??
+        toNumberOrNull(subscribe.used_bytes) ??
+        (
+          (toNumberOrNull(subscribe.u) ?? 0) +
+          (toNumberOrNull(subscribe.d) ?? 0)
+        );
+
+      const remainingTrafficBytes =
+        toNumberOrNull(subscribe.total_remaining_bytes) ??
+        Math.max(totalTrafficBytes - usedTrafficBytes, 0);
+
+      return {
+        totalTrafficBytes: Math.max(totalTrafficBytes, 0),
+        remainingTrafficBytes: Math.max(remainingTrafficBytes, 0)
+      };
+    };
+
     const fetchSubscribe = async () => {
       // 如果showResetTrafficButton为true，强制执行（跳过缓存逻辑）
       // if (showResetTrafficButton.value) {
@@ -1297,9 +1328,10 @@ export default {
       loading.subscribe = true;
       try {
         const response = await getSubscribe();
-        allowNewPeriod.value = response.data.allow_new_period;
+        allowNewPeriod.value = String(response.data.allow_new_period ?? '0');
         if (response.data) {
           const subscribe = response.data;
+          const { totalTrafficBytes, remainingTrafficBytes } = getSubscribeTrafficMetrics(subscribe);
           if (subscribe.plan && subscribe.plan.name) {
             userPlan.value.name = subscribe.plan.name;
           }
@@ -1328,14 +1360,8 @@ export default {
             userStats.remainingDays = null;
             userStats.isRemainingDaysPermanent = true;
           }
-          if (subscribe.transfer_enable) {
-            userPlan.value.totalTraffic = formatTraffic(subscribe.transfer_enable);
-          }
-          if (subscribe.transfer_enable && subscribe.u !== undefined && subscribe.d !== undefined) {
-            const usedTraffic = subscribe.u + subscribe.d;
-            const remainingTraffic = Math.max(0, subscribe.transfer_enable - usedTraffic);
-            userStats.remainingTraffic = formatTraffic(remainingTraffic);
-          }
+          userPlan.value.totalTraffic = formatTraffic(totalTrafficBytes);
+          userStats.remainingTraffic = formatTraffic(remainingTrafficBytes);
           if (subscribe.reset_day) {
             userPlan.value.resetDay = subscribe.reset_day;
           }
@@ -4068,5 +4094,4 @@ a.eztheme-btn {
   color: var(--theme-color);
 }
 </style>
-
 
