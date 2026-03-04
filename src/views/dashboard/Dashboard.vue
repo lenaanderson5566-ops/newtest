@@ -521,9 +521,9 @@
               <div class="traffic-package-item" v-for="plan in trafficPackagePlans" :key="`dashboard-traffic-${plan.id}`">
                 <div class="item-title-row">
                   <strong>{{ plan.name }}</strong>
-                  <span class="item-price">¥{{ (normalizeTrafficPackagePrice(plan.onetime_price) / 100).toFixed(2) }}</span>
+                  <span class="item-price">{{ currencySymbol }}{{ (normalizeTrafficPackagePrice(plan.onetime_price) / 100).toFixed(2) }}</span>
                 </div>
-                <div class="item-content" v-if="!isJsonContent(plan.content)">{{ plan.content }}</div>
+                <div class="item-content" v-if="getTrafficPackageContent(plan)">{{ getTrafficPackageContent(plan) }}</div>
                 <button class="confirm-btn buy-btn" :disabled="plan.capacity_limit === 0" @click="purchaseTrafficPackage(plan)">
                   {{ plan.capacity_limit === 0 ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}
                 </button>
@@ -1410,12 +1410,34 @@ export default {
       return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
     };
 
+
+    const getPlanListFromResponse = (response) => {
+      if (Array.isArray(response?.data)) return response.data;
+      if (Array.isArray(response?.data?.data)) return response.data.data;
+      return [];
+    };
+
+    const getTrafficPackageContent = (plan) => {
+      const raw = plan?.content;
+      if (!raw) return '';
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const enabled = parsed.filter((item) => item && item.support !== false).map((item) => item.feature).filter(Boolean);
+          return enabled.slice(0, 2).join(' · ');
+        }
+      } catch (_) {
+        // non-json content
+      }
+      return String(raw).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    };
+
     const openTrafficPackageModal = async () => {
       showTrafficPackageModal.value = true;
       trafficPackageLoading.value = true;
       try {
         const response = await fetchPlans(locale.value);
-        const list = Array.isArray(response?.data) ? response.data : [];
+        const list = getPlanListFromResponse(response);
         trafficPackagePlans.value = list.filter((plan) => {
           const price = Number(plan?.onetime_price);
           return Number.isFinite(price) && price >= 0;
@@ -2094,6 +2116,7 @@ export default {
       openTrafficPackageModal,
       purchaseTrafficPackage,
       normalizeTrafficPackagePrice,
+      getTrafficPackageContent,
     };
   }
 };
