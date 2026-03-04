@@ -519,6 +519,8 @@ export default {
         plan: {
             purchase: 'Purchase',
             renew: 'Renew',
+            add_quota: 'Add Quota',
+            upgrade_to: 'Upgrade to {name}',
             current: 'Your Current Plan',
             sold_out_btn: 'Sold Out',
             stock: {
@@ -550,6 +552,11 @@ export default {
                 relative: 'Relative discount approx',
                 savings: 'saves you'
             }
+        },
+        current_plan_info: {
+            plan: 'Current Plan',
+            expire: 'Expiry Date',
+            traffic: 'Traffic Usage'
         },
         stats: {
             global_nodes: 'Global Nodes',

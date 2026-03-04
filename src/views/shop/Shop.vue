@@ -10,6 +10,20 @@
 
         <div class="card-body">
           <p>{{ $t("shop.description") }}</p>
+          <div class="plan-summary" v-if="currentSubscription.planName">
+            <div class="plan-summary-item">
+              <span class="label">{{ $t("shop.current_plan_info.plan") }}</span>
+              <strong>{{ currentSubscription.planName }}</strong>
+            </div>
+            <div class="plan-summary-item">
+              <span class="label">{{ $t("shop.current_plan_info.expire") }}</span>
+              <strong>{{ currentSubscription.expireDate || $t("dashboard.permanent") }}</strong>
+            </div>
+            <div class="plan-summary-item">
+              <span class="label">{{ $t("shop.current_plan_info.traffic") }}</span>
+              <strong>{{ currentSubscription.usedTraffic }} / {{ currentSubscription.totalTraffic }}</strong>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -235,11 +249,7 @@
             >
               <IconShoppingCart class="btn-icon" />
 
-              <span class="btn-text">{{
-                plan.capacity_limit === 0
-                  ? $t("shop.plan.sold_out_btn")
-                  : $t(isCurrentPlan(plan) ? "shop.plan.renew" : "shop.plan.purchase")
-              }}</span>
+              <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
             </button>
           </div>
         </div>
@@ -250,7 +260,7 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted, computed, watch } from "vue";
+import { ref, reactive, onMounted, computed, watch, nextTick } from "vue";
 
 import { useI18n } from "vue-i18n";
 
@@ -322,6 +332,14 @@ export default {
 
     const selectedPriceType = reactive({});
     const currentPlanId = ref(null);
+    const currentSubscription = reactive({
+      planName: "",
+      expireDate: "",
+      totalTraffic: "--",
+      usedTraffic: "--",
+      transferEnable: 0,
+      speedLimit: 0,
+    });
 
     const paymentMethods = ref([]);
 
@@ -417,16 +435,61 @@ export default {
       initFilterFromRoute();
     });
 
+    const formatTraffic = (bytes) => {
+      const value = Number(bytes || 0);
+      if (!Number.isFinite(value) || value <= 0) return "0 B";
+      const units = ["B", "KB", "MB", "GB", "TB"];
+      let size = value;
+      let idx = 0;
+      while (size >= 1024 && idx < units.length - 1) {
+        size /= 1024;
+        idx += 1;
+      }
+      return `${size.toFixed(size >= 10 || idx === 0 ? 0 : 1)} ${units[idx]}`;
+    };
+
     const fetchCurrentSubscription = async () => {
       try {
         const response = await getSubscribe();
-        currentPlanId.value = response?.data?.plan_id || response?.data?.plan?.id || null;
+        const data = response?.data || {};
+        currentPlanId.value = data.plan_id || data.plan?.id || null;
+        currentSubscription.planName = data.plan?.name || "";
+        currentSubscription.expireDate = data.expired_at ? new Date(data.expired_at * 1000).toLocaleDateString() : "";
+        currentSubscription.totalTraffic = formatTraffic(data.transfer_enable);
+        currentSubscription.usedTraffic = formatTraffic(data.u + data.d);
+        currentSubscription.transferEnable = Number(data.transfer_enable || 0);
+        currentSubscription.speedLimit = Number(data.plan?.speed_limit || 0);
       } catch (error) {
         console.error('Failed to fetch current subscription:', error);
       }
     };
 
     const isCurrentPlan = (plan) => Number(plan?.id) === Number(currentPlanId.value);
+
+    const isTrafficPackagePlan = (plan) => isOnetimeOnly(plan);
+
+    const isSameSpecPlan = (plan) => {
+      if (isCurrentPlan(plan)) return true;
+      return (
+        Number(plan?.transfer_enable || 0) === Number(currentSubscription.transferEnable || 0) &&
+        Number(plan?.speed_limit || 0) === Number(currentSubscription.speedLimit || 0)
+      );
+    };
+
+    const isHigherSpecPlan = (plan) => {
+      if (!currentPlanId.value || isTrafficPackagePlan(plan)) return false;
+      if (isCurrentPlan(plan) || isSameSpecPlan(plan)) return false;
+      return Number(plan?.transfer_enable || 0) > Number(currentSubscription.transferEnable || 0);
+    };
+
+    const getPurchaseButtonText = (plan) => {
+      if (plan.capacity_limit === 0) return t("shop.plan.sold_out_btn");
+      if (isTrafficPackagePlan(plan)) return t("shop.plan.add_quota");
+      if (!currentPlanId.value) return t("shop.plan.purchase");
+      if (isCurrentPlan(plan) || isSameSpecPlan(plan)) return t("shop.plan.renew");
+      if (isHigherSpecPlan(plan)) return t("shop.plan.upgrade_to", { name: plan.name });
+      return t("shop.plan.purchase");
+    };
 
     const fetchPlanData = async () => {
       loading.plans = true;
@@ -814,7 +877,8 @@ export default {
       selectPlanPriceType,
 
       getDisplayPriceType,
-
+      getPurchaseButtonText,
+      currentSubscription,
 
       SHOP_CONFIG,
 
@@ -841,6 +905,33 @@ export default {
 
   .welcome-card {
     margin-bottom: 24px;
+
+    .plan-summary {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+
+      .plan-summary-item {
+        background: rgba(var(--theme-color-rgb), 0.08);
+        border: 1px solid rgba(var(--theme-color-rgb), 0.2);
+        border-radius: 10px;
+        padding: 10px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .label {
+          color: var(--text-muted);
+          font-size: 12px;
+        }
+
+        strong {
+          color: var(--text-color);
+          font-size: 14px;
+        }
+      }
+    }
   }
 
   .dashboard-card {

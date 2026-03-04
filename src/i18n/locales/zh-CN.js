@@ -518,6 +518,8 @@ export default {
         plan: {
             purchase: '购买',
             renew: '续费',
+            add_quota: '添加额度',
+            upgrade_to: '升级至{name}',
             current: '您的当前套餐',
             sold_out_btn: '已售罄',
             stock: {
@@ -549,6 +551,11 @@ export default {
                 relative: '相对折扣大约',
                 savings: '为您节省'
             }
+        },
+        current_plan_info: {
+            plan: '当前套餐',
+            expire: '到期时间',
+            traffic: '流量使用'
         },
         stats: {
             global_nodes: '全球节点',
