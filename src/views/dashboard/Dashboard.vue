@@ -389,6 +389,7 @@
             <div class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
                 <span class="usage-percent">{{ formatPackageRemaining(card.remaining) }}</span>
+                <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 <button class="package-add-btn" @click.stop="openTrafficPackageModal" :title="$t('dashboard.purchaseTrafficPackage')">
                   <IconPlus :size="14" />
                 </button>
@@ -401,8 +402,8 @@
             <div v-if="card.key !== 'package'" class="section-progress-track">
               <div class="section-progress-fill" :style="{ width: `${card.remainingPercentage}%` }"></div>
             </div>
-            <div class="usage-kpis">
-              <div class="usage-kpi" v-if="card.key !== 'package'">
+            <div class="usage-kpis" v-if="card.key !== 'package'">
+              <div class="usage-kpi">
                 <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
                 <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
               </div>
