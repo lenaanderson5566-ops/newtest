@@ -530,6 +530,11 @@
               </div>
             </div>
           </div>
+          <div class="modal-footer">
+            <button class="cancel-btn" @click="showTrafficPackageModal = false">
+              {{ $t('common.cancel') }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -4242,55 +4247,93 @@ export default {
 }
 
 .traffic-package-modal-card {
+  .modal-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+
+    h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--theme-text-primary);
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--theme-text-secondary);
+      cursor: pointer;
+      padding: 0;
+
+      &:hover {
+        color: var(--theme-text-primary);
+      }
+    }
+  }
+
   .modal-body {
     align-items: stretch;
-    padding-top: 12px;
+    padding: 20px;
   }
 
   .traffic-package-desc {
-    margin: 0 0 12px;
+    margin: 0 0 14px;
     color: var(--theme-text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
   }
 
   .traffic-package-loading,
   .traffic-package-empty {
     text-align: center;
     color: var(--theme-text-secondary);
-    padding: 20px 0;
+    padding: 28px 0;
   }
 
   .traffic-package-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 12px;
+    gap: 14px;
   }
 
   .traffic-package-item {
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 12px;
+    padding: 14px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    background: linear-gradient(
+        180deg,
+        rgba(var(--theme-color-rgb), 0.06) 0%,
+        rgba(var(--theme-color-rgb), 0.02) 100%
+    );
 
     .item-title-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
+
+      strong {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--theme-text-primary);
+      }
     }
 
     .item-price {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 700;
-      color: var(--theme-text-primary);
+      color: var(--theme-color);
     }
 
     .item-content {
       color: var(--theme-text-secondary);
       font-size: 13px;
       line-height: 1.45;
-      min-height: 36px;
+      min-height: 40px;
       max-height: 70px;
       overflow: hidden;
     }
@@ -4298,6 +4341,49 @@ export default {
     .buy-btn {
       width: 100%;
       justify-content: center;
+      margin-top: auto;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      background-color: rgba(var(--theme-color-rgb), 0.92);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
+      }
+
+      &:disabled {
+        opacity: 0.75;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+
+    .cancel-btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: transparent;
+      color: var(--theme-text-primary);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: rgba(var(--theme-color-rgb), 0.06);
+      }
     }
   }
 }
