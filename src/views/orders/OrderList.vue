@@ -503,6 +503,10 @@ watch(locale, () => {
 .orders-container {
   padding: 1.25rem;
   padding-bottom: calc(1.25rem + 64px); 
+  --order-tone-strong: rgba(var(--theme-color-rgb), 0.92);
+  --order-tone-mid: rgba(var(--theme-color-rgb), 0.82);
+  --order-tone-soft: rgba(var(--theme-color-rgb), 0.72);
+  --order-tone-faint: rgba(var(--theme-color-rgb), 0.12);
   
   @media (min-width: 768px) {
     padding: 2rem;
@@ -546,7 +550,7 @@ watch(locale, () => {
   
   .card-body {
     p {
-      color: var(--text-muted);
+      color: rgba(var(--theme-color-rgb), 0.68);
       margin: 0;
       line-height: 1.5;
     }
@@ -628,7 +632,7 @@ watch(locale, () => {
   
   .amount {
     font-weight: 600;
-    color: #f44336;
+    color: var(--order-tone-strong);
   }
   
   .status-badge {
@@ -639,33 +643,33 @@ watch(locale, () => {
     font-weight: 500;
     
     &.status-pending {
-      background-color: rgba(255, 152, 0, 0.1);
-      color: #ff9800;
+      background-color: rgba(var(--theme-color-rgb), 0.08);
+      color: var(--order-tone-mid);
     }
     
     &.status-processing {
-      background-color: rgba(33, 150, 243, 0.1);
-      color: #2196f3;
+      background-color: rgba(var(--theme-color-rgb), 0.12);
+      color: var(--order-tone-strong);
     }
     
     &.status-cancelled {
-      background-color: rgba(244, 67, 54, 0.1);
-      color: #f44336;
+      background-color: rgba(var(--theme-color-rgb), 0.06);
+      color: var(--order-tone-strong);
     }
     
     &.status-completed {
-      background-color: rgba(76, 175, 80, 0.1);
-      color: #4caf50;
+      background-color: rgba(var(--theme-color-rgb), 0.14);
+      color: var(--order-tone-strong);
     }
     
     &.status-discounted {
-      background-color: rgba(156, 39, 176, 0.1);
-      color: #9c27b0;
+      background-color: rgba(var(--theme-color-rgb), 0.1);
+      color: var(--order-tone-mid);
     }
     
     &.status-unknown {
-      background-color: rgba(158, 158, 158, 0.1);
-      color: #9e9e9e;
+      background-color: rgba(var(--theme-color-rgb), 0.05);
+      color: var(--order-tone-soft);
     }
   }
   
@@ -697,11 +701,11 @@ watch(locale, () => {
       }
       
       &.cancel-button {
-        background-color: rgba(244, 67, 54, 0.1);
-        color: #f44336;
+        background-color: rgba(var(--theme-color-rgb), 0.08);
+        color: var(--order-tone-mid);
         
         &:hover:not(.disabled) {
-          background-color: rgba(244, 67, 54, 0.2);
+          background-color: rgba(var(--theme-color-rgb), 0.12);
           transform: translateY(-2px);
         }
       }
@@ -728,13 +732,13 @@ watch(locale, () => {
   
   p {
     margin-top: 1rem;
-    color: var(--text-muted);
+    color: rgba(var(--theme-color-rgb), 0.68);
     font-size: 1.1rem;
   }
   
   .error-icon, 
   .empty-icon {
-    color: var(--text-muted);
+    color: rgba(var(--theme-color-rgb), 0.68);
     opacity: 0.7;
   }
 }
@@ -839,7 +843,7 @@ watch(locale, () => {
   .modal-close {
     background: none;
     border: none;
-    color: var(--text-muted);
+    color: rgba(var(--theme-color-rgb), 0.68);
     cursor: pointer;
     padding: 0.25rem;
     display: flex;
@@ -904,15 +908,15 @@ watch(locale, () => {
     }
     
     &.btn-confirm {
-      background-color: #f44336;
+      background-color: rgba(var(--theme-color-rgb), 0.88);
       border: none;
-      color: white;
+      color: #fff;
       display: flex;
       align-items: center;
       gap: 0.5rem;
       
       &:hover {
-        background-color: #d32f2f;
+        background-color: rgba(var(--theme-color-rgb), 0.98);
       }
       
       &:disabled {
@@ -1082,7 +1086,7 @@ watch(locale, () => {
     
     .label {
       font-size: 0.8rem;
-      color: var(--text-muted);
+      color: rgba(var(--theme-color-rgb), 0.68);
       margin-bottom: 0.25rem;
     }
     
@@ -1108,7 +1112,7 @@ watch(locale, () => {
     }
     
     .label {
-      color: var(--text-muted);
+      color: rgba(var(--theme-color-rgb), 0.68);
       font-size: 0.9rem;
     }
     
@@ -1118,7 +1122,7 @@ watch(locale, () => {
       
       &.amount {
         font-weight: 600;
-        color: #f44336;
+        color: var(--order-tone-strong);
       }
     }
   }
@@ -1155,11 +1159,11 @@ watch(locale, () => {
     }
     
     &.cancel-button {
-      background-color: rgba(244, 67, 54, 0.1);
-      color: #f44336;
+      background-color: rgba(var(--theme-color-rgb), 0.06);
+      color: var(--order-tone-strong);
       
       &:hover:not(.disabled) {
-        background-color: rgba(244, 67, 54, 0.2);
+        background-color: rgba(var(--theme-color-rgb), 0.12);
         transform: translateY(-2px);
       }
     }
@@ -1183,7 +1187,7 @@ watch(locale, () => {
   background-color: rgba(var(--theme-color-rgb), 0.05);
   border-radius: 8px;
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: rgba(var(--theme-color-rgb), 0.68);
   
   .swipe-icon {
     color: var(--theme-color);
