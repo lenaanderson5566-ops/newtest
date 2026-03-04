@@ -1521,8 +1521,24 @@ export default {
     };
 
     const getNextResetDateTime = (subscribe) => {
+      const timestamp =
+        subscribe?.reset_at ??
+        subscribe?.next_reset_at ??
+        subscribe?.reset_time ??
+        subscribe?.next_reset_time ??
+        subscribe?.plan?.reset_at ??
+        subscribe?.plan?.next_reset_at ??
+        subscribe?.plan?.reset_time ??
+        subscribe?.plan?.next_reset_time;
+      const resetAtDate = parseResetTimestamp(timestamp);
+      if (resetAtDate) {
+        return formatResetDateTime(resetAtDate);
+      }
+
       const resetDay = Number(subscribe?.reset_day ?? subscribe?.plan?.reset_day);
-      if (!Number.isFinite(resetDay) || resetDay <= 0) return null;
+      if (!Number.isFinite(resetDay) || resetDay <= 0) {
+        return null;
+      }
 
       const expiredAtDate = parseResetTimestamp(subscribe?.expired_at);
       const now = new Date();
@@ -1549,20 +1565,6 @@ export default {
         }
 
         return formatResetDateTime(candidate);
-      }
-
-      const timestamp =
-        subscribe?.reset_at ??
-        subscribe?.next_reset_at ??
-        subscribe?.reset_time ??
-        subscribe?.next_reset_time ??
-        subscribe?.plan?.reset_at ??
-        subscribe?.plan?.next_reset_at ??
-        subscribe?.plan?.reset_time ??
-        subscribe?.plan?.next_reset_time;
-      const resetAtDate = parseResetTimestamp(timestamp);
-      if (resetAtDate) {
-        return formatResetDateTime(resetAtDate);
       }
 
       const resetHourRaw = subscribe?.reset_hour ?? subscribe?.plan?.reset_hour;
