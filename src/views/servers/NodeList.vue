@@ -30,6 +30,7 @@
               <IconChevronUp v-else :size="14" />
             </button>
             <button class="quick-btn primary" @click="goRenewPlan" :disabled="!currentPlanId">{{ $t('dashboard.renewPlan') }}</button>
+            <button class="quick-btn" @click="goTickets">{{ $t('dashboard.ticketSupport') }}</button>
           </div>
           <transition name="fade-slide">
             <div v-if="showImportPanel && subscriptionUrl" class="quick-import-panel">
@@ -343,6 +344,10 @@ const toggleImportPanel = () => {
 const goRenewPlan = () => {
   if (!currentPlanId.value) return;
   router.push(`/order-confirm?id=${currentPlanId.value}`);
+};
+
+const goTickets = () => {
+  router.push('/tickets');
 };
 
 const fetchNodes = async () => {

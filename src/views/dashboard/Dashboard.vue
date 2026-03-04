@@ -2265,6 +2265,7 @@ export default {
     }
 
     .usage-panel-title-row {
+      grid-column: 1 / -1;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -2345,6 +2346,7 @@ export default {
       }
 
       &.traffic-board-card {
+        min-width: 0;
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
