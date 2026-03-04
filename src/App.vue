@@ -355,7 +355,6 @@ export default {
 @media (min-width: 906px) {
   .app-content-wrapper.with-left-nav {
     padding-left: 240px;
-    padding-top: 76px;
   }
 
   .site-logo {
