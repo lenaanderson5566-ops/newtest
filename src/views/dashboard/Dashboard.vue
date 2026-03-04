@@ -2233,9 +2233,9 @@ export default {
 
       h3 {
         margin: 0;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 700;
-        color: var(--theme-text-primary);
+        color: #111827;
       }
 
       .traffic-package-status {
@@ -2243,12 +2243,12 @@ export default {
         font-weight: 600;
         border-radius: 999px;
         padding: 6px 10px;
-        background: rgba(108, 117, 125, 0.16);
-        color: var(--theme-text-secondary);
+        background: #f3f4f6;
+        color: #6b7280;
 
         &.active {
-          background: rgba(40, 167, 69, 0.15);
-          color: rgba(var(--theme-color-rgb), 0.9);
+          background: rgba(34, 197, 94, 0.14);
+          color: #16a34a;
         }
       }
     }
@@ -2331,9 +2331,9 @@ export default {
         gap: 10px;
 
         .usage-card-title {
-          font-size: 15px;
+          font-size: 14px;
           font-weight: 600;
-          color: var(--theme-text-primary);
+          color: #6b7280;
         }
 
         .usage-card-main {
@@ -2343,15 +2343,15 @@ export default {
         }
 
         .usage-percent {
-          font-size: 40px;
+          font-size: 50px;
           line-height: 1;
           font-weight: 700;
-          color: var(--theme-text-primary);
+          color: #111827;
         }
 
         .usage-percent-label {
-          font-size: 20px;
-          color: var(--theme-text-secondary);
+          font-size: 15px;
+          color: #111827;
         }
 
         .usage-kpis {
@@ -2367,18 +2367,18 @@ export default {
           gap: 4px;
           padding: 8px;
           border-radius: 10px;
-          background: rgba(var(--theme-color-rgb), 0.06);
+          background: #f8fafc;
         }
 
         .usage-kpi-label {
-          font-size: 11px;
-          color: var(--theme-text-secondary);
+          font-size: 12px;
+          color: #9ca3af;
           line-height: 1;
         }
 
         .usage-kpi-value {
-          font-size: 13px;
-          color: var(--theme-text-primary);
+          font-size: 16px;
+          color: #111827;
           font-weight: 600;
           line-height: 1.2;
         }
@@ -2386,20 +2386,20 @@ export default {
         .usage-reset-hint {
           width: 100%;
           font-size: 12px;
-          color: var(--theme-text-secondary);
+          color: #9ca3af;
         }
 
         .section-progress-track {
           width: 100%;
-          height: 9px;
-          background: rgba(var(--theme-color-rgb), 0.14);
+          height: 14px;
+          background: #e5e7eb;
           border-radius: 999px;
           overflow: hidden;
         }
 
         .section-progress-fill {
           height: 100%;
-          background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 0.9));
+          background: linear-gradient(90deg, #22c55e, #22c55e);
           border-radius: inherit;
           transition: width 0.35s ease;
         }
@@ -2611,7 +2611,7 @@ export default {
 
         .notice-date {
           font-size: 12px;
-          color: var(--theme-text-secondary);
+          color: #9ca3af;
           opacity: 0.7;
         }
 
