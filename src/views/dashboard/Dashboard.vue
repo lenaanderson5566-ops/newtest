@@ -2,19 +2,6 @@
   <div class="dashboard-container">
     <div class="dashboard-inner">
       <div class="overview-grid">
-        <div class="dashboard-card welcome-card" :class="{'card-animate': !loading.userInfo}">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.welcome') }}</h2>
-        </div>
-        <div class="card-body">
-          <p class="">{{ $t('dashboard.welcomeDesc') }}</p>
-          <p v-if="userStats.userEmail && DASHBOARD_CONFIG.showUserEmail" class="user-email">
-            <IconMail :size="16"/>
-            <span>{{ userStats.userEmail }}</span>
-          </p>
-        </div>
-      </div>
-
       <!-- 通知区域 -->
       <!-- 待处理事项提示 -->
       <div v-if="hasPendingItems" class="dashboard-card pending-items-card"
@@ -599,7 +586,6 @@ import {
   IconEyeOff,
   IconFileText,
   IconHelpCircle,
-  IconMail,
   IconMoon,
   IconPackage,
   IconQrcode,
@@ -711,7 +697,6 @@ export default {
     IconChevronRight,
     IconTransferVertical,
     IconShare,
-    IconMail,
     IconChevronLeft,
     IconCopy,
     IconQrcode,
