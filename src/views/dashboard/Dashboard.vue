@@ -1789,9 +1789,13 @@ export default {
         trafficTrendData.value = sorted.map((item) => {
           const recordAt = Number(item.record_at);
           const timestampMs = recordAt > 1e12 ? recordAt : recordAt * 1000;
+          const uploadGb = Number(((Number(item.u) || 0) / (1024 ** 3)).toFixed(2));
+          const downloadGb = Number(((Number(item.d) || 0) / (1024 ** 3)).toFixed(2));
           return {
             date: new Date(timestampMs).toLocaleDateString(),
-            totalGb: Number((((Number(item.u) || 0) + (Number(item.d) || 0)) / (1024 ** 3)).toFixed(2))
+            uploadGb,
+            downloadGb,
+            totalGb: Number((uploadGb + downloadGb).toFixed(2))
           };
         });
       } catch (e) {
@@ -1816,28 +1820,80 @@ export default {
       if (trafficTrendChart) {
         trafficTrendChart.dispose();
       }
+      const rootStyles = getComputedStyle(document.documentElement);
+      const textColor = rootStyles.getPropertyValue('--text-color').trim() || '#333333';
+      const borderColor = rootStyles.getPropertyValue('--border-color').trim() || '#e8e8e8';
+      const themeColor = rootStyles.getPropertyValue('--theme-color').trim() || '#6753f6';
       trafficTrendChart = echarts.init(trafficTrendChartRef.value);
       trafficTrendChart.setOption({
-        grid: { left: 20, right: 20, top: 20, bottom: 30, containLabel: true },
-        tooltip: { trigger: 'axis' },
+        tooltip: {
+          trigger: 'axis',
+          formatter: (params) => {
+            let result = `${params[0]?.name || ''}<br/>`;
+            params.forEach((param) => {
+              result += `${param.marker} ${param.seriesName}: ${param.value} GB<br/>`;
+            });
+            return result;
+          }
+        },
+        legend: {
+          data: [t('trafficLog.uploadTraffic'), t('trafficLog.downloadTraffic'), t('trafficLog.totalTraffic')],
+          bottom: 0,
+          textStyle: { color: textColor }
+        },
+        grid: { left: '3%', right: '4%', bottom: '60px', top: '30px', containLabel: true },
         xAxis: {
           type: 'category',
           data: trafficTrendData.value.map((i) => i.date),
-          axisLine: { lineStyle: { color: 'rgba(var(--theme-color-rgb),0.25)' } },
-          axisLabel: { color: 'rgba(var(--theme-color-rgb),0.72)' }
+          boundaryGap: false,
+          axisLabel: { rotate: 45, interval: 'auto', color: textColor },
+          axisLine: { lineStyle: { color: borderColor } },
+          splitLine: { lineStyle: { color: borderColor } }
         },
         yAxis: {
           type: 'value',
-          axisLine: { show: false },
-          splitLine: { lineStyle: { color: 'rgba(var(--theme-color-rgb),0.12)' } },
-          axisLabel: { color: 'rgba(var(--theme-color-rgb),0.72)' }
+          name: 'GB',
+          nameTextStyle: { padding: [0, 0, 0, 10], color: textColor },
+          axisLabel: { formatter: '{value} GB', color: textColor },
+          axisLine: { lineStyle: { color: borderColor } },
+          splitLine: { lineStyle: { color: borderColor } }
         },
-        series: [{
-          type: 'bar',
-          data: trafficTrendData.value.map((i) => i.totalGb),
-          itemStyle: { color: 'rgba(var(--theme-color-rgb),0.86)', borderRadius: [4,4,0,0] },
-          barMaxWidth: 24
-        }]
+        series: [
+          {
+            name: t('trafficLog.uploadTraffic'),
+            type: 'line',
+            stack: 'Total',
+            smooth: true,
+            lineStyle: { width: 2 },
+            showSymbol: false,
+            areaStyle: { opacity: 0.2 },
+            emphasis: { focus: 'series' },
+            data: trafficTrendData.value.map((i) => i.uploadGb),
+            color: '#36AD47'
+          },
+          {
+            name: t('trafficLog.downloadTraffic'),
+            type: 'line',
+            stack: 'Total',
+            smooth: true,
+            lineStyle: { width: 2 },
+            showSymbol: false,
+            areaStyle: { opacity: 0.2 },
+            emphasis: { focus: 'series' },
+            data: trafficTrendData.value.map((i) => i.downloadGb),
+            color: '#4080FF'
+          },
+          {
+            name: t('trafficLog.totalTraffic'),
+            type: 'line',
+            smooth: true,
+            lineStyle: { width: 3 },
+            showSymbol: false,
+            emphasis: { focus: 'series' },
+            data: trafficTrendData.value.map((i) => i.totalGb),
+            color: themeColor
+          }
+        ]
       });
     };
 
