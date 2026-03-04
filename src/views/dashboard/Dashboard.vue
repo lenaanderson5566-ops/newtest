@@ -161,7 +161,6 @@
             </div>
           </div>
         </template>
-        </div>
       </div>
 
       <!-- 订阅导入卡片 -->
@@ -453,7 +452,7 @@
             <div class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
                 <span class="usage-percent">{{ formatPackageRemaining(card.remaining) }}</span>
-                <button class="package-add-btn" @click="goToTrafficPackageShop" :title="$t('dashboard.purchaseTrafficPackage')">
+                <button class="package-add-btn" @click.stop="goToTrafficPackageShop" :title="$t('dashboard.purchaseTrafficPackage')">
                   <IconPlus :size="14" />
                 </button>
               </template>
@@ -565,6 +564,7 @@
     />
 
   </div>
+</div>
 
   <!-- 重置流量确认弹窗 -->
   <transition name="modal-fade">
@@ -668,7 +668,8 @@ import {
   IconWaveSawTool,
   IconWaveSine,
   IconX,
-  IconCalendarPlus
+  IconCalendarPlus,
+  IconPlus
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/dashboard';

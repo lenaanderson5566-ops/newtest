@@ -24,9 +24,19 @@
 
           <p>{{ $t('nodes.welcome.description') || '查看并使用可用的服务器节点' }}</p>
           <div class="quick-actions">
-            <button class="quick-btn" @click="copySubscriptionUrl" :disabled="!subscriptionUrl">{{ $t('dashboard.importSubscription') }}</button>
+            <button class="quick-btn" @click="toggleImportPanel" :disabled="!subscriptionUrl">
+              {{ $t('dashboard.importSubscription') }}
+              <IconChevronDown v-if="!showImportPanel" :size="14" />
+              <IconChevronUp v-else :size="14" />
+            </button>
             <button class="quick-btn primary" @click="goRenewPlan" :disabled="!currentPlanId">{{ $t('dashboard.renewPlan') }}</button>
           </div>
+          <transition name="fade-slide">
+            <div v-if="showImportPanel && subscriptionUrl" class="quick-import-panel">
+              <button class="quick-btn" @click="copySubscriptionUrl">{{ $t('dashboard.copySubscription') }}</button>
+              <a class="quick-btn" :href="subscriptionUrl" target="_blank" rel="noopener noreferrer">{{ $t('dashboard.scanQRCode') }}</a>
+            </div>
+          </transition>
 
         </div>
 
@@ -199,7 +209,11 @@ import {
 
   IconServer,
 
-  IconDotsVertical
+  IconDotsVertical,
+
+  IconChevronDown,
+
+  IconChevronUp
 
 } from '@tabler/icons-vue';
 
@@ -239,6 +253,7 @@ const userInfo = ref(null);
 
 const currentPlanId = ref(null);
 const subscriptionUrl = ref('');
+const showImportPanel = ref(false);
 
 
 
@@ -318,6 +333,11 @@ const copySubscriptionUrl = async () => {
   } catch (err) {
     if ($toast) $toast.error(t('dashboard.copyFailed'));
   }
+};
+
+const toggleImportPanel = () => {
+  if (!subscriptionUrl.value) return;
+  showImportPanel.value = !showImportPanel.value;
 };
 
 const goRenewPlan = () => {
@@ -504,6 +524,14 @@ onMounted(() => {
     margin-top: 12px;
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .quick-import-panel {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
   }
 
   .quick-btn {
@@ -513,6 +541,9 @@ onMounted(() => {
     border-radius: 8px;
     padding: 8px 12px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 
     &.primary {
       background: var(--theme-color, #3b82f6);
@@ -762,6 +793,9 @@ onMounted(() => {
       color: var(--text-muted);
 
       cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 
       transition: all 0.2s ease;
 
