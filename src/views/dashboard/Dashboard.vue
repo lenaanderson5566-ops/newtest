@@ -2100,7 +2100,11 @@ export default {
     }
 
     > .notice-card,
-    > .subscription-card {
+    > .subscription-card,
+    > .stats-grid,
+    > .usage-trend-card,
+    > .download-card,
+    > .import-card {
       grid-column: 1 / -1;
     }
 
@@ -2108,7 +2112,11 @@ export default {
       > .welcome-card,
       > .pending-items-card,
       > .notice-card,
-      > .subscription-card {
+      > .subscription-card,
+      > .stats-grid,
+      > .usage-trend-card,
+      > .download-card,
+      > .import-card {
         grid-column: 1 / -1;
       }
     }
