@@ -13,60 +13,6 @@
         </div>
       </div>
 
-      <!-- 套餐统计卡片组 -->
-
-      <div class="stats-grid" v-if="SHOP_CONFIG.showPlanFeatureCards">
-        <div class="stats-card animate-card">
-          <div class="stats-icon">
-            <IconRocket :size="32" />
-          </div>
-
-          <div class="stats-info">
-            <div class="stats-value">{{ $t("shop.stats.global_nodes") }}</div>
-
-            <div class="stats-label">
-              {{ $t("shop.stats.global_nodes_desc") }}
-            </div>
-          </div>
-        </div>
-
-        <div class="stats-card animate-card">
-          <div class="stats-icon">
-            <IconBolt :size="32" />
-          </div>
-
-          <div class="stats-info">
-            <div class="stats-value">{{ $t("shop.stats.speed") }}</div>
-
-            <div class="stats-label">{{ $t("shop.stats.speed_desc") }}</div>
-          </div>
-        </div>
-
-        <div class="stats-card animate-card">
-          <div class="stats-icon">
-            <IconDeviceTv :size="32" />
-          </div>
-
-          <div class="stats-info">
-            <div class="stats-value">{{ $t("shop.stats.streaming") }}</div>
-
-            <div class="stats-label">{{ $t("shop.stats.streaming_desc") }}</div>
-          </div>
-        </div>
-
-        <div class="stats-card animate-card">
-          <div class="stats-icon">
-            <IconDevices :size="32" />
-          </div>
-
-          <div class="stats-info">
-            <div class="stats-value">{{ $t("shop.stats.devices") }}</div>
-
-            <div class="stats-label">{{ $t("shop.stats.devices_desc") }}</div>
-          </div>
-        </div>
-      </div>
-
       <!-- 筛选选项卡 - 设计成圆形切换按钮 -->
 
       <div class="filter-toggle-container">
@@ -338,10 +284,6 @@ import { SHOP_CONFIG } from "@/utils/baseConfig";
 import ShopPopup from "@/components/shop/ShopPopup.vue";
 
 import {
-  IconRocket,
-  IconBolt,
-  IconDeviceTv,
-  IconDevices,
   IconCheck,
   IconX,
   IconShoppingCart,
@@ -357,14 +299,10 @@ export default {
   name: "ShopView",
 
   components: {
-    IconRocket,
-
-    IconBolt,
-
-    IconDeviceTv,
-
-    IconDevices,
-
+  
+  
+  
+  
     IconCheck,
 
     IconX,
@@ -1216,87 +1154,7 @@ export default {
     }
   }
 
-  .stats-grid {
-    display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 20px;
-
-    margin-bottom: 24px;
-
-    @media (max-width: 1200px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-    }
-
-    .stats-card {
-      background-color: var(--card-bg-color);
-
-      border-radius: 12px;
-
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-
-      padding: 20px;
-
-      display: flex;
-
-      align-items: center;
-
-      border: 1px solid var(--border-color);
-
-      transition: all 0.3s ease;
-
-      &:hover {
-        border-color: rgba(var(--theme-color-rgb), 0.3);
-
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      }
-
-      .stats-icon {
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        width: 60px;
-
-        height: 60px;
-
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-
-        border-radius: 12px;
-
-        margin-right: 15px;
-
-        color: var(--theme-color);
-      }
-
-      .stats-info {
-        flex: 1;
-
-        .stats-value {
-          font-size: 18px;
-
-          font-weight: 600;
-
-          color: var(--text-color);
-
-          margin-bottom: 5px;
-        }
-
-        .stats-label {
-          font-size: 14px;
-
-          color: var(--secondary-text-color);
-        }
-      }
-    }
-  }
 
   .plans-wrapper {
     display: grid;
@@ -2010,10 +1868,6 @@ export default {
     padding: 15px;
 
     padding-bottom: 80px;
-
-    .stats-grid {
-      grid-template-columns: 1fr;
-    }
 
     .plans-wrapper {
       grid-template-columns: 1fr;
