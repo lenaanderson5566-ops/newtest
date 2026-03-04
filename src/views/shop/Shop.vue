@@ -44,9 +44,7 @@
               <IconCircle v-else />
             </div>
 
-            <span class="option-text">{{
-              $t(`shop.filter.${filter.value}`)
-            }}</span>
+            <span class="option-text">{{ $t(filter.labelKey) }}</span>
           </div>
         </div>
       </div>
@@ -313,9 +311,21 @@ export default {
     const { showToast } = useToast();
 
     const router = useRouter();
+    const RECURRING_PERIOD_TYPES = [
+      "month_price",
+      "quarter_price",
+      "half_year_price",
+      "year_price",
+      "two_year_price",
+      "three_year_price",
+    ];
+
     const initFilterFromRoute = () => {
       const qf = router.currentRoute.value.query.filter;
-      if (qf === "onetime" || qf === "recurring" || qf === "all") selectedFilter.value = qf;
+      if (!qf) return;
+      if (qf === "all" || RECURRING_PERIOD_TYPES.includes(qf)) {
+        selectedFilter.value = qf;
+      }
     };
 
     const loading = reactive({
@@ -347,13 +357,19 @@ export default {
 
     const filterToggle = ref(null);
 
-    const filters = [
-      { label: "All", value: "all" },
+    const filters = computed(() => {
+      const periodFilters = RECURRING_PERIOD_TYPES
+        .filter((type) => plans.value.some((plan) => hasPeriodPrice(plan, type)))
+        .map((type) => ({
+          value: type,
+          labelKey: `shop.plan.price_options.${getPriceTypeKey(type)}`,
+        }));
 
-      { label: "Recurring", value: "recurring" },
-
-      { label: "One-time", value: "onetime" },
-    ];
+      return [
+        { value: "all", labelKey: "shop.filter.all" },
+        ...periodFilters,
+      ];
+    });
 
     const currentLanguage = computed(() => locale.value);
 
@@ -392,7 +408,7 @@ export default {
     };
 
     const getPlanMainPrice = (plan) => {
-      const priceType = isCurrentPlan(plan) ? (plan.month_price !== null ? "month_price" : getDisplayPriceType(plan)) : getDisplayPriceType(plan);
+      const priceType = getDisplayPriceType(plan);
 
       if (
         !priceType ||
@@ -406,10 +422,14 @@ export default {
     };
 
     watch(
-      () => selectedFilter.value,
-      () => {
-        console.log("Filter changed:", selectedFilter.value);
-      }
+      () => filters.value,
+      (nextFilters) => {
+        const validFilterValues = nextFilters.map((filter) => filter.value);
+        if (!validFilterValues.includes(selectedFilter.value)) {
+          selectedFilter.value = "all";
+        }
+      },
+      { immediate: true }
     );
 
     watch(
@@ -431,7 +451,6 @@ export default {
     );
 
     onMounted(() => {
-      selectedFilter.value = "all";
       initFilterFromRoute();
     });
 
@@ -474,6 +493,9 @@ export default {
 
     const currentComparePeriod = computed(() => {
       if (!currentPlan.value) return "";
+      if (RECURRING_PERIOD_TYPES.includes(selectedFilter.value) && hasPeriodPrice(currentPlan.value, selectedFilter.value)) {
+        return selectedFilter.value;
+      }
       return getDisplayPriceType(currentPlan.value);
     });
 
@@ -482,6 +504,8 @@ export default {
       const value = Number(plan[periodType]);
       return Number.isFinite(value) && value > 0 ? value : null;
     };
+
+    const hasPeriodPrice = (plan, periodType) => getPriceByPeriod(plan, periodType) !== null;
 
     const isSameSpecPlan = (plan) => {
       if (isCurrentPlan(plan)) return true;
@@ -673,7 +697,7 @@ export default {
         return;
       }
 
-      const priceType = isCurrentPlan(plan) ? (plan.month_price !== null ? "month_price" : getDisplayPriceType(plan)) : getDisplayPriceType(plan);
+      const priceType = getDisplayPriceType(plan);
 
       router.push({
         path: "order-confirm",
@@ -686,47 +710,26 @@ export default {
       });
     };
 
+    const visiblePlans = computed(() => plans.value.filter((plan) => !isOnetimeOnly(plan)));
+
     const filteredPlans = computed(() => {
       if (selectedFilter.value === "all") {
-        return plans.value;
-      } else if (selectedFilter.value === "recurring") {
-        return plans.value.filter(
-          (plan) => hasRecurringPrice(plan) && !isOnetimeOnly(plan)
-        );
-      } else if (selectedFilter.value === "onetime") {
-        return plans.value.filter((plan) => plan.onetime_price !== null);
+        return visiblePlans.value;
       }
 
-      return plans.value;
+      if (RECURRING_PERIOD_TYPES.includes(selectedFilter.value)) {
+        return visiblePlans.value.filter((plan) => hasPeriodPrice(plan, selectedFilter.value));
+      }
+
+      return visiblePlans.value;
     });
 
     const hasRecurringPrice = (plan) => {
-      const recurringTypes = [
-        "month_price",
-        "quarter_price",
-        "half_year_price",
-        "year_price",
-        "two_year_price",
-        "three_year_price",
-      ];
-
-      return recurringTypes.some((type) => plan[type] !== null);
+      return RECURRING_PERIOD_TYPES.some((type) => hasPeriodPrice(plan, type));
     };
 
     const isOnetimeOnly = (plan) => {
-      const recurringTypes = [
-        "month_price",
-        "quarter_price",
-        "half_year_price",
-        "year_price",
-        "two_year_price",
-        "three_year_price",
-      ];
-
-      return (
-        plan.onetime_price !== null &&
-        !recurringTypes.some((type) => plan[type] !== null)
-      );
+      return hasPeriodPrice(plan, "onetime_price") && !hasRecurringPrice(plan);
     };
 
     const selectPlanPriceType = (planId, type) => {
@@ -738,27 +741,24 @@ export default {
     };
 
     const getDisplayPriceType = (plan) => {
-      if (selectedPriceType[plan.id]) {
+      if (RECURRING_PERIOD_TYPES.includes(selectedFilter.value) && hasPeriodPrice(plan, selectedFilter.value)) {
+        return selectedFilter.value;
+      }
+
+      if (selectedPriceType[plan.id] && hasPeriodPrice(plan, selectedPriceType[plan.id])) {
         return selectedPriceType[plan.id];
       }
 
       if (SHOP_CONFIG.autoSelectMaxPeriod) {
-        const priceType = getPlanMainPriceType(plan);
-
-        return priceType;
+        return getPlanMainPriceType(plan);
       }
 
-      const availablePrices = Object.entries(getPlanPrices(plan))
-
-        .filter(([, price]) => price !== null)
-
-        .map(([type]) => type);
-
-      if (availablePrices.length > 0) {
-        return availablePrices[0];
+      const availableRecurring = RECURRING_PERIOD_TYPES.filter((type) => hasPeriodPrice(plan, type));
+      if (availableRecurring.length > 0) {
+        return availableRecurring[0];
       }
 
-      return "";
+      return hasPeriodPrice(plan, "onetime_price") ? "onetime_price" : "";
     };
 
     onMounted(async () => {
