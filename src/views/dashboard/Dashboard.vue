@@ -2252,12 +2252,12 @@ export default {
 
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 20px;
     margin-bottom: 24px;
 
     @media (min-width: 768px) {
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     @media (min-width: 1200px) {
@@ -2368,12 +2368,18 @@ export default {
       &.traffic-board-card {
         width: 100%;
         min-width: 0;
+        min-height: 260px;
+        writing-mode: horizontal-tb;
+        text-orientation: mixed;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
         gap: 10px;
 
         .usage-card-title {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+          white-space: normal;
           font-size: 14px;
           font-weight: 600;
           color: #6b7280;
@@ -2405,6 +2411,8 @@ export default {
         }
 
         .usage-percent {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
           font-size: 40px;
           line-height: 1;
           font-weight: 700;
@@ -2434,12 +2442,16 @@ export default {
         }
 
         .usage-kpi-label {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
           font-size: 12px;
           color: #6b7280;
           line-height: 1;
         }
 
         .usage-kpi-value {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
           font-size: 15px;
           color: #1f2937;
           font-weight: 600;
