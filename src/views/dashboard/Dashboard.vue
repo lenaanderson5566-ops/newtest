@@ -1809,29 +1809,49 @@ export default {
       }
     };
 
+    const getTrafficLogRows = (response) => {
+      if (Array.isArray(response?.data)) return response.data;
+      if (Array.isArray(response?.data?.data)) return response.data.data;
+      return [];
+    };
+
     const fetchTrafficTrend = async () => {
       trafficTrendLoading.value = true;
       trafficTrendError.value = false;
       try {
         const response = await getTrafficLog();
-        const rows = Array.isArray(response?.data) ? response.data : [];
-        const sorted = [...rows].sort((a, b) => a.record_at - b.record_at).slice(-30);
-        trafficTrendData.value = sorted.map((item) => ({
-          date: new Date(item.record_at * 1000).toLocaleDateString(),
-          totalGb: Number((((item.u || 0) + (item.d || 0)) / (1024 ** 3)).toFixed(2))
-        }));
-        await nextTick();
-        renderTrafficTrendChart();
+        const rows = getTrafficLogRows(response);
+        const sorted = [...rows]
+          .filter((item) => item && item.record_at)
+          .sort((a, b) => Number(a.record_at) - Number(b.record_at))
+          .slice(-30);
+        trafficTrendData.value = sorted.map((item) => {
+          const recordAt = Number(item.record_at);
+          const timestampMs = recordAt > 1e12 ? recordAt : recordAt * 1000;
+          return {
+            date: new Date(timestampMs).toLocaleDateString(),
+            totalGb: Number((((Number(item.u) || 0) + (Number(item.d) || 0)) / (1024 ** 3)).toFixed(2))
+          };
+        });
       } catch (e) {
         console.error('Failed to fetch traffic trend data:', e);
         trafficTrendError.value = true;
+        trafficTrendData.value = [];
       } finally {
         trafficTrendLoading.value = false;
+        await nextTick();
+        renderTrafficTrendChart();
       }
     };
 
     const renderTrafficTrendChart = () => {
-      if (!trafficTrendChartRef.value || !trafficTrendData.value.length) return;
+      if (!trafficTrendChartRef.value || !trafficTrendData.value.length) {
+        if (trafficTrendChart) {
+          trafficTrendChart.dispose();
+          trafficTrendChart = null;
+        }
+        return;
+      }
       if (trafficTrendChart) {
         trafficTrendChart.dispose();
       }
