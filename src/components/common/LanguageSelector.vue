@@ -38,7 +38,7 @@ export default {
 
     const languages = [
       { code: 'en-US', name: 'English' },
-      { code: 'zh-CN', name: '中文' },
+      { code: 'zh-CN', name: '简体中文' },
       { code: 'zh-TW', name: '繁體中文' },
       { code: 'ja-JP', name: '日本語' },
       { code: 'ko-KR', name: '한국어' },
@@ -50,17 +50,8 @@ export default {
     const currentLanguage = computed(() => locale.value);
 
     const currentLanguageShort = computed(() => {
-      const map = {
-        'en-US': 'EN',
-        'zh-CN': '中文',
-        'zh-TW': '繁中',
-        'ja-JP': '日本語',
-        'ko-KR': '한국어',
-        'ru-RU': 'RU',
-        'fa-IR': 'FA',
-        'vi-VN': 'VI'
-      };
-      return map[currentLanguage.value] || 'EN';
+      const active = languages.find((lang) => lang.code === currentLanguage.value);
+      return active?.name || 'English';
     });
 
     const toggleDropdown = () => {
