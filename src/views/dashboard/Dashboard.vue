@@ -2507,12 +2507,12 @@ export default {
           gap: 8px;
 
           &.package-main {
-            align-items: center;
-            justify-content: space-between;
+            align-items: baseline;
             width: 100%;
           }
 
           .package-add-btn {
+            margin-left: auto;
             width: 26px;
             height: 26px;
             border-radius: 999px;
