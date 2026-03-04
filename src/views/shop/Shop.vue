@@ -468,8 +468,40 @@ export default {
 
     const isTrafficPackagePlan = (plan) => isOnetimeOnly(plan);
 
+    const getComparablePlanPrice = (plan) => {
+      if (!plan) return 0;
+      const recurringTypes = [
+        "month_price",
+        "quarter_price",
+        "half_year_price",
+        "year_price",
+        "two_year_price",
+        "three_year_price",
+      ];
+
+      for (const type of recurringTypes) {
+        const value = Number(plan[type]);
+        if (Number.isFinite(value) && value > 0) return value;
+      }
+
+      const onetime = Number(plan.onetime_price);
+      return Number.isFinite(onetime) && onetime > 0 ? onetime : 0;
+    };
+
+    const currentPlan = computed(() => {
+      return plans.value.find((plan) => isCurrentPlan(plan)) || null;
+    });
+
     const isSameSpecPlan = (plan) => {
       if (isCurrentPlan(plan)) return true;
+
+      const currentPrice = getComparablePlanPrice(currentPlan.value);
+      const targetPrice = getComparablePlanPrice(plan);
+
+      if (currentPrice > 0 && targetPrice > 0 && targetPrice === currentPrice) {
+        return true;
+      }
+
       return (
         Number(plan?.transfer_enable || 0) === Number(currentSubscription.transferEnable || 0) &&
         Number(plan?.speed_limit || 0) === Number(currentSubscription.speedLimit || 0)
@@ -479,6 +511,13 @@ export default {
     const isHigherSpecPlan = (plan) => {
       if (!currentPlanId.value || isTrafficPackagePlan(plan)) return false;
       if (isCurrentPlan(plan) || isSameSpecPlan(plan)) return false;
+
+      const currentPrice = getComparablePlanPrice(currentPlan.value);
+      const targetPrice = getComparablePlanPrice(plan);
+      if (currentPrice > 0 && targetPrice > 0) {
+        return targetPrice > currentPrice;
+      }
+
       return Number(plan?.transfer_enable || 0) > Number(currentSubscription.transferEnable || 0);
     };
 

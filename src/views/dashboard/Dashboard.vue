@@ -110,58 +110,6 @@
         </div>
       </transition>
 
-      <!-- 套餐信息卡片 -->
-      <div v-if="hasPlan" class="dashboard-card subscription-card" :class="{'card-animate': !loading.userInfo}">
-        <div v-if="loading.userInfo" class="skeleton-card">
-          <div class="skeleton-header"></div>
-          <div class="skeleton-body">
-            <div class="skeleton-row"></div>
-            <div class="skeleton-row"></div>
-            <div class="skeleton-row"></div>
-          </div>
-        </div>
-        <template v-else>
-          <div class="card-header">
-            <h2 class="card-title">{{ $t('dashboard.subscriptionInfo') }}</h2>
-          </div>
-          <div class="card-body">
-            <div class="subscription-info">
-              <div class="info-item">
-                <span class="info-label">{{ $t('dashboard.planName') }}</span>
-                <span class="info-value">{{ userPlan.name || $t('dashboard.noSubscription') }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">{{ $t('dashboard.expiryDate') }}</span>
-                <span class="info-value">
-                  {{
-                    userPlan.isExpireDatePermanent ? $t('dashboard.permanent') : (userPlan.expireDate || $t('dashboard.none'))
-                  }}
-                </span>
-              </div>
-            </div>
-            <div class="subscription-actions">
-              <!-- 重置流量按钮 - 根据配置和流量状态显示 -->
-              <button
-                  v-if="showResetTrafficButton"
-                  class="btn-outline reset-traffic-btn"
-                  :class="{
-                  'reset-warning': isLowTraffic && !isTrafficDepleted,
-                  'reset-danger': isTrafficDepleted
-                }"
-                  @click="openResetTrafficModal"
-              >
-                <IconRefresh :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.resetTraffic') }}</span>
-
-              </button>
-              <button class="btn-outline" v-if="allowNewPeriod==='1'&&showResetTrafficButton" @click="showPopup=true">
-                <IconCalendarPlus :size="16" class="btn-icon"/>
-                <span>{{ $t('dashboard.activateDataCycleInAdvance') }}</span>
-              </button>
-            </div>
-          </div>
-        </template>
-      </div>
 
       <!-- 订阅导入卡片 -->
       <transition name="slide-fade">
