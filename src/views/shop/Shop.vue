@@ -468,49 +468,41 @@ export default {
 
     const isTrafficPackagePlan = (plan) => isOnetimeOnly(plan);
 
-    const getComparablePlanPrice = (plan) => {
-      if (!plan) return 0;
-      const recurringTypes = [
-        "month_price",
-        "quarter_price",
-        "half_year_price",
-        "year_price",
-        "two_year_price",
-        "three_year_price",
-      ];
-
-      for (const type of recurringTypes) {
-        const value = Number(plan[type]);
-        if (Number.isFinite(value) && value > 0) return value;
-      }
-
-      const onetime = Number(plan.onetime_price);
-      return Number.isFinite(onetime) && onetime > 0 ? onetime : 0;
-    };
-
     const currentPlan = computed(() => {
       return plans.value.find((plan) => isCurrentPlan(plan)) || null;
     });
 
+    const currentComparePeriod = computed(() => {
+      if (!currentPlan.value) return "";
+      return getDisplayPriceType(currentPlan.value);
+    });
+
+    const getPriceByPeriod = (plan, periodType) => {
+      if (!plan || !periodType) return null;
+      const value = Number(plan[periodType]);
+      return Number.isFinite(value) && value > 0 ? value : null;
+    };
+
     const isSameSpecPlan = (plan) => {
       if (isCurrentPlan(plan)) return true;
 
-      const currentPrice = getComparablePlanPrice(currentPlan.value);
-      const targetPrice = getComparablePlanPrice(plan);
+      const periodType = currentComparePeriod.value;
+      const currentPrice = getPriceByPeriod(currentPlan.value, periodType);
+      const targetPrice = getPriceByPeriod(plan, periodType);
 
-      if (targetPrice === currentPrice) {
-        return true;
-      }
-
-      return false;
+      if (currentPrice === null || targetPrice === null) return false;
+      return targetPrice === currentPrice;
     };
 
     const isHigherSpecPlan = (plan) => {
       if (!currentPlanId.value || isTrafficPackagePlan(plan)) return false;
       if (isCurrentPlan(plan) || isSameSpecPlan(plan)) return false;
 
-      const currentPrice = getComparablePlanPrice(currentPlan.value);
-      const targetPrice = getComparablePlanPrice(plan);
+      const periodType = currentComparePeriod.value;
+      const currentPrice = getPriceByPeriod(currentPlan.value, periodType);
+      const targetPrice = getPriceByPeriod(plan, periodType);
+
+      if (currentPrice === null || targetPrice === null) return false;
       return targetPrice > currentPrice;
     };
 
