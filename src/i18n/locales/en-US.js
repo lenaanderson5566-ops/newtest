@@ -179,6 +179,7 @@ export default {
     dashboard: {
         welcome: 'Welcome Back',
         welcomeDesc: 'View your services and usage',
+        announcement: 'Announcements',
         siteAnnouncement: 'Site Announcements',
         subscriptionInfo: 'Subscription Info',
         planName: 'Plan Name',

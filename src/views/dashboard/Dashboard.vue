@@ -29,10 +29,7 @@
       <div class="dashboard-card notice-card" :class="{'card-animate': !loading.notices}"
            v-if="notices && notices.data && notices.data.length > 0">
         <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.siteAnnouncement') }}</h2>
-          <div class="notice-counter">
-            {{ $t('common.noticeCount', {current: currentNoticeIndex + 1, total: notices.data.length}) }}
-          </div>
+          <h2 class="card-title">{{ $t('dashboard.announcement') }}</h2>
         </div>
         <div v-if="loading.notices" class="card-body skeleton-loading">
           <div class="skeleton-row"></div>
@@ -40,36 +37,41 @@
           <div class="skeleton-row"></div>
         </div>
         <div v-else class="card-body">
-          <transition name="fade-slide" mode="out-in">
-            <div class="notice-item" v-if="notices.data[currentNoticeIndex]" :key="currentNoticeIndex">
-              <div class="notice-title">{{ notices.data[currentNoticeIndex].title }}</div>
-              <div class="notice-footer">
-                <div class="notice-date">{{ formatDate(notices.data[currentNoticeIndex].created_at) }}</div>
-                <div class="notice-nav">
-                  <button
-                      class="btn-notice"
-                      @click="prevNotice"
-                      :disabled="currentNoticeIndex <= 0">
-                    <IconChevronLeft :size="16"/>
-                    {{ $t('common.prevNotice') }}
-                  </button>
-                  <button
-                      class="btn-notice"
-                      @click="showNoticeModal">
-                    <IconEye :size="16"/>
-                    {{ $t('common.viewDetails') }}
-                  </button>
-                  <button
-                      class="btn-notice"
-                      @click="nextNotice"
-                      :disabled="currentNoticeIndex >= notices.data.length - 1">
-                    {{ $t('common.nextNotice') }}
-                    <IconChevronRight :size="16"/>
-                  </button>
+          <div class="notice-slider" v-if="notices.data && notices.data.length">
+            <transition name="fade-slide" mode="out-in">
+              <div
+                class="notice-item"
+                v-if="notices.data[currentNoticeIndex]"
+                :key="currentNoticeIndex"
+                :style="noticeBackgroundStyle(notices.data[currentNoticeIndex])"
+              >
+                <div class="notice-overlay"></div>
+                <div class="notice-content">
+                  <div class="notice-title">{{ notices.data[currentNoticeIndex].title }}</div>
+                  <div class="notice-footer">
+                    <div class="notice-date">{{ formatDate(notices.data[currentNoticeIndex].created_at) }}</div>
+                    <div class="notice-nav">
+                      <button
+                          class="btn-notice"
+                          @click="showNoticeModal">
+                        <IconEye :size="16"/>
+                        {{ $t('common.viewDetails') }}
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </transition>
+            <div v-if="notices.data.length > 1" class="notice-dots">
+              <button
+                v-for="(notice, idx) in notices.data"
+                :key="notice.id || idx"
+                class="notice-dot"
+                :class="{ active: currentNoticeIndex === idx }"
+                @click="goToNotice(idx)"
+              />
             </div>
-          </transition>
+          </div>
         </div>
       </div>
 
@@ -1378,15 +1380,35 @@ export default {
     });
 
     const prevNotice = () => {
+      if (!notices.value?.data?.length) return;
       if (currentNoticeIndex.value > 0) {
         currentNoticeIndex.value--;
+      } else {
+        currentNoticeIndex.value = notices.value.data.length - 1;
       }
     };
 
     const nextNotice = () => {
+      if (!notices.value?.data?.length) return;
       if (currentNoticeIndex.value < notices.value.data.length - 1) {
         currentNoticeIndex.value++;
+      } else {
+        currentNoticeIndex.value = 0;
       }
+    };
+
+    const goToNotice = (index) => {
+      if (!notices.value?.data?.length) return;
+      currentNoticeIndex.value = Math.max(0, Math.min(index, notices.value.data.length - 1));
+    };
+
+    const noticeBackgroundStyle = (notice) => {
+      if (!notice?.img_url) return {};
+      return {
+        backgroundImage: `url(${notice.img_url})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      };
     };
 
     const showNoticeModal = () => {
@@ -1916,6 +1938,8 @@ export default {
       currentNoticeIndex,
       prevNotice,
       nextNotice,
+      goToNotice,
+      noticeBackgroundStyle,
       showImportCard,
       showQrCode,
       importToClient,
@@ -2598,11 +2622,12 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
 
-      .notice-counter {
-        font-size: 14px;
-        color: var(--theme-text-secondary);
-      }
+    .notice-slider {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .notice-item {
@@ -2610,12 +2635,26 @@ export default {
       padding: 16px;
       border-radius: 8px;
       background-color: rgba(var(--theme-color-rgb), 0.05);
+      overflow: hidden;
+      min-height: 144px;
+
+      .notice-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.72), rgba(15, 23, 42, 0.28));
+        pointer-events: none;
+      }
+
+      .notice-content {
+        position: relative;
+        z-index: 1;
+      }
 
       .notice-title {
         font-size: 16px;
         font-weight: 600;
         margin-bottom: 8px;
-        color: var(--theme-text-primary);
+        color: #fff;
       }
 
       .notice-footer {
@@ -2627,8 +2666,7 @@ export default {
 
         .notice-date {
           font-size: 12px;
-          color: #9ca3af;
-          opacity: 0.7;
+          color: rgba(255, 255, 255, 0.85);
         }
 
         .notice-nav {
@@ -2644,13 +2682,13 @@ export default {
             border-radius: 6px;
             font-size: 13px;
             background-color: rgba(var(--theme-color-rgb), 0.1);
-            color: var(--theme-color);
+            color: #fff;
             border: none;
             cursor: pointer;
             transition: all 0.2s ease;
 
             &:hover:not(:disabled) {
-              background-color: rgba(var(--theme-color-rgb), 0.2);
+              background-color: rgba(var(--theme-color-rgb), 0.35);
               transform: translateY(-1px);
             }
 
@@ -2706,6 +2744,28 @@ export default {
               width: 100%;
             }
           }
+        }
+      }
+    }
+
+    .notice-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+
+      .notice-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        border: none;
+        padding: 0;
+        background: rgba(var(--theme-color-rgb), 0.25);
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &.active {
+          width: 20px;
+          background: rgba(var(--theme-color-rgb), 0.95);
         }
       }
     }
