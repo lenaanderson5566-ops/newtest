@@ -1952,6 +1952,10 @@ export default {
   display: flex;
   justify-content: center;
 
+  --theme-text-primary: rgba(var(--theme-color-rgb), 0.96);
+  --theme-text-secondary: rgba(var(--theme-color-rgb), 0.78);
+  --theme-text-subtle: rgba(var(--theme-color-rgb), 0.64);
+
   .dashboard-inner {
     width: 100%;
     max-width: 1200px;
@@ -1997,7 +2001,7 @@ export default {
       margin-top: 12px;
       padding-top: 8px;
       border-top: 1px solid rgba(var(--theme-color-rgb), 0.1);
-      color: var(--secondary-text-color);
+      color: var(--theme-text-secondary);
       font-size: 14px;
     }
   }
@@ -2050,14 +2054,14 @@ export default {
 
         .info-label {
           font-size: 13px;
-          color: var(--secondary-text-color);
+          color: var(--theme-text-secondary);
           margin-bottom: 5px;
         }
 
         .info-value {
           font-size: 16px;
           font-weight: 600;
-          color: var(--text-color);
+          color: var(--theme-text-primary);
         }
       }
     }
@@ -2092,14 +2096,14 @@ export default {
         overflow: hidden;
 
         &.reset-warning {
-          color: #ff9800;
-          border-color: #ff9800;
+          color: rgba(var(--theme-color-rgb), 0.85);
+          border-color: rgba(var(--theme-color-rgb), 0.85);
           background-color: rgba(255, 152, 0, 0.1);
         }
 
         &.reset-danger {
-          color: #f44336;
-          border-color: #f44336;
+          color: rgba(var(--theme-color-rgb), 0.95);
+          border-color: rgba(var(--theme-color-rgb), 0.95);
           background-color: rgba(244, 67, 54, 0.1);
         }
       }
@@ -2109,14 +2113,14 @@ export default {
         overflow: hidden;
 
         &.renew-warning {
-          color: #ff9800;
-          border-color: #ff9800;
+          color: rgba(var(--theme-color-rgb), 0.85);
+          border-color: rgba(var(--theme-color-rgb), 0.85);
           background-color: rgba(255, 152, 0, 0.1);
         }
 
         &.renew-danger {
-          color: #f44336;
-          border-color: #f44336;
+          color: rgba(var(--theme-color-rgb), 0.95);
+          border-color: rgba(var(--theme-color-rgb), 0.95);
           background-color: rgba(244, 67, 54, 0.1);
         }
       }
@@ -2147,7 +2151,7 @@ export default {
         margin: 0;
         font-size: 20px;
         font-weight: 700;
-        color: var(--text-color);
+        color: var(--theme-text-primary);
       }
 
       .traffic-package-status {
@@ -2156,11 +2160,11 @@ export default {
         border-radius: 999px;
         padding: 6px 10px;
         background: rgba(108, 117, 125, 0.16);
-        color: var(--secondary-text-color);
+        color: var(--theme-text-secondary);
 
         &.active {
           background: rgba(40, 167, 69, 0.15);
-          color: #28a745;
+          color: rgba(var(--theme-color-rgb), 0.9);
         }
       }
     }
@@ -2245,7 +2249,7 @@ export default {
         .usage-card-title {
           font-size: 15px;
           font-weight: 600;
-          color: var(--text-color);
+          color: var(--theme-text-primary);
         }
 
         .usage-card-main {
@@ -2258,12 +2262,12 @@ export default {
           font-size: 40px;
           line-height: 1;
           font-weight: 700;
-          color: var(--text-color);
+          color: var(--theme-text-primary);
         }
 
         .usage-percent-label {
           font-size: 20px;
-          color: var(--secondary-text-color);
+          color: var(--theme-text-secondary);
         }
 
         .usage-kpis {
@@ -2284,13 +2288,13 @@ export default {
 
         .usage-kpi-label {
           font-size: 11px;
-          color: var(--secondary-text-color);
+          color: var(--theme-text-secondary);
           line-height: 1;
         }
 
         .usage-kpi-value {
           font-size: 13px;
-          color: var(--text-color);
+          color: var(--theme-text-primary);
           font-weight: 600;
           line-height: 1.2;
         }
@@ -2298,7 +2302,7 @@ export default {
         .usage-reset-hint {
           width: 100%;
           font-size: 12px;
-          color: var(--secondary-text-color);
+          color: var(--theme-text-secondary);
         }
 
         .section-progress-track {
@@ -2311,7 +2315,7 @@ export default {
 
         .section-progress-fill {
           height: 100%;
-          background: linear-gradient(90deg, #22c55e, #22c55e);
+          background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 0.9));
           border-radius: inherit;
           transition: width 0.35s ease;
         }
@@ -2363,13 +2367,13 @@ export default {
         .stats-value {
           font-size: 18px;
           font-weight: 600;
-          color: var(--text-color);
+          color: var(--theme-text-primary);
           margin-bottom: 5px;
         }
 
         .stats-label {
           font-size: 14px;
-          color: var(--secondary-text-color);
+          color: var(--theme-text-secondary);
         }
       }
 
@@ -2429,32 +2433,32 @@ export default {
 
           &.ios {
             background-color: rgba(0, 122, 255, 0.1);
-            color: #007aff;
+            color: rgba(var(--theme-color-rgb), 0.9);
           }
 
           &.android {
             background-color: rgba(61, 178, 74, 0.1);
-            color: #3db24a;
+            color: rgba(var(--theme-color-rgb), 0.9);
           }
 
           &.macos {
             background-color: rgba(90, 90, 90, 0.1);
-            color: #5a5a5a;
+            color: rgba(var(--theme-color-rgb), 0.72);
           }
 
           &.windows {
             background-color: rgba(0, 120, 215, 0.1);
-            color: #0078d7;
+            color: rgba(var(--theme-color-rgb), 0.9);
           }
 
           &.linux {
             background-color: rgba(243, 123, 29, 0.1);
-            color: #f37b1d;
+            color: rgba(var(--theme-color-rgb), 0.88);
           }
 
           &.openwrt {
             background-color: rgba(0, 136, 204, 0.1);
-            color: #0088cc;
+            color: rgba(var(--theme-color-rgb), 0.9);
           }
         }
 
@@ -2477,7 +2481,7 @@ export default {
 
       .notice-counter {
         font-size: 14px;
-        color: var(--secondary-text-color);
+        color: var(--theme-text-secondary);
       }
     }
 
@@ -2491,7 +2495,7 @@ export default {
         font-size: 16px;
         font-weight: 600;
         margin-bottom: 8px;
-        color: var(--text-color);
+        color: var(--theme-text-primary);
       }
 
       .notice-footer {
@@ -2503,7 +2507,7 @@ export default {
 
         .notice-date {
           font-size: 12px;
-          color: var(--secondary-text-color);
+          color: var(--theme-text-secondary);
           opacity: 0.7;
         }
 
@@ -2629,7 +2633,7 @@ export default {
       }
 
       .pending-action {
-        color: var(--secondary-text-color);
+        color: var(--theme-text-secondary);
         transition: transform 0.3s ease;
       }
 
@@ -2703,7 +2707,7 @@ export default {
 
 .btn-outline {
   background-color: transparent;
-  color: var(--text-color);
+  color: var(--theme-text-primary);
   border: 1px solid var(--border-color);
 
   &:hover {
@@ -2758,7 +2762,7 @@ export default {
 
 .btn-action {
   background-color: transparent;
-  color: var(--secondary-text-color);
+  color: var(--theme-text-secondary);
   border: none;
   padding: 5px 10px;
   font-size: 13px;
@@ -2919,7 +2923,7 @@ export default {
 
 .stats-card.doc-card .stats-icon {
   background-color: rgba(92, 124, 250, 0.15);
-  color: #5c7cfa;
+  color: rgba(var(--theme-color-rgb), 0.88);
 }
 
 .stats-card.doc-card .stats-value {
@@ -3021,7 +3025,7 @@ export default {
       position: absolute;
       width: 100%;
       height: 2px;
-      background-color: var(--secondary-text-color);
+      background-color: var(--theme-text-secondary);
       border-radius: 2px;
       top: 50%;
       left: 0;
@@ -3076,19 +3080,19 @@ export default {
 
     .import-desc {
       font-size: 13px;
-      color: var(--secondary-text-color);
+      color: var(--theme-text-secondary);
     }
   }
 }
 
 .copy-action .import-icon {
   background-color: rgba(25, 113, 194, 0.1);
-  color: #1971c2;
+  color: rgba(var(--theme-color-rgb), 0.88);
 }
 
 .qrcode-action .import-icon {
   background-color: rgba(64, 192, 87, 0.1);
-  color: #40c057;
+  color: rgba(var(--theme-color-rgb), 0.9);
 }
 
 .platform-section {
@@ -3188,7 +3192,7 @@ export default {
   h3 {
     margin: 0;
     font-size: 18px;
-    color: var(--text-color);
+    color: var(--theme-text-primary);
     font-weight: 600;
   }
 }
@@ -3235,7 +3239,7 @@ export default {
 
     p {
       font-size: 15px;
-      color: var(--secondary-text-color);
+      color: var(--theme-text-secondary);
       font-weight: 500;
     }
   }
@@ -3292,7 +3296,7 @@ export default {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: var(--text-color);
+    color: var(--theme-text-primary);
 
     &:hover {
       background-color: rgba(var(--theme-color-rgb), 0.1);
@@ -3347,30 +3351,30 @@ export default {
 
 
 .stats-card.warning-card {
-  border-color: #ff9800;
+  border-color: rgba(var(--theme-color-rgb), 0.85);
   box-shadow: 0 4px 10px rgba(255, 152, 0, 0.15);
 
   .stats-icon {
     background-color: rgba(255, 152, 0, 0.1);
-    color: #ff9800;
+    color: rgba(var(--theme-color-rgb), 0.85);
   }
 
   .stats-value {
-    color: #ff9800;
+    color: rgba(var(--theme-color-rgb), 0.85);
   }
 }
 
 .stats-card.danger-card {
-  border-color: #f44336;
+  border-color: rgba(var(--theme-color-rgb), 0.95);
   box-shadow: 0 4px 10px rgba(244, 67, 54, 0.15);
 
   .stats-icon {
     background-color: rgba(244, 67, 54, 0.1);
-    color: #f44336;
+    color: rgba(var(--theme-color-rgb), 0.95);
   }
 
   .stats-value {
-    color: #f44336;
+    color: rgba(var(--theme-color-rgb), 0.95);
   }
 }
 
@@ -3506,7 +3510,7 @@ export default {
 }
 
 .import-action .import-content .import-desc {
-  color: var(--secondary-text-color);
+  color: var(--theme-text-secondary);
   font-size: 12px;
   line-height: 1.4;
 }
@@ -3521,7 +3525,7 @@ export default {
 }
 
 .no-clients-message p {
-  color: var(--text-color);
+  color: var(--theme-text-primary);
   font-size: 14px;
   margin: 0;
 }
@@ -3546,7 +3550,7 @@ export default {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: var(--text-color);
+    color: var(--theme-text-primary);
 
     &:hover {
       background-color: rgba(var(--theme-color-rgb), 0.1);
@@ -3690,14 +3694,14 @@ export default {
     margin: 0;
     font-size: 18px;
     font-weight: 600;
-    color: var(--text-color);
+    color: var(--theme-text-primary);
   }
 
   .popup-close-btn {
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--secondary-text-color);
+    color: var(--theme-text-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3708,7 +3712,7 @@ export default {
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
-      color: var(--text-color);
+      color: var(--theme-text-primary);
       transform: rotate(90deg);
     }
   }
@@ -3727,7 +3731,7 @@ export default {
     :deep(p) {
       margin: 12px 0;
       line-height: 1.6;
-      color: var(--text-color);
+      color: var(--theme-text-primary);
     }
 
     :deep(strong) {
@@ -3882,7 +3886,7 @@ export default {
     &:disabled {
       opacity: 0.7;
       cursor: not-allowed;
-      background-color: var(--secondary-text-color);
+      background-color: var(--theme-text-secondary);
     }
   }
 }
@@ -3975,19 +3979,19 @@ export default {
       margin: 0;
       font-size: 18px;
       font-weight: 600;
-      color: var(--text-color);
+      color: var(--theme-text-primary);
     }
 
     .close-button {
       background: none;
       border: none;
       font-size: 24px;
-      color: var(--secondary-text-color);
+      color: var(--theme-text-secondary);
       cursor: pointer;
       padding: 0;
 
       &:hover {
-        color: var(--text-color);
+        color: var(--theme-text-primary);
       }
     }
   }
@@ -4000,7 +4004,7 @@ export default {
 
     .warning-icon {
       margin-bottom: 16px;
-      color: #ff9800;
+      color: rgba(var(--theme-color-rgb), 0.85);
     }
 
     .warning-text {
@@ -4008,12 +4012,12 @@ export default {
       line-height: 1.5;
       margin-bottom: 12px;
       text-align: center;
-      color: var(--text-color);
+      color: var(--theme-text-primary);
     }
 
     .note-text {
       font-size: 14px;
-      color: var(--secondary-text-color);
+      color: var(--theme-text-secondary);
       text-align: center;
       margin-bottom: 0;
       padding: 8px 12px;
@@ -4048,7 +4052,7 @@ export default {
     .cancel-btn {
       background-color: transparent;
       border: 1px solid var(--border-color);
-      color: var(--text-color);
+      color: var(--theme-text-primary);
 
       &:hover:not(:disabled) {
         background-color: rgba(0, 0, 0, 0.05);
@@ -4056,12 +4060,12 @@ export default {
     }
 
     .confirm-btn {
-      background-color: #f44336;
+      background-color: rgba(var(--theme-color-rgb), 0.92);
       color: white;
       border: none;
 
       &:hover:not(:disabled) {
-        background-color: #e53935;
+        background-color: rgba(var(--theme-color-rgb), 0.92);
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
       }
@@ -4116,30 +4120,30 @@ export default {
 @use '@/assets/styles/no-plan-card' as *;
 
 .stats-card.warning-card {
-  border-color: #ff9800 !important;
+  border-color: rgba(var(--theme-color-rgb), 0.85) !important;
   box-shadow: 0 4px 10px rgba(255, 152, 0, 0.15) !important;
 
   .stats-icon {
     background-color: rgba(255, 152, 0, 0.1) !important;
-    color: #ff9800 !important;
+    color: rgba(var(--theme-color-rgb), 0.85) !important;
   }
 
   .stats-value {
-    color: #ff9800 !important;
+    color: rgba(var(--theme-color-rgb), 0.85) !important;
   }
 }
 
 .stats-card.danger-card {
-  border-color: #f44336 !important;
+  border-color: rgba(var(--theme-color-rgb), 0.95) !important;
   box-shadow: 0 4px 10px rgba(244, 67, 54, 0.15) !important;
 
   .stats-icon {
     background-color: rgba(244, 67, 54, 0.1) !important;
-    color: #f44336 !important;
+    color: rgba(var(--theme-color-rgb), 0.95) !important;
   }
 
   .stats-value {
-    color: #f44336 !important;
+    color: rgba(var(--theme-color-rgb), 0.95) !important;
   }
 }
 
