@@ -404,6 +404,7 @@ onMounted(() => {
   
 
   fetchUserInfo();
+  fetchSubscription();
 
   fetchNodes();
 

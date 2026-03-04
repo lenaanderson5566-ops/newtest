@@ -97,18 +97,6 @@
             <span v-if="isCurrentPlan(plan)" class="current-plan-badge">{{ $t("shop.plan.current") }}</span>
 
             <div
-              class="card-badge glassmorphism stock-plenty"
-              v-if="
-                plan.capacity_limit >= SHOP_CONFIG.lowStockThreshold ||
-                plan.capacity_limit === null
-              "
-            >
-              <IconBox :size="16" class="badge-icon" />
-
-              <span>{{ $t("shop.plan.stock.plenty") }}</span>
-            </div>
-
-            <div
               class="card-badge glassmorphism stock-warning"
               v-else-if="
                 plan.capacity_limit > 0 &&
