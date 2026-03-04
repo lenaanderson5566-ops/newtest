@@ -433,58 +433,6 @@
         </div>
       </div>
 
-      <!-- 官方客户端下载区域 -->
-      <div class="dashboard-card download-card" :class="{'card-animate': !loading.userInfo}"
-           v-if="clientConfig.showDownloadCard" style="animation-delay: 0.9s">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.officialClients') }}</h2>
-        </div>
-        <div class="card-body">
-          <div class="download-options">
-            <div class="download-option" v-if="clientConfig.showIOS" @click="downloadClient('ios')">
-              <div class="option-icon ios">
-                <IconBrandApple :size="32"/>
-              </div>
-              <div class="option-name">iOS</div>
-            </div>
-
-            <div class="download-option" v-if="clientConfig.showAndroid" @click="downloadClient('android')">
-              <div class="option-icon android">
-                <IconBrandAndroid :size="32"/>
-              </div>
-              <div class="option-name">Android</div>
-            </div>
-
-            <div class="download-option" v-if="clientConfig.showMacOS" @click="downloadClient('macos')">
-              <div class="option-icon macos">
-                <IconBrandFinder :size="32"/>
-              </div>
-              <div class="option-name">MacOS</div>
-            </div>
-
-            <div class="download-option" v-if="clientConfig.showWindows" @click="downloadClient('windows')">
-              <div class="option-icon windows">
-                <IconBrandWindows :size="32"/>
-              </div>
-              <div class="option-name">Windows</div>
-            </div>
-
-            <div class="download-option" v-if="clientConfig.showLinux" @click="downloadClient('linux')">
-              <div class="option-icon linux">
-                <IconBrandDebian :size="32"/>
-              </div>
-              <div class="option-name">Linux</div>
-            </div>
-
-            <div class="download-option" v-if="clientConfig.showOpenWrt" @click="downloadClient('openwrt')">
-              <div class="option-icon openwrt">
-                <IconRouter :size="32"/>
-              </div>
-              <div class="option-name">OpenWrt</div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <!-- 弹窗组件 -->
     <CommonDialog
@@ -886,12 +834,6 @@ export default {
       }
     });
 
-    const downloadClient = (platform) => {
-      const downloadUrl = clientConfig.clientLinks[platform];
-      if (downloadUrl) {
-        window.open(downloadUrl, '_blank');
-      }
-    };
 
     const goToShop = () => {
       router.push('/shop');
@@ -2096,7 +2038,6 @@ export default {
       loading,
       languageChangedSignal,
       goToShop,
-      downloadClient,
       hasPendingItems,
       router,
       currentNoticeIndex,
@@ -2231,7 +2172,6 @@ export default {
     > .subscription-card,
     > .stats-grid,
     > .usage-trend-card,
-    > .download-card,
     > .import-card {
       grid-column: 1 / -1;
     }
@@ -2243,7 +2183,6 @@ export default {
       > .subscription-card,
       > .stats-grid,
       > .usage-trend-card,
-      > .download-card,
       > .import-card {
         grid-column: 1 / -1;
       }
@@ -2707,84 +2646,6 @@ export default {
       height: 280px;
     }
   }
-
-  .download-card {
-    .download-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 20px;
-
-      @media (min-width: 768px) {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      @media (min-width: 992px) {
-        grid-template-columns: repeat(6, 1fr);
-      }
-
-      .download-option {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        cursor: pointer;
-        padding: 15px;
-        border-radius: 10px;
-        transition: all 0.3s ease;
-        border: 1px solid var(--border-color);
-
-        &:hover {
-          background-color: rgba(var(--theme-color-rgb), 0.05);
-          transform: translateY(-2px);
-        }
-
-        .option-icon {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          margin-bottom: 12px;
-
-          &.ios {
-            background-color: rgba(0, 122, 255, 0.1);
-            color: rgba(var(--theme-color-rgb), 0.9);
-          }
-
-          &.android {
-            background-color: rgba(61, 178, 74, 0.1);
-            color: rgba(var(--theme-color-rgb), 0.9);
-          }
-
-          &.macos {
-            background-color: rgba(90, 90, 90, 0.1);
-            color: rgba(var(--theme-color-rgb), 0.72);
-          }
-
-          &.windows {
-            background-color: rgba(0, 120, 215, 0.1);
-            color: rgba(var(--theme-color-rgb), 0.9);
-          }
-
-          &.linux {
-            background-color: rgba(243, 123, 29, 0.1);
-            color: rgba(var(--theme-color-rgb), 0.88);
-          }
-
-          &.openwrt {
-            background-color: rgba(0, 136, 204, 0.1);
-            color: rgba(var(--theme-color-rgb), 0.9);
-          }
-        }
-
-        .option-name {
-          font-size: 14px;
-          font-weight: 500;
-        }
-      }
-    }
-  }
-
 
   .notice-card {
     margin-bottom: 24px;
