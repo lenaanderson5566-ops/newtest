@@ -49,13 +49,6 @@
         </div>
       </div>
 
-      <div class="traffic-package-entry" v-if="trafficPackagePlans.length > 0">
-        <button class="btn-traffic-package" @click="showTrafficPackageModal = true">
-          <IconShoppingCart class="btn-icon" />
-          {{ $t('shop.traffic_package.entry') }}
-        </button>
-      </div>
-
       <!-- 套餐列表 -->
 
       <div class="plans-wrapper">
@@ -235,43 +228,6 @@
       </div>
 
 
-      <transition name="fade">
-        <div
-          v-if="showTrafficPackageModal"
-          class="traffic-package-modal-overlay"
-          @click="showTrafficPackageModal = false"
-        >
-          <div class="traffic-package-modal" @click.stop>
-            <div class="traffic-package-modal-header">
-              <h3>{{ $t('shop.traffic_package.title') }}</h3>
-              <button class="close-btn" @click="showTrafficPackageModal = false">×</button>
-            </div>
-            <p class="traffic-package-desc">{{ $t('shop.traffic_package.description') }}</p>
-            <div class="traffic-package-list">
-              <div
-                class="traffic-package-item"
-                v-for="plan in trafficPackagePlans"
-                :key="`traffic-${plan.id}`"
-              >
-                <div class="item-main">
-                  <div class="item-name">{{ plan.name }}</div>
-                  <div class="item-price">{{ currencySymbol }}{{ (normalizePriceValue(plan, 'onetime_price') / 100).toFixed(2) }}</div>
-                </div>
-                <div class="item-content" v-if="!isJsonContent(plan.content)">{{ plan.content }}</div>
-                <button
-                  class="btn-purchase btn-traffic-buy"
-                  :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
-                  :disabled="plan.capacity_limit === 0"
-                  @click="purchaseTrafficPackage(plan)"
-                >
-                  <IconShoppingCart class="btn-icon" />
-                  <span class="btn-text">{{ plan.capacity_limit === 0 ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </transition>
     </div>
   </div>
 
@@ -361,7 +317,6 @@ export default {
     const currencySymbol = ref("¥");
 
     const selectedPriceType = reactive({});
-    const showTrafficPackageModal = ref(false);
     const currentPlanId = ref(null);
     const currentSubscription = reactive({
       planName: "",
@@ -515,10 +470,6 @@ export default {
     const isCurrentPlan = (plan) => Number(plan?.id) === Number(currentPlanId.value);
 
     const isTrafficPackagePlan = (plan) => isOnetimeOnly(plan);
-
-    const trafficPackagePlans = computed(() =>
-      plans.value.filter((plan) => hasPeriodPrice(plan, "onetime_price"))
-    );
 
     const currentPlan = computed(() => {
       return plans.value.find((plan) => isCurrentPlan(plan)) || null;
@@ -740,21 +691,6 @@ export default {
       });
     };
 
-    const purchaseTrafficPackage = (plan) => {
-      if (plan.capacity_limit === 0) {
-        showToast(t("shop.plan.stock.sold_out"), "error");
-        return;
-      }
-      showTrafficPackageModal.value = false;
-      router.push({
-        path: "order-confirm",
-        query: {
-          id: plan.id,
-          period: "onetime_price",
-        },
-      });
-    };
-
     const visiblePlans = computed(() => plans.value.filter((plan) => !isOnetimeOnly(plan)));
 
     const filteredPlans = computed(() => {
@@ -945,9 +881,6 @@ export default {
       getDisplayPriceType,
       getPurchaseButtonText,
       currentSubscription,
-      showTrafficPackageModal,
-      trafficPackagePlans,
-      purchaseTrafficPackage,
       normalizePriceValue,
 
       SHOP_CONFIG,
@@ -1783,126 +1716,6 @@ export default {
   }
 
 
-
-  .traffic-package-entry {
-    display: flex;
-    justify-content: center;
-    margin: -10px 0 20px;
-
-    .btn-traffic-package {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid rgba(var(--theme-color-rgb), 0.25);
-      background: rgba(var(--theme-color-rgb), 0.08);
-      color: var(--text-color);
-      border-radius: 12px;
-      padding: 10px 16px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      &:hover {
-        background: rgba(var(--theme-color-rgb), 0.14);
-      }
-
-      .btn-icon {
-        width: 16px;
-        height: 16px;
-      }
-    }
-  }
-
-  .traffic-package-modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    z-index: 1200;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-  }
-
-  .traffic-package-modal {
-    width: min(760px, 100%);
-    max-height: 80vh;
-    overflow: auto;
-    background: var(--card-bg-color);
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    padding: 20px;
-
-    .traffic-package-modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-
-      h3 {
-        margin: 0;
-      }
-
-      .close-btn {
-        border: none;
-        background: transparent;
-        font-size: 24px;
-        line-height: 1;
-        cursor: pointer;
-        color: var(--text-color);
-      }
-    }
-
-    .traffic-package-desc {
-      margin: 0 0 16px;
-      color: var(--secondary-text-color);
-    }
-
-    .traffic-package-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-    }
-
-    .traffic-package-item {
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-
-      .item-main {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .item-name {
-        font-size: 16px;
-        font-weight: 600;
-      }
-
-      .item-price {
-        font-size: 24px;
-        font-weight: 700;
-      }
-
-      .item-content {
-        font-size: 13px;
-        color: var(--secondary-text-color);
-        line-height: 1.5;
-        max-height: 60px;
-        overflow: hidden;
-      }
-
-      .btn-traffic-buy {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-  }
   .no-plans-message {
     grid-column: 1 / -1;
 

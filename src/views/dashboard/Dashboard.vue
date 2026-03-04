@@ -389,7 +389,7 @@
             <div class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
                 <span class="usage-percent">{{ formatPackageRemaining(card.remaining) }}</span>
-                <button class="package-add-btn" @click.stop="goToTrafficPackageShop" :title="$t('dashboard.purchaseTrafficPackage')">
+                <button class="package-add-btn" @click.stop="openTrafficPackageModal" :title="$t('dashboard.purchaseTrafficPackage')">
                   <IconPlus :size="14" />
                 </button>
               </template>
@@ -503,6 +503,37 @@
   </div>
 </div>
 
+
+
+  <transition name="modal-fade">
+    <div class="modal-overlay traffic-package-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
+      <div class="modal-container traffic-package-container" @click.stop>
+        <div class="modal-card traffic-package-modal-card">
+          <div class="modal-header">
+            <h3>{{ $t('shop.traffic_package.title') }}</h3>
+            <button class="close-button" @click="showTrafficPackageModal = false">×</button>
+          </div>
+          <div class="modal-body">
+            <p class="traffic-package-desc">{{ $t('shop.traffic_package.description') }}</p>
+            <div v-if="trafficPackageLoading" class="traffic-package-loading">{{ $t('common.loading') }}</div>
+            <div v-else-if="trafficPackagePlans.length === 0" class="traffic-package-empty">{{ $t('shop.no_plans_found') }}</div>
+            <div v-else class="traffic-package-list">
+              <div class="traffic-package-item" v-for="plan in trafficPackagePlans" :key="`dashboard-traffic-${plan.id}`">
+                <div class="item-title-row">
+                  <strong>{{ plan.name }}</strong>
+                  <span class="item-price">¥{{ (normalizeTrafficPackagePrice(plan.onetime_price) / 100).toFixed(2) }}</span>
+                </div>
+                <div class="item-content" v-if="!isJsonContent(plan.content)">{{ plan.content }}</div>
+                <button class="confirm-btn buy-btn" :disabled="plan.capacity_limit === 0" @click="purchaseTrafficPackage(plan)">
+                  {{ plan.capacity_limit === 0 ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
   <!-- 重置流量确认弹窗 -->
   <transition name="modal-fade">
     <div class="modal-overlay" v-if="showResetTrafficModal">
@@ -612,7 +643,7 @@ import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setN
 import { getTrafficLog } from '@/api/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
-import {submitOrder} from '@/api/shop';
+import {fetchPlans, submitOrder} from '@/api/shop';
 import MarkdownIt from 'markdown-it';
 import QRCode from 'qrcode';
 import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
@@ -867,6 +898,9 @@ export default {
     const userPlanId = ref(null);
 
     const showResetTrafficModal = ref(false);
+    const showTrafficPackageModal = ref(false);
+    const trafficPackageLoading = ref(false);
+    const trafficPackagePlans = ref([]);
     const resetConfirmCooldown = ref(0);
     const resetConfirmTimer = ref(null);
     const isCreatingResetOrder = ref(false);
@@ -1371,8 +1405,42 @@ export default {
       return `${gb.toFixed(2)} GB`;
     };
 
-    const goToTrafficPackageShop = () => {
-      router.push({ path: '/shop', query: { filter: 'onetime' } });
+    const normalizeTrafficPackagePrice = (value) => {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+    };
+
+    const openTrafficPackageModal = async () => {
+      showTrafficPackageModal.value = true;
+      trafficPackageLoading.value = true;
+      try {
+        const response = await fetchPlans(locale.value);
+        const list = Array.isArray(response?.data) ? response.data : [];
+        trafficPackagePlans.value = list.filter((plan) => {
+          const price = Number(plan?.onetime_price);
+          return Number.isFinite(price) && price >= 0;
+        });
+      } catch (error) {
+        trafficPackagePlans.value = [];
+        showToast(t('shop.failed_to_fetch_plan'), 'error');
+      } finally {
+        trafficPackageLoading.value = false;
+      }
+    };
+
+    const purchaseTrafficPackage = (plan) => {
+      if (Number(plan?.capacity_limit) === 0) {
+        showToast(t('shop.plan.stock.sold_out'), 'error');
+        return;
+      }
+      showTrafficPackageModal.value = false;
+      router.push({
+        path: '/order-confirm',
+        query: {
+          id: plan.id,
+          period: 'onetime_price'
+        }
+      });
     };
 
     const hasPendingItems = computed(() => {
@@ -1946,7 +2014,6 @@ export default {
       formatDate,
       formatTraffic,
       formatPackageRemaining,
-      goToTrafficPackageShop,
       toggleImportCard,
       copySubscription,
       platforms,
@@ -2021,6 +2088,12 @@ export default {
       DASHBOARD_CONFIG,
       allowNewPeriod,
       showImportSubscription,
+      showTrafficPackageModal,
+      trafficPackageLoading,
+      trafficPackagePlans,
+      openTrafficPackageModal,
+      purchaseTrafficPackage,
+      normalizeTrafficPackagePrice,
     };
   }
 };
@@ -4118,6 +4191,76 @@ export default {
   }
 }
 
+
+
+.traffic-package-overlay {
+  z-index: 1300;
+}
+
+.traffic-package-container {
+  max-width: 760px;
+}
+
+.traffic-package-modal-card {
+  .modal-body {
+    align-items: stretch;
+    padding-top: 12px;
+  }
+
+  .traffic-package-desc {
+    margin: 0 0 12px;
+    color: var(--theme-text-secondary);
+  }
+
+  .traffic-package-loading,
+  .traffic-package-empty {
+    text-align: center;
+    color: var(--theme-text-secondary);
+    padding: 20px 0;
+  }
+
+  .traffic-package-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .traffic-package-item {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .item-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .item-price {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--theme-text-primary);
+    }
+
+    .item-content {
+      color: var(--theme-text-secondary);
+      font-size: 13px;
+      line-height: 1.45;
+      min-height: 36px;
+      max-height: 70px;
+      overflow: hidden;
+    }
+
+    .buy-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
 
 .modal-overlay {
   position: fixed;
