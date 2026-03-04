@@ -1,7 +1,8 @@
 ﻿<template>
   <div class="dashboard-container">
     <div class="dashboard-inner">
-      <div class="dashboard-card welcome-card" :class="{'card-animate': !loading.userInfo}">
+      <div class="overview-grid">
+        <div class="dashboard-card welcome-card" :class="{'card-animate': !loading.userInfo}">
         <div class="card-header">
           <h2 class="card-title">{{ $t('dashboard.welcome') }}</h2>
         </div>
@@ -39,7 +40,7 @@
       </div>
 
       <div class="dashboard-card notice-card" :class="{'card-animate': !loading.notices}"
-           v-if="notices && notices.data && notices.data.length > 0" style="animation-delay: 0.2s">
+           v-if="notices && notices.data && notices.data.length > 0">
         <div class="card-header">
           <h2 class="card-title">{{ $t('dashboard.siteAnnouncement') }}</h2>
           <div class="notice-counter">
@@ -110,8 +111,7 @@
       </transition>
 
       <!-- 套餐信息卡片 -->
-      <div v-if="hasPlan" class="dashboard-card subscription-card" :class="{'card-animate': !loading.userInfo}"
-           style="animation-delay: 0.3s">
+      <div v-if="hasPlan" class="dashboard-card subscription-card" :class="{'card-animate': !loading.userInfo}">
         <div v-if="loading.userInfo" class="skeleton-card">
           <div class="skeleton-header"></div>
           <div class="skeleton-body">
@@ -180,6 +180,7 @@
             </div>
           </div>
         </template>
+        </div>
       </div>
 
       <!-- 订阅导入卡片 -->
@@ -453,7 +454,7 @@
         </template>
 
         <template v-else>
-          <div class="usage-panel-title-row" style="grid-column: 1 / -1; animation-delay: 0.46s">
+          <div class="usage-panel-title-row">
             <h3>{{ $t('dashboard.usagePanel') }}</h3>
             <span class="traffic-package-status" :class="{ active: hasPurchasedTrafficPackage }">
               {{ hasPurchasedTrafficPackage ? $t('dashboard.packagePurchased') : $t('dashboard.packageNotPurchased') }}
@@ -475,13 +476,22 @@
             <div class="section-progress-track">
               <div class="section-progress-fill" :style="{ width: `${card.remainingPercentage}%` }"></div>
             </div>
-            <div class="usage-card-meta">
-              <span>{{ $t('dashboard.used') }}: {{ formatTraffic(card.used) }}</span>
-              <span>{{ $t('dashboard.total') }}: {{ formatTraffic(card.total) }}</span>
+            <div class="usage-kpis">
+              <div class="usage-kpi">
+                <span class="usage-kpi-label">{{ $t('dashboard.used') }}</span>
+                <strong class="usage-kpi-value">{{ formatTraffic(card.used) }}</strong>
+              </div>
+              <div class="usage-kpi">
+                <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
+                <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
+              </div>
+              <div class="usage-kpi">
+                <span class="usage-kpi-label">{{ $t('dashboard.remaining') }}</span>
+                <strong class="usage-kpi-value">{{ formatTraffic(card.remaining) }}</strong>
+              </div>
             </div>
-            <div class="usage-card-meta">
-              <span>{{ $t('dashboard.remaining') }}: {{ formatTraffic(card.remaining) }}</span>
-              <span v-if="card.key === 'subscription'">{{ $t('dashboard.resetHint', { day: userPlan.resetDay || '-' }) }}</span>
+            <div v-if="card.key === 'subscription'" class="usage-reset-hint">
+              {{ $t('dashboard.resetHint', { day: userPlan.resetDay || '-' }) }}
             </div>
           </div>
 
@@ -1947,6 +1957,36 @@ export default {
     max-width: 1200px;
   }
 
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 16px;
+
+    > .welcome-card {
+      grid-column: span 5;
+      margin-bottom: 0;
+    }
+
+    > .pending-items-card {
+      grid-column: span 7;
+      margin-bottom: 0;
+    }
+
+    > .notice-card,
+    > .subscription-card {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 992px) {
+      > .welcome-card,
+      > .pending-items-card,
+      > .notice-card,
+      > .subscription-card {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
   .welcome-card {
     margin-bottom: 24px;
 
@@ -2226,18 +2266,39 @@ export default {
           color: var(--secondary-text-color);
         }
 
-        .usage-card-meta {
+        .usage-kpis {
           width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 8px;
+        }
 
-          span {
-            font-size: 12px;
-            color: var(--secondary-text-color);
-            white-space: nowrap;
-          }
+        .usage-kpi {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          padding: 8px;
+          border-radius: 10px;
+          background: rgba(var(--theme-color-rgb), 0.06);
+        }
+
+        .usage-kpi-label {
+          font-size: 11px;
+          color: var(--secondary-text-color);
+          line-height: 1;
+        }
+
+        .usage-kpi-value {
+          font-size: 13px;
+          color: var(--text-color);
+          font-weight: 600;
+          line-height: 1.2;
+        }
+
+        .usage-reset-hint {
+          width: 100%;
+          font-size: 12px;
+          color: var(--secondary-text-color);
         }
 
         .section-progress-track {
@@ -2253,6 +2314,12 @@ export default {
           background: linear-gradient(90deg, #22c55e, #22c55e);
           border-radius: inherit;
           transition: width 0.35s ease;
+        }
+
+        @media (max-width: 576px) {
+          .usage-kpis {
+            grid-template-columns: 1fr;
+          }
         }
       }
 
