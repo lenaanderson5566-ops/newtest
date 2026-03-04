@@ -23,6 +23,10 @@
         <div class="card-body">
 
           <p>{{ $t('nodes.welcome.description') || '查看并使用可用的服务器节点' }}</p>
+          <div class="quick-actions">
+            <button class="quick-btn" @click="copySubscriptionUrl" :disabled="!subscriptionUrl">{{ $t('dashboard.importSubscription') }}</button>
+            <button class="quick-btn primary" @click="goRenewPlan" :disabled="!currentPlanId">{{ $t('dashboard.renewPlan') }}</button>
+          </div>
 
         </div>
 
@@ -185,6 +189,7 @@
 import { ref, onMounted, inject } from 'vue';
 
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 
@@ -201,6 +206,7 @@ import {
 import { fetchServerNodes } from '@/api/servers';
 
 import { getUserInfo } from '@/api/user';
+import { getSubscribe } from '@/api/dashboard';
 
 
 import { NODES_CONFIG } from '@/utils/baseConfig';
@@ -210,6 +216,7 @@ import NodeDetailModal from '@/components/common/NodeDetailModal.vue';
 
 
 const { t } = useI18n();
+const router = useRouter();
 
 const $toast = inject('$toast');
 
@@ -230,9 +237,8 @@ const allowViewNodeInfo = ref(NODES_CONFIG.allowViewNodeInfo);
 
 const userInfo = ref(null);
 
-
-
-
+const currentPlanId = ref(null);
+const subscriptionUrl = ref('');
 
 
 
@@ -292,7 +298,32 @@ const fetchUserInfo = async () => {
 
 };
 
+const fetchSubscription = async () => {
+  try {
+    const result = await getSubscribe();
+    if (result?.data) {
+      currentPlanId.value = result.data.plan_id || result.data.plan?.id || null;
+      subscriptionUrl.value = result.data.subscribe_url || '';
+    }
+  } catch (err) {
+    console.error('Failed to fetch subscription info:', err);
+  }
+};
 
+const copySubscriptionUrl = async () => {
+  if (!subscriptionUrl.value) return;
+  try {
+    await navigator.clipboard.writeText(subscriptionUrl.value);
+    if ($toast) $toast.success(t('dashboard.subscriptionCopied'));
+  } catch (err) {
+    if ($toast) $toast.error(t('dashboard.copyFailed'));
+  }
+};
+
+const goRenewPlan = () => {
+  if (!currentPlanId.value) return;
+  router.push(`/order-confirm?id=${currentPlanId.value}`);
+};
 
 const fetchNodes = async () => {
 
@@ -469,6 +500,31 @@ onMounted(() => {
 
   margin-bottom: 24px;
 
+  .quick-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .quick-btn {
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+
+    &.primary {
+      background: var(--theme-color, #3b82f6);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
 }
 
 

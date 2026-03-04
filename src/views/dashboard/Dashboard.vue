@@ -140,25 +140,6 @@
               </div>
             </div>
             <div class="subscription-actions">
-              <button v-if="showImportSubscription" class="btn-outline" :class="{
-                'btn-active': showImportCard,
-                'btn-highlight-btnbgcolor': DASHBOARD_CONFIG.importButtonHighlightBtnbgcolor
-              }" @click="toggleImportCard">
-                <IconShare :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.importSubscription') }}</span>
-              </button>
-              <button
-                  v-if="showRenewPlanButton"
-                  class="btn-outline renew-plan-btn"
-                  :class="{
-                  'renew-warning': isExpiringSoon && !isExpired,
-                  'renew-danger': isExpired
-                }"
-                  @click="renewPlan"
-              >
-                <IconShoppingCart :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.renewPlan') }}</span>
-              </button>
               <!-- 重置流量按钮 - 根据配置和流量状态显示 -->
               <button
                   v-if="showResetTrafficButton"
@@ -469,25 +450,33 @@
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">{{ card.title }}</div>
-            <div class="usage-card-main">
-              <span class="usage-percent">{{ card.remainingPercentage }}%</span>
-              <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+            <div class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
+              <template v-if="card.key === 'package'">
+                <span class="usage-percent">{{ formatPackageRemaining(card.remaining) }}</span>
+                <button class="package-add-btn" @click="goToTrafficPackageShop" :title="$t('dashboard.purchaseTrafficPackage')">
+                  <IconPlus :size="14" />
+                </button>
+              </template>
+              <template v-else>
+                <span class="usage-percent">{{ card.remainingPercentage }}%</span>
+                <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+              </template>
             </div>
-            <div class="section-progress-track">
+            <div v-if="card.key !== 'package'" class="section-progress-track">
               <div class="section-progress-fill" :style="{ width: `${card.remainingPercentage}%` }"></div>
             </div>
             <div class="usage-kpis">
-              <div class="usage-kpi">
+              <div class="usage-kpi" v-if="card.key !== 'package'">
                 <span class="usage-kpi-label">{{ $t('dashboard.used') }}</span>
                 <strong class="usage-kpi-value">{{ formatTraffic(card.used) }}</strong>
               </div>
-              <div class="usage-kpi">
+              <div class="usage-kpi" v-if="card.key !== 'package'">
                 <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
                 <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
               </div>
               <div class="usage-kpi">
                 <span class="usage-kpi-label">{{ $t('dashboard.remaining') }}</span>
-                <strong class="usage-kpi-value">{{ formatTraffic(card.remaining) }}</strong>
+                <strong class="usage-kpi-value">{{ card.key === 'package' ? formatPackageRemaining(card.remaining) : formatTraffic(card.remaining) }}</strong>
               </div>
             </div>
             <div v-if="card.key === 'subscription'" class="usage-reset-hint">
@@ -795,6 +784,7 @@ export default {
     IconAlertTriangle,
     IconX,
     IconCalendarPlus,
+    IconPlus,
     CommonDialog
   },
   setup() {
@@ -1440,6 +1430,15 @@ export default {
       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     };
 
+    const formatPackageRemaining = (bytes) => {
+      const gb = Math.max(bytes || 0, 0) / (1024 ** 3);
+      return `${gb.toFixed(2)} GB`;
+    };
+
+    const goToTrafficPackageShop = () => {
+      router.push({ path: '/shop', query: { filter: 'onetime' } });
+    };
+
     const hasPendingItems = computed(() => {
       return userStats.pendingOrders > 0;
     });
@@ -1988,6 +1987,8 @@ export default {
       importToClient,
       formatDate,
       formatTraffic,
+      formatPackageRemaining,
+      goToTrafficPackageShop,
       toggleImportCard,
       copySubscription,
       platforms,
@@ -2377,6 +2378,25 @@ export default {
           display: flex;
           align-items: baseline;
           gap: 8px;
+
+          &.package-main {
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+          }
+
+          .package-add-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            cursor: pointer;
+          }
         }
 
         .usage-percent {

@@ -94,6 +94,7 @@
         >
           <div class="card-header">
             <h2 class="card-title">{{ plan.name }}</h2>
+            <span v-if="isCurrentPlan(plan)" class="current-plan-badge">{{ $t("shop.plan.current") }}</span>
 
             <div
               class="card-badge glassmorphism stock-plenty"
@@ -249,7 +250,7 @@
               <span class="btn-text">{{
                 plan.capacity_limit === 0
                   ? $t("shop.plan.sold_out_btn")
-                  : $t("shop.plan.purchase")
+                  : $t(isCurrentPlan(plan) ? "shop.plan.renew" : "shop.plan.purchase")
               }}</span>
             </button>
           </div>
@@ -278,6 +279,7 @@ import { useI18n } from "vue-i18n";
 import { useToast } from "@/composables/useToast";
 
 import { fetchPlans, getCommConfig } from "@/api/shop";
+import { getSubscribe } from "@/api/dashboard";
 
 import { SHOP_CONFIG } from "@/utils/baseConfig";
 
@@ -326,6 +328,10 @@ export default {
     const { showToast } = useToast();
 
     const router = useRouter();
+    const initFilterFromRoute = () => {
+      const qf = router.currentRoute.value.query.filter;
+      if (qf === "onetime" || qf === "recurring" || qf === "all") selectedFilter.value = qf;
+    };
 
     const loading = reactive({
       plans: true,
@@ -340,6 +346,7 @@ export default {
     const currencySymbol = ref("¥");
 
     const selectedPriceType = reactive({});
+    const currentPlanId = ref(null);
 
     const paymentMethods = ref([]);
 
@@ -442,7 +449,7 @@ export default {
     };
 
     const getPlanMainPrice = (plan) => {
-      const priceType = getDisplayPriceType(plan);
+      const priceType = isCurrentPlan(plan) ? (plan.month_price !== null ? "month_price" : getDisplayPriceType(plan)) : getDisplayPriceType(plan);
 
       if (
         !priceType ||
@@ -463,6 +470,13 @@ export default {
     );
 
     watch(
+      () => router.currentRoute.value.query.filter,
+      () => {
+        initFilterFromRoute();
+      }
+    );
+
+    watch(
       () => currentLanguage.value,
       (newLanguage, oldLanguage) => {
         if (!oldLanguage || newLanguage === oldLanguage) {
@@ -475,7 +489,19 @@ export default {
 
     onMounted(() => {
       selectedFilter.value = "all";
+      initFilterFromRoute();
     });
+
+    const fetchCurrentSubscription = async () => {
+      try {
+        const response = await getSubscribe();
+        currentPlanId.value = response?.data?.plan_id || response?.data?.plan?.id || null;
+      } catch (error) {
+        console.error('Failed to fetch current subscription:', error);
+      }
+    };
+
+    const isCurrentPlan = (plan) => Number(plan?.id) === Number(currentPlanId.value);
 
     const fetchPlanData = async () => {
       loading.plans = true;
@@ -635,7 +661,7 @@ export default {
         return;
       }
 
-      const priceType = getDisplayPriceType(plan);
+      const priceType = isCurrentPlan(plan) ? (plan.month_price !== null ? "month_price" : getDisplayPriceType(plan)) : getDisplayPriceType(plan);
 
       router.push({
         path: "order-confirm",
@@ -727,7 +753,7 @@ export default {
       try {
         loading.plans = true;
 
-        await Promise.all([fetchPlanData(), fetchConfig()]);
+        await Promise.all([fetchPlanData(), fetchConfig(), fetchCurrentSubscription()]);
 
         loading.plans = false;
 
@@ -886,6 +912,7 @@ export default {
       SHOP_CONFIG,
 
       calculateDiscount,
+      isCurrentPlan,
     };
   },
 };
@@ -958,6 +985,17 @@ export default {
 
         padding-right: 10px;
       }
+
+  .current-plan-badge {
+    margin-top: 8px;
+    display: inline-flex;
+    font-size: 12px;
+    color: #1d4ed8;
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    border-radius: 999px;
+    padding: 2px 8px;
+  }
 
       .card-badge {
         display: flex;

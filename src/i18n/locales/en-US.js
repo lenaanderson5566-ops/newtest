@@ -197,6 +197,7 @@ export default {
         trafficPackageQuota: 'Traffic Package Quota',
         resetHint: 'Reset day: {day}',
         resetTimeLabel: 'Reset time',
+        purchaseTrafficPackage: 'Buy one-time traffic package',
         used: 'Used',
         total: 'Total',
         remaining: 'Remaining',
@@ -517,6 +518,8 @@ export default {
         reset_filter: 'Reset Filter',
         plan: {
             purchase: 'Purchase',
+            renew: 'Renew',
+            current: 'Your Current Plan',
             sold_out_btn: 'Sold Out',
             stock: {
                 plenty: 'Plenty in Stock',

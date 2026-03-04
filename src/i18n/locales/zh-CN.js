@@ -197,6 +197,7 @@ export default {
         trafficPackageQuota: '流量额度包',
         resetHint: '重置日：{day}',
         resetTimeLabel: '重置时间',
+        purchaseTrafficPackage: '购买一次性流量包',
         used: '已用',
         total: '总计',
         remaining: '剩余',
@@ -516,6 +517,8 @@ export default {
         reset_filter: '重置筛选',
         plan: {
             purchase: '购买',
+            renew: '续费',
+            current: '您的当前套餐',
             sold_out_btn: '已售罄',
             stock: {
                 plenty: '库存充足',
