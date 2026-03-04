@@ -24,18 +24,62 @@
 
           <p>{{ $t('nodes.welcome.description') || '查看并使用可用的服务器节点' }}</p>
           <div class="quick-actions">
-            <button class="quick-btn" @click="toggleImportPanel" :disabled="!subscriptionUrl">
+            <button class="quick-btn" :class="{ active: showImportPanel }" @click="toggleImportPanel" :disabled="!subscriptionUrl">
               {{ $t('dashboard.importSubscription') }}
               <IconChevronDown v-if="!showImportPanel" :size="14" />
               <IconChevronUp v-else :size="14" />
             </button>
-            <button class="quick-btn primary" @click="goRenewPlan" :disabled="!currentPlanId">{{ $t('dashboard.renewPlan') }}</button>
+            <button class="quick-btn" @click="goRenewPlan" :disabled="!currentPlanId">{{ $t('dashboard.renewPlan') }}</button>
             <button class="quick-btn" @click="goTickets">{{ $t('dashboard.ticketSupport') }}</button>
           </div>
-          <transition name="fade-slide">
-            <div v-if="showImportPanel && subscriptionUrl" class="quick-import-panel">
-              <button class="quick-btn" @click="copySubscriptionUrl">{{ $t('dashboard.copySubscription') }}</button>
-              <a class="quick-btn" :href="subscriptionUrl" target="_blank" rel="noopener noreferrer">{{ $t('dashboard.scanQRCode') }}</a>
+          <transition name="slide-fade">
+            <div v-if="showImportPanel && subscriptionUrl" class="import-panel">
+              <div class="import-header">
+                <h3>{{ $t('dashboard.importSubscription') }}</h3>
+                <button class="close-btn" @click="showImportPanel = false">
+                  <IconX :size="20" />
+                </button>
+              </div>
+              <div class="import-action copy-action" @click="copySubscriptionUrl">
+                <div class="import-icon"><IconCopy :size="24" /></div>
+                <div class="import-content">
+                  <div class="import-title">{{ $t('dashboard.copySubscription') }}</div>
+                  <div class="import-desc">{{ $t('dashboard.copySubscriptionDesc') }}</div>
+                </div>
+              </div>
+              <div class="import-action qrcode-action" @click="showQrCode = true">
+                <div class="import-icon"><IconQrcode :size="24" /></div>
+                <div class="import-content">
+                  <div class="import-title">{{ $t('dashboard.scanQRCode') }}</div>
+                  <div class="import-desc">{{ $t('dashboard.scanQRCodeDesc') }}</div>
+                </div>
+              </div>
+              <div class="platform-selector">
+                <button v-for="platform in platforms" :key="platform.id" class="platform-button" :class="{ active: activePlatform === platform.id }" @click="activePlatform = platform.id">
+                  <component :is="platform.icon" :size="16" />
+                  <span>{{ platform.label }}</span>
+                </button>
+              </div>
+              <div class="platform-section">
+                <div class="platform-title">{{ activePlatformLabel }}</div>
+                <div class="platform-options">
+                  <button class="platform-option" @click="openClientLink('shadowrocket')"><span>Shadowrocket</span></button>
+                  <button class="platform-option" @click="openClientLink('singbox')"><span>Singbox</span></button>
+                </div>
+              </div>
+            </div>
+          </transition>
+          <transition name="fade">
+            <div v-if="showQrCode" class="qrcode-modal-overlay" @click="showQrCode = false">
+              <div class="qrcode-modal" @click.stop>
+                <div class="qrcode-header">
+                  <h3>{{ $t('dashboard.scanQRCode') }}</h3>
+                  <button class="close-btn" @click="showQrCode = false"><IconX :size="20" /></button>
+                </div>
+                <div class="qrcode-content">
+                  <img :src="qrCodeUrl" alt="QR Code" />
+                </div>
+              </div>
             </div>
           </transition>
 
@@ -197,7 +241,7 @@
 
 <script setup>
 
-import { ref, onMounted, inject } from 'vue';
+import { ref, onMounted, inject, computed } from 'vue';
 
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -214,7 +258,14 @@ import {
 
   IconChevronDown,
 
-  IconChevronUp
+  IconChevronUp,
+  IconCopy,
+  IconQrcode,
+  IconX,
+  IconBrandApple,
+  IconBrandAndroid,
+  IconBrandWindows,
+  IconBrandFinder
 
 } from '@tabler/icons-vue';
 
@@ -222,6 +273,7 @@ import { fetchServerNodes } from '@/api/servers';
 
 import { getUserInfo } from '@/api/user';
 import { getSubscribe } from '@/api/dashboard';
+import QRCode from 'qrcode';
 
 
 import { NODES_CONFIG } from '@/utils/baseConfig';
@@ -255,6 +307,15 @@ const userInfo = ref(null);
 const currentPlanId = ref(null);
 const subscriptionUrl = ref('');
 const showImportPanel = ref(false);
+const showQrCode = ref(false);
+const qrCodeUrl = ref('');
+const activePlatform = ref('ios');
+const platforms = [
+  { id: 'ios', label: 'iOS', icon: IconBrandApple },
+  { id: 'android', label: 'Android', icon: IconBrandAndroid },
+  { id: 'windows', label: 'Windows', icon: IconBrandWindows },
+  { id: 'macos', label: 'MacOS', icon: IconBrandFinder }
+];
 
 
 
@@ -339,6 +400,32 @@ const copySubscriptionUrl = async () => {
 const toggleImportPanel = () => {
   if (!subscriptionUrl.value) return;
   showImportPanel.value = !showImportPanel.value;
+  if (showImportPanel.value) {
+    updateQRCode();
+  }
+};
+
+const activePlatformLabel = computed(() => {
+  const p = platforms.find((item) => item.id === activePlatform.value);
+  return p ? p.label : 'iOS';
+});
+
+const updateQRCode = async () => {
+  if (!subscriptionUrl.value) return;
+  try {
+    qrCodeUrl.value = await QRCode.toDataURL(subscriptionUrl.value, { width: 220, margin: 1 });
+  } catch (err) {
+    console.error('Failed to generate QR code:', err);
+  }
+};
+
+const openClientLink = (client) => {
+  if (!subscriptionUrl.value) return;
+  if (client === 'shadowrocket') {
+    window.open(`shadowrocket://add/sub://${window.btoa(subscriptionUrl.value)}`, '_blank');
+    return;
+  }
+  window.open(subscriptionUrl.value, '_blank');
 };
 
 const goRenewPlan = () => {
@@ -533,28 +620,22 @@ onMounted(() => {
     flex-wrap: wrap;
   }
 
-  .quick-import-panel {
-    margin-top: 10px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
   .quick-btn {
     border: 1px solid var(--border-color);
-    background: var(--card-bg);
-    color: var(--text-color);
-    border-radius: 8px;
-    padding: 8px 12px;
+    background: #fff;
+    color: #1f2937;
+    border-radius: 12px;
+    padding: 10px 18px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    font-size: 16px;
 
-    &.primary {
-      background: var(--theme-color, #3b82f6);
-      color: #fff;
-      border-color: transparent;
+    &.active {
+      border-color: rgba(var(--theme-color-rgb), 0.65);
+      color: rgba(var(--theme-color-rgb), 0.95);
+      background: rgba(var(--theme-color-rgb), 0.08);
     }
 
     &:disabled {
@@ -562,11 +643,127 @@ onMounted(() => {
       cursor: not-allowed;
     }
   }
+
+  .import-panel {
+    margin-top: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 16px;
+    background: var(--card-bg);
+
+    .import-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+
+      h3 { margin: 0; font-size: 20px; }
+    }
+
+    .import-action {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #f6f7fb;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .import-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(var(--theme-color-rgb), 0.9);
+      background: rgba(var(--theme-color-rgb), 0.12);
+    }
+
+    .import-title { font-size: 18px; font-weight: 600; }
+    .import-desc { color: #6b7280; font-size: 14px; }
+
+    .platform-selector {
+      display: flex;
+      gap: 12px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+
+    .platform-button {
+      border: 1px solid var(--border-color);
+      background: #f7f7fb;
+      border-radius: 999px;
+      padding: 8px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+
+      &.active {
+        border-color: rgba(var(--theme-color-rgb), 0.65);
+        color: rgba(var(--theme-color-rgb), 0.95);
+        background: #fff;
+      }
+    }
+
+    .platform-title {
+      font-size: 36px;
+      margin: 8px 0 12px;
+      font-weight: 600;
+    }
+
+    .platform-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .platform-option {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 22px 14px;
+      background: #f5f7fb;
+      font-size: 34px;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+    }
+  }
+
+  .qrcode-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+
+    .qrcode-modal {
+      background: #fff;
+      border-radius: 14px;
+      width: min(90vw, 320px);
+      padding: 14px;
+    }
+
+    .qrcode-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .qrcode-content {
+      display: flex;
+      justify-content: center;
+
+      img { width: 220px; height: 220px; }
+    }
+  }
 }
-
-
-
-
 
 .nodes-content {
 
