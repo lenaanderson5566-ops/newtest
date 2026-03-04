@@ -63,8 +63,14 @@
               <div class="platform-section">
                 <div class="platform-title">{{ activePlatformLabel }}</div>
                 <div class="platform-options">
-                  <button class="platform-option" @click="openClientLink('shadowrocket')"><span>Shadowrocket</span></button>
-                  <button class="platform-option" @click="openClientLink('singbox')"><span>Singbox</span></button>
+                  <button
+                    v-for="option in activePlatformOptions"
+                    :key="option.key"
+                    class="platform-option"
+                    @click="openClientLink(option.clientType)"
+                  >
+                    <span>{{ option.label }}</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -405,9 +411,32 @@ const toggleImportPanel = () => {
   }
 };
 
+const platformClientMap = {
+  ios: [
+    { key: 'shadowrocket', label: 'Shadowrocket', clientType: 'shadowrocket' },
+    { key: 'singbox-ios', label: 'Singbox', clientType: 'singbox-ios' }
+  ],
+  android: [
+    { key: 'v2rayng', label: 'V2rayNG', clientType: 'v2rayng' },
+    { key: 'singbox-android', label: 'Singbox', clientType: 'singbox-android' }
+  ],
+  windows: [
+    { key: 'clashverge', label: 'Clash Verge', clientType: 'clashverge' },
+    { key: 'singbox-windows', label: 'Singbox', clientType: 'singbox-windows' }
+  ],
+  macos: [
+    { key: 'clashx', label: 'ClashX', clientType: 'clashx' },
+    { key: 'singbox-macos', label: 'Singbox', clientType: 'singbox-macos' }
+  ]
+};
+
 const activePlatformLabel = computed(() => {
   const p = platforms.find((item) => item.id === activePlatform.value);
   return p ? p.label : 'iOS';
+});
+
+const activePlatformOptions = computed(() => {
+  return platformClientMap[activePlatform.value] || platformClientMap.ios;
 });
 
 const updateQRCode = async () => {
@@ -419,13 +448,34 @@ const updateQRCode = async () => {
   }
 };
 
-const openClientLink = (client) => {
+const openClientLink = (clientType) => {
   if (!subscriptionUrl.value) return;
-  if (client === 'shadowrocket') {
-    window.open(`shadowrocket://add/sub://${window.btoa(subscriptionUrl.value)}`, '_blank');
-    return;
+
+  const subscribeUrl = subscriptionUrl.value;
+  let url = subscribeUrl;
+
+  switch (clientType) {
+    case 'shadowrocket':
+      url = `shadowrocket://add/sub://${window.btoa(subscribeUrl).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}`;
+      break;
+    case 'v2rayng':
+      url = `v2rayng://install-sub?url=${encodeURIComponent(subscribeUrl)}`;
+      break;
+    case 'clashx':
+    case 'clashverge':
+      url = `clash://install-config?url=${encodeURIComponent(subscribeUrl)}`;
+      break;
+    case 'singbox-ios':
+    case 'singbox-android':
+    case 'singbox-windows':
+    case 'singbox-macos':
+      url = `sing-box://import-remote-profile?url=${encodeURIComponent(subscribeUrl)}`;
+      break;
+    default:
+      url = subscribeUrl;
   }
-  window.open(subscriptionUrl.value, '_blank');
+
+  window.open(url, '_blank');
 };
 
 const goRenewPlan = () => {
