@@ -377,6 +377,19 @@ export default {
       selectedFilter.value = filter;
     };
 
+    const normalizePriceValue = (plan, periodType) => {
+      if (!plan || !periodType) return null;
+      const rawValue = plan[periodType];
+      if (rawValue === null || rawValue === undefined || rawValue === "") {
+        return null;
+      }
+      const parsed = Number(rawValue);
+      return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
+    };
+
+    const hasPeriodPrice = (plan, periodType) =>
+      normalizePriceValue(plan, periodType) !== null;
+
     const getPlanMainPriceType = (plan) => {
       const priceTypes = SHOP_CONFIG.periodOrder || [
         "three_year_price",
@@ -392,33 +405,29 @@ export default {
         (type) => type !== "onetime_price"
       );
 
-      const defaultRecurring = recurringTypes.find(
-        (type) => plan[type] !== null
+      const defaultRecurring = recurringTypes.find((type) =>
+        hasPeriodPrice(plan, type)
       );
 
       if (defaultRecurring) {
         return defaultRecurring;
       }
 
-      if (plan.onetime_price !== null) {
+      if (hasPeriodPrice(plan, "onetime_price")) {
         return "onetime_price";
       }
 
-      return priceTypes.find((type) => plan[type] !== null) || priceTypes[0];
+      return priceTypes.find((type) => hasPeriodPrice(plan, type)) || priceTypes[0];
     };
 
     const getPlanMainPrice = (plan) => {
       const priceType = getDisplayPriceType(plan);
-
-      if (
-        !priceType ||
-        plan[priceType] === null ||
-        plan[priceType] === undefined
-      ) {
+      const priceValue = normalizePriceValue(plan, priceType);
+      if (priceValue === null) {
         return "--";
       }
 
-      return (plan[priceType] / 100).toFixed(2);
+      return (priceValue / 100).toFixed(2);
     };
 
     watch(
@@ -500,12 +509,8 @@ export default {
     });
 
     const getPriceByPeriod = (plan, periodType) => {
-      if (!plan || !periodType) return null;
-      const value = Number(plan[periodType]);
-      return Number.isFinite(value) && value > 0 ? value : null;
+      return normalizePriceValue(plan, periodType);
     };
-
-    const hasPeriodPrice = (plan, periodType) => getPriceByPeriod(plan, periodType) !== null;
 
     const isSameSpecPlan = (plan) => {
       if (isCurrentPlan(plan)) return true;
@@ -569,17 +574,17 @@ export default {
                   (type) => type !== "onetime_price"
                 );
 
-                const defaultRecurring = recurringTypes.find(
-                  (type) => plan[type] !== null
+                const defaultRecurring = recurringTypes.find((type) =>
+                  hasPeriodPrice(plan, type)
                 );
 
                 if (defaultRecurring) {
                   selectedPriceType[plan.id] = defaultRecurring;
-                } else if (plan.onetime_price !== null) {
+                } else if (hasPeriodPrice(plan, "onetime_price")) {
                   selectedPriceType[plan.id] = "onetime_price";
                 } else {
                   selectedPriceType[plan.id] =
-                    priceTypes.find((type) => plan[type] !== null) ||
+                    priceTypes.find((type) => hasPeriodPrice(plan, type)) ||
                     priceTypes[0];
                 }
               });
@@ -626,8 +631,8 @@ export default {
       const result = {};
 
       priceTypes.forEach((type) => {
-        if (plan[type] !== null && plan[type] !== undefined) {
-          result[type] = plan[type];
+        if (hasPeriodPrice(plan, type)) {
+          result[type] = normalizePriceValue(plan, type);
         }
       });
 
@@ -660,10 +665,11 @@ export default {
 
     const getSelectedPrice = (plan) => {
       const type = selectedPriceType[plan.id];
+      const priceValue = normalizePriceValue(plan, type);
 
-      if (plan[type] === null) return "--";
+      if (priceValue === null) return "--";
 
-      return (plan[type] / 100).toFixed(2);
+      return (priceValue / 100).toFixed(2);
     };
 
     const isJsonContent = (content) => {
@@ -735,7 +741,7 @@ export default {
     const selectPlanPriceType = (planId, type) => {
       const plan = plans.value.find((p) => p.id === planId);
 
-      if (plan && plan[type] !== null) {
+      if (plan && hasPeriodPrice(plan, type)) {
         selectedPriceType[planId] = type;
       }
     };
