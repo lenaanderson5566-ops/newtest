@@ -1521,26 +1521,16 @@ export default {
     };
 
     const getNextResetDateTime = (subscribe) => {
-      const timestamp =
-        subscribe?.reset_at ??
-        subscribe?.next_reset_at ??
-        subscribe?.reset_time ??
-        subscribe?.next_reset_time ??
-        subscribe?.plan?.reset_at ??
-        subscribe?.plan?.next_reset_at ??
-        subscribe?.plan?.reset_time ??
-        subscribe?.plan?.next_reset_time;
-      const resetAtDate = parseResetTimestamp(timestamp);
-      if (resetAtDate) {
-        return formatResetDateTime(resetAtDate);
-      }
+      const expiredAtDate = parseResetTimestamp(subscribe?.expired_at);
+      const resetDayValue = Number(subscribe?.reset_day ?? subscribe?.plan?.reset_day);
+      const effectiveResetDay = Number.isFinite(resetDayValue) && resetDayValue > 0
+        ? resetDayValue
+        : (expiredAtDate ? expiredAtDate.getDate() : null);
 
-      const resetDay = Number(subscribe?.reset_day ?? subscribe?.plan?.reset_day);
-      if (!Number.isFinite(resetDay) || resetDay <= 0) {
+      if (!Number.isFinite(effectiveResetDay) || effectiveResetDay <= 0) {
         return null;
       }
 
-      const expiredAtDate = parseResetTimestamp(subscribe?.expired_at);
       const now = new Date();
 
       const buildMonthlyDate = (year, month, day, hour, minute) => {
@@ -1552,15 +1542,15 @@ export default {
         const resetHour = expiredAtDate.getHours();
         const resetMinute = expiredAtDate.getMinutes();
 
-        let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), resetDay, resetHour, resetMinute);
+        let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), effectiveResetDay, resetHour, resetMinute);
         while (candidate <= now) {
-          candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, resetDay, resetHour, resetMinute);
+          candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, effectiveResetDay, resetHour, resetMinute);
         }
 
         if (candidate > expiredAtDate) {
-          candidate = buildMonthlyDate(expiredAtDate.getFullYear(), expiredAtDate.getMonth(), resetDay, resetHour, resetMinute);
+          candidate = buildMonthlyDate(expiredAtDate.getFullYear(), expiredAtDate.getMonth(), effectiveResetDay, resetHour, resetMinute);
           if (candidate > expiredAtDate) {
-            candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() - 1, resetDay, resetHour, resetMinute);
+            candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() - 1, effectiveResetDay, resetHour, resetMinute);
           }
         }
 
@@ -1571,9 +1561,9 @@ export default {
       const resetMinuteRaw = subscribe?.reset_minute ?? subscribe?.plan?.reset_minute;
       const resetHour = Number.isFinite(Number(resetHourRaw)) ? Number(resetHourRaw) : 0;
       const resetMinute = Number.isFinite(Number(resetMinuteRaw)) ? Number(resetMinuteRaw) : 0;
-      let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), resetDay, resetHour, resetMinute);
+      let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), effectiveResetDay, resetHour, resetMinute);
       if (candidate <= now) {
-        candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, resetDay, resetHour, resetMinute);
+        candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, effectiveResetDay, resetHour, resetMinute);
       }
       return formatResetDateTime(candidate);
     };
