@@ -403,16 +403,12 @@
             </div>
             <div class="usage-kpis">
               <div class="usage-kpi" v-if="card.key !== 'package'">
-                <span class="usage-kpi-label">{{ $t('dashboard.used') }}</span>
-                <strong class="usage-kpi-value">{{ formatTraffic(card.used) }}</strong>
-              </div>
-              <div class="usage-kpi" v-if="card.key !== 'package'">
                 <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
                 <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
               </div>
               <div class="usage-kpi">
                 <span class="usage-kpi-label">{{ $t('dashboard.remaining') }}</span>
-                <strong class="usage-kpi-value">{{ card.key === 'package' ? formatPackageRemaining(card.remaining) : formatTraffic(card.remaining) }}</strong>
+                <strong class="usage-kpi-value">{{ formatTraffic(card.remaining) }}</strong>
               </div>
             </div>
             <div v-if="card.key === 'subscription'" class="usage-reset-hint">
@@ -1300,8 +1296,9 @@ export default {
           trafficMetrics.subscriptionQuotaRemainingBytes = Math.max(subscriptionQuotaRemainingBytes ?? 0, 0);
           trafficMetrics.packageQuotaRemainingBytes = Math.max(packageQuotaRemainingBytes ?? 0, 0);
 
-          if (subscribe.reset_day) {
-            userPlan.value.resetDay = subscribe.reset_day;
+          const resetDay = subscribe.reset_day ?? subscribe.plan?.reset_day;
+          if (resetDay) {
+            userPlan.value.resetDay = resetDay;
           }
           userPlan.value.resetDateTime = getNextResetDateTime(subscribe);
           if (subscribe.subscribe_url) {
@@ -1552,18 +1549,53 @@ export default {
       return `${year}-${month}-${day} ${hours}:${minutes}`;
     };
 
-    const getNextResetDateTime = (subscribe) => {
-      const timestamp = subscribe?.reset_at ?? subscribe?.next_reset_at ?? subscribe?.reset_time ?? subscribe?.next_reset_time;
-      const parsedTimestamp = Number(timestamp);
-      if (Number.isFinite(parsedTimestamp) && parsedTimestamp > 0) {
-        return formatResetDateTime(new Date(parsedTimestamp * 1000));
+    const parseResetTimestamp = (value) => {
+      if (value === null || value === undefined || value === '') return null;
+
+      if (value instanceof Date) {
+        return Number.isNaN(value.getTime()) ? null : value;
       }
 
-      const resetDay = Number(subscribe?.reset_day);
+      const numeric = Number(value);
+      if (Number.isFinite(numeric) && numeric > 0) {
+        const timestampMs = numeric > 1e12 ? numeric : numeric * 1000;
+        const date = new Date(timestampMs);
+        return Number.isNaN(date.getTime()) ? null : date;
+      }
+
+      if (typeof value === 'string') {
+        const normalized = value.trim().replace(/-/g, '/');
+        const date = new Date(normalized);
+        if (!Number.isNaN(date.getTime())) {
+          return date;
+        }
+      }
+
+      return null;
+    };
+
+    const getNextResetDateTime = (subscribe) => {
+      const timestamp =
+        subscribe?.reset_at ??
+        subscribe?.next_reset_at ??
+        subscribe?.reset_time ??
+        subscribe?.next_reset_time ??
+        subscribe?.plan?.reset_at ??
+        subscribe?.plan?.next_reset_at ??
+        subscribe?.plan?.reset_time ??
+        subscribe?.plan?.next_reset_time;
+      const resetAtDate = parseResetTimestamp(timestamp);
+      if (resetAtDate) {
+        return formatResetDateTime(resetAtDate);
+      }
+
+      const resetDay = Number(subscribe?.reset_day ?? subscribe?.plan?.reset_day);
       if (!Number.isFinite(resetDay) || resetDay <= 0) return null;
 
-      const resetHour = Number.isFinite(Number(subscribe?.reset_hour)) ? Number(subscribe.reset_hour) : 0;
-      const resetMinute = Number.isFinite(Number(subscribe?.reset_minute)) ? Number(subscribe.reset_minute) : 0;
+      const resetHourRaw = subscribe?.reset_hour ?? subscribe?.plan?.reset_hour;
+      const resetMinuteRaw = subscribe?.reset_minute ?? subscribe?.plan?.reset_minute;
+      const resetHour = Number.isFinite(Number(resetHourRaw)) ? Number(resetHourRaw) : 0;
+      const resetMinute = Number.isFinite(Number(resetMinuteRaw)) ? Number(resetMinuteRaw) : 0;
       const now = new Date();
       const candidate = new Date(now.getFullYear(), now.getMonth(), Math.max(1, Math.min(resetDay, 28)), resetHour, resetMinute, 0);
       if (candidate <= now) {
