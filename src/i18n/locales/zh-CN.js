@@ -196,6 +196,7 @@ export default {
         subscriptionMonthlyTraffic: '套餐月流量',
         trafficPackageQuota: '流量额度包',
         resetHint: '重置日：{day}',
+        resetTimeLabel: '重置时间',
         used: '已用',
         total: '总计',
         remaining: '剩余',

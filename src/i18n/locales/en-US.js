@@ -196,6 +196,7 @@ export default {
         subscriptionMonthlyTraffic: 'Monthly Subscription Traffic',
         trafficPackageQuota: 'Traffic Package Quota',
         resetHint: 'Reset day: {day}',
+        resetTimeLabel: 'Reset time',
         used: 'Used',
         total: 'Total',
         remaining: 'Remaining',

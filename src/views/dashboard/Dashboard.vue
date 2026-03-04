@@ -491,7 +491,7 @@
               </div>
             </div>
             <div v-if="card.key === 'subscription'" class="usage-reset-hint">
-              {{ $t('dashboard.resetHint', { day: userPlan.resetDay || '-' }) }}
+              {{ $t('dashboard.resetTimeLabel') }}：{{ userPlan.resetDateTime || '-' }}
             </div>
           </div>
 
@@ -501,7 +501,7 @@
 
       <div class="dashboard-card usage-trend-card" v-if="hasPlan">
         <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.usageDetails') }}</h2>
+          <h2 class="card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
         <div class="card-body">
           <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
@@ -807,6 +807,7 @@ export default {
       deviceLimit: null,
       aliveIp: 0,
       resetDay: null,
+      resetDateTime: null,
       subscriptionQuotaUsed: null,
       subscriptionQuotaRemaining: null,
       packageQuotaRemaining: null
@@ -1337,6 +1338,7 @@ export default {
           if (subscribe.reset_day) {
             userPlan.value.resetDay = subscribe.reset_day;
           }
+          userPlan.value.resetDateTime = getNextResetDateTime(subscribe);
           if (subscribe.subscribe_url) {
             userPlan.value.subscribeUrl = subscribe.subscribe_url;
           }
@@ -1469,6 +1471,41 @@ export default {
       if (!dateString) return '';
       const date = new Date(dateString * 1000);
       return date.toLocaleDateString();
+    };
+
+    const formatResetDateTime = (date) => {
+      if (!(date instanceof Date) || Number.isNaN(date.getTime())) return null;
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      if (String(locale.value || '').toLowerCase().startsWith('zh')) {
+        return `${year}年${month}月${day}日 ${hours}:${minutes}`;
+      }
+      return `${year}-${month}-${day} ${hours}:${minutes}`;
+    };
+
+    const getNextResetDateTime = (subscribe) => {
+      const timestamp = subscribe?.reset_at ?? subscribe?.next_reset_at ?? subscribe?.reset_time ?? subscribe?.next_reset_time;
+      const parsedTimestamp = Number(timestamp);
+      if (Number.isFinite(parsedTimestamp) && parsedTimestamp > 0) {
+        return formatResetDateTime(new Date(parsedTimestamp * 1000));
+      }
+
+      const resetDay = Number(subscribe?.reset_day);
+      if (!Number.isFinite(resetDay) || resetDay <= 0) return null;
+
+      const resetHour = Number.isFinite(Number(subscribe?.reset_hour)) ? Number(subscribe.reset_hour) : 0;
+      const resetMinute = Number.isFinite(Number(subscribe?.reset_minute)) ? Number(subscribe.reset_minute) : 0;
+      const now = new Date();
+      const candidate = new Date(now.getFullYear(), now.getMonth(), Math.max(1, Math.min(resetDay, 28)), resetHour, resetMinute, 0);
+      if (candidate <= now) {
+        candidate.setMonth(candidate.getMonth() + 1);
+      }
+      const maxDay = new Date(candidate.getFullYear(), candidate.getMonth() + 1, 0).getDate();
+      candidate.setDate(Math.min(resetDay, maxDay));
+      return formatResetDateTime(candidate);
     };
 
     const updateQRCodeUrl = () => {
@@ -2343,15 +2380,16 @@ export default {
         }
 
         .usage-percent {
-          font-size: 50px;
+          font-size: 40px;
           line-height: 1;
           font-weight: 700;
           color: #111827;
         }
 
         .usage-percent-label {
-          font-size: 15px;
-          color: #111827;
+          font-size: 13px;
+          color: #4b5563;
+          font-weight: 500;
         }
 
         .usage-kpis {
@@ -2372,13 +2410,13 @@ export default {
 
         .usage-kpi-label {
           font-size: 12px;
-          color: #9ca3af;
+          color: #6b7280;
           line-height: 1;
         }
 
         .usage-kpi-value {
-          font-size: 16px;
-          color: #111827;
+          font-size: 15px;
+          color: #1f2937;
           font-weight: 600;
           line-height: 1.2;
         }
@@ -2386,7 +2424,7 @@ export default {
         .usage-reset-hint {
           width: 100%;
           font-size: 12px;
-          color: #9ca3af;
+          color: #6b7280;
         }
 
         .section-progress-track {
@@ -2399,7 +2437,7 @@ export default {
 
         .section-progress-fill {
           height: 100%;
-          background: linear-gradient(90deg, #22c55e, #22c55e);
+          background: linear-gradient(90deg, #3b82f6, #2563eb);
           border-radius: inherit;
           transition: width 0.35s ease;
         }
