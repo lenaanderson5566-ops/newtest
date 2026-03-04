@@ -39,8 +39,12 @@ export default {
     const languages = [
       { code: 'en-US', name: 'English' },
       { code: 'zh-CN', name: '中文' },
+      { code: 'zh-TW', name: '繁體中文' },
       { code: 'ja-JP', name: '日本語' },
-      { code: 'ko-KR', name: '한국어' }
+      { code: 'ko-KR', name: '한국어' },
+      { code: 'ru-RU', name: 'Русский' },
+      { code: 'fa-IR', name: 'فارسی' },
+      { code: 'vi-VN', name: 'Tiếng Việt' }
     ];
 
     const currentLanguage = computed(() => locale.value);
@@ -49,8 +53,12 @@ export default {
       const map = {
         'en-US': 'EN',
         'zh-CN': '中文',
+        'zh-TW': '繁中',
         'ja-JP': '日本語',
-        'ko-KR': '한국어'
+        'ko-KR': '한국어',
+        'ru-RU': 'RU',
+        'fa-IR': 'FA',
+        'vi-VN': 'VI'
       };
       return map[currentLanguage.value] || 'EN';
     });
