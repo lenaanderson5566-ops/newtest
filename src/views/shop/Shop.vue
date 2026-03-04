@@ -498,14 +498,11 @@ export default {
       const currentPrice = getComparablePlanPrice(currentPlan.value);
       const targetPrice = getComparablePlanPrice(plan);
 
-      if (currentPrice > 0 && targetPrice > 0 && targetPrice === currentPrice) {
+      if (targetPrice === currentPrice) {
         return true;
       }
 
-      return (
-        Number(plan?.transfer_enable || 0) === Number(currentSubscription.transferEnable || 0) &&
-        Number(plan?.speed_limit || 0) === Number(currentSubscription.speedLimit || 0)
-      );
+      return false;
     };
 
     const isHigherSpecPlan = (plan) => {
@@ -514,11 +511,7 @@ export default {
 
       const currentPrice = getComparablePlanPrice(currentPlan.value);
       const targetPrice = getComparablePlanPrice(plan);
-      if (currentPrice > 0 && targetPrice > 0) {
-        return targetPrice > currentPrice;
-      }
-
-      return Number(plan?.transfer_enable || 0) > Number(currentSubscription.transferEnable || 0);
+      return targetPrice > currentPrice;
     };
 
     const getPurchaseButtonText = (plan) => {
