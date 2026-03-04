@@ -517,6 +517,11 @@ export default {
         no_plans_found: 'No plans found matching the criteria',
         try_different_filter: 'Please try different filter conditions',
         reset_filter: 'Reset Filter',
+        traffic_package: {
+            entry: 'Buy Traffic Package',
+            title: 'Buy Traffic Package',
+            description: 'Select a one-time quota package. It will be added to your account immediately after purchase.'
+        },
         plan: {
             purchase: 'Purchase',
             renew: 'Renew',

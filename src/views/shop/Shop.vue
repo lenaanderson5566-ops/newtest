@@ -27,9 +27,9 @@
         </div>
       </div>
 
-      <!-- 筛选选项卡 - 设计成圆形切换按钮 -->
+      <!-- 筛选选项卡 - 周期切换 -->
 
-      <div class="filter-toggle-container">
+      <div class="filter-toggle-container" v-if="filters.length > 0">
         <div class="filter-toggle-wrapper">
           <div
             v-for="filter in filters"
@@ -49,6 +49,13 @@
         </div>
       </div>
 
+      <div class="traffic-package-entry" v-if="trafficPackagePlans.length > 0">
+        <button class="btn-traffic-package" @click="showTrafficPackageModal = true">
+          <IconShoppingCart class="btn-icon" />
+          {{ $t('shop.traffic_package.entry') }}
+        </button>
+      </div>
+
       <!-- 套餐列表 -->
 
       <div class="plans-wrapper">
@@ -64,7 +71,7 @@
 
           <p>{{ $t("shop.try_different_filter") }}</p>
 
-          <button class="btn-reset-filter" @click="selectedFilter = 'all'">
+          <button class="btn-reset-filter" @click="selectedFilter = fallbackFilterValue">
             {{ $t("shop.reset_filter") }}
           </button>
         </div>
@@ -147,32 +154,6 @@
                   )
                 }}</span>
               </div>
-
-              <!-- 支持的周期标签 - 改进显示效果 -->
-
-              <div class="supported-periods" v-if="!SHOP_CONFIG.hidePeriodTabs">
-                <div class="period-labels">
-                  <span
-                    v-for="(price, type) in getPlanPrices(plan)"
-                    :key="type"
-                    class="period-tag"
-                    :class="{
-                      active: getDisplayPriceType(plan) === type,
-
-                      disabled: price === null,
-                    }"
-                    @click="
-                      price !== null && selectPlanPriceType(plan.id, type)
-                    "
-                  >
-                    <IconCheck v-if="price !== null" class="tag-icon check" />
-
-                    <IconX v-else class="tag-icon error" />
-
-                    {{ $t(`shop.plan.price_options.${getPriceTypeKey(type)}`) }}
-                  </span>
-                </div>
-              </div>
             </div>
 
             <!-- 周期折扣计算 -->
@@ -252,6 +233,45 @@
           </div>
         </div>
       </div>
+
+
+      <transition name="fade">
+        <div
+          v-if="showTrafficPackageModal"
+          class="traffic-package-modal-overlay"
+          @click="showTrafficPackageModal = false"
+        >
+          <div class="traffic-package-modal" @click.stop>
+            <div class="traffic-package-modal-header">
+              <h3>{{ $t('shop.traffic_package.title') }}</h3>
+              <button class="close-btn" @click="showTrafficPackageModal = false">×</button>
+            </div>
+            <p class="traffic-package-desc">{{ $t('shop.traffic_package.description') }}</p>
+            <div class="traffic-package-list">
+              <div
+                class="traffic-package-item"
+                v-for="plan in trafficPackagePlans"
+                :key="`traffic-${plan.id}`"
+              >
+                <div class="item-main">
+                  <div class="item-name">{{ plan.name }}</div>
+                  <div class="item-price">{{ currencySymbol }}{{ (normalizePriceValue(plan, 'onetime_price') / 100).toFixed(2) }}</div>
+                </div>
+                <div class="item-content" v-if="!isJsonContent(plan.content)">{{ plan.content }}</div>
+                <button
+                  class="btn-purchase btn-traffic-buy"
+                  :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
+                  :disabled="plan.capacity_limit === 0"
+                  @click="purchaseTrafficPackage(plan)"
+                >
+                  <IconShoppingCart class="btn-icon" />
+                  <span class="btn-text">{{ plan.capacity_limit === 0 ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
     </div>
   </div>
 
@@ -323,7 +343,7 @@ export default {
     const initFilterFromRoute = () => {
       const qf = router.currentRoute.value.query.filter;
       if (!qf) return;
-      if (qf === "all" || RECURRING_PERIOD_TYPES.includes(qf)) {
+      if (RECURRING_PERIOD_TYPES.includes(qf)) {
         selectedFilter.value = qf;
       }
     };
@@ -341,6 +361,7 @@ export default {
     const currencySymbol = ref("¥");
 
     const selectedPriceType = reactive({});
+    const showTrafficPackageModal = ref(false);
     const currentPlanId = ref(null);
     const currentSubscription = reactive({
       planName: "",
@@ -353,22 +374,21 @@ export default {
 
     const paymentMethods = ref([]);
 
-    const selectedFilter = ref("all");
+    const selectedFilter = ref("month_price");
 
     const filterToggle = ref(null);
 
     const filters = computed(() => {
-      const periodFilters = RECURRING_PERIOD_TYPES
+      return RECURRING_PERIOD_TYPES
         .filter((type) => plans.value.some((plan) => hasPeriodPrice(plan, type)))
         .map((type) => ({
           value: type,
           labelKey: `shop.plan.price_options.${getPriceTypeKey(type)}`,
         }));
+    });
 
-      return [
-        { value: "all", labelKey: "shop.filter.all" },
-        ...periodFilters,
-      ];
+    const fallbackFilterValue = computed(() => {
+      return filters.value[0]?.value || RECURRING_PERIOD_TYPES[0];
     });
 
     const currentLanguage = computed(() => locale.value);
@@ -435,7 +455,7 @@ export default {
       (nextFilters) => {
         const validFilterValues = nextFilters.map((filter) => filter.value);
         if (!validFilterValues.includes(selectedFilter.value)) {
-          selectedFilter.value = "all";
+          selectedFilter.value = fallbackFilterValue.value;
         }
       },
       { immediate: true }
@@ -495,6 +515,10 @@ export default {
     const isCurrentPlan = (plan) => Number(plan?.id) === Number(currentPlanId.value);
 
     const isTrafficPackagePlan = (plan) => isOnetimeOnly(plan);
+
+    const trafficPackagePlans = computed(() =>
+      plans.value.filter((plan) => hasPeriodPrice(plan, "onetime_price"))
+    );
 
     const currentPlan = computed(() => {
       return plans.value.find((plan) => isCurrentPlan(plan)) || null;
@@ -716,18 +740,29 @@ export default {
       });
     };
 
+    const purchaseTrafficPackage = (plan) => {
+      if (plan.capacity_limit === 0) {
+        showToast(t("shop.plan.stock.sold_out"), "error");
+        return;
+      }
+      showTrafficPackageModal.value = false;
+      router.push({
+        path: "order-confirm",
+        query: {
+          id: plan.id,
+          period: "onetime_price",
+        },
+      });
+    };
+
     const visiblePlans = computed(() => plans.value.filter((plan) => !isOnetimeOnly(plan)));
 
     const filteredPlans = computed(() => {
-      if (selectedFilter.value === "all") {
-        return visiblePlans.value;
-      }
-
       if (RECURRING_PERIOD_TYPES.includes(selectedFilter.value)) {
         return visiblePlans.value.filter((plan) => hasPeriodPrice(plan, selectedFilter.value));
       }
 
-      return visiblePlans.value;
+      return visiblePlans.value.filter((plan) => hasPeriodPrice(plan, fallbackFilterValue.value));
     });
 
     const hasRecurringPrice = (plan) => {
@@ -875,6 +910,7 @@ export default {
       selectedPriceType,
 
       selectedFilter,
+      fallbackFilterValue,
 
       filteredPlans,
 
@@ -909,6 +945,10 @@ export default {
       getDisplayPriceType,
       getPurchaseButtonText,
       currentSubscription,
+      showTrafficPackageModal,
+      trafficPackagePlans,
+      purchaseTrafficPackage,
+      normalizePriceValue,
 
       SHOP_CONFIG,
 
@@ -1406,80 +1446,6 @@ export default {
           color: var(--secondary-text-color);
         }
       }
-
-      .supported-periods {
-        margin-top: 15px;
-
-        .period-labels {
-          display: flex;
-
-          justify-content: center;
-
-          flex-wrap: wrap;
-
-          gap: 6px;
-
-          .period-tag {
-            padding: 5px 10px;
-
-            border-radius: 6px;
-
-            font-size: 12px;
-
-            background-color: rgba(var(--border-color-rgb), 0.1);
-
-            color: var(--secondary-text-color);
-
-            font-weight: 500;
-
-            cursor: pointer;
-
-            transition: all 0.3s ease;
-
-            border: 1px solid transparent;
-
-            display: flex;
-
-            align-items: center;
-
-            .tag-icon {
-              margin-right: 4px;
-
-              width: 14px;
-
-              height: 14px;
-
-              &.check {
-                color: #4caf50;
-              }
-
-              &.error {
-                color: #f44336;
-              }
-            }
-
-            &:hover:not(.disabled) {
-              background-color: rgba(var(--theme-color-rgb), 0.08);
-
-              color: var(--text-color);
-            }
-
-            &.active {
-              background-color: rgba(var(--theme-color-rgb), 0.1);
-
-              color: var(--text-color);
-
-              border-color: rgba(var(--theme-color-rgb), 0.2);
-            }
-
-            &.disabled {
-              opacity: 0.5;
-
-              cursor: default;
-            }
-          }
-        }
-      }
     }
 
     .discount-calculation {
@@ -1816,6 +1782,127 @@ export default {
     }
   }
 
+
+
+  .traffic-package-entry {
+    display: flex;
+    justify-content: center;
+    margin: -10px 0 20px;
+
+    .btn-traffic-package {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(var(--theme-color-rgb), 0.25);
+      background: rgba(var(--theme-color-rgb), 0.08);
+      color: var(--text-color);
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(var(--theme-color-rgb), 0.14);
+      }
+
+      .btn-icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .traffic-package-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .traffic-package-modal {
+    width: min(760px, 100%);
+    max-height: 80vh;
+    overflow: auto;
+    background: var(--card-bg-color);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+
+    .traffic-package-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+
+      h3 {
+        margin: 0;
+      }
+
+      .close-btn {
+        border: none;
+        background: transparent;
+        font-size: 24px;
+        line-height: 1;
+        cursor: pointer;
+        color: var(--text-color);
+      }
+    }
+
+    .traffic-package-desc {
+      margin: 0 0 16px;
+      color: var(--secondary-text-color);
+    }
+
+    .traffic-package-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .traffic-package-item {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .item-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .item-name {
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .item-price {
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .item-content {
+        font-size: 13px;
+        color: var(--secondary-text-color);
+        line-height: 1.5;
+        max-height: 60px;
+        overflow: hidden;
+      }
+
+      .btn-traffic-buy {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
   .no-plans-message {
     grid-column: 1 / -1;
 

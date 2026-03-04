@@ -516,6 +516,11 @@ export default {
         no_plans_found: '未找到符合条件的套餐',
         try_different_filter: '请尝试其他筛选条件',
         reset_filter: '重置筛选',
+        traffic_package: {
+            entry: '购买流量额度包',
+            title: '购买流量额度包',
+            description: '选择一次性额度包，购买后将立即叠加到当前账户。'
+        },
         plan: {
             purchase: '购买',
             renew: '续费',
