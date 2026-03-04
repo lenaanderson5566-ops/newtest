@@ -10,20 +10,6 @@
 
         <div class="card-body">
           <p>{{ $t("shop.description") }}</p>
-          <div class="plan-summary" v-if="currentSubscription.planName">
-            <div class="plan-summary-item">
-              <span class="label">{{ $t("shop.current_plan_info.plan") }}</span>
-              <strong>{{ currentSubscription.planName }}</strong>
-            </div>
-            <div class="plan-summary-item">
-              <span class="label">{{ $t("shop.current_plan_info.expire") }}</span>
-              <strong>{{ currentSubscription.expireDate || $t("dashboard.permanent") }}</strong>
-            </div>
-            <div class="plan-summary-item">
-              <span class="label">{{ $t("shop.current_plan_info.traffic") }}</span>
-              <strong>{{ currentSubscription.usedTraffic }} / {{ currentSubscription.totalTraffic }}</strong>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -318,14 +304,6 @@ export default {
 
     const selectedPriceType = reactive({});
     const currentPlanId = ref(null);
-    const currentSubscription = reactive({
-      planName: "",
-      expireDate: "",
-      totalTraffic: "--",
-      usedTraffic: "--",
-      transferEnable: 0,
-      speedLimit: 0,
-    });
 
     const paymentMethods = ref([]);
 
@@ -449,22 +427,6 @@ export default {
         idx += 1;
       }
       return `${size.toFixed(size >= 10 || idx === 0 ? 0 : 1)} ${units[idx]}`;
-    };
-
-    const fetchCurrentSubscription = async () => {
-      try {
-        const response = await getSubscribe();
-        const data = response?.data || {};
-        currentPlanId.value = data.plan_id || data.plan?.id || null;
-        currentSubscription.planName = data.plan?.name || "";
-        currentSubscription.expireDate = data.expired_at ? new Date(data.expired_at * 1000).toLocaleDateString() : "";
-        currentSubscription.totalTraffic = formatTraffic(data.transfer_enable);
-        currentSubscription.usedTraffic = formatTraffic(data.u + data.d);
-        currentSubscription.transferEnable = Number(data.transfer_enable || 0);
-        currentSubscription.speedLimit = Number(data.plan?.speed_limit || 0);
-      } catch (error) {
-        console.error('Failed to fetch current subscription:', error);
-      }
     };
 
     const isCurrentPlan = (plan) => Number(plan?.id) === Number(currentPlanId.value);
@@ -742,7 +704,7 @@ export default {
       try {
         loading.plans = true;
 
-        await Promise.all([fetchPlanData(), fetchConfig(), fetchCurrentSubscription()]);
+        await Promise.all([fetchPlanData(), fetchConfig()]);
 
         loading.plans = false;
 
@@ -880,7 +842,6 @@ export default {
 
       getDisplayPriceType,
       getPurchaseButtonText,
-      currentSubscription,
       normalizePriceValue,
 
       SHOP_CONFIG,
@@ -908,33 +869,6 @@ export default {
 
   .welcome-card {
     margin-bottom: 24px;
-
-    .plan-summary {
-      margin-top: 12px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
-
-      .plan-summary-item {
-        background: rgba(var(--theme-color-rgb), 0.08);
-        border: 1px solid rgba(var(--theme-color-rgb), 0.2);
-        border-radius: 10px;
-        padding: 10px 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-
-        .label {
-          color: var(--text-muted);
-          font-size: 12px;
-        }
-
-        strong {
-          color: var(--text-color);
-          font-size: 14px;
-        }
-      }
-    }
   }
 
   .dashboard-card {

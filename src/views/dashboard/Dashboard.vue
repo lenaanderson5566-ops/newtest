@@ -412,6 +412,9 @@
                 <strong class="usage-kpi-value">{{ formatTraffic(card.remaining) }}</strong>
               </div>
             </div>
+            <div v-if="card.key === 'package'" class="usage-package-note">
+              套餐流量用完后，将自动使用流量额度包继续使用。
+            </div>
             <div v-if="card.key === 'subscription'" class="usage-reset-hint">
               {{ $t('dashboard.resetTimeLabel') }}：{{ userPlan.resetDateTime || '-' }}
             </div>
@@ -1518,6 +1521,36 @@ export default {
     };
 
     const getNextResetDateTime = (subscribe) => {
+      const resetDay = Number(subscribe?.reset_day ?? subscribe?.plan?.reset_day);
+      if (!Number.isFinite(resetDay) || resetDay <= 0) return null;
+
+      const expiredAtDate = parseResetTimestamp(subscribe?.expired_at);
+      const now = new Date();
+
+      const buildMonthlyDate = (year, month, day, hour, minute) => {
+        const maxDay = new Date(year, month + 1, 0).getDate();
+        return new Date(year, month, Math.min(day, maxDay), hour, minute, 0);
+      };
+
+      if (expiredAtDate) {
+        const resetHour = expiredAtDate.getHours();
+        const resetMinute = expiredAtDate.getMinutes();
+
+        let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), resetDay, resetHour, resetMinute);
+        while (candidate <= now) {
+          candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, resetDay, resetHour, resetMinute);
+        }
+
+        if (candidate > expiredAtDate) {
+          candidate = buildMonthlyDate(expiredAtDate.getFullYear(), expiredAtDate.getMonth(), resetDay, resetHour, resetMinute);
+          if (candidate > expiredAtDate) {
+            candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() - 1, resetDay, resetHour, resetMinute);
+          }
+        }
+
+        return formatResetDateTime(candidate);
+      }
+
       const timestamp =
         subscribe?.reset_at ??
         subscribe?.next_reset_at ??
@@ -1532,20 +1565,14 @@ export default {
         return formatResetDateTime(resetAtDate);
       }
 
-      const resetDay = Number(subscribe?.reset_day ?? subscribe?.plan?.reset_day);
-      if (!Number.isFinite(resetDay) || resetDay <= 0) return null;
-
       const resetHourRaw = subscribe?.reset_hour ?? subscribe?.plan?.reset_hour;
       const resetMinuteRaw = subscribe?.reset_minute ?? subscribe?.plan?.reset_minute;
       const resetHour = Number.isFinite(Number(resetHourRaw)) ? Number(resetHourRaw) : 0;
       const resetMinute = Number.isFinite(Number(resetMinuteRaw)) ? Number(resetMinuteRaw) : 0;
-      const now = new Date();
-      const candidate = new Date(now.getFullYear(), now.getMonth(), Math.max(1, Math.min(resetDay, 28)), resetHour, resetMinute, 0);
+      let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), resetDay, resetHour, resetMinute);
       if (candidate <= now) {
-        candidate.setMonth(candidate.getMonth() + 1);
+        candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, resetDay, resetHour, resetMinute);
       }
-      const maxDay = new Date(candidate.getFullYear(), candidate.getMonth() + 1, 0).getDate();
-      candidate.setDate(Math.min(resetDay, maxDay));
       return formatResetDateTime(candidate);
     };
 
@@ -2531,6 +2558,14 @@ export default {
           color: #1f2937;
           font-weight: 600;
           line-height: 1.2;
+        }
+
+        .usage-package-note {
+          width: 100%;
+          margin-top: 6px;
+          font-size: 12px;
+          color: #6b7280;
+          line-height: 1.45;
         }
 
         .usage-reset-hint {
