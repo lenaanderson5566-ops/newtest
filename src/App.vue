@@ -35,6 +35,7 @@
     </div>
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
+    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth }]">
     <router-view v-slot="{ Component, route }">
       <transition 
         name="page-transition" 
@@ -50,6 +51,7 @@
         </keep-alive>
       </transition>
     </router-view>
+    </div>
     
     <!-- 全局Toast通知 - 放在最外层，确保不受页面切换影响 -->
     <Toast />
@@ -343,6 +345,21 @@ export default {
       box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.15);
       transform: translateY(-2px);
     }
+  }
+}
+
+.app-content-wrapper {
+  width: 100%;
+}
+
+@media (min-width: 906px) {
+  .app-content-wrapper.with-left-nav {
+    padding-left: 240px;
+    padding-top: 76px;
+  }
+
+  .site-logo {
+    left: 24px;
   }
 }
 

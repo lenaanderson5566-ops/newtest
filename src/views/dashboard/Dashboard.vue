@@ -499,6 +499,18 @@
         </template>
       </div>
 
+      <div class="dashboard-card usage-trend-card" v-if="hasPlan">
+        <div class="card-header">
+          <h2 class="card-title">{{ $t('dashboard.usageDetails') }}</h2>
+        </div>
+        <div class="card-body">
+          <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
+          <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
+          <div v-else-if="!trafficTrendData.length" class="trend-state">{{ $t('trafficLog.noTrafficData') }}</div>
+          <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
+        </div>
+      </div>
+
       <!-- 官方客户端下载区域 -->
       <div class="dashboard-card download-card" :class="{'card-animate': !loading.userInfo}"
            v-if="clientConfig.showDownloadCard" style="animation-delay: 0.9s">
@@ -671,6 +683,8 @@ import {
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/dashboard';
+import { getTrafficLog } from '@/api/trafficLog';
+import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import {submitOrder} from '@/api/shop';
 import MarkdownIt from 'markdown-it';
@@ -798,15 +812,22 @@ export default {
       packageQuotaRemaining: null
     });
 
-    const trafficMetrics = reactive({
+        const trafficMetrics = reactive({
       totalTrafficBytes: 0,
       totalUsedBytes: 0,
       totalRemainingBytes: 0,
       subscriptionQuotaTotalBytes: 0,
       subscriptionQuotaUsedBytes: 0,
       subscriptionQuotaRemainingBytes: 0,
-      packageQuotaRemainingBytes: 0
+      packageQuotaRemainingBytes: 0,
     });
+
+    const trafficTrendChartRef = ref(null);
+    const trafficTrendData = ref([]);
+    const trafficTrendLoading = ref(false);
+    const trafficTrendError = ref(false);
+    let trafficTrendChart = null;
+
     const qrCodeLoading = ref(true);
     const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription)
 
@@ -1652,6 +1673,57 @@ export default {
       }
     };
 
+    const fetchTrafficTrend = async () => {
+      trafficTrendLoading.value = true;
+      trafficTrendError.value = false;
+      try {
+        const response = await getTrafficLog();
+        const rows = Array.isArray(response?.data) ? response.data : [];
+        const sorted = [...rows].sort((a, b) => a.record_at - b.record_at).slice(-30);
+        trafficTrendData.value = sorted.map((item) => ({
+          date: new Date(item.record_at * 1000).toLocaleDateString(),
+          totalGb: Number((((item.u || 0) + (item.d || 0)) / (1024 ** 3)).toFixed(2))
+        }));
+        await nextTick();
+        renderTrafficTrendChart();
+      } catch (e) {
+        console.error('Failed to fetch traffic trend data:', e);
+        trafficTrendError.value = true;
+      } finally {
+        trafficTrendLoading.value = false;
+      }
+    };
+
+    const renderTrafficTrendChart = () => {
+      if (!trafficTrendChartRef.value || !trafficTrendData.value.length) return;
+      if (trafficTrendChart) {
+        trafficTrendChart.dispose();
+      }
+      trafficTrendChart = echarts.init(trafficTrendChartRef.value);
+      trafficTrendChart.setOption({
+        grid: { left: 20, right: 20, top: 20, bottom: 30, containLabel: true },
+        tooltip: { trigger: 'axis' },
+        xAxis: {
+          type: 'category',
+          data: trafficTrendData.value.map((i) => i.date),
+          axisLine: { lineStyle: { color: 'rgba(var(--theme-color-rgb),0.25)' } },
+          axisLabel: { color: 'rgba(var(--theme-color-rgb),0.72)' }
+        },
+        yAxis: {
+          type: 'value',
+          axisLine: { show: false },
+          splitLine: { lineStyle: { color: 'rgba(var(--theme-color-rgb),0.12)' } },
+          axisLabel: { color: 'rgba(var(--theme-color-rgb),0.72)' }
+        },
+        series: [{
+          type: 'bar',
+          data: trafficTrendData.value.map((i) => i.totalGb),
+          itemStyle: { color: 'rgba(var(--theme-color-rgb),0.86)', borderRadius: [4,4,0,0] },
+          barMaxWidth: 24
+        }]
+      });
+    };
+
     onMounted(async () => {
       await fetchUserConfig();
 
@@ -1662,6 +1734,7 @@ export default {
       fetchNotices();
 
       fetchUserStats();
+      fetchTrafficTrend();
 
       updateQRCodeUrl();
     });
@@ -1734,6 +1807,9 @@ export default {
       if (showNoticeDetails.value) {
         updateModalHeight();
       }
+      if (trafficTrendChart) {
+        trafficTrendChart.resize();
+      }
     };
 
     onMounted(() => {
@@ -1742,6 +1818,10 @@ export default {
 
     onBeforeUnmount(() => {
       window.removeEventListener('resize', handleResize);
+      if (trafficTrendChart) {
+        trafficTrendChart.dispose();
+        trafficTrendChart = null;
+      }
     });
 
     const renewPlan = () => {
@@ -1938,6 +2018,10 @@ export default {
       needRefreshData,
       trafficBoardSections,
       hasPurchasedTrafficPackage,
+      trafficTrendChartRef,
+      trafficTrendData,
+      trafficTrendLoading,
+      trafficTrendError,
       DASHBOARD_CONFIG,
       allowNewPeriod,
       showImportSubscription,
@@ -2392,6 +2476,26 @@ export default {
     }
   }
 
+
+  .usage-trend-card {
+    .card-body {
+      padding-top: 6px;
+    }
+
+    .trend-state {
+      min-height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--theme-text-secondary);
+      font-size: 14px;
+    }
+
+    .usage-trend-chart {
+      width: 100%;
+      height: 280px;
+    }
+  }
 
   .download-card {
     .download-options {
