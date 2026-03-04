@@ -524,8 +524,8 @@
                   <span class="item-price">{{ currencySymbol }}{{ (normalizeTrafficPackagePrice(plan.onetime_price) / 100).toFixed(2) }}</span>
                 </div>
                 <div class="item-content" v-if="getTrafficPackageContent(plan)">{{ getTrafficPackageContent(plan) }}</div>
-                <button class="confirm-btn buy-btn" :disabled="plan.capacity_limit === 0" @click="purchaseTrafficPackage(plan)">
-                  {{ plan.capacity_limit === 0 ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}
+                <button class="confirm-btn buy-btn" :disabled="isTrafficPackageSoldOut(plan)" @click="purchaseTrafficPackage(plan)">
+                  {{ isTrafficPackageSoldOut(plan) ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}
                 </button>
               </div>
             </div>
@@ -1432,16 +1432,32 @@ export default {
       return String(raw).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
     };
 
+
+    const hasValidOneTimePrice = (plan) => {
+      const raw = plan?.onetime_price;
+      if (raw === null || raw === undefined || raw === '') {
+        return false;
+      }
+      const price = Number(raw);
+      return Number.isFinite(price) && price >= 0;
+    };
+
+    const isTrafficPackageSoldOut = (plan) => {
+      const raw = plan?.capacity_limit;
+      if (raw === null || raw === undefined || raw === '') {
+        return false;
+      }
+      const capacity = Number(raw);
+      return Number.isFinite(capacity) && capacity === 0;
+    };
+
     const openTrafficPackageModal = async () => {
       showTrafficPackageModal.value = true;
       trafficPackageLoading.value = true;
       try {
         const response = await fetchPlans(locale.value);
         const list = getPlanListFromResponse(response);
-        trafficPackagePlans.value = list.filter((plan) => {
-          const price = Number(plan?.onetime_price);
-          return Number.isFinite(price) && price >= 0;
-        });
+        trafficPackagePlans.value = list.filter((plan) => hasValidOneTimePrice(plan));
       } catch (error) {
         trafficPackagePlans.value = [];
         showToast(t('shop.failed_to_fetch_plan'), 'error');
@@ -1451,7 +1467,7 @@ export default {
     };
 
     const purchaseTrafficPackage = (plan) => {
-      if (Number(plan?.capacity_limit) === 0) {
+      if (isTrafficPackageSoldOut(plan)) {
         showToast(t('shop.plan.stock.sold_out'), 'error');
         return;
       }
@@ -2117,6 +2133,7 @@ export default {
       purchaseTrafficPackage,
       normalizeTrafficPackagePrice,
       getTrafficPackageContent,
+      isTrafficPackageSoldOut,
     };
   }
 };
