@@ -454,46 +454,11 @@ const DEFAULT_SHOP_CONFIG = {
     "month_price", // 月付
     "onetime_price", // 一次性
   ],
-
-  // 商店弹窗配置
-  popup: {
-    // 是否启用弹窗
-    enabled: false,
-
-    // 弹窗标题
-    title: "",
-
-    // 弹窗内容 (支持HTML)
-    content: "",
-
-    // 冷却时间（小时），在此时间内不会再次显示弹窗
-    cooldownHours: 2,
-
-    // 等待时间（秒），用户需要等待多少秒才能关闭弹窗，设为0表示无需等待
-    closeWaitSeconds: 0,
-  },
 };
 
 export const SHOP_CONFIG = mergeDeep(
   DEFAULT_SHOP_CONFIG,
   getConfig("SHOP_CONFIG")
-);
-
-// ===========================================================
-
-/**
- * 商店二次确认
- * 提交订单强制二次确认
- */
-const DEFAULT_ORDER_CONFIG = {
-  // 是否启用二次确认
-  confirmOrder: true,
-  // 二次确认内容
-  confirmOrderContent: "<p>您确定要购买该套餐吗？</p>",
-};
-export const ORDER_CONFIG = mergeDeep(
-  DEFAULT_ORDER_CONFIG,
-  getConfig("ORDER_CONFIG")
 );
 
 // ===========================================================

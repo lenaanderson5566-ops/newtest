@@ -179,33 +179,8 @@ export const config = {
       "month_price", // 月付
       "onetime_price", // 一次性
     ],
-
-    // 商店弹窗配置
-    popup: {
-      // 是否启用弹窗
-      enabled: true,
-
-      // 弹窗标题
-      title: "用户须知",
-
-      // 弹窗内容 (支持HTML)
-      content:
-        "<p><strong>常规套餐默认每月订单日重置流量，您当月未用使用完的流量，不会累积到下个月</strong></p>",
-
-      // 冷却时间（小时），在此时间内不会再次显示弹窗
-      cooldownHours: 0,
-
-      // 等待时间（秒），用户需要等待多少秒才能关闭弹窗，设为0表示无需等待
-      closeWaitSeconds: 0,
-    },
   },
-  ORDER_CONFIG: {
-    // 下单前二次确认
-    confirmOrder: true,
-    // 下单前二次确认内容
-    confirmOrderContent:
-      "<p><strong style='color: red'>无法提供相关教程和使用说明。</strong></p><p><strong style='color: red'>不会使用请勿购买，没有退款政策</strong></p>",
-  },
+
   // 仪表盘页面配置
   DASHBOARD_CONFIG: {
     // 是否在欢迎卡片中显示用户邮箱 (true=显示, false=隐藏)

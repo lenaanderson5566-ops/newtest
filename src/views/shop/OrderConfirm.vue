@@ -309,19 +309,6 @@
       </div>
     </div>
 
-    <!-- 二次确认弹窗 -->
-    <CommonDialog
-      :show-dialog="showConfirmDialog"
-      :title="$t('order.title')"
-      :content="ORDER_CONFIG.confirmOrderContent"
-      :show-close-icon="true"
-      :show-cancel-button="true"
-      :show-confirm-button="true"
-      :cancel-button-i18n-key="'common.cancel'"
-      :confirm-button-i18n-key="'order.confirm_purchase'"
-      @close="handleConfirmDialogClose"
-      @confirm="handleConfirmDialogConfirm"
-    />
   </div>
 </template>
 
@@ -342,10 +329,6 @@ import {
 } from "@/api/shop";
 
 import { getUserInfo } from "@/api/dashboard";
-
-import { ORDER_CONFIG } from "@/utils/baseConfig";
-
-import CommonDialog from "@/components/popup/CommonDialog.vue";
 
 import {
   IconCheck,
@@ -374,8 +357,6 @@ export default {
     IconArrowLeft,
 
     IconAlertTriangle,
-
-    CommonDialog,
   },
 
   setup() {
@@ -414,10 +395,6 @@ export default {
     const couponInfo = ref(null);
 
     const discountPercent = ref(0);
-
-    // 新增：控制二次确认弹窗的变量
-
-    const showConfirmDialog = ref(false);
 
     const originalPrice = computed(() => {
       if (!plan.value || !selectedPriceType.value) return 0;
@@ -693,20 +670,8 @@ export default {
       }
     };
 
-    // 修改后的submitOrder方法
-
     const submitOrder = async () => {
       if (!selectedPriceType.value || loading.submitting) return;
-
-      // 检查是否需要二次确认
-
-      if (ORDER_CONFIG.confirmOrder) {
-        showConfirmDialog.value = true;
-
-        return; // 等待用户确认
-      }
-
-      // 如果不需要二次确认，直接执行订单提交
 
       await executeOrderSubmission();
     };
@@ -752,20 +717,6 @@ export default {
       } finally {
         loading.submitting = false;
       }
-    };
-
-    // 处理确认弹窗的关闭事件
-
-    const handleConfirmDialogClose = () => {
-      showConfirmDialog.value = false;
-    };
-
-    // 处理确认弹窗的确认事件
-
-    const handleConfirmDialogConfirm = () => {
-      showConfirmDialog.value = false;
-
-      executeOrderSubmission(); // 执行订单提交
     };
 
     const goBack = () => {
@@ -956,11 +907,6 @@ export default {
 
       showExistingPlanWarning,
 
-      // 新增的返回值
-      ORDER_CONFIG,
-      showConfirmDialog,
-      handleConfirmDialogClose,
-      handleConfirmDialogConfirm,
     };
   },
 };

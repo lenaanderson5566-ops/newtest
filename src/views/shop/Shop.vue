@@ -247,20 +247,10 @@
     </div>
   </div>
 
-  <!-- 弹窗组件 -->
-
-  <ShopPopup
-    :show-popup="showPopup"
-    :title="popupConfig.title"
-    :content="popupConfig.content"
-    :cooldown-hours="popupConfig.cooldownHours"
-    :close-wait-seconds="popupConfig.closeWaitSeconds"
-    @close="handlePopupClose"
-  />
 </template>
 
 <script>
-import { ref, reactive, onMounted, computed, watch, nextTick } from "vue";
+import { ref, reactive, onMounted, computed, watch } from "vue";
 
 import { useI18n } from "vue-i18n";
 
@@ -271,7 +261,6 @@ import { getSubscribe } from "@/api/dashboard";
 
 import { SHOP_CONFIG } from "@/utils/baseConfig";
 
-import ShopPopup from "@/components/shop/ShopPopup.vue";
 
 import {
   IconCheck,
@@ -305,9 +294,7 @@ export default {
 
     IconCircle,
 
-    IconCircleCheck,
-
-    ShopPopup,
+    IconCircleCheck
   },
 
   setup() {
@@ -349,56 +336,6 @@ export default {
 
       { label: "One-time", value: "onetime" },
     ];
-
-    const showPopup = ref(false);
-
-    const popupConfig = reactive({
-      title: "",
-
-      content: "",
-
-      cooldownHours: 2,
-
-      closeWaitSeconds: 0,
-    });
-
-    const handlePopupClose = () => {
-      showPopup.value = false;
-    };
-
-    const initPopup = () => {
-      if (SHOP_CONFIG.popup && SHOP_CONFIG.popup.enabled) {
-        popupConfig.title = SHOP_CONFIG.popup.title || "";
-
-        popupConfig.content = SHOP_CONFIG.popup.content || "";
-
-        popupConfig.cooldownHours = SHOP_CONFIG.popup.cooldownHours || 24;
-
-        popupConfig.closeWaitSeconds = SHOP_CONFIG.popup.closeWaitSeconds || 0;
-
-        if (popupConfig.cooldownHours === 0) {
-          showPopup.value = true;
-
-          return;
-        }
-
-        const closeTime = localStorage.getItem("shop_popup_close_time");
-
-        if (!closeTime) {
-          showPopup.value = true;
-        } else {
-          const now = new Date().getTime();
-
-          const elapsed = now - parseInt(closeTime);
-
-          const cooldownMs = popupConfig.cooldownHours * 60 * 60 * 1000;
-
-          if (elapsed >= cooldownMs) {
-            showPopup.value = true;
-          }
-        }
-      }
-    };
 
     const currentLanguage = computed(() => locale.value);
 
@@ -745,17 +682,6 @@ export default {
 
         loading.plans = false;
 
-        nextTick(() => {
-          if (
-            SHOP_CONFIG.popup &&
-            SHOP_CONFIG.popup.enabled &&
-            SHOP_CONFIG.popup.cooldownHours === 0
-          ) {
-            localStorage.removeItem("shop_popup_close_time");
-          }
-
-          initPopup();
-        });
       } catch (error) {
         console.error("Failed to load shop data:", error);
 
@@ -889,13 +815,6 @@ export default {
 
       getDisplayPriceType,
 
-      showPopup,
-
-      popupConfig,
-
-      handlePopupClose,
-
-      initPopup,
 
       SHOP_CONFIG,
 
