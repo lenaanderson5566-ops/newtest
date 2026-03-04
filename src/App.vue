@@ -289,7 +289,7 @@ export default {
   position: fixed;
   top: 20px;  
   left: 25px;
-  font-size: 18px;  
+  font-size: 16px;  
   font-weight: 700;
   color: var(--theme-color);
   z-index: 110;
@@ -368,7 +368,7 @@ export default {
   .site-logo {
     top: 12px;  
     left: 20px;
-    font-size: 18px;  
+    font-size: 16px;  
     padding: 5px 10px;
     border-radius: 8px;
   }
@@ -460,11 +460,6 @@ export default {
 
 html {
   scroll-behavior: smooth;
-  font-size: 15px;
-}
-
-body {
-  font-size: 0.95rem;
 }
 
 
