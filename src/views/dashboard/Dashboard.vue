@@ -2261,7 +2261,7 @@ export default {
     }
 
     @media (min-width: 1200px) {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .usage-panel-title-row {
@@ -2366,6 +2366,8 @@ export default {
       }
 
       &.traffic-board-card {
+        width: 100%;
+        min-width: 0;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
@@ -3069,7 +3071,7 @@ export default {
 
 @media (min-width: 769px) and (max-width: 1199px) {
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -3130,6 +3132,7 @@ export default {
 
 
 .import-card {
+  display: none;
   margin-bottom: 24px;
   overflow: hidden;
   will-change: transform, opacity;
