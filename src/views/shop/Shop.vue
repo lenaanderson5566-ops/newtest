@@ -477,7 +477,7 @@ export default {
       if (isTrafficPackagePlan(plan)) return t("shop.plan.add_quota");
       if (!currentPlanId.value) return t("shop.plan.purchase");
       if (isCurrentPlan(plan) || isSameSpecPlan(plan)) return t("shop.plan.renew");
-      if (isHigherSpecPlan(plan)) return t("shop.plan.upgrade_to", { name: plan.name });
+      if (isHigherSpecPlan(plan)) return t("shop.plan.upgrade_to", { name: 'PRO' });
       return t("shop.plan.purchase");
     };
 

@@ -68,10 +68,28 @@
                     :key="option.key"
                     class="platform-option"
                     @click="openClientLink(option.clientType)">
-                    <component :is="option.icon" :size="16" class="platform-option-icon" />
+                    <img v-if="option.iconType === 'image'" :src="option.icon" :alt="option.label" class="platform-option-image" />
+                    <component v-else :is="option.icon" :size="16" class="platform-option-icon" />
                     <span>{{ option.label }}</span>
                   </button>
                 </div>
+              </div>
+
+              <div class="subscription-manage" v-if="subscriptionUrl">
+                <div class="subscription-manage__header">
+                  <h3>{{ $t('profile.subscription') }}</h3>
+                </div>
+                <div class="subscription-manage__actions">
+                  <button class="quick-btn" @click="copySubscriptionUrl">
+                    <IconCopy :size="14" />
+                    <span>{{ $t('profile.copySubscription') }}</span>
+                  </button>
+                  <button class="quick-btn danger" @click="showResetModal = true">
+                    <IconRefresh :size="14" />
+                    <span>{{ $t('profile.resetSecurity') }}</span>
+                  </button>
+                </div>
+                <div class="subscription-url">{{ subscriptionUrl }}</div>
               </div>
             </div>
           </transition>
@@ -84,6 +102,24 @@
                 </div>
                 <div class="qrcode-content">
                   <img :src="qrCodeUrl" alt="QR Code" />
+                </div>
+              </div>
+            </div>
+          </transition>
+
+          <transition name="fade">
+            <div v-if="showResetModal" class="qrcode-modal-overlay" @click="showResetModal = false">
+              <div class="qrcode-modal reset-modal" @click.stop>
+                <div class="qrcode-header">
+                  <h3>{{ $t('profile.resetSecurityTitle') }}</h3>
+                  <button class="close-btn" @click="showResetModal = false"><IconX :size="20" /></button>
+                </div>
+                <p class="reset-modal-text">{{ $t('profile.resetSecurityConfirm') }}</p>
+                <div class="reset-modal-actions">
+                  <button class="quick-btn" @click="showResetModal = false">{{ $t('common.cancel') }}</button>
+                  <button class="quick-btn danger" :disabled="resetting" @click="resetSecurity">
+                    {{ resetting ? $t('common.processing') : $t('profile.confirmReset') }}
+                  </button>
                 </div>
               </div>
             </div>
@@ -217,20 +253,27 @@ import {
   IconCopy,
   IconQrcode,
   IconX,
+  IconRefresh,
   IconBrandApple,
   IconBrandAndroid,
   IconBrandWindows,
-  IconDeviceLaptop,
-  IconRocket,
-  IconBolt
+  IconDeviceLaptop
 
 } from '@tabler/icons-vue';
 
 import { fetchServerNodes } from '@/api/servers';
 
-import { getUserInfo } from '@/api/user';
+import { getUserInfo, resetSecurity as apiResetSecurity } from '@/api/user';
 import { getSubscribe } from '@/api/dashboard';
 import QRCode from 'qrcode';
+import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
+import quantumultxIconImg from '@/assets/images/client-img-ios/quantumultx.png';
+import v2rayngIconImg from '@/assets/images/client-img-android/v2rayng.png';
+import nekoboxIconImg from '@/assets/images/client-img-android/nekobox.png';
+import clashvergeIconImg from '@/assets/images/client-img-windows/clashverge.png';
+import nekorayIconImg from '@/assets/images/client-img-windows/nekoray.png';
+import clashxIconImg from '@/assets/images/client-img-macos/clashx.png';
+import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
 
 
 import { NODES_CONFIG } from '@/utils/baseConfig';
@@ -267,6 +310,8 @@ const showImportPanel = ref(false);
 const showQrCode = ref(false);
 const qrCodeUrl = ref('');
 const activePlatform = ref('ios');
+const showResetModal = ref(false);
+const resetting = ref(false);
 const platforms = [
   { id: 'ios', label: 'iOS', icon: IconBrandApple },
   { id: 'android', label: 'Android', icon: IconBrandAndroid },
@@ -364,20 +409,20 @@ const toggleImportPanel = () => {
 
 const platformClientMap = {
   ios: [
-    { key: 'shadowrocket', label: 'Shadowrocket', clientType: 'shadowrocket', icon: IconRocket },
-    { key: 'singbox-ios', label: 'Singbox', clientType: 'singbox-ios', icon: IconBolt }
+    { key: 'shadowrocket', label: 'Shadowrocket', clientType: 'shadowrocket', icon: shadowrocketIconImg, iconType: 'image' },
+    { key: 'quantumultx', label: 'Quantumult X', clientType: 'quantumultx', icon: quantumultxIconImg, iconType: 'image' }
   ],
   android: [
-    { key: 'v2rayng', label: 'V2rayNG', clientType: 'v2rayng', icon: IconBrandAndroid },
-    { key: 'singbox-android', label: 'Singbox', clientType: 'singbox-android', icon: IconBolt }
+    { key: 'v2rayng', label: 'V2rayNG', clientType: 'v2rayng', icon: v2rayngIconImg, iconType: 'image' },
+    { key: 'nekobox', label: 'NekoBox', clientType: 'nekobox', icon: nekoboxIconImg, iconType: 'image' }
   ],
   windows: [
-    { key: 'clashverge', label: 'Clash Verge', clientType: 'clashverge', icon: IconBrandWindows },
-    { key: 'singbox-windows', label: 'Singbox', clientType: 'singbox-windows', icon: IconBolt }
+    { key: 'clashverge', label: 'Clash Verge', clientType: 'clashverge', icon: clashvergeIconImg, iconType: 'image' },
+    { key: 'nekoray', label: 'Nekoray', clientType: 'nekoray', icon: nekorayIconImg, iconType: 'image' }
   ],
   macos: [
-    { key: 'clashx', label: 'ClashX', clientType: 'clashx', icon: IconDeviceLaptop },
-    { key: 'singbox-macos', label: 'Singbox', clientType: 'singbox-macos', icon: IconBolt }
+    { key: 'clashx', label: 'ClashX', clientType: 'clashx', icon: clashxIconImg, iconType: 'image' },
+    { key: 'stash-mac', label: 'Stash', clientType: 'stash-mac', icon: stashMacIconImg, iconType: 'image' }
   ]
 };
 
@@ -446,11 +491,15 @@ const openClientLink = (clientType) => {
     case 'clashverge':
       url = `clash://install-config?url=${encodeURIComponent(subscribeUrl)}`;
       break;
-    case 'singbox-ios':
-    case 'singbox-android':
-    case 'singbox-windows':
-    case 'singbox-macos':
-      url = `sing-box://import-remote-profile?url=${encodeURIComponent(subscribeUrl)}`;
+    case 'quantumultx':
+      url = `quantumult-x:///update-configuration?remote-resource=${encodeURIComponent(subscribeUrl)}`;
+      break;
+    case 'nekobox':
+    case 'nekoray':
+      url = `nekobox://addProfile?url=${encodeURIComponent(subscribeUrl)}`;
+      break;
+    case 'stash-mac':
+      url = `stash://install-config?url=${encodeURIComponent(subscribeUrl)}`;
       break;
     default:
       url = subscribeUrl;
@@ -466,6 +515,24 @@ const goRenewPlan = () => {
 
 const goTickets = () => {
   router.push('/tickets');
+};
+
+
+const resetSecurity = async () => {
+  resetting.value = true;
+  try {
+    const response = await apiResetSecurity();
+    if (response?.data) {
+      subscriptionUrl.value = response.data;
+      showResetModal.value = false;
+      if ($toast) $toast.success(t('profile.resetSuccess'));
+    }
+  } catch (err) {
+    console.error('Failed to reset security:', err);
+    if ($toast) $toast.error(t('profile.resetError'));
+  } finally {
+    resetting.value = false;
+  }
 };
 
 const fetchNodes = async () => {
@@ -769,6 +836,51 @@ onMounted(() => {
         opacity: 0.9;
         flex-shrink: 0;
       }
+
+      .platform-option-image {
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+    }
+
+    .subscription-manage {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      background: #f8f9fc;
+
+      .subscription-manage__header h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 0 10px;
+      }
+
+      .subscription-manage__actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+
+        .quick-btn.danger {
+          border-color: rgba(239, 68, 68, 0.35);
+          color: #dc2626;
+          background: rgba(239, 68, 68, 0.08);
+        }
+      }
+
+      .subscription-url {
+        font-size: 12px;
+        color: #4b5563;
+        background: #fff;
+        border-radius: 8px;
+        padding: 8px 10px;
+        border: 1px dashed var(--border-color);
+        word-break: break-all;
+      }
     }
   }
 
@@ -786,6 +898,10 @@ onMounted(() => {
       border-radius: 14px;
       width: min(90vw, 320px);
       padding: 14px;
+
+      &.reset-modal {
+        width: min(90vw, 380px);
+      }
     }
 
     .qrcode-header {
@@ -800,6 +916,25 @@ onMounted(() => {
       justify-content: center;
 
       img { width: 220px; height: 220px; }
+    }
+
+    .reset-modal-text {
+      color: #374151;
+      font-size: 14px;
+      margin: 0 0 12px;
+      line-height: 1.6;
+    }
+
+    .reset-modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+
+      .quick-btn.danger {
+        border-color: rgba(239, 68, 68, 0.35);
+        color: #dc2626;
+        background: rgba(239, 68, 68, 0.08);
+      }
     }
   }
 }
