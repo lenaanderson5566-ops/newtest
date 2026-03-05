@@ -93,11 +93,13 @@
           <div class="card-header">
             <div class="header-main">
               <h2 class="card-title">{{ plan.name }}</h2>
-              <span v-if="isCurrentPlan(plan)" class="current-plan-badge">{{ $t("shop.plan.current") }}</span>
-              <div v-if="isCurrentPlan(plan) && currentPlanExpireText" class="current-plan-expire">
-                {{ $t("shop.current_plan_info.expire") }} {{ currentPlanExpireText }}
-              </div>
+            </div>
 
+            <div v-if="isCurrentPlan(plan)" class="current-plan-meta">
+              <span class="current-plan-badge">{{ $t("shop.plan.current") }}</span>
+              <span v-if="currentPlanExpireText" class="current-plan-expire">
+                {{ $t("shop.current_plan_info.expire") }} {{ currentPlanExpireText }}
+              </span>
             </div>
 
             <div
@@ -966,10 +968,26 @@ export default {
         padding-right: 10px;
       }
 
+  .current-plan-meta {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.18);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.08);
+    max-width: min(62%, 280px);
+  }
+
   .current-plan-badge {
-    margin-top: 8px;
     display: inline-flex;
     font-size: 12px;
+    font-weight: 700;
     color: #1d4ed8;
     background: rgba(59, 130, 246, 0.12);
     border: 1px solid rgba(59, 130, 246, 0.25);
@@ -978,11 +996,11 @@ export default {
   }
 
   .current-plan-expire {
-    width: 100%;
-    margin-top: 6px;
     font-size: 12px;
     color: #64748b;
-    line-height: 1.4;
+    line-height: 1.35;
+    font-weight: 600;
+    text-align: right;
   }
 
       .card-badge {
@@ -1196,6 +1214,13 @@ export default {
     }
 
     @media (max-width: 768px) {
+    .current-plan-meta {
+      position: static;
+      align-items: flex-start;
+      max-width: 100%;
+      margin-bottom: 8px;
+    }
+
       grid-template-columns: 1fr;
     }
 
@@ -1240,6 +1265,8 @@ export default {
         justify-content: space-between;
 
         align-items: flex-start;
+
+        min-height: 52px;
 
         margin-bottom: 15px;
 
@@ -1629,6 +1656,18 @@ export default {
     .btn-purchase.btn-disabled {
       background-color: rgba(71, 85, 105, 0.72);
       border-color: rgba(148, 163, 184, 0.38);
+    }
+
+    .current-plan-meta {
+      background: rgba(37, 99, 235, 0.2);
+      border-color: rgba(147, 197, 253, 0.32);
+      box-shadow: none;
+    }
+
+    .current-plan-badge {
+      color: #dbeafe;
+      border-color: rgba(191, 219, 254, 0.38);
+      background: rgba(59, 130, 246, 0.28);
     }
 
     .filter-option:hover {
