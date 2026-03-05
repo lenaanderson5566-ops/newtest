@@ -377,12 +377,21 @@ const fetchUserInfo = async () => {
 
 };
 
+const resolveSubscribeUrl = (payload) => {
+  if (!payload) return '';
+  if (typeof payload === 'string') return payload;
+  if (typeof payload === 'object') {
+    return payload.subscribe_url || payload.url || payload.subscribeUrl || '';
+  }
+  return '';
+};
+
 const fetchSubscription = async () => {
   try {
     const result = await getSubscribe();
     if (result?.data) {
       currentPlanId.value = result.data.plan_id || result.data.plan?.id || null;
-      subscriptionUrl.value = result.data.subscribe_url || '';
+      subscriptionUrl.value = resolveSubscribeUrl(result.data);
     }
   } catch (err) {
     console.error('Failed to fetch subscription info:', err);
@@ -522,11 +531,15 @@ const resetSecurity = async () => {
   resetting.value = true;
   try {
     const response = await apiResetSecurity();
-    if (response?.data) {
-      subscriptionUrl.value = response.data;
+    const latestSubscribeUrl = resolveSubscribeUrl(response?.data);
+    if (latestSubscribeUrl) {
+      subscriptionUrl.value = latestSubscribeUrl;
       showResetModal.value = false;
       if ($toast) $toast.success(t('profile.resetSuccess'));
+      return;
     }
+
+    if ($toast) $toast.error(t('profile.resetError'));
   } catch (err) {
     console.error('Failed to reset security:', err);
     if ($toast) $toast.error(t('profile.resetError'));
@@ -808,7 +821,7 @@ onMounted(() => {
     }
 
     .platform-title {
-      font-size: 36px;
+      font-size: 16px;
       margin: 8px 0 12px;
       font-weight: 600;
     }
@@ -824,10 +837,11 @@ onMounted(() => {
       border-radius: 12px;
       padding: 22px 14px;
       background: #f5f7fb;
-      font-size: 34px;
+      font-size: 14px;
       font-weight: 500;
       text-align: left;
       cursor: pointer;
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -835,6 +849,11 @@ onMounted(() => {
       .platform-option-icon {
         opacity: 0.9;
         flex-shrink: 0;
+      }
+
+      &:hover {
+        border-color: rgba(var(--theme-color-rgb), 0.3);
+        background: #ffffff;
       }
 
       .platform-option-image {
