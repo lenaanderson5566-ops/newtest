@@ -309,24 +309,11 @@
       </div>
     </div>
 
-    <!-- 二次确认弹窗 -->
-    <CommonDialog
-      :show-dialog="showConfirmDialog"
-      :title="$t('order.title')"
-      :content="ORDER_CONFIG.confirmOrderContent"
-      :show-close-icon="true"
-      :show-cancel-button="true"
-      :show-confirm-button="true"
-      :cancel-button-i18n-key="'common.cancel'"
-      :confirm-button-i18n-key="'order.confirm_purchase'"
-      @close="handleConfirmDialogClose"
-      @confirm="handleConfirmDialogConfirm"
-    />
   </div>
 </template>
 
 <script>
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed, watch } from "vue";
 
 import { useI18n } from "vue-i18n";
 
@@ -342,10 +329,6 @@ import {
 } from "@/api/shop";
 
 import { getUserInfo } from "@/api/dashboard";
-
-import { ORDER_CONFIG } from "@/utils/baseConfig";
-
-import CommonDialog from "@/components/popup/CommonDialog.vue";
 
 import {
   IconCheck,
@@ -374,12 +357,10 @@ export default {
     IconArrowLeft,
 
     IconAlertTriangle,
-
-    CommonDialog,
   },
 
   setup() {
-    const { t } = useI18n();
+    const { t, locale } = useI18n();
 
     const { showToast } = useToast();
 
@@ -414,10 +395,6 @@ export default {
     const couponInfo = ref(null);
 
     const discountPercent = ref(0);
-
-    // 新增：控制二次确认弹窗的变量
-
-    const showConfirmDialog = ref(false);
 
     const originalPrice = computed(() => {
       if (!plan.value || !selectedPriceType.value) return 0;
@@ -676,7 +653,7 @@ export default {
           showToast(response.message || t("order.coupon_invalid"), "error");
         }
       } catch (error) {
-        console.error("验证优惠码失败:", error);
+        console.error("Failed to verify coupon:", error);
 
         couponApplied.value = false;
 
@@ -693,20 +670,8 @@ export default {
       }
     };
 
-    // 修改后的submitOrder方法
-
     const submitOrder = async () => {
       if (!selectedPriceType.value || loading.submitting) return;
-
-      // 检查是否需要二次确认
-
-      if (ORDER_CONFIG.confirmOrder) {
-        showConfirmDialog.value = true;
-
-        return; // 等待用户确认
-      }
-
-      // 如果不需要二次确认，直接执行订单提交
 
       await executeOrderSubmission();
     };
@@ -743,7 +708,7 @@ export default {
           showToast(response.message || t("order.order_failed"), "error");
         }
       } catch (error) {
-        console.error("提交订单失败:", error);
+        console.error("Failed to submit order:", error);
 
         showToast(
           error.response?.message || error.message || t("order.order_failed"),
@@ -752,20 +717,6 @@ export default {
       } finally {
         loading.submitting = false;
       }
-    };
-
-    // 处理确认弹窗的关闭事件
-
-    const handleConfirmDialogClose = () => {
-      showConfirmDialog.value = false;
-    };
-
-    // 处理确认弹窗的确认事件
-
-    const handleConfirmDialogConfirm = () => {
-      showConfirmDialog.value = false;
-
-      executeOrderSubmission(); // 执行订单提交
     };
 
     const goBack = () => {
@@ -784,7 +735,7 @@ export default {
           return;
         }
 
-        const response = await fetchPlanById(route.query.id);
+        const response = await fetchPlanById(route.query.id, locale.value);
 
         if (response.data) {
           plan.value = response.data;
@@ -802,7 +753,7 @@ export default {
           router.push("/shop");
         }
       } catch (error) {
-        console.error("获取套餐数据失败:", error);
+        console.error("Failed to fetch plan data:", error);
 
         showToast(
           error.response?.message ||
@@ -827,7 +778,7 @@ export default {
           showToast(response.message, "warning");
         }
       } catch (error) {
-        console.error("获取用户信息失败:", error);
+        console.error("Failed to fetch user info:", error);
 
         showToast(
           error.response?.message ||
@@ -852,7 +803,7 @@ export default {
           showToast(response.message, "warning");
         }
       } catch (error) {
-        console.error("获取系统配置失败:", error);
+        console.error("Failed to fetch system config:", error);
 
         showToast(
           error.response?.message || error.message || t("shop.config_error"),
@@ -883,6 +834,17 @@ export default {
       );
     });
 
+
+    watch(
+      () => locale.value,
+      (newLanguage, oldLanguage) => {
+        if (!oldLanguage || newLanguage === oldLanguage) {
+          return;
+        }
+
+        fetchPlanData();
+      }
+    );
     onMounted(async () => {
       await Promise.all([fetchPlanData(), fetchUserInfo(), fetchConfig()]);
     });
@@ -945,11 +907,6 @@ export default {
 
       showExistingPlanWarning,
 
-      // 新增的返回值
-      ORDER_CONFIG,
-      showConfirmDialog,
-      handleConfirmDialogClose,
-      handleConfirmDialogConfirm,
     };
   },
 };

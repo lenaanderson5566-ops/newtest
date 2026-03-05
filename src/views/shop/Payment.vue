@@ -815,7 +815,7 @@ export default {
           router.push("/shop");
         }
       } catch (error) {
-        console.error("获取订单详情失败:", error);
+        console.error("Failed to fetch order details:", error);
         showToast(t("payment.failed_to_fetch_order"), "error");
         router.push("/shop");
       } finally {
@@ -840,7 +840,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error("获取支付方式失败:", error);
+        console.error("Failed to fetch payment methods:", error);
         showToast(t("payment.failed_to_fetch_methods"), "error");
       } finally {
         loading.methods = false;
@@ -934,7 +934,7 @@ export default {
 
         startPaymentCheck();
       } catch (error) {
-        console.error("结算订单失败:", error);
+        console.error("Failed to checkout order:", error);
         showToast(t("payment.check_failed"), "error");
         loading.checking = false;
       }
@@ -1000,7 +1000,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error("检查支付状态失败:", error);
+        console.error("Failed to check payment status:", error);
         showToast(t("payment.check_failed"), "error");
         loading.checking = false;
       }
@@ -1051,7 +1051,7 @@ export default {
           loading.paying = false;
         }
       } catch (error) {
-        console.error("检查支付状态失败:", error);
+        console.error("Failed to check payment status:", error);
         if (orderDetail.value.total_amount === 0) {
           loading.checking = false;
           loading.paying = false;
@@ -1179,7 +1179,7 @@ export default {
           startPaymentCheck();
         }
       } catch (error) {
-        console.error("发起支付失败:", error);
+        console.error("Failed to start payment:", error);
         showToast(t("payment.check_failed"), "error");
       } finally {
         loading.paying = false;
@@ -1211,7 +1211,7 @@ export default {
             document.body.removeChild(tempLink);
           }
         } catch (e) {
-          console.error("支付链接打开失败:", e);
+          console.error("Failed to open payment link:", e);
           if (PAYMENT_CONFIG.openPaymentInNewTab) {
             window.open(paymentLink.value, "_blank");
           } else {
@@ -1235,7 +1235,7 @@ export default {
 
         router.push("/shop");
       } catch (error) {
-        console.error("取消订单失败:", error);
+        console.error("Failed to cancel order:", error);
         showToast(t("payment.cancel_failed"), "error");
       } finally {
         loading.cancelling = false;
@@ -1295,7 +1295,7 @@ export default {
           }, 4500);
         }
       } catch (error) {
-        console.error("检查支付状态失败:", error);
+        console.error("Failed to check payment status:", error);
         showToast(t("payment.check_failed"), "error");
       } finally {
         loading.checking = false;
