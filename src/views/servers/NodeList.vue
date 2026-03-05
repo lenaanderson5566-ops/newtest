@@ -868,14 +868,15 @@ onMounted(() => {
 
   }
   .node-country {
-    min-width: 56px;
-    height: 56px;
+    min-width: 86px;
+    height: 42px;
     border-radius: 999px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     margin-right: 14px;
-    font-size: 1.1rem;
+    padding: 0 14px;
+    font-size: 1rem;
     font-weight: 800;
     color: #fff;
     letter-spacing: 0.5px;
@@ -909,11 +910,15 @@ onMounted(() => {
 
       .node-tag {
 
-        font-size: 0.75rem;
+        font-size: 12px;
 
-        padding: 0.2rem 0.5rem;
+        height: 22px;
 
-        border-radius: 4px;
+        line-height: 22px;
+
+        padding: 0 9px;
+
+        border-radius: 8px;
 
         background-color: rgba(var(--theme-color-rgb), 0.1);
 
@@ -1014,10 +1019,10 @@ onMounted(() => {
       justify-content: flex-end;
 
       .node-tag.feature-tag {
-        height: 20px;
-        line-height: 20px;
-        font-size: 11px;
-        padding: 0 8px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 12px;
+        padding: 0 10px;
         border-radius: 999px;
         background-color: rgba(190, 24, 93, 0.28);
         color: #fda4af;
@@ -1028,10 +1033,10 @@ onMounted(() => {
     }
 
     .node-online-status {
-      height: 20px;
-      line-height: 20px;
-      font-size: 11px;
-      padding: 0 8px;
+      height: 24px;
+      line-height: 24px;
+      font-size: 12px;
+      padding: 0 10px;
       border-radius: 999px;
       background: rgba(248, 113, 113, 0.2);
       color: #f87171;
