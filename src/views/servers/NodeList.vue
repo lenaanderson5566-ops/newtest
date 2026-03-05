@@ -996,23 +996,31 @@ onMounted(() => {
       justify-content: flex-end;
 
       .node-tag.feature-tag {
-        font-size: 0.75rem;
-        padding: 0.2rem 0.55rem;
+        height: 20px;
+        line-height: 20px;
+        font-size: 11px;
+        padding: 0 8px;
         border-radius: 999px;
         background-color: rgba(99, 102, 241, 0.12);
         color: #4f46e5;
         font-weight: 600;
+        display: inline-flex;
+        align-items: center;
       }
     }
 
     .node-online-status {
-      font-size: 0.75rem;
-      padding: 0.2rem 0.55rem;
+      height: 20px;
+      line-height: 20px;
+      font-size: 11px;
+      padding: 0 8px;
       border-radius: 999px;
       background: rgba(239, 68, 68, 0.12);
       color: #dc2626;
-      font-weight: 700;
+      font-weight: 600;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
 
       &.online {
         background: rgba(34, 197, 94, 0.14);
