@@ -1837,15 +1837,19 @@ export default {
         },
         legend: {
           data: [t('trafficLog.uploadTraffic'), t('trafficLog.downloadTraffic'), t('trafficLog.totalTraffic')],
-          bottom: 0,
+          bottom: 8,
+          left: 'center',
+          icon: 'emptyCircle',
+          itemWidth: 12,
+          itemHeight: 12,
           textStyle: { color: textColor }
         },
-        grid: { left: '3%', right: '4%', bottom: '60px', top: '30px', containLabel: true },
+        grid: { left: '5%', right: '3%', bottom: '72px', top: '28px', containLabel: true },
         xAxis: {
           type: 'category',
           boundaryGap: false,
           data: trafficTrendData.value.map((i) => i.date),
-          axisLabel: { rotate: 45, interval: 'auto', color: textColor },
+          axisLabel: { rotate: 45, interval: 'auto', color: textColor, margin: 12 },
           axisLine: { lineStyle: { color: borderColor } },
           splitLine: { lineStyle: { color: borderColor } }
         },
@@ -1855,7 +1859,8 @@ export default {
           nameTextStyle: { padding: [0, 0, 0, 10], color: textColor },
           axisLabel: {
             color: textColor,
-            formatter: (value) => `${Number(value).toFixed(3).replace(/\.?0+$/, '')} GB`
+            formatter: (value) => `${Number(value).toFixed(3).replace(/\.?0+$/, '')} GB`,
+            margin: 10
           },
           axisLine: { lineStyle: { color: borderColor } },
           splitLine: { lineStyle: { color: borderColor } }
@@ -1884,7 +1889,7 @@ export default {
             type: 'line',
             smooth: true,
             showSymbol: false,
-            lineStyle: { width: 4, color: '#2B2A84' },
+            lineStyle: { width: 5, color: '#2B2A84' },
             itemStyle: { color: '#2B2A84' },
             areaStyle: { color: 'rgba(64, 128, 255, 0.22)' },
             data: trafficTrendData.value.map((i) => i.totalGb)
