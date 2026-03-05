@@ -179,11 +179,29 @@ export default {
     dashboard: {
         welcome: 'Welcome Back',
         welcomeDesc: 'View your services and usage',
+        announcement: 'Announcements',
         siteAnnouncement: 'Site Announcements',
         subscriptionInfo: 'Subscription Info',
         planName: 'Plan Name',
         expiryDate: 'Expiry Date',
         planTraffic: 'Plan Traffic',
+        subscriptionQuotaUsed: 'Subscription Quota Used',
+        subscriptionQuotaRemaining: 'Subscription Quota Remaining',
+        packageQuotaRemaining: 'Package Quota Remaining',
+        trafficBoardTitle: 'Traffic Quota Board',
+        trafficBoardSubtitle: 'Subscription + Package Overview',
+        packagePurchased: 'Package Purchased',
+        packageNotPurchased: 'Package Not Purchased',
+        usagePanel: 'Usage Panel',
+        totalTrafficPackAndPackage: 'Total Traffic (Plan + Package)',
+        subscriptionMonthlyTraffic: 'Monthly Subscription Traffic',
+        trafficPackageQuota: 'Traffic Package Quota',
+        resetHint: 'Reset day: {day}',
+        resetTimeLabel: 'Reset time',
+        purchaseTrafficPackage: 'Buy one-time traffic package',
+        used: 'Used',
+        total: 'Total',
+        remaining: 'Remaining',
         remainingTraffic: 'Remaining Traffic',
         remainingDays: 'Remaining Days',
         accountBalance: 'Account Balance',
@@ -499,8 +517,17 @@ export default {
         no_plans_found: 'No plans found matching the criteria',
         try_different_filter: 'Please try different filter conditions',
         reset_filter: 'Reset Filter',
+        traffic_package: {
+            entry: 'Buy Traffic Package',
+            title: 'Buy Traffic Package',
+            description: 'Select a one-time quota package. It will be added to your account immediately after purchase.'
+        },
         plan: {
             purchase: 'Purchase',
+            renew: 'Renew',
+            add_quota: 'Add Quota',
+            upgrade_to: 'Upgrade to {name}',
+            current: 'Your Current Plan',
             sold_out_btn: 'Sold Out',
             stock: {
                 plenty: 'Plenty in Stock',
@@ -531,6 +558,11 @@ export default {
                 relative: 'Relative discount approx',
                 savings: 'saves you'
             }
+        },
+        current_plan_info: {
+            plan: 'Current Plan',
+            expire: 'Expiry Date',
+            traffic: 'Traffic Usage'
         },
         stats: {
             global_nodes: 'Global Nodes',

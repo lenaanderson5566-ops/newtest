@@ -948,262 +948,105 @@ function debounce(fn, delay) {
 <style lang="scss" scoped>
 
 .slide-tabs-container {
-
   margin-bottom: 20px;
-
   position: fixed;
-
-  top: 20px;
-
-  left: 50%;
-
-  transform: translateX(-50%);
-
+  top: 86px;
+  left: 16px;
   z-index: 10;
-
-  width: auto;
-
-  
+  width: 210px;
 
   .slide-tabs-wrapper {
-
-    background: rgba(var(--card-background-rgb), 0.7);
-
+    background: rgba(var(--card-background-rgb), 0.72);
     backdrop-filter: blur(10px);
-
     -webkit-backdrop-filter: blur(10px);
-
-    border-radius: 30px;
-
-    padding: 5px;
-
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--border-color);
-
-    display: inline-block;
-
     overflow: hidden;
-
   }
-
-
 
   .slide-tabs-nav {
-
     display: flex;
-
+    flex-direction: column;
+    gap: 4px;
     position: relative;
 
-    
-
     .indicator-container {
-
-      position: absolute;
-
-      top: 0;
-
-      left: 0;
-
-      width: 100%;
-
-      height: 100%;
-
-      pointer-events: none;
-
-      z-index: 1;
-
+      display: none;
     }
-
-    
 
     .nav-item {
-
-      padding: 6px 16px;
-
-      border-radius: 26px;
-
+      padding: 9px 12px;
+      border-radius: 10px;
       font-weight: 500;
-
-      font-size: 14px;
-
+      font-size: 13px;
       color: var(--secondary-text-color);
-
       text-decoration: none;
-
-      text-align: center;
-
+      text-align: left;
       position: relative;
-
-      z-index: 2;
-
-      transition: color 0.3s;
-
+      transition: all 0.25s ease;
       white-space: nowrap;
-
       display: flex;
-
       align-items: center;
-
-      gap: 5px;
-
-      
-
-      
+      gap: 8px;
 
       .badge-dot {
-
-        position: absolute;
-
-        top: -3px;
-
-        right: -2px;
-
-        background-color:#ff3030;
-
-        color: white;
-
+        position: static;
+        margin-left: auto;
+        background-color: rgba(var(--theme-color-rgb), 0.88);
+        color: #fff;
         border-radius: 10px;
-
-        padding: 1px 5px;
-
+        padding: 1px 6px;
         font-size: 8px;
-
-        font-weight: bold;
-
+        font-weight: 700;
         line-height: 1.2;
-
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
-        transform: scale(0.9);
-
-        white-space: nowrap;
-
+        box-shadow: none;
+        transform: none;
       }
-
-      
-      
-      &:last-child {
-
-        border: 1px solid var(--theme-color);
-
-        background-color: rgba(var(--theme-color-rgb), 0.05);
-
-        
-
-        .nav-icon svg {
-
-          color: var(--theme-color);
-
-        }
-
-        
-
-        &:hover {
-
-          background-color: rgba(var(--theme-color-rgb), 0.1);
-
-        }
-
-        
-
-        &.active {
-
-          background-color: rgba(var(--theme-color-rgb), 0.15);
-
-        }
-
-      }
-
-      
-
-      
 
       .nav-icon {
-
         display: flex;
-
         align-items: center;
-
         justify-content: center;
 
-        
-
         svg {
-
-          width: 18px;
-
-          height: 18px;
-
-          transition: color 0.3s ease, transform 0.3s ease;
-
-          transform: scale(1);
-
+          width: 16px;
+          height: 16px;
+          transition: color 0.25s ease;
         }
-
       }
-
-      
 
       &.active {
-
         color: var(--text-color);
-
-        
+        background: rgba(var(--theme-color-rgb), 0.14);
 
         .nav-icon svg {
-
           color: var(--theme-color);
-
-          transform: scale(1.15);
-
         }
-
       }
-
-      
 
       &:hover {
-
         color: var(--text-color);
-
+        background: rgba(var(--theme-color-rgb), 0.08);
       }
 
-    }
+      &:last-child {
+        border: none;
+        background: transparent;
 
-    
+        &:hover,
+        &.active {
+          background: rgba(var(--theme-color-rgb), 0.1);
+        }
+      }
+    }
 
     .slider-indicator {
-
-      position: absolute;
-
-      top: 0;
-
-      left: 0;
-
-      height: 100%;
-
-      background-color: rgba(var(--theme-color-rgb), 0.1);
-
-      border-radius: 26px;
-
-      z-index: 1;
-
-      box-shadow: 0 4px 15px rgba(var(--theme-color-rgb), 0.1);
-
-      border: 1px solid var(--theme-color);
-
-      will-change: transform, width, opacity;
-
-      transition-property: transform, width, opacity;  
-
+      display: none;
     }
-
   }
-
 }
-
-
 
 @media (max-width: 768px) {
 

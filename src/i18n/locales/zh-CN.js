@@ -179,11 +179,29 @@ export default {
     dashboard: {
         welcome: '欢迎回来',
         welcomeDesc: '查看您的服务和使用情况',
+        announcement: '公告',
         siteAnnouncement: '网站公告',
         subscriptionInfo: '套餐信息',
         planName: '套餐名称',
         expiryDate: '到期时间',
         planTraffic: '套餐流量',
+        subscriptionQuotaUsed: '订阅配额已用',
+        subscriptionQuotaRemaining: '订阅配额剩余',
+        packageQuotaRemaining: '流量包剩余',
+        trafficBoardTitle: '流量看板',
+        trafficBoardSubtitle: '订阅流量 + 流量包概览',
+        packagePurchased: '已购买流量额度包',
+        packageNotPurchased: '未购买流量额度包',
+        usagePanel: '使用情况面板',
+        totalTrafficPackAndPackage: '总流量（套餐+流量包）',
+        subscriptionMonthlyTraffic: '套餐月流量',
+        trafficPackageQuota: '流量额度包',
+        resetHint: '重置日：{day}',
+        resetTimeLabel: '重置时间',
+        purchaseTrafficPackage: '购买一次性流量包',
+        used: '已用',
+        total: '总计',
+        remaining: '剩余',
         remainingTraffic: '剩余流量',
         remainingDays: '剩余天数',
         accountBalance: '账户余额',
@@ -498,8 +516,17 @@ export default {
         no_plans_found: '未找到符合条件的套餐',
         try_different_filter: '请尝试其他筛选条件',
         reset_filter: '重置筛选',
+        traffic_package: {
+            entry: '购买流量额度包',
+            title: '购买流量额度包',
+            description: '选择一次性额度包，购买后将立即叠加到当前账户。'
+        },
         plan: {
             purchase: '购买',
+            renew: '续费',
+            add_quota: '添加额度',
+            upgrade_to: '升级至{name}',
+            current: '您的当前套餐',
             sold_out_btn: '已售罄',
             stock: {
                 plenty: '库存充足',
@@ -530,6 +557,11 @@ export default {
                 relative: '相对折扣大约',
                 savings: '为您节省'
             }
+        },
+        current_plan_info: {
+            plan: '当前套餐',
+            expire: '到期时间',
+            traffic: '流量使用'
         },
         stats: {
             global_nodes: '全球节点',

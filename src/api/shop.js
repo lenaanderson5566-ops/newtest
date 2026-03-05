@@ -1,9 +1,10 @@
 ﻿import request from './request';
+import { getCurrentLanguage } from '@/utils/language';
 
 
-export function fetchPlans() {
+export function fetchPlans(language = getCurrentLanguage()) {
   return request({
-    url: '/user/plan/fetch',
+    url: `/user/plan/fetch?language=${encodeURIComponent(language)}`,
     method: 'get'
   });
 }
@@ -17,9 +18,9 @@ export function getCommConfig() {
 }
 
 
-export function fetchPlanById(id) {
+export function fetchPlanById(id, language = getCurrentLanguage()) {
   return request({
-    url: `/user/plan/fetch?id=${id}`,
+    url: `/user/plan/fetch?id=${id}&language=${encodeURIComponent(language)}`,
     method: 'get'
   });
 }
@@ -91,4 +92,3 @@ export function checkoutOrder(tradeNo, methodId) {
     }
   });
 }
-

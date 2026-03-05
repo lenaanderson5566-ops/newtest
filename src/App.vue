@@ -20,7 +20,7 @@
           class="gift-btn" 
           @click="$router.push('/profile')"
         >
-          <IconGift :size="20" />
+          <IconGift :size="18" />
         </button>
         <UserAvatar :username="username" :avatarUrl="avatarUrl" />
       </div>
@@ -35,6 +35,7 @@
     </div>
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
+    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth }]">
     <router-view v-slot="{ Component, route }">
       <transition 
         name="page-transition" 
@@ -50,6 +51,7 @@
         </keep-alive>
       </transition>
     </router-view>
+    </div>
     
     <!-- 全局Toast通知 - 放在最外层，确保不受页面切换影响 -->
     <Toast />
@@ -287,7 +289,7 @@ export default {
   position: fixed;
   top: 20px;  
   left: 25px;
-  font-size: 20px;  
+  font-size: 16px;  
   font-weight: 700;
   color: var(--theme-color);
   z-index: 110;
@@ -305,8 +307,8 @@ export default {
   gap: 10px;
   
   .site-logo-img {
-    height: 24px;
-    width: 24px;
+    height: 20px;
+    width: 20px;
     border-radius: 6px;
     object-fit: cover;
   }
@@ -323,15 +325,15 @@ export default {
   top: 20px;
   right: 25px;
   display: flex;
-  gap: 12px;
+  gap: 10px;
   z-index: 110;
   
   .gift-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background-color: rgba(var(--theme-color-rgb), 0.1);
     border: 1px solid rgba(var(--theme-color-rgb), 0.3);
@@ -346,12 +348,26 @@ export default {
   }
 }
 
+.app-content-wrapper {
+  width: 100%;
+}
+
+@media (min-width: 906px) {
+  .app-content-wrapper.with-left-nav {
+    padding-left: 240px;
+  }
+
+  .site-logo {
+    left: 24px;
+  }
+}
+
 
 @media (max-width: 768px) {
   .site-logo {
     top: 12px;  
     left: 20px;
-    font-size: 20px;  
+    font-size: 16px;  
     padding: 5px 10px;
     border-radius: 8px;
   }
@@ -457,7 +473,7 @@ html {
     top: 20px;
     right: 25px;
     display: flex;
-    gap: 12px;
+    gap: 10px;
     z-index: 110;
   }
 }
