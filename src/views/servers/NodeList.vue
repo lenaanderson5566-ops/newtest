@@ -54,6 +54,13 @@
                   <div class="import-desc">{{ $t('dashboard.scanQRCodeDesc') }}</div>
                 </div>
               </div>
+              <div class="import-action reset-action" @click="showResetModal = true">
+                <div class="import-icon"><IconRefresh :size="24" /></div>
+                <div class="import-content">
+                  <div class="import-title">{{ $t('profile.resetSecurity') }}</div>
+                  <div class="import-desc">{{ $t('profile.resetSecurityConfirm') }}</div>
+                </div>
+              </div>
               <div class="platform-selector">
                 <button v-for="platform in platforms" :key="platform.id" class="platform-button" :class="{ active: activePlatform === platform.id }" @click="activePlatform = platform.id">
                   <component :is="platform.icon" :size="16" />
@@ -71,18 +78,6 @@
                     <img v-if="option.iconType === 'image'" :src="option.icon" :alt="option.label" class="platform-option-image" />
                     <component v-else :is="option.icon" :size="16" class="platform-option-icon" />
                     <span>{{ option.label }}</span>
-                  </button>
-                </div>
-              </div>
-
-              <div class="subscription-manage" v-if="subscriptionUrl">
-                <div class="subscription-manage__header">
-                  <h3>{{ $t('profile.subscription') }}</h3>
-                </div>
-                <div class="subscription-manage__actions">
-                  <button class="quick-btn danger" @click="showResetModal = true">
-                    <IconRefresh :size="14" />
-                    <span>{{ $t('profile.resetSecurity') }}</span>
                   </button>
                 </div>
               </div>
@@ -263,12 +258,14 @@ import { getSubscribe } from '@/api/dashboard';
 import QRCode from 'qrcode';
 import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
 import quantumultxIconImg from '@/assets/images/client-img-ios/quantumultx.png';
+import stashIconImg from '@/assets/images/client-img-ios/stash.png';
 import v2rayngIconImg from '@/assets/images/client-img-android/v2rayng.png';
 import nekoboxIconImg from '@/assets/images/client-img-android/nekobox.png';
 import clashvergeIconImg from '@/assets/images/client-img-windows/clashverge.png';
 import nekorayIconImg from '@/assets/images/client-img-windows/nekoray.png';
 import clashxIconImg from '@/assets/images/client-img-macos/clashx.png';
 import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
+import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
 
 
 import { NODES_CONFIG } from '@/utils/baseConfig';
@@ -414,19 +411,24 @@ const toggleImportPanel = () => {
 const platformClientMap = {
   ios: [
     { key: 'shadowrocket', label: 'Shadowrocket', clientType: 'shadowrocket', icon: shadowrocketIconImg, iconType: 'image' },
+    { key: 'stash-ios', label: 'Stash', clientType: 'stash', icon: stashIconImg, iconType: 'image' },
     { key: 'quantumultx', label: 'Quantumult X', clientType: 'quantumultx', icon: quantumultxIconImg, iconType: 'image' }
   ],
   android: [
     { key: 'v2rayng', label: 'V2rayNG', clientType: 'v2rayng', icon: v2rayngIconImg, iconType: 'image' },
-    { key: 'nekobox', label: 'NekoBox', clientType: 'nekobox', icon: nekoboxIconImg, iconType: 'image' }
+    { key: 'nekobox', label: 'NekoBox', clientType: 'nekobox', icon: nekoboxIconImg, iconType: 'image' },
+    { key: 'android-universal', label: 'Universal', clientType: 'universal', icon: IconQrcode, iconType: 'component' }
   ],
   windows: [
     { key: 'clashverge', label: 'Clash Verge', clientType: 'clashverge', icon: clashvergeIconImg, iconType: 'image' },
-    { key: 'nekoray', label: 'Nekoray', clientType: 'nekoray', icon: nekorayIconImg, iconType: 'image' }
+    { key: 'nekoray', label: 'Nekoray', clientType: 'nekoray', icon: nekorayIconImg, iconType: 'image' },
+    { key: 'windows-universal', label: 'Universal', clientType: 'universal', icon: IconQrcode, iconType: 'component' }
   ],
   macos: [
+    { key: 'clashverge-mac', label: 'Clash Verge', clientType: 'clashverge', icon: clashvergeIconImg, iconType: 'image' },
     { key: 'clashx', label: 'ClashX', clientType: 'clashx', icon: clashxIconImg, iconType: 'image' },
-    { key: 'stash-mac', label: 'Stash', clientType: 'stash-mac', icon: stashMacIconImg, iconType: 'image' }
+    { key: 'stash-mac', label: 'Stash', clientType: 'stash-mac', icon: stashMacIconImg, iconType: 'image' },
+    { key: 'quantumultx-mac', label: 'Quantumult X', clientType: 'quantumultx', icon: quantumultXMacIconImg, iconType: 'image' }
   ]
 };
 
@@ -502,8 +504,12 @@ const openClientLink = (clientType) => {
     case 'nekoray':
       url = `nekobox://addProfile?url=${encodeURIComponent(subscribeUrl)}`;
       break;
+    case 'stash':
     case 'stash-mac':
       url = `stash://install-config?url=${encodeURIComponent(subscribeUrl)}`;
+      break;
+    case 'universal':
+      url = subscribeUrl;
       break;
     default:
       url = subscribeUrl;
@@ -701,7 +707,7 @@ onMounted(() => {
 
     p {
 
-      color: rgba(226, 232, 240, 0.75);
+      color: var(--text-color-light, #6b7280);
 
       margin: 0;
 
@@ -859,32 +865,6 @@ onMounted(() => {
         flex-shrink: 0;
       }
     }
-
-    .subscription-manage {
-      margin-top: 14px;
-      padding: 12px;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      background: #f8f9fc;
-
-      .subscription-manage__header h3 {
-        font-size: 16px;
-        font-weight: 600;
-        margin: 0 0 10px;
-      }
-
-      .subscription-manage__actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-
-        .quick-btn.danger {
-          border-color: rgba(239, 68, 68, 0.35);
-          color: #dc2626;
-          background: rgba(239, 68, 68, 0.08);
-        }
-      }
-    }
   }
 
   .qrcode-modal-overlay {
@@ -958,9 +938,9 @@ onMounted(() => {
 
   padding: 14px;
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 12px 28px rgba(9, 16, 40, 0.35);
-  background: radial-gradient(120% 140% at 50% 0%, rgba(31, 41, 86, 0.34), rgba(8, 14, 40, 0.92));
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  background: var(--card-bg);
 
 }
 
@@ -990,13 +970,13 @@ onMounted(() => {
 
   border-radius: 14px;
 
-  background: linear-gradient(90deg, rgba(19, 29, 68, 0.92), rgba(31, 45, 94, 0.72));
+  background: var(--card-bg);
 
   transition: all 0.25s ease;
 
-  box-shadow: 0 8px 22px rgba(5, 10, 32, 0.35);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
 
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
 
   
 
@@ -1004,9 +984,9 @@ onMounted(() => {
 
     transform: translateY(-1px);
 
-    box-shadow: 0 10px 24px rgba(5, 10, 32, 0.45);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(var(--theme-color-rgb), 0.3);
 
   }
   .node-country {
@@ -1074,7 +1054,7 @@ onMounted(() => {
 
           background-color: rgba(74, 222, 128, 0.16);
 
-          color: #86efac;
+          color: #16a34a;
 
           font-weight: 600;
 
@@ -1086,7 +1066,7 @@ onMounted(() => {
 
           background-color: rgba(96, 165, 250, 0.18);
 
-          color: #93c5fd;
+          color: #2563eb;
 
         }
 
@@ -1109,7 +1089,7 @@ onMounted(() => {
 
       margin: 0 0 0.35rem;
 
-      color: #f8fafc;
+      color: var(--text-color);
 
       line-height: 1.4;
 
@@ -1133,7 +1113,7 @@ onMounted(() => {
 
       font-size: 0.8rem;
 
-      color: rgba(226, 232, 240, 0.75);
+      color: var(--text-color-light, #6b7280);
 
       margin: 0;
 
@@ -1168,8 +1148,8 @@ onMounted(() => {
         font-size: 12px;
         padding: 0 10px;
         border-radius: 999px;
-        background-color: rgba(190, 24, 93, 0.28);
-        color: #fda4af;
+        background-color: rgba(190, 24, 93, 0.12);
+        color: #be185d;
         font-weight: 600;
         display: inline-flex;
         align-items: center;
@@ -1191,7 +1171,7 @@ onMounted(() => {
 
       &.online {
         background: rgba(74, 222, 128, 0.2);
-        color: #86efac;
+        color: #16a34a;
       }
     }
 
@@ -1213,7 +1193,7 @@ onMounted(() => {
 
       justify-content: center;
 
-      color: rgba(226, 232, 240, 0.75);
+      color: var(--text-color-light, #6b7280);
 
       cursor: pointer;
 
@@ -1261,7 +1241,7 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: rgba(226, 232, 240, 0.75);
+    color: var(--text-color-light, #6b7280);
 
     font-size: 1.1rem;
 
@@ -1273,7 +1253,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: rgba(226, 232, 240, 0.75);
+    color: var(--text-color-light, #6b7280);
 
     opacity: 0.7;
 
