@@ -818,9 +818,11 @@ onMounted(() => {
 
   margin: 0 auto;
 
-  padding: 12px;
-  border-radius: 16px;
-  background: radial-gradient(120% 140% at 50% 0%, rgba(31, 41, 86, 0.28), rgba(8, 14, 40, 0.9));
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 12px 28px rgba(9, 16, 40, 0.35);
+  background: radial-gradient(120% 140% at 50% 0%, rgba(31, 41, 86, 0.34), rgba(8, 14, 40, 0.92));
 
 }
 
@@ -828,11 +830,11 @@ onMounted(() => {
 
 .node-items {
 
-  display: flex;
+  display: grid;
 
-  flex-direction: column;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  gap: 0.75rem;
+  gap: 0.9rem;
 
 }
 
@@ -841,6 +843,8 @@ onMounted(() => {
 .node-item {
 
   display: flex;
+
+  min-width: 0;
 
   align-items: center;
 
@@ -891,6 +895,8 @@ onMounted(() => {
   .node-info {
 
     flex: 1;
+
+    min-width: 0;
 
     overflow: hidden;
 
@@ -1007,8 +1013,8 @@ onMounted(() => {
 
     gap: 8px;
 
-    margin-left: 14px;
-    min-width: 180px;
+    margin-left: 12px;
+    min-width: 140px;
     justify-content: flex-end;
 
     .node-feature-tags {
@@ -1233,28 +1239,16 @@ onMounted(() => {
 
 
 
-@media (min-width: 768px) {
+@media (max-width: 860px) {
 
   .node-items {
 
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 1rem;
+    grid-template-columns: 1fr;
 
   }
 
-}
-
-
-
-@media (min-width: 1024px) {
-
-  .node-items {
-
-    grid-template-columns: repeat(3, 1fr);
-
+  .node-actions {
+    min-width: 110px;
   }
 
 }
