@@ -91,15 +91,28 @@
           :key="plan.id"
         >
           <div class="card-header">
-            <h2 class="card-title">{{ plan.name }}</h2>
-            <span v-if="isCurrentPlan(plan)" class="current-plan-badge">{{ $t("shop.plan.current") }}</span>
-            <div v-if="isCurrentPlan(plan) && currentPlanExpireText" class="current-plan-expire">
-              {{ $t("shop.current_plan_info.expire") }} {{ currentPlanExpireText }}
+            <div class="header-main">
+              <h2 class="card-title">{{ plan.name }}</h2>
+              <span v-if="isCurrentPlan(plan)" class="current-plan-badge">{{ $t("shop.plan.current") }}</span>
+              <div v-if="isCurrentPlan(plan) && currentPlanExpireText" class="current-plan-expire">
+                {{ $t("shop.current_plan_info.expire") }} {{ currentPlanExpireText }}
+              </div>
+
+              <button
+                class="btn-purchase glassmorphism"
+                :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
+                @click="purchasePlan(plan)"
+                :disabled="plan.capacity_limit === 0"
+              >
+                <IconShoppingCart class="btn-icon" />
+                <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
+              </button>
             </div>
 
             <div
               class="card-badge glassmorphism stock-warning"
-              v-else-if="
+              v-if="
+                !isCurrentPlan(plan) &&
                 plan.capacity_limit > 0 &&
                 plan.capacity_limit < SHOP_CONFIG.lowStockThreshold
               "
@@ -200,18 +213,6 @@
               <div v-else class="html-content" v-html="plan.content"></div>
             </div>
 
-            <!-- 购买按钮 -->
-
-            <button
-              class="btn-purchase glassmorphism"
-              :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
-              @click="purchasePlan(plan)"
-              :disabled="plan.capacity_limit === 0"
-            >
-              <IconShoppingCart class="btn-icon" />
-
-              <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
-            </button>
           </div>
         </div>
       </div>
@@ -1241,6 +1242,15 @@ export default {
 
         margin-bottom: 15px;
 
+        .header-main {
+          flex: 1;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
+        }
+
         .card-title {
           font-size: 18px;
 
@@ -1519,7 +1529,7 @@ export default {
 
     padding: 0 16px;
 
-    margin-top: 12px;
+    margin-top: 4px;
 
     align-self: flex-start;
 
