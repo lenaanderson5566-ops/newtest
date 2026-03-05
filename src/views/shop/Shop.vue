@@ -93,6 +93,9 @@
           <div class="card-header">
             <h2 class="card-title">{{ plan.name }}</h2>
             <span v-if="isCurrentPlan(plan)" class="current-plan-badge">{{ $t("shop.plan.current") }}</span>
+            <div v-if="isCurrentPlan(plan) && currentPlanExpireText" class="current-plan-expire">
+              {{ $t("shop.current_plan_info.expire") }} {{ currentPlanExpireText }}
+            </div>
 
             <div
               class="card-badge glassmorphism stock-warning"
@@ -304,6 +307,7 @@ export default {
 
     const selectedPriceType = reactive({});
     const currentPlanId = ref(null);
+    const currentPlanExpireText = ref('');
 
     const paymentMethods = ref([]);
 
@@ -328,6 +332,31 @@ export default {
 
     const setFilter = (filter) => {
       selectedFilter.value = filter;
+    };
+
+    const formatExpireTimestamp = (timestamp) => {
+      const parsed = Number(timestamp);
+      if (!Number.isFinite(parsed) || parsed <= 0) return '';
+      const date = new Date(parsed * 1000);
+      if (Number.isNaN(date.getTime())) return '';
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    };
+
+    const fetchCurrentSubscription = async () => {
+      try {
+        const response = await getSubscribe();
+        const subscribe = response?.data || {};
+        currentPlanId.value = subscribe.plan_id || subscribe.plan?.id || null;
+        currentPlanExpireText.value =
+          subscribe.expired_at && Number(subscribe.expired_at) > 0
+            ? formatExpireTimestamp(subscribe.expired_at)
+            : '';
+      } catch (error) {
+        console.error('Failed to fetch current subscription:', error);
+        currentPlanId.value = null;
+        currentPlanExpireText.value = '';
+      }
     };
 
     const normalizePriceValue = (plan, periodType) => {
@@ -710,7 +739,7 @@ export default {
       try {
         loading.plans = true;
 
-        await Promise.all([fetchPlanData(), fetchConfig()]);
+        await Promise.all([fetchPlanData(), fetchConfig(), fetchCurrentSubscription()]);
 
         loading.plans = false;
 
@@ -854,6 +883,7 @@ export default {
 
       calculateDiscount,
       isCurrentPlan,
+      currentPlanExpireText,
     };
   },
 };
@@ -936,6 +966,14 @@ export default {
     border: 1px solid rgba(59, 130, 246, 0.25);
     border-radius: 999px;
     padding: 2px 8px;
+  }
+
+  .current-plan-expire {
+    width: 100%;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.4;
   }
 
       .card-badge {
