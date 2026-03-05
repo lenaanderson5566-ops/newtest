@@ -905,6 +905,13 @@ export default {
 
   .welcome-card {
     margin-bottom: 24px;
+
+    .card-body p {
+      color: var(--secondary-text-color);
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
   }
 
   .dashboard-card {
@@ -942,7 +949,7 @@ export default {
       .card-title {
         font-size: 18px;
 
-        font-weight: 600;
+        font-weight: 700;
 
         margin: 0;
 
@@ -1354,7 +1361,7 @@ export default {
         .period {
           font-size: 16px;
 
-          color: var(--secondary-text-color);
+          color: var(--text-color);
         }
       }
     }
@@ -1537,7 +1544,7 @@ export default {
     }
 
     &.btn-disabled {
-      background-color: rgba(150, 150, 150, 0.5);
+      background-color: rgba(100, 116, 139, 0.55);
 
       backdrop-filter: blur(8px);
 
@@ -1547,7 +1554,7 @@ export default {
 
       box-shadow: none;
 
-      border: 1px solid rgba(150, 150, 150, 0.3);
+      border: 1px solid rgba(100, 116, 139, 0.5);
 
       &:hover {
         transform: none;
@@ -1561,9 +1568,61 @@ export default {
 
       height: 18px;
     }
+
+    .btn-text {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(var(--theme-color-rgb), 0.65);
+      outline-offset: 2px;
+    }
   }
 
   .dark-theme {
+    .plan-card,
+    .dashboard-card,
+    .no-plans-message {
+      background-color: #111827;
+      border-color: rgba(148, 163, 184, 0.28);
+    }
+
+    .card-title,
+    .plan-price .price-display .currency,
+    .plan-price .price-display .amount,
+    .plan-features .feature-item span,
+    .filter-option .option-text,
+    .no-plans-message h3 {
+      color: #e5e7eb !important;
+    }
+
+    .plan-price .price-display .period,
+    .welcome-card .card-body p,
+    .current-plan-expire,
+    .no-plans-message p {
+      color: #cbd5e1 !important;
+    }
+
+    .plan-features .feature-item .feature-icon.disabled,
+    .plan-features .feature-item span.disabled-text {
+      color: #94a3b8 !important;
+    }
+
+    .btn-purchase.btn-disabled {
+      background-color: rgba(71, 85, 105, 0.72);
+      border-color: rgba(148, 163, 184, 0.38);
+    }
+
+    .filter-option:hover {
+      background-color: rgba(var(--theme-color-rgb), 0.16);
+    }
+
+    .filter-option:focus-visible,
+    .btn-purchase:focus-visible {
+      outline-color: rgba(191, 219, 254, 0.95);
+    }
+
     .skeleton-header,
     .skeleton-price,
     .skeleton-feature,
@@ -1647,7 +1706,13 @@ export default {
         border-radius: 12px;
 
         &:hover {
-          background-color: rgba(var(--theme-color-rgb), 0.05);
+          background-color: rgba(var(--theme-color-rgb), 0.08);
+        }
+
+        &:focus-visible {
+          outline: 2px solid rgba(var(--theme-color-rgb), 0.55);
+          outline-offset: 2px;
+          background-color: rgba(var(--theme-color-rgb), 0.1);
         }
 
         &.active {
@@ -1671,7 +1736,7 @@ export default {
 
           align-items: center;
 
-          color: var(--secondary-text-color);
+          color: var(--text-color);
 
           transition: color 0.3s ease;
 
@@ -1685,7 +1750,7 @@ export default {
         .option-text {
           font-size: 14px;
 
-          color: var(--secondary-text-color);
+          color: var(--text-color);
 
           transition: color 0.3s ease;
         }
