@@ -128,66 +128,22 @@
         <div class="node-items">
 
           <div v-for="node in nodes" :key="node.id" class="node-item">
-
-            <!-- 节点状态指示器 -->
-
-            <div class="node-status">
-
-              <div class="status-indicator" :class="{ 'online': node.is_online === 1 }"></div>
-
-            </div>
-
-            
-
-            <!-- 节点信息 -->
+            <div class="node-country">{{ formatCountryTag(getCountryTag(node.tags) || '--') }}</div>
 
             <div class="node-info">
-
-              <!-- 标签区域 -->
-
               <div class="node-tags">
-
-                <!-- 倍率标签 -->
-
                 <span class="node-tag rate-tag" v-if="showNodeRate">x{{ node.rate }}</span>
-
-                
-
-                <!-- 节点类型标签 -->
-
                 <span class="node-tag type-tag">{{ node.type }}</span>
-
-                
-
-                <!-- 国家/地区标签 -->
-                <span v-if="getCountryTag(node.tags)" class="node-tag country-tag">{{ formatCountryTag(getCountryTag(node.tags)) }}</span>
-
-                <!-- 其他节点标签 -->
-                <template v-if="getFeatureTags(node.tags).length > 0">
-                  <span v-for="(tag, index) in getFeatureTags(node.tags)" :key="index" class="node-tag feature-tag">{{ tag }}</span>
-                </template>
-
               </div>
 
-              
-
-              <!-- 节点名称 -->
-
               <h3 class="node-name">{{ node.name }}</h3>
-
-              
-
-              <!-- 节点主机信息 -->
-
               <p class="node-host" v-if="showNodeDetails">{{ node.host }}:{{ node.port }}</p>
-
             </div>
 
-            
-
-            <!-- 更多按钮 - 仅当配置允许显示节点倍率和允许查看节点详情时显示 -->
-
             <div class="node-actions">
+              <div class="node-feature-tags" v-if="getFeatureTags(node.tags).length > 0">
+                <span v-for="(tag, index) in getFeatureTags(node.tags)" :key="index" class="node-tag feature-tag">{{ tag }}</span>
+              </div>
               <span class="node-online-status" :class="{ online: node.is_online === 1 }">{{ node.is_online === 1 ? '在线' : '离线' }}</span>
               <button v-if="showNodeRate && allowViewNodeInfo" class="more-btn" @click="openNodeDetail(node)">
                 <IconDotsVertical :size="20" />
@@ -899,44 +855,21 @@ onMounted(() => {
     border-color: rgba(var(--theme-color-rgb), 0.3);
 
   }
-
-  
-
-  .node-status {
-
-    margin-right: 1rem;
-
-    
-
-    .status-indicator {
-
-      width: 12px;
-
-      height: 12px;
-
-      border-radius: 50%;
-
-      background-color: #ccc;
-
-      position: relative;
-
-      
-
-      &.online {
-
-        background-color: #4caf50;
-
-        box-shadow: 0 0 0 rgba(76, 175, 80, 0.4);
-
-        animation: pulse 2s infinite;
-
-      }
-
-    }
-
+  .node-country {
+    min-width: 56px;
+    height: 56px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 14px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #d90429, #9d174d);
+    box-shadow: 0 6px 14px rgba(157, 23, 77, 0.35);
   }
-
-  
 
   .node-info {
 
@@ -992,14 +925,7 @@ onMounted(() => {
 
         }
 
-        &.country-tag {
-          background-color: rgba(239, 68, 68, 0.12);
-          color: #dc2626;
-          font-weight: 700;
-          text-transform: uppercase;
-        }
-
-        &.feature-tag {
+                &.feature-tag {
           background-color: rgba(99, 102, 241, 0.12);
           color: #4f46e5;
         }
@@ -1062,13 +988,31 @@ onMounted(() => {
 
     margin-left: 12px;
 
+    .node-feature-tags {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+
+      .node-tag.feature-tag {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.55rem;
+        border-radius: 999px;
+        background-color: rgba(99, 102, 241, 0.12);
+        color: #4f46e5;
+        font-weight: 600;
+      }
+    }
+
     .node-online-status {
       font-size: 0.75rem;
       padding: 0.2rem 0.55rem;
       border-radius: 999px;
       background: rgba(239, 68, 68, 0.12);
       color: #dc2626;
-      font-weight: 600;
+      font-weight: 700;
+      white-space: nowrap;
 
       &.online {
         background: rgba(34, 197, 94, 0.14);
