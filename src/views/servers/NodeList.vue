@@ -67,8 +67,8 @@
                     v-for="option in activePlatformOptions"
                     :key="option.key"
                     class="platform-option"
-                    @click="openClientLink(option.clientType)"
-                  >
+                    @click="openClientLink(option.clientType)">
+                    <component :is="option.icon" :size="16" class="platform-option-icon" />
                     <span>{{ option.label }}</span>
                   </button>
                 </div>
@@ -271,7 +271,9 @@ import {
   IconBrandApple,
   IconBrandAndroid,
   IconBrandWindows,
-  IconBrandFinder
+  IconDeviceLaptop,
+  IconRocket,
+  IconBolt
 
 } from '@tabler/icons-vue';
 
@@ -320,7 +322,7 @@ const platforms = [
   { id: 'ios', label: 'iOS', icon: IconBrandApple },
   { id: 'android', label: 'Android', icon: IconBrandAndroid },
   { id: 'windows', label: 'Windows', icon: IconBrandWindows },
-  { id: 'macos', label: 'MacOS', icon: IconBrandFinder }
+  { id: 'macos', label: 'MacOS', icon: IconDeviceLaptop }
 ];
 
 
@@ -413,20 +415,20 @@ const toggleImportPanel = () => {
 
 const platformClientMap = {
   ios: [
-    { key: 'shadowrocket', label: 'Shadowrocket', clientType: 'shadowrocket' },
-    { key: 'singbox-ios', label: 'Singbox', clientType: 'singbox-ios' }
+    { key: 'shadowrocket', label: 'Shadowrocket', clientType: 'shadowrocket', icon: IconRocket },
+    { key: 'singbox-ios', label: 'Singbox', clientType: 'singbox-ios', icon: IconBolt }
   ],
   android: [
-    { key: 'v2rayng', label: 'V2rayNG', clientType: 'v2rayng' },
-    { key: 'singbox-android', label: 'Singbox', clientType: 'singbox-android' }
+    { key: 'v2rayng', label: 'V2rayNG', clientType: 'v2rayng', icon: IconBrandAndroid },
+    { key: 'singbox-android', label: 'Singbox', clientType: 'singbox-android', icon: IconBolt }
   ],
   windows: [
-    { key: 'clashverge', label: 'Clash Verge', clientType: 'clashverge' },
-    { key: 'singbox-windows', label: 'Singbox', clientType: 'singbox-windows' }
+    { key: 'clashverge', label: 'Clash Verge', clientType: 'clashverge', icon: IconBrandWindows },
+    { key: 'singbox-windows', label: 'Singbox', clientType: 'singbox-windows', icon: IconBolt }
   ],
   macos: [
-    { key: 'clashx', label: 'ClashX', clientType: 'clashx' },
-    { key: 'singbox-macos', label: 'Singbox', clientType: 'singbox-macos' }
+    { key: 'clashx', label: 'ClashX', clientType: 'clashx', icon: IconDeviceLaptop },
+    { key: 'singbox-macos', label: 'Singbox', clientType: 'singbox-macos', icon: IconBolt }
   ]
 };
 
@@ -780,6 +782,14 @@ onMounted(() => {
       font-weight: 500;
       text-align: left;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+
+      .platform-option-icon {
+        opacity: 0.9;
+        flex-shrink: 0;
+      }
     }
   }
 
