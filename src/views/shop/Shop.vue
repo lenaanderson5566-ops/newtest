@@ -449,8 +449,19 @@ export default {
       return normalizePriceValue(plan, periodType);
     };
 
+    const isSameSpecPlan = (plan) => {
+      if (!currentPlanId.value || isTrafficPackagePlan(plan)) return false;
+
+      const periodType = currentComparePeriod.value;
+      const currentPrice = getPriceByPeriod(currentPlan.value, periodType);
+      const targetPrice = getPriceByPeriod(plan, periodType);
+
+      if (currentPrice === null || targetPrice === null) return false;
+      return targetPrice === currentPrice;
+    };
+
     const isHigherSpecPlan = (plan) => {
-      if (!currentPlanId.value || isTrafficPackagePlan(plan) || isCurrentPlan(plan)) return false;
+      if (!currentPlanId.value || isTrafficPackagePlan(plan)) return false;
 
       const periodType = currentComparePeriod.value;
       const currentPrice = getPriceByPeriod(currentPlan.value, periodType);
@@ -464,7 +475,7 @@ export default {
       if (plan.capacity_limit === 0) return t("shop.plan.sold_out_btn");
       if (isTrafficPackagePlan(plan)) return t("shop.plan.add_quota");
       if (!currentPlanId.value) return t("shop.plan.purchase");
-      if (isCurrentPlan(plan)) return t("shop.plan.renew");
+      if (isSameSpecPlan(plan)) return t("shop.plan.renew");
       if (isHigherSpecPlan(plan)) return t("shop.plan.upgrade_to", { name: plan.name });
       return t("shop.plan.purchase");
     };
