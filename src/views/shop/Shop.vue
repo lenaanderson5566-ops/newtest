@@ -98,15 +98,6 @@
                 {{ $t("shop.current_plan_info.expire") }} {{ currentPlanExpireText }}
               </div>
 
-              <button
-                class="btn-purchase glassmorphism"
-                :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
-                @click="purchasePlan(plan)"
-                :disabled="plan.capacity_limit === 0"
-              >
-                <IconShoppingCart class="btn-icon" />
-                <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
-              </button>
             </div>
 
             <div
@@ -150,6 +141,16 @@
                 }}</span>
               </div>
             </div>
+
+            <button
+              class="btn-purchase glassmorphism"
+              :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
+              @click="purchasePlan(plan)"
+              :disabled="plan.capacity_limit === 0"
+            >
+              <IconShoppingCart class="btn-icon" />
+              <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
+            </button>
 
             <!-- 周期折扣计算 -->
 
@@ -1374,6 +1375,12 @@ export default {
           color: var(--text-color);
         }
       }
+    }
+
+    .plan-price + .btn-purchase {
+      align-self: center;
+      margin-top: 0;
+      margin-bottom: 12px;
     }
 
     .discount-calculation {
