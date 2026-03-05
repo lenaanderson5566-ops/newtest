@@ -128,7 +128,7 @@
         <div class="node-items">
 
           <div v-for="node in nodes" :key="node.id" class="node-item">
-            <div class="node-country">{{ formatCountryTag(getCountryTag(node.tags) || '--') }}</div>
+            <div class="node-country" :class="countryBadgeClass(getCountryTag(node.tags))">{{ formatCountryTag(getCountryTag(node.tags) || '--') }}</div>
 
             <div class="node-info">
               <div class="node-tags">
@@ -412,6 +412,14 @@ const getFeatureTags = (tags) => {
 
 const formatCountryTag = (countryTag) => countryTag.toUpperCase();
 
+const countryBadgeClass = (countryTag) => {
+  const code = formatCountryTag(countryTag || '');
+  if (['US', 'CA', 'NL'].includes(code)) return 'is-blue';
+  if (['HK', 'SG'].includes(code)) return 'is-pink';
+  if (['DE', 'JP', 'KR'].includes(code)) return 'is-red';
+  return 'is-red';
+};
+
 const updateQRCode = async () => {
   if (!subscriptionUrl.value) return;
   try {
@@ -618,7 +626,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--text-muted);
+      color: rgba(226, 232, 240, 0.75);
 
       margin: 0;
 
@@ -802,13 +810,17 @@ onMounted(() => {
 
   flex-direction: column;
 
-  gap: 1.5rem;
+  gap: 1.25rem;
 
   max-width: 1200px;
 
   width: 100%;
 
   margin: 0 auto;
+
+  padding: 12px;
+  border-radius: 16px;
+  background: radial-gradient(120% 140% at 50% 0%, rgba(31, 41, 86, 0.28), rgba(8, 14, 40, 0.9));
 
 }
 
@@ -820,7 +832,7 @@ onMounted(() => {
 
   flex-direction: column;
 
-  gap: 1rem;
+  gap: 0.75rem;
 
 }
 
@@ -832,27 +844,27 @@ onMounted(() => {
 
   align-items: center;
 
-  padding: 1rem 1.25rem;
+  padding: 0.9rem 1.05rem;
 
-  border-radius: 12px;
+  border-radius: 14px;
 
-  background-color: var(--card-bg);
+  background: linear-gradient(90deg, rgba(19, 29, 68, 0.92), rgba(31, 45, 94, 0.72));
 
   transition: all 0.25s ease;
 
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 22px rgba(5, 10, 32, 0.35);
 
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   
 
   &:hover {
 
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 24px rgba(5, 10, 32, 0.45);
 
-    border-color: rgba(var(--theme-color-rgb), 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
 
   }
   .node-country {
@@ -869,6 +881,10 @@ onMounted(() => {
     letter-spacing: 0.5px;
     background: linear-gradient(135deg, #d90429, #9d174d);
     box-shadow: 0 6px 14px rgba(157, 23, 77, 0.35);
+
+    &.is-red { background: linear-gradient(135deg, #d90429, #9d174d); }
+    &.is-pink { background: linear-gradient(135deg, #db2777, #be185d); }
+    &.is-blue { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); }
   }
 
   .node-info {
@@ -907,9 +923,9 @@ onMounted(() => {
 
         &.rate-tag {
 
-          background-color: rgba(76, 175, 80, 0.1);
+          background-color: rgba(74, 222, 128, 0.16);
 
-          color: #4caf50;
+          color: #86efac;
 
           font-weight: 600;
 
@@ -919,9 +935,9 @@ onMounted(() => {
 
         &.type-tag {
 
-          background-color: rgba(33, 150, 243, 0.1);
+          background-color: rgba(96, 165, 250, 0.18);
 
-          color: #2196f3;
+          color: #93c5fd;
 
         }
 
@@ -944,7 +960,7 @@ onMounted(() => {
 
       margin: 0 0 0.35rem;
 
-      color: var(--text-color);
+      color: #f8fafc;
 
       line-height: 1.4;
 
@@ -968,7 +984,7 @@ onMounted(() => {
 
       font-size: 0.8rem;
 
-      color: var(--text-muted);
+      color: rgba(226, 232, 240, 0.75);
 
       margin: 0;
 
@@ -986,7 +1002,9 @@ onMounted(() => {
 
     gap: 8px;
 
-    margin-left: 12px;
+    margin-left: 14px;
+    min-width: 180px;
+    justify-content: flex-end;
 
     .node-feature-tags {
       display: inline-flex;
@@ -1001,8 +1019,8 @@ onMounted(() => {
         font-size: 11px;
         padding: 0 8px;
         border-radius: 999px;
-        background-color: rgba(99, 102, 241, 0.12);
-        color: #4f46e5;
+        background-color: rgba(190, 24, 93, 0.28);
+        color: #fda4af;
         font-weight: 600;
         display: inline-flex;
         align-items: center;
@@ -1015,16 +1033,16 @@ onMounted(() => {
       font-size: 11px;
       padding: 0 8px;
       border-radius: 999px;
-      background: rgba(239, 68, 68, 0.12);
-      color: #dc2626;
+      background: rgba(248, 113, 113, 0.2);
+      color: #f87171;
       font-weight: 600;
       white-space: nowrap;
       display: inline-flex;
       align-items: center;
 
       &.online {
-        background: rgba(34, 197, 94, 0.14);
-        color: #16a34a;
+        background: rgba(74, 222, 128, 0.2);
+        color: #86efac;
       }
     }
 
@@ -1046,7 +1064,7 @@ onMounted(() => {
 
       justify-content: center;
 
-      color: var(--text-muted);
+      color: rgba(226, 232, 240, 0.75);
 
       cursor: pointer;
 
@@ -1094,7 +1112,7 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-muted);
+    color: rgba(226, 232, 240, 0.75);
 
     font-size: 1.1rem;
 
@@ -1106,7 +1124,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-muted);
+    color: rgba(226, 232, 240, 0.75);
 
     opacity: 0.7;
 
