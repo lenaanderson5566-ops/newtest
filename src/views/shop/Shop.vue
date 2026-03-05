@@ -449,10 +449,17 @@ export default {
       return normalizePriceValue(plan, periodType);
     };
 
+    const getComparablePeriodType = (plan) => {
+      if (RECURRING_PERIOD_TYPES.includes(selectedFilter.value)) {
+        return selectedFilter.value;
+      }
+      return getDisplayPriceType(plan);
+    };
+
     const isSameSpecPlan = (plan) => {
       if (!currentPlanId.value || isTrafficPackagePlan(plan)) return false;
 
-      const periodType = currentComparePeriod.value;
+      const periodType = getComparablePeriodType(plan);
       const currentPrice = getPriceByPeriod(currentPlan.value, periodType);
       const targetPrice = getPriceByPeriod(plan, periodType);
 
@@ -463,7 +470,7 @@ export default {
     const isHigherSpecPlan = (plan) => {
       if (!currentPlanId.value || isTrafficPackagePlan(plan)) return false;
 
-      const periodType = currentComparePeriod.value;
+      const periodType = getComparablePeriodType(plan);
       const currentPrice = getPriceByPeriod(currentPlan.value, periodType);
       const targetPrice = getPriceByPeriod(plan, periodType);
 
