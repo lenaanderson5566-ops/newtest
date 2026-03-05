@@ -159,16 +159,12 @@
 
                 
 
-                <!-- 其他标签 -->
+                <!-- 国家/地区标签 -->
+                <span v-if="getCountryTag(node.tags)" class="node-tag country-tag">{{ formatCountryTag(getCountryTag(node.tags)) }}</span>
 
-                <template v-if="node.tags && node.tags.length > 0">
-
-                  <span v-for="(tag, index) in node.tags" :key="index" class="node-tag">
-
-                    {{ tag }}
-
-                  </span>
-
+                <!-- 其他节点标签 -->
+                <template v-if="getFeatureTags(node.tags).length > 0">
+                  <span v-for="(tag, index) in getFeatureTags(node.tags)" :key="index" class="node-tag feature-tag">{{ tag }}</span>
                 </template>
 
               </div>
@@ -191,14 +187,11 @@
 
             <!-- 更多按钮 - 仅当配置允许显示节点倍率和允许查看节点详情时显示 -->
 
-            <div v-if="showNodeRate && allowViewNodeInfo" class="node-actions">
-
-              <button class="more-btn" @click="openNodeDetail(node)">
-
+            <div class="node-actions">
+              <span class="node-online-status" :class="{ online: node.is_online === 1 }">{{ node.is_online === 1 ? '在线' : '离线' }}</span>
+              <button v-if="showNodeRate && allowViewNodeInfo" class="more-btn" @click="openNodeDetail(node)">
                 <IconDotsVertical :size="20" />
-
               </button>
-
             </div>
 
           </div>
@@ -440,6 +433,28 @@ const activePlatformLabel = computed(() => {
 const activePlatformOptions = computed(() => {
   return platformClientMap[activePlatform.value] || platformClientMap.ios;
 });
+
+const COUNTRY_TAG_REGEX = /^(?:[A-Za-z]{2}|(?:usa|uk|uae))$/i;
+
+const normalizeNodeTags = (tags) => {
+  if (!Array.isArray(tags)) return [];
+  return tags
+    .map((tag) => String(tag || '').trim())
+    .filter(Boolean);
+};
+
+const getCountryTag = (tags) => {
+  const normalized = normalizeNodeTags(tags);
+  return normalized.find((tag) => COUNTRY_TAG_REGEX.test(tag)) || '';
+};
+
+const getFeatureTags = (tags) => {
+  const normalized = normalizeNodeTags(tags);
+  const countryTag = getCountryTag(normalized);
+  return normalized.filter((tag) => tag !== countryTag);
+};
+
+const formatCountryTag = (countryTag) => countryTag.toUpperCase();
 
 const updateQRCode = async () => {
   if (!subscriptionUrl.value) return;
@@ -977,6 +992,18 @@ onMounted(() => {
 
         }
 
+        &.country-tag {
+          background-color: rgba(239, 68, 68, 0.12);
+          color: #dc2626;
+          font-weight: 700;
+          text-transform: uppercase;
+        }
+
+        &.feature-tag {
+          background-color: rgba(99, 102, 241, 0.12);
+          color: #4f46e5;
+        }
+
       }
 
     }
@@ -1027,13 +1054,27 @@ onMounted(() => {
 
   .node-actions {
 
-    display: flex;
+    display: inline-flex;
 
     align-items: center;
 
+    gap: 8px;
+
     margin-left: 12px;
 
-    
+    .node-online-status {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(239, 68, 68, 0.12);
+      color: #dc2626;
+      font-weight: 600;
+
+      &.online {
+        background: rgba(34, 197, 94, 0.14);
+        color: #16a34a;
+      }
+    }
 
     .more-btn {
 
@@ -1056,13 +1097,8 @@ onMounted(() => {
       color: var(--text-muted);
 
       cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
 
       transition: all 0.2s ease;
-
-      
 
       &:hover {
 
