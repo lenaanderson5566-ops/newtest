@@ -97,6 +97,7 @@ import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
 import { getUserInfo } from '@/api/user';
 import { handleRedirectPath } from '@/utils/redirectHandler';
+import { normalizeWalletItems } from '@/utils/wallet';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
@@ -191,39 +192,39 @@ export default {
 
     const username = computed(() => store.getters.username);
     const avatarUrl = computed(() => store.getters.avatarUrl || '');
-    const userWallets = ref([]);
+    const walletDisplayItems = ref([]);
+    const isLoadingWallets = ref(false);
 
-    const formatWalletBalance = (rawBalance) => {
-      const numeric = Number(rawBalance || 0);
-      if (!Number.isFinite(numeric)) return '0.00';
-      return (numeric / 100).toFixed(2);
+    const loadUserWallets = async () => {
+      if (!route.meta.requiresAuth || isLoadingWallets.value) {
+        if (!route.meta.requiresAuth) {
+          walletDisplayItems.value = [];
+        }
+        return;
+      }
+
+      isLoadingWallets.value = true;
+
+      try {
+        const response = await getUserInfo();
+        walletDisplayItems.value = normalizeWalletItems(response?.data?.wallets);
+      } catch (error) {
+        walletDisplayItems.value = [];
+        console.error('Failed to refresh user wallets:', error);
+      } finally {
+        isLoadingWallets.value = false;
+      }
     };
 
-    const walletDisplayItems = computed(() => {
-      return userWallets.value
-        .filter((wallet) => wallet && wallet.currency)
-        .map((wallet) => ({
-          currency: String(wallet.currency).toUpperCase(),
-          amount: formatWalletBalance(wallet.balance),
-        }));
-    });
-    
     watch(
       () => route.meta.requiresAuth,
       (requiresAuth) => {
         if (!requiresAuth) {
-          userWallets.value = [];
+          walletDisplayItems.value = [];
           return;
         }
 
-        getUserInfo()
-          .then((response) => {
-            const info = response?.data;
-            userWallets.value = Array.isArray(info?.wallets) ? info.wallets : [];
-          })
-          .catch((error) => {
-            console.error('Failed to refresh user wallets:', error);
-          });
+        loadUserWallets();
       },
       { immediate: true }
     );
@@ -244,7 +245,8 @@ export default {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         checkAuthAndReloadMessages();
-        
+        loadUserWallets();
+
         checkUserLoginStatus().then(result => {
           if (result.isLoggedIn === false && result.message) {
             const { showToast } = require('@/composables/useToast').useToast();
