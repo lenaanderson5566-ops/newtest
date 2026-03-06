@@ -353,9 +353,9 @@ onMounted(() => {
   }
 
   .import-icon {
-    width: 68px;
-    height: 68px;
-    border-radius: 18px;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
     background: rgba(var(--theme-color-rgb), 0.14);
     display: inline-flex;
     align-items: center;
@@ -365,15 +365,15 @@ onMounted(() => {
   }
 
   .import-title {
-    font-size: 32px;
-    line-height: 1.2;
+    font-size: 18px;
+    line-height: 1.35;
     font-weight: 700;
   }
 
   .import-desc {
     margin-top: 6px;
     color: var(--theme-text-secondary);
-    font-size: 24px;
+    font-size: 14px;
     line-height: 1.4;
   }
 
@@ -406,7 +406,7 @@ onMounted(() => {
     margin-top: 14px;
 
     .platform-title {
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 600;
       margin-bottom: 12px;
     }
@@ -420,13 +420,13 @@ onMounted(() => {
     .platform-option {
       border: 1px solid var(--border-color);
       border-radius: 14px;
-      padding: 14px 16px;
+      padding: 12px 14px;
       background: #fff;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      font-size: 18px;
+      gap: 8px;
+      font-size: 14px;
       font-weight: 600;
 
       &:hover {
@@ -535,11 +535,11 @@ onMounted(() => {
     }
 
     .import-title {
-      font-size: 22px;
+      font-size: 16px;
     }
 
     .import-desc {
-      font-size: 16px;
+      font-size: 13px;
     }
   }
 }
