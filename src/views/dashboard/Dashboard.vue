@@ -1,17 +1,6 @@
 ﻿<template>
   <div class="dashboard-container">
     <div class="dashboard-inner">
-      <div class="wallet-summary-bar" v-if="walletDisplayItems.length">
-        <div
-          class="wallet-chip"
-          v-for="wallet in walletDisplayItems"
-          :key="wallet.currency"
-          :title="`${wallet.currency} ${wallet.amount}`"
-        >
-          <span class="wallet-chip-currency">{{ wallet.currency }}</span>
-          <strong class="wallet-chip-amount">{{ wallet.symbol }}{{ wallet.amount }}</strong>
-        </div>
-      </div>
       <div class="overview-grid">
       <!-- 通知区域 -->
       <!-- 待处理事项提示 -->
@@ -825,7 +814,6 @@ export default {
       isRemainingDaysPermanent: false
     });
     const userBalance = ref('0.00');
-    const userWallets = ref([]);
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
     const currentNoticeIndex = ref(0);
@@ -1011,7 +999,6 @@ export default {
             userBalance.value = info.balance;
             updateAccountBalanceDisplay();
           }
-          userWallets.value = Array.isArray(info.wallets) ? info.wallets : [];
           remindExpireSetting.value = !!info.remind_expire;
           remindTrafficSetting.value = !!info.remind_traffic;
           autoRenewalEnabled.value = !!info.auto_renewal;
@@ -1062,34 +1049,6 @@ export default {
         updatingAutoRenewalSetting.value = false;
       }
     };
-
-    const getCurrencySymbol = (currency) => {
-      const symbolMap = {
-        CNY: '¥',
-        USD: '$',
-        EUR: '€',
-        GBP: '£',
-        JPY: '¥',
-        HKD: 'HK$',
-      };
-      return symbolMap[String(currency || '').toUpperCase()] || `${currency || ''} `;
-    };
-
-    const formatWalletBalance = (rawBalance) => {
-      const numeric = Number(rawBalance || 0);
-      if (!Number.isFinite(numeric)) return '0.00';
-      return (numeric / 100).toFixed(2);
-    };
-
-    const walletDisplayItems = computed(() => {
-      return userWallets.value
-        .filter((wallet) => wallet && wallet.currency)
-        .map((wallet) => ({
-          currency: String(wallet.currency).toUpperCase(),
-          symbol: getCurrencySymbol(wallet.currency),
-          amount: formatWalletBalance(wallet.balance),
-        }));
-    });
 
     const isExpiringSoon = computed(() => {
       if (userStats.isRemainingDaysPermanent) return false;
@@ -2200,7 +2159,6 @@ export default {
       userBalance,
       currencySymbol,
       userPlan,
-      walletDisplayItems,
       clientConfig,
       notices,
       loading,
@@ -2322,47 +2280,7 @@ export default {
   .dashboard-inner {
     width: 100%;
     max-width: 1200px;
-
-    .wallet-summary-bar {
-      display: flex;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .wallet-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border-color);
-      background: var(--card-bg-color);
-      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
-      color: var(--text-color);
-
-      .wallet-chip-currency {
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--text-color-secondary);
-      }
-
-      .wallet-chip-amount {
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--text-color);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .wallet-summary-bar {
-        justify-content: flex-start;
-      }
-    }
-  }
-
-  .overview-grid {
+    .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 16px;
@@ -4801,6 +4719,7 @@ export default {
   }
 }
 
+}
 
 </style>
 

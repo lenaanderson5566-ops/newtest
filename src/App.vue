@@ -13,6 +13,17 @@
       
       <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
       <div class="top-toolbar">
+        <div class="toolbar-wallets" v-if="walletDisplayItems.length">
+          <div
+            v-for="wallet in walletDisplayItems"
+            :key="wallet.currency"
+            class="toolbar-wallet-chip"
+            :title="`${wallet.currency} ${wallet.amount}`"
+          >
+            <span class="wallet-currency">{{ wallet.currency }}</span>
+            <span class="wallet-amount">{{ wallet.amount }}</span>
+          </div>
+        </div>
         <ThemeToggle />
         <LanguageSelector />
         <button 
@@ -84,6 +95,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { SITE_CONFIG, PROFILE_CONFIG, CUSTOMER_SERVICE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
+import { getUserInfo } from '@/api/user';
 import { handleRedirectPath } from '@/utils/redirectHandler';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
@@ -176,9 +188,45 @@ export default {
     watch(() => route.fullPath, () => {
       handleRedirectParam();
     });
-    
+
     const username = computed(() => store.getters.username);
     const avatarUrl = computed(() => store.getters.avatarUrl || '');
+    const userWallets = ref([]);
+
+    const formatWalletBalance = (rawBalance) => {
+      const numeric = Number(rawBalance || 0);
+      if (!Number.isFinite(numeric)) return '0.00';
+      return (numeric / 100).toFixed(2);
+    };
+
+    const walletDisplayItems = computed(() => {
+      return userWallets.value
+        .filter((wallet) => wallet && wallet.currency)
+        .map((wallet) => ({
+          currency: String(wallet.currency).toUpperCase(),
+          amount: formatWalletBalance(wallet.balance),
+        }));
+    });
+    
+    watch(
+      () => route.meta.requiresAuth,
+      (requiresAuth) => {
+        if (!requiresAuth) {
+          userWallets.value = [];
+          return;
+        }
+
+        getUserInfo()
+          .then((response) => {
+            const info = response?.data;
+            userWallets.value = Array.isArray(info?.wallets) ? info.wallets : [];
+          })
+          .catch((error) => {
+            console.error('Failed to refresh user wallets:', error);
+          });
+      },
+      { immediate: true }
+    );
     
     const languageChangedSignal = ref(0);
     
@@ -229,7 +277,7 @@ export default {
       applyTheme(store.getters.currentTheme);
       
       checkAuthAndReloadMessages();
-      
+
       document.addEventListener('visibilitychange', handleVisibilityChange);
       
       checkUserLoginStatus().then(result => {
@@ -257,7 +305,8 @@ export default {
       siteConfig,
       PROFILE_CONFIG,
       cachedRoutes,
-      customerServiceConfig
+      customerServiceConfig,
+      walletDisplayItems
     };
   }
 };
@@ -325,8 +374,41 @@ export default {
   top: 20px;
   right: 25px;
   display: flex;
+  align-items: center;
   gap: 10px;
   z-index: 110;
+
+  .toolbar-wallets {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 2px;
+  }
+
+  .toolbar-wallet-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg-color);
+    color: var(--text-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    font-size: 12px;
+    font-weight: 600;
+
+    .wallet-currency {
+      color: var(--text-secondary);
+      letter-spacing: 0.2px;
+    }
+
+    .wallet-amount {
+      color: var(--text-color);
+      font-variant-numeric: tabular-nums;
+    }
+  }
   
   .gift-btn {
     display: flex;
@@ -375,7 +457,16 @@ export default {
   .top-toolbar {
     top: 12px;  
     right: 20px;
-    gap: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+    .toolbar-wallets {
+      order: -1;
+      width: 100%;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
   }
   
   
