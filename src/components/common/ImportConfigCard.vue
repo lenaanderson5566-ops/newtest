@@ -137,6 +137,7 @@ import QRCode from 'qrcode';
 import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
 import quantumultxIconImg from '@/assets/images/client-img-ios/quantumultx.png';
 import stashIconImg from '@/assets/images/client-img-ios/stash.png';
+import loonIconImg from '@/assets/images/client-img-ios/loon.png';
 import v2rayngIconImg from '@/assets/images/client-img-android/v2rayng.png';
 import nekoboxIconImg from '@/assets/images/client-img-android/nekobox.png';
 import clashvergeIconImg from '@/assets/images/client-img-windows/clashverge.png';
@@ -144,6 +145,22 @@ import nekorayIconImg from '@/assets/images/client-img-windows/nekoray.png';
 import clashxIconImg from '@/assets/images/client-img-macos/clashx.png';
 import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
 import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
+
+import surgeIOSIconImg from '@/assets/images/client-img-ios/Surge.png';
+import singboxIOSIconImg from '@/assets/images/client-img-ios/singbox.png';
+import clashAndroidIconImg from '@/assets/images/client-img-android/clash.png';
+import surfboardIconImg from '@/assets/images/client-img-android/surfboard.png';
+import clashMetaAndroidIconImg from '@/assets/images/client-img-android/clashmeta.png';
+import singboxAndroidIconImg from '@/assets/images/client-img-android/singbox.png';
+import hiddifyAndroidIconImg from '@/assets/images/client-img-android/hiddify.png';
+import clashWindowsIconImg from '@/assets/images/client-img-windows/clash.png';
+import flclashWindowsIconImg from '@/assets/images/client-img-windows/flclash.png';
+import singboxWindowsIconImg from '@/assets/images/client-img-windows/singbox.png';
+import hiddifyWindowsIconImg from '@/assets/images/client-img-windows/hiddify.png';
+import clashMetaXIconImg from '@/assets/images/client-img-macos/clashmetax.png';
+import surgeMacIconImg from '@/assets/images/client-img-macos/Surge.png';
+import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
+import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
 
 const { t } = useI18n();
 const $toast = inject('$toast');
@@ -167,41 +184,41 @@ const platforms = [
 const platformClientMap = {
   ios: [
     { key: 'shadowrocket', label: 'Shadowrocket', clientType: 'shadowrocket', icon: shadowrocketIconImg, iconType: 'image', showFlag: 'showShadowrocket' },
-    { key: 'surge', label: 'Surge', clientType: 'surge', icon: IconQrcode, iconType: 'component', showFlag: 'showSurge' },
+    { key: 'surge', label: 'Surge', clientType: 'surge', icon: surgeIOSIconImg, iconType: 'image', showFlag: 'showSurge' },
     { key: 'stash-ios', label: 'Stash', clientType: 'stash', icon: stashIconImg, iconType: 'image', showFlag: 'showStash' },
     { key: 'quantumultx', label: 'Quantumult X', clientType: 'quantumultx', icon: quantumultxIconImg, iconType: 'image', showFlag: 'showQuantumultX' },
-    { key: 'hiddify-ios', label: 'Hiddify', clientType: 'hiddify-ios', icon: IconQrcode, iconType: 'component', showFlag: 'showHiddifyIOS' },
-    { key: 'singbox-ios', label: 'Singbox', clientType: 'singbox-ios', icon: IconQrcode, iconType: 'component', showFlag: 'showSingboxIOS' },
-    { key: 'loon', label: 'Loon', clientType: 'loon', icon: IconQrcode, iconType: 'component', showFlag: 'showLoon' }
+    { key: 'hiddify-ios', label: 'Hiddify', clientType: 'hiddify-ios', icon: hiddifyMacIconImg, iconType: 'image', showFlag: 'showHiddifyIOS' },
+    { key: 'singbox-ios', label: 'Singbox', clientType: 'singbox-ios', icon: singboxIOSIconImg, iconType: 'image', showFlag: 'showSingboxIOS' },
+    { key: 'loon', label: 'Loon', clientType: 'loon', icon: loonIconImg, iconType: 'image', showFlag: 'showLoon' }
   ],
   android: [
-    { key: 'flclash-android', label: 'FlClash', clientType: 'flclash', icon: IconQrcode, iconType: 'component', showFlag: 'showFlClashAndroid' },
+    { key: 'flclash-android', label: 'FlClash', clientType: 'flclash', icon: flclashWindowsIconImg, iconType: 'image', showFlag: 'showFlClashAndroid' },
     { key: 'v2rayng', label: 'V2rayNG', clientType: 'v2rayng', icon: v2rayngIconImg, iconType: 'image', showFlag: 'showV2rayNG' },
-    { key: 'clash-android', label: 'Clash', clientType: 'clash-android', icon: IconQrcode, iconType: 'component', showFlag: 'showClashAndroid' },
-    { key: 'surfboard', label: 'Surfboard', clientType: 'surfboard', icon: IconQrcode, iconType: 'component', showFlag: 'showSurfboard' },
-    { key: 'clash-meta-android', label: 'Clash Meta', clientType: 'clash-meta-android', icon: IconQrcode, iconType: 'component', showFlag: 'showClashMetaAndroid' },
+    { key: 'clash-android', label: 'Clash', clientType: 'clash-android', icon: clashAndroidIconImg, iconType: 'image', showFlag: 'showClashAndroid' },
+    { key: 'surfboard', label: 'Surfboard', clientType: 'surfboard', icon: surfboardIconImg, iconType: 'image', showFlag: 'showSurfboard' },
+    { key: 'clash-meta-android', label: 'Clash Meta', clientType: 'clash-meta-android', icon: clashMetaAndroidIconImg, iconType: 'image', showFlag: 'showClashMetaAndroid' },
     { key: 'nekobox', label: 'NekoBox', clientType: 'nekobox', icon: nekoboxIconImg, iconType: 'image', showFlag: 'showNekobox' },
-    { key: 'singbox-android', label: 'Singbox', clientType: 'singbox-android', icon: IconQrcode, iconType: 'component', showFlag: 'showSingboxAndroid' },
-    { key: 'hiddify-android', label: 'Hiddify', clientType: 'hiddify-android', icon: IconQrcode, iconType: 'component', showFlag: 'showHiddifyAndroid' }
+    { key: 'singbox-android', label: 'Singbox', clientType: 'singbox-android', icon: singboxAndroidIconImg, iconType: 'image', showFlag: 'showSingboxAndroid' },
+    { key: 'hiddify-android', label: 'Hiddify', clientType: 'hiddify-android', icon: hiddifyAndroidIconImg, iconType: 'image', showFlag: 'showHiddifyAndroid' }
   ],
   windows: [
-    { key: 'flclash-windows', label: 'FlClash', clientType: 'flclash', icon: IconQrcode, iconType: 'component', showFlag: 'showFlClashWindows' },
+    { key: 'flclash-windows', label: 'FlClash', clientType: 'flclash', icon: flclashWindowsIconImg, iconType: 'image', showFlag: 'showFlClashWindows' },
     { key: 'clashverge', label: 'Clash Verge', clientType: 'clashverge', icon: clashvergeIconImg, iconType: 'image', showFlag: 'showClashVergeWindows' },
-    { key: 'clash-windows', label: 'Clash', clientType: 'clash', icon: IconQrcode, iconType: 'component', showFlag: 'showClashWindows' },
+    { key: 'clash-windows', label: 'Clash', clientType: 'clash', icon: clashWindowsIconImg, iconType: 'image', showFlag: 'showClashWindows' },
     { key: 'nekoray', label: 'Nekoray', clientType: 'nekoray', icon: nekorayIconImg, iconType: 'image', showFlag: 'showNekoray' },
-    { key: 'singbox-windows', label: 'Singbox', clientType: 'singbox-windows', icon: IconQrcode, iconType: 'component', showFlag: 'showSingboxWindows' },
-    { key: 'hiddify-windows', label: 'Hiddify', clientType: 'hiddify-windows', icon: IconQrcode, iconType: 'component', showFlag: 'showHiddifyWindows' }
+    { key: 'singbox-windows', label: 'Singbox', clientType: 'singbox-windows', icon: singboxWindowsIconImg, iconType: 'image', showFlag: 'showSingboxWindows' },
+    { key: 'hiddify-windows', label: 'Hiddify', clientType: 'hiddify-windows', icon: hiddifyWindowsIconImg, iconType: 'image', showFlag: 'showHiddifyWindows' }
   ],
   macos: [
-    { key: 'flclash-mac', label: 'FlClash', clientType: 'flclash', icon: IconQrcode, iconType: 'component', showFlag: 'showFlClashMac' },
+    { key: 'flclash-mac', label: 'FlClash', clientType: 'flclash', icon: flclashWindowsIconImg, iconType: 'image', showFlag: 'showFlClashMac' },
     { key: 'clashverge-mac', label: 'Clash Verge', clientType: 'clashverge', icon: clashvergeIconImg, iconType: 'image', showFlag: 'showClashVergeMac' },
     { key: 'clashx', label: 'ClashX', clientType: 'clashx', icon: clashxIconImg, iconType: 'image', showFlag: 'showClashX' },
-    { key: 'clashx-meta', label: 'ClashX Meta', clientType: 'clashx-meta', icon: IconQrcode, iconType: 'component', showFlag: 'showClashMetaX' },
-    { key: 'surge-mac', label: 'Surge', clientType: 'surge-mac', icon: IconQrcode, iconType: 'component', showFlag: 'showSurgeMac' },
+    { key: 'clashx-meta', label: 'ClashX Meta', clientType: 'clashx-meta', icon: clashMetaXIconImg, iconType: 'image', showFlag: 'showClashMetaX' },
+    { key: 'surge-mac', label: 'Surge', clientType: 'surge-mac', icon: surgeMacIconImg, iconType: 'image', showFlag: 'showSurgeMac' },
     { key: 'stash-mac', label: 'Stash', clientType: 'stash-mac', icon: stashMacIconImg, iconType: 'image', showFlag: 'showStashMac' },
     { key: 'quantumultx-mac', label: 'Quantumult X', clientType: 'quantumultx-mac', icon: quantumultXMacIconImg, iconType: 'image', showFlag: 'showQuantumultXMac' },
-    { key: 'singbox-macos', label: 'Singbox', clientType: 'singbox-macos', icon: IconQrcode, iconType: 'component', showFlag: 'showSingboxMac' },
-    { key: 'hiddify-macos', label: 'Hiddify', clientType: 'hiddify-macos', icon: IconQrcode, iconType: 'component', showFlag: 'showHiddifyMac' }
+    { key: 'singbox-macos', label: 'Singbox', clientType: 'singbox-macos', icon: singboxMacIconImg, iconType: 'image', showFlag: 'showSingboxMac' },
+    { key: 'hiddify-macos', label: 'Hiddify', clientType: 'hiddify-macos', icon: hiddifyMacIconImg, iconType: 'image', showFlag: 'showHiddifyMac' }
   ]
 };
 
