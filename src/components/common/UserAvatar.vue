@@ -25,6 +25,10 @@
           <IconWallet class="menu-icon" />
           <span>{{ $t('menu.billing') }}</span>
         </div>
+        <div class="menu-item" @click="navigateTo('/trafficlog')">
+          <IconDefinitions class="menu-icon" />
+          <span>{{ $t('trafficLog.title') }}</span>
+        </div>
         <div class="menu-item" @click="navigateTo('/security-settings')">
           <IconLock class="menu-icon" />
           <span>{{ $t('profile.security') }}</span>
@@ -48,6 +52,7 @@ import IconUser from '@/components/icons/IconUser.vue';
 import IconLogout from '@/components/icons/IconLogout.vue';
 import IconWallet from '@/components/icons/IconWallet.vue';
 import IconLock from '@/components/icons/IconLock.vue';
+import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 
 export default {
   name: 'UserAvatar',
@@ -55,7 +60,8 @@ export default {
     IconUser,
     IconLogout,
     IconWallet,
-    IconLock
+    IconLock,
+    IconDefinitions
   },
   props: {
     username: {

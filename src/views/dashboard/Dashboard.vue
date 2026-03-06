@@ -3532,13 +3532,13 @@ export default {
     flex: 1;
 
     .import-title {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 600;
       margin-bottom: 4px;
     }
 
     .import-desc {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--theme-text-secondary);
     }
   }
@@ -3558,7 +3558,7 @@ export default {
   margin-bottom: 24px;
 
   .platform-title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     margin-bottom: 12px;
     padding-bottom: 8px;
@@ -3593,7 +3593,7 @@ export default {
       }
 
       span {
-        font-size: 14px;
+        font-size: 13px;
       }
     }
   }
@@ -4412,6 +4412,15 @@ export default {
 
 
 .traffic-package-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 1200;
   padding: 16px;
 }

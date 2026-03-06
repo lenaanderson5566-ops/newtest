@@ -114,31 +114,7 @@
 
         
 
-        <div class="stats-card" v-if="shouldShowTrafficCard && showTrafficLog" @click="$router.push('/trafficlog')">
 
-          <div class="stats-icon">
-
-            <IconChartBar :size="32" />
-
-          </div>
-
-          <div class="stats-info">
-
-            <div class="stats-value">{{ $t('trafficLog.title') }}</div>
-
-            <div class="stats-label">{{ $t('trafficLog.trafficLogDesc') }}</div>
-
-          </div>
-
-          <div class="chevron-icon">
-
-            <IconChevronRight :size="20" />
-
-          </div>
-
-        </div>
-
-        
 
         <div v-if="shouldShowBillingCard" class="stats-card" @click="$router.push('/billing?tab=orders')">
 
@@ -259,8 +235,6 @@ import {
 
   IconMessages,
 
-  IconChartBar,
-
   IconWallet
 
 } from '@tabler/icons-vue';
@@ -275,7 +249,7 @@ import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
 
 
 
-import { TRAFFICLOG_CONFIG, isXiaoV2board, MORE_PAGE_CONFIG, NAVIGATION_CONFIG } from '@/utils/baseConfig';
+import { isXiaoV2board, MORE_PAGE_CONFIG, NAVIGATION_CONFIG } from '@/utils/baseConfig';
 
 
 
@@ -292,8 +266,6 @@ const isSmallScreen = ref(false);
 
 
 
-
-const showTrafficLog = ref(false);
 
 const isXiaoPanel = isXiaoV2board();
 
@@ -316,8 +288,6 @@ const shouldShowNodesCard = computed(() => !isHiddenByTopNav('nodes'));
 
 
 const shouldShowTicketsCard = computed(() => !isHiddenByTopNav('tickets'));
-
-const shouldShowTrafficCard = computed(() => !isHiddenByTopNav('traffic'));
 
 const shouldShowBillingCard = computed(() => !isHiddenByTopNav('orders') || !isHiddenByTopNav('wallet'));
 
@@ -407,7 +377,6 @@ onMounted(async () => {
 
   
 
-  showTrafficLog.value = TRAFFICLOG_CONFIG.enableTrafficLog;
 
   
 

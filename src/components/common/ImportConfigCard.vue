@@ -320,7 +320,7 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
+    font-size: 14px;
 
     &.active {
       border-color: rgba(var(--theme-color-rgb), 0.65);
@@ -365,7 +365,7 @@ onMounted(() => {
   }
 
   .import-title {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.35;
     font-weight: 700;
   }
@@ -373,7 +373,7 @@ onMounted(() => {
   .import-desc {
     margin-top: 6px;
     color: var(--theme-text-secondary);
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.4;
   }
 
@@ -393,7 +393,7 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
+    font-size: 14px;
 
     &.active {
       border-color: rgba(var(--theme-color-rgb), 0.75);
@@ -474,7 +474,7 @@ onMounted(() => {
 
   h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
