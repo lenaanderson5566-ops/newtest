@@ -382,7 +382,9 @@ onMounted(() => {
         }
       }
     }
+  }
 
+  .deposit-card {
     .deposit-notice {
       display: flex;
       align-items: center;

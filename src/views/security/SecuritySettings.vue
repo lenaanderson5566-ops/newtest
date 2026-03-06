@@ -82,13 +82,13 @@
               <label>{{ $t('profile.confirmPassword') }}</label>
               <input type="password" v-model="passwordForm.confirmPassword" :placeholder="$t('profile.confirmPassword')" />
             </div>
-            <div v-if="passwordMismatch" class="error-message">{{ $t('profile.passwordMismatch') }}</div>
+            <div v-if="passwordMismatch" class="error-text">{{ $t('profile.passwordMismatch') }}</div>
           </div>
           <div class="modal-footer">
             <button class="btn-cancel" @click="showPasswordModal = false">{{ $t('common.cancel') }}</button>
             <button class="btn-submit" :disabled="!validatePasswordForm() || changingPassword" @click="changePassword">
-              <span v-if="changingPassword" class="loading-spinner"></span>
-              <span>{{ $t('common.confirm') }}</span>
+              <span v-if="changingPassword" class="loader"></span>
+              <span>{{ $t('common.submit') }}</span>
             </button>
           </div>
         </div>
@@ -250,33 +250,280 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.security-container { padding: 20px; }
-.security-inner { max-width: 1200px; margin: 0 auto; }
-.profile-card { background: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 20px; }
-.card-header { padding: 16px 20px; border-bottom: 1px solid var(--border-color); }
-.card-header h3 { margin: 0; }
-.settings-content { padding: 16px 20px; }
-.action-btn { border: 1px solid var(--border-color); background: var(--card-bg-color); padding: 8px 12px; border-radius: 8px; display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
-.device-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-color); }
-.device-item:last-child { border-bottom: 0; }
-.device-meta { display: flex; gap: 12px; font-size: 12px; color: var(--text-secondary); }
-.device-empty, .device-error { text-align: center; padding: 16px 0; }
-.refresh-btn { border: 1px solid var(--border-color); background: transparent; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
-.session-skeleton { display: flex; gap: 12px; margin-bottom: 12px; }
-.session-skeleton-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--skeleton-bg, rgba(0,0,0,0.08)); }
-.session-skeleton-title, .session-skeleton-info { height: 10px; border-radius: 6px; background: var(--skeleton-bg, rgba(0,0,0,0.08)); }
-.session-skeleton-title { width: 160px; margin-bottom: 8px; }
-.session-skeleton-info { width: 220px; }
+.security-container {
+  padding: 20px;
+}
 
-.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-.modal-content { width: min(520px, calc(100% - 24px)); background: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 12px; }
-.modal-header, .modal-footer { padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
-.modal-body { padding: 0 16px 12px; }
-.form-group { margin-bottom: 10px; }
-.form-group input { width: 100%; height: 36px; border: 1px solid var(--border-color); border-radius: 8px; padding: 0 10px; background: var(--card-bg-color); color: var(--text-color); }
-.modal-close, .btn-cancel, .btn-submit { border: 1px solid var(--border-color); background: transparent; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
-.btn-submit { background: var(--theme-color); color: #fff; border-color: transparent; }
-.error-message { color: #e53935; font-size: 12px; }
-.loading-spinner { width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.5); border-top-color: #fff; border-radius: 50%; display: inline-block; margin-right: 6px; animation: spin 1s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
+.security-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile-card {
+  background: var(--card-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.settings-content {
+  padding: 16px 20px;
+}
+
+.action-btn {
+  border: 1px solid var(--border-color);
+  background: var(--card-bg-color);
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.device-item {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.device-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.device-empty,
+.device-error {
+  text-align: center;
+  padding: 16px 0;
+}
+
+.refresh-btn {
+  border: 1px solid var(--border-color);
+  background: transparent;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.session-skeleton {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.session-skeleton-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--skeleton-bg, rgba(0, 0, 0, 0.08));
+}
+
+.session-skeleton-title,
+.session-skeleton-info {
+  height: 10px;
+  border-radius: 6px;
+  background: var(--skeleton-bg, rgba(0, 0, 0, 0.08));
+}
+
+.session-skeleton-title {
+  width: 160px;
+  margin-bottom: 8px;
+}
+
+.session-skeleton-info {
+  width: 220px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background-color: var(--card-background);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 480px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(var(--theme-color-rgb), 0.1);
+      color: var(--theme-color);
+    }
+  }
+}
+
+.modal-body {
+  padding: 20px;
+
+  .form-group {
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-color);
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background-color: var(--bg-secondary);
+      color: var(--text-color);
+      font-size: 15px;
+      transition: all 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: var(--theme-color);
+        box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.1);
+      }
+    }
+
+    .error-text {
+      margin-top: 6px;
+      color: #f44336;
+      font-size: 13px;
+    }
+  }
+}
+
+.modal-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+
+  button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.btn-cancel {
+      background-color: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    &.btn-submit {
+      background-color: var(--theme-color);
+      border: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &:hover:not(:disabled) {
+        background-color: rgba(var(--theme-color-rgb), 0.9);
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      .loader {
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s linear infinite;
+      }
+    }
+  }
+}
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
 </style>

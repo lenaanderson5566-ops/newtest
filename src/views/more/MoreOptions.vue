@@ -166,32 +166,6 @@
 
         
 
-        <div v-if="shouldShowProfileCard" class="stats-card" @click="$router.push('/profile')">
-
-          <div class="stats-icon">
-
-            <IconUser :size="32" />
-
-          </div>
-
-          <div class="stats-info">
-
-            <div class="stats-value">{{ $t('profile.title') }}</div>
-
-            <div class="stats-label">{{ $t('more.manageProfile') }}</div>
-
-          </div>
-
-          <div class="chevron-icon">
-
-            <IconChevronRight :size="20" />
-
-          </div>
-
-        </div>
-
-        
-
         <!-- 自定义卡片 -->
 
         <template v-if="morePageConfig.enableCustomCards">
@@ -260,7 +234,6 @@ import {
 
   IconShoppingCart,
 
-  IconUser,
 
   IconDevices,
 
@@ -347,9 +320,6 @@ const shouldShowTicketsCard = computed(() => !isHiddenByTopNav('tickets'));
 const shouldShowTrafficCard = computed(() => !isHiddenByTopNav('traffic'));
 
 const shouldShowBillingCard = computed(() => !isHiddenByTopNav('orders') || !isHiddenByTopNav('wallet'));
-
-const shouldShowProfileCard = computed(() => !isHiddenByTopNav('profile'));
-
 
 const checkScreenSize = () => {
 
