@@ -63,6 +63,8 @@
         </div>
       </div>
 
+      <ImportConfigCard />
+
       <!-- 标题栏 -->
 
       <div class="docs-header">
@@ -228,6 +230,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
+import ImportConfigCard from '@/components/common/ImportConfigCard.vue';
 
 import { 
 
