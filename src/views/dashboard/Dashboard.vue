@@ -385,8 +385,33 @@
             :class="{ 'card-animate': !loading.userStats }"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
-            <div class="usage-card-title">{{ card.title }}</div>
-            <div class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
+            <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
+            <div v-if="card.key === 'total'" class="plan-summary-card">
+              <div class="plan-summary-row">
+                <span class="plan-summary-label">{{ $t('dashboard.planName') }}</span>
+                <strong class="plan-summary-value">{{ userPlan.name || '-' }}</strong>
+              </div>
+              <div class="plan-summary-row">
+                <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
+                <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
+              </div>
+              <div class="plan-summary-row auto-renewal-row">
+                <div>
+                  <span class="plan-summary-label">{{ $t('profile.autoRenewal') }}</span>
+                  <p class="plan-summary-desc">{{ $t('profile.autoRenewalDesc') }}</p>
+                </div>
+                <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
+                  <input
+                    type="checkbox"
+                    v-model="autoRenewalEnabled"
+                    :disabled="updatingAutoRenewalSetting"
+                    @change="updateAutoRenewalSetting"
+                  />
+                  <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
+                </label>
+              </div>
+            </div>
+            <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
                 <span class="usage-percent">{{ formatPackageRemaining(card.remaining) }}</span>
                 <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
@@ -399,10 +424,10 @@
                 <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
               </template>
             </div>
-            <div v-if="card.key !== 'package'" class="section-progress-track">
+            <div v-if="card.key !== 'package' && card.key !== 'total'" class="section-progress-track">
               <div class="section-progress-fill" :style="{ width: `${card.remainingPercentage}%` }"></div>
             </div>
-            <div class="usage-kpis" v-if="card.key !== 'package'">
+            <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
               <div class="usage-kpi">
                 <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
                 <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
@@ -593,6 +618,7 @@ import {
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/dashboard';
+import { updateRemindSettings as apiUpdateRemind } from '@/api/user';
 import { getTrafficLog } from '@/api/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
@@ -722,6 +748,10 @@ export default {
       subscriptionQuotaRemaining: null,
       packageQuotaRemaining: null
     });
+    const remindExpireSetting = ref(false);
+    const remindTrafficSetting = ref(false);
+    const autoRenewalEnabled = ref(false);
+    const updatingAutoRenewalSetting = ref(false);
 
         const trafficMetrics = reactive({
       totalTrafficBytes: 0,
@@ -969,6 +999,9 @@ export default {
             userBalance.value = info.balance;
             updateAccountBalanceDisplay();
           }
+          remindExpireSetting.value = !!info.remind_expire;
+          remindTrafficSetting.value = !!info.remind_traffic;
+          autoRenewalEnabled.value = !!info.auto_renewal;
           if (info.expired_at) {
             userPlan.value.expireDate = formatDate(info.expired_at);
             userPlan.value.isExpireDatePermanent = false;
@@ -996,6 +1029,24 @@ export default {
         console.error('获取用户信息失败:', error);
       } finally {
         loading.userInfo = false;
+      }
+    };
+
+    const updateAutoRenewalSetting = async () => {
+      const originalValue = !autoRenewalEnabled.value;
+      updatingAutoRenewalSetting.value = true;
+      try {
+        await apiUpdateRemind({
+          remind_expire: remindExpireSetting.value ? 1 : 0,
+          remind_traffic: remindTrafficSetting.value ? 1 : 0,
+          auto_renewal: autoRenewalEnabled.value ? 1 : 0,
+        });
+        showToast(t('profile.updateSuccess'), 'success');
+      } catch (error) {
+        autoRenewalEnabled.value = originalValue;
+        showToast(t('profile.updateError'), 'error');
+      } finally {
+        updatingAutoRenewalSetting.value = false;
       }
     };
 
@@ -2192,6 +2243,9 @@ export default {
       showDeviceLimit,
       needRefreshData,
       trafficBoardSections,
+      autoRenewalEnabled,
+      updatingAutoRenewalSetting,
+      updateAutoRenewalSetting,
       hasPurchasedTrafficPackage,
       trafficTrendChartRef,
       trafficTrendData,
@@ -2557,6 +2611,101 @@ export default {
             color: #fff;
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             cursor: pointer;
+          }
+        }
+
+        .plan-summary-card {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 4px;
+
+          .plan-summary-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #f8fafc;
+          }
+
+          .plan-summary-label {
+            font-size: 12px;
+            color: #6b7280;
+          }
+
+          .plan-summary-value {
+            font-size: 14px;
+            color: #111827;
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+          }
+
+          .plan-summary-desc {
+            margin: 4px 0 0;
+            font-size: 12px;
+            color: #6b7280;
+          }
+
+          .auto-renewal-row {
+            align-items: flex-start;
+          }
+
+          .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+
+            &.disabled {
+              opacity: 0.6;
+              cursor: not-allowed;
+            }
+
+            input {
+              opacity: 0;
+              width: 0;
+              height: 0;
+            }
+
+            .slider {
+              position: absolute;
+              cursor: pointer;
+              inset: 0;
+              background-color: #d1d5db;
+              transition: 0.3s;
+
+              &::before {
+                position: absolute;
+                content: '';
+                height: 18px;
+                width: 18px;
+                left: 3px;
+                bottom: 3px;
+                background-color: #fff;
+                transition: 0.3s;
+              }
+
+              &.round {
+                border-radius: 24px;
+
+                &::before {
+                  border-radius: 50%;
+                }
+              }
+            }
+
+            input:checked + .slider {
+              background-color: rgba(var(--theme-color-rgb), 0.9);
+            }
+
+            input:checked + .slider::before {
+              transform: translateX(20px);
+            }
           }
         }
 
@@ -3739,6 +3888,19 @@ export default {
 .dark-theme .skeleton-row-sm,
 .dark-theme .skeleton-row-xs {
   background-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-row {
+  background: rgba(148, 163, 184, 0.12);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-label,
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-desc {
+  color: #cbd5e1;
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-value {
+  color: #f8fafc;
 }
 
 

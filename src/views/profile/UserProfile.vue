@@ -306,48 +306,6 @@
 
 
 
-        <!-- 账号设置 -->
-
-        <div class="profile-card">
-
-          <div class="card-header">
-
-            <h3>{{ $t('profile.accountSettings') }}</h3>
-
-          </div>
-
-          <div class="settings-content">
-
-            <div class="setting-item">
-
-              <div class="setting-info">
-
-                <span class="setting-label">{{ $t('profile.autoRenewal') }}</span>
-
-                <span class="setting-description">{{ $t('profile.autoRenewalDesc') }}</span>
-
-              </div>
-
-              <div class="setting-toggle">
-
-                <label class="switch" :class="{ 'disabled': updatingSettings }">
-
-                  <input type="checkbox" v-model="remindAutoRenewal" @change="updateRemindSettings('auto_renewal')" :disabled="updatingSettings" />
-
-                  <span class="slider round" :class="{ 'loading': updatingAutoRenewal }"></span>
-
-                </label>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-
         <!-- 安全设置 -->
 
         <div class="profile-card">
@@ -892,8 +850,6 @@ const updatingExpire = ref(false);
 
 const updatingTraffic = ref(false);
 
-const updatingAutoRenewal = ref(false);
-
 
 const passwordForm = ref({
 
@@ -1219,13 +1175,7 @@ const updateRemindSettings = async (type) => {
 
     updatingTraffic.value = true;
 
-  } else if (type === 'auto_renewal') {
-
-    updatingAutoRenewal.value = true;
-
   }
-
-
 
   try {
 
@@ -1278,8 +1228,6 @@ const updateRemindSettings = async (type) => {
     updatingExpire.value = false;
 
     updatingTraffic.value = false;
-
-    updatingAutoRenewal.value = false;
 
   }
 
