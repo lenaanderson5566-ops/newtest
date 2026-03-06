@@ -180,11 +180,29 @@ export default {
   dashboard: {
     welcome: 'Добро пожаловать',
     welcomeDesc: 'Просмотрите ваши услуги и использование',
+    announcement: 'Объявления',
     siteAnnouncement: 'Объявления сайта',
     subscriptionInfo: 'Информация о подписке',
     planName: 'Название плана',
     expiryDate: 'Дата окончания',
     planTraffic: 'Трафик плана',
+    subscriptionQuotaUsed: 'Использовано по подписке',
+    subscriptionQuotaRemaining: 'Остаток по подписке',
+    packageQuotaRemaining: 'Остаток пакетного трафика',
+    trafficBoardTitle: 'Панель трафика',
+    trafficBoardSubtitle: 'Обзор подписки и пакета',
+    packagePurchased: 'Пакет куплен',
+    packageNotPurchased: 'Пакет не куплен',
+    usagePanel: 'Панель использования',
+    totalTrafficPackAndPackage: 'Общий трафик (подписка + пакет)',
+    subscriptionMonthlyTraffic: 'Месячный трафик подписки',
+    trafficPackageQuota: 'Квота пакета трафика',
+    resetHint: 'День сброса: {day}',
+    resetTimeLabel: 'Время сброса',
+    purchaseTrafficPackage: 'Купить разовый пакет трафика',
+    used: 'Использовано',
+    total: 'Всего',
+    remaining: 'Осталось',
     remainingTraffic: 'Остаток трафика',
     remainingDays: 'Остаток дней',
     accountBalance: 'Баланс аккаунта',
@@ -195,6 +213,10 @@ export default {
     importSubscription: 'Импортировать подписку',
     purchasePlan: 'Купить план',
     resetTraffic: 'Сбросить трафик',
+    activateDataCycleInAdvance: 'Активировать следующий цикл заранее',
+    resetDataCycleNotice: 'Нажатие "Понятно" спишет оставшееся время текущего цикла и сбросит использованный трафик.',
+    nextPeriodError: 'Не удалось запустить следующий месяц заранее',
+    nextPeriodSuccess: 'Следующий месяц успешно запущен заранее',
     renewPlan: 'Продлить план',
     noPlanToRenew: 'Нет плана для продления',
     resetTrafficConfirm: 'Подтвердить сброс трафика',
@@ -257,6 +279,7 @@ export default {
   more: {
     title: 'Дополнительные функции',
     description: 'Исследуйте больше функций и услуг',
+    inviteDescription: 'Приглашайте друзей и получайте комиссионные',
     viewHelp: 'Посмотреть помощь и FAQ',
     viewNodes: 'Посмотреть доступные серверы',
     manageOrders: 'Управление заказами',
@@ -319,6 +342,8 @@ export default {
       unknown: 'Неизвестный статус'
     },
     confirmOrder: 'Подтвердить заказ',
+    confirm_order_title: 'Подтверждение заказа',
+    confirm_purchase: 'Подтвердить покупку',
     payment: 'Оплатить заказ',
   },
   tickets: {
@@ -496,8 +521,17 @@ export default {
     no_plans_found: 'Планы не найдены',
     try_different_filter: 'Попробуйте другие фильтры',
     reset_filter: 'Сбросить фильтр',
+    traffic_package: {
+      entry: 'Купить пакет трафика',
+      title: 'Купить пакет трафика',
+      description: 'Выберите разовый пакет трафика. После оплаты он сразу будет добавлен в аккаунт.'
+    },
     plan: {
       purchase: 'Купить',
+      renew: 'Продлить',
+      add_quota: 'Добавить трафик',
+      upgrade_to: 'Обновить до {name}',
+      current: 'Ваш текущий план',
       sold_out_btn: 'Распродано',
       stock: {
         plenty: 'В наличии',
@@ -539,6 +573,11 @@ export default {
       devices: 'Поддержка устройств',
       devices_desc: 'Одновременная поддержка нескольких устройств'
     },
+    current_plan_info: {
+      plan: 'Текущий план',
+      expire: 'Срок действия',
+      traffic: 'Остаток трафика'
+    },
     config_error: 'Ошибка загрузки конфигурации магазина',
     popup: {
       close_btn: 'Понял',
@@ -571,7 +610,9 @@ export default {
     order_failed: 'Ошибка создания заказа',
     no_plan_selected: 'План не выбран',
     plan_not_found: 'План не существует',
-    failed_to_fetch_plan: 'Ошибка получения информации о плане'
+    failed_to_fetch_plan: 'Ошибка получения информации о плане',
+    confirm_order_title: 'Подтверждение заказа',
+    confirm_purchase: 'Подтвердить покупку'
   },
   payment: {
     title: 'Оплатить заказ',

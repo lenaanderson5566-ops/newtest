@@ -180,11 +180,29 @@ export default {
   dashboard: {
     welcome: '歡迎回來',
     welcomeDesc: '檢視您的服務與使用情況',
+    announcement: '公告',
     siteAnnouncement: '網站公告',
     subscriptionInfo: '套餐資訊',
     planName: '套餐名稱',
     expiryDate: '到期時間',
     planTraffic: '套餐流量',
+    subscriptionQuotaUsed: '訂閱配額已用',
+    subscriptionQuotaRemaining: '訂閱配額剩餘',
+    packageQuotaRemaining: '流量包配額剩餘',
+    trafficBoardTitle: '流量看板',
+    trafficBoardSubtitle: '訂閱 + 流量包概覽',
+    packagePurchased: '已購買流量包',
+    packageNotPurchased: '未購買流量包',
+    usagePanel: '使用面板',
+    totalTrafficPackAndPackage: '總流量（套餐 + 流量包）',
+    subscriptionMonthlyTraffic: '訂閱月流量',
+    trafficPackageQuota: '流量包配額',
+    resetHint: '重置日：{day}',
+    resetTimeLabel: '重置時間',
+    purchaseTrafficPackage: '購買一次性流量包',
+    used: '已用',
+    total: '總計',
+    remaining: '剩餘',
     remainingTraffic: '剩餘流量',
     remainingDays: '剩餘天數',
     accountBalance: '帳戶餘額',
@@ -195,6 +213,10 @@ export default {
     importSubscription: '匯入訂閱',
     purchasePlan: '購買套餐',
     resetTraffic: '重設流量',
+    activateDataCycleInAdvance: '提前啟用流量週期',
+    resetDataCycleNotice: '點擊「我知道了」後將扣除目前流量週期剩餘的訂閱時間，系統會重設您的已用流量。',
+    nextPeriodError: '提前啟用下個月失敗',
+    nextPeriodSuccess: '提前啟用下個月成功',
     renewPlan: '續費套餐',
     noPlanToRenew: '無可續費的套餐',
     resetTrafficConfirm: '確認重設流量',
@@ -257,6 +279,7 @@ export default {
   more: {
     title: '更多功能',
     description: '探索更多功能與服務',
+    inviteDescription: '邀請好友獲得返佣獎勵',
     viewHelp: '檢視使用幫助與常見問題',
     viewNodes: '檢視可用伺服器節點',
     manageOrders: '管理您的訂單',
@@ -319,6 +342,8 @@ export default {
       unknown: '未知狀態'
     },
     confirmOrder: '確認訂單',
+    confirm_order_title: '確認訂單',
+    confirm_purchase: '確認購買',
     payment: '支付訂單',
   },
   tickets: {
@@ -495,8 +520,17 @@ export default {
     no_plans_found: '未找到符合條件的套餐',
     try_different_filter: '請嘗試其他篩選條件',
     reset_filter: '重設篩選',
+    traffic_package: {
+      entry: '購買流量包',
+      title: '購買流量包',
+      description: '選擇一次性流量包，購買後將立即增加到您的帳號。'
+    },
     plan: {
       purchase: '購買',
+      renew: '續費',
+      add_quota: '加購流量',
+      upgrade_to: '升級至 {name}',
+      current: '您目前的套餐',
       sold_out_btn: '已售罄',
       stock: {
         plenty: '庫存充足',
@@ -538,6 +572,11 @@ export default {
       devices: '多設備支援',
       devices_desc: '同時支援多台設備使用'
     },
+    current_plan_info: {
+      plan: '目前套餐',
+      expire: '到期時間',
+      traffic: '剩餘流量'
+    },
     config_error: '取得商店配置失敗',
     popup: {
       close_btn: '我知道了',
@@ -570,7 +609,9 @@ export default {
     order_failed: '訂單建立失敗',
     no_plan_selected: '未選擇套餐',
     plan_not_found: '套餐不存在',
-    failed_to_fetch_plan: '取得套餐資訊失敗'
+    failed_to_fetch_plan: '取得套餐資訊失敗',
+    confirm_order_title: '確認訂單',
+    confirm_purchase: '確認購買'
   },
   payment: {
     title: '支付訂單',

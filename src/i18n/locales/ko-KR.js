@@ -180,11 +180,29 @@ export default {
   dashboard: {
     welcome: '다시 오신 것을 환영합니다',
     welcomeDesc: '서비스 및 사용 현황을 확인하세요',
+    announcement: '공지',
     siteAnnouncement: '사이트 공지',
     subscriptionInfo: '구독 정보',
     planName: '플랜 이름',
     expiryDate: '만료일',
     planTraffic: '플랜 트래픽',
+    subscriptionQuotaUsed: '구독 할당량 사용량',
+    subscriptionQuotaRemaining: '구독 할당량 잔여',
+    packageQuotaRemaining: '패키지 할당량 잔여',
+    trafficBoardTitle: '트래픽 대시보드',
+    trafficBoardSubtitle: '구독 + 패키지 개요',
+    packagePurchased: '패키지 구매됨',
+    packageNotPurchased: '패키지 미구매',
+    usagePanel: '사용량 패널',
+    totalTrafficPackAndPackage: '총 트래픽 (구독 + 패키지)',
+    subscriptionMonthlyTraffic: '월간 구독 트래픽',
+    trafficPackageQuota: '트래픽 패키지 할당량',
+    resetHint: '리셋일: {day}',
+    resetTimeLabel: '리셋 시간',
+    purchaseTrafficPackage: '일회성 트래픽 패키지 구매',
+    used: '사용됨',
+    total: '총합',
+    remaining: '남음',
     remainingTraffic: '남은 트래픽',
     remainingDays: '남은 일수',
     accountBalance: '계정 잔액',
@@ -195,6 +213,10 @@ export default {
     importSubscription: '구독 가져오기',
     purchasePlan: '플랜 구매',
     resetTraffic: '트래픽 초기화',
+    activateDataCycleInAdvance: '데이터 주기 조기 시작',
+    resetDataCycleNotice: '"확인"을 누르면 현재 데이터 주기의 남은 구독 시간이 차감되고 사용량이 초기화됩니다.',
+    nextPeriodError: '다음 달 주기 조기 시작 실패',
+    nextPeriodSuccess: '다음 달 주기 조기 시작 성공',
     renewPlan: '플랜 갱신',
     noPlanToRenew: '갱신 가능한 플랜 없음',
     resetTrafficConfirm: '트래픽 초기화 확인',
@@ -257,6 +279,7 @@ export default {
   more: {
     title: '추가 기능',
     description: '더 많은 기능과 서비스를 탐색하세요',
+    inviteDescription: '친구를 초대해 커미션 보상을 받으세요',
     viewHelp: '사용 도움말 및 FAQ 보기',
     viewNodes: '사용 가능한 서버 노드 보기',
     manageOrders: '주문 관리',
@@ -319,6 +342,8 @@ export default {
       unknown: '알 수 없는 상태'
     },
     confirmOrder: '주문 확인',
+    confirm_order_title: '주문 확인',
+    confirm_purchase: '구매 확인',
     payment: '주문 결제',
   },
   tickets: {
@@ -497,8 +522,17 @@ export default {
     no_plans_found: '조건에 맞는 플랜을 찾을 수 없습니다',
     try_different_filter: '다른 필터를 시도하세요',
     reset_filter: '필터 초기화',
+    traffic_package: {
+      entry: '트래픽 패키지 구매',
+      title: '트래픽 패키지 구매',
+      description: '일회성 트래픽 패키지를 선택하세요. 구매 후 즉시 계정에 추가됩니다.'
+    },
     plan: {
       purchase: '구매',
+      renew: '갱신',
+      add_quota: '트래픽 추가',
+      upgrade_to: '{name}(으)로 업그레이드',
+      current: '현재 사용 중인 플랜',
       sold_out_btn: '품절',
       stock: {
         plenty: '재고 충분',
@@ -540,6 +574,11 @@ export default {
       devices: '다중 기기 지원',
       devices_desc: '여러 기기에서 동시 사용 지원'
     },
+    current_plan_info: {
+      plan: '현재 플랜',
+      expire: '만료일',
+      traffic: '남은 트래픽'
+    },
     config_error: '상점 구성 가져오기 실패',
     popup: {
       close_btn: '알겠습니다',
@@ -572,7 +611,9 @@ export default {
     order_failed: '주문 생성 실패',
     no_plan_selected: '플랜을 선택하지 않음',
     plan_not_found: '플랜이 존재하지 않음',
-    failed_to_fetch_plan: '플랜 정보 가져오기 실패'
+    failed_to_fetch_plan: '플랜 정보 가져오기 실패',
+    confirm_order_title: '주문 확인',
+    confirm_purchase: '구매 확인'
   },
   payment: {
     title: '주문 결제',

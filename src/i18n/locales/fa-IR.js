@@ -153,7 +153,7 @@ export default {
     networkError: 'خطای شبکه، اتصال را چک کنید',
     serverError: 'خطای سرور، بعدا امتحان کنید',
     unauthorized: 'غیرمجاز، لطفا وارد شوید',
-    forbidden: 'دسترسی ممنوع،权限 کافی نیست',
+    forbidden: 'دسترسی ممنوع، سطح دسترسی کافی نیست',
     notFound: 'صفحه پیدا نشد',
     notFoundDescription: 'متاسفیم، صفحه مورد نظر وجود ندارد یا حذف شده است',
     backToHome: 'به خانه برگردید',
@@ -180,11 +180,29 @@ export default {
   dashboard: {
     welcome: 'به خانه خوش آمدید',
     welcomeDesc: 'سرویس ها و وضعیت استفاده خود را ببینید',
+    announcement: 'اعلان‌ها',
     siteAnnouncement: 'اعلامیه سایت',
     subscriptionInfo: 'اطلاعات بسته',
     planName: 'نام بسته',
     expiryDate: 'زمان انقضا',
     planTraffic: 'ترافیک بسته',
+    subscriptionQuotaUsed: 'سهمیه مصرف‌شده اشتراک',
+    subscriptionQuotaRemaining: 'سهمیه باقی‌مانده اشتراک',
+    packageQuotaRemaining: 'سهمیه باقی‌مانده بسته',
+    trafficBoardTitle: 'داشبورد ترافیک',
+    trafficBoardSubtitle: 'نمای کلی اشتراک + بسته',
+    packagePurchased: 'بسته خریداری شده',
+    packageNotPurchased: 'بسته خریداری نشده',
+    usagePanel: 'پنل مصرف',
+    totalTrafficPackAndPackage: 'کل ترافیک (اشتراک + بسته)',
+    subscriptionMonthlyTraffic: 'ترافیک ماهانه اشتراک',
+    trafficPackageQuota: 'سهمیه بسته ترافیک',
+    resetHint: 'روز ریست: {day}',
+    resetTimeLabel: 'زمان ریست',
+    purchaseTrafficPackage: 'خرید بسته ترافیک یک‌باره',
+    used: 'مصرف‌شده',
+    total: 'کل',
+    remaining: 'باقی‌مانده',
     remainingTraffic: 'ترافیک باقی مانده',
     remainingDays: 'روزهای باقی مانده',
     accountBalance: 'موجودی حساب',
@@ -195,6 +213,10 @@ export default {
     importSubscription: 'وارد کردن اشتراک',
     purchasePlan: 'خرید بسته',
     resetTraffic: 'بازنشانی ترافیک',
+    activateDataCycleInAdvance: 'فعال‌سازی زودتر چرخه ترافیک',
+    resetDataCycleNotice: 'با زدن "متوجه شدم" زمان باقی‌مانده چرخه فعلی کسر شده و ترافیک مصرفی شما ریست می‌شود.',
+    nextPeriodError: 'شروع زودهنگام دوره بعد ناموفق بود',
+    nextPeriodSuccess: 'دوره بعد با موفقیت زودتر شروع شد',
     renewPlan: 'تمدید بسته',
     noPlanToRenew: 'بسته ای برای تمدید وجود ندارد',
     resetTrafficConfirm: 'تایید بازنشانی ترافیک',
@@ -257,6 +279,7 @@ export default {
   more: {
     title: 'بیشتر ویژگی ها',
     description: 'کاوش ویژگی ها و خدمات بیشتر',
+    inviteDescription: 'دوستان خود را دعوت کنید و پاداش کمیسیون بگیرید',
     viewHelp: 'نمایش کمک و سوالات متداول',
     viewNodes: 'نمایش نودهای سرور',
     manageOrders: 'مدیریت سفارش ها',
@@ -319,6 +342,8 @@ export default {
       unknown: 'وضعیت ناشناخته'
     },
     confirmOrder: 'تایید سفارش',
+    confirm_order_title: 'تایید سفارش',
+    confirm_purchase: 'تایید خرید',
     payment: 'پرداخت سفارش',
   },
   tickets: {
@@ -496,8 +521,17 @@ export default {
     no_plans_found: 'بسته ای پیدا نشد',
     try_different_filter: 'فیلتر دیگری امتحان کنید',
     reset_filter: 'بازنشانی فیلتر',
+    traffic_package: {
+      entry: 'خرید بسته ترافیک',
+      title: 'خرید بسته ترافیک',
+      description: 'یک بسته ترافیک یک‌باره انتخاب کنید. پس از خرید بلافاصله به حساب شما افزوده می‌شود.'
+    },
     plan: {
       purchase: 'خرید',
+      renew: 'تمدید',
+      add_quota: 'افزایش سهمیه',
+      upgrade_to: 'ارتقا به {name}',
+      current: 'پلن فعلی شما',
       sold_out_btn: 'فروخته شد',
       stock: {
         plenty: 'موجودی کافی',
@@ -539,6 +573,11 @@ export default {
       devices: 'پشتیبانی چند دستگاه',
       devices_desc: 'استفاده همزمان چند دستگاه'
     },
+    current_plan_info: {
+      plan: 'پلن فعلی',
+      expire: 'تاریخ انقضا',
+      traffic: 'ترافیک باقیمانده'
+    },
     config_error: 'دریافت تنظیمات فروشگاه شکست خورد',
     popup: {
       close_btn: 'درک کردم',
@@ -571,7 +610,9 @@ export default {
     order_failed: 'ایجاد سفارش شکست خورد',
     no_plan_selected: 'بسته ای انتخاب نشده',
     plan_not_found: 'بسته وجود ندارد',
-    failed_to_fetch_plan: 'دریافت اطلاعات بسته شکست خورد'
+    failed_to_fetch_plan: 'دریافت اطلاعات بسته شکست خورد',
+    confirm_order_title: 'تایید سفارش',
+    confirm_purchase: 'تایید خرید'
   },
   payment: {
     title: 'پرداخت سفارش',
@@ -597,7 +638,7 @@ export default {
     free_order: 'سفارش رایگان',
     free_order_title: 'سفارش شما رایگان است',
     free_order_desc: 'برای فعال سازی روی دکمه "فعال سازی" کلیک کنید',
-    fee: 'هزینه手续',
+    fee: 'کارمزد',
     cancel_order: 'لغو سفارش',
     check_payment: 'بررسی وضعیت پرداخت',
     activate: 'فعال سازی',
@@ -621,8 +662,8 @@ export default {
     return_to_dashboard: 'به داشبورد برگردید',
     order_expired: 'سفارش منقضی شد',
     create_new_order: 'سفارش جدید ایجاد کنید',
-    handling_fee: 'هزینه手续',
-    total_with_fee: 'جمع کل با هزینه手续',
+    handling_fee: 'کارمزد',
+    total_with_fee: 'جمع کل با کارمزد',
     pay_now: 'اکنون پرداخت کنید',
     scan_qrcode: 'QR کد را اسکن کنید و پرداخت را کامل کنید',
     pay_success: 'پرداخت موفق',

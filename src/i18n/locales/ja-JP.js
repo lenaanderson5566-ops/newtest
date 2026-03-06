@@ -180,11 +180,29 @@ export default {
   dashboard: {
     welcome: 'おかえりなさい',
     welcomeDesc: 'サービスと使用状況を確認',
+    announcement: 'お知らせ',
     siteAnnouncement: 'サイトお知らせ',
     subscriptionInfo: 'プラン情報',
     planName: 'プラン名',
     expiryDate: '有効期限',
     planTraffic: 'プラン流量',
+    subscriptionQuotaUsed: 'サブスク使用済み容量',
+    subscriptionQuotaRemaining: 'サブスク残容量',
+    packageQuotaRemaining: 'パッケージ残容量',
+    trafficBoardTitle: 'トラフィックボード',
+    trafficBoardSubtitle: 'サブスク + パッケージ概要',
+    packagePurchased: 'パッケージ購入済み',
+    packageNotPurchased: 'パッケージ未購入',
+    usagePanel: '使用状況パネル',
+    totalTrafficPackAndPackage: '合計トラフィック（プラン + パッケージ）',
+    subscriptionMonthlyTraffic: 'サブスク月間トラフィック',
+    trafficPackageQuota: 'トラフィックパッケージ容量',
+    resetHint: 'リセット日: {day}',
+    resetTimeLabel: 'リセット時刻',
+    purchaseTrafficPackage: '買い切りトラフィックパッケージを購入',
+    used: '使用済み',
+    total: '合計',
+    remaining: '残り',
     remainingTraffic: '残り流量',
     remainingDays: '残り日数',
     accountBalance: 'アカウント残高',
@@ -195,6 +213,10 @@ export default {
     importSubscription: 'サブスクリプションインポート',
     purchasePlan: 'プラン購入',
     resetTraffic: '流量リセット',
+    activateDataCycleInAdvance: '次のデータ周期を前倒し開始',
+    resetDataCycleNotice: '「了解」を押すと現在周期の残り時間が差し引かれ、使用済みデータがリセットされます。',
+    nextPeriodError: '来月周期の前倒し開始に失敗しました',
+    nextPeriodSuccess: '来月周期の前倒し開始に成功しました',
     renewPlan: 'プラン更新',
     noPlanToRenew: '更新可能なプランがありません',
     resetTrafficConfirm: '流量リセット確認',
@@ -257,6 +279,7 @@ export default {
   more: {
     title: '追加機能',
     description: 'さらに多くの機能とサービスを探る',
+    inviteDescription: '友達を招待してコミッション報酬を獲得',
     viewHelp: '使用ヘルプとFAQを見る',
     viewNodes: '利用可能なサーバーノードを見る',
     manageOrders: '注文管理',
@@ -319,6 +342,8 @@ export default {
       unknown: '不明な状態'
     },
     confirmOrder: '注文確認',
+    confirm_order_title: '注文確認',
+    confirm_purchase: '購入を確定',
     payment: '注文支払い',
   },
   tickets: {
@@ -496,8 +521,17 @@ export default {
     no_plans_found: '条件に合うプランが見つかりません',
     try_different_filter: '他のフィルタ条件を試してください',
     reset_filter: 'フィルタリセット',
+    traffic_package: {
+      entry: 'トラフィックパッケージを購入',
+      title: 'トラフィックパッケージを購入',
+      description: '買い切りトラフィックパッケージを選択してください。購入後すぐにアカウントへ追加されます。'
+    },
     plan: {
       purchase: '購入',
+      renew: '更新',
+      add_quota: '容量追加',
+      upgrade_to: '{name} へアップグレード',
+      current: '現在ご利用中のプラン',
       sold_out_btn: '売り切れ',
       stock: {
         plenty: '在庫十分',
@@ -539,6 +573,11 @@ export default {
       devices: '複数デバイス対応',
       devices_desc: '複数デバイスの同時使用に対応'
     },
+    current_plan_info: {
+      plan: '現在のプラン',
+      expire: '有効期限',
+      traffic: '残りトラフィック'
+    },
     config_error: 'ストア設定取得失敗',
     popup: {
       close_btn: '了解',
@@ -571,7 +610,9 @@ export default {
     order_failed: '注文作成失敗',
     no_plan_selected: 'プラン未選択',
     plan_not_found: 'プランが存在しません',
-    failed_to_fetch_plan: 'プラン情報取得失敗'
+    failed_to_fetch_plan: 'プラン情報取得失敗',
+    confirm_order_title: '注文確認',
+    confirm_purchase: '購入を確定'
   },
   payment: {
     title: '注文支払い',

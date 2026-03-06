@@ -608,6 +608,7 @@ export default {
         no_plan_selected: 'No plan selected',
         plan_not_found: 'Plan not found',
         failed_to_fetch_plan: 'Failed to fetch plan information',
+        confirm_order_title: 'Confirm Order',
         confirm_purchase:'Confirm Purchase'
     },
     payment: {
