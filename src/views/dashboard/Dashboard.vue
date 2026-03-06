@@ -379,7 +379,7 @@
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && !hasPurchasedTrafficPackage }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }]"
+            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && !hasPurchasedTrafficPackage }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
@@ -445,6 +445,9 @@
             </div>
           </div>
 
+          <div v-if="isPlanExpired" class="expired-renew-overlay">
+            <button class="expired-renew-btn" @click="renewPlan">立即续费</button>
+          </div>
 
         </template>
       </div>
@@ -2519,6 +2522,46 @@ export default {
           background: rgba(34, 197, 94, 0.14);
           color: #16a34a;
         }
+      }
+    }
+
+    .expired-blur-target {
+      filter: blur(2.5px) saturate(0.65);
+      opacity: 0.65;
+      pointer-events: none;
+      user-select: none;
+      transition: filter 0.2s ease, opacity 0.2s ease;
+    }
+
+    .expired-renew-overlay {
+      grid-column: 2 / -1;
+      grid-row: 2;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(2px);
+      pointer-events: none;
+
+      .expired-renew-btn {
+        pointer-events: auto;
+        border: none;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-size: 15px;
+        font-weight: 700;
+        color: #fff;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        box-shadow: 0 8px 18px rgba(220, 38, 38, 0.28);
+        cursor: pointer;
+      }
+
+      @media (max-width: 1199px) {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        min-height: 110px;
       }
     }
 
@@ -4858,6 +4901,10 @@ export default {
   background: rgba(148, 163, 184, 0.5);
 }
 
+.dark-theme .stats-grid .expired-renew-overlay {
+  background: rgba(15, 23, 42, 0.4);
+}
+
 .dark-theme .traffic-board-card .usage-percent.expired {
   color: rgba(226, 232, 240, 0.55);
 }
@@ -5164,6 +5211,10 @@ a.eztheme-btn {
 
 .dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
   background: rgba(148, 163, 184, 0.5);
+}
+
+.dark-theme .stats-grid .expired-renew-overlay {
+  background: rgba(15, 23, 42, 0.4);
 }
 
 </style>
