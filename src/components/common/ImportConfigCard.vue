@@ -48,7 +48,7 @@
       <div class="section-title">选择平台并一键导入</div>
       <div class="platform-selector">
         <button
-          v-for="platform in platforms"
+          v-for="platform in availablePlatforms"
           :key="platform.id"
           class="platform-button"
           :class="{ active: activePlatform === platform.id }"
@@ -61,7 +61,7 @@
 
       <div class="platform-section">
         <div class="platform-title">{{ activePlatformLabel }}</div>
-        <div class="platform-options">
+        <div class="platform-options" v-if="activePlatformOptions.length">
           <button
             v-for="option in activePlatformOptions"
             :key="option.key"
@@ -77,6 +77,7 @@
             <span>{{ option.label }}</span>
           </button>
         </div>
+        <div v-else class="no-clients-tip">当前平台暂无可用导入客户端</div>
       </div>
     </div>
 
@@ -115,7 +116,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, inject } from 'vue';
+import { ref, computed, onMounted, inject, reactive, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
   IconCopy,
@@ -130,6 +131,7 @@ import {
   IconChevronUp
 } from '@tabler/icons-vue';
 import { getSubscribe } from '@/api/dashboard';
+import { CLIENT_CONFIG } from '@/utils/baseConfig';
 import { resetSecurity as apiResetSecurity } from '@/api/user';
 import QRCode from 'qrcode';
 import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
@@ -153,40 +155,72 @@ const activePlatform = ref('ios');
 const showResetModal = ref(false);
 const resetting = ref(false);
 const showImportPanel = ref(true);
+const clientConfig = reactive(CLIENT_CONFIG);
 
 const platforms = [
-  { id: 'ios', label: 'iOS', icon: IconBrandApple },
-  { id: 'android', label: 'Android', icon: IconBrandAndroid },
-  { id: 'windows', label: 'Windows', icon: IconBrandWindows },
-  { id: 'macos', label: 'MacOS', icon: IconDeviceLaptop }
+  { id: 'ios', label: 'iOS', icon: IconBrandApple, showFlag: 'showIOS' },
+  { id: 'android', label: 'Android', icon: IconBrandAndroid, showFlag: 'showAndroid' },
+  { id: 'windows', label: 'Windows', icon: IconBrandWindows, showFlag: 'showWindows' },
+  { id: 'macos', label: 'MacOS', icon: IconDeviceLaptop, showFlag: 'showMacOS' }
 ];
 
 const platformClientMap = {
   ios: [
-    { key: 'shadowrocket', label: 'Shadowrocket', clientType: 'shadowrocket', icon: shadowrocketIconImg, iconType: 'image' },
-    { key: 'stash-ios', label: 'Stash', clientType: 'stash', icon: stashIconImg, iconType: 'image' },
-    { key: 'quantumultx', label: 'Quantumult X', clientType: 'quantumultx', icon: quantumultxIconImg, iconType: 'image' }
+    { key: 'shadowrocket', label: 'Shadowrocket', clientType: 'shadowrocket', icon: shadowrocketIconImg, iconType: 'image', showFlag: 'showShadowrocket' },
+    { key: 'surge', label: 'Surge', clientType: 'surge', icon: IconQrcode, iconType: 'component', showFlag: 'showSurge' },
+    { key: 'stash-ios', label: 'Stash', clientType: 'stash', icon: stashIconImg, iconType: 'image', showFlag: 'showStash' },
+    { key: 'quantumultx', label: 'Quantumult X', clientType: 'quantumultx', icon: quantumultxIconImg, iconType: 'image', showFlag: 'showQuantumultX' },
+    { key: 'hiddify-ios', label: 'Hiddify', clientType: 'hiddify-ios', icon: IconQrcode, iconType: 'component', showFlag: 'showHiddifyIOS' },
+    { key: 'singbox-ios', label: 'Singbox', clientType: 'singbox-ios', icon: IconQrcode, iconType: 'component', showFlag: 'showSingboxIOS' },
+    { key: 'loon', label: 'Loon', clientType: 'loon', icon: IconQrcode, iconType: 'component', showFlag: 'showLoon' }
   ],
   android: [
-    { key: 'v2rayng', label: 'V2rayNG', clientType: 'v2rayng', icon: v2rayngIconImg, iconType: 'image' },
-    { key: 'nekobox', label: 'NekoBox', clientType: 'nekobox', icon: nekoboxIconImg, iconType: 'image' },
-    { key: 'android-universal', label: 'Universal', clientType: 'universal', icon: IconQrcode, iconType: 'component' }
+    { key: 'flclash-android', label: 'FlClash', clientType: 'flclash', icon: IconQrcode, iconType: 'component', showFlag: 'showFlClashAndroid' },
+    { key: 'v2rayng', label: 'V2rayNG', clientType: 'v2rayng', icon: v2rayngIconImg, iconType: 'image', showFlag: 'showV2rayNG' },
+    { key: 'clash-android', label: 'Clash', clientType: 'clash-android', icon: IconQrcode, iconType: 'component', showFlag: 'showClashAndroid' },
+    { key: 'surfboard', label: 'Surfboard', clientType: 'surfboard', icon: IconQrcode, iconType: 'component', showFlag: 'showSurfboard' },
+    { key: 'clash-meta-android', label: 'Clash Meta', clientType: 'clash-meta-android', icon: IconQrcode, iconType: 'component', showFlag: 'showClashMetaAndroid' },
+    { key: 'nekobox', label: 'NekoBox', clientType: 'nekobox', icon: nekoboxIconImg, iconType: 'image', showFlag: 'showNekobox' },
+    { key: 'singbox-android', label: 'Singbox', clientType: 'singbox-android', icon: IconQrcode, iconType: 'component', showFlag: 'showSingboxAndroid' },
+    { key: 'hiddify-android', label: 'Hiddify', clientType: 'hiddify-android', icon: IconQrcode, iconType: 'component', showFlag: 'showHiddifyAndroid' }
   ],
   windows: [
-    { key: 'clashverge', label: 'Clash Verge', clientType: 'clashverge', icon: clashvergeIconImg, iconType: 'image' },
-    { key: 'nekoray', label: 'Nekoray', clientType: 'nekoray', icon: nekorayIconImg, iconType: 'image' },
-    { key: 'windows-universal', label: 'Universal', clientType: 'universal', icon: IconQrcode, iconType: 'component' }
+    { key: 'flclash-windows', label: 'FlClash', clientType: 'flclash', icon: IconQrcode, iconType: 'component', showFlag: 'showFlClashWindows' },
+    { key: 'clashverge', label: 'Clash Verge', clientType: 'clashverge', icon: clashvergeIconImg, iconType: 'image', showFlag: 'showClashVergeWindows' },
+    { key: 'clash-windows', label: 'Clash', clientType: 'clash', icon: IconQrcode, iconType: 'component', showFlag: 'showClashWindows' },
+    { key: 'nekoray', label: 'Nekoray', clientType: 'nekoray', icon: nekorayIconImg, iconType: 'image', showFlag: 'showNekoray' },
+    { key: 'singbox-windows', label: 'Singbox', clientType: 'singbox-windows', icon: IconQrcode, iconType: 'component', showFlag: 'showSingboxWindows' },
+    { key: 'hiddify-windows', label: 'Hiddify', clientType: 'hiddify-windows', icon: IconQrcode, iconType: 'component', showFlag: 'showHiddifyWindows' }
   ],
   macos: [
-    { key: 'clashverge-mac', label: 'Clash Verge', clientType: 'clashverge', icon: clashvergeIconImg, iconType: 'image' },
-    { key: 'clashx', label: 'ClashX', clientType: 'clashx', icon: clashxIconImg, iconType: 'image' },
-    { key: 'stash-mac', label: 'Stash', clientType: 'stash-mac', icon: stashMacIconImg, iconType: 'image' },
-    { key: 'quantumultx-mac', label: 'Quantumult X', clientType: 'quantumultx', icon: quantumultXMacIconImg, iconType: 'image' }
+    { key: 'flclash-mac', label: 'FlClash', clientType: 'flclash', icon: IconQrcode, iconType: 'component', showFlag: 'showFlClashMac' },
+    { key: 'clashverge-mac', label: 'Clash Verge', clientType: 'clashverge', icon: clashvergeIconImg, iconType: 'image', showFlag: 'showClashVergeMac' },
+    { key: 'clashx', label: 'ClashX', clientType: 'clashx', icon: clashxIconImg, iconType: 'image', showFlag: 'showClashX' },
+    { key: 'clashx-meta', label: 'ClashX Meta', clientType: 'clashx-meta', icon: IconQrcode, iconType: 'component', showFlag: 'showClashMetaX' },
+    { key: 'surge-mac', label: 'Surge', clientType: 'surge-mac', icon: IconQrcode, iconType: 'component', showFlag: 'showSurgeMac' },
+    { key: 'stash-mac', label: 'Stash', clientType: 'stash-mac', icon: stashMacIconImg, iconType: 'image', showFlag: 'showStashMac' },
+    { key: 'quantumultx-mac', label: 'Quantumult X', clientType: 'quantumultx-mac', icon: quantumultXMacIconImg, iconType: 'image', showFlag: 'showQuantumultXMac' },
+    { key: 'singbox-macos', label: 'Singbox', clientType: 'singbox-macos', icon: IconQrcode, iconType: 'component', showFlag: 'showSingboxMac' },
+    { key: 'hiddify-macos', label: 'Hiddify', clientType: 'hiddify-macos', icon: IconQrcode, iconType: 'component', showFlag: 'showHiddifyMac' }
   ]
 };
 
-const activePlatformLabel = computed(() => platforms.find((item) => item.id === activePlatform.value)?.label || 'iOS');
-const activePlatformOptions = computed(() => platformClientMap[activePlatform.value] || platformClientMap.ios);
+const availablePlatforms = computed(() => {
+  return platforms.filter((platform) => clientConfig[platform.showFlag]);
+});
+
+const activePlatformLabel = computed(() => availablePlatforms.value.find((item) => item.id === activePlatform.value)?.label || availablePlatforms.value[0]?.label || 'iOS');
+const activePlatformOptions = computed(() => {
+  const options = platformClientMap[activePlatform.value] || [];
+  return options.filter((option) => clientConfig[option.showFlag]);
+});
+
+watch(availablePlatforms, (next) => {
+  if (!next.length) return;
+  if (!next.some((item) => item.id === activePlatform.value)) {
+    activePlatform.value = next[0].id;
+  }
+}, { immediate: true });
 
 const preCopySubscriptionUrl = async () => {
   if (!subscriptionUrl.value) return false;
@@ -242,36 +276,62 @@ const updateQRCode = async () => {
 const openClientLink = async (clientType) => {
   if (!subscriptionUrl.value) return;
   const subscribeUrl = subscriptionUrl.value;
+  const siteName = '订阅';
   let url = subscribeUrl;
 
   switch (clientType) {
     case 'shadowrocket':
-      url = `shadowrocket://add/sub://${window.btoa(subscribeUrl).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}`;
+      url = `shadowrocket://add/sub://${window.btoa(subscribeUrl).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}?remark=${encodeURIComponent(siteName)}`;
       break;
-    case 'v2rayng':
-      url = `v2rayng://install-sub?url=${encodeURIComponent(subscribeUrl)}`;
-      break;
-    case 'clashx':
-    case 'clashverge':
-      url = `clash://install-config?url=${encodeURIComponent(subscribeUrl)}`;
-      break;
-    case 'quantumultx':
-      url = `quantumult-x:///update-configuration?remote-resource=${encodeURIComponent(subscribeUrl)}`;
-      break;
-    case 'nekobox':
-    case 'nekoray':
-      url = `nekobox://addProfile?url=${encodeURIComponent(subscribeUrl)}`;
+    case 'surge':
+    case 'surge-mac':
+      url = `surge:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
       break;
     case 'stash':
     case 'stash-mac':
-      url = `stash://install-config?url=${encodeURIComponent(subscribeUrl)}`;
+      url = `stash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+      break;
+    case 'quantumultx':
+    case 'quantumultx-mac':
+      url = `quantumult-x:///update-configuration?remote-resource=${encodeURI(JSON.stringify({ server_remote: [`${subscribeUrl}, tag=${encodeURIComponent(siteName)}`] }))}`;
+      break;
+    case 'loon':
+      url = `loon://import?nodelist=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+      break;
+    case 'v2rayng':
+      url = `v2rayng://install-sub?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
+      break;
+    case 'clash':
+    case 'clash-android':
+    case 'clash-meta-android':
+    case 'flclash':
+    case 'clashverge':
+    case 'nekobox':
+    case 'nekoray':
+    case 'clashx':
+    case 'clashx-meta':
+      url = `clash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+      break;
+    case 'surfboard':
+      url = `surfboard:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+      break;
+    case 'singbox-ios':
+    case 'singbox-android':
+    case 'singbox-windows':
+    case 'singbox-macos':
+      url = `sing-box://import-remote-profile?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
+      break;
+    case 'hiddify-android':
+    case 'hiddify-windows':
+    case 'hiddify-macos':
+    case 'hiddify-ios':
+      url = `hiddify://import/${subscribeUrl}#${encodeURIComponent(siteName)}`;
       break;
     default:
       url = subscribeUrl;
   }
 
   const copied = await preCopySubscriptionUrl();
-
   window.open(url, '_blank');
   if ($toast) {
     $toast.success(copied ? '已尝试唤起客户端，订阅地址已复制到剪贴板' : t('dashboard.manualImportRequired'));
@@ -496,6 +556,15 @@ onMounted(() => {
 
     .platform-option-icon {
       color: rgba(var(--theme-color-rgb), 0.95);
+    }
+
+    .no-clients-tip {
+      padding: 12px;
+      border: 1px dashed var(--border-color);
+      border-radius: 10px;
+      color: var(--theme-text-secondary);
+      font-size: 13px;
+      text-align: center;
     }
   }
 }
