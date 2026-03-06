@@ -208,11 +208,13 @@ export default {
 
           nodes: { title: 'Nodes', path: '/nodes', name: 'Nodes', icon: 'IconServer', i18nKey: 'nodes' },
 
-          orders: { title: 'Orders', path: '/orders', name: 'Orders', icon: 'IconShop', i18nKey: 'orders' },
+          billing: { title: 'Billing', path: '/billing?tab=orders', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
+
+          orders: { title: 'Billing', path: '/billing?tab=orders', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
 
           traffic: { title: 'Traffic', path: '/trafficlog', name: 'TrafficLog', icon: 'IconChartBar', i18nKey: 'traffic' },
 
-          wallet: { title: 'Wallet', path: '/wallet/deposit', name: 'Deposit', icon: 'IconWallet', i18nKey: 'wallet' },
+          wallet: { title: 'Billing', path: '/billing?tab=wallet', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
 
           profile: { title: 'Profile', path: '/profile', name: 'Profile', icon: 'IconUser', i18nKey: 'profile' }
 

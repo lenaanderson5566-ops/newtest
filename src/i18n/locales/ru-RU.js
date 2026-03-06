@@ -248,6 +248,7 @@ export default {
     nodes: 'Узлы',
     traffic: 'Трафик',
     wallet: 'Кошелек',
+    billing: 'Биллинг',
     profile: 'Профиль',
     more: 'Еще',
     commission: 'Комиссия',

@@ -248,6 +248,7 @@ export default {
     nodes: '節點',
     traffic: '流量',
     wallet: '錢包',
+    billing: '帳單',
     profile: '帳號',
     more: '更多',
     commission: '返利',

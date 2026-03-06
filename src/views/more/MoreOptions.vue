@@ -112,32 +112,6 @@
 
         
 
-        <div v-if="shouldShowOrdersCard" class="stats-card" @click="$router.push('/orders')">
-
-          <div class="stats-icon">
-
-            <IconShoppingCart :size="32" />
-
-          </div>
-
-          <div class="stats-info">
-
-            <div class="stats-value">{{ $t('orders.title') }}</div>
-
-            <div class="stats-label">{{ $t('more.manageOrders') }}</div>
-
-          </div>
-
-          <div class="chevron-icon">
-
-            <IconChevronRight :size="20" />
-
-          </div>
-
-        </div>
-
-        
-
         <div v-if="shouldShowTicketsCard" class="stats-card" @click="navigateToTickets">
 
           <div class="stats-icon">
@@ -190,9 +164,7 @@
 
         
 
-        <!-- 充值选项，仅Xiao-V2board面板显示 -->
-
-        <div v-if="shouldShowWalletCard && isXiaoPanel" class="stats-card" @click="$router.push('/wallet/deposit')">
+        <div v-if="shouldShowBillingCard" class="stats-card" @click="$router.push('/billing?tab=orders')">
 
           <div class="stats-icon">
 
@@ -202,9 +174,9 @@
 
           <div class="stats-info">
 
-            <div class="stats-value">{{ $t('wallet.deposit.title') }}</div>
+            <div class="stats-value">{{ $t('menu.billing') }}</div>
 
-            <div class="stats-label">{{ $t('wallet.balance.description') }}</div>
+            <div class="stats-label">{{ $t('more.manageOrders') }}</div>
 
           </div>
 
@@ -396,13 +368,12 @@ const shouldShowDocsCard = computed(() => !isHiddenByTopNav('docs'));
 
 const shouldShowNodesCard = computed(() => !isHiddenByTopNav('nodes'));
 
-const shouldShowOrdersCard = computed(() => !isHiddenByTopNav('orders'));
 
 const shouldShowTicketsCard = computed(() => !isHiddenByTopNav('tickets'));
 
 const shouldShowTrafficCard = computed(() => !isHiddenByTopNav('traffic'));
 
-const shouldShowWalletCard = computed(() => !isHiddenByTopNav('wallet'));
+const shouldShowBillingCard = computed(() => !isHiddenByTopNav('orders') || !isHiddenByTopNav('wallet'));
 
 const shouldShowProfileCard = computed(() => !isHiddenByTopNav('profile'));
 

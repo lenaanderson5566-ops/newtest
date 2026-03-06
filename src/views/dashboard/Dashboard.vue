@@ -11,7 +11,7 @@
         </div>
         <div class="card-body">
           <div class="pending-items-list">
-            <div v-if="userStats.pendingOrders > 0" class="pending-item" @click="router.push('/orders')">
+            <div v-if="userStats.pendingOrders > 0" class="pending-item" @click="router.push('/billing?tab=orders')">
               <div class="pending-icon">
                 <IconShoppingCart :size="20"/>
               </div>
@@ -2060,7 +2060,7 @@ export default {
     const isXiaoPanel = isXiaoV2board();
 
     const navigateToDeposit = () => {
-      router.push('/wallet/deposit');
+      router.push('/billing?tab=wallet');
     };
 
     const showDeviceLimit = computed(() => {

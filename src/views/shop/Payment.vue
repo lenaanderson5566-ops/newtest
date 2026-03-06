@@ -1244,7 +1244,7 @@ export default {
 
     const goToDashboard = () => {
       if (orderDetail.value.period === "deposit") {
-        router.push("/wallet/deposit");
+        router.push("/billing?tab=wallet");
       } else {
         router.push("/dashboard");
       }
@@ -1335,7 +1335,7 @@ export default {
 
       if (route.query.from === "orders") {
         fromOrderList.value = true;
-      } else if (document.referrer && document.referrer.includes("/orders")) {
+      } else if (document.referrer && document.referrer.includes("/orders") || document.referrer.includes("/billing")) {
         fromOrderList.value = true;
       } else {
         fromOrderList.value = false;

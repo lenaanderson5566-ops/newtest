@@ -248,6 +248,7 @@ export default {
     nodes: 'ノード',
     traffic: 'トラフィック',
     wallet: 'ウォレット',
+    billing: '請求書',
     profile: 'プロフィール',
     more: 'もっと見る',
     commission: 'リベート',

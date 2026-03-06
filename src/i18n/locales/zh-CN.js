@@ -269,6 +269,7 @@ export default {
         nodes: '节点',
         traffic: '流量',
         wallet: '钱包',
+        billing: '账单',
         profile: '账号',
         more: '更多',
         commission: '返利',

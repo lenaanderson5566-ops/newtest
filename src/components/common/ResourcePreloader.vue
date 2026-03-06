@@ -216,6 +216,11 @@ export default {
           { path: 'TicketList', name: 'TicketList', priority: 1, component: () => import('@/views/ticket/TicketList.vue') },
           { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/dashboard/Dashboard.vue') }
         ],
+        '/billing': [
+          { path: 'OrderList', name: 'OrderList', priority: 1, component: () => import('@/views/orders/OrderList.vue') },
+          { path: 'Deposit', name: 'Deposit', priority: 2, component: () => import('@/views/wallet/WalletDeposit.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/dashboard/Dashboard.vue') }
+        ],
         '/orders': [
           { path: 'Shop', name: 'Shop', priority: 1, component: () => import('@/views/shop/Shop.vue') },
           { path: 'Payment', name: 'Payment', priority: 2, component: () => import('@/views/shop/Payment.vue') },

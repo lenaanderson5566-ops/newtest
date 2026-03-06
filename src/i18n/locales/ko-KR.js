@@ -248,6 +248,7 @@ export default {
     nodes: '노드',
     traffic: '트래픽',
     wallet: '지갑',
+    billing: '청구서',
     profile: '프로필',
     more: '더 보기',
     commission: '커미션',

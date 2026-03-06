@@ -57,11 +57,13 @@ const getActiveNavForRoute = (routeName) => {
 
     nodes: 'NodeList',
 
-    orders: 'OrderList',
+    orders: 'Billing',
+
+    billing: 'Billing',
 
     traffic: 'TrafficLog',
 
-    wallet: 'Deposit',
+    wallet: 'Billing',
 
     profile: 'Profile'
     
@@ -73,9 +75,10 @@ const getActiveNavForRoute = (routeName) => {
     Invite: 'Invite',
     TicketList: 'Tickets',
     NodeList: 'Nodes',
-    OrderList: 'Orders',
+    OrderList: 'Billing',
+    Billing: 'Billing',
     TrafficLog: 'Traffic',
-    Deposit: 'Wallet',
+    Deposit: 'Billing',
     Profile: 'Profile'
   };
 
@@ -461,20 +464,28 @@ const routes = [
 
       {
 
-        path: 'orders',
+        path: 'billing',
 
-        name: 'OrderList',
+        name: 'Billing',
 
-        component: () => import('@/views/orders/OrderList.vue'),
+        component: () => import('@/views/billing/Billing.vue'),
 
         meta: {
 
-          titleKey: 'orders.title',
+          titleKey: 'menu.billing',
 
           requiresAuth: true,
 
-          get activeNav() { return getActiveNavForRoute('OrderList'); } 
+          get activeNav() { return getActiveNavForRoute('Billing'); } 
         }
+
+      },
+
+      {
+
+        path: 'orders',
+
+        redirect: { path: '/billing', query: { tab: 'orders' } }
 
       },
 
@@ -572,31 +583,11 @@ const routes = [
 
         path: 'wallet/deposit',
 
-        name: 'Deposit',
-
-        component: () => import('@/views/wallet/WalletDeposit.vue'),
-
-        meta: {
-
-          titleKey: 'wallet.deposit.title',
-
-          requiresAuth: true,
-
-          get activeNav() { return getActiveNavForRoute('Deposit'); } 
-        },
-
-        beforeEnter: (to, from, next) => {
-
+        redirect: () => {
           if (!isXiaoV2board()) {
-
-            next('/dashboard');
-
-          } else {
-
-            next();
-
+            return '/billing?tab=orders';
           }
-
+          return '/billing?tab=wallet';
         }
 
       }

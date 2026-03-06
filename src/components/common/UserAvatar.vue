@@ -21,9 +21,9 @@
           <IconUser class="menu-icon" />
           <span>{{ $t('common.userCenter') }}</span>
         </div>
-        <div class="menu-item" v-if="isXiaoV2board" @click="navigateTo('/wallet/deposit')">
+        <div class="menu-item" @click="navigateTo('/billing?tab=orders')">
           <IconWallet class="menu-icon" />
-          <span>{{ $t('common.myWallet') }}</span>
+          <span>{{ $t('menu.billing') }}</span>
         </div>
         <div class="menu-item" @click="navigateTo('/profile?openPasswordModal=true')">
           <IconLock class="menu-icon" />
@@ -44,7 +44,6 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
-import { isXiaoV2board } from '@/utils/baseConfig';
 import IconUser from '@/components/icons/IconUser.vue';
 import IconLogout from '@/components/icons/IconLogout.vue';
 import IconWallet from '@/components/icons/IconWallet.vue';
@@ -119,8 +118,7 @@ export default {
       toggleDropdown,
       navigateTo,
       logout,
-      avatarContainer,
-      isXiaoV2board: isXiaoV2board()
+      avatarContainer
     };
   }
 };

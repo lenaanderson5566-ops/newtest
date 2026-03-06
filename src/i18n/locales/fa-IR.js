@@ -248,6 +248,7 @@ export default {
     nodes: 'نودها',
     traffic: 'ترافیک',
     wallet: 'کیف پول',
+    billing: 'صورتحساب',
     profile: 'پروفایل',
     more: 'بیشتر',
     commission: 'کمیسیون',

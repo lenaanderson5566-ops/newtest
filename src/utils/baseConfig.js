@@ -918,11 +918,11 @@ export const AUTH_CONFIG = mergeDeep(
  */
 const DEFAULT_NAVIGATION_CONFIG = {
   // 设置导航栏第三个位置显示的内容
-  // 可选值: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'traffic', 'wallet', 'profile'
+  // 可选值: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'billing', 'traffic', 'wallet', 'profile'
   thirdNavItem: "invite", // 默认显示邀请
 
   // 可选的第四个导航项，插入在 "更多" 之前；为空字符串或未设置则不插入
-  // 可选值同上: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'traffic', 'wallet', 'profile'
+  // 可选值同上: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'billing', 'traffic', 'wallet', 'profile'
   fourthNavItem: "",
 };
 

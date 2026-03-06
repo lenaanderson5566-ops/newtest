@@ -268,6 +268,7 @@ export default {
         orders: 'Orders',
         nodes: 'Nodes',
         wallet: 'Wallet',
+        billing: 'Billing',
         traffic: 'Traffic',
         profile: 'Profile',
         more: 'More',

@@ -10,7 +10,7 @@ export function handleRedirectPath(redirectPath) {
     } else if (redirectPath === '/profile' || redirectPath === 'profile') {
       targetPath = '/profile'; 
     } else if (redirectPath === '/order' || redirectPath === '/orders' || redirectPath === 'order' || redirectPath === 'orders') {
-      targetPath = '/orders'; 
+      targetPath = '/billing?tab=orders'; 
     }
     else if (redirectPath.startsWith('/')) {
       targetPath = redirectPath;
