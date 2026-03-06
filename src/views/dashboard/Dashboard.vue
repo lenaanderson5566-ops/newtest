@@ -4883,14 +4883,140 @@ a.eztheme-btn {
   background-color: var(--card-background) !important;
   display: flex !important;
   flex-direction: column !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(var(--theme-color-rgb), 0.15) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
   max-height: calc(100vh - 32px) !important;
   overflow: hidden !important;
+}
+
+.traffic-package-modal-card-global .modal-header {
+  padding: 16px 20px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  background-color: rgba(var(--theme-color-rgb), 0.03) !important;
+}
+
+.traffic-package-modal-card-global .modal-header h3 {
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.traffic-package-modal-card-global .modal-header .close-button {
+  border: none !important;
+  background: transparent !important;
+  color: var(--theme-text-secondary) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.traffic-package-modal-card-global .modal-header .close-button:hover {
+  color: var(--theme-text-primary) !important;
 }
 
 .traffic-package-modal-card-global .modal-body {
   display: block !important;
   padding: 20px !important;
   overflow-y: auto !important;
+}
+
+.traffic-package-modal-card-global .traffic-package-desc {
+  margin: 0 0 14px !important;
+  color: var(--theme-text-secondary) !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+.traffic-package-modal-card-global .traffic-package-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+.traffic-package-modal-card-global .traffic-package-item {
+  border: 1px solid var(--border-color) !important;
+  border-radius: 12px !important;
+  padding: 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--theme-color-rgb), 0.06) 0%,
+    rgba(var(--theme-color-rgb), 0.02) 100%
+  ) !important;
+}
+
+.traffic-package-modal-card-global .item-title-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.traffic-package-modal-card-global .item-title-row strong {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.traffic-package-modal-card-global .item-price {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: var(--theme-color) !important;
+}
+
+.traffic-package-modal-card-global .item-content {
+  color: var(--theme-text-secondary) !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  min-height: 32px !important;
+}
+
+.traffic-package-modal-card-global .buy-btn {
+  width: 100% !important;
+  margin-top: auto !important;
+  padding: 8px 12px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  background-color: rgba(var(--theme-color-rgb), 0.92) !important;
+  color: #fff !important;
+  cursor: pointer !important;
+}
+
+.traffic-package-modal-card-global .buy-btn:disabled {
+  opacity: 0.75 !important;
+  cursor: not-allowed !important;
+}
+
+.traffic-package-modal-card-global .modal-footer {
+  padding: 16px 20px !important;
+  border-top: 1px solid var(--border-color) !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+.traffic-package-modal-card-global .cancel-btn {
+  padding: 8px 16px !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--border-color) !important;
+  background-color: transparent !important;
+  color: var(--theme-text-primary) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+}
+
+.traffic-package-modal-card-global .cancel-btn:hover {
+  background-color: rgba(var(--theme-color-rgb), 0.06) !important;
 }
 
 </style>
