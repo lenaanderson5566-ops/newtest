@@ -34,30 +34,6 @@
 
       <div class="stats-grid">
         
-        <div v-if="shouldShowInviteCard" class="stats-card" @click="$router.push('/invite')">
-
-          <div class="stats-icon">
-
-            <IconUserPlus :size="32" />
-
-          </div>
-
-          <div class="stats-info">
-
-            <div class="stats-value">{{ $t('invite.title') }}</div>
-
-            <div class="stats-label">{{ $t('more.inviteDescription') }}</div>
-
-          </div>
-
-          <div class="chevron-icon">
-
-            <IconChevronRight :size="20" />
-
-          </div>
-
-        </div>
-
 
 
         <div v-if="shouldShowDocsCard" class="stats-card" @click="$router.push('/docs')">
@@ -312,9 +288,7 @@ import {
 
   IconChartBar,
 
-  IconWallet,
-
-  IconUserPlus
+  IconWallet
 
 } from '@tabler/icons-vue';
 
@@ -362,7 +336,6 @@ const isHiddenByTopNav = (key) => key === thirdNavItem || key === fourthNavItem;
 
 
 
-const shouldShowInviteCard = computed(() => !isHiddenByTopNav('invite'));
 
 const shouldShowDocsCard = computed(() => !isHiddenByTopNav('docs'));
 

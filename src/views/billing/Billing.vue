@@ -17,11 +17,19 @@
         >
           {{ $t('menu.orders') }}
         </button>
+        <button
+          class="billing-tab"
+          :class="{ active: activeTab === 'invite' }"
+          @click="switchTab('invite')"
+        >
+          {{ $t('menu.invite') }}
+        </button>
       </div>
 
       <div class="billing-panel">
         <WalletDeposit v-if="activeTab === 'wallet' && showWalletTab" />
-        <OrderList v-else />
+        <OrderList v-else-if="activeTab === 'orders'" />
+        <Invite v-else />
       </div>
     </div>
   </div>
@@ -33,12 +41,13 @@ import { useRoute, useRouter } from 'vue-router';
 import { isXiaoV2board } from '@/utils/baseConfig';
 import WalletDeposit from '@/views/wallet/WalletDeposit.vue';
 import OrderList from '@/views/orders/OrderList.vue';
+import Invite from '@/views/invite/Invite.vue';
 
 const route = useRoute();
 const router = useRouter();
 const showWalletTab = isXiaoV2board();
 
-const allowedTabs = computed(() => (showWalletTab ? ['wallet', 'orders'] : ['orders']));
+const allowedTabs = computed(() => (showWalletTab ? ['wallet', 'orders', 'invite'] : ['orders', 'invite']));
 
 const activeTab = computed(() => {
   const queryTab = String(route.query.tab || '');

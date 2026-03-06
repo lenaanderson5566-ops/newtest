@@ -51,7 +51,7 @@ const getActiveNavForRoute = (routeName) => {
 
     docs: 'Docs',
 
-    invite: 'Invite',
+    invite: 'Billing',
 
     tickets: 'TicketList',
 
@@ -72,7 +72,7 @@ const getActiveNavForRoute = (routeName) => {
   // 路由名称 -> 导航名称 映射（与 SlideTabsNav 中的 item.name 对齐）
   const navNameMap = {
     Docs: 'Docs',
-    Invite: 'Invite',
+    Invite: 'Billing',
     TicketList: 'Tickets',
     NodeList: 'Nodes',
     OrderList: 'Billing',
@@ -369,21 +369,7 @@ const routes = [
 
         path: 'invite',
 
-        name: 'Invite',
-
-        component: () => import('@/views/invite/Invite.vue'),
-
-        meta: {
-
-          titleKey: 'menu.invite',
-
-          requiresAuth: true,
-
-          keepAlive: true,
-
-          get activeNav() { return getActiveNavForRoute('Invite'); }
-
-        }
+        redirect: { path: '/billing', query: { tab: 'invite' } }
 
       },
 
