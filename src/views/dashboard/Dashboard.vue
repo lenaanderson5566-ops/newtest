@@ -478,8 +478,7 @@
 
 
 
-  <teleport to="body">
-    <transition name="modal-fade">
+  <transition name="modal-fade">
       <div class="modal-overlay traffic-package-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
         <div class="modal-container traffic-package-container" @click.stop>
           <div class="modal-card traffic-package-modal-card">
@@ -514,8 +513,7 @@
           </div>
         </div>
       </div>
-    </transition>
-  </teleport>
+  </transition>
   <!-- 重置流量确认弹窗 -->
   <transition name="modal-fade">
     <div class="modal-overlay" v-if="showResetTrafficModal">
