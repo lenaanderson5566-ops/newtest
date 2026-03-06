@@ -263,6 +263,7 @@ export default {
     },
     menu: {
         dashboard: 'Dashboard',
+        overview: 'Overview',
         shop: 'Shop',
         subscription: 'Subscription',
         invite: 'Invite',
@@ -821,7 +822,7 @@ export default {
         }
     },
     docs: {
-        title: 'Documentation Center',
+        title: 'Client Center',
         searchPlaceholder: 'Search documentation...',
         noAccessPrompt: 'You currently have no active plan. Purchase a plan to view content in this section',
         loading: 'Loading documentation...',
@@ -839,8 +840,8 @@ export default {
         languageHint: 'No documentation available for current language {currentLang}, please try switching to another language',
         networkError: 'Network error',
         welcome: {
-            title: 'Documentation Center',
-            description: 'Find and read detailed documentation on usage and configuration.'
+            title: 'Client Center',
+            description: 'Download official clients and get setup guides for each platform.'
         }
     },
     browserRestricted: {

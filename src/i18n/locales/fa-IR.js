@@ -264,6 +264,7 @@ export default {
   },
   menu: {
     dashboard: 'داشبورد',
+    overview: 'نمای کلی',
     shop: 'فروشگاه',
     subscription: 'اشتراک',
     invite: 'دعوت',

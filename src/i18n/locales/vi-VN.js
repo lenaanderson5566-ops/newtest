@@ -36,6 +36,7 @@ export default {
         noData: 'Chưa có dữ liệu',
         confirm: 'Xác nhận',
         dashboard: 'Trang chủ',
+        overview: 'Tổng quan',
         profile: 'Hồ sơ cá nhân',
         settings: 'Cài đặt',
         help: 'Trợ giúp',
@@ -269,6 +270,7 @@ export default {
     },
     menu: {
         dashboard: 'Trang chủ',
+        overview: 'Tổng quan',
         shop: 'Cửa hàng',
         subscription: 'Gói đăng ký',
         invite: 'Mời bạn',

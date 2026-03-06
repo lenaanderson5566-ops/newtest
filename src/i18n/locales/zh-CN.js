@@ -263,6 +263,7 @@ export default {
     },
     menu: {
         dashboard: '仪表盘',
+        overview: '概览',
         shop: '商店',
         subscription: '订阅',
         invite: '邀请',
@@ -820,7 +821,7 @@ export default {
         }
     },
     docs: {
-        title: '文档中心',
+        title: '客户端中心',
         searchPlaceholder: '搜索文档...',
         noAccessPrompt: '您目前没有有效的套餐，购买套餐后即可查看该区域的内容',
         loading: '正在加载文档...',
@@ -838,8 +839,8 @@ export default {
         languageHint: '当前语言 {currentLang} 暂无文档，请尝试切换到其他语言',
         networkError: '网络错误',
         welcome: {
-            title: '文档中心',
-            description: '查找并阅读有关使用和配置的详细文档。'
+            title: '客户端中心',
+            description: '下载并使用官方客户端，获取各平台接入指引。'
         }
     },
     browserRestricted: {

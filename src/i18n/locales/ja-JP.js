@@ -264,6 +264,7 @@ export default {
   },
   menu: {
     dashboard: 'ダッシュボード',
+    overview: '概要',
     shop: 'ストア',
     subscription: 'サブスクリプション',
     invite: '招待',

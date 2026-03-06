@@ -264,6 +264,7 @@ export default {
   },
   menu: {
     dashboard: '대시보드',
+    overview: '개요',
     shop: '상점',
     subscription: '구독',
     invite: '초대',

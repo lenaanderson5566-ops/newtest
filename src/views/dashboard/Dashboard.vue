@@ -484,7 +484,9 @@
         <div class="modal-card traffic-package-modal-card">
           <div class="modal-header">
             <h3>{{ $t('shop.traffic_package.title') }}</h3>
-            <button class="close-button" @click="showTrafficPackageModal = false">×</button>
+            <button class="close-button" :aria-label="$t('common.close')" @click="showTrafficPackageModal = false">
+              <IconX :size="18" />
+            </button>
           </div>
           <div class="modal-body">
             <p class="traffic-package-desc">{{ $t('shop.traffic_package.description') }}</p>
@@ -493,7 +495,7 @@
             <div v-else class="traffic-package-list">
               <div class="traffic-package-item" v-for="plan in trafficPackagePlans" :key="`dashboard-traffic-${plan.id}`">
                 <div class="item-title-row">
-                  <strong>{{ plan.name }}</strong>
+                  <strong>{{ getTrafficPackageDisplayName(plan) }}</strong>
                   <span class="item-price">{{ currencySymbol }}{{ (normalizeTrafficPackagePrice(plan.onetime_price) / 100).toFixed(2) }}</span>
                 </div>
                 <div class="item-content" v-if="getTrafficPackageContent(plan)">{{ getTrafficPackageContent(plan) }}</div>
@@ -1416,6 +1418,13 @@ export default {
       return [];
     };
 
+    const getTrafficPackageDisplayName = (plan) => {
+      const name = String(plan?.name || '').trim();
+      if (!name) return t('shop.traffic_package.entry');
+      if (/^data\s*credit$/i.test(name)) return t('shop.traffic_package.entry');
+      return name;
+    };
+
     const getTrafficPackageContent = (plan) => {
       const raw = plan?.content;
       if (!raw) return '';
@@ -1428,7 +1437,11 @@ export default {
       } catch (_) {
         // non-json content
       }
-      return String(raw).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+      const plain = String(raw).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+      const displayName = getTrafficPackageDisplayName(plan);
+      if (!plain) return '';
+      if (plain.toLowerCase() === displayName.toLowerCase()) return '';
+      return plain;
     };
 
 
@@ -2260,6 +2273,7 @@ export default {
       openTrafficPackageModal,
       purchaseTrafficPackage,
       normalizeTrafficPackagePrice,
+      getTrafficPackageDisplayName,
       getTrafficPackageContent,
       isTrafficPackageSoldOut,
     };
@@ -4406,6 +4420,9 @@ export default {
 .traffic-package-modal-card {
   .modal-header {
     padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid var(--border-color);
 
     h3 {

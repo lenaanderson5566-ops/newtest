@@ -264,6 +264,7 @@ export default {
   },
   menu: {
     dashboard: 'Панель управления',
+    overview: 'Обзор',
     shop: 'Магазин',
     subscription: 'Подписка',
     invite: 'Приглашение',

@@ -264,10 +264,12 @@ export default {
   },
   menu: {
     dashboard: '儀表板',
+    overview: '概覽',
     shop: '商店',
     subscription: '訂閱',
     invite: '邀請',
     docs: '文件',
+    client: '客戶端',
     tickets: '工單',
     orders: '訂單',
     nodes: '節點',
