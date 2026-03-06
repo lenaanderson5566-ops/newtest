@@ -393,7 +393,10 @@
               </div>
               <div class="plan-summary-row">
                 <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
-                <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
+                <div class="plan-summary-value-wrap">
+                  <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
+                  <span v-if="isPlanExpired" class="plan-expired-tag">已过期</span>
+                </div>
               </div>
               <div class="plan-summary-row auto-renewal-row">
                 <div>
@@ -748,7 +751,8 @@ export default {
       resetDateTime: null,
       subscriptionQuotaUsed: null,
       subscriptionQuotaRemaining: null,
-      packageQuotaRemaining: null
+      packageQuotaRemaining: null,
+      expiredAt: null
     });
     const remindExpireSetting = ref(false);
     const remindTrafficSetting = ref(false);
@@ -1006,6 +1010,7 @@ export default {
           autoRenewalEnabled.value = !!info.auto_renewal;
           if (info.expired_at) {
             userPlan.value.expireDate = formatDate(info.expired_at);
+            userPlan.value.expiredAt = Number(info.expired_at);
             userPlan.value.isExpireDatePermanent = false;
 
             const now = new Date();
@@ -1022,6 +1027,7 @@ export default {
             }
           } else {
             userPlan.value.expireDate = null;
+            userPlan.value.expiredAt = null;
             userPlan.value.isExpireDatePermanent = true;
             userStats.remainingDays = null;
             userStats.isRemainingDaysPermanent = true;
@@ -1105,6 +1111,13 @@ export default {
 
       const days = parseInt(userStats.remainingDays, 10);
       return !isNaN(days) && days <= 0;
+    });
+
+    const isPlanExpired = computed(() => {
+      if (userPlan.value.isExpireDatePermanent) return false;
+      const expiredAt = Number(userPlan.value.expiredAt || 0);
+      if (!expiredAt) return false;
+      return expiredAt * 1000 <= Date.now();
     });
 
     const isLowTraffic = computed(() => {
@@ -1244,6 +1257,7 @@ export default {
           }
           if (subscribe.expired_at) {
             userPlan.value.expireDate = formatDate(subscribe.expired_at);
+            userPlan.value.expiredAt = Number(subscribe.expired_at);
             userPlan.value.isExpireDatePermanent = false;
 
             const now = new Date();
@@ -1260,6 +1274,7 @@ export default {
             }
           } else {
             userPlan.value.expireDate = null;
+            userPlan.value.expiredAt = null;
             userPlan.value.isExpireDatePermanent = true;
             userStats.remainingDays = null;
             userStats.isRemainingDaysPermanent = true;
@@ -2245,6 +2260,7 @@ export default {
       hiddifyMacIcon,
       isExpiringSoon,
       isExpired,
+      isPlanExpired,
       isLowTraffic,
       isTrafficDepleted,
       hasPlan,
@@ -2648,12 +2664,31 @@ export default {
             color: #6b7280;
           }
 
+          .plan-summary-value-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+          }
+
           .plan-summary-value {
             font-size: 14px;
             color: #111827;
             font-weight: 600;
             text-align: right;
             word-break: break-word;
+          }
+
+          .plan-expired-tag {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #dc2626;
+            background: rgba(220, 38, 38, 0.1);
           }
 
           .plan-summary-desc {
@@ -4750,6 +4785,11 @@ export default {
 
 }
 
+.dark-theme .traffic-board-card .plan-summary-card .plan-expired-tag {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.2);
+}
+
 </style>
 
 <!-- 全局样式，不受scoped限制 -->
@@ -5019,4 +5059,10 @@ a.eztheme-btn {
   background-color: rgba(var(--theme-color-rgb), 0.06) !important;
 }
 
+.dark-theme .traffic-board-card .plan-summary-card .plan-expired-tag {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.2);
+}
+
 </style>
+
