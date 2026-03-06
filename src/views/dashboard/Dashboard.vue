@@ -4412,16 +4412,11 @@ export default {
 
 
 .traffic-package-overlay {
-  position: fixed !important;
-  inset: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background-color: rgba(0, 0, 0, 0.62) !important;
-  z-index: 1300 !important;
+  z-index: 1000;
 }
 
 .traffic-package-container {
+  width: 90%;
   max-width: 760px;
 }
 

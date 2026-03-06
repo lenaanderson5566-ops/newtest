@@ -1,10 +1,18 @@
 <template>
   <div class="dashboard-card import-config-card" v-if="subscriptionUrl">
     <div class="card-header">
-      <h2 class="card-title">{{ $t('dashboard.importSubscription') }}</h2>
+      <div class="quick-actions">
+        <button class="quick-btn" :class="{ active: showImportPanel }" @click="showImportPanel = !showImportPanel">
+          {{ $t('dashboard.importSubscription') }}
+          <IconChevronDown v-if="!showImportPanel" :size="14" />
+          <IconChevronUp v-else :size="14" />
+        </button>
+        <button class="quick-btn" @click="goRenewPlan" :disabled="!currentPlanId">{{ $t('dashboard.renewPlan') }}</button>
+        <button class="quick-btn" @click="goTickets">{{ $t('dashboard.ticketSupport') }}</button>
+      </div>
     </div>
 
-    <div class="card-body">
+    <div class="card-body" v-if="showImportPanel">
       <div class="import-action copy-action" @click="copySubscriptionUrl">
         <div class="import-icon"><IconCopy :size="24" /></div>
         <div class="import-content">
@@ -99,6 +107,7 @@
 
 <script setup>
 import { ref, computed, onMounted, inject } from 'vue';
+import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import {
   IconCopy,
@@ -108,7 +117,9 @@ import {
   IconBrandApple,
   IconBrandAndroid,
   IconBrandWindows,
-  IconDeviceLaptop
+  IconDeviceLaptop,
+  IconChevronDown,
+  IconChevronUp
 } from '@tabler/icons-vue';
 import { getSubscribe } from '@/api/dashboard';
 import { resetSecurity as apiResetSecurity } from '@/api/user';
@@ -126,6 +137,7 @@ import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.
 
 const { t } = useI18n();
 const $toast = inject('$toast');
+const router = useRouter();
 
 const subscriptionUrl = ref('');
 const showQrCode = ref(false);
@@ -133,6 +145,8 @@ const qrCodeUrl = ref('');
 const activePlatform = ref('ios');
 const showResetModal = ref(false);
 const resetting = ref(false);
+const showImportPanel = ref(true);
+const currentPlanId = ref(null);
 
 const platforms = [
   { id: 'ios', label: 'iOS', icon: IconBrandApple },
@@ -181,6 +195,7 @@ const fetchSubscription = async () => {
   try {
     const result = await getSubscribe();
     if (result?.data) {
+      currentPlanId.value = result.data.plan_id || result.data.plan?.id || null;
       subscriptionUrl.value = resolveSubscribeUrl(result.data);
       updateQRCode();
     }
@@ -242,6 +257,16 @@ const openClientLink = (clientType) => {
   window.open(url, '_blank');
 };
 
+
+const goRenewPlan = () => {
+  if (!currentPlanId.value) return;
+  router.push(`/order-confirm?id=${currentPlanId.value}`);
+};
+
+const goTickets = () => {
+  router.push('/tickets');
+};
+
 const resetSecurity = async () => {
   resetting.value = true;
   try {
@@ -278,6 +303,37 @@ onMounted(() => {
       margin: 0;
     }
   }
+
+  .quick-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .quick-btn {
+    border: 1px solid var(--border-color);
+    background: #fff;
+    color: #1f2937;
+    border-radius: 12px;
+    padding: 10px 18px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+
+    &.active {
+      border-color: rgba(var(--theme-color-rgb), 0.65);
+      color: rgba(var(--theme-color-rgb), 0.95);
+      background: rgba(var(--theme-color-rgb), 0.08);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
 
   .import-action {
     display: flex;
