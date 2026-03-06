@@ -11,37 +11,41 @@
     </div>
 
     <div class="card-body" v-if="showImportPanel">
-      <div class="import-action copy-action" @click="copySubscriptionUrl">
-        <div class="import-icon"><IconCopy :size="24" /></div>
-        <div class="import-content">
-          <div class="import-title">{{ $t('dashboard.copySubscription') }}</div>
-          <div class="import-desc">{{ $t('dashboard.copySubscriptionDesc') }}</div>
-        </div>
+      <div class="section-title">快捷导入</div>
+      <div class="import-actions-grid">
+        <button class="import-action copy-action" @click="copySubscriptionUrl">
+          <div class="import-icon"><IconCopy :size="24" /></div>
+          <div class="import-content">
+            <div class="import-title">{{ $t('dashboard.copySubscription') }}</div>
+            <div class="import-desc">{{ $t('dashboard.copySubscriptionDesc') }}</div>
+          </div>
+        </button>
+
+        <button class="import-action qrcode-action" @click="showQrCode = true">
+          <div class="import-icon"><IconQrcode :size="24" /></div>
+          <div class="import-content">
+            <div class="import-title">{{ $t('dashboard.scanQRCode') }}</div>
+            <div class="import-desc">{{ $t('dashboard.scanQRCodeDesc') }}</div>
+          </div>
+        </button>
+
+        <button class="import-action reset-action" @click="showResetModal = true">
+          <div class="import-icon"><IconRefresh :size="24" /></div>
+          <div class="import-content">
+            <div class="import-title">{{ $t('profile.resetSecurity') }}</div>
+            <div class="import-desc">{{ $t('profile.resetSecurityConfirm') }}</div>
+          </div>
+        </button>
       </div>
 
-      <div class="import-action qrcode-action" @click="showQrCode = true">
-        <div class="import-icon"><IconQrcode :size="24" /></div>
-        <div class="import-content">
-          <div class="import-title">{{ $t('dashboard.scanQRCode') }}</div>
-          <div class="import-desc">{{ $t('dashboard.scanQRCodeDesc') }}</div>
-        </div>
-      </div>
-
-      <div class="import-action reset-action" @click="showResetModal = true">
-        <div class="import-icon"><IconRefresh :size="24" /></div>
-        <div class="import-content">
-          <div class="import-title">{{ $t('profile.resetSecurity') }}</div>
-          <div class="import-desc">{{ $t('profile.resetSecurityConfirm') }}</div>
-        </div>
-      </div>
-
-
+      <div class="section-title">导入步骤</div>
       <div class="import-guide">
         <div class="guide-step"><span class="step-badge">1</span><span>先下载并打开客户端</span></div>
         <div class="guide-step"><span class="step-badge">2</span><span>选择平台后点击下方客户端，一键导入</span></div>
         <div class="guide-step"><span class="step-badge">3</span><span>若唤起失败，可使用复制地址或二维码导入</span></div>
       </div>
 
+      <div class="section-title">选择平台并一键导入</div>
       <div class="platform-selector">
         <button
           v-for="platform in platforms"
@@ -99,8 +103,8 @@
           </div>
           <p class="reset-modal-text">{{ $t('profile.resetSecurityConfirm') }}</p>
           <div class="reset-modal-actions">
-            <button class="quick-btn" @click="showResetModal = false">{{ $t('common.cancel') }}</button>
-            <button class="quick-btn danger" :disabled="resetting" @click="resetSecurity">
+            <button class="modal-btn" @click="showResetModal = false">{{ $t('common.cancel') }}</button>
+            <button class="modal-btn danger" :disabled="resetting" @click="resetSecurity">
               {{ resetting ? $t('common.processing') : $t('profile.confirmReset') }}
             </button>
           </div>
@@ -307,9 +311,15 @@ onMounted(() => {
   margin-top: 24px;
 
   .card-body {
-    p {
-      margin: 0;
-    }
+    display: grid;
+    gap: 14px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--theme-text-secondary);
+    margin-top: 2px;
   }
 
   .quick-actions {
@@ -343,14 +353,23 @@ onMounted(() => {
   }
 
 
+  .import-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
   .import-action {
+    border: 1px solid rgba(var(--theme-color-rgb), 0.12);
+    background: #fff;
+    width: 100%;
+    text-align: left;
     display: flex;
     align-items: center;
     gap: 16px;
     border: 1px solid rgba(var(--theme-color-rgb), 0.12);
     border-radius: 14px;
     padding: 16px;
-    margin-bottom: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
 
@@ -389,7 +408,6 @@ onMounted(() => {
     display: grid;
     gap: 8px;
     margin-top: 4px;
-    margin-bottom: 12px;
 
     .guide-step {
       display: flex;
@@ -417,7 +435,7 @@ onMounted(() => {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 16px;
+    margin-top: 0;
   }
 
   .platform-button {
@@ -444,8 +462,7 @@ onMounted(() => {
     .platform-title {
       font-size: 14px;
       font-weight: 600;
-      margin-bottom: 12px;
-    }
+      }
 
     .platform-options {
       display: grid;
@@ -548,7 +565,7 @@ onMounted(() => {
   padding: 0 16px;
 }
 
-.quick-btn {
+.modal-btn {
   border: 1px solid var(--border-color);
   background: #fff;
   border-radius: 10px;
