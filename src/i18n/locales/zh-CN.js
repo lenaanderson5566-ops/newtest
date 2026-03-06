@@ -268,10 +268,10 @@ export default {
         subscription: '订阅',
         invite: '邀请',
         docs: '文档',
-        client: '客户端',
+        startUsing: '开始使用',
         tickets: '工单',
         orders: '订单',
-        nodes: '节点',
+        lines: '线路',
         traffic: '流量',
         wallet: '钱包',
         billing: '账单',
@@ -285,21 +285,21 @@ export default {
         description: '探索更多功能和服务',
         inviteDescription: '邀请好友获得返佣奖励',
         viewHelp: '查看使用帮助和常见问题',
-        viewNodes: '查看可用的服务器节点',
+        viewLines: '查看可用线路',
         manageOrders: '管理您的订单',
         getTechnicalSupport: '获取技术支持',
         manageProfile: '管理个人资料'
     },
-    nodes: {
-        title: '节点列表',
-        loading: '正在加载节点...',
-        noNodes: '暂无可用节点',
+    lines: {
+        title: '线路列表',
+        loading: '正在加载线路...',
+        noLines: '暂无可用线路',
         copiedToClipboard: '已复制到剪贴板',
         welcome: {
-            title: '节点列表',
-            description: '查看并使用可用的服务器节点'
+            title: '线路列表',
+            description: '查看并使用可用线路'
         },
-        type: '节点类型',
+        type: '线路类型',
         rate: '倍率',
         host: '域名',
         port: '端口',

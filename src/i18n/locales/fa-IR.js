@@ -269,10 +269,10 @@ export default {
     subscription: 'اشتراک',
     invite: 'دعوت',
     docs: 'مستندات',
-    client: 'کلاینت',
+    startUsing: 'کلاینت',
     tickets: 'تیکت‌ها',
     orders: 'سفارش‌ها',
-    nodes: 'نودها',
+    lines: 'نودها',
     traffic: 'ترافیک',
     wallet: 'کیف پول',
     billing: 'صورتحساب',
@@ -286,15 +286,15 @@ export default {
     description: 'کاوش ویژگی ها و خدمات بیشتر',
     inviteDescription: 'دوستان خود را دعوت کنید و پاداش کمیسیون بگیرید',
     viewHelp: 'نمایش کمک و سوالات متداول',
-    viewNodes: 'نمایش نودهای سرور',
+    viewLines: 'نمایش نودهای سرور',
     manageOrders: 'مدیریت سفارش ها',
     getTechnicalSupport: 'دریافت پشتیبانی فنی',
     manageProfile: 'مدیریت پروفایل'
   },
-  nodes: {
+  lines: {
     title: 'لیست نودها',
     loading: 'در حال بارگذاری نودها...',
-    noNodes: 'نودی موجود نیست',
+    noLines: 'نودی موجود نیست',
     copiedToClipboard: 'به کلیپ بورد کپی شد',
     welcome: {
       title: 'لیست نودها',

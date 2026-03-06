@@ -396,7 +396,7 @@ const routes = [
 
         meta: {
 
-          titleKey: 'menu.client',
+          titleKey: 'menu.startUsing',
 
           requiresAuth: true,
 
@@ -434,7 +434,7 @@ const routes = [
 
         meta: {
 
-          titleKey: 'nodes.title',
+          titleKey: 'lines.title',
 
           requiresAuth: true,
 

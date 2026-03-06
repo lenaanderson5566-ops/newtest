@@ -16,13 +16,13 @@
 
         <div class="card-header">
 
-          <h2 class="card-title">{{ $t('nodes.welcome.title') || '节点列表' }}</h2>
+          <h2 class="card-title">{{ $t('lines.welcome.title') || '线路列表' }}</h2>
 
         </div>
 
         <div class="card-body">
 
-          <p>{{ $t('nodes.welcome.description') || '查看并使用可用的服务器节点' }}</p>
+          <p>{{ $t('lines.welcome.description') || '查看并使用可用线路' }}</p>
 
         </div>
 
@@ -30,13 +30,13 @@
 
       
 
-      <!-- 节点列表状态 -->
+      <!-- 线路列表状态 -->
 
       <div v-if="loading" class="nodes-loading">
 
         <LoadingSpinner />
 
-        <p>{{ $t('nodes.loading') || '正在加载节点...' }}</p>
+        <p>{{ $t('lines.loading') || '正在加载线路...' }}</p>
 
       </div>
 
@@ -56,31 +56,31 @@
 
       
 
-      <!-- 节点列表内容 -->
+      <!-- 线路列表内容 -->
 
-      <div v-else-if="nodes.length > 0" class="nodes-content">
+      <div v-else-if="lines.length > 0" class="nodes-content">
 
         <div class="node-items">
 
-          <div v-for="node in nodes" :key="node.id" class="node-item">
-            <div class="node-country" :class="countryBadgeClass(getCountryTag(node.tags))">{{ formatCountryTag(getCountryTag(node.tags) || '--') }}</div>
+          <div v-for="line in lines" :key="line.id" class="node-item">
+            <div class="node-country" :class="countryBadgeClass(getCountryTag(line.tags))">{{ formatCountryTag(getCountryTag(line.tags) || '--') }}</div>
 
             <div class="node-info">
               <div class="node-tags">
-                <span class="node-tag rate-tag" v-if="showNodeRate">x{{ node.rate }}</span>
-                <span class="node-tag type-tag">{{ node.type }}</span>
+                <span class="node-tag rate-tag" v-if="showNodeRate">x{{ line.rate }}</span>
+                <span class="node-tag type-tag">{{ line.type }}</span>
               </div>
 
-              <h3 class="node-name">{{ node.name }}</h3>
-              <p class="node-host" v-if="showNodeDetails">{{ node.host }}:{{ node.port }}</p>
+              <h3 class="node-name">{{ line.name }}</h3>
+              <p class="node-host" v-if="showNodeDetails">{{ line.host }}:{{ line.port }}</p>
             </div>
 
             <div class="node-actions">
-              <div class="node-feature-tags" v-if="getFeatureTags(node.tags).length > 0">
-                <span v-for="(tag, index) in getFeatureTags(node.tags)" :key="index" class="node-tag feature-tag">{{ tag }}</span>
+              <div class="node-feature-tags" v-if="getFeatureTags(line.tags).length > 0">
+                <span v-for="(tag, index) in getFeatureTags(line.tags)" :key="index" class="node-tag feature-tag">{{ tag }}</span>
               </div>
-              <span class="node-online-status" :class="{ online: node.is_online === 1 }">{{ node.is_online === 1 ? '在线' : '离线' }}</span>
-              <button v-if="showNodeRate && allowViewNodeInfo" class="more-btn" @click="openNodeDetail(node)">
+              <span class="node-online-status" :class="{ online: line.is_online === 1 }">{{ line.is_online === 1 ? '在线' : '离线' }}</span>
+              <button v-if="showNodeRate && allowViewNodeInfo" class="more-btn" @click="openNodeDetail(line)">
                 <IconDotsVertical :size="20" />
               </button>
             </div>
@@ -99,7 +99,7 @@
 
         <IconServer :size="48" class="empty-icon" />
 
-        <p>{{ $t('nodes.noNodes') || '暂无可用节点' }}</p>
+        <p>{{ $t('lines.noLines') || '暂无可用线路' }}</p>
 
       </div>
 
@@ -167,7 +167,7 @@ const loading = ref(true);
 
 const error = ref('');
 
-const nodes = ref([]);
+const lines = ref([]);
 
 const showNodeDetails = ref(NODES_CONFIG.showNodeDetails); 
 const showNodeRate = ref(NODES_CONFIG.showNodeRate);
@@ -281,11 +281,11 @@ const fetchNodes = async () => {
 
     if (result && result.data) {
 
-      nodes.value = result.data;
+      lines.value = result.data;
 
     } else {
 
-      nodes.value = [];
+      lines.value = [];
 
     }
 

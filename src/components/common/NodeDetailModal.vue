@@ -34,7 +34,7 @@
 
               <div class="info-row">
 
-                <span class="info-label">{{ $t('nodes.type') }}:</span>
+                <span class="info-label">{{ $t('lines.type') }}:</span>
 
                 <span class="info-value">{{ node.type }}</span>
 
@@ -42,7 +42,7 @@
 
               <div class="info-row">
 
-                <span class="info-label">{{ $t('nodes.rate') }}:</span>
+                <span class="info-label">{{ $t('lines.rate') }}:</span>
 
                 <span class="info-value" :class="{ 'high-rate': parseFloat(node.rate) != 1 }">x{{ node.rate }}</span>
 
@@ -50,7 +50,7 @@
 
               <div class="info-row">
 
-                <span class="info-label">{{ $t('nodes.host') }}:</span>
+                <span class="info-label">{{ $t('lines.host') }}:</span>
 
                 <span class="info-value">{{ node.host }}</span>
 
@@ -58,7 +58,7 @@
 
               <div class="info-row">
 
-                <span class="info-label">{{ $t('nodes.port') }}:</span>
+                <span class="info-label">{{ $t('lines.port') }}:</span>
 
                 <span class="info-value">{{ node.port }}</span>
 
@@ -72,7 +72,7 @@
 
                 <div class="info-row">
 
-                  <span class="info-label">{{ $t('nodes.cipher')}}:</span>
+                  <span class="info-label">{{ $t('lines.cipher')}}:</span>
 
                   <span class="info-value">{{ node.cipher}}</span>
 
@@ -86,9 +86,9 @@
 
                 <div class="info-row">
 
-                  <span class="info-label">{{ $t('nodes.security')}}:</span>
+                  <span class="info-label">{{ $t('lines.security')}}:</span>
 
-                  <span class="info-value">{{ node.allow_insecure ? $t('nodes.allowInsecure') : $t('nodes.secure') }}</span>
+                  <span class="info-value">{{ node.allow_insecure ? $t('lines.allowInsecure') : $t('lines.secure') }}</span>
 
                 </div>
 
@@ -100,7 +100,7 @@
 
                 <div class="info-row">
 
-                  <span class="info-label">{{ $t('nodes.tls') || 'TLS' }}:</span>
+                  <span class="info-label">{{ $t('lines.tls') || 'TLS' }}:</span>
 
                   <span class="info-value">{{ node.tls === 1 ? $t('common.on') : $t('common.off') }}</span>
 
@@ -120,7 +120,7 @@
 
                 <IconLink :size="16" />
 
-                {{ $t('nodes.viewSubscribeLink') }}
+                {{ $t('lines.viewSubscribeLink') }}
 
               </button>
 
@@ -140,7 +140,7 @@
 
               <div class="section-header">
 
-                <h4>{{ $t('nodes.quickLink') }}</h4>
+                <h4>{{ $t('lines.quickLink') }}</h4>
 
                 <div class="view-toggle">
 
@@ -156,7 +156,7 @@
 
                     <IconFileText :size="16" />
 
-                    {{ $t('nodes.linkView') }}
+                    {{ $t('lines.linkView') }}
 
                   </button>
 
@@ -172,7 +172,7 @@
 
                     <IconQrcode :size="16" />
 
-                    {{ $t('nodes.qrcodeView') }}
+                    {{ $t('lines.qrcodeView') }}
 
                   </button>
 
@@ -396,7 +396,7 @@ const subscribeLink = computed(() => {
 
   if (!nodeType || !props.node.host || !props.node.port) {
 
-    return t('nodes.invalidNodeData') || '节点数据不完整，无法生成链接';
+    return t('lines.invalidNodeData') || '节点数据不完整，无法生成链接';
 
   }
 
@@ -501,7 +501,7 @@ const subscribeLink = computed(() => {
     }
 
     default:
-      return t('nodes.unsupportedNodeType') || '不支持的类型';
+      return t('lines.unsupportedNodeType') || '不支持的类型';
   }
 
 });

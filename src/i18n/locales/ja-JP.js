@@ -269,10 +269,10 @@ export default {
     subscription: 'サブスクリプション',
     invite: '招待',
     docs: 'ドキュメント',
-    client: 'クライアント',
+    startUsing: 'クライアント',
     tickets: 'チケット',
     orders: '注文',
-    nodes: 'ノード',
+    lines: 'ノード',
     traffic: 'トラフィック',
     wallet: 'ウォレット',
     billing: '請求書',
@@ -286,15 +286,15 @@ export default {
     description: 'さらに多くの機能とサービスを探る',
     inviteDescription: '友達を招待してコミッション報酬を獲得',
     viewHelp: '使用ヘルプとFAQを見る',
-    viewNodes: '利用可能なサーバーノードを見る',
+    viewLines: '利用可能なサーバーノードを見る',
     manageOrders: '注文管理',
     getTechnicalSupport: '技術サポートを受ける',
     manageProfile: 'プロフィール管理'
   },
-  nodes: {
+  lines: {
     title: 'ノードリスト',
     loading: 'ノード読み込み中...',
-    noNodes: '利用可能なノードなし',
+    noLines: '利用可能なノードなし',
     copiedToClipboard: 'クリップボードにコピー済み',
     welcome: {
       title: 'ノードリスト',

@@ -72,9 +72,9 @@
 
           <div class="stats-info">
 
-            <div class="stats-value">{{ $t('nodes.title') }}</div>
+            <div class="stats-value">{{ $t('lines.title') }}</div>
 
-            <div class="stats-label">{{ $t('more.viewNodes') }}</div>
+            <div class="stats-label">{{ $t('more.viewLines') }}</div>
 
           </div>
 

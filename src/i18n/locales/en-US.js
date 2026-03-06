@@ -268,10 +268,10 @@ export default {
         subscription: 'Subscription',
         invite: 'Invite',
         docs: 'Docs',
-        client: 'Client',
+        startUsing: 'Start Using',
         tickets: 'Tickets',
         orders: 'Orders',
-        nodes: 'Nodes',
+        lines: 'Lines',
         wallet: 'Wallet',
         billing: 'Billing',
         traffic: 'Traffic',
@@ -285,21 +285,21 @@ export default {
         description: 'Explore more features and services',
         inviteDescription: 'Invite friends to earn commission rewards',
         viewHelp: 'View help and FAQs',
-        viewNodes: 'View available server nodes',
+        viewLines: 'View available lines',
         manageOrders: 'Manage your orders',
         getTechnicalSupport: 'Get technical support',
         manageProfile: 'Manage profile'
     },
-    nodes: {
-        title: 'Node List',
-        loading: 'Loading nodes...',
-        noNodes: 'No nodes available',
+    lines: {
+        title: 'Line List',
+        loading: 'Loading lines...',
+        noLines: 'No lines available',
         copiedToClipboard: 'Copied to clipboard',
         welcome: {
-            title: 'Node List',
-            description: 'View and use available server nodes'
+            title: 'Line List',
+            description: 'View and use available lines'
         },
-        type: 'Node Type',
+        type: 'Line Type',
         rate: 'Rate',
         host: 'Domain',
         port: 'Port',

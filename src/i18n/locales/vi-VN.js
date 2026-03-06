@@ -275,10 +275,10 @@ export default {
         subscription: 'Gói đăng ký',
         invite: 'Mời bạn',
         docs: 'Tài liệu',
-        client: 'Ứng dụng khách',
+        startUsing: 'Ứng dụng khách',
         tickets: 'Vé hỗ trợ',
         orders: 'Đơn hàng',
-        nodes: 'Nút',
+        lines: 'Nút',
         traffic: 'Lưu lượng',
         wallet: 'Ví',
         billing: 'Hóa đơn',
@@ -292,15 +292,15 @@ export default {
         description: 'Khám phá thêm tính năng và dịch vụ',
         inviteDescription: 'Mời bạn bè để nhận thưởng hoa hồng',
         viewHelp: 'Xem hướng dẫn sử dụng và câu hỏi thường gặp',
-        viewNodes: 'Xem các node máy chủ khả dụng',
+        viewLines: 'Xem các node máy chủ khả dụng',
         manageOrders: 'Quản lý đơn hàng của bạn',
         getTechnicalSupport: 'Nhận hỗ trợ kỹ thuật',
         manageProfile: 'Quản lý hồ sơ cá nhân'
     },
-    nodes: {
+    lines: {
         title: 'Danh sách Node',
         loading: 'Đang tải node...',
-        noNodes: 'Tạm thời không có node khả dụng',
+        noLines: 'Tạm thời không có node khả dụng',
         copiedToClipboard: 'Đã sao chép vào clipboard',
         welcome: {
             title: 'Danh sách Node',
