@@ -825,7 +825,6 @@ export default {
       isRemainingDaysPermanent: false
     });
     const userBalance = ref('0.00');
-    const userBalanceCurrency = ref('USD');
     const userWallets = ref([]);
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
@@ -1012,9 +1011,6 @@ export default {
             userBalance.value = info.balance;
             updateAccountBalanceDisplay();
           }
-          if (info.balance_currency) {
-            userBalanceCurrency.value = String(info.balance_currency).toUpperCase();
-          }
           userWallets.value = Array.isArray(info.wallets) ? info.wallets : [];
           remindExpireSetting.value = !!info.remind_expire;
           remindTrafficSetting.value = !!info.remind_traffic;
@@ -1086,28 +1082,13 @@ export default {
     };
 
     const walletDisplayItems = computed(() => {
-      if (userWallets.value.length > 0) {
-        return userWallets.value
-          .filter((wallet) => wallet && wallet.currency)
-          .map((wallet) => ({
-            currency: String(wallet.currency).toUpperCase(),
-            symbol: getCurrencySymbol(wallet.currency),
-            amount: formatWalletBalance(wallet.balance),
-          }));
-      }
-
-      if (userBalance.value !== undefined && userBalance.value !== null) {
-        const fallbackCurrency = userBalanceCurrency.value || 'USD';
-        return [
-          {
-            currency: String(fallbackCurrency).toUpperCase(),
-            symbol: getCurrencySymbol(fallbackCurrency),
-            amount: formatWalletBalance(userBalance.value),
-          },
-        ];
-      }
-
-      return [];
+      return userWallets.value
+        .filter((wallet) => wallet && wallet.currency)
+        .map((wallet) => ({
+          currency: String(wallet.currency).toUpperCase(),
+          symbol: getCurrencySymbol(wallet.currency),
+          amount: formatWalletBalance(wallet.balance),
+        }));
     });
 
     const isExpiringSoon = computed(() => {
