@@ -349,29 +349,59 @@
           </div>
         </template>
 
-        <template v-else>
-          <div class="stats-card service-status-card" :class="[{ 'card-animate': !loading.userStats }, `status-${serviceStatus.type}`]">
-            <div class="service-status-header">
-              <h3>服务状态</h3>
-              <span class="service-status-badge">{{ serviceStatus.label }}</span>
+        <template v-else-if="!hasPlan">
+          <!-- 没有套餐时显示的提示卡片 -->
+          <div class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
+               style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: 1200px; width: 100%;">
+            <div class="no-plan-content">
+              <div class="no-plan-icon">
+                <IconShoppingCart :size="45" class="icon-cart"/>
+              </div>
+              <div class="no-plan-message">
+                <div class="no-plan-title">{{ $t('dashboard.noPlanPrompt') }}</div>
+                <div class="no-plan-actions">
+                  <button class="action-button primary" @click="goToShop">
+                    <IconShoppingBag :size="18" class="btn-icon"/>
+                    <span>{{ $t('dashboard.purchasePlan') }}</span>
+                  </button>
+                </div>
+              </div>
             </div>
+          </div>
+        </template>
 
-            <div v-if="!hasPlan" class="service-status-empty">您还没有订阅服务</div>
+        <template v-else>
+          <div class="usage-panel-title-row">
+            <h3>{{ $t('dashboard.usagePanel') }}</h3>
+            <span class="traffic-package-status" :class="{ active: hasPurchasedTrafficPackage }">
+              {{ hasPurchasedTrafficPackage ? $t('dashboard.packagePurchased') : $t('dashboard.packageNotPurchased') }}
+            </span>
+          </div>
 
-            <div v-else class="service-status-body">
-              <div class="service-status-row">
-                <span class="service-status-label">当前订阅</span>
-                <strong class="service-status-value">{{ userPlan.name || '-' }}</strong>
+          <div
+            class="stats-card traffic-board-card"
+            v-for="(card, idx) in trafficBoardSections"
+            :key="card.key"
+            :class="{ 'card-animate': !loading.userStats }"
+            :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
+          >
+            <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
+            <div v-if="card.key === 'total'" class="plan-summary-card">
+              <div class="plan-summary-row">
+                <span class="plan-summary-label">{{ $t('dashboard.planName') }}</span>
+                <strong class="plan-summary-value">{{ userPlan.name || '-' }}</strong>
               </div>
-              <div class="service-status-row">
-                <span class="service-status-label">到期时间</span>
-                <strong class="service-status-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
+              <div class="plan-summary-row">
+                <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
+                <div class="plan-summary-value-wrap">
+                  <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
+                  <span v-if="isPlanExpired" class="plan-expired-tag">已过期</span>
+                </div>
               </div>
-
-              <div class="service-status-row auto-renewal-row">
+              <div class="plan-summary-row auto-renewal-row">
                 <div>
-                  <span class="service-status-label">自动续费</span>
-                  <p class="service-status-desc">开启后将在到期时自动续费当前订阅</p>
+                  <span class="plan-summary-label">{{ $t('profile.autoRenewal') }}</span>
+                  <p class="plan-summary-desc">{{ $t('profile.autoRenewalDesc') }}</p>
                 </div>
                 <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
                   <input
@@ -384,51 +414,41 @@
                 </label>
               </div>
             </div>
-
-            <div class="service-status-actions">
-              <button class="action-button primary" @click="handlePrimaryServiceAction">{{ primaryServiceActionText }}</button>
-              <button v-if="secondaryServiceActionText" class="action-button secondary" @click="handleSecondaryServiceAction">{{ secondaryServiceActionText }}</button>
+            <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
+              <template v-if="card.key === 'package'">
+                <span class="usage-percent">{{ formatPackageRemaining(card.remaining) }}</span>
+                <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+                <button class="package-add-btn" @click.stop="openTrafficPackageModal" :title="$t('dashboard.purchaseTrafficPackage')">
+                  <IconPlus :size="14" />
+                </button>
+              </template>
+              <template v-else>
+                <span class="usage-percent">{{ card.remainingPercentage }}%</span>
+                <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+              </template>
             </div>
-
-            <div v-if="hasPlan && (isLowTraffic || isTrafficDepleted)" class="service-status-tip">
-              月流量不足，建议购买流量包
+            <div v-if="card.key !== 'package' && card.key !== 'total'" class="section-progress-track">
+              <div class="section-progress-fill" :style="{ width: `${card.remainingPercentage}%` }"></div>
+            </div>
+            <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
+              <div class="usage-kpi">
+                <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
+                <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
+              </div>
+              <div class="usage-kpi">
+                <span class="usage-kpi-label">{{ $t('dashboard.remaining') }}</span>
+                <strong class="usage-kpi-value">{{ formatTraffic(card.remaining) }}</strong>
+              </div>
+            </div>
+            <div v-if="card.key === 'package'" class="usage-package-note">
+              {{ $t('dashboard.packageUsageNote') }}
+            </div>
+            <div v-if="card.key === 'subscription'" class="usage-reset-hint">
+              {{ $t('dashboard.resetTimeLabel') }}：{{ userPlan.resetDateTime || '-' }}
             </div>
           </div>
 
-          <div class="stats-card monthly-traffic-card" v-if="showMonthlyTrafficCard" :class="[{ 'card-animate': !loading.userStats }, monthlyTrafficStatusClass]">
-            <div class="card-mini-title">月流量</div>
-            <div class="monthly-traffic-main">剩余 {{ formatTraffic(trafficMetrics.subscriptionQuotaRemainingBytes) }}</div>
-            <div class="section-progress-track">
-              <div class="section-progress-fill" :style="{ width: `${monthlyTrafficRemainingPercent}%` }"></div>
-            </div>
-            <div class="monthly-traffic-meta">
-              <span>已用 {{ formatTraffic(trafficMetrics.subscriptionQuotaUsedBytes) }}</span>
-              <span>总量 {{ formatTraffic(trafficMetrics.subscriptionQuotaTotalBytes) }}</span>
-            </div>
-            <div class="usage-reset-hint">重置时间：{{ userPlan.resetDateTime || '-' }}</div>
-          </div>
 
-          <div class="stats-card balance-card" :class="{ 'card-animate': !loading.userStats }">
-            <div class="card-mini-title">账户余额</div>
-            <div class="balance-main">{{ userStats.accountBalance || '-' }}</div>
-            <div class="balance-actions">
-              <button class="action-button primary" @click="navigateToDeposit">充值余额</button>
-              <button class="action-button link" @click="viewBills">查看账单</button>
-            </div>
-          </div>
-
-          <div class="stats-card package-card" :class="{ 'card-animate': !loading.userStats }">
-            <div class="card-mini-title">流量包</div>
-            <div class="package-main-value">
-              {{ hasPurchasedTrafficPackage ? formatTraffic(trafficMetrics.packageQuotaRemainingBytes) : '暂无流量包' }}
-            </div>
-            <div class="usage-package-note">
-              {{ hasPurchasedTrafficPackage ? '月流量用完后将自动使用流量包' : '月流量用完后，可使用流量包继续使用' }}
-            </div>
-            <button class="action-button primary" @click="openTrafficPackageModal">
-              {{ hasPurchasedTrafficPackage ? '购买更多' : '购买流量包' }}
-            </button>
-          </div>
         </template>
       </div>
 
@@ -1099,39 +1119,6 @@ export default {
       if (!expiredAt) return false;
       return expiredAt * 1000 <= Date.now();
     });
-
-    const monthlyTrafficRemainingPercent = computed(() => {
-      const total = Number(trafficMetrics.subscriptionQuotaTotalBytes || 0);
-      const remaining = Math.max(Number(trafficMetrics.subscriptionQuotaRemainingBytes || 0), 0);
-      if (total <= 0) return 0;
-      return Math.min(Math.max(Math.round((remaining / total) * 100), 0), 100);
-    });
-
-    const monthlyTrafficStatusClass = computed(() => {
-      if (monthlyTrafficRemainingPercent.value <= 10) return 'danger';
-      if (monthlyTrafficRemainingPercent.value <= 20) return 'warning';
-      return 'normal';
-    });
-
-    const serviceStatus = computed(() => {
-      if (!hasPlan.value) return { type: 'none', label: '未开通' };
-      if (isPlanExpired.value) return { type: 'expired', label: '已过期' };
-      if (isExpiringSoon.value) return { type: 'expiring', label: '即将到期' };
-      return { type: 'active', label: '有效' };
-    });
-
-    const primaryServiceActionText = computed(() => {
-      if (!hasPlan.value) return '查看订阅';
-      if (isPlanExpired.value) return '立即续费';
-      return '续费订阅';
-    });
-
-    const secondaryServiceActionText = computed(() => {
-      if (!hasPlan.value) return '';
-      return isPlanExpired.value || isExpiringSoon.value ? '更换订阅' : '管理订阅';
-    });
-
-    const showMonthlyTrafficCard = computed(() => hasPlan.value && !isPlanExpired.value);
 
     const isLowTraffic = computed(() => {
       const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
@@ -2104,27 +2091,6 @@ export default {
       router.push('/billing?tab=wallet');
     };
 
-    const viewBills = () => {
-      router.push('/billing?tab=orders');
-    };
-
-    const handlePrimaryServiceAction = () => {
-      if (!hasPlan.value) {
-        goToShop();
-        return;
-      }
-      renewPlan();
-    };
-
-    const handleSecondaryServiceAction = () => {
-      if (!hasPlan.value) return;
-      if (isPlanExpired.value || isExpiringSoon.value) {
-        goToShop();
-        return;
-      }
-      viewBills();
-    };
-
     const showDeviceLimit = computed(() => {
       return isXiaoV2board() && DASHBOARD_CONFIG.showOnlineDevicesLimit;
     });
@@ -2295,12 +2261,6 @@ export default {
       isExpiringSoon,
       isExpired,
       isPlanExpired,
-      serviceStatus,
-      primaryServiceActionText,
-      secondaryServiceActionText,
-      showMonthlyTrafficCard,
-      monthlyTrafficRemainingPercent,
-      monthlyTrafficStatusClass,
       isLowTraffic,
       isTrafficDepleted,
       hasPlan,
@@ -2309,9 +2269,6 @@ export default {
       renewPlan,
       isXiaoPanel,
       navigateToDeposit,
-      viewBills,
-      handlePrimaryServiceAction,
-      handleSecondaryServiceAction,
       showDeviceLimit,
       needRefreshData,
       trafficBoardSections,
@@ -2565,210 +2522,6 @@ export default {
           background: rgba(34, 197, 94, 0.14);
           color: #16a34a;
         }
-      }
-    }
-
-    .service-status-card {
-      grid-column: 1 / -1;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      align-items: stretch;
-
-      .service-status-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        h3 {
-          margin: 0;
-          font-size: 18px;
-        }
-      }
-
-      .service-status-badge {
-        border-radius: 999px;
-        padding: 4px 10px;
-        font-size: 12px;
-        font-weight: 600;
-        background: #e0f2fe;
-        color: #0369a1;
-      }
-
-      &.status-expired .service-status-badge {
-        background: rgba(220, 38, 38, 0.12);
-        color: #dc2626;
-      }
-
-      &.status-expiring .service-status-badge {
-        background: rgba(249, 115, 22, 0.14);
-        color: #ea580c;
-      }
-
-      .service-status-empty {
-        font-size: 14px;
-        color: var(--theme-text-secondary);
-      }
-
-      .service-status-body {
-        display: grid;
-        gap: 10px;
-      }
-
-      .service-status-row {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 10px 12px;
-        border-radius: 10px;
-        background: #f8fafc;
-        align-items: center;
-
-        &.auto-renewal-row {
-          align-items: flex-start;
-        }
-      }
-
-      .service-status-label {
-        font-size: 13px;
-        color: #6b7280;
-      }
-
-      .service-status-value {
-        font-size: 14px;
-        font-weight: 600;
-        color: #111827;
-      }
-
-      .service-status-desc {
-        margin: 4px 0 0;
-        font-size: 12px;
-        color: #6b7280;
-      }
-
-      .service-status-actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-
-      .service-status-tip {
-        font-size: 13px;
-        color: #d97706;
-      }
-    }
-
-    .card-mini-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #6b7280;
-    }
-
-    .monthly-traffic-card,
-    .balance-card,
-    .package-card {
-      min-height: 220px;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      gap: 12px;
-    }
-
-    .monthly-traffic-main,
-    .balance-main,
-    .package-main-value {
-      font-size: 26px;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .monthly-traffic-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 13px;
-      color: #6b7280;
-    }
-
-    .monthly-traffic-card {
-      .section-progress-track {
-        width: 100%;
-      }
-
-      &.warning .section-progress-fill {
-        background: linear-gradient(90deg, #f59e0b, #f97316);
-      }
-
-      &.danger .section-progress-fill {
-        background: linear-gradient(90deg, #ef4444, #dc2626);
-      }
-    }
-
-    .balance-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .action-button.link {
-      border: none;
-      background: transparent;
-      color: rgba(var(--theme-color-rgb), 0.95);
-      padding: 8px 0;
-      font-weight: 600;
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 44px;
-      height: 24px;
-      flex-shrink: 0;
-
-      &.disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-
-      input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-      }
-
-      .slider {
-        position: absolute;
-        cursor: pointer;
-        inset: 0;
-        background-color: #d1d5db;
-        transition: 0.3s;
-
-        &::before {
-          position: absolute;
-          content: '';
-          height: 18px;
-          width: 18px;
-          left: 3px;
-          bottom: 3px;
-          background-color: #fff;
-          transition: 0.3s;
-        }
-
-        &.round {
-          border-radius: 24px;
-
-          &::before {
-            border-radius: 50%;
-          }
-        }
-      }
-
-      input:checked + .slider {
-        background-color: rgba(var(--theme-color-rgb), 0.9);
-      }
-
-      input:checked + .slider::before {
-        transform: translateX(20px);
       }
     }
 
@@ -5037,24 +4790,6 @@ export default {
   background: rgba(239, 68, 68, 0.2);
 }
 
-.dark-theme .stats-grid .service-status-row {
-  background: rgba(148, 163, 184, 0.12);
-}
-
-.dark-theme .stats-grid .service-status-label,
-.dark-theme .stats-grid .service-status-desc,
-.dark-theme .stats-grid .monthly-traffic-meta,
-.dark-theme .stats-grid .card-mini-title {
-  color: rgba(226, 232, 240, 0.75);
-}
-
-.dark-theme .stats-grid .service-status-value,
-.dark-theme .stats-grid .monthly-traffic-main,
-.dark-theme .stats-grid .balance-main,
-.dark-theme .stats-grid .package-main-value {
-  color: #f8fafc;
-}
-
 </style>
 
 <!-- 全局样式，不受scoped限制 -->
@@ -5327,24 +5062,6 @@ a.eztheme-btn {
 .dark-theme .traffic-board-card .plan-summary-card .plan-expired-tag {
   color: #fca5a5;
   background: rgba(239, 68, 68, 0.2);
-}
-
-.dark-theme .stats-grid .service-status-row {
-  background: rgba(148, 163, 184, 0.12);
-}
-
-.dark-theme .stats-grid .service-status-label,
-.dark-theme .stats-grid .service-status-desc,
-.dark-theme .stats-grid .monthly-traffic-meta,
-.dark-theme .stats-grid .card-mini-title {
-  color: rgba(226, 232, 240, 0.75);
-}
-
-.dark-theme .stats-grid .service-status-value,
-.dark-theme .stats-grid .monthly-traffic-main,
-.dark-theme .stats-grid .balance-main,
-.dark-theme .stats-grid .package-main-value {
-  color: #f8fafc;
 }
 
 </style>
