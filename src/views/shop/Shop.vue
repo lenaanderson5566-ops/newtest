@@ -86,6 +86,7 @@
 
         <div
           class="plan-card"
+          :class="{ 'current-plan-card': isCurrentPlan(plan) }"
           v-else
           v-for="plan in filteredPlans"
           :key="plan.id"
@@ -97,10 +98,6 @@
 
             <div v-if="isCurrentPlan(plan)" class="current-plan-meta">
               <span class="current-plan-badge">{{ $t("shop.plan.current") }}</span>
-              <span v-if="currentPlanExpireText" class="current-plan-expire">
-                {{ $t("shop.current_plan_info.expire") }}
-                <span class="expire-time">{{ currentPlanExpireText }}</span>
-              </span>
             </div>
 
             <div
@@ -312,7 +309,6 @@ export default {
 
     const selectedPriceType = reactive({});
     const currentPlanId = ref(null);
-    const currentPlanExpireText = ref('');
 
     const paymentMethods = ref([]);
 
@@ -339,28 +335,14 @@ export default {
       selectedFilter.value = filter;
     };
 
-    const formatExpireTimestamp = (timestamp) => {
-      const parsed = Number(timestamp);
-      if (!Number.isFinite(parsed) || parsed <= 0) return '';
-      const date = new Date(parsed * 1000);
-      if (Number.isNaN(date.getTime())) return '';
-      const pad = (n) => String(n).padStart(2, '0');
-      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
-    };
-
     const fetchCurrentSubscription = async () => {
       try {
         const response = await getSubscribe();
         const subscribe = response?.data || {};
         currentPlanId.value = subscribe.plan_id || subscribe.plan?.id || null;
-        currentPlanExpireText.value =
-          subscribe.expired_at && Number(subscribe.expired_at) > 0
-            ? formatExpireTimestamp(subscribe.expired_at)
-            : '';
       } catch (error) {
         console.error('Failed to fetch current subscription:', error);
         currentPlanId.value = null;
-        currentPlanExpireText.value = '';
       }
     };
 
@@ -888,7 +870,6 @@ export default {
 
       calculateDiscount,
       isCurrentPlan,
-      currentPlanExpireText,
     };
   },
 };
@@ -991,23 +972,10 @@ export default {
     font-weight: 700;
     color: #1d4ed8;
     background: rgba(59, 130, 246, 0.12);
-    border: 1px solid rgba(59, 130, 246, 0.25);
+    border: 1px solid rgba(59, 130, 246, 0.42);
     border-radius: 999px;
-    padding: 2px 8px;
-  }
-
-  .current-plan-expire {
-    font-size: 12px;
-    color: #64748b;
-    line-height: 1.35;
-    font-weight: 600;
-    text-align: right;
-
-    .expire-time {
-      display: block;
-      margin-top: 2px;
-      word-break: break-word;
-    }
+    padding: 3px 10px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
   }
 
       .card-badge {
@@ -1264,6 +1232,11 @@ export default {
         border-color: rgba(var(--theme-color-rgb), 0.3);
 
         transform: translateY(-5px);
+      }
+
+      &.current-plan-card {
+        border-color: rgba(59, 130, 246, 0.6);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.18), 0 10px 24px rgba(59, 130, 246, 0.12);
       }
 
       .card-header {
@@ -1650,7 +1623,6 @@ export default {
 
     .plan-price .price-display .period,
     .welcome-card .card-body p,
-    .current-plan-expire,
     .no-plans-message p {
       color: #cbd5e1 !important;
     }
@@ -1669,6 +1641,11 @@ export default {
       background: rgba(37, 99, 235, 0.2);
       border-color: rgba(147, 197, 253, 0.32);
       box-shadow: none;
+    }
+
+    .plan-card.current-plan-card {
+      border-color: rgba(96, 165, 250, 0.78);
+      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.22), 0 10px 22px rgba(15, 23, 42, 0.35);
     }
 
     .current-plan-badge {
