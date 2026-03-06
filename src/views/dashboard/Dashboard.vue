@@ -479,9 +479,9 @@
 
 
   <transition name="modal-fade">
-      <div class="modal-overlay traffic-package-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
-        <div class="modal-container traffic-package-container" @click.stop>
-          <div class="modal-card traffic-package-modal-card">
+      <div class="modal-overlay traffic-package-overlay traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
+        <div class="modal-container traffic-package-container traffic-package-modal-container" @click.stop>
+          <div class="modal-card traffic-package-modal-card traffic-package-modal-card-global">
             <div class="modal-header">
               <h3>{{ $t('shop.traffic_package.title') }}</h3>
               <button class="close-button" :aria-label="$t('common.close')" @click="showTrafficPackageModal = false">
@@ -4858,4 +4858,39 @@ a.eztheme-btn {
 .stats-card.balance-card .stats-value {
   color: var(--theme-color);
 }
+
+
+.traffic-package-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  z-index: 1200 !important;
+  padding: 16px !important;
+}
+
+.traffic-package-modal-container {
+  width: min(100%, 420px) !important;
+  max-height: calc(100vh - 32px) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.traffic-package-modal-card-global {
+  background-color: var(--card-background) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: calc(100vh - 32px) !important;
+  overflow: hidden !important;
+}
+
+.traffic-package-modal-card-global .modal-body {
+  display: block !important;
+  padding: 20px !important;
+  overflow-y: auto !important;
+}
+
 </style>
