@@ -4412,15 +4412,18 @@ export default {
 
 
 .traffic-package-overlay {
-  z-index: 1000;
+  z-index: 1200;
+  padding: 16px;
 }
 
 .traffic-package-container {
-  width: 90%;
-  max-width: 760px;
+  width: min(100%, 420px);
+  max-height: calc(100vh - 32px);
 }
 
 .traffic-package-modal-card {
+  max-height: calc(100vh - 32px);
+
   .modal-header {
     padding: 16px 20px;
     display: flex;
@@ -4450,8 +4453,9 @@ export default {
   }
 
   .modal-body {
-    align-items: stretch;
+    display: block;
     padding: 20px;
+    overflow-y: auto;
   }
 
   .traffic-package-desc {
@@ -4469,9 +4473,9 @@ export default {
   }
 
   .traffic-package-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .traffic-package-item {
@@ -4510,9 +4514,7 @@ export default {
       color: var(--theme-text-secondary);
       font-size: 13px;
       line-height: 1.45;
-      min-height: 40px;
-      max-height: 70px;
-      overflow: hidden;
+      min-height: 32px;
     }
 
     .buy-btn {
