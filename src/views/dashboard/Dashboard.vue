@@ -419,15 +419,19 @@
                   <IconPlus :size="14" />
                 </button>
               </template>
+              <template v-else-if="card.key === 'subscription' && isPlanExpired">
+                <span class="usage-percent expired">--</span>
+                <span class="usage-percent-label">套餐已过期</span>
+              </template>
               <template v-else>
                 <span class="usage-percent">{{ card.remainingPercentage }}%</span>
                 <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
               </template>
             </div>
-            <div v-if="card.key !== 'package' && card.key !== 'total'" class="section-progress-track">
+            <div v-if="card.key !== 'package' && card.key !== 'total' && !(card.key === 'subscription' && isPlanExpired)" class="section-progress-track">
               <div class="section-progress-fill" :style="{ width: `${card.remainingPercentage}%` }"></div>
             </div>
-            <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
+            <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total' && !(card.key === 'subscription' && isPlanExpired)">
               <div class="usage-kpi">
                 <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
                 <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
@@ -440,7 +444,10 @@
             <div v-if="card.key === 'package'" class="usage-package-note">
               {{ $t('dashboard.packageUsageNote') }}
             </div>
-            <div v-if="card.key === 'subscription'" class="usage-reset-hint">
+            <div v-if="card.key === 'subscription' && isPlanExpired" class="usage-expired-tip">
+              套餐已过期，续费后恢复月流量展示
+            </div>
+            <div v-else-if="card.key === 'subscription'" class="usage-reset-hint">
               {{ $t('dashboard.resetTimeLabel') }}：{{ userPlan.resetDateTime || '-' }}
             </div>
           </div>
@@ -2827,6 +2834,12 @@ export default {
           line-height: 1.45;
         }
 
+
+        .usage-expired-tip {
+          font-size: 12px;
+          color: #9ca3af;
+          line-height: 1.5;
+        }
         .usage-reset-hint {
           width: 100%;
           font-size: 12px;
@@ -4814,6 +4827,11 @@ export default {
 .dark-theme .traffic-board-card.package-card-muted .usage-percent,
 .dark-theme .traffic-board-card.package-card-muted .usage-percent-label,
 .dark-theme .traffic-board-card.package-card-muted .usage-package-note {
+  color: rgba(226, 232, 240, 0.55);
+}
+
+.dark-theme .traffic-board-card .usage-percent.expired,
+.dark-theme .traffic-board-card .usage-expired-tip {
   color: rgba(226, 232, 240, 0.55);
 }
 
