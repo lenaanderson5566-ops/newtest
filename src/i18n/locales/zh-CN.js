@@ -36,6 +36,7 @@ export default {
         noData: '暂无数据',
         confirm: '确认',
         dashboard: '仪表盘',
+        overview: '概览',
         profile: '个人资料',
         settings: '设置',
         help: '帮助',
@@ -263,8 +264,10 @@ export default {
     menu: {
         dashboard: '仪表盘',
         shop: '商店',
+        subscription: '订阅',
         invite: '邀请',
         docs: '文档',
+        client: '客户端',
         tickets: '工单',
         orders: '订单',
         nodes: '节点',
@@ -508,8 +511,8 @@ export default {
         back: '返回'
     },
     shop: {
-        title: '商店',
-        description: '查看并购买可用的套餐',
+        title: '订阅计划',
+        description: '选择适合您的订阅服务',
         loading: '正在加载套餐...',
         filter: {
             all: '全部',

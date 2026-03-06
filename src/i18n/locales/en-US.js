@@ -36,6 +36,7 @@ export default {
         noData: 'No Data Available',
         confirm: 'Confirm',
         dashboard: 'Dashboard',
+        overview: 'Overview',
         profile: 'Profile',
         settings: 'Settings',
         help: 'Help',
@@ -263,8 +264,10 @@ export default {
     menu: {
         dashboard: 'Dashboard',
         shop: 'Shop',
+        subscription: 'Subscription',
         invite: 'Invite',
         docs: 'Docs',
+        client: 'Client',
         tickets: 'Tickets',
         orders: 'Orders',
         nodes: 'Nodes',
@@ -509,8 +512,8 @@ export default {
         back: 'Back'
     },
     shop: {
-        title: 'Shop',
-        description: 'View and purchase available plans',
+        title: 'Subscription Plans',
+        description: 'Choose the subscription service that suits you',
         loading: 'Loading plans...',
         filter: {
             all: 'All',

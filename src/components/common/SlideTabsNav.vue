@@ -176,9 +176,9 @@ export default {
         // 基础导航项
         const baseNavItems = [
 
-            { title: 'Dashboard', path: '/dashboard', name: 'Dashboard', icon: 'IconDashboard', i18nKey: 'dashboard' },
+            { title: 'Dashboard', path: '/dashboard', name: 'Dashboard', icon: 'IconDashboard', i18nKey: 'overview' },
 
-            { title: 'Shop', path: '/shop', name: 'Shop', icon: 'IconShop', i18nKey: 'shop' },
+            { title: 'Shop', path: '/shop', name: 'Shop', icon: 'IconShop', i18nKey: 'subscription' },
 
         ];
 
@@ -189,7 +189,7 @@ export default {
         // 导航项配置映射（可复用）
         const navMap = {
 
-          docs: { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'docs' },
+          docs: { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'client' },
 
           invite: { title: 'Billing', path: '/billing?tab=referral', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
 

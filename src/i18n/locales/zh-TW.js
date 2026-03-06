@@ -37,6 +37,7 @@ export default {
     noData: '暫無資料',
     confirm: '確認',
     dashboard: '儀表板',
+    overview: '概覽',
     profile: '個人資料',
     settings: '設定',
     help: '幫助',
@@ -264,6 +265,7 @@ export default {
   menu: {
     dashboard: '儀表板',
     shop: '商店',
+    subscription: '訂閱',
     invite: '邀請',
     docs: '文件',
     tickets: '工單',

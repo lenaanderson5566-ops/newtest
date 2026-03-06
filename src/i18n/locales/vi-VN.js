@@ -270,8 +270,10 @@ export default {
     menu: {
         dashboard: 'Trang chủ',
         shop: 'Cửa hàng',
+        subscription: 'Gói đăng ký',
         invite: 'Mời bạn',
         docs: 'Tài liệu',
+        client: 'Ứng dụng khách',
         tickets: 'Vé hỗ trợ',
         orders: 'Đơn hàng',
         nodes: 'Nút',

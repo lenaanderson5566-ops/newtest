@@ -37,6 +37,7 @@ export default {
     noData: 'داده ای موجود نیست',
     confirm: 'تایید',
     dashboard: 'داشبورد',
+    overview: 'نمای کلی',
     profile: 'پروفایل',
     settings: 'تنظیمات',
     help: 'کمک',
@@ -264,8 +265,10 @@ export default {
   menu: {
     dashboard: 'داشبورد',
     shop: 'فروشگاه',
+    subscription: 'اشتراک',
     invite: 'دعوت',
     docs: 'مستندات',
+    client: 'کلاینت',
     tickets: 'تیکت‌ها',
     orders: 'سفارش‌ها',
     nodes: 'نودها',

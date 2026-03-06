@@ -300,7 +300,7 @@ const routes = [
 
         meta: {
 
-          titleKey: 'menu.dashboard',
+          titleKey: 'menu.overview',
 
           requiresAuth: true,
 
@@ -320,7 +320,7 @@ const routes = [
 
         meta: {
 
-          titleKey: 'menu.shop',
+          titleKey: 'menu.subscription',
 
           requiresAuth: true,
 
@@ -396,7 +396,7 @@ const routes = [
 
         meta: {
 
-          titleKey: 'menu.docs',
+          titleKey: 'menu.client',
 
           requiresAuth: true,
 

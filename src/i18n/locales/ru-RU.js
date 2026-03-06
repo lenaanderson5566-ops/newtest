@@ -37,6 +37,7 @@ export default {
     noData: 'Нет данных',
     confirm: 'Подтвердить',
     dashboard: 'Панель управления',
+    overview: 'Обзор',
     profile: 'Профиль',
     settings: 'Настройки',
     help: 'Помощь',
@@ -264,8 +265,10 @@ export default {
   menu: {
     dashboard: 'Панель управления',
     shop: 'Магазин',
+    subscription: 'Подписка',
     invite: 'Приглашение',
     docs: 'Документы',
+    client: 'Клиент',
     tickets: 'Тикеты',
     orders: 'Заказы',
     nodes: 'Узлы',

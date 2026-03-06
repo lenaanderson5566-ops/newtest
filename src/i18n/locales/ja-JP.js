@@ -37,6 +37,7 @@ export default {
     noData: 'データなし',
     confirm: '確認',
     dashboard: 'ダッシュボード',
+    overview: '概要',
     profile: 'プロフィール',
     settings: '設定',
     help: 'ヘルプ',
@@ -264,8 +265,10 @@ export default {
   menu: {
     dashboard: 'ダッシュボード',
     shop: 'ストア',
+    subscription: 'サブスクリプション',
     invite: '招待',
     docs: 'ドキュメント',
+    client: 'クライアント',
     tickets: 'チケット',
     orders: '注文',
     nodes: 'ノード',

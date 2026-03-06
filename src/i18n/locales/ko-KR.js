@@ -37,6 +37,7 @@ export default {
     noData: '데이터 없음',
     confirm: '확인',
     dashboard: '대시보드',
+    overview: '개요',
     profile: '프로필',
     settings: '설정',
     help: '도움말',
@@ -264,8 +265,10 @@ export default {
   menu: {
     dashboard: '대시보드',
     shop: '상점',
+    subscription: '구독',
     invite: '초대',
     docs: '문서',
+    client: '클라이언트',
     tickets: '티켓',
     orders: '주문',
     nodes: '노드',
