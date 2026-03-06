@@ -19,8 +19,8 @@
         </button>
         <button
           class="billing-tab"
-          :class="{ active: activeTab === 'invite' }"
-          @click="switchTab('invite')"
+          :class="{ active: activeTab === 'referral' }"
+          @click="switchTab('referral')"
         >
           Referral
         </button>
@@ -29,7 +29,8 @@
       <div class="billing-panel">
         <WalletDeposit v-if="activeTab === 'wallet' && showWalletTab" />
         <OrderList v-else-if="activeTab === 'orders'" />
-        <Invite v-else />
+        <Invite v-else-if="activeTab === 'referral'" />
+        <OrderList v-else />
       </div>
     </div>
   </div>
@@ -47,7 +48,7 @@ const route = useRoute();
 const router = useRouter();
 const showWalletTab = isXiaoV2board();
 
-const allowedTabs = computed(() => (showWalletTab ? ['wallet', 'orders', 'invite'] : ['orders', 'invite']));
+const allowedTabs = computed(() => (showWalletTab ? ['wallet', 'orders', 'referral'] : ['orders', 'referral']));
 
 const activeTab = computed(() => {
   const queryTab = String(route.query.tab || '');

@@ -187,11 +187,6 @@ export default {
           { path: 'More', name: 'More', priority: 4, component: () => import('@/views/more/MoreOptions.vue') },
           { path: 'OrderList', name: 'OrderList', priority: 5, component: () => import('@/views/orders/OrderList.vue') }
         ],
-        '/invite': [
-          { path: 'Shop', name: 'Shop', priority: 1, component: () => import('@/views/shop/Shop.vue') },
-          { path: 'More', name: 'More', priority: 2, component: () => import('@/views/more/MoreOptions.vue') },
-          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/dashboard/Dashboard.vue') }
-        ],
         '/more': [
           { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/profile/UserProfile.vue') },
           { path: 'NodeList', name: 'NodeList', priority: 2, component: () => import('@/views/servers/NodeList.vue') },

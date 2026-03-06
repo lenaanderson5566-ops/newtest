@@ -191,7 +191,7 @@ export default {
 
           docs: { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'docs' },
 
-          invite: { title: 'Billing', path: '/billing?tab=invite', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
+          invite: { title: 'Billing', path: '/billing?tab=referral', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
 
           tickets: {
 

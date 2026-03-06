@@ -367,14 +367,6 @@ const routes = [
 
       {
 
-        path: 'invite',
-
-        redirect: { path: '/billing', query: { tab: 'invite' } }
-
-      },
-
-      {
-
         path: 'more',
 
         name: 'More',
