@@ -65,7 +65,9 @@ const getActiveNavForRoute = (routeName) => {
 
     wallet: 'Billing',
 
-    profile: 'Profile'
+    profile: 'Profile',
+
+    security: 'SecuritySettings'
     
   };
 
@@ -79,7 +81,8 @@ const getActiveNavForRoute = (routeName) => {
     Billing: 'Billing',
     TrafficLog: 'Traffic',
     Deposit: 'Billing',
-    Profile: 'Profile'
+    Profile: 'Profile',
+    SecuritySettings: 'Profile'
   };
 
   // 如果当前路由匹配第三个导航项，则返回第三项对应的导航名
@@ -520,6 +523,25 @@ const routes = [
           requiresAuth: true,
 
           get activeNav() { return getActiveNavForRoute('Profile'); } 
+        }
+
+      },
+
+      {
+
+        path: 'security-settings',
+
+        name: 'SecuritySettings',
+
+        component: () => import('@/views/security/SecuritySettings.vue'),
+
+        meta: {
+
+          titleKey: 'profile.security',
+
+          requiresAuth: true,
+
+          get activeNav() { return getActiveNavForRoute('SecuritySettings'); } 
         }
 
       },

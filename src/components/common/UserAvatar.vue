@@ -25,9 +25,9 @@
           <IconWallet class="menu-icon" />
           <span>{{ $t('menu.billing') }}</span>
         </div>
-        <div class="menu-item" @click="navigateTo('/profile?openPasswordModal=true')">
+        <div class="menu-item" @click="navigateTo('/security-settings')">
           <IconLock class="menu-icon" />
-          <span>{{ $t('common.changePassword') }}</span>
+          <span>{{ $t('profile.security') }}</span>
         </div>
         <div class="divider"></div>
         <div class="menu-item" @click="logout">

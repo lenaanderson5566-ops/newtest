@@ -30,7 +30,7 @@
 
         <!-- 基本信息骨架屏 -->
 
-        <div class="profile-card">
+        <div v-if="false" class="profile-card">
 
           <div class="card-header">
 
@@ -308,7 +308,7 @@
 
         <!-- 安全设置 -->
 
-        <div class="profile-card">
+        <div v-if="false" class="profile-card">
 
           <div class="card-header">
 
@@ -394,7 +394,7 @@
 
         <!-- 近期登录设备 -->
 
-        <div v-if="PROFILE_CONFIG.showRecentDevices" class="profile-card">
+        <div v-if="false && PROFILE_CONFIG.showRecentDevices" class="profile-card">
 
           <div class="card-header">
 
@@ -494,7 +494,7 @@
 
       <!-- 修改密码弹窗 -->
 
-      <transition name="modal-fade">
+      <transition v-if="false" name="modal-fade">
 
         <div v-if="showPasswordModal" class="modal-overlay" @click="showPasswordModal = false">
 
