@@ -379,7 +379,7 @@
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && !hasPurchasedTrafficPackage }]"
+            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && !hasPurchasedTrafficPackage }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
@@ -419,19 +419,15 @@
                   <IconPlus :size="14" />
                 </button>
               </template>
-              <template v-else-if="card.key === 'subscription' && isPlanExpired">
-                <span class="usage-percent expired">--</span>
-                <span class="usage-percent-label">套餐已过期</span>
-              </template>
               <template v-else>
-                <span class="usage-percent">{{ card.remainingPercentage }}%</span>
+                <span class="usage-percent" :class="{ expired: card.key === 'subscription' && isPlanExpired }">{{ card.key === 'subscription' && isPlanExpired ? 0 : card.remainingPercentage }}%</span>
                 <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
               </template>
             </div>
-            <div v-if="card.key !== 'package' && card.key !== 'total' && !(card.key === 'subscription' && isPlanExpired)" class="section-progress-track">
-              <div class="section-progress-fill" :style="{ width: `${card.remainingPercentage}%` }"></div>
+            <div v-if="card.key !== 'package' && card.key !== 'total'" class="section-progress-track">
+              <div class="section-progress-fill" :style="{ width: `${card.key === 'subscription' && isPlanExpired ? 0 : card.remainingPercentage}%` }"></div>
             </div>
-            <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total' && !(card.key === 'subscription' && isPlanExpired)">
+            <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
               <div class="usage-kpi">
                 <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
                 <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
@@ -444,10 +440,7 @@
             <div v-if="card.key === 'package'" class="usage-package-note">
               {{ $t('dashboard.packageUsageNote') }}
             </div>
-            <div v-if="card.key === 'subscription' && isPlanExpired" class="usage-expired-tip">
-              套餐已过期，续费后恢复月流量展示
-            </div>
-            <div v-else-if="card.key === 'subscription'" class="usage-reset-hint">
+            <div v-if="card.key === 'subscription'" class="usage-reset-hint">
               {{ $t('dashboard.resetTimeLabel') }}：{{ userPlan.resetDateTime || '-' }}
             </div>
           </div>
@@ -2664,6 +2657,28 @@ export default {
           }
         }
 
+        &.subscription-card-muted {
+          background: #f3f4f6;
+          border-color: #e5e7eb;
+
+          .usage-card-title,
+          .usage-percent,
+          .usage-percent-label,
+          .usage-kpi-label,
+          .usage-kpi-value,
+          .usage-reset-hint {
+            color: #9ca3af;
+          }
+
+          .section-progress-track {
+            background: #e5e7eb;
+          }
+
+          .section-progress-fill {
+            background: #cbd5e1;
+          }
+        }
+
         .plan-summary-card {
           width: 100%;
           display: flex;
@@ -2835,11 +2850,6 @@ export default {
         }
 
 
-        .usage-expired-tip {
-          font-size: 12px;
-          color: #9ca3af;
-          line-height: 1.5;
-        }
         .usage-reset-hint {
           width: 100%;
           font-size: 12px;
@@ -4830,8 +4840,25 @@ export default {
   color: rgba(226, 232, 240, 0.55);
 }
 
-.dark-theme .traffic-board-card .usage-percent.expired,
-.dark-theme .traffic-board-card .usage-expired-tip {
+.dark-theme .traffic-board-card.subscription-card-muted {
+  background: rgba(71, 85, 105, 0.2);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.dark-theme .traffic-board-card.subscription-card-muted .usage-card-title,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-percent,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-percent-label,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-label,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-value,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-reset-hint {
+  color: rgba(226, 232, 240, 0.55);
+}
+
+.dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+.dark-theme .traffic-board-card .usage-percent.expired {
   color: rgba(226, 232, 240, 0.55);
 }
 
@@ -5119,6 +5146,24 @@ a.eztheme-btn {
 .dark-theme .traffic-board-card.package-card-muted .usage-percent-label,
 .dark-theme .traffic-board-card.package-card-muted .usage-package-note {
   color: rgba(226, 232, 240, 0.55);
+}
+
+.dark-theme .traffic-board-card.subscription-card-muted {
+  background: rgba(71, 85, 105, 0.2);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.dark-theme .traffic-board-card.subscription-card-muted .usage-card-title,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-percent,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-percent-label,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-label,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-value,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-reset-hint {
+  color: rgba(226, 232, 240, 0.55);
+}
+
+.dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
+  background: rgba(148, 163, 184, 0.5);
 }
 
 </style>
