@@ -2483,6 +2483,7 @@ export default {
   }
 
   .stats-grid {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 20px;
@@ -2534,12 +2535,15 @@ export default {
     }
 
     .expired-renew-overlay {
-      grid-column: 2 / -1;
-      grid-row: 2;
-      z-index: 6;
+      position: absolute;
+      z-index: 8;
+      left: calc(66.666% + 6px);
+      top: 53%;
+      transform: translate(-50%, -50%);
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 18px;
       border-radius: 16px;
       background: rgba(255, 255, 255, 0.45);
       backdrop-filter: blur(2px);
@@ -2559,9 +2563,13 @@ export default {
       }
 
       @media (max-width: 1199px) {
-        grid-column: 1 / -1;
-        grid-row: auto;
-        min-height: 110px;
+        left: 50%;
+        top: 58%;
+      }
+
+      @media (max-width: 767px) {
+        left: 50%;
+        top: 62%;
       }
     }
 
