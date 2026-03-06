@@ -373,16 +373,13 @@
         <template v-else>
           <div class="usage-panel-title-row">
             <h3>{{ $t('dashboard.usagePanel') }}</h3>
-            <span class="traffic-package-status" :class="{ active: hasPurchasedTrafficPackage }">
-              {{ hasPurchasedTrafficPackage ? $t('dashboard.packagePurchased') : $t('dashboard.packageNotPurchased') }}
-            </span>
           </div>
 
           <div
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="{ 'card-animate': !loading.userStats }"
+            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && !hasPurchasedTrafficPackage }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
@@ -2642,6 +2639,24 @@ export default {
           }
         }
 
+
+        &.package-card-muted {
+          background: #f3f4f6;
+          border-color: #e5e7eb;
+
+          .usage-card-title,
+          .usage-percent,
+          .usage-percent-label,
+          .usage-package-note {
+            color: #9ca3af;
+          }
+
+          .package-add-btn {
+            color: #fff;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+          }
+        }
+
         .plan-summary-card {
           width: 100%;
           display: flex;
@@ -4790,6 +4805,18 @@ export default {
   background: rgba(239, 68, 68, 0.2);
 }
 
+.dark-theme .traffic-board-card.package-card-muted {
+  background: rgba(71, 85, 105, 0.2);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.dark-theme .traffic-board-card.package-card-muted .usage-card-title,
+.dark-theme .traffic-board-card.package-card-muted .usage-percent,
+.dark-theme .traffic-board-card.package-card-muted .usage-percent-label,
+.dark-theme .traffic-board-card.package-card-muted .usage-package-note {
+  color: rgba(226, 232, 240, 0.55);
+}
+
 </style>
 
 <!-- 全局样式，不受scoped限制 -->
@@ -5062,6 +5089,18 @@ a.eztheme-btn {
 .dark-theme .traffic-board-card .plan-summary-card .plan-expired-tag {
   color: #fca5a5;
   background: rgba(239, 68, 68, 0.2);
+}
+
+.dark-theme .traffic-board-card.package-card-muted {
+  background: rgba(71, 85, 105, 0.2);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.dark-theme .traffic-board-card.package-card-muted .usage-card-title,
+.dark-theme .traffic-board-card.package-card-muted .usage-percent,
+.dark-theme .traffic-board-card.package-card-muted .usage-percent-label,
+.dark-theme .traffic-board-card.package-card-muted .usage-package-note {
+  color: rgba(226, 232, 240, 0.55);
 }
 
 </style>
