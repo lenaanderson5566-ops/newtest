@@ -438,7 +438,7 @@
               </div>
             </div>
             <div v-if="card.key === 'package'" class="usage-package-note">
-              套餐流量用完后，将自动使用流量额度包继续使用。
+              {{ $t('dashboard.packageUsageNote') }}
             </div>
             <div v-if="card.key === 'subscription'" class="usage-reset-hint">
               {{ $t('dashboard.resetTimeLabel') }}：{{ userPlan.resetDateTime || '-' }}
