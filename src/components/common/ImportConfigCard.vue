@@ -184,6 +184,17 @@ const platformClientMap = {
 const activePlatformLabel = computed(() => platforms.find((item) => item.id === activePlatform.value)?.label || 'iOS');
 const activePlatformOptions = computed(() => platformClientMap[activePlatform.value] || platformClientMap.ios);
 
+const preCopySubscriptionUrl = async () => {
+  if (!subscriptionUrl.value) return false;
+  try {
+    await navigator.clipboard.writeText(subscriptionUrl.value);
+    return true;
+  } catch (err) {
+    console.warn('Failed to copy subscription url:', err);
+    return false;
+  }
+};
+
 const resolveSubscribeUrl = (payload) => {
   if (!payload) return '';
   if (typeof payload === 'string') return payload;
@@ -208,8 +219,8 @@ const fetchSubscription = async () => {
 const copySubscriptionUrl = async () => {
   if (!subscriptionUrl.value) return;
   try {
-    await navigator.clipboard.writeText(subscriptionUrl.value);
-    if ($toast) $toast.success(t('dashboard.subscriptionCopied'));
+    const copied = await preCopySubscriptionUrl();
+    if ($toast && copied) $toast.success(t('dashboard.subscriptionCopied'));
   } catch (err) {
     if ($toast) $toast.error(t('dashboard.copyFailed'));
   }
@@ -255,14 +266,12 @@ const openClientLink = async (clientType) => {
       url = subscribeUrl;
   }
 
-  try {
-    await navigator.clipboard.writeText(subscribeUrl);
-  } catch (err) {
-    console.warn('Failed to pre-copy subscription url:', err);
-  }
+  const copied = await preCopySubscriptionUrl();
 
   window.open(url, '_blank');
-  if ($toast) $toast.success(t('dashboard.manualImportRequired'));
+  if ($toast) {
+    $toast.success(copied ? '已尝试唤起客户端，订阅地址已复制到剪贴板' : t('dashboard.manualImportRequired'));
+  }
 };
 
 
