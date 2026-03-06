@@ -7,8 +7,6 @@
           <IconChevronDown v-if="!showImportPanel" :size="14" />
           <IconChevronUp v-else :size="14" />
         </button>
-        <button class="quick-btn" @click="goRenewPlan" :disabled="!currentPlanId">{{ $t('dashboard.renewPlan') }}</button>
-        <button class="quick-btn" @click="goTickets">{{ $t('dashboard.ticketSupport') }}</button>
       </div>
     </div>
 
@@ -35,6 +33,13 @@
           <div class="import-title">{{ $t('profile.resetSecurity') }}</div>
           <div class="import-desc">{{ $t('profile.resetSecurityConfirm') }}</div>
         </div>
+      </div>
+
+
+      <div class="import-guide">
+        <div class="guide-step"><span class="step-badge">1</span><span>先下载并打开客户端</span></div>
+        <div class="guide-step"><span class="step-badge">2</span><span>选择平台后点击下方客户端，一键导入</span></div>
+        <div class="guide-step"><span class="step-badge">3</span><span>若唤起失败，可使用复制地址或二维码导入</span></div>
       </div>
 
       <div class="platform-selector">
@@ -107,7 +112,6 @@
 
 <script setup>
 import { ref, computed, onMounted, inject } from 'vue';
-import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import {
   IconCopy,
@@ -137,7 +141,6 @@ import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.
 
 const { t } = useI18n();
 const $toast = inject('$toast');
-const router = useRouter();
 
 const subscriptionUrl = ref('');
 const showQrCode = ref(false);
@@ -146,7 +149,6 @@ const activePlatform = ref('ios');
 const showResetModal = ref(false);
 const resetting = ref(false);
 const showImportPanel = ref(true);
-const currentPlanId = ref(null);
 
 const platforms = [
   { id: 'ios', label: 'iOS', icon: IconBrandApple },
@@ -195,7 +197,6 @@ const fetchSubscription = async () => {
   try {
     const result = await getSubscribe();
     if (result?.data) {
-      currentPlanId.value = result.data.plan_id || result.data.plan?.id || null;
       subscriptionUrl.value = resolveSubscribeUrl(result.data);
       updateQRCode();
     }
@@ -223,7 +224,7 @@ const updateQRCode = async () => {
   }
 };
 
-const openClientLink = (clientType) => {
+const openClientLink = async (clientType) => {
   if (!subscriptionUrl.value) return;
   const subscribeUrl = subscriptionUrl.value;
   let url = subscribeUrl;
@@ -254,18 +255,16 @@ const openClientLink = (clientType) => {
       url = subscribeUrl;
   }
 
+  try {
+    await navigator.clipboard.writeText(subscribeUrl);
+  } catch (err) {
+    console.warn('Failed to pre-copy subscription url:', err);
+  }
+
   window.open(url, '_blank');
+  if ($toast) $toast.success(t('dashboard.manualImportRequired'));
 };
 
-
-const goRenewPlan = () => {
-  if (!currentPlanId.value) return;
-  router.push(`/order-confirm?id=${currentPlanId.value}`);
-};
-
-const goTickets = () => {
-  router.push('/tickets');
-};
 
 const resetSecurity = async () => {
   resetting.value = true;
@@ -375,6 +374,34 @@ onMounted(() => {
     color: var(--theme-text-secondary);
     font-size: 13px;
     line-height: 1.4;
+  }
+
+  .import-guide {
+    display: grid;
+    gap: 8px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+
+    .guide-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--theme-text-secondary);
+    }
+
+    .step-badge {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #fff;
+      background: rgba(var(--theme-color-rgb), 0.9);
+      flex-shrink: 0;
+    }
   }
 
   .platform-selector {
