@@ -381,34 +381,43 @@ export default {
   z-index: 110;
 
   .toolbar-wallets {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
+    height: 36px;
+    padding: 0 8px;
     margin-right: 2px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: color-mix(in srgb, var(--card-bg-color) 88%, transparent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 
   .toolbar-wallet-chip {
     display: inline-flex;
-    align-items: center;
+    align-items: baseline;
     gap: 6px;
-    height: 34px;
     padding: 0 10px;
-    border-radius: 999px;
-    border: 1px solid var(--border-color);
-    background: var(--card-bg-color);
-    color: var(--text-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
+    line-height: 1;
+    color: var(--text-color);
+
+    &:not(:last-child) {
+      border-right: 1px solid color-mix(in srgb, var(--border-color) 75%, transparent);
+    }
 
     .wallet-currency {
       color: var(--text-secondary);
       letter-spacing: 0.2px;
+      font-size: 12px;
     }
 
     .wallet-amount {
       color: var(--text-color);
       font-variant-numeric: tabular-nums;
+      min-width: 36px;
     }
   }
   
@@ -465,9 +474,15 @@ export default {
 
     .toolbar-wallets {
       order: -1;
-      width: 100%;
-      justify-content: flex-end;
-      flex-wrap: wrap;
+      height: 34px;
+      max-width: 100%;
+      margin-left: auto;
+      overflow-x: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
   
