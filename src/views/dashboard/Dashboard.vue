@@ -478,42 +478,44 @@
 
 
 
-  <transition name="modal-fade">
-    <div class="modal-overlay traffic-package-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
-      <div class="modal-container traffic-package-container" @click.stop>
-        <div class="modal-card traffic-package-modal-card">
-          <div class="modal-header">
-            <h3>{{ $t('shop.traffic_package.title') }}</h3>
-            <button class="close-button" :aria-label="$t('common.close')" @click="showTrafficPackageModal = false">
-              <IconX :size="18" />
-            </button>
-          </div>
-          <div class="modal-body">
-            <p class="traffic-package-desc">{{ $t('shop.traffic_package.description') }}</p>
-            <div v-if="trafficPackageLoading" class="traffic-package-loading">{{ $t('common.loading') }}</div>
-            <div v-else-if="trafficPackagePlans.length === 0" class="traffic-package-empty">{{ $t('shop.no_plans_found') }}</div>
-            <div v-else class="traffic-package-list">
-              <div class="traffic-package-item" v-for="plan in trafficPackagePlans" :key="`dashboard-traffic-${plan.id}`">
-                <div class="item-title-row">
-                  <strong>{{ getTrafficPackageDisplayName(plan) }}</strong>
-                  <span class="item-price">{{ currencySymbol }}{{ (normalizeTrafficPackagePrice(plan.onetime_price) / 100).toFixed(2) }}</span>
+  <teleport to="body">
+    <transition name="modal-fade">
+      <div class="modal-overlay traffic-package-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
+        <div class="modal-container traffic-package-container" @click.stop>
+          <div class="modal-card traffic-package-modal-card">
+            <div class="modal-header">
+              <h3>{{ $t('shop.traffic_package.title') }}</h3>
+              <button class="close-button" :aria-label="$t('common.close')" @click="showTrafficPackageModal = false">
+                <IconX :size="18" />
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class="traffic-package-desc">{{ $t('shop.traffic_package.description') }}</p>
+              <div v-if="trafficPackageLoading" class="traffic-package-loading">{{ $t('common.loading') }}</div>
+              <div v-else-if="trafficPackagePlans.length === 0" class="traffic-package-empty">{{ $t('shop.no_plans_found') }}</div>
+              <div v-else class="traffic-package-list">
+                <div class="traffic-package-item" v-for="plan in trafficPackagePlans" :key="`dashboard-traffic-${plan.id}`">
+                  <div class="item-title-row">
+                    <strong>{{ getTrafficPackageDisplayName(plan) }}</strong>
+                    <span class="item-price">{{ currencySymbol }}{{ (normalizeTrafficPackagePrice(plan.onetime_price) / 100).toFixed(2) }}</span>
+                  </div>
+                  <div class="item-content" v-if="getTrafficPackageContent(plan)">{{ getTrafficPackageContent(plan) }}</div>
+                  <button class="confirm-btn buy-btn" :disabled="isTrafficPackageSoldOut(plan)" @click="purchaseTrafficPackage(plan)">
+                    {{ isTrafficPackageSoldOut(plan) ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}
+                  </button>
                 </div>
-                <div class="item-content" v-if="getTrafficPackageContent(plan)">{{ getTrafficPackageContent(plan) }}</div>
-                <button class="confirm-btn buy-btn" :disabled="isTrafficPackageSoldOut(plan)" @click="purchaseTrafficPackage(plan)">
-                  {{ isTrafficPackageSoldOut(plan) ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}
-                </button>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button class="cancel-btn" @click="showTrafficPackageModal = false">
-              {{ $t('common.cancel') }}
-            </button>
+            <div class="modal-footer">
+              <button class="cancel-btn" @click="showTrafficPackageModal = false">
+                {{ $t('common.cancel') }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </transition>
+    </transition>
+  </teleport>
   <!-- 重置流量确认弹窗 -->
   <transition name="modal-fade">
     <div class="modal-overlay" v-if="showResetTrafficModal">
@@ -4410,7 +4412,13 @@ export default {
 
 
 .traffic-package-overlay {
-  z-index: 1300;
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: rgba(0, 0, 0, 0.62) !important;
+  z-index: 1300 !important;
 }
 
 .traffic-package-container {
