@@ -27,9 +27,17 @@
 
       </div>
 
-      
+      <div class="dashboard-card start-using-status-card"> 
+        <div class="card-header">
+          <h2 class="card-title">{{ statusCardTitle }}</h2>
+        </div>
+        <div class="card-body">
+          <p>{{ statusCardDescription }}</p>
+          <button class="status-action-btn" @click="handleStatusAction">{{ statusCardActionText }}</button>
+        </div>
+      </div>
 
-      <div class="dashboard-card docs-download-card" v-if="clientConfig.showDownloadCard">
+      <div class="dashboard-card docs-download-card" v-if="showDownloadCard">
         <div class="card-header">
           <h2 class="card-title">{{ $t('dashboard.officialClients') }}</h2>
         </div>
@@ -63,7 +71,7 @@
         </div>
       </div>
 
-      <ImportConfigCard />
+      <ImportConfigCard v-if="showImportConfigCard" />
 
       <!-- 标题栏 -->
 
@@ -261,6 +269,7 @@ import {
 } from '@tabler/icons-vue';
 
 import { fetchKnowledgeList } from '@/api/docs';
+import { getSubscribe } from '@/api/dashboard';
 import { CLIENT_CONFIG } from '@/utils/baseConfig';
 
 
@@ -282,6 +291,8 @@ const documents = ref({});
 
 const searchQuery = ref('');
 const clientConfig = reactive(CLIENT_CONFIG);
+const userStatus = ref('new');
+const currentPlanId = ref(null);
 
 const downloadClient = (platform) => {
   const downloadUrl = clientConfig.clientLinks?.[platform];
@@ -296,6 +307,27 @@ const downloadClient = (platform) => {
 const currentLanguage = computed(() => locale.value === 'zh-CN' ? '中文' : 'English');
 
 const alternateLanguage = computed(() => locale.value === 'zh-CN' ? 'English' : '中文');
+
+const showDownloadCard = computed(() => userStatus.value === 'active' && clientConfig.showDownloadCard);
+const showImportConfigCard = computed(() => userStatus.value === 'active');
+
+const statusCardTitle = computed(() => {
+  if (userStatus.value === 'active') return '订阅状态正常';
+  if (userStatus.value === 'expired') return '订阅已到期';
+  return '欢迎使用，先购买订阅';
+});
+
+const statusCardDescription = computed(() => {
+  if (userStatus.value === 'active') return '您可以下载客户端并添加配置，快速开始使用。';
+  if (userStatus.value === 'expired') return '您的订阅已过期，请及时续费以继续使用服务。';
+  return '当前尚未购买订阅，请先前往订阅页面购买套餐。';
+});
+
+const statusCardActionText = computed(() => {
+  if (userStatus.value === 'active') return '查看使用教程';
+  if (userStatus.value === 'expired') return '立即续费';
+  return '去购买订阅';
+});
 
 
 
@@ -411,7 +443,44 @@ const goToDocument = (id) => {
 
 };
 
+const handleStatusAction = () => {
+  if (userStatus.value === 'active') {
+    const header = document.querySelector('.docs-header');
+    if (header) header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
 
+  if (userStatus.value === 'expired' && currentPlanId.value) {
+    router.push(`/order-confirm?id=${currentPlanId.value}`);
+    return;
+  }
+
+  router.push('/shop');
+};
+
+const fetchUserStatus = async () => {
+  try {
+    const response = await getSubscribe();
+    const subscribe = response?.data || {};
+    currentPlanId.value = subscribe?.plan_id || subscribe?.plan?.id || null;
+
+    if (!subscribe?.plan_id && !subscribe?.plan?.id) {
+      userStatus.value = 'new';
+      return;
+    }
+
+    if (subscribe?.expired_at) {
+      const now = Math.floor(Date.now() / 1000);
+      userStatus.value = subscribe.expired_at < now ? 'expired' : 'active';
+      return;
+    }
+
+    userStatus.value = 'active';
+  } catch (err) {
+    console.error('Failed to fetch user status:', err);
+    userStatus.value = 'new';
+  }
+};
 
 const fetchKnowledge = async () => {
 
@@ -469,14 +538,9 @@ watch(locale, () => {
 
 
 
-onMounted(() => {
-
-
-
-  
-
+onMounted(async () => {
+  await fetchUserStatus();
   fetchKnowledge();
-
 });
 
 </script>
@@ -597,6 +661,26 @@ onMounted(() => {
 
 }
 
+.start-using-status-card {
+  margin-bottom: 20px;
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .status-action-btn {
+    align-self: flex-start;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    background: rgba(var(--theme-color-rgb), 0.92);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+}
 
 .docs-download-card {
   margin-bottom: 20px;
