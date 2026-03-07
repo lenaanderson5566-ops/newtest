@@ -379,7 +379,7 @@
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && !hasPurchasedTrafficPackage }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
+            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && !hasPurchasedTrafficPackage }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && card.key === 'package' }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
@@ -410,6 +410,22 @@
                   <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
                 </label>
               </div>
+              <div class="plan-summary-actions">
+                <button
+                  class="plan-action-btn"
+                  :class="isPlanExpired ? 'primary' : 'secondary'"
+                  @click="renewPlan"
+                >
+                  立即续费
+                </button>
+                <button
+                  class="plan-action-btn"
+                  :class="isPlanExpired ? 'secondary' : 'ghost'"
+                  @click="goToShop"
+                >
+                  管理订阅
+                </button>
+              </div>
             </div>
             <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
@@ -420,33 +436,41 @@
                 </button>
               </template>
               <template v-else>
-                <span class="usage-percent" :class="{ expired: card.key === 'subscription' && isPlanExpired }">{{ card.key === 'subscription' && isPlanExpired ? 0 : card.remainingPercentage }}%</span>
-                <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+                <template v-if="card.key === 'subscription'">
+                  <span class="usage-remaining-main">{{ $t('dashboard.remaining') }} {{ formatTraffic(isPlanExpired ? 0 : card.remaining) }}</span>
+                </template>
+                <template v-else>
+                  <span class="usage-percent">{{ card.remainingPercentage }}%</span>
+                  <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+                </template>
               </template>
             </div>
             <div v-if="card.key !== 'package' && card.key !== 'total'" class="section-progress-track">
               <div class="section-progress-fill" :style="{ width: `${card.key === 'subscription' && isPlanExpired ? 0 : card.remainingPercentage}%` }"></div>
             </div>
             <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
-              <div class="usage-kpi">
-                <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
-                <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
-              </div>
-              <div class="usage-kpi">
-                <span class="usage-kpi-label">{{ $t('dashboard.remaining') }}</span>
-                <strong class="usage-kpi-value">{{ formatTraffic(card.remaining) }}</strong>
-              </div>
+              <template v-if="card.key === 'subscription'">
+                <div class="usage-summary-line">
+                  {{ $t('dashboard.used') }} {{ formatTraffic(isPlanExpired ? 0 : card.used) }} / {{ formatTraffic(card.total) }}
+                </div>
+              </template>
+              <template v-else>
+                <div class="usage-kpi">
+                  <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
+                  <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
+                </div>
+                <div class="usage-kpi">
+                  <span class="usage-kpi-label">{{ $t('dashboard.remaining') }}</span>
+                  <strong class="usage-kpi-value">{{ formatTraffic(card.remaining) }}</strong>
+                </div>
+              </template>
             </div>
             <div v-if="card.key === 'package'" class="usage-package-note">
               {{ $t('dashboard.packageUsageNote') }}
             </div>
             <div v-if="card.key === 'subscription'" class="usage-reset-hint">
-              {{ $t('dashboard.resetTimeLabel') }}：{{ userPlan.resetDateTime || '-' }}
+              {{ $t('dashboard.resetTimeLabel') }} {{ userPlan.resetDateTime || '-' }}
             </div>
-          </div>
-
-          <div v-if="isPlanExpired" class="expired-renew-overlay">
-            <button class="expired-renew-btn" @click="renewPlan">立即续费</button>
           </div>
 
         </template>
@@ -2534,45 +2558,6 @@ export default {
       transition: filter 0.2s ease, opacity 0.2s ease;
     }
 
-    .expired-renew-overlay {
-      position: absolute;
-      z-index: 8;
-      left: calc(66.666% + 6px);
-      top: 53%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.45);
-      backdrop-filter: blur(2px);
-      pointer-events: none;
-
-      .expired-renew-btn {
-        pointer-events: auto;
-        border: none;
-        border-radius: 12px;
-        padding: 10px 20px;
-        font-size: 15px;
-        font-weight: 700;
-        color: #fff;
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-        box-shadow: 0 8px 18px rgba(220, 38, 38, 0.28);
-        cursor: pointer;
-      }
-
-      @media (max-width: 1199px) {
-        left: 50%;
-        top: 58%;
-      }
-
-      @media (max-width: 767px) {
-        left: 50%;
-        top: 62%;
-      }
-    }
-
     .stats-card {
       position: relative;
       background-color: var(--card-bg-color);
@@ -2789,6 +2774,45 @@ export default {
             align-items: flex-start;
           }
 
+          .plan-summary-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+
+            @media (max-width: 576px) {
+              flex-direction: column;
+            }
+
+            .plan-action-btn {
+              flex: 1;
+              border-radius: 10px;
+              border: 1px solid transparent;
+              padding: 9px 12px;
+              font-size: 13px;
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.2s ease;
+
+              &.primary {
+                color: #fff;
+                background: linear-gradient(135deg, #ef4444, #dc2626);
+                box-shadow: 0 6px 14px rgba(220, 38, 38, 0.22);
+              }
+
+              &.secondary {
+                color: #fff;
+                background: linear-gradient(135deg, #3b82f6, #2563eb);
+                box-shadow: 0 6px 14px rgba(37, 99, 235, 0.2);
+              }
+
+              &.ghost {
+                color: #2563eb;
+                border-color: rgba(37, 99, 235, 0.35);
+                background: rgba(59, 130, 246, 0.08);
+              }
+            }
+          }
+
           .switch {
             position: relative;
             display: inline-block;
@@ -2844,6 +2868,13 @@ export default {
           }
         }
 
+        .usage-remaining-main {
+          font-size: 28px;
+          line-height: 1.2;
+          font-weight: 700;
+          color: #111827;
+        }
+
         .usage-percent {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
@@ -2862,8 +2893,15 @@ export default {
         .usage-kpis {
           width: 100%;
           display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 8px;
+        }
+
+        .usage-summary-line {
+          grid-column: 1 / -1;
+          font-size: 14px;
+          font-weight: 600;
+          color: #374151;
         }
 
         .usage-kpi {
@@ -4899,8 +4937,10 @@ export default {
 .dark-theme .traffic-board-card.subscription-card-muted .usage-card-title,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-percent,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-percent-label,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-remaining-main,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-label,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-value,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-summary-line,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-reset-hint {
   color: rgba(226, 232, 240, 0.55);
 }
@@ -4909,13 +4949,6 @@ export default {
   background: rgba(148, 163, 184, 0.5);
 }
 
-.dark-theme .stats-grid .expired-renew-overlay {
-  background: rgba(15, 23, 42, 0.4);
-}
-
-.dark-theme .traffic-board-card .usage-percent.expired {
-  color: rgba(226, 232, 240, 0.55);
-}
 
 </style>
 
@@ -5211,8 +5244,10 @@ a.eztheme-btn {
 .dark-theme .traffic-board-card.subscription-card-muted .usage-card-title,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-percent,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-percent-label,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-remaining-main,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-label,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-value,
+.dark-theme .traffic-board-card.subscription-card-muted .usage-summary-line,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-reset-hint {
   color: rgba(226, 232, 240, 0.55);
 }
@@ -5221,9 +5256,5 @@ a.eztheme-btn {
   background: rgba(148, 163, 184, 0.5);
 }
 
-.dark-theme .stats-grid .expired-renew-overlay {
-  background: rgba(15, 23, 42, 0.4);
-}
 
 </style>
-
