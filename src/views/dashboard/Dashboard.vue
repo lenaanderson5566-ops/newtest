@@ -2942,6 +2942,7 @@ export default {
         width: 100%;
         min-width: 0;
         min-height: 232px;
+        overflow: visible;
         writing-mode: horizontal-tb;
         text-orientation: mixed;
         flex-direction: column;
@@ -2950,6 +2951,8 @@ export default {
         gap: 10px;
 
         .usage-card-title {
+          position: relative;
+          z-index: 5;
           display: inline-flex;
           align-items: center;
           gap: 6px;
@@ -3026,12 +3029,14 @@ export default {
           flex-direction: column;
           gap: 12px;
           margin-top: 6px;
+          overflow: visible;
 
           .plan-summary-section {
             border: 1px solid #e8edf4;
             border-radius: 12px;
             background: #f8fafc;
             padding: 10px 12px;
+            overflow: visible;
           }
 
           .plan-summary-section-meta {
