@@ -2742,7 +2742,8 @@ export default {
     }
 
     @media (min-width: 1200px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1.86fr) minmax(0, 1fr);
+      grid-auto-rows: minmax(124px, auto);
     }
 
     .usage-panel-title-row {
@@ -3218,6 +3219,52 @@ export default {
         @media (max-width: 576px) {
           .usage-kpis {
             grid-template-columns: 1fr;
+          }
+        }
+      }
+
+      @media (min-width: 1200px) {
+        &.traffic-board-card.total-main-card {
+          grid-column: 1;
+          grid-row: 1 / span 2;
+          min-height: 100%;
+        }
+
+        &.traffic-board-card:not(.total-main-card) {
+          grid-column: 2;
+          min-height: 124px;
+          padding: 14px;
+          gap: 8px;
+
+          .usage-card-title {
+            font-size: 13px;
+            font-weight: 600;
+          }
+
+          .usage-percent {
+            font-size: 30px;
+          }
+
+          .usage-percent-label {
+            font-size: 12px;
+          }
+
+          .section-progress-track {
+            height: 10px;
+          }
+
+          .usage-kpi-label {
+            font-size: 11px;
+          }
+
+          .usage-kpi-value {
+            font-size: 13px;
+          }
+
+          .usage-summary-line,
+          .usage-package-note,
+          .usage-reset-hint {
+            font-size: 11px;
           }
         }
       }
