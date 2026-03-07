@@ -375,17 +375,13 @@
             :class="[{ 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
-            <div class="usage-card-title">{{ card.key === 'total' ? (userPlan.name || $t('dashboard.subscriptionInfo')) : card.title }}</div>
+            <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
             <div v-if="card.key === 'total'" class="plan-summary-card">
               <div class="plan-summary-section plan-summary-section-meta">
-                <div class="plan-summary-row">
-                  <span class="plan-summary-label">{{ $t('dashboard.planName') }}</span>
-                  <strong class="plan-summary-value">{{ userPlan.name || '-' }}</strong>
-                </div>
-                <div class="plan-summary-row">
-                  <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
-                  <div class="plan-summary-value-wrap">
-                    <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
+                <div class="plan-status-hero">
+                  <div class="plan-name-main">{{ userPlan.name || '-' }}</div>
+                  <div class="plan-expire-meta">
+                    <span>{{ $t('dashboard.expiryDate') }} · {{ userPlan.expireDate || $t('dashboard.permanent') }}</span>
                     <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
                   </div>
                 </div>
@@ -2676,14 +2672,14 @@ export default {
   .dashboard-card {
     background-color: var(--card-bg-color);
     border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 1px 8px rgba(15, 23, 42, 0.04);
     padding: 20px;
     margin-bottom: 24px;
     border: 1px solid rgba(148, 163, 184, 0.16);
     transition: all 0.3s ease;
 
     &:hover {
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.07);
       border-color: rgba(148, 163, 184, 0.24);
     }
 
@@ -3017,9 +3013,30 @@ export default {
           }
 
           .plan-summary-section-meta {
+            padding: 12px 14px;
+          }
+
+          .plan-status-hero {
             display: flex;
             flex-direction: column;
             gap: 8px;
+          }
+
+          .plan-name-main {
+            font-size: 24px;
+            line-height: 1.2;
+            font-weight: 700;
+            color: #0f172a;
+          }
+
+          .plan-expire-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: #64748b;
           }
 
           .plan-summary-section-renew {
@@ -3441,7 +3458,7 @@ export default {
   .ip-location-summary-card {
     border-color: rgba(148, 163, 184, 0.24);
     background: linear-gradient(180deg, rgba(10, 23, 40, 0.9), rgba(5, 13, 23, 0.92));
-    box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.1), 0 8px 18px rgba(2, 10, 24, 0.24);
+    box-shadow: 0 8px 18px rgba(2, 10, 24, 0.24);
 
     .card-header {
       display: flex;
@@ -3518,7 +3535,7 @@ export default {
     }
 
     .ip-region-primary {
-      font-size: 36px;
+      font-size: 40px;
       line-height: 1.15;
       font-weight: 700;
       letter-spacing: 0.2px;
@@ -3533,20 +3550,20 @@ export default {
     }
 
     .ip-address-secondary {
-      font-size: 12px;
-      color: rgba(189, 223, 255, 0.72);
+      font-size: 11px;
+      color: rgba(189, 223, 255, 0.58);
       letter-spacing: 0.2px;
     }
 
     .region-code-badge {
-      min-width: 52px;
-      height: 28px;
+      min-width: 44px;
+      height: 24px;
       border-radius: 999px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0 10px;
-      font-size: 12px;
+      padding: 0 8px;
+      font-size: 11px;
       font-weight: 800;
       color: #fff;
       letter-spacing: 0.5px;
@@ -3570,7 +3587,7 @@ export default {
       padding: 8px 10px;
       border-radius: 10px;
       background: rgba(10, 26, 44, 0.56);
-      border: 1px solid rgba(148, 163, 184, 0.24);
+      border: none;
       min-height: 100%;
     }
 
@@ -3588,21 +3605,21 @@ export default {
     }
 
     .service-reference-item {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(144, 196, 238, 0.22);
-      background: rgba(67, 86, 109, 0.35);
+      border: none;
+      background: transparent;
       color: rgba(233, 243, 255, 0.45);
-      opacity: 0.5;
+      opacity: 0.42;
       transition: all 0.2s ease;
 
       .service-reference-icon-mask {
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
         display: block;
         background-color: currentColor;
         mask-image: var(--service-icon-url);
@@ -3618,23 +3635,18 @@ export default {
       &.active {
         opacity: 1;
         color: #eef6ff;
-        border-color: rgba(124, 199, 255, 0.4);
-        background: rgba(67, 86, 109, 0.52);
-        box-shadow: 0 4px 10px rgba(5, 18, 31, 0.35);
+        background: rgba(67, 86, 109, 0.28);
 
 
         &.is-red {
-          border-color: rgba(251, 113, 133, 0.6);
           background: rgba(157, 23, 77, 0.38);
         }
 
         &.is-pink {
-          border-color: rgba(244, 114, 182, 0.62);
           background: rgba(190, 24, 93, 0.36);
         }
 
         &.is-blue {
-          border-color: rgba(96, 165, 250, 0.62);
           background: rgba(30, 58, 138, 0.38);
         }
       }
@@ -3676,13 +3688,13 @@ export default {
   .notice-card {
     margin-bottom: 12px;
     padding: 12px;
-    border-color: rgba(var(--theme-color-rgb), 0.12);
-    background: color-mix(in srgb, var(--card-bg-color) 92%, rgba(var(--theme-color-rgb), 0.08));
+    border-color: rgba(148, 163, 184, 0.14);
+    background: color-mix(in srgb, var(--card-bg-color) 98%, rgba(var(--theme-color-rgb), 0.02));
     box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
 
     &:hover {
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-      border-color: rgba(var(--theme-color-rgb), 0.18);
+      border-color: rgba(148, 163, 184, 0.2);
       transform: none;
     }
 
@@ -3702,12 +3714,12 @@ export default {
       border-radius: 8px;
       background-color: rgba(var(--theme-color-rgb), 0.045);
       overflow: hidden;
-      min-height: 102px;
+      min-height: 84px;
 
       .notice-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.72), rgba(15, 23, 42, 0.28));
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.64), rgba(15, 23, 42, 0.2));
         pointer-events: none;
       }
 
@@ -5562,6 +5574,14 @@ export default {
   border-color: rgba(148, 163, 184, 0.3);
 }
 
+.dark-theme .traffic-board-card .plan-summary-card .plan-name-main {
+  color: rgba(226, 232, 240, 0.95);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-expire-meta {
+  color: rgba(148, 163, 184, 0.9);
+}
+
 
 .dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
   color: #86efac;
@@ -5921,6 +5941,3 @@ a.eztheme-btn {
 
 
 </style>
-          &.compact {
-            font-size: 32px;
-          }
