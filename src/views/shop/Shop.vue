@@ -1267,7 +1267,7 @@ export default {
         }
 
         .card-title {
-          font-size: clamp(34px, 4vw, 52px);
+          font-size: clamp(26px, 2.3vw, 40px);
 
           font-weight: 700;
 
@@ -1358,43 +1358,43 @@ export default {
     }
 
     .plan-price {
-      margin: 24px 0;
+      margin: 14px 0 18px;
 
       padding: 0 4px;
 
       .price-display {
+        display: inline-flex;
+        align-items: baseline;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
         text-align: center;
-
         margin-bottom: 12px;
 
         .currency {
-          font-size: 24px;
-
+          font-size: 20px;
           font-weight: 500;
-
-          color: var(--text-color);
+          color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
         }
 
         .amount {
-          font-size: 48px;
-
+          font-size: clamp(44px, 4.2vw, 58px);
+          line-height: 0.95;
           font-weight: 700;
-
           color: var(--text-color);
+          letter-spacing: -0.8px;
         }
 
         .currency-code {
-          margin-left: 8px;
-          font-size: 26px;
+          font-size: 15px;
           font-weight: 600;
-          color: var(--text-color);
-          letter-spacing: 0.3px;
+          color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
+          letter-spacing: 0.2px;
         }
 
         .period {
-          font-size: 16px;
-
-          color: var(--text-color);
+          font-size: 15px;
+          color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
         }
       }
     }
