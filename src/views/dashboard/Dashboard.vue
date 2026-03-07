@@ -368,59 +368,63 @@
         </template>
 
         <template v-else>
-          <div class="usage-panel-title-row">
-            <h3>{{ $t('dashboard.usagePanel') }}</h3>
-          </div>
-
           <div
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
+            :class="[{ 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
             <div v-if="card.key === 'total'" class="plan-summary-card">
-              <div class="plan-summary-row">
-                <span class="plan-summary-label">{{ $t('dashboard.planName') }}</span>
-                <strong class="plan-summary-value">{{ userPlan.name || '-' }}</strong>
-              </div>
-              <div class="plan-summary-row">
-                <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
-                <div class="plan-summary-value-wrap">
-                  <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
-                  <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
+              <div class="plan-summary-section plan-summary-section-meta">
+                <div class="plan-summary-row">
+                  <span class="plan-summary-label">{{ $t('dashboard.planName') }}</span>
+                  <strong class="plan-summary-value">{{ userPlan.name || '-' }}</strong>
+                </div>
+                <div class="plan-summary-row">
+                  <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
+                  <div class="plan-summary-value-wrap">
+                    <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
+                    <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
+                  </div>
                 </div>
               </div>
-              <div class="plan-summary-row auto-renewal-row">
-                <div>
-                  <span class="plan-summary-label">{{ $t('profile.autoRenewal') }}</span>
-                  <p class="plan-summary-desc">{{ $t('profile.autoRenewalDesc') }}</p>
+
+              <div class="plan-summary-section plan-summary-section-renew">
+                <div class="plan-summary-row auto-renewal-row">
+                  <div>
+                    <span class="plan-summary-label">{{ $t('profile.autoRenewal') }}</span>
+                    <p class="plan-summary-desc">{{ $t('profile.autoRenewalDesc') }}</p>
+                  </div>
+                  <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
+                    <input
+                      type="checkbox"
+                      v-model="autoRenewalEnabled"
+                      :disabled="updatingAutoRenewalSetting"
+                      @change="updateAutoRenewalSetting"
+                    />
+                    <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
+                  </label>
                 </div>
-                <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
-                  <input
-                    type="checkbox"
-                    v-model="autoRenewalEnabled"
-                    :disabled="updatingAutoRenewalSetting"
-                    @change="updateAutoRenewalSetting"
-                  />
-                  <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
-                </label>
               </div>
-              <div class="plan-summary-actions">
-                <button
-                  class="plan-action-btn"
-                  :class="primaryActionClass"
-                  @click="handlePrimaryPlanAction"
-                >
-                  {{ primaryPlanActionLabel }}
-                </button>
-                <button
-                  class="plan-action-btn subtle"
-                  @click="handleSecondaryPlanAction"
-                >
-                  {{ secondaryPlanActionLabel }}
-                </button>
+
+              <div class="plan-summary-section plan-summary-section-actions">
+                <div class="plan-summary-actions">
+                  <button
+                    class="plan-action-btn"
+                    :class="primaryActionClass"
+                    @click="handlePrimaryPlanAction"
+                  >
+                    {{ primaryPlanActionLabel }}
+                  </button>
+                  <button
+                    class="plan-action-btn subtle"
+                    @click="handleSecondaryPlanAction"
+                  >
+                    {{ secondaryPlanActionLabel }}
+                  </button>
+                </div>
               </div>
             </div>
             <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
@@ -471,6 +475,53 @@
           </div>
 
         </template>
+      </div>
+
+      <div class="dashboard-card ip-location-summary-card" v-if="hasPlan">
+        <div class="card-header">
+          <h2 class="card-title">当前出口地区</h2>
+          <button
+            class="ip-location-refresh"
+            :disabled="ipLocationLoading"
+            :title="ipLocationLoading ? $t('common.loading') : $t('common.retry')"
+            @click="triggerIpLocationRefresh"
+          >
+            <IconRefresh :size="16" :class="{ spin: ipLocationLoading }" />
+          </button>
+        </div>
+        <div class="card-body ip-location-summary-body">
+          <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
+          <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
+          <div v-else-if="ipLocationData" class="ip-location-content">
+            <div class="ip-location-main-info">
+              <div class="ip-main-line">
+                <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
+                <span class="ip-region-primary">{{ ipLocationPrimaryRegionText }}</span>
+              </div>
+              <div class="ip-sub-line">
+                <span class="ip-region">{{ ipLocationDisplayText }}</span>
+              </div>
+              <div class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</div>
+            </div>
+            <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
+              <div class="service-reference-title">地区服务参考</div>
+              <div class="service-reference-tags" role="list" aria-label="地区服务参考">
+                <div
+                  v-for="service in ipLocationServiceCatalog"
+                  :key="`ip-service-${service.key}`"
+                  class="service-reference-item"
+                  :class="[{ active: isIpServiceReferenced(service.key) }, ipLocationCodeBadgeClass]"
+                  role="listitem"
+                  :title="`${service.label} · ${isIpServiceReferenced(service.key) ? '地区参考可用' : '未在地区参考列表'}`"
+                >
+                  <span class="service-reference-icon-mask" :style="{ '--service-icon-url': `url(${service.icon})` }"></span>
+                </div>
+              </div>
+              <div class="service-reference-note">静态地区服务参考，不代表已解锁检测结果</div>
+            </div>
+          </div>
+          <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
+        </div>
       </div>
 
       <div class="dashboard-card usage-trend-card" v-if="hasPlan">
@@ -677,6 +728,12 @@ import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
 import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
 import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
 import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
+import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
+import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
+import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube-premium.svg';
+import serviceChatgptIcon from '@/assets/images/service-icons/chatgpt.svg';
+import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
+import serviceTiktokIcon from '@/assets/images/service-icons/tiktok.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 
@@ -795,6 +852,12 @@ export default {
     const trafficTrendLoading = ref(false);
     const trafficTrendError = ref(false);
     let trafficTrendChart = null;
+
+    const ipLocationLoading = ref(false);
+    const ipLocationError = ref('');
+    const ipLocationData = ref(null);
+    const ipLocationCache = ref(null);
+    const ipLocationDebounceTimer = ref(null);
 
     const qrCodeLoading = ref(true);
     const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription)
@@ -1925,6 +1988,152 @@ export default {
       return [];
     };
 
+
+    const normalizeIpLocation = (payload = {}) => {
+      const latitude = Number(
+        payload.latitude ?? payload.lat ?? payload.location?.latitude ?? payload.loc?.split(',')?.[0]
+      );
+      const longitude = Number(
+        payload.longitude ?? payload.lon ?? payload.lng ?? payload.location?.longitude ?? payload.loc?.split(',')?.[1]
+      );
+      const city = payload.city || payload.town || payload.district || '';
+      const region = payload.region || payload.regionName || payload.state || '';
+      const country = payload.country || payload.country_name || '';
+      const countryCode = (payload.country_code || payload.countryCode || payload.countryCode2 || '').toString().toUpperCase();
+      const ip = payload.ip || payload.query || '';
+
+      if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+
+      return {
+        ip,
+        city,
+        region,
+        country,
+        countryCode,
+        latitude,
+        longitude
+      };
+    };
+
+    const fetchIpLocationFromSources = async () => {
+      const endpoints = [
+        'https://ipwho.is',
+        'https://api.myip.com',
+        'https://ipapi.co/json',
+        'https://ident.me/json',
+        'http://ip-api.com/json',
+        'https://api.ip.sb/geoip',
+        'https://ipinfo.io/json'
+      ];
+
+      const requests = endpoints.map((url) => (
+        fetch(url, { cache: 'no-store' })
+          .then(async (resp) => {
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            const data = await resp.json();
+            const normalized = normalizeIpLocation(data);
+            if (!normalized) throw new Error('Invalid location payload');
+            return normalized;
+          })
+      ));
+
+      const settled = await Promise.allSettled(requests);
+      const hit = settled.find((item) => item.status === 'fulfilled');
+      if (hit && hit.status === 'fulfilled') {
+        return hit.value;
+      }
+      throw new Error('IP location lookup failed on all providers.');
+    };
+
+    const scheduleIpLocationRefresh = (force = false) => {
+      if (ipLocationDebounceTimer.value) {
+        clearTimeout(ipLocationDebounceTimer.value);
+      }
+
+      ipLocationDebounceTimer.value = setTimeout(async () => {
+        const now = Date.now();
+        const cache = ipLocationCache.value;
+        if (!force && cache?.expiresAt > now) {
+          ipLocationData.value = cache.data;
+          ipLocationError.value = '';
+          return;
+        }
+
+        ipLocationLoading.value = true;
+        ipLocationError.value = '';
+
+        try {
+          const data = await fetchIpLocationFromSources();
+          ipLocationData.value = data;
+          ipLocationCache.value = {
+            data,
+            expiresAt: now + 5 * 60 * 1000
+          };
+        } catch (error) {
+          console.error('Failed to fetch IP location:', error);
+          ipLocationError.value = t('trafficLog.errorLoadingTraffic');
+        } finally {
+          ipLocationLoading.value = false;
+        }
+      }, 2000);
+    };
+
+    const triggerIpLocationRefresh = () => {
+      scheduleIpLocationRefresh(true);
+    };
+
+    const ipLocationDisplayText = computed(() => {
+      if (!ipLocationData.value) return '';
+      return [ipLocationData.value.city, ipLocationData.value.region, ipLocationData.value.country]
+        .filter(Boolean)
+        .join(', ');
+    });
+
+    const ipLocationCode = computed(() => {
+      const code = (ipLocationData.value?.countryCode || '').trim().toUpperCase();
+      return /^[A-Z]{2}$/.test(code) ? code : '--';
+    });
+
+    const ipLocationPrimaryRegionText = computed(() => {
+      if (!ipLocationData.value) return '-';
+      return ipLocationData.value.city || ipLocationData.value.region || ipLocationData.value.country || '-';
+    });
+
+    const ipLocationCodeBadgeClass = computed(() => {
+      const code = ipLocationCode.value;
+      const badgeMap = DASHBOARD_CONFIG.ipRegionBadgeByCountryCode || {};
+      return badgeMap[code] || 'is-red';
+    });
+
+    const ipLocationServiceReferences = computed(() => {
+      const code = ipLocationCode.value;
+      const serviceMap = DASHBOARD_CONFIG.ipRegionServiceReferenceByCountryCode || {};
+      const defaultServices = DASHBOARD_CONFIG.ipRegionServiceReferenceDefault || [];
+      const services = serviceMap[code] || defaultServices;
+      return Array.isArray(services) ? services : [];
+    });
+
+    const ipLocationServiceIconMap = {
+      'Netflix': serviceNetflixIcon,
+      'Disney+': serviceDisneyPlusIcon,
+      'YouTube Premium': serviceYoutubePremiumIcon,
+      'ChatGPT': serviceChatgptIcon,
+      Claude: serviceClaudeIcon,
+      TikTok: serviceTiktokIcon,
+    };
+
+    const ipLocationServiceCatalog = computed(() => {
+      const serviceCatalog = DASHBOARD_CONFIG.ipRegionServiceCatalog || [];
+      return serviceCatalog.map((item) => ({
+        ...item,
+        icon: ipLocationServiceIconMap[item.key] || serviceChatgptIcon,
+      }));
+    });
+
+    const isIpServiceReferenced = (serviceKey) => {
+      return ipLocationServiceReferences.value.includes(serviceKey);
+    };
+
     const fetchTrafficTrend = async () => {
       trafficTrendLoading.value = true;
       trafficTrendError.value = false;
@@ -2057,6 +2266,7 @@ export default {
 
       fetchUserStats();
       fetchTrafficTrend();
+      scheduleIpLocationRefresh();
 
       updateQRCodeUrl();
     });
@@ -2144,6 +2354,10 @@ export default {
         trafficTrendChart.dispose();
         trafficTrendChart = null;
       }
+      if (ipLocationDebounceTimer.value) {
+        clearTimeout(ipLocationDebounceTimer.value);
+        ipLocationDebounceTimer.value = null;
+      }
     });
 
     const renewPlan = () => {
@@ -2184,6 +2398,7 @@ export default {
         fetchUserInfo();
         fetchUserStats();
         fetchNotices();
+        scheduleIpLocationRefresh();
         needRefreshData.value = false;
       }
 
@@ -2357,6 +2572,17 @@ export default {
       trafficTrendData,
       trafficTrendLoading,
       trafficTrendError,
+      ipLocationLoading,
+      ipLocationError,
+      ipLocationData,
+      ipLocationDisplayText,
+      ipLocationCode,
+      ipLocationPrimaryRegionText,
+      ipLocationCodeBadgeClass,
+      ipLocationServiceReferences,
+      ipLocationServiceCatalog,
+      isIpServiceReferenced,
+      triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
       showImportSubscription,
@@ -2405,6 +2631,7 @@ export default {
     > .notice-card,
     > .subscription-card,
     > .stats-grid,
+    > .ip-location-summary-card,
     > .usage-trend-card,
     > .import-card {
       grid-column: 1 / -1;
@@ -2416,6 +2643,7 @@ export default {
       > .notice-card,
       > .subscription-card,
       > .stats-grid,
+      > .ip-location-summary-card,
       > .usage-trend-card,
       > .import-card {
         grid-column: 1 / -1;
@@ -2444,7 +2672,7 @@ export default {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 20px;
     margin-bottom: 24px;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(148, 163, 184, 0.2);
     transition: all 0.3s ease;
 
     &:hover {
@@ -2477,7 +2705,7 @@ export default {
     .subscription-info {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 16px;
       margin-bottom: 15px;
 
       .info-item {
@@ -2571,7 +2799,8 @@ export default {
     }
 
     @media (min-width: 1200px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1.86fr) minmax(0, 1fr);
+      grid-auto-rows: minmax(124px, auto);
     }
 
     .usage-panel-title-row {
@@ -2580,6 +2809,10 @@ export default {
       align-items: center;
       justify-content: space-between;
       margin-top: 2px;
+
+      @media (min-width: 1200px) {
+        grid-row: 1;
+      }
 
       h3 {
         margin: 0;
@@ -2615,11 +2848,11 @@ export default {
       position: relative;
       background-color: var(--card-bg-color);
       border-radius: 16px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
       display: flex;
       align-items: center;
       gap: 16px;
-      padding: 18px;
+      padding: 16px;
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
       border: 1px solid var(--border-color);
@@ -2698,9 +2931,10 @@ export default {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 600;
-          color: #6b7280;
+          color: #475569;
+          line-height: 1.35;
         }
 
         .usage-card-main {
@@ -2749,21 +2983,55 @@ export default {
           }
         }
 
+        &.total-main-card {
+          background: color-mix(in srgb, var(--card-bg-color) 88%, #eef4ff 12%);
+          border-color: rgba(100, 116, 139, 0.3);
+          box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+
+          .usage-card-title {
+            color: #4b5563;
+            font-weight: 650;
+          }
+        }
+
         .plan-summary-card {
           width: 100%;
           display: flex;
           flex-direction: column;
           gap: 12px;
-          margin-top: 4px;
+          margin-top: 6px;
+
+          .plan-summary-section {
+            border: 1px solid #e8edf4;
+            border-radius: 12px;
+            background: #f8fafc;
+            padding: 10px 12px;
+          }
+
+          .plan-summary-section-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+          }
+
+          .plan-summary-section-renew {
+            background: #f9fbff;
+          }
+
+          .plan-summary-section-actions {
+            background: transparent;
+            border-style: dashed;
+            border-color: #dbe5f2;
+            padding-top: 12px;
+            padding-bottom: 12px;
+          }
 
           .plan-summary-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            background: #f8fafc;
+            padding: 2px 0;
           }
 
           .plan-summary-label {
@@ -2824,7 +3092,7 @@ export default {
           .plan-summary-actions {
             display: flex;
             gap: 10px;
-            margin-top: 4px;
+            margin-top: 0;
 
             @media (max-width: 576px) {
               flex-direction: column;
@@ -2835,7 +3103,7 @@ export default {
               border-radius: 12px;
               border: 1px solid transparent;
               padding: 10px 14px;
-              font-size: 13px;
+              font-size: 14px;
               font-weight: 600;
               letter-spacing: 0.2px;
               cursor: pointer;
@@ -2928,7 +3196,7 @@ export default {
         .usage-percent {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
-          font-size: 40px;
+          font-size: 36px;
           line-height: 1;
           font-weight: 700;
           color: #111827;
@@ -2949,9 +3217,9 @@ export default {
 
         .usage-summary-line {
           grid-column: 1 / -1;
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 600;
-          color: #374151;
+          color: #475569;
         }
 
         .usage-kpi {
@@ -2967,7 +3235,7 @@ export default {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           font-size: 12px;
-          color: #6b7280;
+          color: #94a3b8;
           line-height: 1;
         }
 
@@ -2984,8 +3252,8 @@ export default {
           width: 100%;
           margin-top: 6px;
           font-size: 12px;
-          color: #6b7280;
-          line-height: 1.45;
+          color: #94a3b8;
+          line-height: 1.35;
         }
 
 
@@ -3013,6 +3281,63 @@ export default {
         @media (max-width: 576px) {
           .usage-kpis {
             grid-template-columns: 1fr;
+          }
+        }
+      }
+
+      @media (min-width: 1200px) {
+        &.traffic-board-card.total-main-card {
+          grid-column: 1;
+          grid-row: 1 / span 2;
+          min-height: 100%;
+        }
+
+        &.traffic-board-card:not(.total-main-card) {
+          grid-column: 2;
+          min-height: 152px;
+          padding: 16px;
+          gap: 8px;
+
+          .usage-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #334155;
+          }
+
+          .usage-percent {
+            font-size: 36px;
+          }
+
+          .usage-percent-label {
+            font-size: 12px;
+          }
+
+          .section-progress-track {
+            height: 8px;
+          }
+
+          .usage-kpis {
+            display: flex;
+            gap: 12px;
+          }
+
+          .usage-kpi {
+            flex: 1;
+            background: rgba(241, 245, 249, 0.9);
+          }
+
+          .usage-kpi-label {
+            font-size: 12px;
+          }
+
+          .usage-kpi-value {
+            font-size: 14px;
+          }
+
+          .usage-summary-line,
+          .usage-package-note,
+          .usage-reset-hint {
+            display: none;
           }
         }
       }
@@ -3082,6 +3407,221 @@ export default {
     }
   }
 
+
+  .ip-location-summary-card {
+    border-color: rgba(148, 163, 184, 0.24);
+    background: linear-gradient(180deg, rgba(10, 23, 40, 0.9), rgba(5, 13, 23, 0.92));
+    box-shadow: inset 0 0 0 1px rgba(30, 64, 175, 0.14), 0 8px 18px rgba(2, 10, 24, 0.28);
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .card-title {
+        color: #eaf5ff;
+        letter-spacing: 0.2px;
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+
+    .ip-location-refresh {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid rgba(112, 190, 255, 0.35);
+      background: rgba(18, 46, 73, 0.7);
+      color: #8ed0ff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+
+      .spin {
+        animation: spin 0.9s linear infinite;
+      }
+    }
+
+    .ip-location-summary-body {
+      padding-top: 0;
+    }
+
+    .ip-location-state {
+      color: #bddfff;
+      font-size: 13px;
+
+      &.error {
+        color: #ff9ba8;
+      }
+    }
+
+    .ip-location-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 10px 14px;
+      color: #d9ecff;
+      align-items: start;
+
+      @media (max-width: 920px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ip-location-main-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .ip-main-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ip-region-primary {
+      font-size: 36px;
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      color: #ecf6ff;
+    }
+
+    .ip-sub-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ip-address-secondary {
+      font-size: 12px;
+      color: rgba(189, 223, 255, 0.72);
+      letter-spacing: 0.2px;
+    }
+
+    .region-code-badge {
+      min-width: 52px;
+      height: 28px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #d90429, #9d174d);
+      box-shadow: 0 6px 14px rgba(157, 23, 77, 0.35);
+
+      &.is-red { background: linear-gradient(135deg, #d90429, #9d174d); }
+      &.is-pink { background: linear-gradient(135deg, #db2777, #be185d); }
+      &.is-blue { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); }
+    }
+
+    .ip-region {
+      color: #bddfff;
+      font-size: 13px;
+    }
+
+    .ip-service-reference {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(10, 26, 44, 0.56);
+      border: 1px solid rgba(96, 165, 250, 0.18);
+      min-height: 100%;
+    }
+
+    .service-reference-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #9fd0f5;
+      letter-spacing: 0.2px;
+    }
+
+    .service-reference-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .service-reference-item {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(144, 196, 238, 0.22);
+      background: rgba(67, 86, 109, 0.35);
+      color: rgba(233, 243, 255, 0.45);
+      opacity: 0.55;
+      transition: all 0.2s ease;
+
+      .service-reference-icon-mask {
+        width: 16px;
+        height: 16px;
+        display: block;
+        background-color: currentColor;
+        mask-image: var(--service-icon-url);
+        -webkit-mask-image: var(--service-icon-url);
+        mask-repeat: no-repeat;
+        -webkit-mask-repeat: no-repeat;
+        mask-size: contain;
+        -webkit-mask-size: contain;
+        mask-position: center;
+        -webkit-mask-position: center;
+      }
+
+      &.active {
+        opacity: 1;
+        color: #eef6ff;
+        border-color: rgba(124, 199, 255, 0.48);
+        background: rgba(67, 86, 109, 0.6);
+        box-shadow: 0 4px 10px rgba(5, 18, 31, 0.35);
+
+
+        &.is-red {
+          border-color: rgba(251, 113, 133, 0.6);
+          background: rgba(157, 23, 77, 0.38);
+        }
+
+        &.is-pink {
+          border-color: rgba(244, 114, 182, 0.62);
+          background: rgba(190, 24, 93, 0.36);
+        }
+
+        &.is-blue {
+          border-color: rgba(96, 165, 250, 0.62);
+          background: rgba(30, 58, 138, 0.38);
+        }
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+        border-color: rgba(144, 196, 238, 0.45);
+      }
+    }
+
+    .service-reference-note {
+      font-size: 11px;
+      line-height: 1.35;
+      color: #7fb8e4;
+      opacity: 0.9;
+    }
+  }
 
   .usage-trend-card {
     .card-body {
@@ -4971,6 +5511,27 @@ export default {
 }
 
 }
+
+.dark-theme .traffic-board-card.total-main-card {
+  background: rgba(15, 23, 42, 0.66);
+  border-color: rgba(129, 160, 205, 0.46);
+  box-shadow: 0 6px 16px rgba(2, 6, 23, 0.2);
+}
+
+.dark-theme .traffic-board-card.total-main-card .usage-card-title {
+  color: rgba(226, 232, 240, 0.92);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-section {
+  background: rgba(30, 41, 59, 0.52);
+  border-color: rgba(148, 163, 184, 0.22);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-section-actions {
+  background: rgba(15, 23, 42, 0.18);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
 
 .dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
   color: #86efac;
