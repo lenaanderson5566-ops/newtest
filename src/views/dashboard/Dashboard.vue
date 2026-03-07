@@ -493,14 +493,16 @@
           <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
           <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
           <div v-else-if="ipLocationData" class="ip-location-content">
-            <div class="ip-main-line">
-              <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
-              <span class="ip-region-primary">{{ ipLocationPrimaryRegionText }}</span>
+            <div class="ip-location-main-info">
+              <div class="ip-main-line">
+                <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
+                <span class="ip-region-primary">{{ ipLocationPrimaryRegionText }}</span>
+              </div>
+              <div class="ip-sub-line">
+                <span class="ip-region">{{ ipLocationDisplayText }}</span>
+              </div>
+              <div class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</div>
             </div>
-            <div class="ip-sub-line">
-              <span class="ip-region">{{ ipLocationDisplayText }}</span>
-            </div>
-            <div class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</div>
             <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
               <div class="service-reference-title">地区服务参考</div>
               <div class="service-reference-tags" role="list" aria-label="地区服务参考">
@@ -512,7 +514,7 @@
                   role="listitem"
                   :title="`${service.label} · ${isIpServiceReferenced(service.key) ? '地区参考可用' : '未在地区参考列表'}`"
                 >
-                  <img :src="service.icon" :alt="service.label" class="service-reference-icon" />
+                  <span class="service-reference-icon-mask" :style="{ '--service-icon-url': `url(${service.icon})` }"></span>
                 </div>
               </div>
               <div class="service-reference-note">静态地区服务参考，不代表已解锁检测结果</div>
@@ -726,6 +728,12 @@ import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
 import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
 import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
 import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
+import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
+import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
+import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube-premium.svg';
+import serviceChatgptIcon from '@/assets/images/service-icons/chatgpt.svg';
+import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
+import serviceTiktokIcon from '@/assets/images/service-icons/tiktok.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 
@@ -2106,19 +2114,19 @@ export default {
     });
 
     const ipLocationServiceIconMap = {
-      'Netflix': '/assets/service-icons/netflix.svg',
-      'Disney+': '/assets/service-icons/disney-plus.svg',
-      'YouTube Premium': '/assets/service-icons/youtube-premium.svg',
-      'ChatGPT': '/assets/service-icons/chatgpt.svg',
-      Claude: '/assets/service-icons/claude.svg',
-      TikTok: '/assets/service-icons/tiktok.svg',
+      'Netflix': serviceNetflixIcon,
+      'Disney+': serviceDisneyPlusIcon,
+      'YouTube Premium': serviceYoutubePremiumIcon,
+      'ChatGPT': serviceChatgptIcon,
+      Claude: serviceClaudeIcon,
+      TikTok: serviceTiktokIcon,
     };
 
     const ipLocationServiceCatalog = computed(() => {
       const serviceCatalog = DASHBOARD_CONFIG.ipRegionServiceCatalog || [];
       return serviceCatalog.map((item) => ({
         ...item,
-        icon: ipLocationServiceIconMap[item.key] || '/assets/service-icons/chatgpt.svg',
+        icon: ipLocationServiceIconMap[item.key] || serviceChatgptIcon,
       }));
     });
 
@@ -3440,10 +3448,22 @@ export default {
     }
 
     .ip-location-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 10px 14px;
+      color: #d9ecff;
+      align-items: start;
+
+      @media (max-width: 920px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ip-location-main-info {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      color: #d9ecff;
+      min-width: 0;
     }
 
     .ip-main-line {
@@ -3500,10 +3520,14 @@ export default {
     }
 
     .ip-service-reference {
-      margin-top: 2px;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(14, 35, 56, 0.46);
+      border: 1px solid rgba(112, 190, 255, 0.2);
+      min-height: 100%;
     }
 
     .service-reference-title {
@@ -3532,11 +3556,19 @@ export default {
       opacity: 0.55;
       transition: all 0.2s ease;
 
-      .service-reference-icon {
+      .service-reference-icon-mask {
         width: 16px;
         height: 16px;
         display: block;
-        opacity: 0.86;
+        background-color: currentColor;
+        mask-image: var(--service-icon-url);
+        -webkit-mask-image: var(--service-icon-url);
+        mask-repeat: no-repeat;
+        -webkit-mask-repeat: no-repeat;
+        mask-size: contain;
+        -webkit-mask-size: contain;
+        mask-position: center;
+        -webkit-mask-position: center;
       }
 
       &.active {
@@ -3546,9 +3578,6 @@ export default {
         background: rgba(67, 86, 109, 0.6);
         box-shadow: 0 4px 10px rgba(5, 18, 31, 0.35);
 
-        .service-reference-icon {
-          opacity: 1;
-        }
 
         &.is-red {
           border-color: rgba(251, 113, 133, 0.6);
