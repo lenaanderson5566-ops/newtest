@@ -28,9 +28,6 @@
 
       <div class="dashboard-card notice-card" :class="{'card-animate': !loading.notices}"
            v-if="notices && notices.data && notices.data.length > 0">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.announcement') }}</h2>
-        </div>
         <div v-if="loading.notices" class="card-body skeleton-loading">
           <div class="skeleton-row"></div>
           <div class="skeleton-row"></div>
@@ -3107,27 +3104,35 @@ export default {
   }
 
   .notice-card {
-    margin-bottom: 24px;
+    margin-bottom: 12px;
+    padding: 12px;
+    border-color: rgba(var(--theme-color-rgb), 0.12);
+    background: color-mix(in srgb, var(--card-bg-color) 92%, rgba(var(--theme-color-rgb), 0.08));
+    box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
 
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    &:hover {
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+      border-color: rgba(var(--theme-color-rgb), 0.18);
+      transform: none;
+    }
+
+    .card-body {
+      padding: 0;
     }
 
     .notice-slider {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
 
     .notice-item {
       position: relative;
-      padding: 16px;
+      padding: 12px 14px;
       border-radius: 8px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
+      background-color: rgba(var(--theme-color-rgb), 0.045);
       overflow: hidden;
-      min-height: 144px;
+      min-height: 102px;
 
       .notice-overlay {
         position: absolute;
@@ -3142,10 +3147,11 @@ export default {
       }
 
       .notice-title {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 600;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         color: #fff;
+        line-height: 1.35;
       }
 
       .notice-footer {
@@ -3153,10 +3159,10 @@ export default {
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
 
         .notice-date {
-          font-size: 12px;
+          font-size: 11px;
           color: rgba(255, 255, 255, 0.85);
         }
 
@@ -3168,11 +3174,11 @@ export default {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-            padding: 6px 10px;
+            gap: 3px;
+            padding: 5px 8px;
             border-radius: 6px;
-            font-size: 13px;
-            background-color: rgba(var(--theme-color-rgb), 0.1);
+            font-size: 12px;
+            background-color: rgba(var(--theme-color-rgb), 0.14);
             color: #fff;
             border: none;
             cursor: pointer;
@@ -3200,7 +3206,7 @@ export default {
             .btn-notice {
               flex: 1;
               justify-content: center;
-              padding: 8px;
+              padding: 6px;
             }
           }
         }
@@ -3242,11 +3248,12 @@ export default {
     .notice-dots {
       display: flex;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
+      margin-top: 2px;
 
       .notice-dot {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
         border-radius: 999px;
         border: none;
         padding: 0;
@@ -3255,7 +3262,7 @@ export default {
         transition: all 0.2s ease;
 
         &.active {
-          width: 20px;
+          width: 14px;
           background: rgba(var(--theme-color-rgb), 0.95);
         }
       }
