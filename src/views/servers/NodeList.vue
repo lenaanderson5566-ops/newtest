@@ -12,7 +12,7 @@
 
       <!-- 欢迎卡片 -->
 
-      <div class="dashboard-card welcome-card">
+      <div v-if="hasActivePlan" class="dashboard-card welcome-card">
 
         <div class="card-header">
 
@@ -55,6 +55,34 @@
       </div>
 
       
+
+      <!-- 无套餐解锁页 -->
+      <div v-else-if="!hasActivePlan" class="nodes-no-plan">
+        <div class="no-plan-head">
+          <h2>全球节点覆盖</h2>
+          <p>已部署多个接入区域，购买套餐后解锁完整线路</p>
+        </div>
+
+        <div class="no-plan-map">
+          <div class="map-glow region-jp">JP</div>
+          <div class="map-glow region-sg">SG</div>
+          <div class="map-glow region-hk">HK</div>
+          <div class="map-glow region-us">US</div>
+        </div>
+
+        <div class="region-lock-grid">
+          <div v-for="region in lockedRegions" :key="region.title" class="region-lock-card">
+            <h3>{{ region.title }}</h3>
+            <p>{{ region.desc }}</p>
+            <button class="unlock-tip-btn">购买后解锁</button>
+          </div>
+        </div>
+
+        <div class="no-plan-cta">
+          <button class="cta-btn primary" @click="goToShop">立即订阅</button>
+          <button class="cta-btn secondary" @click="goToShop">查看套餐区别</button>
+        </div>
+      </div>
 
       <!-- 线路列表内容 -->
 
@@ -132,6 +160,7 @@
 <script setup>
 
 import { ref, onMounted, inject, computed } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { useI18n } from 'vue-i18n';
 
@@ -159,6 +188,7 @@ import NodeDetailModal from '@/components/common/NodeDetailModal.vue';
 
 
 const { t } = useI18n();
+const router = useRouter();
 const $toast = inject('$toast');
 
 
@@ -263,6 +293,31 @@ const countryBadgeClass = (countryTag) => {
   if (['HK', 'SG'].includes(code)) return 'is-pink';
   if (['DE', 'JP', 'KR'].includes(code)) return 'is-red';
   return 'is-red';
+};
+
+const hasActivePlan = computed(() => {
+  if (!userInfo.value) return lines.value.length > 0;
+
+  const planId = Number(userInfo.value.plan_id || userInfo.value.planId || userInfo.value.plan?.id || 0);
+  if (!planId) return false;
+
+  const expiredAt = Number(userInfo.value.expired_at || userInfo.value.expiredAt || 0);
+  if (!expiredAt) return true;
+
+  return expiredAt * 1000 > Date.now();
+});
+
+const lockedRegions = [
+  { title: 'Japan Region', desc: '低延迟连接 / 稳定访问' },
+  { title: 'Singapore Region', desc: '亚洲优化 / 通用场景' },
+  { title: 'Hong Kong Region', desc: '快速接入 / 高频使用' },
+  { title: 'US Region', desc: '国际访问 / 多场景支持' },
+  { title: 'Germany Region', desc: '欧洲覆盖 / 稳定中转' },
+  { title: 'Global Mix Region', desc: '跨区调度 / 备用线路' }
+];
+
+const goToShop = () => {
+  router.push('/shop');
 };
 
 const fetchNodes = async () => {
@@ -635,6 +690,158 @@ onMounted(() => {
       }
     }
   }
+}
+
+
+.nodes-no-plan {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+
+  .no-plan-head {
+    text-align: center;
+    margin-bottom: 18px;
+
+    h2 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    p {
+      margin: 8px 0 0;
+      color: var(--text-color-light, #6b7280);
+      font-size: 15px;
+    }
+  }
+
+  .no-plan-map {
+    position: relative;
+    height: 240px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(var(--theme-color-rgb), 0.22);
+    background:
+      radial-gradient(circle at 20% 30%, rgba(var(--theme-color-rgb), 0.22), transparent 35%),
+      radial-gradient(circle at 78% 42%, rgba(99, 102, 241, 0.2), transparent 32%),
+      linear-gradient(160deg, rgba(17, 24, 39, 0.95), rgba(30, 41, 59, 0.92));
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+      background-size: 42px 42px;
+    }
+
+    .map-glow {
+      position: absolute;
+      z-index: 1;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      background: radial-gradient(circle at center, rgba(var(--theme-color-rgb), 0.95), rgba(var(--theme-color-rgb), 0.35));
+      box-shadow: 0 0 0 6px rgba(var(--theme-color-rgb), 0.18), 0 0 26px rgba(var(--theme-color-rgb), 0.55);
+      animation: regionPulse 2.8s ease-in-out infinite;
+    }
+
+    .region-jp { top: 62px; right: 360px; }
+    .region-sg { top: 126px; right: 470px; animation-delay: 0.4s; }
+    .region-hk { top: 96px; right: 420px; animation-delay: 0.9s; }
+    .region-us { top: 84px; left: 210px; animation-delay: 1.2s; }
+  }
+
+  .region-lock-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+
+    @media (max-width: 1080px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+
+    .region-lock-card {
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.96));
+      position: relative;
+
+      h3 {
+        margin: 0 0 6px;
+        font-size: 17px;
+      }
+
+      p {
+        margin: 0;
+        color: var(--text-color-light, #6b7280);
+        font-size: 13px;
+      }
+
+      .unlock-tip-btn {
+        margin-top: 12px;
+        border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+        background: rgba(var(--theme-color-rgb), 0.08);
+        color: rgba(var(--theme-color-rgb), 0.95);
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        float: right;
+      }
+    }
+  }
+
+  .no-plan-cta {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    .cta-btn {
+      min-width: 168px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .primary {
+      color: #fff;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
+    }
+
+    .secondary {
+      color: #475569;
+      border-color: #cbd5e1;
+      background: #f8fafc;
+    }
+  }
+}
+
+@keyframes regionPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.85; }
 }
 
 .nodes-content {
