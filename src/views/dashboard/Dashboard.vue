@@ -2676,37 +2676,18 @@ export default {
             cursor: pointer;
           }
         }
-
-
         &.package-card-muted {
           background: #f3f4f6;
           border-color: #e5e7eb;
-
-          .usage-card-title,
-          .usage-percent,
-          .usage-percent-label,
-          .usage-package-note {
-            color: #9ca3af;
-          }
 
           .package-add-btn {
             color: #fff;
             background: linear-gradient(135deg, #3b82f6, #2563eb);
           }
         }
-
         &.subscription-card-muted {
           background: #f3f4f6;
           border-color: #e5e7eb;
-
-          .usage-card-title,
-          .usage-percent,
-          .usage-percent-label,
-          .usage-kpi-label,
-          .usage-kpi-value,
-          .usage-reset-hint {
-            color: #9ca3af;
-          }
 
           .section-progress-track {
             background: #e5e7eb;
@@ -4927,27 +4908,12 @@ export default {
   border-color: rgba(148, 163, 184, 0.35);
 }
 
-.dark-theme .traffic-board-card.package-card-muted .usage-card-title,
-.dark-theme .traffic-board-card.package-card-muted .usage-percent,
-.dark-theme .traffic-board-card.package-card-muted .usage-percent-label,
-.dark-theme .traffic-board-card.package-card-muted .usage-package-note {
-  color: rgba(226, 232, 240, 0.55);
-}
 
 .dark-theme .traffic-board-card.subscription-card-muted {
   background: rgba(71, 85, 105, 0.2);
   border-color: rgba(148, 163, 184, 0.35);
 }
 
-.dark-theme .traffic-board-card.subscription-card-muted .usage-card-title,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-percent,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-percent-label,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-label,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-value,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-summary-line,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-reset-hint {
-  color: rgba(226, 232, 240, 0.55);
-}
 
 .dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
   background: rgba(148, 163, 184, 0.5);
@@ -5245,27 +5211,12 @@ a.eztheme-btn {
   border-color: rgba(148, 163, 184, 0.35);
 }
 
-.dark-theme .traffic-board-card.package-card-muted .usage-card-title,
-.dark-theme .traffic-board-card.package-card-muted .usage-percent,
-.dark-theme .traffic-board-card.package-card-muted .usage-percent-label,
-.dark-theme .traffic-board-card.package-card-muted .usage-package-note {
-  color: rgba(226, 232, 240, 0.55);
-}
 
 .dark-theme .traffic-board-card.subscription-card-muted {
   background: rgba(71, 85, 105, 0.2);
   border-color: rgba(148, 163, 184, 0.35);
 }
 
-.dark-theme .traffic-board-card.subscription-card-muted .usage-card-title,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-percent,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-percent-label,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-label,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-value,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-summary-line,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-reset-hint {
-  color: rgba(226, 232, 240, 0.55);
-}
 
 .dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
   background: rgba(148, 163, 184, 0.5);
