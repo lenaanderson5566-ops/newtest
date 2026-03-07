@@ -965,11 +965,11 @@ export default {
     flex-direction: column;
     align-items: flex-end;
     gap: 6px;
-    padding: 8px 10px;
+    padding: 6px 8px;
     border-radius: 10px;
-    background: rgba(59, 130, 246, 0.08);
-    border: 1px solid rgba(59, 130, 246, 0.18);
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.08);
+    background: rgba(107, 114, 128, 0.08);
+    border: 1px solid rgba(107, 114, 128, 0.22);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
     max-width: min(62%, 280px);
   }
 
@@ -977,9 +977,9 @@ export default {
     display: inline-flex;
     font-size: 12px;
     font-weight: 700;
-    color: #1d4ed8;
-    background: rgba(59, 130, 246, 0.12);
-    border: 1px solid rgba(59, 130, 246, 0.42);
+    color: #4b5563;
+    background: rgba(107, 114, 128, 0.14);
+    border: 1px solid rgba(107, 114, 128, 0.35);
     border-radius: 999px;
     padding: 3px 10px;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
@@ -1654,8 +1654,8 @@ export default {
     }
 
     .current-plan-meta {
-      background: rgba(37, 99, 235, 0.2);
-      border-color: rgba(147, 197, 253, 0.32);
+      background: rgba(71, 85, 105, 0.26);
+      border-color: rgba(148, 163, 184, 0.36);
       box-shadow: none;
     }
 
@@ -1665,9 +1665,9 @@ export default {
     }
 
     .current-plan-badge {
-      color: #dbeafe;
-      border-color: rgba(191, 219, 254, 0.38);
-      background: rgba(59, 130, 246, 0.28);
+      color: #e5e7eb;
+      border-color: rgba(148, 163, 184, 0.46);
+      background: rgba(100, 116, 139, 0.42);
     }
 
     .filter-option:hover {
