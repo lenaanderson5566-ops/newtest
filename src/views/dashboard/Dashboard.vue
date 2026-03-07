@@ -413,14 +413,14 @@
               <div class="plan-summary-actions">
                 <button
                   class="plan-action-btn"
-                  :class="isPlanExpired ? 'primary' : 'secondary'"
+                  :class="isPlanExpired ? 'primary' : 'premium'"
                   @click="renewPlan"
                 >
                   立即续费
                 </button>
                 <button
                   class="plan-action-btn"
-                  :class="isPlanExpired ? 'secondary' : 'ghost'"
+                  :class="'subtle'"
                   @click="goToShop"
                 >
                   管理订阅
@@ -2786,30 +2786,40 @@ export default {
 
             .plan-action-btn {
               flex: 1;
-              border-radius: 10px;
+              border-radius: 12px;
               border: 1px solid transparent;
-              padding: 9px 12px;
+              padding: 10px 14px;
               font-size: 13px;
               font-weight: 600;
+              letter-spacing: 0.2px;
               cursor: pointer;
-              transition: all 0.2s ease;
+              transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+              &:hover {
+                transform: translateY(-1px);
+              }
+
+              &:active {
+                transform: translateY(0);
+              }
 
               &.primary {
                 color: #fff;
                 background: linear-gradient(135deg, #ef4444, #dc2626);
-                box-shadow: 0 6px 14px rgba(220, 38, 38, 0.22);
+                box-shadow: 0 8px 18px rgba(220, 38, 38, 0.24);
               }
 
-              &.secondary {
+              &.premium {
                 color: #fff;
                 background: linear-gradient(135deg, #3b82f6, #2563eb);
-                box-shadow: 0 6px 14px rgba(37, 99, 235, 0.2);
+                box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
               }
 
-              &.ghost {
-                color: #2563eb;
-                border-color: rgba(37, 99, 235, 0.35);
-                background: rgba(59, 130, 246, 0.08);
+              &.subtle {
+                color: #6b7280;
+                border-color: #e5e7eb;
+                background: #f8fafc;
+                box-shadow: none;
               }
             }
           }
@@ -4943,6 +4953,18 @@ export default {
 }
 
 
+
+.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle {
+  color: rgba(226, 232, 240, 0.75);
+  background: rgba(51, 65, 85, 0.45);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle:hover {
+  background: rgba(51, 65, 85, 0.65);
+}
+
+
 </style>
 
 <!-- 全局样式，不受scoped限制 -->
@@ -5246,6 +5268,18 @@ a.eztheme-btn {
 
 .dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
   background: rgba(148, 163, 184, 0.5);
+}
+
+
+
+.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle {
+  color: rgba(226, 232, 240, 0.75);
+  background: rgba(51, 65, 85, 0.45);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle:hover {
+  background: rgba(51, 65, 85, 0.65);
 }
 
 
