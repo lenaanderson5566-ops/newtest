@@ -3255,6 +3255,11 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      .card-title {
+        color: #eaf5ff;
+        letter-spacing: 0.2px;
+      }
     }
 
     .ip-location-refresh {
