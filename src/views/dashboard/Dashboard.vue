@@ -726,12 +726,6 @@ import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
 import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
 import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
 import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
-import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
-import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
-import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube-premium.svg';
-import serviceChatgptIcon from '@/assets/images/service-icons/chatgpt.svg';
-import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
-import serviceTiktokIcon from '@/assets/images/service-icons/tiktok.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 
@@ -2112,19 +2106,19 @@ export default {
     });
 
     const ipLocationServiceIconMap = {
-      'Netflix': serviceNetflixIcon,
-      'Disney+': serviceDisneyPlusIcon,
-      'YouTube Premium': serviceYoutubePremiumIcon,
-      'ChatGPT': serviceChatgptIcon,
-      Claude: serviceClaudeIcon,
-      TikTok: serviceTiktokIcon,
+      'Netflix': '/assets/service-icons/netflix.svg',
+      'Disney+': '/assets/service-icons/disney-plus.svg',
+      'YouTube Premium': '/assets/service-icons/youtube-premium.svg',
+      'ChatGPT': '/assets/service-icons/chatgpt.svg',
+      Claude: '/assets/service-icons/claude.svg',
+      TikTok: '/assets/service-icons/tiktok.svg',
     };
 
     const ipLocationServiceCatalog = computed(() => {
       const serviceCatalog = DASHBOARD_CONFIG.ipRegionServiceCatalog || [];
       return serviceCatalog.map((item) => ({
         ...item,
-        icon: ipLocationServiceIconMap[item.key] || serviceChatgptIcon,
+        icon: ipLocationServiceIconMap[item.key] || '/assets/service-icons/chatgpt.svg',
       }));
     });
 
@@ -3542,7 +3536,7 @@ export default {
         width: 16px;
         height: 16px;
         display: block;
-        filter: grayscale(1) opacity(0.86);
+        opacity: 0.86;
       }
 
       &.active {
@@ -3553,7 +3547,7 @@ export default {
         box-shadow: 0 4px 10px rgba(5, 18, 31, 0.35);
 
         .service-reference-icon {
-          filter: none;
+          opacity: 1;
         }
 
         &.is-red {
