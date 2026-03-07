@@ -372,7 +372,7 @@
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[{ 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
+            :class="[{ 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">
@@ -389,11 +389,14 @@
               </span>
             </div>
             <div v-if="card.key === 'total'" class="plan-summary-card">
+              <div v-if="isPlanExpired" class="expired-status-strip">
+                订阅已过期，服务已暂停
+              </div>
               <div class="plan-summary-section plan-summary-section-meta">
                 <div class="plan-status-hero">
                   <div class="plan-name-main">{{ userPlan.name || '-' }}</div>
                   <div class="plan-expire-meta">
-                    <span>{{ $t('dashboard.expiryDate') }} · {{ userPlan.expireDate || $t('dashboard.permanent') }}</span>
+                    <span>{{ planExpireMetaText }}</span>
                     <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
                   </div>
                 </div>
@@ -438,6 +441,9 @@
                   >
                     {{ secondaryPlanActionLabel }}
                   </button>
+                </div>
+                <div v-if="isPlanExpired" class="plan-action-helper-text">
+                  续费后将立即恢复节点访问
                 </div>
               </div>
             </div>
@@ -1239,7 +1245,15 @@ export default {
 
     const primaryPlanActionLabel = computed(() => {
       if (subscriptionStatus.value === 'active') return '管理订阅';
+      if (subscriptionStatus.value === 'expired') return '立即恢复订阅';
       return '立即续费';
+    });
+
+    const planExpireMetaText = computed(() => {
+      if (subscriptionStatus.value === 'expired') {
+        return `已于 ${userPlan.value.expireDate || '-'} 到期`;
+      }
+      return `${t('dashboard.expiryDate')} · ${userPlan.value.expireDate || t('dashboard.permanent')}`;
     });
 
     const secondaryPlanActionLabel = computed(() => {
@@ -2570,6 +2584,7 @@ export default {
       subscriptionStatus,
       subscriptionStatusLabel,
       primaryPlanActionLabel,
+      planExpireMetaText,
       secondaryPlanActionLabel,
       primaryActionClass,
       secondaryActionClass,
@@ -3023,6 +3038,15 @@ export default {
           }
         }
 
+        &.expired-main-card {
+          background: #f3f4f6;
+          border-color: #d1d5db;
+
+          .usage-card-title {
+            color: #6b7280;
+          }
+        }
+
         .plan-summary-card {
           width: 100%;
           display: flex;
@@ -3030,6 +3054,16 @@ export default {
           gap: 12px;
           margin-top: 6px;
           overflow: visible;
+
+          .expired-status-strip {
+            border-radius: 10px;
+            padding: 9px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #b91c1c;
+            background: rgba(248, 113, 113, 0.16);
+            border: 1px solid rgba(239, 68, 68, 0.32);
+          }
 
           .plan-summary-section {
             border: 1px solid #e8edf4;
@@ -3201,6 +3235,13 @@ export default {
                 box-shadow: none;
               }
             }
+          }
+
+          .plan-action-helper-text {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #475569;
+            text-align: center;
           }
 
           .switch {
@@ -5740,6 +5781,21 @@ export default {
 .dark-theme .traffic-board-card.subscription-card-muted {
   background: rgba(71, 85, 105, 0.2);
   border-color: rgba(148, 163, 184, 0.35);
+}
+
+.dark-theme .traffic-board-card.expired-main-card {
+  background: rgba(51, 65, 85, 0.62);
+  border-color: rgba(148, 163, 184, 0.42);
+}
+
+.dark-theme .traffic-board-card.expired-main-card .plan-summary-card .expired-status-strip {
+  color: #fecaca;
+  background: rgba(127, 29, 29, 0.35);
+  border-color: rgba(248, 113, 113, 0.36);
+}
+
+.dark-theme .traffic-board-card.expired-main-card .plan-summary-card .plan-action-helper-text {
+  color: rgba(203, 213, 225, 0.9);
 }
 
 
