@@ -474,6 +474,47 @@
       </div>
 
       <div class="dashboard-card usage-trend-card" v-if="hasPlan">
+        <div class="ip-location-card">
+          <div class="ip-location-header">
+            <h3>IP Location</h3>
+            <button
+              class="ip-location-refresh"
+              :disabled="ipLocationLoading"
+              :title="ipLocationLoading ? $t('common.loading') : $t('common.retry')"
+              @click="triggerIpLocationRefresh"
+            >
+              <IconRefresh :size="16" :class="{ spin: ipLocationLoading }" />
+            </button>
+          </div>
+          <div class="ip-location-map-shell">
+            <img :src="ipLocationMapImage" alt="IP location map" class="ip-location-map" />
+            <div
+              v-for="marker in ipLocationMarkers"
+              :key="marker.id"
+              class="ip-location-marker"
+              :class="{ 'is-self': marker.type === 'self' }"
+              :style="{ left: `${marker.x}%`, top: `${marker.y}%` }"
+            >
+              <span class="ip-location-dot"></span>
+              <span class="ip-location-label">{{ marker.label }}</span>
+            </div>
+          </div>
+          <div class="ip-location-footer">
+            <template v-if="ipLocationLoading">
+              {{ $t('common.loading') }}...
+            </template>
+            <template v-else-if="ipLocationError">
+              {{ ipLocationError }}
+            </template>
+            <template v-else-if="ipLocationDisplayText">
+              {{ ipLocationDisplayText }}
+            </template>
+            <template v-else>
+              {{ $t('trafficLog.noTrafficData') }}
+            </template>
+          </div>
+        </div>
+
         <div class="card-header">
           <h2 class="card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
@@ -677,6 +718,7 @@ import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
 import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
 import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
 import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
+import ipLocationMapImageAsset from '@/assets/images/ip-location-world-map.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 
@@ -795,6 +837,19 @@ export default {
     const trafficTrendLoading = ref(false);
     const trafficTrendError = ref(false);
     let trafficTrendChart = null;
+
+    const ipLocationLoading = ref(false);
+    const ipLocationError = ref('');
+    const ipLocationData = ref(null);
+    const ipLocationCache = ref(null);
+    const ipLocationDebounceTimer = ref(null);
+
+    const ipLocationMapImage = ipLocationMapImageAsset;
+    const ipLocationFallbackNodes = [
+      { id: 'tokyo', label: 'Tokyo', latitude: 35.6762, longitude: 139.6503, type: 'node' },
+      { id: 'frankfurt', label: 'Frankfurt', latitude: 50.1109, longitude: 8.6821, type: 'node' },
+      { id: 'sao-paulo', label: 'Sao Paulo', latitude: -23.5505, longitude: -46.6333, type: 'node' }
+    ];
 
     const qrCodeLoading = ref(true);
     const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription)
@@ -1925,6 +1980,134 @@ export default {
       return [];
     };
 
+
+    const normalizeIpLocation = (payload = {}) => {
+      const latitude = Number(
+        payload.latitude ?? payload.lat ?? payload.location?.latitude ?? payload.loc?.split(',')?.[0]
+      );
+      const longitude = Number(
+        payload.longitude ?? payload.lon ?? payload.lng ?? payload.location?.longitude ?? payload.loc?.split(',')?.[1]
+      );
+      const city = payload.city || payload.town || payload.district || '';
+      const region = payload.region || payload.regionName || payload.state || '';
+      const country = payload.country || payload.country_name || '';
+      const ip = payload.ip || payload.query || '';
+
+      if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+
+      return {
+        ip,
+        city,
+        region,
+        country,
+        latitude,
+        longitude
+      };
+    };
+
+    const fetchIpLocationFromSources = async () => {
+      const endpoints = [
+        'https://ipwho.is',
+        'https://api.myip.com',
+        'https://ipapi.co/json',
+        'https://ident.me/json',
+        'http://ip-api.com/json',
+        'https://api.ip.sb/geoip',
+        'https://ipinfo.io/json'
+      ];
+
+      const requests = endpoints.map((url) => (
+        fetch(url, { cache: 'no-store' })
+          .then(async (resp) => {
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            const data = await resp.json();
+            const normalized = normalizeIpLocation(data);
+            if (!normalized) throw new Error('Invalid location payload');
+            return normalized;
+          })
+      ));
+
+      const settled = await Promise.allSettled(requests);
+      const hit = settled.find((item) => item.status === 'fulfilled');
+      if (hit && hit.status === 'fulfilled') {
+        return hit.value;
+      }
+      throw new Error('IP location lookup failed on all providers.');
+    };
+
+    const scheduleIpLocationRefresh = (force = false) => {
+      if (ipLocationDebounceTimer.value) {
+        clearTimeout(ipLocationDebounceTimer.value);
+      }
+
+      ipLocationDebounceTimer.value = setTimeout(async () => {
+        const now = Date.now();
+        const cache = ipLocationCache.value;
+        if (!force && cache?.expiresAt > now) {
+          ipLocationData.value = cache.data;
+          ipLocationError.value = '';
+          return;
+        }
+
+        ipLocationLoading.value = true;
+        ipLocationError.value = '';
+
+        try {
+          const data = await fetchIpLocationFromSources();
+          ipLocationData.value = data;
+          ipLocationCache.value = {
+            data,
+            expiresAt: now + 5 * 60 * 1000
+          };
+        } catch (error) {
+          console.error('Failed to fetch IP location:', error);
+          ipLocationError.value = t('trafficLog.errorLoadingTraffic');
+        } finally {
+          ipLocationLoading.value = false;
+        }
+      }, 2000);
+    };
+
+    const triggerIpLocationRefresh = () => {
+      scheduleIpLocationRefresh(true);
+    };
+
+    const projectToMapCoordinates = (latitude, longitude) => {
+      const clampedLat = Math.max(-85, Math.min(85, Number(latitude) || 0));
+      const clampedLng = Math.max(-180, Math.min(180, Number(longitude) || 0));
+      const x = ((clampedLng + 180) / 360) * 100;
+      const y = ((90 - clampedLat) / 180) * 100;
+      return {
+        x: Math.max(1.5, Math.min(98.5, x)),
+        y: Math.max(3, Math.min(97, y))
+      };
+    };
+
+    const ipLocationDisplayText = computed(() => {
+      if (!ipLocationData.value) return '';
+      return [ipLocationData.value.city, ipLocationData.value.region, ipLocationData.value.country]
+        .filter(Boolean)
+        .join(', ');
+    });
+
+    const ipLocationMarkers = computed(() => {
+      const ownMarker = ipLocationData.value
+        ? [{
+          id: 'self-location',
+          label: ipLocationData.value.city || ipLocationData.value.country || 'You',
+          type: 'self',
+          ...projectToMapCoordinates(ipLocationData.value.latitude, ipLocationData.value.longitude)
+        }]
+        : [];
+
+      const nodeMarkers = ipLocationFallbackNodes.map((node) => ({
+        ...node,
+        ...projectToMapCoordinates(node.latitude, node.longitude)
+      }));
+
+      return [...nodeMarkers, ...ownMarker];
+    });
+
     const fetchTrafficTrend = async () => {
       trafficTrendLoading.value = true;
       trafficTrendError.value = false;
@@ -2057,6 +2240,7 @@ export default {
 
       fetchUserStats();
       fetchTrafficTrend();
+      scheduleIpLocationRefresh();
 
       updateQRCodeUrl();
     });
@@ -2144,6 +2328,10 @@ export default {
         trafficTrendChart.dispose();
         trafficTrendChart = null;
       }
+      if (ipLocationDebounceTimer.value) {
+        clearTimeout(ipLocationDebounceTimer.value);
+        ipLocationDebounceTimer.value = null;
+      }
     });
 
     const renewPlan = () => {
@@ -2184,6 +2372,7 @@ export default {
         fetchUserInfo();
         fetchUserStats();
         fetchNotices();
+        scheduleIpLocationRefresh();
         needRefreshData.value = false;
       }
 
@@ -2357,6 +2546,12 @@ export default {
       trafficTrendData,
       trafficTrendLoading,
       trafficTrendError,
+      ipLocationMapImage,
+      ipLocationLoading,
+      ipLocationError,
+      ipLocationDisplayText,
+      ipLocationMarkers,
+      triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
       showImportSubscription,
@@ -3086,6 +3281,97 @@ export default {
   .usage-trend-card {
     .card-body {
       padding-top: 6px;
+    }
+
+    .ip-location-card {
+      border: 1px solid rgba(112, 190, 255, 0.26);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 14px;
+      background: linear-gradient(180deg, rgba(10, 23, 40, 0.9), rgba(5, 13, 23, 0.92));
+      box-shadow: inset 0 0 0 1px rgba(38, 108, 163, 0.2), 0 10px 20px rgba(0, 0, 0, 0.18);
+
+      .ip-location-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        h3 {
+          margin: 0;
+          color: #d4e9ff;
+          font-size: 14px;
+          letter-spacing: 0.4px;
+        }
+      }
+
+      .ip-location-refresh {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        border: 1px solid rgba(112, 190, 255, 0.35);
+        background: rgba(18, 46, 73, 0.7);
+        color: #8ed0ff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        &:disabled {
+          opacity: 0.65;
+          cursor: not-allowed;
+        }
+
+        .spin {
+          animation: spin 0.9s linear infinite;
+        }
+      }
+
+      .ip-location-map-shell {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1200 / 560;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(83, 152, 217, 0.25);
+        margin-bottom: 10px;
+      }
+
+      .ip-location-map {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .ip-location-marker {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: rgba(211, 238, 255, 0.95);
+        font-size: 11px;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+
+        .ip-location-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #59c8ff;
+          box-shadow: 0 0 0 4px rgba(89, 200, 255, 0.18), 0 0 16px rgba(89, 200, 255, 0.65);
+        }
+
+        &.is-self .ip-location-dot {
+          background: #ff6fda;
+          box-shadow: 0 0 0 4px rgba(255, 111, 218, 0.2), 0 0 16px rgba(255, 111, 218, 0.8);
+        }
+      }
+
+      .ip-location-footer {
+        min-height: 20px;
+        color: #bddfff;
+        font-size: 12px;
+      }
     }
 
     .trend-state {
