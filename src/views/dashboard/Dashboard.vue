@@ -392,7 +392,7 @@
                 <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
                 <div class="plan-summary-value-wrap">
                   <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
-                  <span v-if="isPlanExpired" class="plan-expired-tag">已过期</span>
+                  <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
                 </div>
               </div>
               <div class="plan-summary-row auto-renewal-row">
@@ -413,18 +413,16 @@
               <div class="plan-summary-actions">
                 <button
                   class="plan-action-btn"
-                  :class="isPlanExpired ? 'primary' : 'premium'"
-                  @click="renewPlan"
+                  :class="primaryActionClass"
+                  @click="handlePrimaryPlanAction"
                 >
-                  立即续费
+                  {{ primaryPlanActionLabel }}
                 </button>
                 <button
-                  v-if="!isPlanExpired"
-                  class="plan-action-btn"
-                  :class="'subtle'"
-                  @click="goToShop"
+                  class="plan-action-btn subtle"
+                  @click="handleSecondaryPlanAction"
                 >
-                  管理订阅
+                  {{ secondaryPlanActionLabel }}
                 </button>
               </div>
             </div>
@@ -1145,6 +1143,55 @@ export default {
       if (!expiredAt) return false;
       return expiredAt * 1000 <= Date.now();
     });
+
+    const subscriptionStatus = computed(() => {
+      if (isPlanExpired.value) return 'expired';
+      if (userPlan.value.isExpireDatePermanent) return 'active';
+
+      const expiredAt = Number(userPlan.value.expiredAt || 0);
+      if (!expiredAt) return 'active';
+
+      const diffMs = expiredAt * 1000 - Date.now();
+      return diffMs <= 7 * 24 * 60 * 60 * 1000 ? 'expiring' : 'active';
+    });
+
+    const subscriptionStatusLabel = computed(() => {
+      if (subscriptionStatus.value === 'expired') return '已过期';
+      if (subscriptionStatus.value === 'expiring') return '即将到期';
+      return '有效中';
+    });
+
+    const primaryPlanActionLabel = computed(() => {
+      if (subscriptionStatus.value === 'active') return '管理订阅';
+      return '立即续费';
+    });
+
+    const secondaryPlanActionLabel = computed(() => {
+      if (subscriptionStatus.value === 'expired') return '重新选择套餐';
+      if (subscriptionStatus.value === 'expiring') return '管理订阅';
+      return '续费';
+    });
+
+    const primaryActionClass = computed(() => {
+      if (subscriptionStatus.value === 'active') return 'premium';
+      return 'primary';
+    });
+
+    const handlePrimaryPlanAction = () => {
+      if (subscriptionStatus.value === 'active') {
+        goToShop();
+        return;
+      }
+      renewPlan();
+    };
+
+    const handleSecondaryPlanAction = () => {
+      if (subscriptionStatus.value === 'active') {
+        renewPlan();
+        return;
+      }
+      goToShop();
+    };
 
     const isLowTraffic = computed(() => {
       const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
@@ -2287,6 +2334,13 @@ export default {
       isExpiringSoon,
       isExpired,
       isPlanExpired,
+      subscriptionStatus,
+      subscriptionStatusLabel,
+      primaryPlanActionLabel,
+      secondaryPlanActionLabel,
+      primaryActionClass,
+      handlePrimaryPlanAction,
+      handleSecondaryPlanAction,
       isLowTraffic,
       isTrafficDepleted,
       hasPlan,
@@ -2736,15 +2790,28 @@ export default {
             word-break: break-word;
           }
 
-          .plan-expired-tag {
+          .plan-status-tag {
             display: inline-flex;
             align-items: center;
             border-radius: 999px;
             padding: 2px 8px;
             font-size: 12px;
             font-weight: 600;
-            color: #dc2626;
-            background: rgba(220, 38, 38, 0.1);
+
+            &.is-active {
+              color: #15803d;
+              background: rgba(34, 197, 94, 0.15);
+            }
+
+            &.is-expiring {
+              color: #b45309;
+              background: rgba(245, 158, 11, 0.16);
+            }
+
+            &.is-expired {
+              color: #dc2626;
+              background: rgba(220, 38, 38, 0.1);
+            }
           }
 
           .plan-summary-desc {
@@ -4898,7 +4965,17 @@ export default {
 
 }
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-expired-tag {
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expiring {
+  color: #fcd34d;
+  background: rgba(245, 158, 11, 0.2);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expired {
   color: #fca5a5;
   background: rgba(239, 68, 68, 0.2);
 }
@@ -5201,7 +5278,17 @@ a.eztheme-btn {
   background-color: rgba(var(--theme-color-rgb), 0.06) !important;
 }
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-expired-tag {
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expiring {
+  color: #fcd34d;
+  background: rgba(245, 158, 11, 0.2);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expired {
   color: #fca5a5;
   background: rgba(239, 68, 68, 0.2);
 }
