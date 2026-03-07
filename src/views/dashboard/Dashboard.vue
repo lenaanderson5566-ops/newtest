@@ -463,7 +463,7 @@
                 </div>
               </template>
             </div>
-            <div v-if="card.key === 'package'" class="usage-package-note">
+            <div v-if="card.key === 'package'" class="usage-package-note persist-visible">
               {{ $t('dashboard.packageUsageNote') }}
             </div>
             <div v-if="card.key === 'subscription'" class="usage-reset-hint">
