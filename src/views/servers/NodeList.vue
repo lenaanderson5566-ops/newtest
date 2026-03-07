@@ -64,6 +64,20 @@
         </div>
 
         <div class="no-plan-map">
+          <svg class="world-map-svg" viewBox="0 0 1000 420" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+            <g class="continent-layer">
+              <path d="M96 168l34-26 44 10 28-18 37 16 40-8 22 20 31 4 28 22-16 24-34 10-21 27-37 6-28-20-20-26-35-6-29-20z" />
+              <path d="M364 126l32-18 48 8 23 18 38 4 30 20 22-10 26 12-8 24-27 16-4 24-40 8-27 22-38-8-13-26 6-32-28-20z" />
+              <path d="M502 240l34 12 29-8 26 14 10 30-18 20-38 0-36-18-19-22z" />
+              <path d="M598 138l42-20 58 6 42-16 46 20 8 28-28 22-38-2-34 10-27 22-45-6-27-24z" />
+              <path d="M744 220l29-18 36 8 24 22-8 24-27 12-30-10-20-20z" />
+              <path d="M802 296l30-16 24 10 12 20-12 16-30 4-24-12z" />
+            </g>
+            <g class="grid-lines">
+              <path d="M0 110h1000M0 210h1000M0 310h1000" />
+              <path d="M170 0v420M340 0v420M510 0v420M680 0v420M850 0v420" />
+            </g>
+          </svg>
           <div class="map-glow region-jp">JP</div>
           <div class="map-glow region-sg">SG</div>
           <div class="map-glow region-hk">HK</div>
@@ -296,7 +310,7 @@ const countryBadgeClass = (countryTag) => {
 };
 
 const hasActivePlan = computed(() => {
-  if (!userInfo.value) return lines.value.length > 0;
+  if (!userInfo.value) return false;
 
   const planId = Number(userInfo.value.plan_id || userInfo.value.planId || userInfo.value.plan?.id || 0);
   if (!planId) return false;
@@ -740,9 +754,30 @@ onMounted(() => {
       background-size: 42px 42px;
     }
 
+    .world-map-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+
+      .continent-layer {
+        fill: rgba(59, 130, 246, 0.16);
+        stroke: rgba(147, 197, 253, 0.5);
+        stroke-width: 2;
+        filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.25));
+      }
+
+      .grid-lines {
+        fill: none;
+        stroke: rgba(148, 163, 184, 0.2);
+        stroke-width: 1;
+      }
+    }
+
     .map-glow {
       position: absolute;
-      z-index: 1;
+      z-index: 2;
       width: 52px;
       height: 52px;
       border-radius: 999px;
