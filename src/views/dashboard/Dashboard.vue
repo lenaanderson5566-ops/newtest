@@ -500,6 +500,20 @@
               <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
               <span class="ip-region">{{ ipLocationDisplayText }}</span>
             </div>
+            <div class="ip-service-reference" v-if="ipLocationServiceReferences.length">
+              <div class="service-reference-title">地区服务参考</div>
+              <div class="service-reference-tags">
+                <span
+                  v-for="service in ipLocationServiceReferences"
+                  :key="`ip-service-${service}`"
+                  class="service-reference-tag"
+                  :class="ipLocationCodeBadgeClass"
+                >
+                  {{ service }}
+                </span>
+              </div>
+              <div class="service-reference-note">静态地区服务参考，不代表已解锁检测结果</div>
+            </div>
           </div>
           <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
         </div>
@@ -2071,10 +2085,16 @@ export default {
 
     const ipLocationCodeBadgeClass = computed(() => {
       const code = ipLocationCode.value;
-      if (['US', 'CA', 'NL'].includes(code)) return 'is-blue';
-      if (['HK', 'SG'].includes(code)) return 'is-pink';
-      if (['DE', 'JP', 'KR'].includes(code)) return 'is-red';
-      return 'is-red';
+      const badgeMap = DASHBOARD_CONFIG.ipRegionBadgeByCountryCode || {};
+      return badgeMap[code] || 'is-red';
+    });
+
+    const ipLocationServiceReferences = computed(() => {
+      const code = ipLocationCode.value;
+      const serviceMap = DASHBOARD_CONFIG.ipRegionServiceReferenceByCountryCode || {};
+      const defaultServices = DASHBOARD_CONFIG.ipRegionServiceReferenceDefault || [];
+      const services = serviceMap[code] || defaultServices;
+      return Array.isArray(services) ? services : [];
     });
 
     const fetchTrafficTrend = async () => {
@@ -2521,6 +2541,7 @@ export default {
       ipLocationDisplayText,
       ipLocationCode,
       ipLocationCodeBadgeClass,
+      ipLocationServiceReferences,
       triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
@@ -3435,6 +3456,51 @@ export default {
     .ip-region {
       color: #bddfff;
       font-size: 13px;
+    }
+
+    .ip-service-reference {
+      margin-top: 2px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .service-reference-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #9fd0f5;
+      letter-spacing: 0.2px;
+    }
+
+    .service-reference-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .service-reference-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      color: #fff;
+      background: linear-gradient(135deg, #d90429, #9d174d);
+      box-shadow: 0 5px 12px rgba(157, 23, 77, 0.28);
+
+      &.is-red { background: linear-gradient(135deg, #d90429, #9d174d); }
+      &.is-pink { background: linear-gradient(135deg, #db2777, #be185d); }
+      &.is-blue { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); }
+    }
+
+    .service-reference-note {
+      font-size: 11px;
+      line-height: 1.35;
+      color: #7fb8e4;
+      opacity: 0.9;
     }
   }
 
