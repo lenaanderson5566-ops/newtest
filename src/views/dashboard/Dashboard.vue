@@ -3226,7 +3226,7 @@ export default {
       @media (min-width: 1200px) {
         &.traffic-board-card.total-main-card {
           grid-column: 1;
-          grid-row: 2 / span 2;
+          grid-row: 1 / span 2;
           min-height: 100%;
         }
 
