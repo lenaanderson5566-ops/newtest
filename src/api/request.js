@@ -111,14 +111,14 @@ request.interceptors.request.use(
         }
       }
     } catch (error) {
-      console.error("应用自定义标头失败:", error);
+      console.error("Failed to apply custom headers:", error);
     }
 
     return config;
   },
   (error) => {
-    console.error("请求拦截器错误:", error);
-    return Promise.reject(new Error("请求配置错误"));
+    console.error("Request interceptor error:", error);
+    return Promise.reject(new Error("Request configuration error"));
   }
 );
 
@@ -127,8 +127,8 @@ request.interceptors.response.use(
     try {
       const res = response.data;
 
-      if (res && res.message === "未登录或登陆已过期") {
-        console.log("检测到登录已过期，执行登出操作");
+      if (res && (res.message === "未登录或登陆已过期" || res.message === "Not logged in or session expired")) {
+        console.log("Login expired, forcing logout.");
         const { forceLogout } = require("./auth");
         forceLogout();
         window.location.href = "/#/login";
@@ -137,12 +137,12 @@ request.interceptors.response.use(
 
       return res;
     } catch (err) {
-      console.error("响应数据处理错误:", err);
-      return Promise.reject(new Error("响应数据处理错误"));
+      console.error("Failed to process response data:", err);
+      return Promise.reject(new Error("Failed to process response data"));
     }
   },
   (error) => {
-    console.error("请求错误:", error);
+    console.error("Request error:", error);
 
     if (error.response && error.response.data && error.response.data.message) {
       error.response.message = error.response.data.message;
@@ -150,25 +150,25 @@ request.interceptors.response.use(
       const statusCode = error.response.status;
       switch (statusCode) {
         case 400:
-          error.response.message = "请求参数错误";
+          error.response.message = "Invalid request parameters";
           break;
         case 401:
-          error.response.message = "未授权，请重新登录";
+          error.response.message = "Unauthorized, please log in again";
           break;
         case 403:
-          error.response.message = "拒绝访问";
+          error.response.message = "Access denied";
           break;
         case 404:
-          error.response.message = "请求的资源不存在";
+          error.response.message = "Requested resource not found";
           break;
         default:
-          error.response.message = `请求失败 (${statusCode})`;
+          error.response.message = `Request failed (${statusCode})`;
       }
     } else if (error.message) {
       if (error.message.includes("timeout")) {
-        error.message = "请求超时";
+        error.message = "Request timeout";
       } else if (error.message.includes("Network Error")) {
-        error.message = "网络错误，请检查您的网络连接";
+        error.message = "Network error, please check your connection";
       }
     }
 

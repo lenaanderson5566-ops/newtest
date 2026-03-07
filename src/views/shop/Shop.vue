@@ -13,63 +13,9 @@
         </div>
       </div>
 
-      <!-- 套餐统计卡片组 -->
+      <!-- 筛选选项卡 - 周期切换 -->
 
-      <div class="stats-grid" v-if="SHOP_CONFIG.showPlanFeatureCards">
-        <div class="stats-card animate-card">
-          <div class="stats-icon">
-            <IconRocket :size="32" />
-          </div>
-
-          <div class="stats-info">
-            <div class="stats-value">{{ $t("shop.stats.global_nodes") }}</div>
-
-            <div class="stats-label">
-              {{ $t("shop.stats.global_nodes_desc") }}
-            </div>
-          </div>
-        </div>
-
-        <div class="stats-card animate-card">
-          <div class="stats-icon">
-            <IconBolt :size="32" />
-          </div>
-
-          <div class="stats-info">
-            <div class="stats-value">{{ $t("shop.stats.speed") }}</div>
-
-            <div class="stats-label">{{ $t("shop.stats.speed_desc") }}</div>
-          </div>
-        </div>
-
-        <div class="stats-card animate-card">
-          <div class="stats-icon">
-            <IconDeviceTv :size="32" />
-          </div>
-
-          <div class="stats-info">
-            <div class="stats-value">{{ $t("shop.stats.streaming") }}</div>
-
-            <div class="stats-label">{{ $t("shop.stats.streaming_desc") }}</div>
-          </div>
-        </div>
-
-        <div class="stats-card animate-card">
-          <div class="stats-icon">
-            <IconDevices :size="32" />
-          </div>
-
-          <div class="stats-info">
-            <div class="stats-value">{{ $t("shop.stats.devices") }}</div>
-
-            <div class="stats-label">{{ $t("shop.stats.devices_desc") }}</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 筛选选项卡 - 设计成圆形切换按钮 -->
-
-      <div class="filter-toggle-container">
+      <div class="filter-toggle-container" v-if="filters.length > 0">
         <div class="filter-toggle-wrapper">
           <div
             v-for="filter in filters"
@@ -84,9 +30,7 @@
               <IconCircle v-else />
             </div>
 
-            <span class="option-text">{{
-              $t(`shop.filter.${filter.value}`)
-            }}</span>
+            <span class="option-text">{{ $t(filter.labelKey) }}</span>
           </div>
         </div>
       </div>
@@ -106,7 +50,7 @@
 
           <p>{{ $t("shop.try_different_filter") }}</p>
 
-          <button class="btn-reset-filter" @click="selectedFilter = 'all'">
+          <button class="btn-reset-filter" @click="selectedFilter = fallbackFilterValue">
             {{ $t("shop.reset_filter") }}
           </button>
         </div>
@@ -142,28 +86,24 @@
 
         <div
           class="plan-card"
+          :class="{ 'current-plan-card': isCurrentPlan(plan) }"
           v-else
           v-for="plan in filteredPlans"
           :key="plan.id"
         >
           <div class="card-header">
-            <h2 class="card-title">{{ plan.name }}</h2>
+            <div class="header-main">
+              <h2 class="card-title">{{ plan.name }}</h2>
+            </div>
 
-            <div
-              class="card-badge glassmorphism stock-plenty"
-              v-if="
-                plan.capacity_limit >= SHOP_CONFIG.lowStockThreshold ||
-                plan.capacity_limit === null
-              "
-            >
-              <IconBox :size="16" class="badge-icon" />
-
-              <span>{{ $t("shop.plan.stock.plenty") }}</span>
+            <div v-if="isCurrentPlan(plan)" class="current-plan-meta">
+              <span class="current-plan-badge">{{ $t("shop.plan.current") }}</span>
             </div>
 
             <div
               class="card-badge glassmorphism stock-warning"
-              v-else-if="
+              v-if="
+                !isCurrentPlan(plan) &&
                 plan.capacity_limit > 0 &&
                 plan.capacity_limit < SHOP_CONFIG.lowStockThreshold
               "
@@ -200,33 +140,17 @@
                   )
                 }}</span>
               </div>
-
-              <!-- 支持的周期标签 - 改进显示效果 -->
-
-              <div class="supported-periods" v-if="!SHOP_CONFIG.hidePeriodTabs">
-                <div class="period-labels">
-                  <span
-                    v-for="(price, type) in getPlanPrices(plan)"
-                    :key="type"
-                    class="period-tag"
-                    :class="{
-                      active: getDisplayPriceType(plan) === type,
-
-                      disabled: price === null,
-                    }"
-                    @click="
-                      price !== null && selectPlanPriceType(plan.id, type)
-                    "
-                  >
-                    <IconCheck v-if="price !== null" class="tag-icon check" />
-
-                    <IconX v-else class="tag-icon error" />
-
-                    {{ $t(`shop.plan.price_options.${getPriceTypeKey(type)}`) }}
-                  </span>
-                </div>
-              </div>
             </div>
+
+            <button
+              class="btn-purchase glassmorphism"
+              :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
+              @click="purchasePlan(plan)"
+              :disabled="plan.capacity_limit === 0"
+            >
+              <IconShoppingCart class="btn-icon" />
+              <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
+            </button>
 
             <!-- 周期折扣计算 -->
 
@@ -290,38 +214,14 @@
               <div v-else class="html-content" v-html="plan.content"></div>
             </div>
 
-            <!-- 购买按钮 -->
-
-            <button
-              class="btn-purchase glassmorphism"
-              :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
-              @click="purchasePlan(plan)"
-              :disabled="plan.capacity_limit === 0"
-            >
-              <IconShoppingCart class="btn-icon" />
-
-              <span class="btn-text">{{
-                plan.capacity_limit === 0
-                  ? $t("shop.plan.sold_out_btn")
-                  : $t("shop.plan.purchase")
-              }}</span>
-            </button>
           </div>
         </div>
       </div>
+
+
     </div>
   </div>
 
-  <!-- 弹窗组件 -->
-
-  <ShopPopup
-    :show-popup="showPopup"
-    :title="popupConfig.title"
-    :content="popupConfig.content"
-    :cooldown-hours="popupConfig.cooldownHours"
-    :close-wait-seconds="popupConfig.closeWaitSeconds"
-    @close="handlePopupClose"
-  />
 </template>
 
 <script>
@@ -332,16 +232,12 @@ import { useI18n } from "vue-i18n";
 import { useToast } from "@/composables/useToast";
 
 import { fetchPlans, getCommConfig } from "@/api/shop";
+import { getSubscribe } from "@/api/dashboard";
 
 import { SHOP_CONFIG } from "@/utils/baseConfig";
 
-import ShopPopup from "@/components/shop/ShopPopup.vue";
 
 import {
-  IconRocket,
-  IconBolt,
-  IconDeviceTv,
-  IconDevices,
   IconCheck,
   IconX,
   IconShoppingCart,
@@ -357,14 +253,10 @@ export default {
   name: "ShopView",
 
   components: {
-    IconRocket,
-
-    IconBolt,
-
-    IconDeviceTv,
-
-    IconDevices,
-
+  
+  
+  
+  
     IconCheck,
 
     IconX,
@@ -377,9 +269,7 @@ export default {
 
     IconCircle,
 
-    IconCircleCheck,
-
-    ShopPopup,
+    IconCircleCheck
   },
 
   setup() {
@@ -388,6 +278,22 @@ export default {
     const { showToast } = useToast();
 
     const router = useRouter();
+    const RECURRING_PERIOD_TYPES = [
+      "month_price",
+      "quarter_price",
+      "half_year_price",
+      "year_price",
+      "two_year_price",
+      "three_year_price",
+    ];
+
+    const initFilterFromRoute = () => {
+      const qf = router.currentRoute.value.query.filter;
+      if (!qf) return;
+      if (RECURRING_PERIOD_TYPES.includes(qf)) {
+        selectedFilter.value = qf;
+      }
+    };
 
     const loading = reactive({
       plans: true,
@@ -402,76 +308,56 @@ export default {
     const currencySymbol = ref("¥");
 
     const selectedPriceType = reactive({});
+    const currentPlanId = ref(null);
 
     const paymentMethods = ref([]);
 
-    const selectedFilter = ref("all");
+    const selectedFilter = ref("month_price");
 
     const filterToggle = ref(null);
 
-    const filters = [
-      { label: "全部", value: "all" },
-
-      { label: "周期性", value: "recurring" },
-
-      { label: "一次性", value: "onetime" },
-    ];
-
-    const showPopup = ref(false);
-
-    const popupConfig = reactive({
-      title: "",
-
-      content: "",
-
-      cooldownHours: 2,
-
-      closeWaitSeconds: 0,
+    const filters = computed(() => {
+      return RECURRING_PERIOD_TYPES
+        .filter((type) => plans.value.some((plan) => hasPeriodPrice(plan, type)))
+        .map((type) => ({
+          value: type,
+          labelKey: `shop.plan.price_options.${getPriceTypeKey(type)}`,
+        }));
     });
 
-    const handlePopupClose = () => {
-      showPopup.value = false;
-    };
-
-    const initPopup = () => {
-      if (SHOP_CONFIG.popup && SHOP_CONFIG.popup.enabled) {
-        popupConfig.title = SHOP_CONFIG.popup.title || "";
-
-        popupConfig.content = SHOP_CONFIG.popup.content || "";
-
-        popupConfig.cooldownHours = SHOP_CONFIG.popup.cooldownHours || 24;
-
-        popupConfig.closeWaitSeconds = SHOP_CONFIG.popup.closeWaitSeconds || 0;
-
-        if (popupConfig.cooldownHours === 0) {
-          showPopup.value = true;
-
-          return;
-        }
-
-        const closeTime = localStorage.getItem("shop_popup_close_time");
-
-        if (!closeTime) {
-          showPopup.value = true;
-        } else {
-          const now = new Date().getTime();
-
-          const elapsed = now - parseInt(closeTime);
-
-          const cooldownMs = popupConfig.cooldownHours * 60 * 60 * 1000;
-
-          if (elapsed >= cooldownMs) {
-            showPopup.value = true;
-          }
-        }
-      }
-    };
+    const fallbackFilterValue = computed(() => {
+      return filters.value[0]?.value || RECURRING_PERIOD_TYPES[0];
+    });
 
     const currentLanguage = computed(() => locale.value);
 
     const setFilter = (filter) => {
       selectedFilter.value = filter;
     };
+
+    const fetchCurrentSubscription = async () => {
+      try {
+        const response = await getSubscribe();
+        const subscribe = response?.data || {};
+        currentPlanId.value = subscribe.plan_id || subscribe.plan?.id || null;
+      } catch (error) {
+        console.error('Failed to fetch current subscription:', error);
+        currentPlanId.value = null;
+      }
+    };
+
+    const normalizePriceValue = (plan, periodType) => {
+      if (!plan || !periodType) return null;
+      const rawValue = plan[periodType];
+      if (rawValue === null || rawValue === undefined || rawValue === "") {
+        return null;
+      }
+      const parsed = Number(rawValue);
+      return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
+    };
+
+    const hasPeriodPrice = (plan, periodType) =>
+      normalizePriceValue(plan, periodType) !== null;
 
     const getPlanMainPriceType = (plan) => {
       const priceTypes = SHOP_CONFIG.periodOrder || [
@@ -488,58 +374,140 @@ export default {
         (type) => type !== "onetime_price"
       );
 
-      const defaultRecurring = recurringTypes.find(
-        (type) => plan[type] !== null
+      const defaultRecurring = recurringTypes.find((type) =>
+        hasPeriodPrice(plan, type)
       );
 
       if (defaultRecurring) {
         return defaultRecurring;
       }
 
-      if (plan.onetime_price !== null) {
+      if (hasPeriodPrice(plan, "onetime_price")) {
         return "onetime_price";
       }
 
-      return priceTypes.find((type) => plan[type] !== null) || priceTypes[0];
+      return priceTypes.find((type) => hasPeriodPrice(plan, type)) || priceTypes[0];
     };
 
     const getPlanMainPrice = (plan) => {
       const priceType = getDisplayPriceType(plan);
-
-      if (
-        !priceType ||
-        plan[priceType] === null ||
-        plan[priceType] === undefined
-      ) {
+      const priceValue = normalizePriceValue(plan, priceType);
+      if (priceValue === null) {
         return "--";
       }
 
-      return (plan[priceType] / 100).toFixed(2);
+      return (priceValue / 100).toFixed(2);
     };
 
     watch(
-      () => selectedFilter.value,
+      () => filters.value,
+      (nextFilters) => {
+        const validFilterValues = nextFilters.map((filter) => filter.value);
+        if (!validFilterValues.includes(selectedFilter.value)) {
+          selectedFilter.value = fallbackFilterValue.value;
+        }
+      },
+      { immediate: true }
+    );
+
+    watch(
+      () => router.currentRoute.value.query.filter,
       () => {
-        console.log("筛选条件变化为:", selectedFilter.value);
+        initFilterFromRoute();
       }
     );
 
     watch(
       () => currentLanguage.value,
-      () => {
-        console.log("语言变化为:", currentLanguage.value);
+      (newLanguage, oldLanguage) => {
+        if (!oldLanguage || newLanguage === oldLanguage) {
+          return;
+        }
+
+        fetchPlanData();
       }
     );
 
     onMounted(() => {
-      selectedFilter.value = "all";
+      initFilterFromRoute();
     });
+
+    const formatTraffic = (bytes) => {
+      const value = Number(bytes || 0);
+      if (!Number.isFinite(value) || value <= 0) return "0 B";
+      const units = ["B", "KB", "MB", "GB", "TB"];
+      let size = value;
+      let idx = 0;
+      while (size >= 1024 && idx < units.length - 1) {
+        size /= 1024;
+        idx += 1;
+      }
+      return `${size.toFixed(size >= 10 || idx === 0 ? 0 : 1)} ${units[idx]}`;
+    };
+
+    const isCurrentPlan = (plan) => Number(plan?.id) === Number(currentPlanId.value);
+
+    const isTrafficPackagePlan = (plan) => isOnetimeOnly(plan);
+
+    const currentPlan = computed(() => {
+      return plans.value.find((plan) => isCurrentPlan(plan)) || null;
+    });
+
+    const currentComparePeriod = computed(() => {
+      if (!currentPlan.value) return "";
+      if (RECURRING_PERIOD_TYPES.includes(selectedFilter.value) && hasPeriodPrice(currentPlan.value, selectedFilter.value)) {
+        return selectedFilter.value;
+      }
+      return getDisplayPriceType(currentPlan.value);
+    });
+
+    const getPriceByPeriod = (plan, periodType) => {
+      return normalizePriceValue(plan, periodType);
+    };
+
+    const getComparablePeriodType = (plan) => {
+      if (RECURRING_PERIOD_TYPES.includes(selectedFilter.value)) {
+        return selectedFilter.value;
+      }
+      return getDisplayPriceType(plan);
+    };
+
+    const isSameSpecPlan = (plan) => {
+      if (!currentPlanId.value || isTrafficPackagePlan(plan)) return false;
+
+      const periodType = getComparablePeriodType(plan);
+      const currentPrice = getPriceByPeriod(currentPlan.value, periodType);
+      const targetPrice = getPriceByPeriod(plan, periodType);
+
+      if (currentPrice === null || targetPrice === null) return false;
+      return targetPrice === currentPrice;
+    };
+
+    const isHigherSpecPlan = (plan) => {
+      if (!currentPlanId.value || isTrafficPackagePlan(plan)) return false;
+
+      const periodType = getComparablePeriodType(plan);
+      const currentPrice = getPriceByPeriod(currentPlan.value, periodType);
+      const targetPrice = getPriceByPeriod(plan, periodType);
+
+      if (currentPrice === null || targetPrice === null) return false;
+      return targetPrice > currentPrice;
+    };
+
+    const getPurchaseButtonText = (plan) => {
+      if (plan.capacity_limit === 0) return t("shop.plan.sold_out_btn");
+      if (isTrafficPackagePlan(plan)) return t("shop.plan.add_quota");
+      if (!currentPlanId.value) return t("shop.plan.purchase");
+      if (isSameSpecPlan(plan)) return t("shop.plan.renew");
+      if (isHigherSpecPlan(plan)) return t("shop.plan.upgrade_to", { name: plan.name });
+      return t("shop.plan.purchase");
+    };
 
     const fetchPlanData = async () => {
       loading.plans = true;
 
       try {
-        const response = await fetchPlans();
+        const response = await fetchPlans(currentLanguage.value);
 
         if (response.data) {
           plans.value = response.data;
@@ -565,17 +533,17 @@ export default {
                   (type) => type !== "onetime_price"
                 );
 
-                const defaultRecurring = recurringTypes.find(
-                  (type) => plan[type] !== null
+                const defaultRecurring = recurringTypes.find((type) =>
+                  hasPeriodPrice(plan, type)
                 );
 
                 if (defaultRecurring) {
                   selectedPriceType[plan.id] = defaultRecurring;
-                } else if (plan.onetime_price !== null) {
+                } else if (hasPeriodPrice(plan, "onetime_price")) {
                   selectedPriceType[plan.id] = "onetime_price";
                 } else {
                   selectedPriceType[plan.id] =
-                    priceTypes.find((type) => plan[type] !== null) ||
+                    priceTypes.find((type) => hasPeriodPrice(plan, type)) ||
                     priceTypes[0];
                 }
               });
@@ -584,7 +552,7 @@ export default {
           }
         }
       } catch (error) {
-        showToast("获取套餐数据失败", "error");
+        showToast(t("shop.failed_to_fetch_plan"), "error");
       } finally {
         loading.plans = false;
       }
@@ -602,7 +570,7 @@ export default {
           currencySymbol.value = response.data.currency_symbol || "¥";
         }
       } catch (error) {
-        console.error("获取系统配置失败:", error);
+        console.error("Failed to fetch system config:", error);
       } finally {
         loading.config = false;
       }
@@ -622,8 +590,8 @@ export default {
       const result = {};
 
       priceTypes.forEach((type) => {
-        if (plan[type] !== null && plan[type] !== undefined) {
-          result[type] = plan[type];
+        if (hasPeriodPrice(plan, type)) {
+          result[type] = normalizePriceValue(plan, type);
         }
       });
 
@@ -650,56 +618,17 @@ export default {
       return keyMap[type] || "";
     };
 
-    const getPriceTypeName = (type) => {
-      const nameMap = {
-        month_price: "月付",
-
-        quarter_price: "季付",
-
-        half_year_price: "半年付",
-
-        year_price: "年付",
-
-        two_year_price: "两年付",
-
-        three_year_price: "三年付",
-
-        onetime_price: "一次性",
-      };
-
-      return nameMap[type] || "";
-    };
-
-    const getPeriodText = (type) => {
-      const textMap = {
-        month_price: "/ 月",
-
-        quarter_price: "/ 季",
-
-        half_year_price: "/ 半年",
-
-        year_price: "/ 年",
-
-        two_year_price: "/ 两年",
-
-        three_year_price: "/ 三年",
-
-        onetime_price: "",
-      };
-
-      return textMap[type] || "";
-    };
-
     const selectPriceType = (planId, type) => {
       selectedPriceType[planId] = type;
     };
 
     const getSelectedPrice = (plan) => {
       const type = selectedPriceType[plan.id];
+      const priceValue = normalizePriceValue(plan, type);
 
-      if (plan[type] === null) return "--";
+      if (priceValue === null) return "--";
 
-      return (plan[type] / 100).toFixed(2);
+      return (priceValue / 100).toFixed(2);
     };
 
     const isJsonContent = (content) => {
@@ -746,102 +675,63 @@ export default {
       });
     };
 
+    const visiblePlans = computed(() => plans.value.filter((plan) => !isOnetimeOnly(plan)));
+
     const filteredPlans = computed(() => {
-      if (selectedFilter.value === "all") {
-        return plans.value;
-      } else if (selectedFilter.value === "recurring") {
-        return plans.value.filter(
-          (plan) => hasRecurringPrice(plan) && !isOnetimeOnly(plan)
-        );
-      } else if (selectedFilter.value === "onetime") {
-        return plans.value.filter((plan) => plan.onetime_price !== null);
+      if (RECURRING_PERIOD_TYPES.includes(selectedFilter.value)) {
+        return visiblePlans.value.filter((plan) => hasPeriodPrice(plan, selectedFilter.value));
       }
 
-      return plans.value;
+      return visiblePlans.value.filter((plan) => hasPeriodPrice(plan, fallbackFilterValue.value));
     });
 
     const hasRecurringPrice = (plan) => {
-      const recurringTypes = [
-        "month_price",
-        "quarter_price",
-        "half_year_price",
-        "year_price",
-        "two_year_price",
-        "three_year_price",
-      ];
-
-      return recurringTypes.some((type) => plan[type] !== null);
+      return RECURRING_PERIOD_TYPES.some((type) => hasPeriodPrice(plan, type));
     };
 
     const isOnetimeOnly = (plan) => {
-      const recurringTypes = [
-        "month_price",
-        "quarter_price",
-        "half_year_price",
-        "year_price",
-        "two_year_price",
-        "three_year_price",
-      ];
-
-      return (
-        plan.onetime_price !== null &&
-        !recurringTypes.some((type) => plan[type] !== null)
-      );
+      return hasPeriodPrice(plan, "onetime_price") && !hasRecurringPrice(plan);
     };
 
     const selectPlanPriceType = (planId, type) => {
       const plan = plans.value.find((p) => p.id === planId);
 
-      if (plan && plan[type] !== null) {
+      if (plan && hasPeriodPrice(plan, type)) {
         selectedPriceType[planId] = type;
       }
     };
 
     const getDisplayPriceType = (plan) => {
-      if (selectedPriceType[plan.id]) {
+      if (RECURRING_PERIOD_TYPES.includes(selectedFilter.value) && hasPeriodPrice(plan, selectedFilter.value)) {
+        return selectedFilter.value;
+      }
+
+      if (selectedPriceType[plan.id] && hasPeriodPrice(plan, selectedPriceType[plan.id])) {
         return selectedPriceType[plan.id];
       }
 
       if (SHOP_CONFIG.autoSelectMaxPeriod) {
-        const priceType = getPlanMainPriceType(plan);
-
-        return priceType;
+        return getPlanMainPriceType(plan);
       }
 
-      const availablePrices = Object.entries(getPlanPrices(plan))
-
-        .filter(([, price]) => price !== null)
-
-        .map(([type]) => type);
-
-      if (availablePrices.length > 0) {
-        return availablePrices[0];
+      const availableRecurring = RECURRING_PERIOD_TYPES.filter((type) => hasPeriodPrice(plan, type));
+      if (availableRecurring.length > 0) {
+        return availableRecurring[0];
       }
 
-      return "";
+      return hasPeriodPrice(plan, "onetime_price") ? "onetime_price" : "";
     };
 
     onMounted(async () => {
       try {
         loading.plans = true;
 
-        await Promise.all([fetchPlanData(), fetchConfig()]);
+        await Promise.all([fetchPlanData(), fetchConfig(), fetchCurrentSubscription()]);
 
         loading.plans = false;
 
-        nextTick(() => {
-          if (
-            SHOP_CONFIG.popup &&
-            SHOP_CONFIG.popup.enabled &&
-            SHOP_CONFIG.popup.cooldownHours === 0
-          ) {
-            localStorage.removeItem("shop_popup_close_time");
-          }
-
-          initPopup();
-        });
       } catch (error) {
-        console.error("加载数据失败:", error);
+        console.error("Failed to load shop data:", error);
 
         loading.plans = false;
       }
@@ -940,16 +830,13 @@ export default {
       selectedPriceType,
 
       selectedFilter,
+      fallbackFilterValue,
 
       filteredPlans,
 
       getPlanPrices,
 
       getPriceTypeKey,
-
-      getPriceTypeName,
-
-      getPeriodText,
 
       selectPriceType,
 
@@ -976,18 +863,13 @@ export default {
       selectPlanPriceType,
 
       getDisplayPriceType,
-
-      showPopup,
-
-      popupConfig,
-
-      handlePopupClose,
-
-      initPopup,
+      getPurchaseButtonText,
+      normalizePriceValue,
 
       SHOP_CONFIG,
 
       calculateDiscount,
+      isCurrentPlan,
     };
   },
 };
@@ -1009,6 +891,13 @@ export default {
 
   .welcome-card {
     margin-bottom: 24px;
+
+    .card-body p {
+      color: var(--secondary-text-color);
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
   }
 
   .dashboard-card {
@@ -1046,7 +935,7 @@ export default {
       .card-title {
         font-size: 18px;
 
-        font-weight: 600;
+        font-weight: 700;
 
         margin: 0;
 
@@ -1060,6 +949,34 @@ export default {
 
         padding-right: 10px;
       }
+
+  .current-plan-meta {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.18);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.08);
+    max-width: min(62%, 280px);
+  }
+
+  .current-plan-badge {
+    display: inline-flex;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1d4ed8;
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.42);
+    border-radius: 999px;
+    padding: 3px 10px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  }
 
       .card-badge {
         display: flex;
@@ -1256,87 +1173,7 @@ export default {
     }
   }
 
-  .stats-grid {
-    display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 20px;
-
-    margin-bottom: 24px;
-
-    @media (max-width: 1200px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-    }
-
-    .stats-card {
-      background-color: var(--card-bg-color);
-
-      border-radius: 12px;
-
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-
-      padding: 20px;
-
-      display: flex;
-
-      align-items: center;
-
-      border: 1px solid var(--border-color);
-
-      transition: all 0.3s ease;
-
-      &:hover {
-        border-color: rgba(var(--theme-color-rgb), 0.3);
-
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      }
-
-      .stats-icon {
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        width: 60px;
-
-        height: 60px;
-
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-
-        border-radius: 12px;
-
-        margin-right: 15px;
-
-        color: var(--theme-color);
-      }
-
-      .stats-info {
-        flex: 1;
-
-        .stats-value {
-          font-size: 18px;
-
-          font-weight: 600;
-
-          color: var(--text-color);
-
-          margin-bottom: 5px;
-        }
-
-        .stats-label {
-          font-size: 14px;
-
-          color: var(--secondary-text-color);
-        }
-      }
-    }
-  }
 
   .plans-wrapper {
     display: grid;
@@ -1352,6 +1189,13 @@ export default {
     }
 
     @media (max-width: 768px) {
+    .current-plan-meta {
+      position: static;
+      align-items: flex-start;
+      max-width: 100%;
+      margin-bottom: 8px;
+    }
+
       grid-template-columns: 1fr;
     }
 
@@ -1390,6 +1234,11 @@ export default {
         transform: translateY(-5px);
       }
 
+      &.current-plan-card {
+        border-color: rgba(59, 130, 246, 0.6);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.18), 0 10px 24px rgba(59, 130, 246, 0.12);
+      }
+
       .card-header {
         display: flex;
 
@@ -1397,7 +1246,18 @@ export default {
 
         align-items: flex-start;
 
+        min-height: 52px;
+
         margin-bottom: 15px;
+
+        .header-main {
+          flex: 1;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
+        }
 
         .card-title {
           font-size: 18px;
@@ -1519,83 +1379,15 @@ export default {
         .period {
           font-size: 16px;
 
-          color: var(--secondary-text-color);
+          color: var(--text-color);
         }
       }
+    }
 
-      .supported-periods {
-        margin-top: 15px;
-
-        .period-labels {
-          display: flex;
-
-          justify-content: center;
-
-          flex-wrap: wrap;
-
-          gap: 6px;
-
-          .period-tag {
-            padding: 5px 10px;
-
-            border-radius: 6px;
-
-            font-size: 12px;
-
-            background-color: rgba(var(--border-color-rgb), 0.1);
-
-            color: var(--secondary-text-color);
-
-            font-weight: 500;
-
-            cursor: pointer;
-
-            transition: all 0.3s ease;
-
-            border: 1px solid transparent;
-
-            display: flex;
-
-            align-items: center;
-
-            .tag-icon {
-              margin-right: 4px;
-
-              width: 14px;
-
-              height: 14px;
-
-              &.check {
-                color: #4caf50;
-              }
-
-              &.error {
-                color: #f44336;
-              }
-            }
-
-            &:hover:not(.disabled) {
-              background-color: rgba(var(--theme-color-rgb), 0.08);
-
-              color: var(--text-color);
-            }
-
-            &.active {
-              background-color: rgba(var(--theme-color-rgb), 0.1);
-
-              color: var(--text-color);
-
-              border-color: rgba(var(--theme-color-rgb), 0.2);
-            }
-
-            &.disabled {
-              opacity: 0.5;
-
-              cursor: default;
-            }
-          }
-        }
-      }
+    .plan-price + .btn-purchase {
+      align-self: center;
+      margin-top: 0;
+      margin-bottom: 12px;
     }
 
     .discount-calculation {
@@ -1751,7 +1543,7 @@ export default {
 
     padding: 0 16px;
 
-    margin-top: 12px;
+    margin-top: 4px;
 
     align-self: flex-start;
 
@@ -1776,7 +1568,7 @@ export default {
     }
 
     &.btn-disabled {
-      background-color: rgba(150, 150, 150, 0.5);
+      background-color: rgba(100, 116, 139, 0.55);
 
       backdrop-filter: blur(8px);
 
@@ -1786,7 +1578,7 @@ export default {
 
       box-shadow: none;
 
-      border: 1px solid rgba(150, 150, 150, 0.3);
+      border: 1px solid rgba(100, 116, 139, 0.5);
 
       &:hover {
         transform: none;
@@ -1800,9 +1592,77 @@ export default {
 
       height: 18px;
     }
+
+    .btn-text {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(var(--theme-color-rgb), 0.65);
+      outline-offset: 2px;
+    }
   }
 
   .dark-theme {
+    .plan-card,
+    .dashboard-card,
+    .no-plans-message {
+      background-color: #111827;
+      border-color: rgba(148, 163, 184, 0.28);
+    }
+
+    .card-title,
+    .plan-price .price-display .currency,
+    .plan-price .price-display .amount,
+    .plan-features .feature-item span,
+    .filter-option .option-text,
+    .no-plans-message h3 {
+      color: #e5e7eb !important;
+    }
+
+    .plan-price .price-display .period,
+    .welcome-card .card-body p,
+    .no-plans-message p {
+      color: #cbd5e1 !important;
+    }
+
+    .plan-features .feature-item .feature-icon.disabled,
+    .plan-features .feature-item span.disabled-text {
+      color: #94a3b8 !important;
+    }
+
+    .btn-purchase.btn-disabled {
+      background-color: rgba(71, 85, 105, 0.72);
+      border-color: rgba(148, 163, 184, 0.38);
+    }
+
+    .current-plan-meta {
+      background: rgba(37, 99, 235, 0.2);
+      border-color: rgba(147, 197, 253, 0.32);
+      box-shadow: none;
+    }
+
+    .plan-card.current-plan-card {
+      border-color: rgba(96, 165, 250, 0.78);
+      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.22), 0 10px 22px rgba(15, 23, 42, 0.35);
+    }
+
+    .current-plan-badge {
+      color: #dbeafe;
+      border-color: rgba(191, 219, 254, 0.38);
+      background: rgba(59, 130, 246, 0.28);
+    }
+
+    .filter-option:hover {
+      background-color: rgba(var(--theme-color-rgb), 0.16);
+    }
+
+    .filter-option:focus-visible,
+    .btn-purchase:focus-visible {
+      outline-color: rgba(191, 219, 254, 0.95);
+    }
+
     .skeleton-header,
     .skeleton-price,
     .skeleton-feature,
@@ -1886,7 +1746,13 @@ export default {
         border-radius: 12px;
 
         &:hover {
-          background-color: rgba(var(--theme-color-rgb), 0.05);
+          background-color: rgba(var(--theme-color-rgb), 0.08);
+        }
+
+        &:focus-visible {
+          outline: 2px solid rgba(var(--theme-color-rgb), 0.55);
+          outline-offset: 2px;
+          background-color: rgba(var(--theme-color-rgb), 0.1);
         }
 
         &.active {
@@ -1910,7 +1776,7 @@ export default {
 
           align-items: center;
 
-          color: var(--secondary-text-color);
+          color: var(--text-color);
 
           transition: color 0.3s ease;
 
@@ -1924,13 +1790,14 @@ export default {
         .option-text {
           font-size: 14px;
 
-          color: var(--secondary-text-color);
+          color: var(--text-color);
 
           transition: color 0.3s ease;
         }
       }
     }
   }
+
 
   .no-plans-message {
     grid-column: 1 / -1;
@@ -2050,10 +1917,6 @@ export default {
     padding: 15px;
 
     padding-bottom: 80px;
-
-    .stats-grid {
-      grid-template-columns: 1fr;
-    }
 
     .plans-wrapper {
       grid-template-columns: 1fr;

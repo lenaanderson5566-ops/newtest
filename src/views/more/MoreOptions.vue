@@ -34,30 +34,6 @@
 
       <div class="stats-grid">
         
-        <div v-if="shouldShowInviteCard" class="stats-card" @click="$router.push('/invite')">
-
-          <div class="stats-icon">
-
-            <IconUserPlus :size="32" />
-
-          </div>
-
-          <div class="stats-info">
-
-            <div class="stats-value">{{ $t('invite.title') }}</div>
-
-            <div class="stats-label">{{ $t('more.inviteDescription') }}</div>
-
-          </div>
-
-          <div class="chevron-icon">
-
-            <IconChevronRight :size="20" />
-
-          </div>
-
-        </div>
-
 
 
         <div v-if="shouldShowDocsCard" class="stats-card" @click="$router.push('/docs')">
@@ -99,32 +75,6 @@
             <div class="stats-value">{{ $t('nodes.title') }}</div>
 
             <div class="stats-label">{{ $t('more.viewNodes') }}</div>
-
-          </div>
-
-          <div class="chevron-icon">
-
-            <IconChevronRight :size="20" />
-
-          </div>
-
-        </div>
-
-        
-
-        <div v-if="shouldShowOrdersCard" class="stats-card" @click="$router.push('/orders')">
-
-          <div class="stats-icon">
-
-            <IconShoppingCart :size="32" />
-
-          </div>
-
-          <div class="stats-info">
-
-            <div class="stats-value">{{ $t('orders.title') }}</div>
-
-            <div class="stats-label">{{ $t('more.manageOrders') }}</div>
 
           </div>
 
@@ -190,9 +140,7 @@
 
         
 
-        <!-- 充值选项，仅Xiao-V2board面板显示 -->
-
-        <div v-if="shouldShowWalletCard && isXiaoPanel" class="stats-card" @click="$router.push('/wallet/deposit')">
+        <div v-if="shouldShowBillingCard" class="stats-card" @click="$router.push('/billing?tab=orders')">
 
           <div class="stats-icon">
 
@@ -202,35 +150,9 @@
 
           <div class="stats-info">
 
-            <div class="stats-value">{{ $t('wallet.deposit.title') }}</div>
+            <div class="stats-value">{{ $t('menu.billing') }}</div>
 
-            <div class="stats-label">{{ $t('wallet.balance.description') }}</div>
-
-          </div>
-
-          <div class="chevron-icon">
-
-            <IconChevronRight :size="20" />
-
-          </div>
-
-        </div>
-
-        
-
-        <div v-if="shouldShowProfileCard" class="stats-card" @click="$router.push('/profile')">
-
-          <div class="stats-icon">
-
-            <IconUser :size="32" />
-
-          </div>
-
-          <div class="stats-info">
-
-            <div class="stats-value">{{ $t('profile.title') }}</div>
-
-            <div class="stats-label">{{ $t('more.manageProfile') }}</div>
+            <div class="stats-label">{{ $t('more.manageOrders') }}</div>
 
           </div>
 
@@ -312,7 +234,6 @@ import {
 
   IconShoppingCart,
 
-  IconUser,
 
   IconDevices,
 
@@ -340,9 +261,7 @@ import {
 
   IconChartBar,
 
-  IconWallet,
-
-  IconUserPlus
+  IconWallet
 
 } from '@tabler/icons-vue';
 
@@ -390,22 +309,17 @@ const isHiddenByTopNav = (key) => key === thirdNavItem || key === fourthNavItem;
 
 
 
-const shouldShowInviteCard = computed(() => !isHiddenByTopNav('invite'));
 
 const shouldShowDocsCard = computed(() => !isHiddenByTopNav('docs'));
 
 const shouldShowNodesCard = computed(() => !isHiddenByTopNav('nodes'));
 
-const shouldShowOrdersCard = computed(() => !isHiddenByTopNav('orders'));
 
 const shouldShowTicketsCard = computed(() => !isHiddenByTopNav('tickets'));
 
 const shouldShowTrafficCard = computed(() => !isHiddenByTopNav('traffic'));
 
-const shouldShowWalletCard = computed(() => !isHiddenByTopNav('wallet'));
-
-const shouldShowProfileCard = computed(() => !isHiddenByTopNav('profile'));
-
+const shouldShowBillingCard = computed(() => !isHiddenByTopNav('orders') || !isHiddenByTopNav('wallet'));
 
 const checkScreenSize = () => {
 

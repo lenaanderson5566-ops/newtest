@@ -51,32 +51,38 @@ const getActiveNavForRoute = (routeName) => {
 
     docs: 'Docs',
 
-    invite: 'Invite',
+    invite: 'Billing',
 
     tickets: 'TicketList',
 
     nodes: 'NodeList',
 
-    orders: 'OrderList',
+    orders: 'Billing',
+
+    billing: 'Billing',
 
     traffic: 'TrafficLog',
 
-    wallet: 'Deposit',
+    wallet: 'Billing',
 
-    profile: 'Profile'
+    profile: 'Profile',
+
+    security: 'SecuritySettings'
     
   };
 
   // 路由名称 -> 导航名称 映射（与 SlideTabsNav 中的 item.name 对齐）
   const navNameMap = {
     Docs: 'Docs',
-    Invite: 'Invite',
+    Invite: 'Billing',
     TicketList: 'Tickets',
     NodeList: 'Nodes',
-    OrderList: 'Orders',
+    OrderList: 'Billing',
+    Billing: 'Billing',
     TrafficLog: 'Traffic',
-    Deposit: 'Wallet',
-    Profile: 'Profile'
+    Deposit: 'Billing',
+    Profile: 'Profile',
+    SecuritySettings: 'Profile'
   };
 
   // 如果当前路由匹配第三个导航项，则返回第三项对应的导航名
@@ -294,7 +300,7 @@ const routes = [
 
         meta: {
 
-          titleKey: 'menu.dashboard',
+          titleKey: 'menu.overview',
 
           requiresAuth: true,
 
@@ -314,7 +320,7 @@ const routes = [
 
         meta: {
 
-          titleKey: 'menu.shop',
+          titleKey: 'menu.subscription',
 
           requiresAuth: true,
 
@@ -364,28 +370,6 @@ const routes = [
 
       {
 
-        path: 'invite',
-
-        name: 'Invite',
-
-        component: () => import('@/views/invite/Invite.vue'),
-
-        meta: {
-
-          titleKey: 'menu.invite',
-
-          requiresAuth: true,
-
-          keepAlive: true,
-
-          get activeNav() { return getActiveNavForRoute('Invite'); }
-
-        }
-
-      },
-
-      {
-
         path: 'more',
 
         name: 'More',
@@ -412,7 +396,7 @@ const routes = [
 
         meta: {
 
-          titleKey: 'menu.docs',
+          titleKey: 'menu.client',
 
           requiresAuth: true,
 
@@ -461,20 +445,28 @@ const routes = [
 
       {
 
-        path: 'orders',
+        path: 'billing',
 
-        name: 'OrderList',
+        name: 'Billing',
 
-        component: () => import('@/views/orders/OrderList.vue'),
+        component: () => import('@/views/billing/Billing.vue'),
 
         meta: {
 
-          titleKey: 'orders.title',
+          titleKey: 'menu.billing',
 
           requiresAuth: true,
 
-          get activeNav() { return getActiveNavForRoute('OrderList'); } 
+          get activeNav() { return getActiveNavForRoute('Billing'); } 
         }
+
+      },
+
+      {
+
+        path: 'orders',
+
+        redirect: { path: '/billing', query: { tab: 'orders' } }
 
       },
 
@@ -537,6 +529,25 @@ const routes = [
 
       {
 
+        path: 'security-settings',
+
+        name: 'SecuritySettings',
+
+        component: () => import('@/views/security/SecuritySettings.vue'),
+
+        meta: {
+
+          titleKey: 'profile.security',
+
+          requiresAuth: true,
+
+          get activeNav() { return getActiveNavForRoute('SecuritySettings'); } 
+        }
+
+      },
+
+      {
+
         path: 'trafficlog',
 
         name: 'TrafficLog',
@@ -572,31 +583,11 @@ const routes = [
 
         path: 'wallet/deposit',
 
-        name: 'Deposit',
-
-        component: () => import('@/views/wallet/WalletDeposit.vue'),
-
-        meta: {
-
-          titleKey: 'wallet.deposit.title',
-
-          requiresAuth: true,
-
-          get activeNav() { return getActiveNavForRoute('Deposit'); } 
-        },
-
-        beforeEnter: (to, from, next) => {
-
+        redirect: () => {
           if (!isXiaoV2board()) {
-
-            next('/dashboard');
-
-          } else {
-
-            next();
-
+            return '/billing?tab=orders';
           }
-
+          return '/billing?tab=wallet';
         }
 
       }

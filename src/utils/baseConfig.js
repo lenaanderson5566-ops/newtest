@@ -232,11 +232,8 @@ export const SITE_CONFIG = mergeDeep(
   getConfig("SITE_CONFIG")
 );
 
-// 默认语言和主题配置
+// 默认主题配置
 const DEFAULT_BASE_CONFIG = {
-  // 默认语言 ('zh-CN' 或 'en-US') TODO
-  defaultLanguage: "zh-CN",
-
   // 默认主题 ('light' 或 'dark') TODO
   defaultTheme: "dark",
 
@@ -457,46 +454,11 @@ const DEFAULT_SHOP_CONFIG = {
     "month_price", // 月付
     "onetime_price", // 一次性
   ],
-
-  // 商店弹窗配置
-  popup: {
-    // 是否启用弹窗
-    enabled: false,
-
-    // 弹窗标题
-    title: "",
-
-    // 弹窗内容 (支持HTML)
-    content: "",
-
-    // 冷却时间（小时），在此时间内不会再次显示弹窗
-    cooldownHours: 2,
-
-    // 等待时间（秒），用户需要等待多少秒才能关闭弹窗，设为0表示无需等待
-    closeWaitSeconds: 0,
-  },
 };
 
 export const SHOP_CONFIG = mergeDeep(
   DEFAULT_SHOP_CONFIG,
   getConfig("SHOP_CONFIG")
-);
-
-// ===========================================================
-
-/**
- * 商店二次确认
- * 提交订单强制二次确认
- */
-const DEFAULT_ORDER_CONFIG = {
-  // 是否启用二次确认
-  confirmOrder: true,
-  // 二次确认内容
-  confirmOrderContent: "<p>您确定要购买该套餐吗？</p>",
-};
-export const ORDER_CONFIG = mergeDeep(
-  DEFAULT_ORDER_CONFIG,
-  getConfig("ORDER_CONFIG")
 );
 
 // ===========================================================
@@ -956,11 +918,11 @@ export const AUTH_CONFIG = mergeDeep(
  */
 const DEFAULT_NAVIGATION_CONFIG = {
   // 设置导航栏第三个位置显示的内容
-  // 可选值: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'traffic', 'wallet', 'profile'
+  // 可选值: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'billing', 'traffic', 'wallet', 'profile'
   thirdNavItem: "invite", // 默认显示邀请
 
   // 可选的第四个导航项，插入在 "更多" 之前；为空字符串或未设置则不插入
-  // 可选值同上: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'traffic', 'wallet', 'profile'
+  // 可选值同上: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'billing', 'traffic', 'wallet', 'profile'
   fourthNavItem: "",
 };
 

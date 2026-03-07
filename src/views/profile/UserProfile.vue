@@ -30,7 +30,7 @@
 
         <!-- 基本信息骨架屏 -->
 
-        <div class="profile-card">
+        <div v-if="false" class="profile-card">
 
           <div class="card-header">
 
@@ -306,51 +306,9 @@
 
 
 
-        <!-- 账号设置 -->
-
-        <div class="profile-card">
-
-          <div class="card-header">
-
-            <h3>{{ $t('profile.accountSettings') }}</h3>
-
-          </div>
-
-          <div class="settings-content">
-
-            <div class="setting-item">
-
-              <div class="setting-info">
-
-                <span class="setting-label">{{ $t('profile.autoRenewal') }}</span>
-
-                <span class="setting-description">{{ $t('profile.autoRenewalDesc') }}</span>
-
-              </div>
-
-              <div class="setting-toggle">
-
-                <label class="switch" :class="{ 'disabled': updatingSettings }">
-
-                  <input type="checkbox" v-model="remindAutoRenewal" @change="updateRemindSettings('auto_renewal')" :disabled="updatingSettings" />
-
-                  <span class="slider round" :class="{ 'loading': updatingAutoRenewal }"></span>
-
-                </label>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-
         <!-- 安全设置 -->
 
-        <div class="profile-card">
+        <div v-if="false" class="profile-card">
 
           <div class="card-header">
 
@@ -434,59 +392,9 @@
 
         </div>
 
-
-
-        <!-- 订阅管理 -->
-
-        <div class="profile-card" v-if="showImportSubscription">
-
-          <div class="card-header">
-
-            <h3>{{ $t('profile.subscription') }}</h3>
-
-          </div>
-
-          <div class="settings-content">
-
-            <div class="action-buttons">
-
-              <button class="action-btn danger" @click="showResetModal = true">
-
-                <IconRefresh :size="18" />
-
-                {{ $t('profile.resetSecurity') }}
-
-              </button>
-
-
-
-              <button v-if="subscriptionUrl" class="action-btn" @click="copySubscriptionUrl">
-
-                <IconCopy :size="18" />
-
-                {{ $t('profile.copySubscription') }}
-
-              </button>
-
-            </div>
-
-
-
-            <div v-if="subscriptionUrl" class="subscription-info">
-
-              <div class="subscription-url">{{ subscriptionUrl }}</div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-
         <!-- 近期登录设备 -->
 
-        <div v-if="PROFILE_CONFIG.showRecentDevices" class="profile-card">
+        <div v-if="false && PROFILE_CONFIG.showRecentDevices" class="profile-card">
 
           <div class="card-header">
 
@@ -586,7 +494,7 @@
 
       <!-- 修改密码弹窗 -->
 
-      <transition name="modal-fade">
+      <transition v-if="false" name="modal-fade">
 
         <div v-if="showPasswordModal" class="modal-overlay" @click="showPasswordModal = false">
 
@@ -683,66 +591,6 @@
                 <span v-if="changingPassword" class="loader"></span>
 
                 {{ $t('common.submit') }}
-
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </transition>
-
-
-
-      <!-- 重置订阅弹窗 -->
-
-      <transition name="modal-fade">
-
-        <div v-if="showResetModal" class="modal-overlay" @click="showResetModal = false">
-
-          <div class="modal-content" @click.stop>
-
-            <div class="modal-header">
-
-              <h3>{{ $t('profile.resetSecurityTitle') }}</h3>
-
-              <button class="modal-close" @click="showResetModal = false">
-
-                <IconX :size="20" />
-
-              </button>
-
-            </div>
-
-            <div class="modal-body">
-
-              <p>{{ $t('profile.resetSecurityConfirm') }}</p>
-
-            </div>
-
-            <div class="modal-footer">
-
-              <button class="btn-cancel" @click="showResetModal = false">
-
-                {{ $t('common.cancel') }}
-
-              </button>
-
-              <button
-
-                class="btn-submit danger"
-
-                @click="resetSecurity"
-
-                :disabled="resetting"
-
-              >
-
-                <span v-if="resetting" class="loader"></span>
-
-                {{ $t('common.confirm') }}
 
               </button>
 
@@ -874,7 +722,6 @@ import {
 
   changePassword as apiChangePassword,
 
-  resetSecurity as apiResetSecurity,
 
   updateRemindSettings as apiUpdateRemind,
 
@@ -898,7 +745,6 @@ import {
 
   IconLock,
 
-  IconRefresh,
 
   IconCopy,
 
@@ -922,7 +768,7 @@ import useToast from '@/hooks/useToast';
 
 import { reloadMessages } from '@/i18n';
 
-import { DASHBOARD_CONFIG, PROFILE_CONFIG } from '@/utils/baseConfig';
+import { PROFILE_CONFIG } from '@/utils/baseConfig';
 
 
 
@@ -952,11 +798,9 @@ const userInfo = ref({});
 
 const showPasswordModal = ref(false);
 
-const showResetModal = ref(false);
 
 const changingPassword = ref(false);
 
-const resetting = ref(false);
 
 const remindExpire = ref(false);
 
@@ -1006,9 +850,6 @@ const updatingExpire = ref(false);
 
 const updatingTraffic = ref(false);
 
-const updatingAutoRenewal = ref(false);
-
-const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription)
 
 const passwordForm = ref({
 
@@ -1334,13 +1175,7 @@ const updateRemindSettings = async (type) => {
 
     updatingTraffic.value = true;
 
-  } else if (type === 'auto_renewal') {
-
-    updatingAutoRenewal.value = true;
-
   }
-
-
 
   try {
 
@@ -1393,8 +1228,6 @@ const updateRemindSettings = async (type) => {
     updatingExpire.value = false;
 
     updatingTraffic.value = false;
-
-    updatingAutoRenewal.value = false;
 
   }
 
@@ -1468,71 +1301,6 @@ const changePassword = async () => {
 
 
 
-const resetSecurity = async () => {
-
-  resetting.value = true;
-
-
-
-  try {
-
-    const response = await apiResetSecurity();
-
-
-
-    if (response && response.data) {
-
-      subscriptionUrl.value = response.data;
-
-
-
-      success(t('profile.resetSuccess'));
-
-
-
-      showResetModal.value = false;
-
-    }
-
-  } catch (err) {
-
-    console.error('Failed to reset security:', err);
-
-
-
-    showError(t('profile.resetError'));
-
-  } finally {
-
-    resetting.value = false;
-
-  }
-
-};
-
-
-
-const copySubscriptionUrl = () => {
-
-  if (!subscriptionUrl.value) return;
-
-
-
-  navigator.clipboard.writeText(subscriptionUrl.value)
-
-    .then(() => {
-
-      success(t('profile.subscriptionCopied'));
-
-    })
-
-    .catch(err => {
-
-      console.error('Failed to copy text:', err);
-
-    });
-
-};
 
 
 
@@ -2596,38 +2364,6 @@ body.dark-theme {
       }
 
     }
-
-
-
-    .subscription-info {
-
-      margin-top: 16px;
-
-      padding: 12px;
-
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-
-      border-radius: 8px;
-
-      border: 1px dashed rgba(var(--theme-color-rgb), 0.3);
-
-
-
-      .subscription-url {
-
-        font-size: 14px;
-
-        color: var(--text-color);
-
-        word-break: break-all;
-
-        line-height: 1.5;
-
-      }
-
-    }
-
-
 
     .gift-card-form {
 

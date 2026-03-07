@@ -13,6 +13,17 @@
       
       <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
       <div class="top-toolbar">
+        <div class="toolbar-wallets" v-if="walletDisplayItems.length">
+          <div
+            v-for="wallet in walletDisplayItems"
+            :key="wallet.currency"
+            class="toolbar-wallet-chip"
+            :title="`${wallet.currency} ${wallet.amount}`"
+          >
+            <span class="wallet-currency">{{ wallet.currency }}</span>
+            <span class="wallet-amount">{{ wallet.amount }}</span>
+          </div>
+        </div>
         <ThemeToggle />
         <LanguageSelector />
         <button 
@@ -20,7 +31,7 @@
           class="gift-btn" 
           @click="$router.push('/profile')"
         >
-          <IconGift :size="20" />
+          <IconGift :size="18" />
         </button>
         <UserAvatar :username="username" :avatarUrl="avatarUrl" />
       </div>
@@ -35,6 +46,7 @@
     </div>
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
+    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth }]">
     <router-view v-slot="{ Component, route }">
       <transition 
         name="page-transition" 
@@ -50,6 +62,7 @@
         </keep-alive>
       </transition>
     </router-view>
+    </div>
     
     <!-- 全局Toast通知 - 放在最外层，确保不受页面切换影响 -->
     <Toast />
@@ -82,7 +95,9 @@ import { useRouter, useRoute } from 'vue-router';
 import { SITE_CONFIG, PROFILE_CONFIG, CUSTOMER_SERVICE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
+import { getUserInfo } from '@/api/user';
 import { handleRedirectPath } from '@/utils/redirectHandler';
+import { normalizeWalletItems } from '@/utils/wallet';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
@@ -174,9 +189,45 @@ export default {
     watch(() => route.fullPath, () => {
       handleRedirectParam();
     });
-    
+
     const username = computed(() => store.getters.username);
     const avatarUrl = computed(() => store.getters.avatarUrl || '');
+    const walletDisplayItems = ref([]);
+    const isLoadingWallets = ref(false);
+
+    const loadUserWallets = async () => {
+      if (!route.meta.requiresAuth || isLoadingWallets.value) {
+        if (!route.meta.requiresAuth) {
+          walletDisplayItems.value = [];
+        }
+        return;
+      }
+
+      isLoadingWallets.value = true;
+
+      try {
+        const response = await getUserInfo();
+        walletDisplayItems.value = normalizeWalletItems(response?.data?.wallets);
+      } catch (error) {
+        walletDisplayItems.value = [];
+        console.error('Failed to refresh user wallets:', error);
+      } finally {
+        isLoadingWallets.value = false;
+      }
+    };
+
+    watch(
+      () => route.meta.requiresAuth,
+      (requiresAuth) => {
+        if (!requiresAuth) {
+          walletDisplayItems.value = [];
+          return;
+        }
+
+        loadUserWallets();
+      },
+      { immediate: true }
+    );
     
     const languageChangedSignal = ref(0);
     
@@ -194,7 +245,8 @@ export default {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         checkAuthAndReloadMessages();
-        
+        loadUserWallets();
+
         checkUserLoginStatus().then(result => {
           if (result.isLoggedIn === false && result.message) {
             const { showToast } = require('@/composables/useToast').useToast();
@@ -227,7 +279,7 @@ export default {
       applyTheme(store.getters.currentTheme);
       
       checkAuthAndReloadMessages();
-      
+
       document.addEventListener('visibilitychange', handleVisibilityChange);
       
       checkUserLoginStatus().then(result => {
@@ -255,7 +307,8 @@ export default {
       siteConfig,
       PROFILE_CONFIG,
       cachedRoutes,
-      customerServiceConfig
+      customerServiceConfig,
+      walletDisplayItems
     };
   }
 };
@@ -287,7 +340,7 @@ export default {
   position: fixed;
   top: 20px;  
   left: 25px;
-  font-size: 20px;  
+  font-size: 16px;  
   font-weight: 700;
   color: var(--theme-color);
   z-index: 110;
@@ -305,8 +358,8 @@ export default {
   gap: 10px;
   
   .site-logo-img {
-    height: 24px;
-    width: 24px;
+    height: 20px;
+    width: 20px;
     border-radius: 6px;
     object-fit: cover;
   }
@@ -323,15 +376,57 @@ export default {
   top: 20px;
   right: 25px;
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 10px;
   z-index: 110;
+
+  .toolbar-wallets {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 8px;
+    margin-right: 2px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: color-mix(in srgb, var(--card-bg-color) 88%, transparent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .toolbar-wallet-chip {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--text-color);
+
+    &:not(:last-child) {
+      border-right: 1px solid color-mix(in srgb, var(--border-color) 75%, transparent);
+    }
+
+    .wallet-currency {
+      color: var(--text-secondary);
+      letter-spacing: 0.2px;
+      font-size: 12px;
+    }
+
+    .wallet-amount {
+      color: var(--text-color);
+      font-variant-numeric: tabular-nums;
+      min-width: 36px;
+    }
+  }
   
   .gift-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background-color: rgba(var(--theme-color-rgb), 0.1);
     border: 1px solid rgba(var(--theme-color-rgb), 0.3);
@@ -346,12 +441,26 @@ export default {
   }
 }
 
+.app-content-wrapper {
+  width: 100%;
+}
+
+@media (min-width: 906px) {
+  .app-content-wrapper.with-left-nav {
+    padding-left: 240px;
+  }
+
+  .site-logo {
+    left: 24px;
+  }
+}
+
 
 @media (max-width: 768px) {
   .site-logo {
     top: 12px;  
     left: 20px;
-    font-size: 20px;  
+    font-size: 16px;  
     padding: 5px 10px;
     border-radius: 8px;
   }
@@ -359,7 +468,22 @@ export default {
   .top-toolbar {
     top: 12px;  
     right: 20px;
-    gap: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+    .toolbar-wallets {
+      order: -1;
+      height: 34px;
+      max-width: 100%;
+      margin-left: auto;
+      overflow-x: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
   
   
@@ -457,7 +581,7 @@ html {
     top: 20px;
     right: 25px;
     display: flex;
-    gap: 12px;
+    gap: 10px;
     z-index: 110;
   }
 }

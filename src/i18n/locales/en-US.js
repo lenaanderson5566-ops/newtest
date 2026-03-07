@@ -36,6 +36,7 @@ export default {
         noData: 'No Data Available',
         confirm: 'Confirm',
         dashboard: 'Dashboard',
+        overview: 'Overview',
         profile: 'Profile',
         settings: 'Settings',
         help: 'Help',
@@ -179,11 +180,30 @@ export default {
     dashboard: {
         welcome: 'Welcome Back',
         welcomeDesc: 'View your services and usage',
+        announcement: 'Announcements',
         siteAnnouncement: 'Site Announcements',
         subscriptionInfo: 'Subscription Info',
         planName: 'Plan Name',
         expiryDate: 'Expiry Date',
         planTraffic: 'Plan Traffic',
+        subscriptionQuotaUsed: 'Subscription Quota Used',
+        subscriptionQuotaRemaining: 'Subscription Quota Remaining',
+        packageQuotaRemaining: 'Package Quota Remaining',
+        trafficBoardTitle: 'Traffic Quota Board',
+        trafficBoardSubtitle: 'Subscription + Package Overview',
+        packagePurchased: 'Package Purchased',
+        packageNotPurchased: 'Package Not Purchased',
+        usagePanel: 'Usage Panel',
+        totalTrafficPackAndPackage: 'Total Traffic (Plan + Package)',
+        subscriptionMonthlyTraffic: 'Monthly Subscription Traffic',
+        trafficPackageQuota: 'Traffic Package Quota',
+        packageUsageNote: 'When your plan traffic is used up, traffic package quota will be used automatically.',
+        resetHint: 'Reset day: {day}',
+        resetTimeLabel: 'Reset time',
+        purchaseTrafficPackage: 'Buy one-time traffic package',
+        used: 'Used',
+        total: 'Total',
+        remaining: 'Remaining',
         remainingTraffic: 'Remaining Traffic',
         remainingDays: 'Remaining Days',
         accountBalance: 'Account Balance',
@@ -191,7 +211,7 @@ export default {
         none: 'None',
         days: 'Days',
         noPlanPrompt: 'You currently have no active plan, please purchase a plan to use the service',
-        importSubscription: 'Import Subscription',
+        importSubscription: 'Add Configuration',
         purchasePlan: 'Purchase Plan',
         resetTraffic: 'Reset Traffic',
         activateDataCycleInAdvance: 'Activate data cycle in advance',
@@ -217,10 +237,10 @@ export default {
         nextResetTime: 'Next Reset Time',
 
         importTitle: 'Select Import Method',
-        copySubscription: 'Copy Subscription Link',
-        copySubscriptionDesc: 'Copy subscription link to clipboard',
-        scanQRCode: 'Scan QR Code to Subscribe',
-        scanQRCodeDesc: 'Use the client to scan the QR code to import',
+        copySubscription: 'Copy Configuration Address',
+        copySubscriptionDesc: 'Copy configuration address to clipboard',
+        scanQRCode: 'Scan QR Code to Add Configuration',
+        scanQRCodeDesc: 'Use a client to scan the QR code and add configuration',
         importToShadowrocket: 'Import to Shadowrocket',
         importToSurge: 'Import to Surge',
         importToStash: 'Import to Stash',
@@ -228,12 +248,12 @@ export default {
         importToClash: 'Import to Clash',
         importToClashX: 'Import to ClashX',
         selectPlatform: 'Select Your Device Platform',
-        subscriptionCopied: 'Subscription link copied to clipboard',
+        subscriptionCopied: 'Configuration address copied to clipboard',
         copyFailed: 'Copy failed, please copy manually',
-        manualImportRequired: 'Automatic import not possible, please manually copy the subscription link',
-        noSubscription: 'No subscription available',
+        manualImportRequired: 'Automatic import is unavailable. Please copy the configuration address manually and add it in your client.',
+        noSubscription: 'No configuration address available',
         noClientsAvailable: 'No quick import methods available for this platform',
-        clientNotInstalled: 'Corresponding client not installed, subscription link copied to clipboard'
+        clientNotInstalled: 'The required client is not installed. The configuration address has been copied to clipboard.'
     },
     platforms: {
         ios: 'iOS',
@@ -243,13 +263,17 @@ export default {
     },
     menu: {
         dashboard: 'Dashboard',
+        overview: 'Overview',
         shop: 'Shop',
+        subscription: 'Subscription',
         invite: 'Invite',
         docs: 'Docs',
+        client: 'Client',
         tickets: 'Tickets',
         orders: 'Orders',
         nodes: 'Nodes',
         wallet: 'Wallet',
+        billing: 'Billing',
         traffic: 'Traffic',
         profile: 'Profile',
         more: 'More',
@@ -420,13 +444,14 @@ export default {
         passwordChanged: 'Password changed',
         passwordError: 'Failed to change password, please check if the current password is correct',
         subscription: 'Subscription Management',
-        resetSecurity: 'Reset Subscription',
-        resetSecurityTitle: 'Reset Subscription Link',
-        resetSecurityConfirm: 'Are you sure you want to reset the subscription? After resetting, your previous subscription will become invalid, and you need to re-import the new subscription.',
+        resetSecurity: 'Reset Configuration Address',
+        resetSecurityTitle: 'Reset Configuration Address',
+        confirmReset: 'Confirm Reset',
+        resetSecurityConfirm: 'Are you sure you want to reset the configuration address? The current address will become invalid. You need to add a new configuration to continue using it.',
         resetSuccess: 'Reset successful',
         resetError: 'Reset failed',
-        copySubscription: 'Copy Subscription Link',
-        subscriptionCopied: 'Subscription link copied',
+        copySubscription: 'Copy Configuration Address',
+        subscriptionCopied: 'Configuration address copied to clipboard',
         updateSuccess: 'Update successful',
         updateError: 'Update failed',
         settingsUpdated: 'Settings updated',
@@ -443,8 +468,8 @@ export default {
         giftCardEmpty: 'Please enter gift card code',
         saveChanges: 'Save Changes',
         cancel: 'Cancel',
-        noSubscription: 'No subscription link available',
-        getSubscription: 'Get Subscription Link',
+        noSubscription: 'No configuration address available',
+        getSubscription: 'Get Configuration Address',
         avatarUploadSuccess: 'Avatar uploaded successfully',
         avatarUploadError: 'Avatar upload failed',
         confirmLogout: 'Confirm Logout',
@@ -488,8 +513,8 @@ export default {
         back: 'Back'
     },
     shop: {
-        title: 'Shop',
-        description: 'View and purchase available plans',
+        title: 'Subscription Plans',
+        description: 'Choose the subscription service that suits you',
         loading: 'Loading plans...',
         filter: {
             all: 'All',
@@ -499,8 +524,17 @@ export default {
         no_plans_found: 'No plans found matching the criteria',
         try_different_filter: 'Please try different filter conditions',
         reset_filter: 'Reset Filter',
+        traffic_package: {
+            entry: 'Buy Traffic Package',
+            title: 'Buy Traffic Package',
+            description: 'Select a one-time quota package. It will be added to your account immediately after purchase.'
+        },
         plan: {
             purchase: 'Purchase',
+            renew: 'Renew',
+            add_quota: 'Add Quota',
+            upgrade_to: 'Upgrade to {name}',
+            current: 'Your Current Plan',
             sold_out_btn: 'Sold Out',
             stock: {
                 plenty: 'Plenty in Stock',
@@ -531,6 +565,11 @@ export default {
                 relative: 'Relative discount approx',
                 savings: 'saves you'
             }
+        },
+        current_plan_info: {
+            plan: 'Current Plan',
+            expire: 'Expiry Date',
+            traffic: 'Traffic Usage'
         },
         stats: {
             global_nodes: 'Global Nodes',
@@ -575,6 +614,7 @@ export default {
         no_plan_selected: 'No plan selected',
         plan_not_found: 'Plan not found',
         failed_to_fetch_plan: 'Failed to fetch plan information',
+        confirm_order_title: 'Confirm Order',
         confirm_purchase:'Confirm Purchase'
     },
     payment: {
@@ -743,7 +783,7 @@ export default {
             telegram: 'Telegram',
             noLinkAvailable: 'No invite link available',
             scanTitle: 'Use WeChat to scan and share',
-            scanQRCode: 'Please use WeChat to scan the QR code',
+            scanQRCode: 'Scan QR Code to Add Configuration',
             inviteQRCode: 'Invite Link QR Code',
             orCopyLink: 'Or Copy Link',
             shareTitle: 'Invite You to Use Our Service',
@@ -782,7 +822,7 @@ export default {
         }
     },
     docs: {
-        title: 'Documentation Center',
+        title: 'Client Center',
         searchPlaceholder: 'Search documentation...',
         noAccessPrompt: 'You currently have no active plan. Purchase a plan to view content in this section',
         loading: 'Loading documentation...',
@@ -800,8 +840,8 @@ export default {
         languageHint: 'No documentation available for current language {currentLang}, please try switching to another language',
         networkError: 'Network error',
         welcome: {
-            title: 'Documentation Center',
-            description: 'Find and read detailed documentation on usage and configuration.'
+            title: 'Client Center',
+            description: 'Download official clients and get setup guides for each platform.'
         }
     },
     browserRestricted: {

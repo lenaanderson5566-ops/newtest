@@ -1,19 +1,7 @@
 ﻿<template>
   <div class="dashboard-container">
     <div class="dashboard-inner">
-      <div class="dashboard-card welcome-card" :class="{'card-animate': !loading.userInfo}">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.welcome') }}</h2>
-        </div>
-        <div class="card-body">
-          <p class="">{{ $t('dashboard.welcomeDesc') }}</p>
-          <p v-if="userStats.userEmail && DASHBOARD_CONFIG.showUserEmail" class="user-email">
-            <IconMail :size="16"/>
-            <span>{{ userStats.userEmail }}</span>
-          </p>
-        </div>
-      </div>
-
+      <div class="overview-grid">
       <!-- 通知区域 -->
       <!-- 待处理事项提示 -->
       <div v-if="hasPendingItems" class="dashboard-card pending-items-card"
@@ -23,7 +11,7 @@
         </div>
         <div class="card-body">
           <div class="pending-items-list">
-            <div v-if="userStats.pendingOrders > 0" class="pending-item" @click="router.push('/orders')">
+            <div v-if="userStats.pendingOrders > 0" class="pending-item" @click="router.push('/billing?tab=orders')">
               <div class="pending-icon">
                 <IconShoppingCart :size="20"/>
               </div>
@@ -34,29 +22,14 @@
                 <IconChevronRight :size="16"/>
               </div>
             </div>
-
-            <div v-if="userStats.pendingTickets > 0" class="pending-item" @click="goToSupport">
-              <div class="pending-icon">
-                <IconMessage :size="20"/>
-              </div>
-              <div class="pending-info">
-                <span class="">{{ $t('dashboard.pendingTickets') }} ({{ userStats.pendingTickets }})</span>
-              </div>
-              <div class="pending-action">
-                <IconChevronRight :size="16"/>
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
       <div class="dashboard-card notice-card" :class="{'card-animate': !loading.notices}"
-           v-if="notices && notices.data && notices.data.length > 0" style="animation-delay: 0.2s">
+           v-if="notices && notices.data && notices.data.length > 0">
         <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.siteAnnouncement') }}</h2>
-          <div class="notice-counter">
-            {{ $t('common.noticeCount', {current: currentNoticeIndex + 1, total: notices.data.length}) }}
-          </div>
+          <h2 class="card-title">{{ $t('dashboard.announcement') }}</h2>
         </div>
         <div v-if="loading.notices" class="card-body skeleton-loading">
           <div class="skeleton-row"></div>
@@ -64,36 +37,41 @@
           <div class="skeleton-row"></div>
         </div>
         <div v-else class="card-body">
-          <transition name="fade-slide" mode="out-in">
-            <div class="notice-item" v-if="notices.data[currentNoticeIndex]" :key="currentNoticeIndex">
-              <div class="notice-title">{{ notices.data[currentNoticeIndex].title }}</div>
-              <div class="notice-footer">
-                <div class="notice-date">{{ formatDate(notices.data[currentNoticeIndex].created_at) }}</div>
-                <div class="notice-nav">
-                  <button
-                      class="btn-notice"
-                      @click="prevNotice"
-                      :disabled="currentNoticeIndex <= 0">
-                    <IconChevronLeft :size="16"/>
-                    {{ $t('common.prevNotice') }}
-                  </button>
-                  <button
-                      class="btn-notice"
-                      @click="showNoticeModal">
-                    <IconEye :size="16"/>
-                    {{ $t('common.viewDetails') }}
-                  </button>
-                  <button
-                      class="btn-notice"
-                      @click="nextNotice"
-                      :disabled="currentNoticeIndex >= notices.data.length - 1">
-                    {{ $t('common.nextNotice') }}
-                    <IconChevronRight :size="16"/>
-                  </button>
+          <div class="notice-slider" v-if="notices.data && notices.data.length">
+            <transition name="fade-slide" mode="out-in">
+              <div
+                class="notice-item"
+                v-if="notices.data[currentNoticeIndex]"
+                :key="currentNoticeIndex"
+                :style="noticeBackgroundStyle(notices.data[currentNoticeIndex])"
+              >
+                <div class="notice-overlay"></div>
+                <div class="notice-content">
+                  <div class="notice-title">{{ notices.data[currentNoticeIndex].title }}</div>
+                  <div class="notice-footer">
+                    <div class="notice-date">{{ formatDate(notices.data[currentNoticeIndex].created_at) }}</div>
+                    <div class="notice-nav">
+                      <button
+                          class="btn-notice"
+                          @click="showNoticeModal">
+                        <IconEye :size="16"/>
+                        {{ $t('common.viewDetails') }}
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </transition>
+            <div v-if="notices.data.length > 1" class="notice-dots">
+              <button
+                v-for="(notice, idx) in notices.data"
+                :key="notice.id || idx"
+                class="notice-dot"
+                :class="{ active: currentNoticeIndex === idx }"
+                @click="goToNotice(idx)"
+              />
             </div>
-          </transition>
+          </div>
         </div>
       </div>
 
@@ -121,100 +99,6 @@
         </div>
       </transition>
 
-      <!-- 套餐信息卡片 -->
-      <div v-if="hasPlan" class="dashboard-card subscription-card" :class="{'card-animate': !loading.userInfo}"
-           style="animation-delay: 0.3s">
-        <div v-if="loading.userInfo" class="skeleton-card">
-          <div class="skeleton-header"></div>
-          <div class="skeleton-body">
-            <div class="skeleton-row"></div>
-            <div class="skeleton-row"></div>
-            <div class="skeleton-row"></div>
-          </div>
-        </div>
-        <template v-else>
-          <div class="card-header">
-            <h2 class="card-title">{{ $t('dashboard.subscriptionInfo') }}</h2>
-          </div>
-          <div class="card-body">
-            <div class="subscription-info">
-              <div class="info-item">
-                <span class="info-label">{{ $t('dashboard.planName') }}</span>
-                <span class="info-value">{{ userPlan.name || $t('dashboard.noSubscription') }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">{{ $t('dashboard.expiryDate') }}</span>
-                <span class="info-value">
-                  {{
-                    userPlan.isExpireDatePermanent ? $t('dashboard.permanent') : (userPlan.expireDate || $t('dashboard.none'))
-                  }}
-                </span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">{{ $t('dashboard.planTraffic') }}</span>
-                <span class="info-value">{{ userPlan.totalTraffic || '0 GB' }}</span>
-              </div>
-              <!-- 添加下次重置时间，只有当resetDay存在时才显示 -->
-              <div class="info-item" v-if="userPlan.resetDay">
-                <span class="info-label">{{ $t('dashboard.nextResetTime') }}</span>
-                <span class="info-value">{{ userPlan.resetDay }} {{ $t('dashboard.days') }}</span>
-              </div>
-              <!-- 添加在线设备信息，仅当面板类型为 Xiao-board 时显示 -->
-              <div class="info-item" v-if="showDeviceLimit">
-                <span class="info-label">{{ $t('dashboard.deviceLimit') }}</span>
-                <span class="info-value">
-                  {{
-                    userPlan.deviceLimit === null ? `${userPlan.aliveIp} / ${$t('dashboard.unlimited')}` : `${userPlan.aliveIp} / ${userPlan.deviceLimit}`
-                  }}
-                </span>
-              </div>
-            </div>
-            <div class="subscription-actions">
-              <button v-if="showImportSubscription" class="btn-outline" :class="{
-                'btn-active': showImportCard,
-                'btn-highlight-btnbgcolor': DASHBOARD_CONFIG.importButtonHighlightBtnbgcolor
-              }" @click="toggleImportCard">
-                <IconShare :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.importSubscription') }}</span>
-              </button>
-              <button
-                  v-if="showRenewPlanButton"
-                  class="btn-outline renew-plan-btn"
-                  :class="{
-                  'renew-warning': isExpiringSoon && !isExpired,
-                  'renew-danger': isExpired
-                }"
-                  @click="renewPlan"
-              >
-                <IconShoppingCart :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.renewPlan') }}</span>
-              </button>
-              <!-- 重置流量按钮 - 根据配置和流量状态显示 -->
-              <button
-                  v-if="showResetTrafficButton"
-                  class="btn-outline reset-traffic-btn"
-                  :class="{
-                  'reset-warning': isLowTraffic && !isTrafficDepleted,
-                  'reset-danger': isTrafficDepleted
-                }"
-                  @click="openResetTrafficModal"
-              >
-                <IconRefresh :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.resetTraffic') }}</span>
-
-              </button>
-              <button class="btn-outline" v-if="allowNewPeriod==='1'&&showResetTrafficButton" @click="showPopup=true">
-                <IconCalendarPlus :size="16" class="btn-icon"/>
-                <span>{{ $t('dashboard.activateDataCycleInAdvance') }}</span>
-              </button>
-              <button class="btn-outline" @click="goToSupport">
-                <IconMessage :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.ticketSupport') }}</span>
-              </button>
-            </div>
-          </div>
-        </template>
-      </div>
 
       <!-- 订阅导入卡片 -->
       <transition name="slide-fade">
@@ -480,10 +364,6 @@
                     <IconShoppingBag :size="18" class="btn-icon"/>
                     <span>{{ $t('dashboard.purchasePlan') }}</span>
                   </button>
-                  <button class="action-button secondary" @click="goToSupport">
-                    <IconMessage :size="18" class="btn-icon"/>
-                    <span>{{ $t('dashboard.ticketSupport') }}</span>
-                  </button>
                 </div>
               </div>
             </div>
@@ -491,137 +371,96 @@
         </template>
 
         <template v-else>
-          <div class="stats-card"
-               :class="{
-              'card-animate': !loading.userStats,
-              'warning-card': isLowTraffic && !isTrafficDepleted,
-              'danger-card': isTrafficDepleted
-            }"
-               style="animation-delay: 0.5s">
-            <div class="stats-icon">
-              <IconTransferVertical :size="32"/>
-            </div>
-            <div class="stats-info">
-              <div class="stats-value">{{ userStats.remainingTraffic }}</div>
-              <div class="stats-label">{{ $t('dashboard.remainingTraffic') }}</div>
-            </div>
+          <div class="usage-panel-title-row">
+            <h3>{{ $t('dashboard.usagePanel') }}</h3>
+            <span class="traffic-package-status" :class="{ active: hasPurchasedTrafficPackage }">
+              {{ hasPurchasedTrafficPackage ? $t('dashboard.packagePurchased') : $t('dashboard.packageNotPurchased') }}
+            </span>
+          </div>
 
-            <!-- 水流进度条效果 -->
-            <div class="water-container">
-              <div class="water-progress"
-                   :class="{'animate-water': waterAnimationState.canAnimate}"
-                   :style="{ height: waterAnimationState.canAnimate ? `${trafficPercentage}%` : '0%' }">
+          <div
+            class="stats-card traffic-board-card"
+            v-for="(card, idx) in trafficBoardSections"
+            :key="card.key"
+            :class="{ 'card-animate': !loading.userStats }"
+            :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
+          >
+            <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
+            <div v-if="card.key === 'total'" class="plan-summary-card">
+              <div class="plan-summary-row">
+                <span class="plan-summary-label">{{ $t('dashboard.planName') }}</span>
+                <strong class="plan-summary-value">{{ userPlan.name || '-' }}</strong>
+              </div>
+              <div class="plan-summary-row">
+                <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
+                <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
+              </div>
+              <div class="plan-summary-row auto-renewal-row">
+                <div>
+                  <span class="plan-summary-label">{{ $t('profile.autoRenewal') }}</span>
+                  <p class="plan-summary-desc">{{ $t('profile.autoRenewalDesc') }}</p>
+                </div>
+                <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
+                  <input
+                    type="checkbox"
+                    v-model="autoRenewalEnabled"
+                    :disabled="updatingAutoRenewalSetting"
+                    @change="updateAutoRenewalSetting"
+                  />
+                  <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
+                </label>
               </div>
             </div>
-          </div>
-
-          <div class="stats-card"
-               :class="{
-              'card-animate': !loading.userStats,
-              'warning-card': isExpiringSoon && !isExpired,
-              'danger-card': isExpired
-            }"
-               style="animation-delay: 0.6s">
-            <div class="stats-icon">
-              <IconCalendar :size="32"/>
+            <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
+              <template v-if="card.key === 'package'">
+                <span class="usage-percent">{{ formatPackageRemaining(card.remaining) }}</span>
+                <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+                <button class="package-add-btn" @click.stop="openTrafficPackageModal" :title="$t('dashboard.purchaseTrafficPackage')">
+                  <IconPlus :size="14" />
+                </button>
+              </template>
+              <template v-else>
+                <span class="usage-percent">{{ card.remainingPercentage }}%</span>
+                <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+              </template>
             </div>
-            <div class="stats-info">
-              <div class="stats-value">
-                {{
-                  userStats.isRemainingDaysPermanent ? $t('dashboard.permanent') : userStats.remainingDays + $t('dashboard.days')
-                }}
+            <div v-if="card.key !== 'package' && card.key !== 'total'" class="section-progress-track">
+              <div class="section-progress-fill" :style="{ width: `${card.remainingPercentage}%` }"></div>
+            </div>
+            <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
+              <div class="usage-kpi">
+                <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
+                <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
               </div>
-              <div class="stats-label">{{ $t('dashboard.remainingDays') }}</div>
+              <div class="usage-kpi">
+                <span class="usage-kpi-label">{{ $t('dashboard.remaining') }}</span>
+                <strong class="usage-kpi-value">{{ formatTraffic(card.remaining) }}</strong>
+              </div>
+            </div>
+            <div v-if="card.key === 'package'" class="usage-package-note">
+              {{ $t('dashboard.packageUsageNote') }}
+            </div>
+            <div v-if="card.key === 'subscription'" class="usage-reset-hint">
+              {{ $t('dashboard.resetTimeLabel') }}：{{ userPlan.resetDateTime || '-' }}
             </div>
           </div>
 
-          <div class="stats-card"
-               :class="{'card-animate': !loading.userStats, 'balance-card': true, 'clickable': isXiaoPanel}"
-               style="animation-delay: 0.7s"
-               @click="isXiaoPanel ? navigateToDeposit() : null"
-               :style="isXiaoPanel ? { cursor: 'pointer' } : {}">
-            <div class="stats-icon">
-              <IconWallet :size="32"/>
-            </div>
-            <div class="stats-info">
-              <div class="stats-value">{{ userStats.accountBalance }}</div>
-              <div class="stats-label">{{ $t('dashboard.accountBalance') }}</div>
-            </div>
-            <div v-if="isXiaoPanel" class="chevron-icon">
-              <IconChevronRight :size="20"/>
-            </div>
-          </div>
 
-          <div class="stats-card doc-card"
-               :class="{'card-animate': !loading.userStats}"
-               @click="openDocumentation"
-               style="animation-delay: 0.8s">
-            <div class="stats-icon">
-              <IconFileText :size="32"/>
-            </div>
-            <div class="stats-info">
-              <div class="stats-value">{{ $t('dashboard.viewHelp') }}</div>
-              <div class="stats-label">{{ $t('dashboard.documentation') }}</div>
-            </div>
-            <div class="chevron-icon">
-              <IconChevronRight :size="20"/>
-            </div>
-          </div>
         </template>
       </div>
 
-      <!-- 官方客户端下载区域 -->
-      <div class="dashboard-card download-card" :class="{'card-animate': !loading.userInfo}"
-           v-if="clientConfig.showDownloadCard" style="animation-delay: 0.9s">
+      <div class="dashboard-card usage-trend-card" v-if="hasPlan">
         <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.officialClients') }}</h2>
+          <h2 class="card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
         <div class="card-body">
-          <div class="download-options">
-            <div class="download-option" v-if="clientConfig.showIOS" @click="downloadClient('ios')">
-              <div class="option-icon ios">
-                <IconBrandApple :size="32"/>
-              </div>
-              <div class="option-name">iOS</div>
-            </div>
-
-            <div class="download-option" v-if="clientConfig.showAndroid" @click="downloadClient('android')">
-              <div class="option-icon android">
-                <IconBrandAndroid :size="32"/>
-              </div>
-              <div class="option-name">Android</div>
-            </div>
-
-            <div class="download-option" v-if="clientConfig.showMacOS" @click="downloadClient('macos')">
-              <div class="option-icon macos">
-                <IconBrandFinder :size="32"/>
-              </div>
-              <div class="option-name">MacOS</div>
-            </div>
-
-            <div class="download-option" v-if="clientConfig.showWindows" @click="downloadClient('windows')">
-              <div class="option-icon windows">
-                <IconBrandWindows :size="32"/>
-              </div>
-              <div class="option-name">Windows</div>
-            </div>
-
-            <div class="download-option" v-if="clientConfig.showLinux" @click="downloadClient('linux')">
-              <div class="option-icon linux">
-                <IconBrandDebian :size="32"/>
-              </div>
-              <div class="option-name">Linux</div>
-            </div>
-
-            <div class="download-option" v-if="clientConfig.showOpenWrt" @click="downloadClient('openwrt')">
-              <div class="option-icon openwrt">
-                <IconRouter :size="32"/>
-              </div>
-              <div class="option-name">OpenWrt</div>
-            </div>
-          </div>
+          <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
+          <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
+          <div v-else-if="!trafficTrendData.length" class="trend-state">{{ $t('trafficLog.noTrafficData') }}</div>
+          <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
         </div>
       </div>
+
     </div>
     <!-- 弹窗组件 -->
     <CommonDialog
@@ -635,7 +474,48 @@
     />
 
   </div>
+</div>
 
+
+
+  <teleport to="body">
+    <transition name="modal-fade">
+      <div class="modal-overlay traffic-package-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
+        <div class="modal-container traffic-package-container" @click.stop>
+          <div class="modal-card traffic-package-modal-card">
+            <div class="modal-header">
+              <h3>{{ $t('shop.traffic_package.title') }}</h3>
+              <button class="close-button" :aria-label="$t('common.close')" @click="showTrafficPackageModal = false">
+                <IconX :size="18" />
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class="traffic-package-desc">{{ $t('shop.traffic_package.description') }}</p>
+              <div v-if="trafficPackageLoading" class="traffic-package-loading">{{ $t('common.loading') }}</div>
+              <div v-else-if="trafficPackagePlans.length === 0" class="traffic-package-empty">{{ $t('shop.no_plans_found') }}</div>
+              <div v-else class="traffic-package-list">
+                <div class="traffic-package-item" v-for="plan in trafficPackagePlans" :key="`dashboard-traffic-${plan.id}`">
+                  <div class="item-title-row">
+                    <strong>{{ getTrafficPackageDisplayName(plan) }}</strong>
+                    <span class="item-price">{{ currencySymbol }}{{ (normalizeTrafficPackagePrice(plan.onetime_price) / 100).toFixed(2) }}</span>
+                  </div>
+                  <div class="item-content" v-if="getTrafficPackageContent(plan)">{{ getTrafficPackageContent(plan) }}</div>
+                  <button class="confirm-btn buy-btn" :disabled="isTrafficPackageSoldOut(plan)" @click="purchaseTrafficPackage(plan)">
+                    {{ isTrafficPackageSoldOut(plan) ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="cancel-btn" @click="showTrafficPackageModal = false">
+                {{ $t('common.cancel') }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </teleport>
   <!-- 重置流量确认弹窗 -->
   <transition name="modal-fade">
     <div class="modal-overlay" v-if="showResetTrafficModal">
@@ -721,8 +601,6 @@ import {
   IconEyeOff,
   IconFileText,
   IconHelpCircle,
-  IconMail,
-  IconMessage,
   IconMoon,
   IconPackage,
   IconQrcode,
@@ -739,12 +617,16 @@ import {
   IconWaveSawTool,
   IconWaveSine,
   IconX,
-  IconCalendarPlus
+  IconCalendarPlus,
+  IconPlus
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/dashboard';
+import { updateRemindSettings as apiUpdateRemind } from '@/api/user';
+import { getTrafficLog } from '@/api/trafficLog';
+import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
-import {submitOrder} from '@/api/shop';
+import {fetchPlans, submitOrder} from '@/api/shop';
 import MarkdownIt from 'markdown-it';
 import QRCode from 'qrcode';
 import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
@@ -831,8 +713,6 @@ export default {
     IconChevronRight,
     IconTransferVertical,
     IconShare,
-    IconMessage,
-    IconMail,
     IconChevronLeft,
     IconCopy,
     IconQrcode,
@@ -854,6 +734,7 @@ export default {
     IconAlertTriangle,
     IconX,
     IconCalendarPlus,
+    IconPlus,
     CommonDialog
   },
   setup() {
@@ -865,8 +746,33 @@ export default {
     const userPlan = ref({
       deviceLimit: null,
       aliveIp: 0,
-      resetDay: null
+      resetDay: null,
+      resetDateTime: null,
+      subscriptionQuotaUsed: null,
+      subscriptionQuotaRemaining: null,
+      packageQuotaRemaining: null
     });
+    const remindExpireSetting = ref(false);
+    const remindTrafficSetting = ref(false);
+    const autoRenewalEnabled = ref(false);
+    const updatingAutoRenewalSetting = ref(false);
+
+        const trafficMetrics = reactive({
+      totalTrafficBytes: 0,
+      totalUsedBytes: 0,
+      totalRemainingBytes: 0,
+      subscriptionQuotaTotalBytes: 0,
+      subscriptionQuotaUsedBytes: 0,
+      subscriptionQuotaRemainingBytes: 0,
+      packageQuotaRemainingBytes: 0,
+    });
+
+    const trafficTrendChartRef = ref(null);
+    const trafficTrendData = ref([]);
+    const trafficTrendLoading = ref(false);
+    const trafficTrendError = ref(false);
+    let trafficTrendChart = null;
+
     const qrCodeLoading = ref(true);
     const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription)
 
@@ -959,36 +865,12 @@ export default {
       subscribe: true
     });
 
-    const waterAnimationState = reactive({
-      canAnimate: false,
-      initialized: false
-    });
-
-    watch(() => [loading.userStats, loading.userInfo], ([userStatsLoading, userInfoLoading]) => {
-      if (!userStatsLoading && !userInfoLoading) {
-        setTimeout(() => {
-          waterAnimationState.canAnimate = true;
-          waterAnimationState.initialized = true;
-        }, 500);
-      }
-    }, {immediate: false, flush: 'post'});
-
     watch(() => locale.value, () => {
       if (userPlan.value.isExpireDatePermanent) {
         userPlan.value.expireDate = t('dashboard.permanent');
       }
     });
 
-    const openDocumentation = () => {
-      router.push('/docs');
-    };
-
-    const downloadClient = (platform) => {
-      const downloadUrl = clientConfig.clientLinks[platform];
-      if (downloadUrl) {
-        window.open(downloadUrl, '_blank');
-      }
-    };
 
     const goToShop = () => {
       router.push('/shop');
@@ -997,6 +879,9 @@ export default {
     const userPlanId = ref(null);
 
     const showResetTrafficModal = ref(false);
+    const showTrafficPackageModal = ref(false);
+    const trafficPackageLoading = ref(false);
+    const trafficPackagePlans = ref([]);
     const resetConfirmCooldown = ref(0);
     const resetConfirmTimer = ref(null);
     const isCreatingResetOrder = ref(false);
@@ -1118,6 +1003,9 @@ export default {
             userBalance.value = info.balance;
             updateAccountBalanceDisplay();
           }
+          remindExpireSetting.value = !!info.remind_expire;
+          remindTrafficSetting.value = !!info.remind_traffic;
+          autoRenewalEnabled.value = !!info.auto_renewal;
           if (info.expired_at) {
             userPlan.value.expireDate = formatDate(info.expired_at);
             userPlan.value.isExpireDatePermanent = false;
@@ -1145,6 +1033,24 @@ export default {
         console.error('获取用户信息失败:', error);
       } finally {
         loading.userInfo = false;
+      }
+    };
+
+    const updateAutoRenewalSetting = async () => {
+      const originalValue = !autoRenewalEnabled.value;
+      updatingAutoRenewalSetting.value = true;
+      try {
+        await apiUpdateRemind({
+          remind_expire: remindExpireSetting.value ? 1 : 0,
+          remind_traffic: remindTrafficSetting.value ? 1 : 0,
+          auto_renewal: autoRenewalEnabled.value ? 1 : 0,
+        });
+        showToast(t('profile.updateSuccess'), 'success');
+      } catch (error) {
+        autoRenewalEnabled.value = originalValue;
+        showToast(t('profile.updateError'), 'error');
+      } finally {
+        updatingAutoRenewalSetting.value = false;
       }
     };
 
@@ -1284,6 +1190,37 @@ export default {
     });
 
 
+    const toNumberOrNull = (value) => {
+      if (value === null || value === undefined || value === '') return null;
+      const num = Number(value);
+      return Number.isFinite(num) ? num : null;
+    };
+
+    const getSubscribeTrafficMetrics = (subscribe) => {
+      const totalTrafficBytes =
+        toNumberOrNull(subscribe.transfer_enable) ??
+        toNumberOrNull(subscribe.subscription_quota_total_bytes) ??
+        toNumberOrNull(subscribe.base_quota_bytes) ??
+        0;
+
+      const usedTrafficBytes =
+        toNumberOrNull(subscribe.total_used_bytes) ??
+        toNumberOrNull(subscribe.used_bytes) ??
+        (
+          (toNumberOrNull(subscribe.u) ?? 0) +
+          (toNumberOrNull(subscribe.d) ?? 0)
+        );
+
+      const remainingTrafficBytes =
+        toNumberOrNull(subscribe.total_remaining_bytes) ??
+        Math.max(totalTrafficBytes - usedTrafficBytes, 0);
+
+      return {
+        totalTrafficBytes: Math.max(totalTrafficBytes, 0),
+        remainingTrafficBytes: Math.max(remainingTrafficBytes, 0)
+      };
+    };
+
     const fetchSubscribe = async () => {
       // 如果showResetTrafficButton为true，强制执行（跳过缓存逻辑）
       // if (showResetTrafficButton.value) {
@@ -1297,9 +1234,10 @@ export default {
       loading.subscribe = true;
       try {
         const response = await getSubscribe();
-        allowNewPeriod.value = response.data.allow_new_period;
+        allowNewPeriod.value = String(response.data.allow_new_period ?? '0');
         if (response.data) {
           const subscribe = response.data;
+          const { totalTrafficBytes, remainingTrafficBytes } = getSubscribeTrafficMetrics(subscribe);
           if (subscribe.plan && subscribe.plan.name) {
             userPlan.value.name = subscribe.plan.name;
           }
@@ -1328,17 +1266,42 @@ export default {
             userStats.remainingDays = null;
             userStats.isRemainingDaysPermanent = true;
           }
-          if (subscribe.transfer_enable) {
-            userPlan.value.totalTraffic = formatTraffic(subscribe.transfer_enable);
+          userPlan.value.totalTraffic = formatTraffic(totalTrafficBytes);
+          userStats.remainingTraffic = formatTraffic(remainingTrafficBytes);
+
+          const subscriptionQuotaUsedBytes =
+            toNumberOrNull(subscribe.subscription_quota_used_bytes) ??
+            toNumberOrNull(subscribe.monthly_used_bytes);
+          const subscriptionQuotaTotalBytes =
+            toNumberOrNull(subscribe.subscription_quota_total_bytes) ??
+            toNumberOrNull(subscribe.base_quota_bytes);
+          const subscriptionQuotaRemainingBytes =
+            toNumberOrNull(subscribe.subscription_quota_remaining_bytes) ??
+            toNumberOrNull(subscribe.monthly_remaining_bytes);
+          const packageQuotaRemainingBytes =
+            toNumberOrNull(subscribe.quota_package_remaining_bytes) ??
+            toNumberOrNull(subscribe.package_remaining_bytes);
+
+          userPlan.value.subscriptionQuotaUsed =
+            subscriptionQuotaUsedBytes === null ? null : formatTraffic(Math.max(subscriptionQuotaUsedBytes, 0));
+          userPlan.value.subscriptionQuotaRemaining =
+            subscriptionQuotaRemainingBytes === null ? null : formatTraffic(Math.max(subscriptionQuotaRemainingBytes, 0));
+          userPlan.value.packageQuotaRemaining =
+            packageQuotaRemainingBytes === null ? null : formatTraffic(Math.max(packageQuotaRemainingBytes, 0));
+
+          trafficMetrics.totalTrafficBytes = totalTrafficBytes;
+          trafficMetrics.totalUsedBytes = Math.max(totalTrafficBytes - remainingTrafficBytes, 0);
+          trafficMetrics.totalRemainingBytes = remainingTrafficBytes;
+          trafficMetrics.subscriptionQuotaTotalBytes = Math.max(subscriptionQuotaTotalBytes ?? 0, 0);
+          trafficMetrics.subscriptionQuotaUsedBytes = Math.max(subscriptionQuotaUsedBytes ?? 0, 0);
+          trafficMetrics.subscriptionQuotaRemainingBytes = Math.max(subscriptionQuotaRemainingBytes ?? 0, 0);
+          trafficMetrics.packageQuotaRemainingBytes = Math.max(packageQuotaRemainingBytes ?? 0, 0);
+
+          const resetDay = subscribe.reset_day ?? subscribe.plan?.reset_day;
+          if (resetDay) {
+            userPlan.value.resetDay = resetDay;
           }
-          if (subscribe.transfer_enable && subscribe.u !== undefined && subscribe.d !== undefined) {
-            const usedTraffic = subscribe.u + subscribe.d;
-            const remainingTraffic = Math.max(0, subscribe.transfer_enable - usedTraffic);
-            userStats.remainingTraffic = formatTraffic(remainingTraffic);
-          }
-          if (subscribe.reset_day) {
-            userPlan.value.resetDay = subscribe.reset_day;
-          }
+          userPlan.value.resetDateTime = getNextResetDateTime(subscribe);
           if (subscribe.subscribe_url) {
             userPlan.value.subscribeUrl = subscribe.subscribe_url;
           }
@@ -1440,20 +1403,132 @@ export default {
       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     };
 
+    const formatPackageRemaining = (bytes) => {
+      const gb = Math.max(bytes || 0, 0) / (1024 ** 3);
+      return `${gb.toFixed(2)} GB`;
+    };
+
+    const normalizeTrafficPackagePrice = (value) => {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+    };
+
+
+    const getPlanListFromResponse = (response) => {
+      if (Array.isArray(response?.data)) return response.data;
+      if (Array.isArray(response?.data?.data)) return response.data.data;
+      return [];
+    };
+
+    const getTrafficPackageDisplayName = (plan) => {
+      const name = String(plan?.name || '').trim();
+      if (!name) return t('shop.traffic_package.entry');
+      if (/^data\s*credit$/i.test(name)) return t('shop.traffic_package.entry');
+      return name;
+    };
+
+    const getTrafficPackageContent = (plan) => {
+      const raw = plan?.content;
+      if (!raw) return '';
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const enabled = parsed.filter((item) => item && item.support !== false).map((item) => item.feature).filter(Boolean);
+          return enabled.slice(0, 2).join(' · ');
+        }
+      } catch (_) {
+        // non-json content
+      }
+      const plain = String(raw).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+      const displayName = getTrafficPackageDisplayName(plan);
+      if (!plain) return '';
+      if (plain.toLowerCase() === displayName.toLowerCase()) return '';
+      return plain;
+    };
+
+
+    const hasValidOneTimePrice = (plan) => {
+      const raw = plan?.onetime_price;
+      if (raw === null || raw === undefined || raw === '') {
+        return false;
+      }
+      const price = Number(raw);
+      return Number.isFinite(price) && price >= 0;
+    };
+
+    const isTrafficPackageSoldOut = (plan) => {
+      const raw = plan?.capacity_limit;
+      if (raw === null || raw === undefined || raw === '') {
+        return false;
+      }
+      const capacity = Number(raw);
+      return Number.isFinite(capacity) && capacity === 0;
+    };
+
+    const openTrafficPackageModal = async () => {
+      showTrafficPackageModal.value = true;
+      trafficPackageLoading.value = true;
+      try {
+        const response = await fetchPlans(locale.value);
+        const list = getPlanListFromResponse(response);
+        trafficPackagePlans.value = list.filter((plan) => hasValidOneTimePrice(plan));
+      } catch (error) {
+        trafficPackagePlans.value = [];
+        showToast(t('shop.failed_to_fetch_plan'), 'error');
+      } finally {
+        trafficPackageLoading.value = false;
+      }
+    };
+
+    const purchaseTrafficPackage = (plan) => {
+      if (isTrafficPackageSoldOut(plan)) {
+        showToast(t('shop.plan.stock.sold_out'), 'error');
+        return;
+      }
+      showTrafficPackageModal.value = false;
+      router.push({
+        path: '/order-confirm',
+        query: {
+          id: plan.id,
+          period: 'onetime_price'
+        }
+      });
+    };
+
     const hasPendingItems = computed(() => {
-      return userStats.pendingOrders > 0 || userStats.pendingTickets > 0;
+      return userStats.pendingOrders > 0;
     });
 
     const prevNotice = () => {
+      if (!notices.value?.data?.length) return;
       if (currentNoticeIndex.value > 0) {
         currentNoticeIndex.value--;
+      } else {
+        currentNoticeIndex.value = notices.value.data.length - 1;
       }
     };
 
     const nextNotice = () => {
+      if (!notices.value?.data?.length) return;
       if (currentNoticeIndex.value < notices.value.data.length - 1) {
         currentNoticeIndex.value++;
+      } else {
+        currentNoticeIndex.value = 0;
       }
+    };
+
+    const goToNotice = (index) => {
+      if (!notices.value?.data?.length) return;
+      currentNoticeIndex.value = Math.max(0, Math.min(index, notices.value.data.length - 1));
+    };
+
+    const noticeBackgroundStyle = (notice) => {
+      if (!notice?.img_url) return {};
+      return {
+        backgroundImage: `url(${notice.img_url})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      };
     };
 
     const showNoticeModal = () => {
@@ -1471,6 +1546,92 @@ export default {
       if (!dateString) return '';
       const date = new Date(dateString * 1000);
       return date.toLocaleDateString();
+    };
+
+    const formatResetDateTime = (date) => {
+      if (!(date instanceof Date) || Number.isNaN(date.getTime())) return null;
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      if (String(locale.value || '').toLowerCase().startsWith('zh')) {
+        return `${year}年${month}月${day}日 ${hours}:${minutes}`;
+      }
+      return `${year}-${month}-${day} ${hours}:${minutes}`;
+    };
+
+    const parseResetTimestamp = (value) => {
+      if (value === null || value === undefined || value === '') return null;
+
+      if (value instanceof Date) {
+        return Number.isNaN(value.getTime()) ? null : value;
+      }
+
+      const numeric = Number(value);
+      if (Number.isFinite(numeric) && numeric > 0) {
+        const timestampMs = numeric > 1e12 ? numeric : numeric * 1000;
+        const date = new Date(timestampMs);
+        return Number.isNaN(date.getTime()) ? null : date;
+      }
+
+      if (typeof value === 'string') {
+        const normalized = value.trim().replace(/-/g, '/');
+        const date = new Date(normalized);
+        if (!Number.isNaN(date.getTime())) {
+          return date;
+        }
+      }
+
+      return null;
+    };
+
+    const getNextResetDateTime = (subscribe) => {
+      const expiredAtDate = parseResetTimestamp(subscribe?.expired_at);
+      const resetDayValue = Number(subscribe?.reset_day ?? subscribe?.plan?.reset_day);
+      const effectiveResetDay = Number.isFinite(resetDayValue) && resetDayValue > 0
+        ? resetDayValue
+        : (expiredAtDate ? expiredAtDate.getDate() : null);
+
+      if (!Number.isFinite(effectiveResetDay) || effectiveResetDay <= 0) {
+        return null;
+      }
+
+      const now = new Date();
+
+      const buildMonthlyDate = (year, month, day, hour, minute) => {
+        const maxDay = new Date(year, month + 1, 0).getDate();
+        return new Date(year, month, Math.min(day, maxDay), hour, minute, 0);
+      };
+
+      if (expiredAtDate) {
+        const resetHour = expiredAtDate.getHours();
+        const resetMinute = expiredAtDate.getMinutes();
+
+        let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), effectiveResetDay, resetHour, resetMinute);
+        while (candidate <= now) {
+          candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, effectiveResetDay, resetHour, resetMinute);
+        }
+
+        if (candidate > expiredAtDate) {
+          candidate = buildMonthlyDate(expiredAtDate.getFullYear(), expiredAtDate.getMonth(), effectiveResetDay, resetHour, resetMinute);
+          if (candidate > expiredAtDate) {
+            candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() - 1, effectiveResetDay, resetHour, resetMinute);
+          }
+        }
+
+        return formatResetDateTime(candidate);
+      }
+
+      const resetHourRaw = subscribe?.reset_hour ?? subscribe?.plan?.reset_hour;
+      const resetMinuteRaw = subscribe?.reset_minute ?? subscribe?.plan?.reset_minute;
+      const resetHour = Number.isFinite(Number(resetHourRaw)) ? Number(resetHourRaw) : 0;
+      const resetMinute = Number.isFinite(Number(resetMinuteRaw)) ? Number(resetMinuteRaw) : 0;
+      let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), effectiveResetDay, resetHour, resetMinute);
+      if (candidate <= now) {
+        candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, effectiveResetDay, resetHour, resetMinute);
+      }
+      return formatResetDateTime(candidate);
     };
 
     const updateQRCodeUrl = () => {
@@ -1636,14 +1797,6 @@ export default {
       }
     };
 
-    const goToSupport = () => {
-      if (window.innerWidth < 905) {
-        router.push('/mobile/tickets');
-      } else {
-        router.push('/tickets');
-      }
-    };
-
     const toggleImportCard = () => {
       showImportCard.value = !showImportCard.value;
       if (showImportCard.value) {
@@ -1683,6 +1836,133 @@ export default {
       }
     };
 
+    const getTrafficLogRows = (response) => {
+      if (Array.isArray(response?.data)) return response.data;
+      if (Array.isArray(response?.data?.data)) return response.data.data;
+      return [];
+    };
+
+    const fetchTrafficTrend = async () => {
+      trafficTrendLoading.value = true;
+      trafficTrendError.value = false;
+      try {
+        const response = await getTrafficLog();
+        const rows = getTrafficLogRows(response);
+        const sorted = [...rows]
+          .filter((item) => item && item.record_at)
+          .sort((a, b) => Number(a.record_at) - Number(b.record_at))
+          .slice(-30);
+        trafficTrendData.value = sorted.map((item) => {
+          const recordAt = Number(item.record_at);
+          const timestampMs = recordAt > 1e12 ? recordAt : recordAt * 1000;
+          const uploadGb = Number(((Number(item.u) || 0) / (1024 ** 3)).toFixed(2));
+          const downloadGb = Number(((Number(item.d) || 0) / (1024 ** 3)).toFixed(2));
+          return {
+            date: new Date(timestampMs).toLocaleDateString(),
+            uploadGb,
+            downloadGb,
+            totalGb: Number((uploadGb + downloadGb).toFixed(2))
+          };
+        });
+      } catch (e) {
+        console.error('Failed to fetch traffic trend data:', e);
+        trafficTrendError.value = true;
+        trafficTrendData.value = [];
+      } finally {
+        trafficTrendLoading.value = false;
+        await nextTick();
+        renderTrafficTrendChart();
+      }
+    };
+
+    const renderTrafficTrendChart = () => {
+      if (!trafficTrendChartRef.value || !trafficTrendData.value.length) {
+        if (trafficTrendChart) {
+          trafficTrendChart.dispose();
+          trafficTrendChart = null;
+        }
+        return;
+      }
+      if (trafficTrendChart) {
+        trafficTrendChart.dispose();
+      }
+      const rootStyles = getComputedStyle(document.documentElement);
+      const textColor = rootStyles.getPropertyValue('--text-color').trim() || '#333333';
+      const borderColor = rootStyles.getPropertyValue('--border-color').trim() || '#e8e8e8';
+      const themeColor = rootStyles.getPropertyValue('--theme-color').trim() || '#6753f6';
+      trafficTrendChart = echarts.init(trafficTrendChartRef.value);
+      trafficTrendChart.setOption({
+        tooltip: {
+          trigger: 'axis',
+          formatter: (params) => {
+            let result = `${params[0]?.name || ''}<br/>`;
+            params.forEach((param) => {
+              result += `${param.marker} ${param.seriesName}: ${param.value} GB<br/>`;
+            });
+            return result;
+          }
+        },
+        legend: {
+          data: [t('trafficLog.uploadTraffic'), t('trafficLog.downloadTraffic'), t('trafficLog.totalTraffic')],
+          bottom: 0,
+          textStyle: { color: textColor }
+        },
+        grid: { left: '3%', right: '4%', bottom: '60px', top: '30px', containLabel: true },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: trafficTrendData.value.map((i) => i.date),
+          axisLabel: { rotate: 45, interval: 'auto', color: textColor },
+          axisLine: { lineStyle: { color: borderColor } },
+          splitLine: { lineStyle: { color: borderColor } }
+        },
+        yAxis: {
+          type: 'value',
+          name: 'GB',
+          nameTextStyle: { padding: [0, 0, 0, 10], color: textColor },
+          axisLabel: { formatter: '{value} GB', color: textColor },
+          axisLine: { lineStyle: { color: borderColor } },
+          splitLine: { lineStyle: { color: borderColor } }
+        },
+        series: [
+          {
+            name: t('trafficLog.uploadTraffic'),
+            type: 'line',
+            stack: 'Total',
+            smooth: true,
+            lineStyle: { width: 2 },
+            showSymbol: false,
+            areaStyle: { opacity: 0.2 },
+            emphasis: { focus: 'series' },
+            data: trafficTrendData.value.map((i) => i.uploadGb),
+            color: '#36AD47'
+          },
+          {
+            name: t('trafficLog.downloadTraffic'),
+            type: 'line',
+            stack: 'Total',
+            smooth: true,
+            lineStyle: { width: 2 },
+            showSymbol: false,
+            areaStyle: { opacity: 0.2 },
+            emphasis: { focus: 'series' },
+            data: trafficTrendData.value.map((i) => i.downloadGb),
+            color: '#4080FF'
+          },
+          {
+            name: t('trafficLog.totalTraffic'),
+            type: 'line',
+            smooth: true,
+            lineStyle: { width: 3 },
+            showSymbol: false,
+            emphasis: { focus: 'series' },
+            data: trafficTrendData.value.map((i) => i.totalGb),
+            color: themeColor
+          }
+        ]
+      });
+    };
+
     onMounted(async () => {
       await fetchUserConfig();
 
@@ -1693,6 +1973,7 @@ export default {
       fetchNotices();
 
       fetchUserStats();
+      fetchTrafficTrend();
 
       updateQRCodeUrl();
     });
@@ -1765,6 +2046,9 @@ export default {
       if (showNoticeDetails.value) {
         updateModalHeight();
       }
+      if (trafficTrendChart) {
+        trafficTrendChart.resize();
+      }
     };
 
     onMounted(() => {
@@ -1773,6 +2057,10 @@ export default {
 
     onBeforeUnmount(() => {
       window.removeEventListener('resize', handleResize);
+      if (trafficTrendChart) {
+        trafficTrendChart.dispose();
+        trafficTrendChart = null;
+      }
     });
 
     const renewPlan = () => {
@@ -1787,7 +2075,7 @@ export default {
     const isXiaoPanel = isXiaoV2board();
 
     const navigateToDeposit = () => {
-      router.push('/wallet/deposit');
+      router.push('/billing?tab=wallet');
     };
 
     const showDeviceLimit = computed(() => {
@@ -1832,34 +2120,53 @@ export default {
 
     const needRefreshData = ref(false);
 
-    const trafficPercentage = computed(() => {
-      const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
+    const hasPurchasedTrafficPackage = computed(() => {
+      const packageUsed = Math.max(
+        trafficMetrics.totalUsedBytes - trafficMetrics.subscriptionQuotaUsedBytes,
+        0
+      );
+      return packageUsed > 0 || trafficMetrics.packageQuotaRemainingBytes > 0;
+    });
 
-      if (!userPlan.value || !userPlan.value.totalTraffic || !remainingMatch) return 0;
+    const trafficBoardSections = computed(() => {
+      const packageUsedBytes = Math.max(
+        trafficMetrics.totalUsedBytes - trafficMetrics.subscriptionQuotaUsedBytes,
+        0
+      );
+      const packageTotalBytes = packageUsedBytes + trafficMetrics.packageQuotaRemainingBytes;
 
-      const totalMatch = userPlan.value.totalTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
-      if (!totalMatch) return 0;
+      const rows = [
+        {
+          key: 'total',
+          title: t('dashboard.totalTrafficPackAndPackage'),
+          used: trafficMetrics.totalUsedBytes,
+          total: trafficMetrics.totalTrafficBytes,
+          remaining: trafficMetrics.totalRemainingBytes
+        },
+        {
+          key: 'subscription',
+          title: t('dashboard.subscriptionMonthlyTraffic'),
+          used: trafficMetrics.subscriptionQuotaUsedBytes,
+          total: trafficMetrics.subscriptionQuotaTotalBytes,
+          remaining: trafficMetrics.subscriptionQuotaRemainingBytes
+        },
+        {
+          key: 'package',
+          title: t('dashboard.trafficPackageQuota'),
+          used: packageUsedBytes,
+          total: packageTotalBytes,
+          remaining: trafficMetrics.packageQuotaRemainingBytes
+        }
+      ];
 
-      const remainingValue = parseFloat(remainingMatch[1]);
-      const remainingUnit = remainingMatch[3].toUpperCase();
-
-      const totalValue = parseFloat(totalMatch[1]);
-      const totalUnit = totalMatch[3].toUpperCase();
-
-      const unitToBytes = {
-        'B': 1,
-        'KB': 1024,
-        'MB': 1024 * 1024,
-        'GB': 1024 * 1024 * 1024,
-        'TB': 1024 * 1024 * 1024 * 1024
-      };
-
-      const remainingBytes = remainingValue * unitToBytes[remainingUnit];
-      const totalBytes = totalValue * unitToBytes[totalUnit];
-
-      if (totalBytes === 0) return 0;
-
-      return Math.min(Math.max(Math.round((remainingBytes / totalBytes) * 100), 0), 100);
+      return rows.map((row) => {
+        const usedPercentage = row.total > 0 ? Math.round((row.used / row.total) * 100) : 0;
+        return {
+          ...row,
+          usedPercentage: Math.min(Math.max(usedPercentage, 0), 100),
+          remainingPercentage: Math.min(Math.max(100 - usedPercentage, 0), 100)
+        };
+      });
     });
 
     return {
@@ -1872,19 +2179,19 @@ export default {
       loading,
       languageChangedSignal,
       goToShop,
-      openDocumentation,
-      downloadClient,
       hasPendingItems,
       router,
       currentNoticeIndex,
       prevNotice,
       nextNotice,
+      goToNotice,
+      noticeBackgroundStyle,
       showImportCard,
       showQrCode,
       importToClient,
-      goToSupport,
       formatDate,
       formatTraffic,
+      formatPackageRemaining,
       toggleImportCard,
       copySubscription,
       platforms,
@@ -1950,11 +2257,27 @@ export default {
       navigateToDeposit,
       showDeviceLimit,
       needRefreshData,
-      trafficPercentage,
-      waterAnimationState,
+      trafficBoardSections,
+      autoRenewalEnabled,
+      updatingAutoRenewalSetting,
+      updateAutoRenewalSetting,
+      hasPurchasedTrafficPackage,
+      trafficTrendChartRef,
+      trafficTrendData,
+      trafficTrendLoading,
+      trafficTrendError,
       DASHBOARD_CONFIG,
       allowNewPeriod,
       showImportSubscription,
+      showTrafficPackageModal,
+      trafficPackageLoading,
+      trafficPackagePlans,
+      openTrafficPackageModal,
+      purchaseTrafficPackage,
+      normalizeTrafficPackagePrice,
+      getTrafficPackageDisplayName,
+      getTrafficPackageContent,
+      isTrafficPackageSoldOut,
     };
   }
 };
@@ -1966,9 +2289,47 @@ export default {
   display: flex;
   justify-content: center;
 
+  --theme-text-primary: rgba(var(--theme-color-rgb), 0.96);
+  --theme-text-secondary: rgba(var(--theme-color-rgb), 0.78);
+  --theme-text-subtle: rgba(var(--theme-color-rgb), 0.64);
+
   .dashboard-inner {
     width: 100%;
     max-width: 1200px;
+    .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 16px;
+
+    > .welcome-card {
+      grid-column: span 5;
+      margin-bottom: 0;
+    }
+
+    > .pending-items-card {
+      grid-column: span 7;
+      margin-bottom: 0;
+    }
+
+    > .notice-card,
+    > .subscription-card,
+    > .stats-grid,
+    > .usage-trend-card,
+    > .import-card {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 992px) {
+      > .welcome-card,
+      > .pending-items-card,
+      > .notice-card,
+      > .subscription-card,
+      > .stats-grid,
+      > .usage-trend-card,
+      > .import-card {
+        grid-column: 1 / -1;
+      }
+    }
   }
 
   .welcome-card {
@@ -1981,7 +2342,7 @@ export default {
       margin-top: 12px;
       padding-top: 8px;
       border-top: 1px solid rgba(var(--theme-color-rgb), 0.1);
-      color: var(--secondary-text-color);
+      color: var(--theme-text-secondary);
       font-size: 14px;
     }
   }
@@ -2034,14 +2395,14 @@ export default {
 
         .info-label {
           font-size: 13px;
-          color: var(--secondary-text-color);
+          color: var(--theme-text-secondary);
           margin-bottom: 5px;
         }
 
         .info-value {
           font-size: 16px;
           font-weight: 600;
-          color: var(--text-color);
+          color: var(--theme-text-primary);
         }
       }
     }
@@ -2076,14 +2437,14 @@ export default {
         overflow: hidden;
 
         &.reset-warning {
-          color: #ff9800;
-          border-color: #ff9800;
+          color: rgba(var(--theme-color-rgb), 0.85);
+          border-color: rgba(var(--theme-color-rgb), 0.85);
           background-color: rgba(255, 152, 0, 0.1);
         }
 
         &.reset-danger {
-          color: #f44336;
-          border-color: #f44336;
+          color: rgba(var(--theme-color-rgb), 0.95);
+          border-color: rgba(var(--theme-color-rgb), 0.95);
           background-color: rgba(244, 67, 54, 0.1);
         }
       }
@@ -2093,14 +2454,14 @@ export default {
         overflow: hidden;
 
         &.renew-warning {
-          color: #ff9800;
-          border-color: #ff9800;
+          color: rgba(var(--theme-color-rgb), 0.85);
+          border-color: rgba(var(--theme-color-rgb), 0.85);
           background-color: rgba(255, 152, 0, 0.1);
         }
 
         &.renew-danger {
-          color: #f44336;
-          border-color: #f44336;
+          color: rgba(var(--theme-color-rgb), 0.95);
+          border-color: rgba(var(--theme-color-rgb), 0.95);
           background-color: rgba(244, 67, 54, 0.1);
         }
       }
@@ -2109,16 +2470,45 @@ export default {
 
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 20px;
     margin-bottom: 24px;
 
     @media (min-width: 768px) {
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     @media (min-width: 1200px) {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .usage-panel-title-row {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 2px;
+
+      h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: #111827;
+      }
+
+      .traffic-package-status {
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 6px 10px;
+        background: #f3f4f6;
+        color: #6b7280;
+
+        &.active {
+          background: rgba(34, 197, 94, 0.14);
+          color: #16a34a;
+        }
+      }
     }
 
     .stats-card {
@@ -2173,6 +2563,250 @@ export default {
         z-index: 1;
       }
 
+      &.traffic-board-card {
+        min-width: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+
+        .stats-info {
+          width: 100%;
+        }
+
+        .stats-value {
+          font-size: 16px;
+          margin-bottom: 2px;
+        }
+
+        .stats-label {
+          font-size: 12px;
+        }
+      }
+
+      &.traffic-board-card {
+        width: 100%;
+        min-width: 0;
+        min-height: 260px;
+        writing-mode: horizontal-tb;
+        text-orientation: mixed;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 10px;
+
+        .usage-card-title {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+          white-space: normal;
+          font-size: 14px;
+          font-weight: 600;
+          color: #6b7280;
+        }
+
+        .usage-card-main {
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
+
+          &.package-main {
+            align-items: baseline;
+            width: 100%;
+          }
+
+          .package-add-btn {
+            margin-left: auto;
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            cursor: pointer;
+          }
+        }
+
+        .plan-summary-card {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 4px;
+
+          .plan-summary-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #f8fafc;
+          }
+
+          .plan-summary-label {
+            font-size: 12px;
+            color: #6b7280;
+          }
+
+          .plan-summary-value {
+            font-size: 14px;
+            color: #111827;
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+          }
+
+          .plan-summary-desc {
+            margin: 4px 0 0;
+            font-size: 12px;
+            color: #6b7280;
+          }
+
+          .auto-renewal-row {
+            align-items: flex-start;
+          }
+
+          .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+
+            &.disabled {
+              opacity: 0.6;
+              cursor: not-allowed;
+            }
+
+            input {
+              opacity: 0;
+              width: 0;
+              height: 0;
+            }
+
+            .slider {
+              position: absolute;
+              cursor: pointer;
+              inset: 0;
+              background-color: #d1d5db;
+              transition: 0.3s;
+
+              &::before {
+                position: absolute;
+                content: '';
+                height: 18px;
+                width: 18px;
+                left: 3px;
+                bottom: 3px;
+                background-color: #fff;
+                transition: 0.3s;
+              }
+
+              &.round {
+                border-radius: 24px;
+
+                &::before {
+                  border-radius: 50%;
+                }
+              }
+            }
+
+            input:checked + .slider {
+              background-color: rgba(var(--theme-color-rgb), 0.9);
+            }
+
+            input:checked + .slider::before {
+              transform: translateX(20px);
+            }
+          }
+        }
+
+        .usage-percent {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+          font-size: 40px;
+          line-height: 1;
+          font-weight: 700;
+          color: #111827;
+        }
+
+        .usage-percent-label {
+          font-size: 13px;
+          color: #4b5563;
+          font-weight: 500;
+        }
+
+        .usage-kpis {
+          width: 100%;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 8px;
+        }
+
+        .usage-kpi {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          padding: 8px;
+          border-radius: 10px;
+          background: #f8fafc;
+        }
+
+        .usage-kpi-label {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+          font-size: 12px;
+          color: #6b7280;
+          line-height: 1;
+        }
+
+        .usage-kpi-value {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+          font-size: 15px;
+          color: #1f2937;
+          font-weight: 600;
+          line-height: 1.2;
+        }
+
+        .usage-package-note {
+          width: 100%;
+          margin-top: 6px;
+          font-size: 12px;
+          color: #6b7280;
+          line-height: 1.45;
+        }
+
+        .usage-reset-hint {
+          width: 100%;
+          font-size: 12px;
+          color: #6b7280;
+        }
+
+        .section-progress-track {
+          width: 100%;
+          height: 14px;
+          background: #e5e7eb;
+          border-radius: 999px;
+          overflow: hidden;
+        }
+
+        .section-progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #3b82f6, #2563eb);
+          border-radius: inherit;
+          transition: width 0.35s ease;
+        }
+
+        @media (max-width: 576px) {
+          .usage-kpis {
+            grid-template-columns: 1fr;
+          }
+        }
+      }
+
       &.warning-card .water-progress {
         background-color: rgba(255, 152, 0, 0.15);
       }
@@ -2213,13 +2847,13 @@ export default {
         .stats-value {
           font-size: 18px;
           font-weight: 600;
-          color: var(--text-color);
+          color: var(--theme-text-primary);
           margin-bottom: 5px;
         }
 
         .stats-label {
           font-size: 14px;
-          color: var(--secondary-text-color);
+          color: var(--theme-text-secondary);
         }
       }
 
@@ -2239,83 +2873,25 @@ export default {
   }
 
 
-  .download-card {
-    .download-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 20px;
+  .usage-trend-card {
+    .card-body {
+      padding-top: 6px;
+    }
 
-      @media (min-width: 768px) {
-        grid-template-columns: repeat(3, 1fr);
-      }
+    .trend-state {
+      min-height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--theme-text-secondary);
+      font-size: 14px;
+    }
 
-      @media (min-width: 992px) {
-        grid-template-columns: repeat(6, 1fr);
-      }
-
-      .download-option {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        cursor: pointer;
-        padding: 15px;
-        border-radius: 10px;
-        transition: all 0.3s ease;
-        border: 1px solid var(--border-color);
-
-        &:hover {
-          background-color: rgba(var(--theme-color-rgb), 0.05);
-          transform: translateY(-2px);
-        }
-
-        .option-icon {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          margin-bottom: 12px;
-
-          &.ios {
-            background-color: rgba(0, 122, 255, 0.1);
-            color: #007aff;
-          }
-
-          &.android {
-            background-color: rgba(61, 178, 74, 0.1);
-            color: #3db24a;
-          }
-
-          &.macos {
-            background-color: rgba(90, 90, 90, 0.1);
-            color: #5a5a5a;
-          }
-
-          &.windows {
-            background-color: rgba(0, 120, 215, 0.1);
-            color: #0078d7;
-          }
-
-          &.linux {
-            background-color: rgba(243, 123, 29, 0.1);
-            color: #f37b1d;
-          }
-
-          &.openwrt {
-            background-color: rgba(0, 136, 204, 0.1);
-            color: #0088cc;
-          }
-        }
-
-        .option-name {
-          font-size: 14px;
-          font-weight: 500;
-        }
-      }
+    .usage-trend-chart {
+      width: 100%;
+      height: 280px;
     }
   }
-
 
   .notice-card {
     margin-bottom: 24px;
@@ -2324,11 +2900,12 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
 
-      .notice-counter {
-        font-size: 14px;
-        color: var(--secondary-text-color);
-      }
+    .notice-slider {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .notice-item {
@@ -2336,12 +2913,26 @@ export default {
       padding: 16px;
       border-radius: 8px;
       background-color: rgba(var(--theme-color-rgb), 0.05);
+      overflow: hidden;
+      min-height: 144px;
+
+      .notice-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.72), rgba(15, 23, 42, 0.28));
+        pointer-events: none;
+      }
+
+      .notice-content {
+        position: relative;
+        z-index: 1;
+      }
 
       .notice-title {
         font-size: 16px;
         font-weight: 600;
         margin-bottom: 8px;
-        color: var(--text-color);
+        color: #fff;
       }
 
       .notice-footer {
@@ -2353,8 +2944,7 @@ export default {
 
         .notice-date {
           font-size: 12px;
-          color: var(--secondary-text-color);
-          opacity: 0.7;
+          color: rgba(255, 255, 255, 0.85);
         }
 
         .notice-nav {
@@ -2370,13 +2960,13 @@ export default {
             border-radius: 6px;
             font-size: 13px;
             background-color: rgba(var(--theme-color-rgb), 0.1);
-            color: var(--theme-color);
+            color: #fff;
             border: none;
             cursor: pointer;
             transition: all 0.2s ease;
 
             &:hover:not(:disabled) {
-              background-color: rgba(var(--theme-color-rgb), 0.2);
+              background-color: rgba(var(--theme-color-rgb), 0.35);
               transform: translateY(-1px);
             }
 
@@ -2435,6 +3025,28 @@ export default {
         }
       }
     }
+
+    .notice-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+
+      .notice-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        border: none;
+        padding: 0;
+        background: rgba(var(--theme-color-rgb), 0.25);
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &.active {
+          width: 20px;
+          background: rgba(var(--theme-color-rgb), 0.95);
+        }
+      }
+    }
   }
 
 
@@ -2479,7 +3091,7 @@ export default {
       }
 
       .pending-action {
-        color: var(--secondary-text-color);
+        color: var(--theme-text-secondary);
         transition: transform 0.3s ease;
       }
 
@@ -2553,7 +3165,7 @@ export default {
 
 .btn-outline {
   background-color: transparent;
-  color: var(--text-color);
+  color: var(--theme-text-primary);
   border: 1px solid var(--border-color);
 
   &:hover {
@@ -2608,7 +3220,7 @@ export default {
 
 .btn-action {
   background-color: transparent;
-  color: var(--secondary-text-color);
+  color: var(--theme-text-secondary);
   border: none;
   padding: 5px 10px;
   font-size: 13px;
@@ -2750,7 +3362,7 @@ export default {
 
 @media (min-width: 769px) and (max-width: 1199px) {
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -2769,7 +3381,7 @@ export default {
 
 .stats-card.doc-card .stats-icon {
   background-color: rgba(92, 124, 250, 0.15);
-  color: #5c7cfa;
+  color: rgba(var(--theme-color-rgb), 0.88);
 }
 
 .stats-card.doc-card .stats-value {
@@ -2811,6 +3423,7 @@ export default {
 
 
 .import-card {
+  display: none;
   margin-bottom: 24px;
   overflow: hidden;
   will-change: transform, opacity;
@@ -2871,7 +3484,7 @@ export default {
       position: absolute;
       width: 100%;
       height: 2px;
-      background-color: var(--secondary-text-color);
+      background-color: var(--theme-text-secondary);
       border-radius: 2px;
       top: 50%;
       left: 0;
@@ -2926,19 +3539,19 @@ export default {
 
     .import-desc {
       font-size: 13px;
-      color: var(--secondary-text-color);
+      color: var(--theme-text-secondary);
     }
   }
 }
 
 .copy-action .import-icon {
   background-color: rgba(25, 113, 194, 0.1);
-  color: #1971c2;
+  color: rgba(var(--theme-color-rgb), 0.88);
 }
 
 .qrcode-action .import-icon {
   background-color: rgba(64, 192, 87, 0.1);
-  color: #40c057;
+  color: rgba(var(--theme-color-rgb), 0.9);
 }
 
 .platform-section {
@@ -3038,7 +3651,7 @@ export default {
   h3 {
     margin: 0;
     font-size: 18px;
-    color: var(--text-color);
+    color: var(--theme-text-primary);
     font-weight: 600;
   }
 }
@@ -3085,7 +3698,7 @@ export default {
 
     p {
       font-size: 15px;
-      color: var(--secondary-text-color);
+      color: var(--theme-text-secondary);
       font-weight: 500;
     }
   }
@@ -3142,7 +3755,7 @@ export default {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: var(--text-color);
+    color: var(--theme-text-primary);
 
     &:hover {
       background-color: rgba(var(--theme-color-rgb), 0.1);
@@ -3197,30 +3810,30 @@ export default {
 
 
 .stats-card.warning-card {
-  border-color: #ff9800;
+  border-color: rgba(var(--theme-color-rgb), 0.85);
   box-shadow: 0 4px 10px rgba(255, 152, 0, 0.15);
 
   .stats-icon {
     background-color: rgba(255, 152, 0, 0.1);
-    color: #ff9800;
+    color: rgba(var(--theme-color-rgb), 0.85);
   }
 
   .stats-value {
-    color: #ff9800;
+    color: rgba(var(--theme-color-rgb), 0.85);
   }
 }
 
 .stats-card.danger-card {
-  border-color: #f44336;
+  border-color: rgba(var(--theme-color-rgb), 0.95);
   box-shadow: 0 4px 10px rgba(244, 67, 54, 0.15);
 
   .stats-icon {
     background-color: rgba(244, 67, 54, 0.1);
-    color: #f44336;
+    color: rgba(var(--theme-color-rgb), 0.95);
   }
 
   .stats-value {
-    color: #f44336;
+    color: rgba(var(--theme-color-rgb), 0.95);
   }
 }
 
@@ -3291,6 +3904,19 @@ export default {
   background-color: rgba(255, 255, 255, 0.08);
 }
 
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-row {
+  background: rgba(148, 163, 184, 0.12);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-label,
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-desc {
+  color: #cbd5e1;
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-value {
+  color: #f8fafc;
+}
+
 
 .skeleton-icon {
   width: 48px;
@@ -3356,7 +3982,7 @@ export default {
 }
 
 .import-action .import-content .import-desc {
-  color: var(--secondary-text-color);
+  color: var(--theme-text-secondary);
   font-size: 12px;
   line-height: 1.4;
 }
@@ -3371,7 +3997,7 @@ export default {
 }
 
 .no-clients-message p {
-  color: var(--text-color);
+  color: var(--theme-text-primary);
   font-size: 14px;
   margin: 0;
 }
@@ -3396,7 +4022,7 @@ export default {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: var(--text-color);
+    color: var(--theme-text-primary);
 
     &:hover {
       background-color: rgba(var(--theme-color-rgb), 0.1);
@@ -3540,14 +4166,14 @@ export default {
     margin: 0;
     font-size: 18px;
     font-weight: 600;
-    color: var(--text-color);
+    color: var(--theme-text-primary);
   }
 
   .popup-close-btn {
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--secondary-text-color);
+    color: var(--theme-text-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3558,7 +4184,7 @@ export default {
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
-      color: var(--text-color);
+      color: var(--theme-text-primary);
       transform: rotate(90deg);
     }
   }
@@ -3577,7 +4203,7 @@ export default {
     :deep(p) {
       margin: 12px 0;
       line-height: 1.6;
-      color: var(--text-color);
+      color: var(--theme-text-primary);
     }
 
     :deep(strong) {
@@ -3732,7 +4358,7 @@ export default {
     &:disabled {
       opacity: 0.7;
       cursor: not-allowed;
-      background-color: var(--secondary-text-color);
+      background-color: var(--theme-text-secondary);
     }
   }
 }
@@ -3784,6 +4410,163 @@ export default {
 }
 
 
+
+.traffic-package-overlay {
+  z-index: 1200;
+  padding: 16px;
+}
+
+.traffic-package-container {
+  width: min(100%, 420px);
+  max-height: calc(100vh - 32px);
+}
+
+.traffic-package-modal-card {
+  max-height: calc(100vh - 32px);
+
+  .modal-header {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+
+    h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--theme-text-primary);
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--theme-text-secondary);
+      cursor: pointer;
+      padding: 0;
+
+      &:hover {
+        color: var(--theme-text-primary);
+      }
+    }
+  }
+
+  .modal-body {
+    display: block;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .traffic-package-desc {
+    margin: 0 0 14px;
+    color: var(--theme-text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .traffic-package-loading,
+  .traffic-package-empty {
+    text-align: center;
+    color: var(--theme-text-secondary);
+    padding: 28px 0;
+  }
+
+  .traffic-package-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .traffic-package-item {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: linear-gradient(
+        180deg,
+        rgba(var(--theme-color-rgb), 0.06) 0%,
+        rgba(var(--theme-color-rgb), 0.02) 100%
+    );
+
+    .item-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+
+      strong {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--theme-text-primary);
+      }
+    }
+
+    .item-price {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--theme-color);
+    }
+
+    .item-content {
+      color: var(--theme-text-secondary);
+      font-size: 13px;
+      line-height: 1.45;
+      min-height: 32px;
+    }
+
+    .buy-btn {
+      width: 100%;
+      justify-content: center;
+      margin-top: auto;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      background-color: rgba(var(--theme-color-rgb), 0.92);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
+      }
+
+      &:disabled {
+        opacity: 0.75;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+
+    .cancel-btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: transparent;
+      color: var(--theme-text-primary);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: rgba(var(--theme-color-rgb), 0.06);
+      }
+    }
+  }
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -3825,19 +4608,19 @@ export default {
       margin: 0;
       font-size: 18px;
       font-weight: 600;
-      color: var(--text-color);
+      color: var(--theme-text-primary);
     }
 
     .close-button {
       background: none;
       border: none;
       font-size: 24px;
-      color: var(--secondary-text-color);
+      color: var(--theme-text-secondary);
       cursor: pointer;
       padding: 0;
 
       &:hover {
-        color: var(--text-color);
+        color: var(--theme-text-primary);
       }
     }
   }
@@ -3850,7 +4633,7 @@ export default {
 
     .warning-icon {
       margin-bottom: 16px;
-      color: #ff9800;
+      color: rgba(var(--theme-color-rgb), 0.85);
     }
 
     .warning-text {
@@ -3858,12 +4641,12 @@ export default {
       line-height: 1.5;
       margin-bottom: 12px;
       text-align: center;
-      color: var(--text-color);
+      color: var(--theme-text-primary);
     }
 
     .note-text {
       font-size: 14px;
-      color: var(--secondary-text-color);
+      color: var(--theme-text-secondary);
       text-align: center;
       margin-bottom: 0;
       padding: 8px 12px;
@@ -3898,7 +4681,7 @@ export default {
     .cancel-btn {
       background-color: transparent;
       border: 1px solid var(--border-color);
-      color: var(--text-color);
+      color: var(--theme-text-primary);
 
       &:hover:not(:disabled) {
         background-color: rgba(0, 0, 0, 0.05);
@@ -3906,12 +4689,12 @@ export default {
     }
 
     .confirm-btn {
-      background-color: #f44336;
+      background-color: rgba(var(--theme-color-rgb), 0.92);
       color: white;
       border: none;
 
       &:hover:not(:disabled) {
-        background-color: #e53935;
+        background-color: rgba(var(--theme-color-rgb), 0.92);
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
       }
@@ -3958,6 +4741,7 @@ export default {
   }
 }
 
+}
 
 </style>
 
@@ -3966,30 +4750,30 @@ export default {
 @use '@/assets/styles/no-plan-card' as *;
 
 .stats-card.warning-card {
-  border-color: #ff9800 !important;
+  border-color: rgba(var(--theme-color-rgb), 0.85) !important;
   box-shadow: 0 4px 10px rgba(255, 152, 0, 0.15) !important;
 
   .stats-icon {
     background-color: rgba(255, 152, 0, 0.1) !important;
-    color: #ff9800 !important;
+    color: rgba(var(--theme-color-rgb), 0.85) !important;
   }
 
   .stats-value {
-    color: #ff9800 !important;
+    color: rgba(var(--theme-color-rgb), 0.85) !important;
   }
 }
 
 .stats-card.danger-card {
-  border-color: #f44336 !important;
+  border-color: rgba(var(--theme-color-rgb), 0.95) !important;
   box-shadow: 0 4px 10px rgba(244, 67, 54, 0.15) !important;
 
   .stats-icon {
     background-color: rgba(244, 67, 54, 0.1) !important;
-    color: #f44336 !important;
+    color: rgba(var(--theme-color-rgb), 0.95) !important;
   }
 
   .stats-value {
-    color: #f44336 !important;
+    color: rgba(var(--theme-color-rgb), 0.95) !important;
   }
 }
 
@@ -4068,5 +4852,3 @@ a.eztheme-btn {
   color: var(--theme-color);
 }
 </style>
-
-

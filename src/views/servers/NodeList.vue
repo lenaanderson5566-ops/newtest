@@ -63,77 +63,26 @@
         <div class="node-items">
 
           <div v-for="node in nodes" :key="node.id" class="node-item">
-
-            <!-- 节点状态指示器 -->
-
-            <div class="node-status">
-
-              <div class="status-indicator" :class="{ 'online': node.is_online === 1 }"></div>
-
-            </div>
-
-            
-
-            <!-- 节点信息 -->
+            <div class="node-country" :class="countryBadgeClass(getCountryTag(node.tags))">{{ formatCountryTag(getCountryTag(node.tags) || '--') }}</div>
 
             <div class="node-info">
-
-              <!-- 标签区域 -->
-
               <div class="node-tags">
-
-                <!-- 倍率标签 -->
-
                 <span class="node-tag rate-tag" v-if="showNodeRate">x{{ node.rate }}</span>
-
-                
-
-                <!-- 节点类型标签 -->
-
                 <span class="node-tag type-tag">{{ node.type }}</span>
-
-                
-
-                <!-- 其他标签 -->
-
-                <template v-if="node.tags && node.tags.length > 0">
-
-                  <span v-for="(tag, index) in node.tags" :key="index" class="node-tag">
-
-                    {{ tag }}
-
-                  </span>
-
-                </template>
-
               </div>
 
-              
-
-              <!-- 节点名称 -->
-
               <h3 class="node-name">{{ node.name }}</h3>
-
-              
-
-              <!-- 节点主机信息 -->
-
               <p class="node-host" v-if="showNodeDetails">{{ node.host }}:{{ node.port }}</p>
-
             </div>
 
-            
-
-            <!-- 更多按钮 - 仅当配置允许显示节点倍率和允许查看节点详情时显示 -->
-
-            <div v-if="showNodeRate && allowViewNodeInfo" class="node-actions">
-
-              <button class="more-btn" @click="openNodeDetail(node)">
-
+            <div class="node-actions">
+              <div class="node-feature-tags" v-if="getFeatureTags(node.tags).length > 0">
+                <span v-for="(tag, index) in getFeatureTags(node.tags)" :key="index" class="node-tag feature-tag">{{ tag }}</span>
+              </div>
+              <span class="node-online-status" :class="{ online: node.is_online === 1 }">{{ node.is_online === 1 ? '在线' : '离线' }}</span>
+              <button v-if="showNodeRate && allowViewNodeInfo" class="more-btn" @click="openNodeDetail(node)">
                 <IconDotsVertical :size="20" />
-
               </button>
-
             </div>
 
           </div>
@@ -182,7 +131,7 @@
 
 <script setup>
 
-import { ref, onMounted, inject } from 'vue';
+import { ref, onMounted, inject, computed } from 'vue';
 
 import { useI18n } from 'vue-i18n';
 
@@ -210,7 +159,6 @@ import NodeDetailModal from '@/components/common/NodeDetailModal.vue';
 
 
 const { t } = useI18n();
-
 const $toast = inject('$toast');
 
 
@@ -229,11 +177,6 @@ const allowViewNodeInfo = ref(NODES_CONFIG.allowViewNodeInfo);
 
 
 const userInfo = ref(null);
-
-
-
-
-
 
 
 const showDetailModal = ref(false);
@@ -292,7 +235,35 @@ const fetchUserInfo = async () => {
 
 };
 
+const COUNTRY_TAG_REGEX = /^(?:[A-Za-z]{2}|(?:usa|uk|uae))$/i;
 
+const normalizeNodeTags = (tags) => {
+  if (!Array.isArray(tags)) return [];
+  return tags
+    .map((tag) => String(tag || '').trim())
+    .filter(Boolean);
+};
+
+const getCountryTag = (tags) => {
+  const normalized = normalizeNodeTags(tags);
+  return normalized.find((tag) => COUNTRY_TAG_REGEX.test(tag)) || '';
+};
+
+const getFeatureTags = (tags) => {
+  const normalized = normalizeNodeTags(tags);
+  const countryTag = getCountryTag(normalized);
+  return normalized.filter((tag) => tag !== countryTag);
+};
+
+const formatCountryTag = (countryTag) => countryTag.toUpperCase();
+
+const countryBadgeClass = (countryTag) => {
+  const code = formatCountryTag(countryTag || '');
+  if (['US', 'CA', 'NL'].includes(code)) return 'is-blue';
+  if (['HK', 'SG'].includes(code)) return 'is-pink';
+  if (['DE', 'JP', 'KR'].includes(code)) return 'is-red';
+  return 'is-red';
+};
 
 const fetchNodes = async () => {
 
@@ -451,7 +422,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--text-muted);
+      color: var(--text-color-light, #6b7280);
 
       margin: 0;
 
@@ -469,11 +440,202 @@ onMounted(() => {
 
   margin-bottom: 24px;
 
+  .quick-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .quick-btn {
+    border: 1px solid var(--border-color);
+    background: #fff;
+    color: #1f2937;
+    border-radius: 12px;
+    padding: 10px 18px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+
+    &.active {
+      border-color: rgba(var(--theme-color-rgb), 0.65);
+      color: rgba(var(--theme-color-rgb), 0.95);
+      background: rgba(var(--theme-color-rgb), 0.08);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .import-panel {
+    margin-top: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 16px;
+    background: var(--card-bg);
+
+    .import-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+
+      h3 { margin: 0; font-size: 20px; }
+    }
+
+    .import-action {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #f6f7fb;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .import-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(var(--theme-color-rgb), 0.9);
+      background: rgba(var(--theme-color-rgb), 0.12);
+    }
+
+    .import-title { font-size: 18px; font-weight: 600; }
+    .import-desc { color: #6b7280; font-size: 14px; }
+
+    .platform-selector {
+      display: flex;
+      gap: 12px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+
+    .platform-button {
+      border: 1px solid var(--border-color);
+      background: #f7f7fb;
+      border-radius: 999px;
+      padding: 8px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+
+      &.active {
+        border-color: rgba(var(--theme-color-rgb), 0.65);
+        color: rgba(var(--theme-color-rgb), 0.95);
+        background: #fff;
+      }
+    }
+
+    .platform-title {
+      font-size: 16px;
+      margin: 8px 0 12px;
+      font-weight: 600;
+    }
+
+    .platform-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .platform-option {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 22px 14px;
+      background: #f5f7fb;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+
+      .platform-option-icon {
+        opacity: 0.9;
+        flex-shrink: 0;
+      }
+
+      &:hover {
+        border-color: rgba(var(--theme-color-rgb), 0.3);
+        background: #ffffff;
+      }
+
+      .platform-option-image {
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  .qrcode-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+
+    .qrcode-modal {
+      background: #fff;
+      border-radius: 14px;
+      width: min(90vw, 320px);
+      padding: 14px;
+
+      &.reset-modal {
+        width: min(90vw, 380px);
+      }
+    }
+
+    .qrcode-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .qrcode-content {
+      display: flex;
+      justify-content: center;
+
+      img { width: 220px; height: 220px; }
+    }
+
+    .reset-modal-text {
+      color: #374151;
+      font-size: 14px;
+      margin: 0 0 12px;
+      line-height: 1.6;
+    }
+
+    .reset-modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+
+      .quick-btn.danger {
+        border-color: rgba(239, 68, 68, 0.35);
+        color: #dc2626;
+        background: rgba(239, 68, 68, 0.08);
+      }
+    }
+  }
 }
-
-
-
-
 
 .nodes-content {
 
@@ -481,7 +643,7 @@ onMounted(() => {
 
   flex-direction: column;
 
-  gap: 1.5rem;
+  gap: 1.25rem;
 
   max-width: 1200px;
 
@@ -489,17 +651,23 @@ onMounted(() => {
 
   margin: 0 auto;
 
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  background: var(--card-bg);
+
 }
 
 
 
 .node-items {
 
-  display: flex;
+  display: grid;
 
-  flex-direction: column;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  gap: 1rem;
+  gap: 0.9rem;
 
 }
 
@@ -509,17 +677,19 @@ onMounted(() => {
 
   display: flex;
 
+  min-width: 0;
+
   align-items: center;
 
-  padding: 1rem 1.25rem;
+  padding: 0.9rem 1.05rem;
 
-  border-radius: 12px;
+  border-radius: 14px;
 
-  background-color: var(--card-bg);
+  background: var(--card-bg);
 
   transition: all 0.25s ease;
 
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
 
   border: 1px solid var(--border-color);
 
@@ -527,55 +697,39 @@ onMounted(() => {
 
   &:hover {
 
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
 
   }
+  .node-country {
+    min-width: 72px;
+    height: 34px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 14px;
+    padding: 0 10px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #d90429, #9d174d);
+    box-shadow: 0 6px 14px rgba(157, 23, 77, 0.35);
 
-  
-
-  .node-status {
-
-    margin-right: 1rem;
-
-    
-
-    .status-indicator {
-
-      width: 12px;
-
-      height: 12px;
-
-      border-radius: 50%;
-
-      background-color: #ccc;
-
-      position: relative;
-
-      
-
-      &.online {
-
-        background-color: #4caf50;
-
-        box-shadow: 0 0 0 rgba(76, 175, 80, 0.4);
-
-        animation: pulse 2s infinite;
-
-      }
-
-    }
-
+    &.is-red { background: linear-gradient(135deg, #d90429, #9d174d); }
+    &.is-pink { background: linear-gradient(135deg, #db2777, #be185d); }
+    &.is-blue { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); }
   }
-
-  
 
   .node-info {
 
     flex: 1;
+
+    min-width: 0;
 
     overflow: hidden;
 
@@ -595,11 +749,15 @@ onMounted(() => {
 
       .node-tag {
 
-        font-size: 0.75rem;
+        font-size: 12px;
 
-        padding: 0.2rem 0.5rem;
+        height: 22px;
 
-        border-radius: 4px;
+        line-height: 22px;
+
+        padding: 0 9px;
+
+        border-radius: 8px;
 
         background-color: rgba(var(--theme-color-rgb), 0.1);
 
@@ -609,9 +767,9 @@ onMounted(() => {
 
         &.rate-tag {
 
-          background-color: rgba(76, 175, 80, 0.1);
+          background-color: rgba(74, 222, 128, 0.16);
 
-          color: #4caf50;
+          color: #16a34a;
 
           font-weight: 600;
 
@@ -621,10 +779,15 @@ onMounted(() => {
 
         &.type-tag {
 
-          background-color: rgba(33, 150, 243, 0.1);
+          background-color: rgba(96, 165, 250, 0.18);
 
-          color: #2196f3;
+          color: #2563eb;
 
+        }
+
+                &.feature-tag {
+          background-color: rgba(99, 102, 241, 0.12);
+          color: #4f46e5;
         }
 
       }
@@ -665,7 +828,7 @@ onMounted(() => {
 
       font-size: 0.8rem;
 
-      color: var(--text-muted);
+      color: var(--text-color-light, #6b7280);
 
       margin: 0;
 
@@ -677,13 +840,55 @@ onMounted(() => {
 
   .node-actions {
 
-    display: flex;
+    display: inline-flex;
 
     align-items: center;
 
-    margin-left: 12px;
+    gap: 8px;
 
-    
+    margin-left: 12px;
+    min-width: 140px;
+    justify-content: flex-end;
+
+    .node-feature-tags {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+
+      .node-tag.feature-tag {
+        height: 24px;
+        line-height: 24px;
+        font-size: 12px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background-color: rgba(190, 24, 93, 0.12);
+        color: #be185d;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    .node-online-status {
+      height: 24px;
+      line-height: 24px;
+      font-size: 12px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: rgba(248, 113, 113, 0.2);
+      color: #f87171;
+      font-weight: 600;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+
+      &.online {
+        background: rgba(74, 222, 128, 0.2);
+        color: #16a34a;
+      }
+    }
 
     .more-btn {
 
@@ -703,13 +908,11 @@ onMounted(() => {
 
       justify-content: center;
 
-      color: var(--text-muted);
+      color: var(--text-color-light, #6b7280);
 
       cursor: pointer;
 
       transition: all 0.2s ease;
-
-      
 
       &:hover {
 
@@ -753,7 +956,7 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-muted);
+    color: var(--text-color-light, #6b7280);
 
     font-size: 1.1rem;
 
@@ -765,7 +968,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-muted);
+    color: var(--text-color-light, #6b7280);
 
     opacity: 0.7;
 
@@ -869,28 +1072,16 @@ onMounted(() => {
 
 
 
-@media (min-width: 768px) {
+@media (max-width: 860px) {
 
   .node-items {
 
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 1rem;
+    grid-template-columns: 1fr;
 
   }
 
-}
-
-
-
-@media (min-width: 1024px) {
-
-  .node-items {
-
-    grid-template-columns: repeat(3, 1fr);
-
+  .node-actions {
+    min-width: 110px;
   }
 
 }
