@@ -419,7 +419,8 @@
                     {{ primaryPlanActionLabel }}
                   </button>
                   <button
-                    class="plan-action-btn subtle"
+                    class="plan-action-btn"
+                    :class="secondaryActionClass"
                     @click="handleSecondaryPlanAction"
                   >
                     {{ secondaryPlanActionLabel }}
@@ -1233,8 +1234,13 @@ export default {
     });
 
     const primaryActionClass = computed(() => {
-      if (subscriptionStatus.value === 'active') return 'premium';
+      if (subscriptionStatus.value === 'active') return 'theme';
       return 'primary';
+    });
+
+    const secondaryActionClass = computed(() => {
+      if (secondaryPlanActionLabel.value === '管理订阅') return 'theme';
+      return 'subtle';
     });
 
     const handlePrimaryPlanAction = () => {
@@ -2551,6 +2557,7 @@ export default {
       primaryPlanActionLabel,
       secondaryPlanActionLabel,
       primaryActionClass,
+      secondaryActionClass,
       handlePrimaryPlanAction,
       handleSecondaryPlanAction,
       isLowTraffic,
@@ -3128,6 +3135,13 @@ export default {
                 color: #fff;
                 background: linear-gradient(135deg, #3b82f6, #2563eb);
                 box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
+              }
+
+              &.theme {
+                color: #fff;
+                border-color: transparent;
+                background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 1));
+                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.28);
               }
 
               &.subtle {
