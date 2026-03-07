@@ -419,6 +419,7 @@
                   立即续费
                 </button>
                 <button
+                  v-if="!isPlanExpired"
                   class="plan-action-btn"
                   :class="'subtle'"
                   @click="goToShop"
