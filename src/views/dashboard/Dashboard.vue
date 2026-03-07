@@ -437,7 +437,8 @@
               </template>
               <template v-else>
                 <template v-if="card.key === 'subscription'">
-                  <span class="usage-remaining-main">{{ formatTraffic(isPlanExpired ? 0 : card.remaining) }} {{ $t('dashboard.remaining') }}</span>
+                  <span class="usage-percent">{{ formatTraffic(isPlanExpired ? 0 : card.remaining) }}</span>
+                  <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 </template>
                 <template v-else>
                   <span class="usage-percent">{{ card.remainingPercentage }}%</span>
@@ -2868,13 +2869,6 @@ export default {
           }
         }
 
-        .usage-remaining-main {
-          font-size: 28px;
-          line-height: 1.2;
-          font-weight: 700;
-          color: #111827;
-        }
-
         .usage-percent {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
@@ -4937,7 +4931,6 @@ export default {
 .dark-theme .traffic-board-card.subscription-card-muted .usage-card-title,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-percent,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-percent-label,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-remaining-main,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-label,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-value,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-summary-line,
@@ -5244,7 +5237,6 @@ a.eztheme-btn {
 .dark-theme .traffic-board-card.subscription-card-muted .usage-card-title,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-percent,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-percent-label,
-.dark-theme .traffic-board-card.subscription-card-muted .usage-remaining-main,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-label,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-kpi-value,
 .dark-theme .traffic-board-card.subscription-card-muted .usage-summary-line,
