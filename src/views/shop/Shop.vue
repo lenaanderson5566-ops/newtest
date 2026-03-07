@@ -1267,7 +1267,7 @@ export default {
         }
 
         .card-title {
-          font-size: clamp(26px, 2.3vw, 40px);
+          font-size: 20px;
 
           font-weight: 700;
 
@@ -1378,7 +1378,7 @@ export default {
         }
 
         .amount {
-          font-size: clamp(44px, 4.2vw, 58px);
+          font-size: 36px;
           line-height: 0.95;
           font-weight: 700;
           color: var(--text-color);
@@ -1393,7 +1393,7 @@ export default {
         }
 
         .period {
-          font-size: 15px;
+          font-size: 14px;
           color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
         }
       }
