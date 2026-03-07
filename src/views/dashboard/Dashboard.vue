@@ -437,7 +437,7 @@
               </template>
               <template v-else>
                 <template v-if="card.key === 'subscription'">
-                  <span class="usage-percent">{{ formatTraffic(isPlanExpired ? 0 : card.remaining) }}</span>
+                  <span class="usage-percent">{{ formatPackageRemaining(isPlanExpired ? 0 : card.remaining) }}</span>
                   <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 </template>
                 <template v-else>
@@ -452,17 +452,17 @@
             <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
               <template v-if="card.key === 'subscription'">
                 <div class="usage-summary-line">
-                  {{ $t('dashboard.used') }} {{ formatTraffic(isPlanExpired ? 0 : card.used) }} / {{ formatTraffic(card.total) }}
+                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(isPlanExpired ? 0 : card.used) }} / {{ formatPackageRemaining(card.total) }}
                 </div>
               </template>
               <template v-else>
                 <div class="usage-kpi">
                   <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
-                  <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
+                  <strong class="usage-kpi-value">{{ formatPackageRemaining(card.total) }}</strong>
                 </div>
                 <div class="usage-kpi">
                   <span class="usage-kpi-label">{{ $t('dashboard.remaining') }}</span>
-                  <strong class="usage-kpi-value">{{ formatTraffic(card.remaining) }}</strong>
+                  <strong class="usage-kpi-value">{{ formatPackageRemaining(card.remaining) }}</strong>
                 </div>
               </template>
             </div>
