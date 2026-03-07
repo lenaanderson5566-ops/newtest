@@ -500,17 +500,19 @@
               <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
               <span class="ip-region">{{ ipLocationDisplayText }}</span>
             </div>
-            <div class="ip-service-reference" v-if="ipLocationServiceReferences.length">
+            <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
               <div class="service-reference-title">地区服务参考</div>
-              <div class="service-reference-tags">
-                <span
-                  v-for="service in ipLocationServiceReferences"
-                  :key="`ip-service-${service}`"
-                  class="service-reference-tag"
-                  :class="ipLocationCodeBadgeClass"
+              <div class="service-reference-tags" role="list" aria-label="地区服务参考">
+                <div
+                  v-for="service in ipLocationServiceCatalog"
+                  :key="`ip-service-${service.key}`"
+                  class="service-reference-item"
+                  :class="[{ active: isIpServiceReferenced(service.key) }, ipLocationCodeBadgeClass]"
+                  role="listitem"
+                  :title="`${service.label} · ${isIpServiceReferenced(service.key) ? '地区参考可用' : '未在地区参考列表'}`"
                 >
-                  {{ service }}
-                </span>
+                  <img :src="service.icon" :alt="service.label" class="service-reference-icon" />
+                </div>
               </div>
               <div class="service-reference-note">静态地区服务参考，不代表已解锁检测结果</div>
             </div>
@@ -723,6 +725,12 @@ import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
 import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
 import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
 import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
+import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
+import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
+import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube-premium.svg';
+import serviceChatgptIcon from '@/assets/images/service-icons/chatgpt.svg';
+import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
+import serviceTiktokIcon from '@/assets/images/service-icons/tiktok.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 
@@ -2097,6 +2105,27 @@ export default {
       return Array.isArray(services) ? services : [];
     });
 
+    const ipLocationServiceIconMap = {
+      'Netflix': serviceNetflixIcon,
+      'Disney+': serviceDisneyPlusIcon,
+      'YouTube Premium': serviceYoutubePremiumIcon,
+      'ChatGPT': serviceChatgptIcon,
+      Claude: serviceClaudeIcon,
+      TikTok: serviceTiktokIcon,
+    };
+
+    const ipLocationServiceCatalog = computed(() => {
+      const serviceCatalog = DASHBOARD_CONFIG.ipRegionServiceCatalog || [];
+      return serviceCatalog.map((item) => ({
+        ...item,
+        icon: ipLocationServiceIconMap[item.key] || serviceChatgptIcon,
+      }));
+    });
+
+    const isIpServiceReferenced = (serviceKey) => {
+      return ipLocationServiceReferences.value.includes(serviceKey);
+    };
+
     const fetchTrafficTrend = async () => {
       trafficTrendLoading.value = true;
       trafficTrendError.value = false;
@@ -2542,6 +2571,8 @@ export default {
       ipLocationCode,
       ipLocationCodeBadgeClass,
       ipLocationServiceReferences,
+      ipLocationServiceCatalog,
+      isIpServiceReferenced,
       triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
@@ -3475,25 +3506,60 @@ export default {
     .service-reference-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
     }
 
-    .service-reference-tag {
+    .service-reference-item {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      color: #fff;
-      background: linear-gradient(135deg, #d90429, #9d174d);
-      box-shadow: 0 5px 12px rgba(157, 23, 77, 0.28);
+      border: 1px solid rgba(144, 196, 238, 0.22);
+      background: rgba(67, 86, 109, 0.35);
+      color: rgba(233, 243, 255, 0.45);
+      opacity: 0.55;
+      transition: all 0.2s ease;
 
-      &.is-red { background: linear-gradient(135deg, #d90429, #9d174d); }
-      &.is-pink { background: linear-gradient(135deg, #db2777, #be185d); }
-      &.is-blue { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); }
+      .service-reference-icon {
+        width: 16px;
+        height: 16px;
+        display: block;
+        filter: grayscale(1) opacity(0.86);
+      }
+
+      &.active {
+        opacity: 1;
+        color: #eef6ff;
+        border-color: rgba(124, 199, 255, 0.48);
+        background: rgba(67, 86, 109, 0.6);
+        box-shadow: 0 4px 10px rgba(5, 18, 31, 0.35);
+
+        .service-reference-icon {
+          filter: none;
+        }
+
+        &.is-red {
+          border-color: rgba(251, 113, 133, 0.6);
+          background: rgba(157, 23, 77, 0.38);
+        }
+
+        &.is-pink {
+          border-color: rgba(244, 114, 182, 0.62);
+          background: rgba(190, 24, 93, 0.36);
+        }
+
+        &.is-blue {
+          border-color: rgba(96, 165, 250, 0.62);
+          background: rgba(30, 58, 138, 0.38);
+        }
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+        border-color: rgba(144, 196, 238, 0.45);
+      }
     }
 
     .service-reference-note {

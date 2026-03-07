@@ -232,6 +232,16 @@ export const config = {
       CN: 'is-red',
     },
 
+    // 当前出口 IP 卡片：服务图标目录（统一小尺寸 SVG/icon，优先本地静态资源）
+    ipRegionServiceCatalog: [
+      { key: 'Netflix', label: 'Netflix' },
+      { key: 'Disney+', label: 'Disney+' },
+      { key: 'YouTube Premium', label: 'YouTube Premium' },
+      { key: 'ChatGPT', label: 'ChatGPT' },
+      { key: 'Claude', label: 'Claude' },
+      { key: 'TikTok', label: 'TikTok' },
+    ],
+
     // 当前出口 IP 卡片：地区服务参考（静态映射，不做真实解锁检测）
     ipRegionServiceReferenceByCountryCode: {
       US: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'TikTok'],
