@@ -368,10 +368,6 @@
         </template>
 
         <template v-else>
-          <div class="usage-panel-title-row">
-            <h3>{{ $t('dashboard.usagePanel') }}</h3>
-          </div>
-
           <div
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
