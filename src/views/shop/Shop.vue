@@ -957,27 +957,25 @@ export default {
     top: 18px;
     right: 18px;
     display: inline-flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
-    padding: 6px 8px;
-    border-radius: 10px;
-    background: rgba(107, 114, 128, 0.08);
-    border: 1px solid rgba(107, 114, 128, 0.22);
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    align-items: center;
+    justify-content: center;
     max-width: min(62%, 280px);
+    pointer-events: none;
   }
 
   .current-plan-badge {
     display: inline-flex;
+    align-items: center;
     font-size: 12px;
-    font-weight: 700;
-    color: #4b5563;
-    background: rgba(107, 114, 128, 0.14);
-    border: 1px solid rgba(107, 114, 128, 0.35);
+    line-height: 1;
+    font-weight: 600;
+    color: #374151;
+    background: rgba(107, 114, 128, 0.12);
+    border: 1px solid rgba(107, 114, 128, 0.3);
     border-radius: 999px;
-    padding: 3px 10px;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
+    padding: 5px 10px;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
   }
 
       .card-badge {
@@ -1649,8 +1647,6 @@ export default {
     }
 
     .current-plan-meta {
-      background: rgba(71, 85, 105, 0.26);
-      border-color: rgba(148, 163, 184, 0.36);
       box-shadow: none;
     }
 
@@ -1660,9 +1656,10 @@ export default {
     }
 
     .current-plan-badge {
-      color: #e5e7eb;
-      border-color: rgba(148, 163, 184, 0.46);
-      background: rgba(100, 116, 139, 0.42);
+      color: #e2e8f0;
+      border-color: rgba(148, 163, 184, 0.42);
+      background: rgba(71, 85, 105, 0.5);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.32);
     }
 
     .filter-option:hover {
