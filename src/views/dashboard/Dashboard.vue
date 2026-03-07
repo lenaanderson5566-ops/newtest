@@ -376,51 +376,59 @@
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
+            :class="[{ 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
             <div v-if="card.key === 'total'" class="plan-summary-card">
-              <div class="plan-summary-row">
-                <span class="plan-summary-label">{{ $t('dashboard.planName') }}</span>
-                <strong class="plan-summary-value">{{ userPlan.name || '-' }}</strong>
-              </div>
-              <div class="plan-summary-row">
-                <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
-                <div class="plan-summary-value-wrap">
-                  <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
-                  <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
+              <div class="plan-summary-section plan-summary-section-meta">
+                <div class="plan-summary-row">
+                  <span class="plan-summary-label">{{ $t('dashboard.planName') }}</span>
+                  <strong class="plan-summary-value">{{ userPlan.name || '-' }}</strong>
+                </div>
+                <div class="plan-summary-row">
+                  <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
+                  <div class="plan-summary-value-wrap">
+                    <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
+                    <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
+                  </div>
                 </div>
               </div>
-              <div class="plan-summary-row auto-renewal-row">
-                <div>
-                  <span class="plan-summary-label">{{ $t('profile.autoRenewal') }}</span>
-                  <p class="plan-summary-desc">{{ $t('profile.autoRenewalDesc') }}</p>
+
+              <div class="plan-summary-section plan-summary-section-renew">
+                <div class="plan-summary-row auto-renewal-row">
+                  <div>
+                    <span class="plan-summary-label">{{ $t('profile.autoRenewal') }}</span>
+                    <p class="plan-summary-desc">{{ $t('profile.autoRenewalDesc') }}</p>
+                  </div>
+                  <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
+                    <input
+                      type="checkbox"
+                      v-model="autoRenewalEnabled"
+                      :disabled="updatingAutoRenewalSetting"
+                      @change="updateAutoRenewalSetting"
+                    />
+                    <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
+                  </label>
                 </div>
-                <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
-                  <input
-                    type="checkbox"
-                    v-model="autoRenewalEnabled"
-                    :disabled="updatingAutoRenewalSetting"
-                    @change="updateAutoRenewalSetting"
-                  />
-                  <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
-                </label>
               </div>
-              <div class="plan-summary-actions">
-                <button
-                  class="plan-action-btn"
-                  :class="primaryActionClass"
-                  @click="handlePrimaryPlanAction"
-                >
-                  {{ primaryPlanActionLabel }}
-                </button>
-                <button
-                  class="plan-action-btn subtle"
-                  @click="handleSecondaryPlanAction"
-                >
-                  {{ secondaryPlanActionLabel }}
-                </button>
+
+              <div class="plan-summary-section plan-summary-section-actions">
+                <div class="plan-summary-actions">
+                  <button
+                    class="plan-action-btn"
+                    :class="primaryActionClass"
+                    @click="handlePrimaryPlanAction"
+                  >
+                    {{ primaryPlanActionLabel }}
+                  </button>
+                  <button
+                    class="plan-action-btn subtle"
+                    @click="handleSecondaryPlanAction"
+                  >
+                    {{ secondaryPlanActionLabel }}
+                  </button>
+                </div>
               </div>
             </div>
             <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
@@ -2912,21 +2920,55 @@ export default {
           }
         }
 
+        &.total-main-card {
+          background: color-mix(in srgb, var(--card-bg-color) 88%, #eef4ff 12%);
+          border-color: rgba(var(--theme-color-rgb), 0.24);
+          box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+
+          .usage-card-title {
+            color: #4b5563;
+            font-weight: 650;
+          }
+        }
+
         .plan-summary-card {
           width: 100%;
           display: flex;
           flex-direction: column;
           gap: 12px;
-          margin-top: 4px;
+          margin-top: 6px;
+
+          .plan-summary-section {
+            border: 1px solid #e8edf4;
+            border-radius: 12px;
+            background: #f8fafc;
+            padding: 10px 12px;
+          }
+
+          .plan-summary-section-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+          }
+
+          .plan-summary-section-renew {
+            background: #f9fbff;
+          }
+
+          .plan-summary-section-actions {
+            background: transparent;
+            border-style: dashed;
+            border-color: #dbe5f2;
+            padding-top: 12px;
+            padding-bottom: 12px;
+          }
 
           .plan-summary-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            background: #f8fafc;
+            padding: 2px 0;
           }
 
           .plan-summary-label {
@@ -2987,7 +3029,7 @@ export default {
           .plan-summary-actions {
             display: flex;
             gap: 10px;
-            margin-top: 4px;
+            margin-top: 0;
 
             @media (max-width: 576px) {
               flex-direction: column;
@@ -5237,6 +5279,27 @@ export default {
 }
 
 }
+
+.dark-theme .traffic-board-card.total-main-card {
+  background: rgba(15, 23, 42, 0.66);
+  border-color: rgba(129, 160, 205, 0.46);
+  box-shadow: 0 6px 16px rgba(2, 6, 23, 0.2);
+}
+
+.dark-theme .traffic-board-card.total-main-card .usage-card-title {
+  color: rgba(226, 232, 240, 0.92);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-section {
+  background: rgba(30, 41, 59, 0.52);
+  border-color: rgba(148, 163, 184, 0.22);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-summary-section-actions {
+  background: rgba(15, 23, 42, 0.18);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
 
 .dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
   color: #86efac;
