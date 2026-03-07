@@ -131,6 +131,7 @@
                 <span class="currency">{{ currencySymbol }}</span>
 
                 <span class="amount">{{ getPlanMainPrice(plan) }}</span>
+                <span class="currency-code">{{ currency }}</span>
 
                 <span class="period">{{
                   $t(
@@ -389,6 +390,12 @@ export default {
       return priceTypes.find((type) => hasPeriodPrice(plan, type)) || priceTypes[0];
     };
 
+    const formatPriceNumber = (priceValue) => {
+      if (priceValue === null || priceValue === undefined) return '--';
+      const fixed = (priceValue / 100).toFixed(2);
+      return fixed.endsWith('.00') ? fixed.slice(0, -3) : fixed;
+    };
+
     const getPlanMainPrice = (plan) => {
       const priceType = getDisplayPriceType(plan);
       const priceValue = normalizePriceValue(plan, priceType);
@@ -396,7 +403,7 @@ export default {
         return "--";
       }
 
-      return (priceValue / 100).toFixed(2);
+      return formatPriceNumber(priceValue);
     };
 
     watch(
@@ -628,7 +635,7 @@ export default {
 
       if (priceValue === null) return "--";
 
-      return (priceValue / 100).toFixed(2);
+      return formatPriceNumber(priceValue);
     };
 
     const isJsonContent = (content) => {
@@ -1260,9 +1267,9 @@ export default {
         }
 
         .card-title {
-          font-size: 18px;
+          font-size: clamp(34px, 4vw, 52px);
 
-          font-weight: 600;
+          font-weight: 700;
 
           margin: 0;
 
@@ -1374,6 +1381,14 @@ export default {
           font-weight: 700;
 
           color: var(--text-color);
+        }
+
+        .currency-code {
+          margin-left: 8px;
+          font-size: 26px;
+          font-weight: 600;
+          color: var(--text-color);
+          letter-spacing: 0.3px;
         }
 
         .period {
@@ -1615,6 +1630,7 @@ export default {
     .card-title,
     .plan-price .price-display .currency,
     .plan-price .price-display .amount,
+    .plan-price .price-display .currency-code,
     .plan-features .feature-item span,
     .filter-option .option-text,
     .no-plans-message h3 {
