@@ -379,7 +379,7 @@
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && !hasPurchasedTrafficPackage }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && card.key === 'package' }]"
+            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && !hasPurchasedTrafficPackage }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
@@ -437,7 +437,7 @@
               </template>
               <template v-else>
                 <template v-if="card.key === 'subscription'">
-                  <span class="usage-remaining-main">{{ $t('dashboard.remaining') }} {{ formatTraffic(isPlanExpired ? 0 : card.remaining) }}</span>
+                  <span class="usage-remaining-main">{{ formatTraffic(isPlanExpired ? 0 : card.remaining) }} {{ $t('dashboard.remaining') }}</span>
                 </template>
                 <template v-else>
                   <span class="usage-percent">{{ card.remainingPercentage }}%</span>
