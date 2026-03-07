@@ -2669,15 +2669,15 @@ export default {
   .dashboard-card {
     background-color: var(--card-bg-color);
     border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
     padding: 20px;
     margin-bottom: 24px;
-    border: 1px solid rgba(148, 163, 184, 0.2);
+    border: 1px solid rgba(148, 163, 184, 0.16);
     transition: all 0.3s ease;
 
     &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      border-color: rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+      border-color: rgba(148, 163, 184, 0.24);
     }
 
     .card-header {
@@ -2791,7 +2791,7 @@ export default {
     position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
+    gap: 16px;
     margin-bottom: 24px;
 
     @media (min-width: 768px) {
@@ -2919,7 +2919,7 @@ export default {
       &.traffic-board-card {
         width: 100%;
         min-width: 0;
-        min-height: 260px;
+        min-height: 232px;
         writing-mode: horizontal-tb;
         text-orientation: mixed;
         flex-direction: column;
@@ -2933,7 +2933,7 @@ export default {
           white-space: normal;
           font-size: 16px;
           font-weight: 600;
-          color: #475569;
+          color: #334155;
           line-height: 1.35;
         }
 
@@ -2958,6 +2958,7 @@ export default {
             justify-content: center;
             color: #fff;
             background: linear-gradient(135deg, #3b82f6, #2563eb);
+            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.2);
             cursor: pointer;
           }
         }
@@ -2984,9 +2985,9 @@ export default {
         }
 
         &.total-main-card {
-          background: color-mix(in srgb, var(--card-bg-color) 88%, #eef4ff 12%);
-          border-color: rgba(100, 116, 139, 0.3);
-          box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+          background: color-mix(in srgb, var(--card-bg-color) 92%, #eff6ff 8%);
+          border-color: rgba(100, 116, 139, 0.22);
+          box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
 
           .usage-card-title {
             color: #4b5563;
@@ -3015,13 +3016,13 @@ export default {
           }
 
           .plan-summary-section-renew {
-            background: #f9fbff;
+            background: #f8fafc;
           }
 
           .plan-summary-section-actions {
-            background: transparent;
-            border-style: dashed;
-            border-color: #dbe5f2;
+            background: #f8fafc;
+            border-style: solid;
+            border-color: #e8edf4;
             padding-top: 12px;
             padding-bottom: 12px;
           }
@@ -3119,8 +3120,8 @@ export default {
 
               &.primary {
                 color: #fff;
-                background: linear-gradient(135deg, #ef4444, #dc2626);
-                box-shadow: 0 8px 18px rgba(220, 38, 38, 0.24);
+                background: linear-gradient(135deg, #2563eb, #1d4ed8);
+                box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
               }
 
               &.premium {
@@ -3219,7 +3220,7 @@ export default {
           grid-column: 1 / -1;
           font-size: 13px;
           font-weight: 600;
-          color: #475569;
+          color: #334155;
         }
 
         .usage-kpi {
@@ -3273,7 +3274,7 @@ export default {
 
         .section-progress-fill {
           height: 100%;
-          background: linear-gradient(90deg, #3b82f6, #2563eb);
+          background: linear-gradient(90deg, #60a5fa, #3b82f6);
           border-radius: inherit;
           transition: width 0.35s ease;
         }
@@ -3360,8 +3361,8 @@ export default {
       }
 
       &:hover {
-        border-color: rgba(var(--theme-color-rgb), 0.3);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        border-color: rgba(148, 163, 184, 0.24);
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
       }
 
       .stats-icon {
@@ -3411,7 +3412,7 @@ export default {
   .ip-location-summary-card {
     border-color: rgba(148, 163, 184, 0.24);
     background: linear-gradient(180deg, rgba(10, 23, 40, 0.9), rgba(5, 13, 23, 0.92));
-    box-shadow: inset 0 0 0 1px rgba(30, 64, 175, 0.14), 0 8px 18px rgba(2, 10, 24, 0.28);
+    box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.1), 0 8px 18px rgba(2, 10, 24, 0.24);
 
     .card-header {
       display: flex;
@@ -3464,7 +3465,7 @@ export default {
     .ip-location-content {
       display: grid;
       grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-      gap: 10px 14px;
+      gap: 8px 12px;
       color: #d9ecff;
       align-items: start;
 
@@ -3520,11 +3521,11 @@ export default {
       font-weight: 800;
       color: #fff;
       letter-spacing: 0.5px;
-      background: linear-gradient(135deg, #d90429, #9d174d);
-      box-shadow: 0 6px 14px rgba(157, 23, 77, 0.35);
+      background: linear-gradient(135deg, #334155, #1e293b);
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
 
-      &.is-red { background: linear-gradient(135deg, #d90429, #9d174d); }
-      &.is-pink { background: linear-gradient(135deg, #db2777, #be185d); }
+      &.is-red { background: linear-gradient(135deg, #e11d48, #9f1239); }
+      &.is-pink { background: linear-gradient(135deg, #be185d, #831843); }
       &.is-blue { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); }
     }
 
@@ -3540,7 +3541,7 @@ export default {
       padding: 8px 10px;
       border-radius: 10px;
       background: rgba(10, 26, 44, 0.56);
-      border: 1px solid rgba(96, 165, 250, 0.18);
+      border: 1px solid rgba(148, 163, 184, 0.24);
       min-height: 100%;
     }
 
@@ -3567,7 +3568,7 @@ export default {
       border: 1px solid rgba(144, 196, 238, 0.22);
       background: rgba(67, 86, 109, 0.35);
       color: rgba(233, 243, 255, 0.45);
-      opacity: 0.55;
+      opacity: 0.5;
       transition: all 0.2s ease;
 
       .service-reference-icon-mask {
@@ -3588,8 +3589,8 @@ export default {
       &.active {
         opacity: 1;
         color: #eef6ff;
-        border-color: rgba(124, 199, 255, 0.48);
-        background: rgba(67, 86, 109, 0.6);
+        border-color: rgba(124, 199, 255, 0.4);
+        background: rgba(67, 86, 109, 0.52);
         box-shadow: 0 4px 10px rgba(5, 18, 31, 0.35);
 
 
@@ -4427,7 +4428,7 @@ export default {
     width: 220px;
     height: 220px;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
     background-color: white;
     padding: 15px;
     object-fit: cover;
