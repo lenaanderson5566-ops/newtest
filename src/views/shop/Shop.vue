@@ -89,7 +89,7 @@
             </div>
 
             <div v-if="isCurrentPlan(plan)" class="current-plan-meta">
-              <span class="current-plan-badge">{{ $t("shop.plan.current") }}</span>
+              <span class="current-plan-badge">{{ currentPlanBadgeLabel }}</span>
             </div>
 
             <div
@@ -120,18 +120,11 @@
 
             <div class="plan-price">
               <div class="price-display">
-                <span class="currency">{{ currencySymbol }}</span>
-
-                <span class="amount">{{ getPlanMainPrice(plan) }}</span>
-                <span class="currency-code">{{ currency }}</span>
-
-                <span class="period">{{
-                  $t(
-                    `shop.plan.periods.${getPriceTypeKey(
-                      getDisplayPriceType(plan)
-                    )}`
-                  )
-                }}</span>
+                <div class="price-main-line">
+                  <span class="currency">{{ currencySymbol }}</span>
+                  <span class="amount">{{ getPlanMainPrice(plan) }}</span>
+                </div>
+                <span class="unit-line">{{ currency }} {{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`) }}</span>
               </div>
             </div>
 
@@ -317,6 +310,10 @@ export default {
     });
 
     const currentLanguage = computed(() => locale.value);
+
+    const currentPlanBadgeLabel = computed(() =>
+      locale.value?.startsWith("zh") ? "当前套餐" : "Current Plan"
+    );
 
     const setFilter = (filter) => {
       selectedFilter.value = filter;
@@ -861,6 +858,7 @@ export default {
       getPlanMainPriceType,
 
       currentLanguage,
+      currentPlanBadgeLabel,
 
       selectPlanPriceType,
 
@@ -1189,13 +1187,6 @@ export default {
     }
 
     @media (max-width: 768px) {
-    .current-plan-meta {
-      position: static;
-      align-items: flex-start;
-      max-width: 100%;
-      margin-bottom: 8px;
-    }
-
       grid-template-columns: 1fr;
     }
 
@@ -1240,29 +1231,28 @@ export default {
       }
 
       .card-header {
+        position: relative;
         display: flex;
-
-        justify-content: space-between;
-
-        align-items: flex-start;
-
-        min-height: 52px;
-
-        margin-bottom: 15px;
+        justify-content: center;
+        align-items: center;
+        min-height: 64px;
+        margin-bottom: 18px;
+        padding-top: 6px;
 
         .header-main {
-          flex: 1;
+          width: 100%;
           min-width: 0;
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
-          gap: 6px;
+          align-items: center;
+          text-align: center;
+          gap: 4px;
         }
 
         .card-title {
-          font-size: 20px;
+          font-size: 22px;
 
-          font-weight: 700;
+          font-weight: 600;
 
           margin: 0;
 
@@ -1272,12 +1262,15 @@ export default {
 
           hyphens: auto;
 
-          flex: 1;
-
-          padding-right: 10px;
+          max-width: 100%;
+          padding: 0 48px;
+          line-height: 1.25;
         }
 
         .card-badge {
+          position: absolute;
+          top: 0;
+          right: 0;
           display: flex;
 
           align-items: center;
@@ -1290,7 +1283,7 @@ export default {
 
           font-weight: 500;
 
-          margin-left: 8px;
+          margin-left: 0;
 
           white-space: nowrap;
 
@@ -1347,6 +1340,7 @@ export default {
         display: flex;
 
         flex-direction: column;
+        align-items: center;
       }
     }
 
@@ -1354,39 +1348,41 @@ export default {
       margin: 14px 0 18px;
 
       padding: 0 4px;
+      text-align: center;
 
       .price-display {
-        display: inline-flex;
-        align-items: baseline;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
         gap: 6px;
         text-align: center;
         margin-bottom: 12px;
 
+        .price-main-line {
+          display: inline-flex;
+          align-items: baseline;
+          justify-content: center;
+          gap: 6px;
+        }
+
         .currency {
-          font-size: 20px;
+          font-size: 22px;
           font-weight: 500;
           color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
         }
 
         .amount {
-          font-size: 36px;
+          font-size: 42px;
           line-height: 0.95;
           font-weight: 700;
           color: var(--text-color);
           letter-spacing: -0.8px;
         }
 
-        .currency-code {
-          font-size: 15px;
-          font-weight: 600;
-          color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
-          letter-spacing: 0.2px;
-        }
-
-        .period {
-          font-size: 14px;
+        .unit-line {
+          font-size: 13px;
+          font-weight: 500;
           color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
         }
       }
@@ -1450,6 +1446,7 @@ export default {
     }
 
     .plan-features {
+      width: 100%;
       margin: 24px 0 10px 0;
 
       padding: 0 4px;
@@ -1623,14 +1620,14 @@ export default {
     .card-title,
     .plan-price .price-display .currency,
     .plan-price .price-display .amount,
-    .plan-price .price-display .currency-code,
+    .plan-price .price-display .unit-line,
     .plan-features .feature-item span,
     .filter-option .option-text,
     .no-plans-message h3 {
       color: #e5e7eb !important;
     }
 
-    .plan-price .price-display .period,
+    .plan-price .price-display .unit-line,
     .welcome-card .card-body p,
     .no-plans-message p {
       color: #cbd5e1 !important;
