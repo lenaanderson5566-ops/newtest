@@ -4,34 +4,26 @@
       <!-- 欢迎卡片 -->
 
       <div class="dashboard-card welcome-card">
-        <div class="card-header">
+        <div class="card-header shop-title-header">
           <h2 class="card-title">{{ $t("shop.title") }}</h2>
+          <div class="filter-toggle-container" v-if="filters.length > 0">
+            <div class="filter-toggle-wrapper" role="tablist" aria-label="billing period">
+              <button
+                v-for="filter in filters"
+                :key="`${filter.value}-${currentLanguage}`"
+                type="button"
+                class="filter-option"
+                :class="{ active: selectedFilter === filter.value }"
+                @click="setFilter(filter.value)"
+              >
+                <span class="option-text">{{ getFilterDisplayLabel(filter) }}</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="card-body">
           <p>{{ $t("shop.description") }}</p>
-        </div>
-      </div>
-
-      <!-- 筛选选项卡 - 周期切换 -->
-
-      <div class="filter-toggle-container" v-if="filters.length > 0">
-        <div class="filter-toggle-wrapper">
-          <div
-            v-for="filter in filters"
-            :key="`${filter.value}-${currentLanguage}`"
-            class="filter-option"
-            :class="{ active: selectedFilter === filter.value }"
-            @click="setFilter(filter.value)"
-          >
-            <div class="option-icon">
-              <IconCircleCheck v-if="selectedFilter === filter.value" />
-
-              <IconCircle v-else />
-            </div>
-
-            <span class="option-text">{{ $t(filter.labelKey) }}</span>
-          </div>
         </div>
       </div>
 
@@ -244,8 +236,6 @@ import {
   IconShoppingCart,
   IconBox,
   IconInfoCircle,
-  IconCircle,
-  IconCircleCheck,
 } from "@tabler/icons-vue";
 
 import { useRouter } from "vue-router";
@@ -266,11 +256,7 @@ export default {
 
     IconBox,
 
-    IconInfoCircle,
-
-    IconCircle,
-
-    IconCircleCheck
+    IconInfoCircle
   },
 
   setup() {
@@ -334,6 +320,14 @@ export default {
 
     const setFilter = (filter) => {
       selectedFilter.value = filter;
+    };
+
+    const getFilterDisplayLabel = (filter) => {
+      const quickLabels = {
+        month_price: "每月",
+        year_price: "每年",
+      };
+      return quickLabels[filter?.value] || t(filter?.labelKey || "");
     };
 
     const fetchCurrentSubscription = async () => {
@@ -860,6 +854,7 @@ export default {
       filters,
 
       setFilter,
+      getFilterDisplayLabel,
 
       getPlanMainPrice,
 
@@ -1712,103 +1707,62 @@ export default {
     }
   }
 
+  .shop-title-header {
+    align-items: center !important;
+    gap: 14px;
+  }
+
   .filter-toggle-container {
-    margin-bottom: 30px;
-
-    display: flex;
-
-    justify-content: center;
+    margin-bottom: 0;
+    flex-shrink: 0;
 
     .filter-toggle-wrapper {
-      background: rgba(var(--card-background-rgb, 255, 255, 255), 0.7);
-
-      backdrop-filter: blur(12px);
-
-      -webkit-backdrop-filter: blur(12px);
-
-      border-radius: 18px;
-
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-
-      padding: 8px 20px;
-
-      border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
-
-      display: flex;
-
-      flex-wrap: wrap;
-
-      justify-content: center;
-
-      gap: 15px;
-
-      max-width: 600px;
-
-      will-change: backdrop-filter, background-color;
-
-      transition: background-color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color, rgba(15, 23, 42, 0.12));
+      background: rgba(var(--card-background-rgb, 255, 255, 255), 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 
       .filter-option {
-        display: flex;
-
-        align-items: center;
-
+        border: 0;
+        background: transparent;
+        min-width: 60px;
+        height: 30px;
+        padding: 0 10px;
+        border-radius: 999px;
         cursor: pointer;
-
-        transition: all 0.3s ease;
-
-        padding: 6px 10px;
-
-        border-radius: 12px;
+        transition: all 0.22s ease;
 
         &:hover {
           background-color: rgba(var(--theme-color-rgb), 0.08);
         }
 
         &:focus-visible {
-          outline: 2px solid rgba(var(--theme-color-rgb), 0.55);
-          outline-offset: 2px;
-          background-color: rgba(var(--theme-color-rgb), 0.1);
+          outline: 2px solid rgba(var(--theme-color-rgb), 0.45);
+          outline-offset: 1px;
         }
 
         &.active {
-          background-color: rgba(var(--theme-color-rgb), 0.08);
-
-          .option-icon {
-            color: var(--theme-color);
-          }
+          background-color: rgba(var(--theme-color-rgb), 0.18);
+          box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.26);
 
           .option-text {
             color: var(--text-color);
-
             font-weight: 600;
           }
         }
 
-        .option-icon {
-          margin-right: 6px;
-
-          display: flex;
-
-          align-items: center;
-
-          color: var(--text-color);
-
-          transition: color 0.3s ease;
-
-          svg {
-            width: 18px;
-
-            height: 18px;
-          }
-        }
-
         .option-text {
-          font-size: 14px;
-
-          color: var(--text-color);
-
-          transition: color 0.3s ease;
+          font-size: 13px;
+          line-height: 1;
+          color: var(--secondary-text-color);
+          transition: color 0.22s ease;
+          white-space: nowrap;
         }
       }
     }
@@ -1939,64 +1893,36 @@ export default {
     }
   }
 
+  .shop-container .shop-title-header {
+    align-items: flex-start !important;
+    flex-direction: column;
+    gap: 10px;
+
+    .card-title {
+      padding-right: 0;
+    }
+  }
+
   .shop-container .filter-toggle-container {
+    width: 100%;
+
     .filter-toggle-wrapper {
-      width: 100%;
-
-      max-width: 100%;
-
-      padding: 10px;
-
-      flex-direction: row;
-
-      justify-content: space-around;
-
-      gap: 5px;
-
-      border-radius: 14px;
-
-      .filter-option {
-        padding: 8px 10px;
-
-        flex: 1;
-
-        justify-content: center;
-
-        min-width: 80px;
-
-        .option-icon {
-          margin-right: 4px;
-
-          svg {
-            width: 16px;
-
-            height: 16px;
-          }
-        }
-
-        .option-text {
-          font-size: 12px;
-
-          white-space: nowrap;
-        }
-      }
+      width: fit-content;
     }
   }
 }
 
 @media (max-width: 480px) {
-  .shop-container .filter-toggle-container {
-    .filter-toggle-wrapper {
-      padding: 8px;
+  .shop-container .filter-toggle-container .filter-toggle-wrapper {
+    padding: 2px;
 
-      .filter-option {
-        padding: 6px 8px;
+    .filter-option {
+      min-width: 56px;
+      height: 28px;
+      padding: 0 9px;
 
-        min-width: auto;
-
-        .option-icon {
-          margin-right: 3px;
-        }
+      .option-text {
+        font-size: 12px;
       }
     }
   }
