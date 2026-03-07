@@ -375,7 +375,19 @@
             :class="[{ 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
-            <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
+            <div class="usage-card-title">
+              <span>{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</span>
+              <span
+                v-if="card.key === 'package'"
+                class="info-tooltip"
+                tabindex="0"
+                role="button"
+                aria-label="流量额度包说明"
+              >
+                <IconHelpCircle :size="14" />
+                <span class="info-tooltip-content">流量额度包为一次性补充流量，优先消耗月订阅流量，订阅用尽后再消耗额度包流量。</span>
+              </span>
+            </div>
             <div v-if="card.key === 'total'" class="plan-summary-card">
               <div class="plan-summary-section plan-summary-section-meta">
                 <div class="plan-status-hero">
@@ -390,8 +402,13 @@
               <div class="plan-summary-section plan-summary-section-renew">
                 <div class="plan-summary-row auto-renewal-row">
                   <div>
-                    <span class="plan-summary-label">{{ $t('profile.autoRenewal') }}</span>
-                    <p class="plan-summary-desc">{{ $t('profile.autoRenewalDesc') }}</p>
+                    <span class="plan-summary-label with-tooltip">
+                      <span>{{ $t('profile.autoRenewal') }}</span>
+                      <span class="info-tooltip" tabindex="0" role="button" aria-label="自动续费说明">
+                        <IconHelpCircle :size="14" />
+                        <span class="info-tooltip-content">{{ $t('profile.autoRenewalDesc') }}</span>
+                      </span>
+                    </span>
                   </div>
                   <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
                     <input
@@ -463,9 +480,6 @@
                 </div>
               </template>
             </div>
-            <div v-if="card.key === 'package'" class="usage-package-note persist-visible">
-              {{ $t('dashboard.packageUsageNote') }}
-            </div>
             <div v-if="card.key === 'subscription'" class="usage-reset-hint">
               {{ $t('dashboard.resetTimeLabel') }} {{ userPlan.resetDateTime || '-' }}
             </div>
@@ -501,7 +515,13 @@
               <div class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</div>
             </div>
             <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
-              <div class="service-reference-title">地区服务参考</div>
+              <div class="service-reference-title">
+                <span>地区服务参考</span>
+                <span class="info-tooltip" tabindex="0" role="button" aria-label="地区服务参考说明">
+                  <IconHelpCircle :size="14" />
+                  <span class="info-tooltip-content">地区服务参考仅基于地区静态映射推测，不代表实时解锁检测结果。</span>
+                </span>
+              </div>
               <div class="service-reference-tags" role="list" aria-label="地区服务参考">
                 <div
                   v-for="service in ipLocationServiceCatalog"
@@ -514,7 +534,6 @@
                   <span class="service-reference-icon-mask" :style="{ '--service-icon-url': `url(${service.icon})` }"></span>
                 </div>
               </div>
-              <div class="service-reference-note">静态地区服务参考，不代表已解锁检测结果</div>
             </div>
           </div>
           <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
@@ -2931,6 +2950,9 @@ export default {
         gap: 10px;
 
         .usage-card-title {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
@@ -3062,6 +3084,12 @@ export default {
           .plan-summary-label {
             font-size: 12px;
             color: #6b7280;
+
+            &.with-tooltip {
+              display: inline-flex;
+              align-items: center;
+              gap: 6px;
+            }
           }
 
           .plan-summary-value-wrap {
@@ -3592,6 +3620,9 @@ export default {
     }
 
     .service-reference-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-size: 12px;
       font-weight: 600;
       color: #9fd0f5;
@@ -3657,11 +3688,108 @@ export default {
       }
     }
 
-    .service-reference-note {
-      font-size: 11px;
-      line-height: 1.35;
-      color: #7fb8e4;
-      opacity: 0.9;
+    .info-tooltip {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      color: rgba(148, 163, 184, 0.95);
+      cursor: help;
+
+      .info-tooltip-content {
+        position: absolute;
+        right: 0;
+        bottom: calc(100% + 8px);
+        width: 200px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        background: rgba(15, 23, 42, 0.96);
+        color: #e2e8f0;
+        font-size: 12px;
+        line-height: 1.4;
+        font-weight: 500;
+        box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(4px);
+        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        transition-delay: 0s;
+        pointer-events: none;
+        z-index: 30;
+      }
+
+      .info-tooltip-content::after {
+        content: '';
+        position: absolute;
+        right: 12px;
+        top: 100%;
+        border-width: 5px;
+        border-style: solid;
+        border-color: rgba(15, 23, 42, 0.96) transparent transparent transparent;
+      }
+
+      &:hover .info-tooltip-content,
+      &:focus-visible .info-tooltip-content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+      }
+    }
+  }
+
+  .info-tooltip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    color: rgba(148, 163, 184, 0.95);
+    cursor: help;
+
+    .info-tooltip-content {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 8px);
+      width: 200px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.96);
+      color: #e2e8f0;
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 500;
+      box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(4px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+      transition-delay: 0s;
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    .info-tooltip-content::after {
+      content: '';
+      position: absolute;
+      right: 12px;
+      top: 100%;
+      border-width: 5px;
+      border-style: solid;
+      border-color: rgba(15, 23, 42, 0.96) transparent transparent transparent;
+    }
+
+    &:hover .info-tooltip-content,
+    &:focus-visible .info-tooltip-content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition-delay: 0.2s;
     }
   }
 
