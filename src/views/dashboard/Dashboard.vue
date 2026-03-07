@@ -475,7 +475,7 @@
 
       <div class="dashboard-card ip-location-summary-card" v-if="hasPlan">
         <div class="card-header">
-          <h2 class="card-title">IP Location</h2>
+          <h2 class="card-title">当前出口 IP</h2>
           <button
             class="ip-location-refresh"
             :disabled="ipLocationLoading"
@@ -491,9 +491,11 @@
           <div v-else-if="ipLocationData" class="ip-location-content">
             <div class="ip-main-line">
               <span class="ip-address">{{ ipLocationData.ip || '-' }}</span>
-              <span class="country-flag" :aria-label="ipLocationData.country">{{ ipLocationFlag }}</span>
             </div>
-            <div class="ip-region">{{ ipLocationDisplayText }}</div>
+            <div class="ip-sub-line">
+              <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
+              <span class="ip-region">{{ ipLocationDisplayText }}</span>
+            </div>
           </div>
           <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
         </div>
@@ -2058,10 +2060,17 @@ export default {
         .join(', ');
     });
 
-    const ipLocationFlag = computed(() => {
+    const ipLocationCode = computed(() => {
       const code = (ipLocationData.value?.countryCode || '').trim().toUpperCase();
-      if (!/^[A-Z]{2}$/.test(code)) return '🌐';
-      return String.fromCodePoint(...[...code].map((char) => 127397 + char.charCodeAt(0)));
+      return /^[A-Z]{2}$/.test(code) ? code : '--';
+    });
+
+    const ipLocationCodeBadgeClass = computed(() => {
+      const code = ipLocationCode.value;
+      if (['US', 'CA', 'NL'].includes(code)) return 'is-blue';
+      if (['HK', 'SG'].includes(code)) return 'is-pink';
+      if (['DE', 'JP', 'KR'].includes(code)) return 'is-red';
+      return 'is-red';
     });
 
     const fetchTrafficTrend = async () => {
@@ -2506,7 +2515,8 @@ export default {
       ipLocationError,
       ipLocationData,
       ipLocationDisplayText,
-      ipLocationFlag,
+      ipLocationCode,
+      ipLocationCodeBadgeClass,
       triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
@@ -3292,18 +3302,40 @@ export default {
     .ip-main-line {
       display: flex;
       align-items: center;
-      gap: 10px;
 
       .ip-address {
-        font-size: 18px;
-        font-weight: 600;
-        letter-spacing: 0.3px;
-      }
-
-      .country-flag {
         font-size: 20px;
-        line-height: 1;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        color: #ecf6ff;
       }
+    }
+
+    .ip-sub-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .region-code-badge {
+      min-width: 52px;
+      height: 28px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #d90429, #9d174d);
+      box-shadow: 0 6px 14px rgba(157, 23, 77, 0.35);
+
+      &.is-red { background: linear-gradient(135deg, #d90429, #9d174d); }
+      &.is-pink { background: linear-gradient(135deg, #db2777, #be185d); }
+      &.is-blue { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); }
     }
 
     .ip-region {
