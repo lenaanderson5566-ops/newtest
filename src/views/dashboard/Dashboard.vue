@@ -479,7 +479,7 @@
 
       <div class="dashboard-card ip-location-summary-card" v-if="hasPlan">
         <div class="card-header">
-          <h2 class="card-title">当前出口 IP</h2>
+          <h2 class="card-title">当前出口地区</h2>
           <button
             class="ip-location-refresh"
             :disabled="ipLocationLoading"
@@ -494,12 +494,13 @@
           <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
           <div v-else-if="ipLocationData" class="ip-location-content">
             <div class="ip-main-line">
-              <span class="ip-address">{{ ipLocationData.ip || '-' }}</span>
+              <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
+              <span class="ip-region-primary">{{ ipLocationPrimaryRegionText }}</span>
             </div>
             <div class="ip-sub-line">
-              <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
               <span class="ip-region">{{ ipLocationDisplayText }}</span>
             </div>
+            <div class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</div>
             <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
               <div class="service-reference-title">地区服务参考</div>
               <div class="service-reference-tags" role="list" aria-label="地区服务参考">
@@ -2091,6 +2092,11 @@ export default {
       return /^[A-Z]{2}$/.test(code) ? code : '--';
     });
 
+    const ipLocationPrimaryRegionText = computed(() => {
+      if (!ipLocationData.value) return '-';
+      return ipLocationData.value.city || ipLocationData.value.region || ipLocationData.value.country || '-';
+    });
+
     const ipLocationCodeBadgeClass = computed(() => {
       const code = ipLocationCode.value;
       const badgeMap = DASHBOARD_CONFIG.ipRegionBadgeByCountryCode || {};
@@ -2569,6 +2575,7 @@ export default {
       ipLocationData,
       ipLocationDisplayText,
       ipLocationCode,
+      ipLocationPrimaryRegionText,
       ipLocationCodeBadgeClass,
       ipLocationServiceReferences,
       ipLocationServiceCatalog,
@@ -3448,20 +3455,29 @@ export default {
     .ip-main-line {
       display: flex;
       align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-      .ip-address {
-        font-size: 20px;
-        font-weight: 700;
-        letter-spacing: 0.4px;
-        color: #ecf6ff;
-      }
+    .ip-region-primary {
+      font-size: 22px;
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      color: #ecf6ff;
     }
 
     .ip-sub-line {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
+    }
+
+    .ip-address-secondary {
+      font-size: 12px;
+      color: rgba(189, 223, 255, 0.72);
+      letter-spacing: 0.2px;
     }
 
     .region-code-badge {
