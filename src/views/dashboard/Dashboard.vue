@@ -2753,6 +2753,10 @@ export default {
       justify-content: space-between;
       margin-top: 2px;
 
+      @media (min-width: 1200px) {
+        grid-row: 1;
+      }
+
       h3 {
         margin: 0;
         font-size: 18px;
@@ -3226,7 +3230,7 @@ export default {
       @media (min-width: 1200px) {
         &.traffic-board-card.total-main-card {
           grid-column: 1;
-          grid-row: 1 / span 2;
+          grid-row: 2 / span 2;
           min-height: 100%;
         }
 
