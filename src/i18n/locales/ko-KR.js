@@ -269,10 +269,10 @@ export default {
     subscription: '구독',
     invite: '초대',
     docs: '문서',
-    client: '클라이언트',
+    startUsing: '클라이언트',
     tickets: '티켓',
     orders: '주문',
-    nodes: '노드',
+    lines: '노드',
     traffic: '트래픽',
     wallet: '지갑',
     billing: '청구서',
@@ -286,15 +286,15 @@ export default {
     description: '더 많은 기능과 서비스를 탐색하세요',
     inviteDescription: '친구를 초대해 커미션 보상을 받으세요',
     viewHelp: '사용 도움말 및 FAQ 보기',
-    viewNodes: '사용 가능한 서버 노드 보기',
+    viewLines: '사용 가능한 서버 노드 보기',
     manageOrders: '주문 관리',
     getTechnicalSupport: '기술 지원 받기',
     manageProfile: '프로필 관리'
   },
-  nodes: {
+  lines: {
     title: '노드 목록',
     loading: '노드 로딩 중...',
-    noNodes: '사용 가능한 노드 없음',
+    noLines: '사용 가능한 노드 없음',
     copiedToClipboard: '클립보드에 복사됨',
     welcome: {
       title: '노드 목록',

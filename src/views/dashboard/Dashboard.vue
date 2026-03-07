@@ -28,9 +28,6 @@
 
       <div class="dashboard-card notice-card" :class="{'card-animate': !loading.notices}"
            v-if="notices && notices.data && notices.data.length > 0">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.announcement') }}</h2>
-        </div>
         <div v-if="loading.notices" class="card-body skeleton-loading">
           <div class="skeleton-row"></div>
           <div class="skeleton-row"></div>
@@ -373,16 +370,13 @@
         <template v-else>
           <div class="usage-panel-title-row">
             <h3>{{ $t('dashboard.usagePanel') }}</h3>
-            <span class="traffic-package-status" :class="{ active: hasPurchasedTrafficPackage }">
-              {{ hasPurchasedTrafficPackage ? $t('dashboard.packagePurchased') : $t('dashboard.packageNotPurchased') }}
-            </span>
           </div>
 
           <div
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="{ 'card-animate': !loading.userStats }"
+            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
@@ -393,7 +387,10 @@
               </div>
               <div class="plan-summary-row">
                 <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
-                <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
+                <div class="plan-summary-value-wrap">
+                  <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
+                  <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
+                </div>
               </div>
               <div class="plan-summary-row auto-renewal-row">
                 <div>
@@ -410,6 +407,21 @@
                   <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
                 </label>
               </div>
+              <div class="plan-summary-actions">
+                <button
+                  class="plan-action-btn"
+                  :class="primaryActionClass"
+                  @click="handlePrimaryPlanAction"
+                >
+                  {{ primaryPlanActionLabel }}
+                </button>
+                <button
+                  class="plan-action-btn subtle"
+                  @click="handleSecondaryPlanAction"
+                >
+                  {{ secondaryPlanActionLabel }}
+                </button>
+              </div>
             </div>
             <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
@@ -420,31 +432,43 @@
                 </button>
               </template>
               <template v-else>
-                <span class="usage-percent">{{ card.remainingPercentage }}%</span>
-                <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+                <template v-if="card.key === 'subscription'">
+                  <span class="usage-percent">{{ formatPackageRemaining(isPlanExpired ? 0 : card.remaining) }}</span>
+                  <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+                </template>
+                <template v-else>
+                  <span class="usage-percent">{{ card.remainingPercentage }}%</span>
+                  <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+                </template>
               </template>
             </div>
             <div v-if="card.key !== 'package' && card.key !== 'total'" class="section-progress-track">
-              <div class="section-progress-fill" :style="{ width: `${card.remainingPercentage}%` }"></div>
+              <div class="section-progress-fill" :style="{ width: `${card.key === 'subscription' && isPlanExpired ? 0 : card.remainingPercentage}%` }"></div>
             </div>
             <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
-              <div class="usage-kpi">
-                <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
-                <strong class="usage-kpi-value">{{ formatTraffic(card.total) }}</strong>
-              </div>
-              <div class="usage-kpi">
-                <span class="usage-kpi-label">{{ $t('dashboard.remaining') }}</span>
-                <strong class="usage-kpi-value">{{ formatTraffic(card.remaining) }}</strong>
-              </div>
+              <template v-if="card.key === 'subscription'">
+                <div class="usage-summary-line">
+                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(isPlanExpired ? 0 : card.used) }} / {{ formatPackageRemaining(card.total) }}
+                </div>
+              </template>
+              <template v-else>
+                <div class="usage-kpi">
+                  <span class="usage-kpi-label">{{ $t('dashboard.total') }}</span>
+                  <strong class="usage-kpi-value">{{ formatPackageRemaining(card.total) }}</strong>
+                </div>
+                <div class="usage-kpi">
+                  <span class="usage-kpi-label">{{ $t('dashboard.remaining') }}</span>
+                  <strong class="usage-kpi-value">{{ formatPackageRemaining(card.remaining) }}</strong>
+                </div>
+              </template>
             </div>
             <div v-if="card.key === 'package'" class="usage-package-note">
               {{ $t('dashboard.packageUsageNote') }}
             </div>
             <div v-if="card.key === 'subscription'" class="usage-reset-hint">
-              {{ $t('dashboard.resetTimeLabel') }}：{{ userPlan.resetDateTime || '-' }}
+              {{ $t('dashboard.resetTimeLabel') }} {{ userPlan.resetDateTime || '-' }}
             </div>
           </div>
-
 
         </template>
       </div>
@@ -478,11 +502,10 @@
 
 
 
-  <teleport to="body">
-    <transition name="modal-fade">
-      <div class="modal-overlay traffic-package-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
-        <div class="modal-container traffic-package-container" @click.stop>
-          <div class="modal-card traffic-package-modal-card">
+  <transition name="modal-fade">
+      <div class="modal-overlay traffic-package-overlay traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
+        <div class="modal-container traffic-package-container traffic-package-modal-container" @click.stop>
+          <div class="modal-card traffic-package-modal-card traffic-package-modal-card-global">
             <div class="modal-header">
               <h3>{{ $t('shop.traffic_package.title') }}</h3>
               <button class="close-button" :aria-label="$t('common.close')" @click="showTrafficPackageModal = false">
@@ -514,8 +537,7 @@
           </div>
         </div>
       </div>
-    </transition>
-  </teleport>
+  </transition>
   <!-- 重置流量确认弹窗 -->
   <transition name="modal-fade">
     <div class="modal-overlay" v-if="showResetTrafficModal">
@@ -750,7 +772,8 @@ export default {
       resetDateTime: null,
       subscriptionQuotaUsed: null,
       subscriptionQuotaRemaining: null,
-      packageQuotaRemaining: null
+      packageQuotaRemaining: null,
+      expiredAt: null
     });
     const remindExpireSetting = ref(false);
     const remindTrafficSetting = ref(false);
@@ -1008,6 +1031,7 @@ export default {
           autoRenewalEnabled.value = !!info.auto_renewal;
           if (info.expired_at) {
             userPlan.value.expireDate = formatDate(info.expired_at);
+            userPlan.value.expiredAt = Number(info.expired_at);
             userPlan.value.isExpireDatePermanent = false;
 
             const now = new Date();
@@ -1024,6 +1048,7 @@ export default {
             }
           } else {
             userPlan.value.expireDate = null;
+            userPlan.value.expiredAt = null;
             userPlan.value.isExpireDatePermanent = true;
             userStats.remainingDays = null;
             userStats.isRemainingDaysPermanent = true;
@@ -1108,6 +1133,62 @@ export default {
       const days = parseInt(userStats.remainingDays, 10);
       return !isNaN(days) && days <= 0;
     });
+
+    const isPlanExpired = computed(() => {
+      if (userPlan.value.isExpireDatePermanent) return false;
+      const expiredAt = Number(userPlan.value.expiredAt || 0);
+      if (!expiredAt) return false;
+      return expiredAt * 1000 <= Date.now();
+    });
+
+    const subscriptionStatus = computed(() => {
+      if (isPlanExpired.value) return 'expired';
+      if (userPlan.value.isExpireDatePermanent) return 'active';
+
+      const expiredAt = Number(userPlan.value.expiredAt || 0);
+      if (!expiredAt) return 'active';
+
+      const diffMs = expiredAt * 1000 - Date.now();
+      return diffMs <= 7 * 24 * 60 * 60 * 1000 ? 'expiring' : 'active';
+    });
+
+    const subscriptionStatusLabel = computed(() => {
+      if (subscriptionStatus.value === 'expired') return '已过期';
+      if (subscriptionStatus.value === 'expiring') return '即将到期';
+      return '有效中';
+    });
+
+    const primaryPlanActionLabel = computed(() => {
+      if (subscriptionStatus.value === 'active') return '管理订阅';
+      return '立即续费';
+    });
+
+    const secondaryPlanActionLabel = computed(() => {
+      if (subscriptionStatus.value === 'expired') return '重新选择套餐';
+      if (subscriptionStatus.value === 'expiring') return '管理订阅';
+      return '续费';
+    });
+
+    const primaryActionClass = computed(() => {
+      if (subscriptionStatus.value === 'active') return 'premium';
+      return 'primary';
+    });
+
+    const handlePrimaryPlanAction = () => {
+      if (subscriptionStatus.value === 'active') {
+        goToShop();
+        return;
+      }
+      renewPlan();
+    };
+
+    const handleSecondaryPlanAction = () => {
+      if (subscriptionStatus.value === 'active') {
+        renewPlan();
+        return;
+      }
+      goToShop();
+    };
 
     const isLowTraffic = computed(() => {
       const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
@@ -1246,6 +1327,7 @@ export default {
           }
           if (subscribe.expired_at) {
             userPlan.value.expireDate = formatDate(subscribe.expired_at);
+            userPlan.value.expiredAt = Number(subscribe.expired_at);
             userPlan.value.isExpireDatePermanent = false;
 
             const now = new Date();
@@ -1262,6 +1344,7 @@ export default {
             }
           } else {
             userPlan.value.expireDate = null;
+            userPlan.value.expiredAt = null;
             userPlan.value.isExpireDatePermanent = true;
             userStats.remainingDays = null;
             userStats.isRemainingDaysPermanent = true;
@@ -2247,6 +2330,14 @@ export default {
       hiddifyMacIcon,
       isExpiringSoon,
       isExpired,
+      isPlanExpired,
+      subscriptionStatus,
+      subscriptionStatusLabel,
+      primaryPlanActionLabel,
+      secondaryPlanActionLabel,
+      primaryActionClass,
+      handlePrimaryPlanAction,
+      handleSecondaryPlanAction,
       isLowTraffic,
       isTrafficDepleted,
       hasPlan,
@@ -2469,6 +2560,7 @@ export default {
   }
 
   .stats-grid {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 20px;
@@ -2509,6 +2601,14 @@ export default {
           color: #16a34a;
         }
       }
+    }
+
+    .expired-blur-target {
+      filter: blur(2.5px) saturate(0.65);
+      opacity: 0.65;
+      pointer-events: none;
+      user-select: none;
+      transition: filter 0.2s ease, opacity 0.2s ease;
     }
 
     .stats-card {
@@ -2627,6 +2727,27 @@ export default {
             cursor: pointer;
           }
         }
+        &.package-card-muted {
+          background: #f3f4f6;
+          border-color: #e5e7eb;
+
+          .package-add-btn {
+            color: #fff;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+          }
+        }
+        &.subscription-card-muted {
+          background: #f3f4f6;
+          border-color: #e5e7eb;
+
+          .section-progress-track {
+            background: #e5e7eb;
+          }
+
+          .section-progress-fill {
+            background: #cbd5e1;
+          }
+        }
 
         .plan-summary-card {
           width: 100%;
@@ -2650,12 +2771,44 @@ export default {
             color: #6b7280;
           }
 
+          .plan-summary-value-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+          }
+
           .plan-summary-value {
             font-size: 14px;
             color: #111827;
             font-weight: 600;
             text-align: right;
             word-break: break-word;
+          }
+
+          .plan-status-tag {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: 600;
+
+            &.is-active {
+              color: #15803d;
+              background: rgba(34, 197, 94, 0.15);
+            }
+
+            &.is-expiring {
+              color: #b45309;
+              background: rgba(245, 158, 11, 0.16);
+            }
+
+            &.is-expired {
+              color: #dc2626;
+              background: rgba(220, 38, 38, 0.1);
+            }
           }
 
           .plan-summary-desc {
@@ -2666,6 +2819,55 @@ export default {
 
           .auto-renewal-row {
             align-items: flex-start;
+          }
+
+          .plan-summary-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+
+            @media (max-width: 576px) {
+              flex-direction: column;
+            }
+
+            .plan-action-btn {
+              flex: 1;
+              border-radius: 12px;
+              border: 1px solid transparent;
+              padding: 10px 14px;
+              font-size: 13px;
+              font-weight: 600;
+              letter-spacing: 0.2px;
+              cursor: pointer;
+              transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+              &:hover {
+                transform: translateY(-1px);
+              }
+
+              &:active {
+                transform: translateY(0);
+              }
+
+              &.primary {
+                color: #fff;
+                background: linear-gradient(135deg, #ef4444, #dc2626);
+                box-shadow: 0 8px 18px rgba(220, 38, 38, 0.24);
+              }
+
+              &.premium {
+                color: #fff;
+                background: linear-gradient(135deg, #3b82f6, #2563eb);
+                box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
+              }
+
+              &.subtle {
+                color: #6b7280;
+                border-color: #e5e7eb;
+                background: #f8fafc;
+                box-shadow: none;
+              }
+            }
           }
 
           .switch {
@@ -2741,8 +2943,15 @@ export default {
         .usage-kpis {
           width: 100%;
           display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 8px;
+        }
+
+        .usage-summary-line {
+          grid-column: 1 / -1;
+          font-size: 14px;
+          font-weight: 600;
+          color: #374151;
         }
 
         .usage-kpi {
@@ -2778,6 +2987,7 @@ export default {
           color: #6b7280;
           line-height: 1.45;
         }
+
 
         .usage-reset-hint {
           width: 100%;
@@ -2894,27 +3104,35 @@ export default {
   }
 
   .notice-card {
-    margin-bottom: 24px;
+    margin-bottom: 12px;
+    padding: 12px;
+    border-color: rgba(var(--theme-color-rgb), 0.12);
+    background: color-mix(in srgb, var(--card-bg-color) 92%, rgba(var(--theme-color-rgb), 0.08));
+    box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
 
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    &:hover {
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+      border-color: rgba(var(--theme-color-rgb), 0.18);
+      transform: none;
+    }
+
+    .card-body {
+      padding: 0;
     }
 
     .notice-slider {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
 
     .notice-item {
       position: relative;
-      padding: 16px;
+      padding: 12px 14px;
       border-radius: 8px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
+      background-color: rgba(var(--theme-color-rgb), 0.045);
       overflow: hidden;
-      min-height: 144px;
+      min-height: 102px;
 
       .notice-overlay {
         position: absolute;
@@ -2929,10 +3147,11 @@ export default {
       }
 
       .notice-title {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 600;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         color: #fff;
+        line-height: 1.35;
       }
 
       .notice-footer {
@@ -2940,10 +3159,10 @@ export default {
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
 
         .notice-date {
-          font-size: 12px;
+          font-size: 11px;
           color: rgba(255, 255, 255, 0.85);
         }
 
@@ -2955,11 +3174,11 @@ export default {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-            padding: 6px 10px;
+            gap: 3px;
+            padding: 5px 8px;
             border-radius: 6px;
-            font-size: 13px;
-            background-color: rgba(var(--theme-color-rgb), 0.1);
+            font-size: 12px;
+            background-color: rgba(var(--theme-color-rgb), 0.14);
             color: #fff;
             border: none;
             cursor: pointer;
@@ -2987,7 +3206,7 @@ export default {
             .btn-notice {
               flex: 1;
               justify-content: center;
-              padding: 8px;
+              padding: 6px;
             }
           }
         }
@@ -3029,11 +3248,12 @@ export default {
     .notice-dots {
       display: flex;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
+      margin-top: 2px;
 
       .notice-dot {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
         border-radius: 999px;
         border: none;
         padding: 0;
@@ -3042,7 +3262,7 @@ export default {
         transition: all 0.2s ease;
 
         &.active {
-          width: 20px;
+          width: 14px;
           background: rgba(var(--theme-color-rgb), 0.95);
         }
       }
@@ -3532,13 +3752,13 @@ export default {
     flex: 1;
 
     .import-title {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 600;
       margin-bottom: 4px;
     }
 
     .import-desc {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--theme-text-secondary);
     }
   }
@@ -3558,7 +3778,7 @@ export default {
   margin-bottom: 24px;
 
   .platform-title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     margin-bottom: 12px;
     padding-bottom: 8px;
@@ -3593,7 +3813,7 @@ export default {
       }
 
       span {
-        font-size: 14px;
+        font-size: 13px;
       }
     }
   }
@@ -4412,6 +4632,15 @@ export default {
 
 
 .traffic-package-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 1200;
   padding: 16px;
 }
@@ -4743,6 +4972,50 @@ export default {
 
 }
 
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expiring {
+  color: #fcd34d;
+  background: rgba(245, 158, 11, 0.2);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expired {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.dark-theme .traffic-board-card.package-card-muted {
+  background: rgba(71, 85, 105, 0.2);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+
+.dark-theme .traffic-board-card.subscription-card-muted {
+  background: rgba(71, 85, 105, 0.2);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+
+.dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+
+
+.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle {
+  color: rgba(226, 232, 240, 0.75);
+  background: rgba(51, 65, 85, 0.45);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle:hover {
+  background: rgba(51, 65, 85, 0.65);
+}
+
+
 </style>
 
 <!-- 全局样式，不受scoped限制 -->
@@ -4851,4 +5124,209 @@ a.eztheme-btn {
 .stats-card.balance-card .stats-value {
   color: var(--theme-color);
 }
+
+
+.traffic-package-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  z-index: 1200 !important;
+  padding: 16px !important;
+}
+
+.traffic-package-modal-container {
+  width: min(100%, 420px) !important;
+  max-height: calc(100vh - 32px) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.traffic-package-modal-card-global {
+  background-color: var(--card-background) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(var(--theme-color-rgb), 0.15) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+  max-height: calc(100vh - 32px) !important;
+  overflow: hidden !important;
+}
+
+.traffic-package-modal-card-global .modal-header {
+  padding: 16px 20px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  background-color: rgba(var(--theme-color-rgb), 0.03) !important;
+}
+
+.traffic-package-modal-card-global .modal-header h3 {
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.traffic-package-modal-card-global .modal-header .close-button {
+  border: none !important;
+  background: transparent !important;
+  color: var(--theme-text-secondary) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.traffic-package-modal-card-global .modal-header .close-button:hover {
+  color: var(--theme-text-primary) !important;
+}
+
+.traffic-package-modal-card-global .modal-body {
+  display: block !important;
+  padding: 20px !important;
+  overflow-y: auto !important;
+}
+
+.traffic-package-modal-card-global .traffic-package-desc {
+  margin: 0 0 14px !important;
+  color: var(--theme-text-secondary) !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+.traffic-package-modal-card-global .traffic-package-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+.traffic-package-modal-card-global .traffic-package-item {
+  border: 1px solid var(--border-color) !important;
+  border-radius: 12px !important;
+  padding: 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--theme-color-rgb), 0.06) 0%,
+    rgba(var(--theme-color-rgb), 0.02) 100%
+  ) !important;
+}
+
+.traffic-package-modal-card-global .item-title-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.traffic-package-modal-card-global .item-title-row strong {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.traffic-package-modal-card-global .item-price {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: var(--theme-color) !important;
+}
+
+.traffic-package-modal-card-global .item-content {
+  color: var(--theme-text-secondary) !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  min-height: 32px !important;
+}
+
+.traffic-package-modal-card-global .buy-btn {
+  width: 100% !important;
+  margin-top: auto !important;
+  padding: 8px 12px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  background-color: rgba(var(--theme-color-rgb), 0.92) !important;
+  color: #fff !important;
+  cursor: pointer !important;
+}
+
+.traffic-package-modal-card-global .buy-btn:disabled {
+  opacity: 0.75 !important;
+  cursor: not-allowed !important;
+}
+
+.traffic-package-modal-card-global .modal-footer {
+  padding: 16px 20px !important;
+  border-top: 1px solid var(--border-color) !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+.traffic-package-modal-card-global .cancel-btn {
+  padding: 8px 16px !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--border-color) !important;
+  background-color: transparent !important;
+  color: var(--theme-text-primary) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+}
+
+.traffic-package-modal-card-global .cancel-btn:hover {
+  background-color: rgba(var(--theme-color-rgb), 0.06) !important;
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expiring {
+  color: #fcd34d;
+  background: rgba(245, 158, 11, 0.2);
+}
+
+.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expired {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.dark-theme .traffic-board-card.package-card-muted {
+  background: rgba(71, 85, 105, 0.2);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+
+.dark-theme .traffic-board-card.subscription-card-muted {
+  background: rgba(71, 85, 105, 0.2);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+
+.dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+
+
+.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle {
+  color: rgba(226, 232, 240, 0.75);
+  background: rgba(51, 65, 85, 0.45);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle:hover {
+  background: rgba(51, 65, 85, 0.65);
+}
+
+
 </style>

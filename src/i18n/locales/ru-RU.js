@@ -269,10 +269,10 @@ export default {
     subscription: 'Подписка',
     invite: 'Приглашение',
     docs: 'Документы',
-    client: 'Клиент',
+    startUsing: 'Клиент',
     tickets: 'Тикеты',
     orders: 'Заказы',
-    nodes: 'Узлы',
+    lines: 'Узлы',
     traffic: 'Трафик',
     wallet: 'Кошелек',
     billing: 'Биллинг',
@@ -286,15 +286,15 @@ export default {
     description: 'Исследуйте больше функций и услуг',
     inviteDescription: 'Приглашайте друзей и получайте комиссионные',
     viewHelp: 'Посмотреть помощь и FAQ',
-    viewNodes: 'Посмотреть доступные серверы',
+    viewLines: 'Посмотреть доступные серверы',
     manageOrders: 'Управление заказами',
     getTechnicalSupport: 'Получить техподдержку',
     manageProfile: 'Управление профилем'
   },
-  nodes: {
+  lines: {
     title: 'Список узлов',
     loading: 'Загрузка узлов...',
-    noNodes: 'Нет доступных узлов',
+    noLines: 'Нет доступных узлов',
     copiedToClipboard: 'Скопировано в буфер обмена',
     welcome: {
       title: 'Список узлов',

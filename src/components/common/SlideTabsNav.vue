@@ -189,7 +189,7 @@ export default {
         // 导航项配置映射（可复用）
         const navMap = {
 
-          docs: { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'client' },
+          docs: { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'startUsing' },
 
           invite: { title: 'Billing', path: '/billing?tab=referral', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
 
@@ -206,7 +206,7 @@ export default {
             i18nKey: 'tickets'
           },
 
-          nodes: { title: 'Nodes', path: '/nodes', name: 'Nodes', icon: 'IconServer', i18nKey: 'nodes' },
+          nodes: { title: 'Nodes', path: '/nodes', name: 'Nodes', icon: 'IconServer', i18nKey: 'lines' },
 
           billing: { title: 'Billing', path: '/billing?tab=orders', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
 
