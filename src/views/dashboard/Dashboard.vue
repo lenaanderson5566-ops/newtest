@@ -375,7 +375,7 @@
             :class="[{ 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
-            <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
+            <div class="usage-card-title">{{ card.key === 'total' ? (userPlan.name || $t('dashboard.subscriptionInfo')) : card.title }}</div>
             <div v-if="card.key === 'total'" class="plan-summary-card">
               <div class="plan-summary-section plan-summary-section-meta">
                 <div class="plan-summary-row">
@@ -430,7 +430,7 @@
             </div>
             <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
-                <span class="usage-percent">{{ formatPackageRemaining(card.remaining) }}</span>
+                <span class="usage-percent compact">{{ formatPackageRemaining(card.remaining) }}</span>
                 <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 <button class="package-add-btn" @click.stop="openTrafficPackageModal" :title="$t('dashboard.purchaseTrafficPackage')">
                   <IconPlus :size="14" />
@@ -438,7 +438,7 @@
               </template>
               <template v-else>
                 <template v-if="card.key === 'subscription'">
-                  <span class="usage-percent">{{ formatPackageRemaining(isPlanExpired ? 0 : card.remaining) }}</span>
+                  <span class="usage-percent compact">{{ formatPackageRemaining(isPlanExpired ? 0 : card.remaining) }}</span>
                   <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 </template>
                 <template v-else>
@@ -452,7 +452,7 @@
             </div>
             <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
               <template v-if="card.key === 'subscription'">
-                <div class="usage-summary-line">
+                <div class="usage-summary-line persist-visible">
                   {{ $t('dashboard.used') }} {{ formatPackageRemaining(isPlanExpired ? 0 : card.used) }} / {{ formatPackageRemaining(card.total) }}
                 </div>
               </template>
@@ -3215,6 +3215,10 @@ export default {
           line-height: 1;
           font-weight: 700;
           color: #111827;
+
+          &.compact {
+            font-size: 32px;
+          }
         }
 
         .usage-percent-label {
@@ -3321,6 +3325,10 @@ export default {
 
           .usage-percent {
             font-size: 36px;
+
+            &.compact {
+              font-size: 30px;
+            }
           }
 
           .usage-percent-label {
@@ -3349,10 +3357,17 @@ export default {
             font-size: 14px;
           }
 
-          .usage-summary-line,
           .usage-package-note,
           .usage-reset-hint {
             display: none;
+          }
+
+          .usage-summary-line,
+          .usage-package-note,
+          .usage-reset-hint {
+            &.persist-visible {
+              display: block;
+            }
           }
         }
       }
@@ -5906,3 +5921,6 @@ a.eztheme-btn {
 
 
 </style>
+          &.compact {
+            font-size: 32px;
+          }
