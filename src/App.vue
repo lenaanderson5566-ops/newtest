@@ -490,7 +490,7 @@ export default {
       border-radius: var(--toolbar-control-radius);
       border: 1px solid var(--toolbar-control-border);
       background: var(--toolbar-control-bg);
-      color: var(--text-color);
+      color: var(--text-color, #111827);
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
@@ -510,6 +510,7 @@ export default {
       .wallet-icon {
         font-size: 14px;
         line-height: 1;
+        opacity: 1;
       }
     }
 

@@ -136,33 +136,32 @@ export default {
 }
 
 .avatar-wrapper {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   cursor: pointer;
   overflow: hidden;
-  background-color: color-mix(in srgb, var(--card-bg-color, #ffffff) 92%, #fff 8%);
-  border: 1px solid rgba(148, 163, 184, 0.24);
-  transition: all 0.3s ease;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   &:hover {
-    border-color: rgba(var(--theme-color-rgb), 0.45);
-    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1);
-    transform: translateY(-1px);
+    background: #f5f7fa;
+    border-color: transparent;
   }
 
   &.is-active {
     border-color: #e5e7eb;
-    box-shadow: none;
-    transform: none;
+    background: #f5f7fa;
   }
-  
+
   .avatar-image {
     width: 100%;
     height: 100%;
+    border-radius: 8px;
     object-fit: cover;
   }
   

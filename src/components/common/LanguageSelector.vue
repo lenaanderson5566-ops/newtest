@@ -119,25 +119,23 @@ export default {
   align-items: center;
   justify-content: center;
   min-width: 120px;
-  height: 38px;
-  padding: 0 12px;
-  border-radius: 999px;
-  background-color: color-mix(in srgb, var(--card-bg-color, var(--card-background)) 92%, #fff 8%);
-  border: 1px solid rgba(148, 163, 184, 0.24);
-  color: var(--text-color);
+  height: 36px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-color, #111827);
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 
   &:hover {
-    background-color: color-mix(in srgb, var(--card-bg-color, var(--card-background)) 88%, rgba(var(--theme-color-rgb), 0.08));
-    border-color: rgba(var(--theme-color-rgb), 0.45);
-    transform: translateY(-1px);
+    background: #f5f7fa;
+    border-color: transparent;
   }
 
   &.is-active {
     border-color: #e5e7eb;
     background: #f5f7fa;
-    transform: none;
   }
 
   .language-btn-text {
