@@ -678,7 +678,7 @@ import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
 import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
 import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
 import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
-import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube-premium.svg';
+import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube.svg';
 import serviceChatgptIcon from '@/assets/images/service-icons/chatgpt.svg';
 import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
 import serviceGoogleIcon from '@/assets/images/service-icons/google.svg';
