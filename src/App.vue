@@ -497,8 +497,8 @@ export default {
 
 
 .top-toolbar {
-  --toolbar-control-height: 36px;
-  --toolbar-control-padding: 6px 9px;
+  --toolbar-control-height: 34px;
+  --toolbar-control-padding: 5px 8px;
   --toolbar-control-radius: 8px;
   --toolbar-control-border: transparent;
   --toolbar-control-bg: transparent;
@@ -508,7 +508,7 @@ export default {
   position: static;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   z-index: 110;
 
   .toolbar-wallets {
@@ -654,7 +654,7 @@ export default {
   }
 
   :deep(.language-btn) {
-    min-width: 96px;
+    min-width: 88px;
     font-size: 14px;
   }
 }
@@ -671,7 +671,7 @@ export default {
   width: 100%;
 
   &.with-top-bar {
-    padding-top: 100px;
+    padding-top: 16px;
   }
 }
 
@@ -739,7 +739,7 @@ export default {
   }
 
   .top-toolbar {
-    gap: 4px;
+    gap: 3px;
     flex-wrap: nowrap;
     justify-content: flex-end;
 

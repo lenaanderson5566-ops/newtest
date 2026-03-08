@@ -3470,8 +3470,8 @@ export default {
 
     .ip-location-content {
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 1fr) minmax(0, 1.35fr);
-      gap: 8px 16px;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.35fr);
+      gap: 14px 18px;
       color: #d9ecff;
       align-items: start;
       position: relative;
@@ -3618,10 +3618,10 @@ export default {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      padding-top: 2px;
-      border-radius: 10px;
-      background: transparent;
-      border: none;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(164, 191, 242, 0.24);
       min-height: 100%;
     }
 
@@ -3636,22 +3636,27 @@ export default {
     }
 
     .service-reference-tags {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
       overflow: visible;
       padding-bottom: 2px;
     }
 
+    @media (max-width: 680px) {
+      .service-reference-tags {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .service-reference-item {
-      flex: 0 0 auto;
-      min-height: 40px;
+      width: 100%;
+      min-height: 38px;
       border-radius: 999px;
       display: inline-flex;
       flex-direction: row;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 8px;
       white-space: nowrap;
       padding: 6px 12px;

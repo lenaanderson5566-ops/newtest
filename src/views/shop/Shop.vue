@@ -6,10 +6,11 @@
       <div class="dashboard-card welcome-card">
         <div class="card-header shop-title-header">
           <h2 class="card-title">{{ $t("shop.title") }}</h2>
-          <div class="filter-toggle-container" v-if="filters.length > 0">
+          <div class="filter-toggle-container" v-if="displayedFilters.length > 0">
             <div class="filter-toggle-wrapper" role="tablist" aria-label="billing period">
+              <span class="filter-highlight" :style="filterHighlightStyle"></span>
               <button
-                v-for="filter in filters"
+                v-for="filter in displayedFilters"
                 :key="`${filter.value}-${currentLanguage}`"
                 type="button"
                 class="filter-option"
@@ -311,6 +312,25 @@ export default {
 
     const currentLanguage = computed(() => locale.value);
 
+    const displayedFilters = computed(() => {
+      const monthFilter = filters.value.find((item) => item.value === "month_price");
+      const yearFilter = filters.value.find((item) => item.value === "year_price");
+      if (monthFilter && yearFilter) {
+        return [monthFilter, yearFilter];
+      }
+      return filters.value;
+    });
+
+    const filterHighlightStyle = computed(() => {
+      const count = displayedFilters.value.length;
+      if (!count) return {};
+      const activeIndex = Math.max(0, displayedFilters.value.findIndex((item) => item.value === selectedFilter.value));
+      return {
+        width: `${100 / count}%`,
+        transform: `translateX(${activeIndex * 100}%)`,
+      };
+    });
+
     const currentPlanBadgeLabel = computed(() =>
       locale.value?.startsWith("zh") ? "当前套餐" : "Current Plan"
     );
@@ -398,7 +418,7 @@ export default {
     };
 
     watch(
-      () => filters.value,
+      () => displayedFilters.value,
       (nextFilters) => {
         const validFilterValues = nextFilters.map((filter) => filter.value);
         if (!validFilterValues.includes(selectedFilter.value)) {
@@ -858,6 +878,8 @@ export default {
       getPlanMainPriceType,
 
       currentLanguage,
+      displayedFilters,
+      filterHighlightStyle,
       currentPlanBadgeLabel,
 
       selectPlanPriceType,
@@ -1600,16 +1622,31 @@ export default {
     flex-shrink: 0;
 
     .filter-toggle-wrapper {
+      position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 0;
       padding: 3px;
       border-radius: 12px;
       border: 1px solid var(--border-color-soft);
       background: var(--surface-subtle);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
 
+      .filter-highlight {
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        bottom: 3px;
+        border-radius: 9px;
+        background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
+        box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.22);
+        transition: transform 0.22s ease, width 0.22s ease;
+        pointer-events: none;
+      }
+
       .filter-option {
+        position: relative;
+        z-index: 1;
         border: 0;
         background: transparent;
         min-width: 60px;
@@ -1629,9 +1666,6 @@ export default {
         }
 
         &.active {
-          background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
-          box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.22);
-
           .option-text {
             color: #fff;
             font-weight: 600;
