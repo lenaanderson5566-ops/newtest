@@ -431,6 +431,10 @@
               </div>
               <div class="ip-sub-line">
                 <span class="ip-region">{{ ipLocationDisplayText }}</span>
+                <button class="ip-refresh-btn" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
+                  <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
+                  <span>{{ ipLocationLoading ? '刷新中' : '刷新' }}</span>
+                </button>
               </div>
               <div class="ip-status-row">
                 <span class="status-dot" aria-hidden="true"></span>
@@ -455,7 +459,7 @@
                   v-for="service in ipLocationServiceCatalog"
                   :key="`ip-service-${service.key}`"
                   class="service-reference-item"
-                  :class="[{ active: isIpServiceReferenced(service.key) }, ipLocationCodeBadgeClass]"
+                  :class="{ active: isIpServiceReferenced(service.key) }"
                   role="listitem"
                   :title="`${service.label} · ${isIpServiceReferenced(service.key) ? '地区参考可用' : '未在地区参考列表'}`"
                 >
@@ -639,7 +643,8 @@ import {
   IconWaveSine,
   IconX,
   IconCalendarPlus,
-  IconPlus
+  IconPlus,
+  IconRefresh
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/dashboard';
@@ -3527,18 +3532,18 @@ export default {
     }
 
     .ip-region-primary {
-      font-size: 56px;
+      font-size: 44px;
       line-height: 1.15;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: #ecf6ff;
 
       @media (max-width: 1220px) {
-        font-size: 46px;
+        font-size: 38px;
       }
 
       @media (max-width: 680px) {
-        font-size: 38px;
+        font-size: 30px;
       }
     }
 
@@ -3547,6 +3552,35 @@ export default {
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
+    }
+
+    .ip-refresh-btn {
+      border: 1px solid rgba(165, 194, 246, 0.35);
+      background: rgba(255, 255, 255, 0.08);
+      color: #e7f1ff;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.14);
+        border-color: rgba(188, 211, 248, 0.48);
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      .spinning {
+        animation: spin 0.9s linear infinite;
+      }
     }
 
     .ip-address-secondary {
@@ -3576,7 +3610,10 @@ export default {
       align-self: stretch;
       min-height: 182px;
       border-radius: 16px;
-      background: rgba(255, 255, 255, 0.02);
+      background:
+        radial-gradient(circle at 50% 55%, rgba(71, 127, 255, 0.28), rgba(18, 34, 68, 0.45) 58%, rgba(9, 18, 36, 0.65) 100%),
+        linear-gradient(160deg, rgba(20, 39, 75, 0.75), rgba(9, 18, 38, 0.55));
+      border: 1px solid rgba(145, 177, 238, 0.24);
       position: relative;
       overflow: hidden;
 
@@ -3663,12 +3700,10 @@ export default {
     .service-reference-tags {
       display: flex;
       align-items: center;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       gap: 10px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding-bottom: 4px;
-      scrollbar-width: thin;
+      overflow: visible;
+      padding-bottom: 2px;
     }
 
     .service-reference-item {
@@ -3683,19 +3718,20 @@ export default {
       white-space: nowrap;
       padding: 6px 12px;
       border: none;
-      background: rgba(255, 255, 255, 0.06);
-      color: rgba(233, 243, 255, 0.86);
-      opacity: 0.72;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(233, 243, 255, 0.92);
+      opacity: 0.84;
       transition: all 0.2s ease;
 
       .service-reference-tile {
-        width: 22px;
-        height: 22px;
-        border-radius: 0;
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: transparent;
+        background: #ffffff;
+        box-shadow: 0 0 0 1px rgba(190, 209, 247, 0.25);
       }
 
       .service-reference-label {
@@ -3706,29 +3742,17 @@ export default {
       }
 
       .service-reference-icon {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         display: block;
         object-fit: contain;
+        filter: none;
       }
 
       &.active {
         opacity: 1;
         color: #eef6ff;
-        background: rgba(255, 255, 255, 0.11);
-
-
-        &.is-red {
-          background: rgba(157, 23, 77, 0.22);
-        }
-
-        &.is-pink {
-          background: rgba(190, 24, 93, 0.22);
-        }
-
-        &.is-blue {
-          background: rgba(30, 58, 138, 0.22);
-        }
+        background: rgba(255, 255, 255, 0.16);
       }
 
       &:hover {
