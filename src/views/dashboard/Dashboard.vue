@@ -3,27 +3,19 @@
     <div class="dashboard-inner">
       <div class="overview-grid">
       <!-- 通知区域 -->
-      <!-- 待处理事项提示 -->
-      <div v-if="hasPendingItems" class="dashboard-card pending-items-card"
-           :class="{'card-animate': !loading.userStats}" style="animation-delay: 0.1s">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.pendingItems') }}</h2>
+      <!-- 待支付订单提醒条 -->
+      <div
+        v-if="hasPendingItems"
+        class="pending-order-banner"
+        :class="{'card-animate': !loading.userStats}"
+        style="animation-delay: 0.1s"
+        @click="goToOrders"
+      >
+        <div class="banner-main">
+          <IconAlertTriangle :size="16" class="banner-icon" />
+          <span class="banner-text">你有 {{ userStats.pendingOrders }} 个待支付订单，请尽快完成支付以激活服务。</span>
         </div>
-        <div class="card-body">
-          <div class="pending-items-list">
-            <div v-if="userStats.pendingOrders > 0" class="pending-item" @click="router.push('/billing?tab=orders')">
-              <div class="pending-icon">
-                <IconShoppingCart :size="20"/>
-              </div>
-              <div class="pending-info">
-                <span class="">{{ $t('dashboard.pendingOrders') }} ({{ userStats.pendingOrders }})</span>
-              </div>
-              <div class="pending-action">
-                <IconChevronRight :size="16"/>
-              </div>
-            </div>
-          </div>
-        </div>
+        <button class="banner-action" @click.stop="goToOrders">去支付</button>
       </div>
 
       <h1 class="overview-title" :class="{'card-animate': !loading.userStats}">{{ $t('dashboard.welcome') }}</h1>
@@ -619,7 +611,6 @@ import {
   IconCalendar,
   IconCat,
   IconChevronLeft,
-  IconChevronRight,
   IconCoins,
   IconCopy,
   IconCrosshair,
@@ -743,8 +734,7 @@ export default {
     IconBrandDebian,
     IconRouter,
     IconBrandFinder,
-    IconChevronRight,
-    IconTransferVertical,
+      IconTransferVertical,
     IconShare,
     IconChevronLeft,
     IconCopy,
@@ -1612,6 +1602,10 @@ export default {
       return userStats.pendingOrders > 0;
     });
 
+    const goToOrders = () => {
+      router.push('/billing?tab=orders');
+    };
+
     const prevNotice = () => {
       if (!notices.value?.data?.length) return;
       if (currentNoticeIndex.value > 0) {
@@ -2445,6 +2439,7 @@ export default {
       languageChangedSignal,
       goToShop,
       hasPendingItems,
+      goToOrders,
       router,
       currentNoticeIndex,
       prevNotice,
@@ -2596,7 +2591,7 @@ export default {
       color: var(--heading-color);
     }
 
-    > .pending-items-card {
+    > .pending-order-banner {
       grid-column: 1 / -1;
       margin-bottom: 0;
     }
@@ -2612,7 +2607,7 @@ export default {
 
     @media (max-width: 992px) {
       > .overview-title,
-      > .pending-items-card,
+      > .pending-order-banner,
       > .notice-card,
       > .subscription-card,
       > .stats-grid,
@@ -3951,55 +3946,61 @@ export default {
   }
 
 
-  .pending-items-card {
-    margin-bottom: 24px;
+  .pending-order-banner {
+    margin-bottom: 16px;
+    min-height: 44px;
+    max-height: 48px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid #facc15;
+    background: #fef9c3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 
-    .pending-items-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    &:hover {
+      background: #fef08a;
+      border-color: #eab308;
+      transform: translateY(-1px);
     }
 
-    .pending-item {
-      display: flex;
+    .banner-main {
+      display: inline-flex;
       align-items: center;
-      padding: 15px;
-      border-radius: 10px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
+      gap: 8px;
+      min-width: 0;
+      color: #854d0e;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 500;
+    }
+
+    .banner-icon {
+      flex-shrink: 0;
+      color: #ca8a04;
+    }
+
+    .banner-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .banner-action {
+      border: none;
+      border-radius: 8px;
+      height: 30px;
+      padding: 0 12px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
+      box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.22);
       cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-        transform: translateY(-2px);
-      }
-
-      .pending-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-        background-color: rgba(var(--theme-color-rgb), 0.15);
-        color: var(--theme-color);
-        margin-right: 15px;
-      }
-
-      .pending-info {
-        flex: 1;
-        font-weight: 500;
-      }
-
-      .pending-action {
-        color: var(--theme-text-secondary);
-        transition: transform 0.3s ease;
-      }
-
-      &:hover .pending-action {
-        transform: translateX(3px);
-        color: var(--theme-color);
-      }
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
     }
   }
 }
