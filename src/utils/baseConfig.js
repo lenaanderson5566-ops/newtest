@@ -468,74 +468,11 @@ export const SHOP_CONFIG = mergeDeep(
  * 控制仪表盘页面的功能与显示
  */
 const DEFAULT_DASHBOARD_CONFIG = {
-  // 是否在欢迎卡片中显示用户邮箱 (true=显示, false=隐藏)
-  showUserEmail: true,
-
-  // 是否为导入订阅按钮添加高光效果和填充底色 (true=添加效果, false=不添加效果)
-  importButtonHighlightBtnbgcolor: true,
-
-  // 是否启用重置流量功能 (true=启用, false=禁用)
-  enableResetTraffic: true,
-
-  // 重置流量按钮显示条件 ('always'=始终显示, 'low'=流量低于阈值时显示, 'depleted'=流量耗尽时显示)
-  resetTrafficDisplayMode: "low",
-
-  // 低流量阈值百分比 (1-100)，当剩余流量百分比低于此值时触发低流量警告
-  lowTrafficThreshold: 10,
-
-  // 是否启用续费套餐功能 (true=启用, false=禁用)
-  enableRenewPlan: true,
-
-  // 续费套餐按钮显示条件 ('always'=始终显示, 'expiring'=套餐即将到期时显示, 'expired'=套餐已过期时显示)
-  renewPlanDisplayMode: "always",
-
-  // 即将过期的天数阈值 (1-30)，当剩余天数小于等于此值时触发即将过期警告
-  expiringThreshold: 7,
-
-  // 是否显示在线设备数量限制 (true=显示, false=隐藏，仅Xiao-V2board支持)
-  showOnlineDevicesLimit: true,
-
-  // 是否显示导入订阅
-  showImportSubscription: true,
-
-  // 当前出口 IP 卡片：地区徽记颜色映射（国家/地区代码 -> 徽记色）
-  ipRegionBadgeByCountryCode: {
-    US: "is-blue",
-    CA: "is-blue",
-    NL: "is-blue",
-    HK: "is-pink",
-    SG: "is-pink",
-    JP: "is-red",
-    KR: "is-red",
-    DE: "is-red",
-    CN: "is-red",
-  },
-
-  // 当前出口 IP 卡片：服务图标目录（统一小尺寸 SVG/icon，优先本地静态资源）
-  ipRegionServiceCatalog: [
-    { key: "Netflix", label: "Netflix" },
-    { key: "Disney+", label: "Disney+" },
-    { key: "YouTube Premium", label: "YouTube Premium" },
-    { key: "ChatGPT", label: "ChatGPT" },
-    { key: "Claude", label: "Claude" },
-    { key: "TikTok", label: "TikTok" },
-  ],
-
-  // 当前出口 IP 卡片：地区服务参考（静态映射，不做真实解锁检测）
-  ipRegionServiceReferenceByCountryCode: {
-    US: ["Netflix", "Disney+", "YouTube Premium", "ChatGPT", "Claude", "TikTok"],
-    JP: ["Netflix", "Disney+", "YouTube Premium", "ChatGPT", "Claude", "TikTok"],
-    SG: ["Netflix", "Disney+", "YouTube Premium", "ChatGPT", "Claude", "TikTok"],
-    HK: ["Netflix", "Disney+", "YouTube Premium", "ChatGPT", "Claude", "TikTok"],
-    UK: ["Netflix", "Disney+", "YouTube Premium", "ChatGPT", "Claude", "TikTok"],
-    DE: ["Netflix", "Disney+", "YouTube Premium", "ChatGPT", "Claude", "TikTok"],
-    TW: ["Netflix", "Disney+", "YouTube Premium", "ChatGPT", "Claude", "TikTok"],
-    KR: ["Netflix", "Disney+", "YouTube Premium", "ChatGPT", "Claude", "TikTok"],
-    CN: ["YouTube Premium", "ChatGPT", "Claude", "TikTok"],
-  },
-
-  // 未命中地区映射时的默认地区服务参考
-  ipRegionServiceReferenceDefault: ["Netflix", "Disney+", "YouTube Premium", "ChatGPT", "Claude", "TikTok"],
+  /**
+   * 说明：
+   * Dashboard 功能开关以 src/config/index.js 的 DASHBOARD_CONFIG 为主。
+   * 这里仅保留空兜底，避免与外部配置重复维护造成分叉。
+   */
 };
 
 export const DASHBOARD_CONFIG = mergeDeep(
