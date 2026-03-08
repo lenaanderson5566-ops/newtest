@@ -2,6 +2,7 @@
   <div class="language-selector">
     <button
       class="language-btn"
+      :class="{ 'is-active': isOpen }"
       @click="toggleDropdown"
       :title="$t('common.language')"
     >
@@ -131,6 +132,12 @@ export default {
     background-color: color-mix(in srgb, var(--card-bg-color, var(--card-background)) 88%, rgba(var(--theme-color-rgb), 0.08));
     border-color: rgba(var(--theme-color-rgb), 0.45);
     transform: translateY(-1px);
+  }
+
+  &.is-active {
+    border-color: #e5e7eb;
+    background: #f5f7fa;
+    transform: none;
   }
 
   .language-btn-text {

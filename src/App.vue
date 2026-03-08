@@ -22,6 +22,7 @@
         >
           <button
             class="toolbar-wallet-main"
+            :class="{ 'is-active': walletDropdownOpen }"
             :title="`${primaryWallet.currency} ${primaryWalletDisplay}`"
             @click.stop="toggleWalletDropdown"
           >
@@ -457,18 +458,20 @@ export default {
 
 
 .top-toolbar {
-  --toolbar-control-height: 38px;
-  --toolbar-control-radius: 999px;
-  --toolbar-control-border: rgba(148, 163, 184, 0.24);
-  --toolbar-control-bg: color-mix(in srgb, var(--card-bg-color) 92%, #ffffff 8%);
-  --toolbar-control-shadow: 0 1px 8px rgba(15, 23, 42, 0.06);
+  --toolbar-control-height: 36px;
+  --toolbar-control-padding: 6px 10px;
+  --toolbar-control-radius: 8px;
+  --toolbar-control-border: transparent;
+  --toolbar-control-bg: transparent;
+  --toolbar-control-hover-bg: #f5f7fa;
+  --toolbar-control-active-border: #e5e7eb;
 
   position: fixed;
   top: 20px;
   right: 25px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
   z-index: 110;
 
   .toolbar-wallets {
@@ -482,17 +485,27 @@ export default {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      height: 100%;
-      padding: 0 12px;
+      min-height: var(--toolbar-control-height);
+      padding: var(--toolbar-control-padding);
       border-radius: var(--toolbar-control-radius);
       border: 1px solid var(--toolbar-control-border);
       background: var(--toolbar-control-bg);
-      box-shadow: var(--toolbar-control-shadow);
       color: var(--text-color);
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
       font-variant-numeric: tabular-nums;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+
+      &:hover {
+        background: var(--toolbar-control-hover-bg);
+      }
+
+      &:active,
+      &.is-active {
+        border-color: var(--toolbar-control-active-border);
+        background: var(--toolbar-control-hover-bg);
+      }
 
       .wallet-icon {
         font-size: 14px;
@@ -577,21 +590,31 @@ export default {
 
   :deep(.language-btn),
   :deep(.avatar-wrapper) {
-    height: var(--toolbar-control-height);
+    min-height: var(--toolbar-control-height);
+    padding: var(--toolbar-control-padding);
     border: 1px solid var(--toolbar-control-border);
     background: var(--toolbar-control-bg);
-    box-shadow: var(--toolbar-control-shadow);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    border-radius: var(--toolbar-control-radius);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      background: var(--toolbar-control-hover-bg);
+    }
+
+    &:active,
+    &.is-active {
+      border-color: var(--toolbar-control-active-border);
+      background: var(--toolbar-control-hover-bg);
+    }
   }
 
   :deep(.avatar-wrapper) {
-    width: var(--toolbar-control-height);
+    width: auto;
+    min-width: var(--toolbar-control-height);
   }
 
   :deep(.language-btn) {
-    min-width: 120px;
-    padding: 0 14px;
+    min-width: 110px;
   }
 }
 
@@ -622,7 +645,7 @@ export default {
   .top-toolbar {
     top: 12px;  
     right: 20px;
-    gap: 8px;
+    gap: 12px;
     flex-wrap: wrap;
     justify-content: flex-end;
 
@@ -728,7 +751,7 @@ html {
     top: 20px;
     right: 25px;
     display: flex;
-    gap: 10px;
+    gap: 16px;
     z-index: 110;
   }
 }

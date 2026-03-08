@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="user-avatar-container" ref="avatarContainer">
-    <div class="avatar-wrapper" @click="toggleDropdown">
+    <div class="avatar-wrapper" :class="{ 'is-active': isDropdownOpen }" @click="toggleDropdown">
       <img 
         v-if="avatarUrl" 
         :src="avatarUrl" 
@@ -152,6 +152,12 @@ export default {
     border-color: rgba(var(--theme-color-rgb), 0.45);
     box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1);
     transform: translateY(-1px);
+  }
+
+  &.is-active {
+    border-color: #e5e7eb;
+    box-shadow: none;
+    transform: none;
   }
   
   .avatar-image {
