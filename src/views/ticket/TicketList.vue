@@ -1417,14 +1417,6 @@ onUnmounted(() => {
 }
 
 // 仅在 EZ 主题为暗色时生效
-:global(body.dark-theme) .ticket-detail-content {
-  background-color: rgba(20, 25, 30, 0.7);
-  background-image: linear-gradient(
-    to bottom,
-    rgba(30, 35, 40, 0.4),
-    rgba(15, 20, 25, 0.4)
-  );
-}
 
 .ticket-messages {
   display: flex;
@@ -1674,22 +1666,6 @@ onUnmounted(() => {
 }
 
 // 按应用主题启用深色
-:global(body.dark-theme) .message-item.user-message .message-content,
-:global(body.dark-theme) .message-item.admin-message .message-content {
-  background-color: rgba(var(--theme-color-rgb), 0.15);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.2);
-}
-:global(body.dark-theme) .message-item .message-content {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-:global(body.dark-theme) .message-item .message-avatar.user-avatar {
-  background-color: rgba(74, 122, 226, 0.85);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-}
-:global(body.dark-theme) .message-item .message-avatar.admin-avatar {
-  background-color: rgba(216, 73, 73, 0.85);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-}
 
 .reply-container {
   padding: 1.25rem;
@@ -1833,13 +1809,6 @@ onUnmounted(() => {
 }
 
 // 按应用主题启用深色
-:global(body.dark-theme) .reply-container {
-  background-color: rgba(25, 30, 35, 0.8);
-}
-:global(body.dark-theme) .reply-container textarea {
-  background-color: rgba(30, 35, 40, 0.7);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
 
 .no-selection,
 .message-loading,
@@ -1988,9 +1957,6 @@ onUnmounted(() => {
   // @media (prefers-color-scheme: dark) {
   //   background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
   // }
-}
-:global(body.dark-theme) .modal-content {
-  background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
 }
 
 .modal-close-animation {

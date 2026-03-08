@@ -266,6 +266,7 @@ export default {
         overview: '概览',
         shop: '商店',
         subscription: '订阅',
+        announcement: '公告',
         invite: '邀请',
         docs: '文档',
         startUsing: '开始使用',
@@ -533,7 +534,7 @@ export default {
             renew: '续费',
             add_quota: '添加额度',
             upgrade_to: '升级至{name}',
-            current: '您的当前套餐',
+            current: '您的当前订阅',
             sold_out_btn: '已售罄',
             stock: {
                 plenty: '库存充足',

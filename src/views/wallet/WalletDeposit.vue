@@ -622,21 +622,6 @@ onMounted(() => {
     transform: translateX(100%);
   }
 }
-.dark-theme {
-  .skeleton-balance-value,
-  .skeleton-balance-label,
-  .skeleton-price,
-  .skeleton-input-field {
-    background-color: rgba(255, 255, 255, 0.08);
-    
-    &::after {
-      background: linear-gradient(90deg, 
-        rgba(255, 255, 255, 0) 0%, 
-        rgba(255, 255, 255, 0.05) 50%, 
-        rgba(255, 255, 255, 0) 100%);
-    }
-  }
-}
 @media (max-width: 768px) {
   .deposit-container {
     padding: 15px;

@@ -1987,11 +1987,6 @@ onMounted(() => {
 
 
 
-body.dark-theme {
-
-  --skeleton-color: rgba(255, 255, 255, 0.08);
-
-}
 
 
 
@@ -2547,7 +2542,8 @@ body.dark-theme {
 
     &:checked + .slider {
 
-      background-color: var(--theme-color);
+      background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
+      border-color: transparent;
 
     }
 
@@ -2585,7 +2581,8 @@ body.dark-theme {
 
     bottom: 0;
 
-    background-color: #ccc;
+    background-color: var(--surface-subtle);
+    border: 1px solid var(--border-color-soft);
 
     transition: .4s;
 

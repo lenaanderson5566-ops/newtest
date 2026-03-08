@@ -109,27 +109,4 @@ export default {
 }
 
 
-:deep(.dark-theme) .domain-auth-alert {
-  .alert-content {
-    background-color: var(--card-background, #222);
-    
-    .alert-icon {
-      background-color: rgba(255, 56, 56, 0.2);
-    }
-    
-    .alert-message {
-      h3 {
-        color: var(--text-color, #eee);
-      }
-      
-      p {
-        color: var(--secondary-text-color, #aaa);
-        
-        &.current-domain {
-          background-color: rgba(255, 255, 255, 0.1);
-        }
-      }
-    }
-  }
-}
 </style> 

@@ -178,6 +178,8 @@ export default {
 
             { title: 'Dashboard', path: '/dashboard', name: 'Dashboard', icon: 'IconDashboard', i18nKey: 'overview' },
 
+            { title: 'Announcement', path: '/announcements', name: 'Announcements', icon: 'IconFileText', i18nKey: 'announcement' },
+
             { title: 'Shop', path: '/shop', name: 'Shop', icon: 'IconShop', i18nKey: 'subscription' },
 
         ];

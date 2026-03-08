@@ -85,7 +85,8 @@ watch(
 
 <style lang="scss" scoped>
 .billing-container {
-  padding: 20px;
+  padding: 24px;
+  background: transparent;
 }
 
 .billing-inner {
@@ -95,22 +96,22 @@ watch(
 
 .billing-tabs-card {
   display: inline-flex;
-  gap: 8px;
+  gap: 6px;
   padding: 6px;
-  border-radius: 999px;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg-color);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-  margin-bottom: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color-soft);
+  background: var(--surface-subtle);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.65);
+  margin-bottom: 16px;
 }
 
 .billing-tab {
   border: 0;
   background: transparent;
-  color: var(--text-color);
+  color: var(--neutral-strong);
   height: 34px;
-  padding: 0 18px;
-  border-radius: 999px;
+  padding: 0 16px;
+  border-radius: 9px;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s ease;
@@ -120,14 +121,14 @@ watch(
   }
 
   &.active {
-    background: var(--theme-color);
+    background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
     color: #fff;
-    box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.3);
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.24);
   }
 }
 
 .billing-panel {
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 
 @media (max-width: 768px) {

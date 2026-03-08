@@ -117,19 +117,19 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 84px;
-  height: 36px;
+  min-width: 120px;
+  height: 38px;
   padding: 0 12px;
   border-radius: 999px;
-  background-color: var(--card-background);
-  border: 1px solid var(--border-color);
+  background-color: color-mix(in srgb, var(--card-bg-color, var(--card-background)) 92%, #fff 8%);
+  border: 1px solid rgba(148, 163, 184, 0.24);
   color: var(--text-color);
   cursor: pointer;
   transition: all 0.25s ease;
 
   &:hover {
-    background-color: rgba(var(--theme-color-rgb), 0.08);
-    border-color: var(--theme-color);
+    background-color: color-mix(in srgb, var(--card-bg-color, var(--card-background)) 88%, rgba(var(--theme-color-rgb), 0.08));
+    border-color: rgba(var(--theme-color-rgb), 0.45);
     transform: translateY(-1px);
   }
 

@@ -24,7 +24,6 @@
             <span class="wallet-amount">{{ wallet.amount }}</span>
           </div>
         </div>
-        <ThemeToggle />
         <LanguageSelector />
         <button 
           v-if="PROFILE_CONFIG.showGiftCardRedeem" 
@@ -40,7 +39,6 @@
     <!-- 认证页面顶部工具栏，确保认证页面也有语言切换器 -->
     <div class="auth-toolbar" v-if="!$route.meta.requiresAuth && $route.path.includes('/auth')">
       <div class="top-toolbar">
-        <ThemeToggle />
         <LanguageSelector />
       </div>
     </div>
@@ -101,7 +99,6 @@ import { normalizeWalletItems } from '@/utils/wallet';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
-import ThemeToggle from '@/components/common/ThemeToggle.vue';
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 import UserAvatar from '@/components/common/UserAvatar.vue';
 import BackToTop from '@/components/common/BackToTop.vue';
@@ -127,7 +124,6 @@ export default {
     Toast,
     IconDefinitions,
     SlideTabsNav,
-    ThemeToggle,
     LanguageSelector,
     UserAvatar,
     BackToTop,
@@ -366,12 +362,15 @@ export default {
 }
 
 
-.dark-theme .site-logo {
-  background-color: rgba(30, 30, 30, 0.7);
-}
 
 
 .top-toolbar {
+  --toolbar-control-height: 38px;
+  --toolbar-control-radius: 999px;
+  --toolbar-control-border: rgba(148, 163, 184, 0.24);
+  --toolbar-control-bg: color-mix(in srgb, var(--card-bg-color) 92%, #ffffff 8%);
+  --toolbar-control-shadow: 0 1px 8px rgba(15, 23, 42, 0.06);
+
   position: fixed;
   top: 20px;
   right: 25px;
@@ -383,13 +382,13 @@ export default {
   .toolbar-wallets {
     display: inline-flex;
     align-items: center;
-    height: 36px;
+    height: var(--toolbar-control-height);
     padding: 0 8px;
     margin-right: 2px;
-    border-radius: 999px;
-    border: 1px solid var(--border-color);
-    background: color-mix(in srgb, var(--card-bg-color) 88%, transparent);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: var(--toolbar-control-radius);
+    border: 1px solid var(--toolbar-control-border);
+    background: var(--toolbar-control-bg);
+    box-shadow: var(--toolbar-control-shadow);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
   }
@@ -425,19 +424,41 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
+    width: var(--toolbar-control-height);
+    height: var(--toolbar-control-height);
     border-radius: 50%;
-    background-color: rgba(var(--theme-color-rgb), 0.1);
-    border: 1px solid rgba(var(--theme-color-rgb), 0.3);
-    color: var(--theme-color);
+    background: var(--toolbar-control-bg);
+    border: 1px solid var(--toolbar-control-border);
+    box-shadow: var(--toolbar-control-shadow);
+    color: var(--text-color);
     cursor: pointer;
     transition: all 0.3s ease;
-    
+
     &:hover {
-      box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.15);
-      transform: translateY(-2px);
+      border-color: rgba(var(--theme-color-rgb), 0.45);
+      color: var(--theme-color);
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1);
+      transform: translateY(-1px);
     }
+  }
+
+  :deep(.language-btn),
+  :deep(.avatar-wrapper) {
+    height: var(--toolbar-control-height);
+    border: 1px solid var(--toolbar-control-border);
+    background: var(--toolbar-control-bg);
+    box-shadow: var(--toolbar-control-shadow);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  :deep(.avatar-wrapper) {
+    width: var(--toolbar-control-height);
+  }
+
+  :deep(.language-btn) {
+    min-width: 120px;
+    padding: 0 14px;
   }
 }
 

@@ -1,7 +1,7 @@
 ﻿<template>
   <div 
     class="customer-service-container"
-    :class="{ 'dark-theme': isDarkTheme }"
+    
   >
     <!-- 顶部导航栏 -->
     <div class="service-header">
@@ -107,14 +107,6 @@ export default {
 
         Crisp.configure(websiteId);
         
-        const storedTheme = localStorage.getItem('theme');
-        const currentTheme = storedTheme || store.getters.currentTheme || 'light';
-        const isCurrentDarkTheme = currentTheme === 'dark';
-        
-        if (isCurrentDarkTheme) {
-          Crisp.setColorTheme('dark');
-        }
-
         if (store.getters.isLoggedIn) {
           let userEmail = '';
           
@@ -318,11 +310,6 @@ export default {
       }
     };
     
-    const isDarkTheme = computed(() => {
-      const storedTheme = localStorage.getItem('theme');
-      return storedTheme === 'dark';
-    });
-    
     const refreshChat = () => {
       if (serviceType.value === 'crisp') {
         loading.value = true;
@@ -337,12 +324,6 @@ export default {
         window.location.reload();
       }
     };
-    
-    watch(() => isDarkTheme.value, (newVal) => {
-      if (serviceType.value === 'crisp' && crispInitialized.value) {
-        Crisp.setColorTheme(newVal ? 'dark' : 'light');
-      }
-    });
     
     const fetchUserInfo = async () => {
       if (!store.getters.isLoggedIn || serviceType.value !== 'crisp') return;
@@ -403,12 +384,6 @@ export default {
         loadOtherService();
       }
       
-      window.addEventListener('storage', (e) => {
-        if (e.key === 'theme' && serviceType.value === 'crisp' && crispInitialized.value) {
-          const newTheme = e.newValue;
-          Crisp.setColorTheme(newTheme === 'dark' ? 'dark' : 'light');
-        }
-      });
     });
     
     onUnmounted(() => {
@@ -428,7 +403,6 @@ export default {
     });
     
     return {
-      isDarkTheme,
       otherServiceContainer,
       refreshChat,
       goBack,
@@ -449,21 +423,7 @@ export default {
   background-color: var(--background-color);
   color: var(--text-color);
   
-  &.dark-theme {
-    --background-color: #171A1D;
-    --card-background: rgba(30, 30, 30, 0.8);
-    --text-color: rgba(255, 255, 255, 0.9);
-    --secondary-text-color: rgba(255, 255, 255, 0.6);
-    --border-color: rgba(255, 255, 255, 0.1);
-  }
   
-  &:not(.dark-theme) {
-    --background-color: #f5f7fa;
-    --card-background: #ffffff;
-    --text-color: #333333;
-    --secondary-text-color: #666666;
-    --border-color: #e8e8e8;
-  }
 }
 
 .service-header {
