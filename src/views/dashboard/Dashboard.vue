@@ -2569,10 +2569,18 @@ export default {
   padding: 20px;
   display: flex;
   justify-content: center;
+  background: #f6f7f9;
 
-  --theme-text-primary: rgba(var(--theme-color-rgb), 0.96);
-  --theme-text-secondary: rgba(var(--theme-color-rgb), 0.78);
-  --theme-text-subtle: rgba(var(--theme-color-rgb), 0.64);
+  --saas-brand: #355cc2;
+  --saas-text-primary: #111827;
+  --saas-text-secondary: #6b7280;
+  --saas-border-soft: #eef1f5;
+  --saas-card-bg: #ffffff;
+  --saas-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 18px rgba(15, 23, 42, 0.04);
+
+  --theme-text-primary: #111827;
+  --theme-text-secondary: #6b7280;
+  --theme-text-subtle: #9ca3af;
 
   .dashboard-inner {
     width: 100%;
@@ -2585,10 +2593,11 @@ export default {
     > .overview-title {
       grid-column: 1 / -1;
       margin: 0;
-      font-size: 30px;
+      font-size: 28px;
       line-height: 1.25;
-      font-weight: 700;
-      color: var(--heading-color);
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      color: var(--saas-text-primary);
     }
 
     > .pending-order-banner {
@@ -2620,17 +2629,17 @@ export default {
   }
 
   .dashboard-card {
-    background-color: var(--card-background);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card-sm);
-    padding: var(--space-5);
-    margin-bottom: var(--space-5);
-    border: 1px solid var(--border-color-soft);
-    transition: box-shadow 0.25s ease, transform 0.2s ease;
+    background-color: var(--saas-card-bg);
+    border-radius: 14px;
+    box-shadow: var(--saas-card-shadow);
+    padding: 20px;
+    margin-bottom: 16px;
+    border: none;
+    transition: box-shadow 0.2s ease;
 
     &:hover {
-      box-shadow: var(--shadow-card-md);
-      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 10px 24px rgba(15, 23, 42, 0.06);
+      transform: none;
     }
 
     .card-header {
@@ -2640,9 +2649,10 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 17px;
-        font-weight: 650;
+        font-size: 16px;
+        font-weight: 600;
         margin: 0;
+        color: var(--saas-text-primary);
       }
 
       .card-actions {
@@ -3947,11 +3957,11 @@ export default {
 
 
   .pending-order-banner {
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     min-height: 44px;
     max-height: 48px;
-    padding: 8px 12px;
-    border-radius: 12px;
+    padding: 6px 12px;
+    border-radius: 10px;
     border: 1px solid #FFE58F;
     background: #FFFBE6;
     display: flex;
@@ -3964,7 +3974,7 @@ export default {
     &:hover {
       background: #FFF7D6;
       border-color: #FFD666;
-      transform: translateY(-1px);
+      transform: none;
     }
 
     .banner-main {
@@ -3995,14 +4005,30 @@ export default {
       height: 30px;
       padding: 0 12px;
       color: #fff;
-      background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
-      box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.22);
+      background: var(--saas-brand);
+      box-shadow: none;
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
       flex-shrink: 0;
     }
   }
+
+  .status-badge,
+  .status-tag {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+  }
+
+  .status-badge.success, .status-tag.success { background: #ecfdf3; color: #166534; }
+  .status-badge.warning, .status-tag.warning { background: #fff7e6; color: #8c6d1f; }
+  .status-badge.error, .status-tag.error { background: #fef2f2; color: #991b1b; }
 }
 
 
@@ -4055,26 +4081,25 @@ export default {
 }
 
 .btn-primary {
-  background-color: var(--theme-color);
-  color: white;
+  background-color: #355cc2;
+  color: #fff;
   border: none;
 
   &:hover {
-    background-color: var(--primary-color-hover);
-    transform: translateY(-1px);
+    background-color: #2f4fa8;
+    transform: none;
   }
 }
 
 .btn-outline {
-  background-color: transparent;
-  color: var(--theme-text-primary);
-  border: 1px solid var(--border-color);
+  background-color: #f3f4f6;
+  color: #374151;
+  border: none;
 
   &:hover {
-    border-color: var(--theme-color);
-    color: var(--theme-color);
-    background-color: rgba(var(--theme-color-rgb), 0.05);
-    transform: translateY(-1px);
+    background-color: #e5e7eb;
+    color: #111827;
+    transform: none;
   }
 
 

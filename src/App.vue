@@ -17,8 +17,6 @@
           class="toolbar-wallets"
           v-if="primaryWallet"
           ref="walletContainer"
-          @mouseenter="openWalletDropdown"
-          @mouseleave="closeWalletDropdown"
         >
           <button
             class="toolbar-wallet-main"
@@ -249,13 +247,6 @@ export default {
       return formatWalletDisplay(primaryWallet.value);
     });
 
-    const openWalletDropdown = () => {
-      if (extraWalletItems.value.length) walletDropdownOpen.value = true;
-    };
-
-    const closeWalletDropdown = () => {
-      walletDropdownOpen.value = false;
-    };
 
     const toggleWalletDropdown = () => {
       if (!extraWalletItems.value.length) return;
@@ -395,8 +386,6 @@ export default {
       extraWalletItems,
       primaryWalletDisplay,
       formatWalletDisplay,
-      openWalletDropdown,
-      closeWalletDropdown,
       toggleWalletDropdown,
       goToWalletDeposit
     };
