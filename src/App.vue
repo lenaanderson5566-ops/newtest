@@ -2,17 +2,15 @@
   <div>
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
     <div class="static-layout" v-if="$route.meta.requiresAuth">
-      <!-- 网站名称 -->
-      <div class="site-logo">
-        <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
-        {{ siteConfig.siteName }}
-      </div>
-      
-      <!-- 顶部导航栏 - 保持不变 -->
-      <SlideTabsNav />
-      
-      <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
-      <div class="top-toolbar">
+      <div class="top-fixed-bar">
+        <!-- 网站名称 -->
+        <div class="site-logo">
+          <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
+          {{ siteConfig.siteName }}
+        </div>
+
+        <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
+        <div class="top-toolbar">
         <div
           class="toolbar-wallets"
           v-if="primaryWallet"
@@ -56,7 +54,11 @@
           <IconGift :size="18" />
         </button>
         <UserAvatar :username="username" :avatarUrl="avatarUrl" />
+        </div>
       </div>
+
+      <!-- 顶部导航栏 - 保持不变 -->
+      <SlideTabsNav />
     </div>
 
     <!-- 认证页面顶部工具栏，确保认证页面也有语言切换器 -->
@@ -67,7 +69,7 @@
     </div>
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
-    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth }]">
+    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]">
       <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
         <router-view v-slot="{ Component, route }">
           <transition 
@@ -416,28 +418,32 @@ export default {
   z-index: 100;
 }
 
+.top-fixed-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 120;
+}
+
 
 .site-logo {
-  position: fixed;
-  top: 20px;  
-  left: 25px;
-  font-size: 16px;  
+  font-size: 16px;
   font-weight: 700;
   color: var(--theme-color);
-  z-index: 110;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   letter-spacing: -0.5px;
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 6px 14px;
-  border-radius: 10px;  
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 10px;
-  
+
   .site-logo-img {
     height: 20px;
     width: 20px;
@@ -458,9 +464,7 @@ export default {
   --toolbar-control-hover-bg: #f5f7fa;
   --toolbar-control-active-border: #e5e7eb;
 
-  position: fixed;
-  top: 20px;
-  right: 25px;
+  position: static;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -613,6 +617,10 @@ export default {
 
 .app-content-wrapper {
   width: 100%;
+
+  &.with-top-bar {
+    padding-top: 72px;
+  }
 }
 
 .content-layout-shell {
@@ -630,26 +638,32 @@ export default {
     margin-left: 0;
   }
 
-  .site-logo {
-    left: 24px;
-  }
 }
 
 
 @media (max-width: 768px) {
-  .site-logo {
-    top: 12px;  
-    left: 20px;
-    font-size: 16px;  
-    padding: 5px 10px;
-    border-radius: 8px;
+  .app-content-wrapper.with-top-bar {
+    padding-top: 64px;
   }
-  
+
+  .top-fixed-bar {
+    height: 56px;
+    padding: 0 12px;
+  }
+
+  .site-logo {
+    font-size: 14px;
+    gap: 8px;
+
+    .site-logo-img {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
   .top-toolbar {
-    top: 12px;  
-    right: 20px;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 8px;
+    flex-wrap: nowrap;
     justify-content: flex-end;
 
     .toolbar-wallets {
