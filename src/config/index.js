@@ -239,24 +239,24 @@ export const config = {
       { key: 'YouTube Premium', label: 'YouTube Premium' },
       { key: 'ChatGPT', label: 'ChatGPT' },
       { key: 'Claude', label: 'Claude' },
-      { key: 'TikTok', label: 'TikTok' },
+      { key: 'Google', label: 'Google' },
     ],
 
     // 当前出口 IP 卡片：地区服务参考（静态映射，不做真实解锁检测）
     ipRegionServiceReferenceByCountryCode: {
-      US: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'TikTok'],
-      JP: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'TikTok'],
-      SG: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'TikTok'],
-      HK: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'TikTok'],
-      UK: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'TikTok'],
-      DE: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'TikTok'],
-      TW: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'TikTok'],
-      KR: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'TikTok'],
-      CN: ['YouTube Premium', 'ChatGPT', 'Claude', 'TikTok'],
+      US: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      JP: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      SG: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      HK: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      UK: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      DE: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      TW: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      KR: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      CN: ['YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
     },
 
     // 未命中地区映射时的默认地区服务参考
-    ipRegionServiceReferenceDefault: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'TikTok'],
+    ipRegionServiceReferenceDefault: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
   },
 
   // 客户端下载配置

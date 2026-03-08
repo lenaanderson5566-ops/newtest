@@ -681,7 +681,7 @@ import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg
 import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube-premium.svg';
 import serviceChatgptIcon from '@/assets/images/service-icons/chatgpt.svg';
 import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
-import serviceTiktokIcon from '@/assets/images/service-icons/tiktok.svg';
+import serviceGoogleIcon from '@/assets/images/service-icons/google.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 
@@ -2083,7 +2083,7 @@ export default {
       'YouTube Premium': serviceYoutubePremiumIcon,
       'ChatGPT': serviceChatgptIcon,
       Claude: serviceClaudeIcon,
-      TikTok: serviceTiktokIcon,
+      Google: serviceGoogleIcon,
     };
 
     const ipLocationServiceCatalog = computed(() => {
