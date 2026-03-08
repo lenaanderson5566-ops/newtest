@@ -26,7 +26,6 @@
 
     <div class="top-toolbar">
 
-      <ThemeToggle />
 
       <LanguageSelector />
 
@@ -358,7 +357,6 @@ import { useRouter } from 'vue-router';
 
 import { useI18n } from 'vue-i18n';
 
-import ThemeToggle from '@/components/common/ThemeToggle.vue';
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 
@@ -428,7 +426,6 @@ export default {
 
   components: {
 
-    ThemeToggle,
 
     LanguageSelector,
 
@@ -729,7 +726,7 @@ export default {
 
                   },
 
-                  'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
+                  'theme': 'light',
 
                   'retry': 'auto',
                   'retry-interval': 5000,
@@ -880,7 +877,7 @@ export default {
 
                     'callback': 'onCaptchaForgotPasswordModalVerified',
 
-                    'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light'
+                    'theme': 'light'
 
                   });
 
@@ -946,7 +943,7 @@ export default {
 
                     },
 
-                    'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
+                    'theme': 'light',
 
                     'retry': 'auto',
                     'retry-interval': 5000,
@@ -1515,7 +1512,7 @@ export default {
 
                   },
 
-                  'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
+                  'theme': 'light',
 
                   'retry-interval': 3000
 
@@ -2347,83 +2344,6 @@ export default {
 
 
 
-.dark-theme {
-
-  .input-with-icon {
-
-    .input-icon {
-
-      color: var(--secondary-text-color);
-
-    }
-
-
-
-    .form-control {
-
-      background-color: var(--input-bg-color, #333);
-
-      border-color: var(--input-border-color, #444);
-
-
-
-      &:focus {
-
-        background-color: var(--input-focus-bg-color, #3a3a3a);
-
-        border-color: var(--theme-color);
-
-      }
-
-
-
-      &::placeholder {
-
-        color: var(--placeholder-color, #777);
-
-      }
-
-    }
-
-  }
-
-
-
-  .input-with-button {
-
-    .send-code-btn {
-
-      background-color: var(--theme-color);
-
-
-
-      &:hover:not(:disabled) {
-
-        background-color: var(--primary-color-hover);
-
-      }
-
-    }
-
-  }
-
-
-
-  .btn-primary {
-
-    background-color: var(--theme-color);
-
-
-
-    &:hover:not(:disabled) {
-
-      background-color: var(--primary-color-hover);
-
-    }
-
-  }
-
-}
 
 
 

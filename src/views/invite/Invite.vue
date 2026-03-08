@@ -2302,14 +2302,6 @@ export default {
 }
 
 
-.dark-theme .skeleton-header-cell,
-.dark-theme .skeleton-cell,
-.dark-theme .skeleton-icon,
-.dark-theme .skeleton-row,
-.dark-theme .skeleton-row-sm,
-.dark-theme .skeleton-row-xs {
-  background-color: rgba(255, 255, 255, 0.08);
-}
 
 
 @media (max-width: 768px) {
@@ -2349,22 +2341,6 @@ export default {
 }
 
 
-.dark-theme .invite-code-tabs,
-.dark .invite-code-tabs {
-  background-color: rgba(255, 255, 255, 0.05);
-  
-  .invite-code-tab {
-    background-color: rgba(30, 30, 30, 0.7);
-    
-    &.active {
-      background-color: var(--card-bg-color);
-    }
-    
-    &:hover:not(.active) {
-      background-color: rgba(40, 40, 40, 0.9);
-    }
-  }
-}
 
 
 @media (max-width: 768px) {
@@ -2444,111 +2420,6 @@ export default {
 }
 
 
-.dark-theme, .dark {
-  .invite-link-wrapper .input-with-icon .invite-link {
-    background-color: var(--input-bg-color, rgba(255, 255, 255, 0.08));
-    border-color: var(--border-color, rgba(255, 255, 255, 0.12));
-    
-    &:hover:not(:focus) {
-      background-color: var(--input-hover-bg-color, rgba(255, 255, 255, 0.12));
-      border-color: rgba(var(--theme-color-rgb), 0.4);
-    }
-    
-    &::placeholder {
-      color: var(--placeholder-color, rgba(255, 255, 255, 0.4));
-    }
-  }
-  
-  .btn-primary {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    
-    &:hover:not(:disabled) {
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    }
-  }
-  
-  .share-buttons .btn-outline {
-    border-color: var(--border-color, rgba(255, 255, 255, 0.15));
-    
-    &:hover {
-      background-color: rgba(var(--theme-color-rgb), 0.15);
-    }
-  }
-  
-  .loading-icon {
-    border-color: rgba(255, 255, 255, 0.2);
-    
-    &.dark-loader {
-      border-color: rgba(0, 0, 0, 0.2);
-      border-top-color: var(--theme-color);
-    }
-  }
-  
-  
-  .transfer-card {
-    background-color: var(--card-bg-color);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    
-    .alert.alert-warning {
-      background-color: rgba(255, 152, 0, 0.1);
-      border-color: rgba(255, 152, 0, 0.25);
-      
-      .alert-icon {
-        color: #ff9800;
-        filter: drop-shadow(0 1px 3px rgba(255, 152, 0, 0.3));
-      }
-      
-      .alert-desc {
-        color: #ff9800;
-      }
-    }
-    
-    .input-with-prefix {
-      .input-prefix {
-        background-color: rgba(255, 255, 255, 0.05);
-        border-color: rgba(255, 255, 255, 0.1);
-      }
-      
-      .form-control {
-        background-color: rgba(255, 255, 255, 0.05);
-        border-color: rgba(255, 255, 255, 0.1);
-        color: var(--text-color);
-        
-        &:hover:not(:focus) {
-          background-color: rgba(255, 255, 255, 0.08);
-        }
-        
-        &:focus {
-          background-color: rgba(255, 255, 255, 0.1);
-        }
-      }
-    }
-    
-    .form-hint::before {
-      opacity: 0.8;
-    }
-  }
-  
-  
-  .balance-card {
-    &:hover {
-      border-color: rgba(var(--theme-color-rgb), 0.3);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    }
-    
-    .balance-value::before {
-      opacity: 0.8;
-    }
-  }
-  
-  
-  .modal-container {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    background-color: var(--card-bg-color);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-}
 
 
 .custom-modal {
@@ -3264,24 +3135,6 @@ export default {
 }
 
 
-.dark-theme, .dark {
-  .invite-cards-nav {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.1);
-    
-    &:hover {
-      background-color: var(--theme-color);
-    }
-  }
-  
-  .invite-cards-indicators .indicator {
-    background-color: rgba(255, 255, 255, 0.2);
-    
-    &:hover:not(.active) {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
-  }
-}
 
 
 @media (max-width: 768px) {
@@ -3794,16 +3647,6 @@ export default {
 }
 
 
-.dark-theme, .dark {
-  .method-tag {
-    border-color: rgba(255, 255, 255, 0.1);
-    
-    &:hover {
-      border-color: var(--theme-color);
-      background-color: rgba(var(--theme-color-rgb), 0.15);
-    }
-  }
-}
 
 .account-input {
   position: relative;

@@ -26,75 +26,7 @@
         </div>
       </div>
 
-      <div class="dashboard-card notice-card" :class="{'card-animate': !loading.notices}"
-           v-if="notices && notices.data && notices.data.length > 0">
-        <div v-if="loading.notices" class="card-body skeleton-loading">
-          <div class="skeleton-row"></div>
-          <div class="skeleton-row"></div>
-          <div class="skeleton-row"></div>
-        </div>
-        <div v-else class="card-body">
-          <div class="notice-slider" v-if="notices.data && notices.data.length">
-            <transition name="fade-slide" mode="out-in">
-              <div
-                class="notice-item"
-                v-if="notices.data[currentNoticeIndex]"
-                :key="currentNoticeIndex"
-                :style="noticeBackgroundStyle(notices.data[currentNoticeIndex])"
-              >
-                <div class="notice-overlay"></div>
-                <div class="notice-content">
-                  <div class="notice-title">{{ notices.data[currentNoticeIndex].title }}</div>
-                  <div class="notice-footer">
-                    <div class="notice-date">{{ formatDate(notices.data[currentNoticeIndex].created_at) }}</div>
-                    <div class="notice-nav">
-                      <button
-                          class="btn-notice"
-                          @click="showNoticeModal">
-                        <IconEye :size="16"/>
-                        {{ $t('common.viewDetails') }}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </transition>
-            <div v-if="notices.data.length > 1" class="notice-dots">
-              <button
-                v-for="(notice, idx) in notices.data"
-                :key="notice.id || idx"
-                class="notice-dot"
-                :class="{ active: currentNoticeIndex === idx }"
-                @click="goToNotice(idx)"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 公告弹窗 -->
-      <transition name="fade">
-        <div v-if="showNoticeDetails" class="notice-modal-overlay" @click="closeNoticeModal">
-          <transition name="popup-slide">
-            <div v-if="showNoticeDetails" class="notice-modal" :style="noticeModalStyle" @click.stop>
-              <div class="notice-modal-header">
-                <h2 class="popup-title">{{ notices.data[currentNoticeIndex].title }}</h2>
-                <button class="popup-close-btn" @click="closeNoticeModal">
-                  <IconX :size="20"/>
-                </button>
-              </div>
-              <div class="notice-modal-content">
-                <div v-html="processedNoticeContent" class="notice-content"></div>
-              </div>
-              <div class="notice-modal-footer">
-                <button class="popup-action-btn adaptive-btn" @click="closeNoticeModal">
-                  {{ $t('common.close') }}
-                </button>
-              </div>
-            </div>
-          </transition>
-        </div>
-      </transition>
+      <h1 class="overview-title" :class="{'card-animate': !loading.userStats}">{{ $t('dashboard.welcome') }}</h1>
 
 
       <!-- 订阅导入卡片 -->
@@ -368,64 +300,88 @@
         </template>
 
         <template v-else>
-          <div class="usage-panel-title-row">
-            <h3>{{ $t('dashboard.usagePanel') }}</h3>
-          </div>
-
           <div
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
+            :class="[{ 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
-            <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
+            <div class="usage-card-title">
+              <span>{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</span>
+              <span
+                v-if="card.key === 'package'"
+                class="info-tooltip"
+                tabindex="0"
+                role="button"
+                aria-label="流量额度包说明"
+              >
+                <IconHelpCircle :size="14" />
+                <span class="info-tooltip-content">流量额度包为一次性补充流量，优先消耗月订阅流量，订阅用尽后再消耗额度包流量。</span>
+              </span>
+            </div>
             <div v-if="card.key === 'total'" class="plan-summary-card">
-              <div class="plan-summary-row">
-                <span class="plan-summary-label">{{ $t('dashboard.planName') }}</span>
-                <strong class="plan-summary-value">{{ userPlan.name || '-' }}</strong>
+              <div v-if="isPlanExpired" class="expired-status-strip">
+                订阅已过期，服务已暂停
               </div>
-              <div class="plan-summary-row">
-                <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
-                <div class="plan-summary-value-wrap">
-                  <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
-                  <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
+              <div class="plan-summary-section plan-summary-section-meta">
+                <div class="plan-status-hero">
+                  <div class="plan-name-main">{{ userPlan.name || '-' }}</div>
+                  <div class="plan-expire-meta">
+                    <span>{{ planExpireMetaText }}</span>
+                    <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
+                  </div>
                 </div>
               </div>
-              <div class="plan-summary-row auto-renewal-row">
-                <div>
-                  <span class="plan-summary-label">{{ $t('profile.autoRenewal') }}</span>
-                  <p class="plan-summary-desc">{{ $t('profile.autoRenewalDesc') }}</p>
+
+              <div class="plan-summary-section plan-summary-section-renew">
+                <div class="plan-summary-row auto-renewal-row">
+                  <div>
+                    <span class="plan-summary-label with-tooltip">
+                      <span>{{ $t('profile.autoRenewal') }}</span>
+                      <span class="info-tooltip" tabindex="0" role="button" aria-label="自动续费说明">
+                        <IconHelpCircle :size="14" />
+                        <span class="info-tooltip-content">{{ $t('profile.autoRenewalDesc') }}</span>
+                      </span>
+                    </span>
+                  </div>
+                  <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
+                    <input
+                      type="checkbox"
+                      v-model="autoRenewalEnabled"
+                      :disabled="updatingAutoRenewalSetting"
+                      @change="updateAutoRenewalSetting"
+                    />
+                    <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
+                  </label>
                 </div>
-                <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
-                  <input
-                    type="checkbox"
-                    v-model="autoRenewalEnabled"
-                    :disabled="updatingAutoRenewalSetting"
-                    @change="updateAutoRenewalSetting"
-                  />
-                  <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
-                </label>
               </div>
-              <div class="plan-summary-actions">
-                <button
-                  class="plan-action-btn"
-                  :class="primaryActionClass"
-                  @click="handlePrimaryPlanAction"
-                >
-                  {{ primaryPlanActionLabel }}
-                </button>
-                <button
-                  class="plan-action-btn subtle"
-                  @click="handleSecondaryPlanAction"
-                >
-                  {{ secondaryPlanActionLabel }}
-                </button>
+
+              <div class="plan-summary-section plan-summary-section-actions">
+                <div class="plan-summary-actions">
+                  <button
+                    class="plan-action-btn"
+                    :class="primaryActionClass"
+                    @click="handlePrimaryPlanAction"
+                  >
+                    {{ primaryPlanActionLabel }}
+                  </button>
+                  <button
+                    class="plan-action-btn"
+                    :class="secondaryActionClass"
+                    @click="handleSecondaryPlanAction"
+                  >
+                    {{ secondaryPlanActionLabel }}
+                  </button>
+                </div>
+                <div v-if="isPlanExpired" class="plan-action-helper-text">
+                  续费后将立即恢复节点访问
+                </div>
               </div>
             </div>
             <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
-                <span class="usage-percent">{{ formatPackageRemaining(card.remaining) }}</span>
+                <span class="usage-percent compact">{{ formatPackageRemaining(card.remaining) }}</span>
                 <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 <button class="package-add-btn" @click.stop="openTrafficPackageModal" :title="$t('dashboard.purchaseTrafficPackage')">
                   <IconPlus :size="14" />
@@ -433,7 +389,7 @@
               </template>
               <template v-else>
                 <template v-if="card.key === 'subscription'">
-                  <span class="usage-percent">{{ formatPackageRemaining(isPlanExpired ? 0 : card.remaining) }}</span>
+                  <span class="usage-percent compact">{{ formatPackageRemaining(isPlanExpired ? 0 : card.remaining) }}</span>
                   <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 </template>
                 <template v-else>
@@ -447,7 +403,7 @@
             </div>
             <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
               <template v-if="card.key === 'subscription'">
-                <div class="usage-summary-line">
+                <div class="usage-summary-line persist-visible">
                   {{ $t('dashboard.used') }} {{ formatPackageRemaining(isPlanExpired ? 0 : card.used) }} / {{ formatPackageRemaining(card.total) }}
                 </div>
               </template>
@@ -462,15 +418,64 @@
                 </div>
               </template>
             </div>
-            <div v-if="card.key === 'package'" class="usage-package-note">
-              {{ $t('dashboard.packageUsageNote') }}
-            </div>
-            <div v-if="card.key === 'subscription'" class="usage-reset-hint">
+            <div v-if="card.key === 'subscription'" class="usage-reset-hint persist-visible">
               {{ $t('dashboard.resetTimeLabel') }} {{ userPlan.resetDateTime || '-' }}
             </div>
           </div>
 
         </template>
+      </div>
+
+      <div class="dashboard-card ip-location-summary-card" v-if="hasPlan">
+        <div class="card-header">
+          <h2 class="card-title">当前出口地区</h2>
+          <button
+            class="ip-location-refresh"
+            :disabled="ipLocationLoading"
+            :title="ipLocationLoading ? $t('common.loading') : $t('common.retry')"
+            @click="triggerIpLocationRefresh"
+          >
+            <IconRefresh :size="16" :class="{ spin: ipLocationLoading }" />
+          </button>
+        </div>
+        <div class="card-body ip-location-summary-body">
+          <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
+          <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
+          <div v-else-if="ipLocationData" class="ip-location-content">
+            <div class="ip-location-main-info">
+              <div class="ip-main-line">
+                <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
+                <span class="ip-region-primary">{{ ipLocationPrimaryRegionText }}</span>
+              </div>
+              <div class="ip-sub-line">
+                <span class="ip-region">{{ ipLocationDisplayText }}</span>
+              </div>
+              <div class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</div>
+            </div>
+            <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
+              <div class="service-reference-title">
+                <span>地区服务参考</span>
+                <span class="info-tooltip" tabindex="0" role="button" aria-label="地区服务参考说明">
+                  <IconHelpCircle :size="14" />
+                  <span class="info-tooltip-content">地区服务参考仅基于地区静态映射推测，不代表实时解锁检测结果。</span>
+                </span>
+              </div>
+              <div class="service-reference-tags" role="list" aria-label="地区服务参考">
+                <div
+                  v-for="service in ipLocationServiceCatalog"
+                  :key="`ip-service-${service.key}`"
+                  class="service-reference-item"
+                  :class="[{ active: isIpServiceReferenced(service.key) }, ipLocationCodeBadgeClass]"
+                  role="listitem"
+                  :title="`${service.label} · ${isIpServiceReferenced(service.key) ? '地区参考可用' : '未在地区参考列表'}`"
+                >
+                  <span class="service-reference-icon-mask" :style="{ '--service-icon-url': `url(${service.icon})` }"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
+        </div>
       </div>
 
       <div class="dashboard-card usage-trend-card" v-if="hasPlan">
@@ -677,6 +682,12 @@ import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
 import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
 import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
 import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
+import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
+import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
+import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube-premium.svg';
+import serviceChatgptIcon from '@/assets/images/service-icons/chatgpt.svg';
+import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
+import serviceTiktokIcon from '@/assets/images/service-icons/tiktok.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 
@@ -795,6 +806,12 @@ export default {
     const trafficTrendLoading = ref(false);
     const trafficTrendError = ref(false);
     let trafficTrendChart = null;
+
+    const ipLocationLoading = ref(false);
+    const ipLocationError = ref('');
+    const ipLocationData = ref(null);
+    const ipLocationCache = ref(null);
+    const ipLocationDebounceTimer = ref(null);
 
     const qrCodeLoading = ref(true);
     const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription)
@@ -1160,7 +1177,15 @@ export default {
 
     const primaryPlanActionLabel = computed(() => {
       if (subscriptionStatus.value === 'active') return '管理订阅';
+      if (subscriptionStatus.value === 'expired') return '立即恢复订阅';
       return '立即续费';
+    });
+
+    const planExpireMetaText = computed(() => {
+      if (subscriptionStatus.value === 'expired') {
+        return `已于 ${userPlan.value.expireDate || '-'} 到期`;
+      }
+      return `${t('dashboard.expiryDate')} · ${userPlan.value.expireDate || t('dashboard.permanent')}`;
     });
 
     const secondaryPlanActionLabel = computed(() => {
@@ -1170,8 +1195,13 @@ export default {
     });
 
     const primaryActionClass = computed(() => {
-      if (subscriptionStatus.value === 'active') return 'premium';
+      if (subscriptionStatus.value === 'active') return 'theme';
       return 'primary';
+    });
+
+    const secondaryActionClass = computed(() => {
+      if (secondaryPlanActionLabel.value === '管理订阅') return 'theme';
+      return 'subtle';
     });
 
     const handlePrimaryPlanAction = () => {
@@ -1925,6 +1955,152 @@ export default {
       return [];
     };
 
+
+    const normalizeIpLocation = (payload = {}) => {
+      const latitude = Number(
+        payload.latitude ?? payload.lat ?? payload.location?.latitude ?? payload.loc?.split(',')?.[0]
+      );
+      const longitude = Number(
+        payload.longitude ?? payload.lon ?? payload.lng ?? payload.location?.longitude ?? payload.loc?.split(',')?.[1]
+      );
+      const city = payload.city || payload.town || payload.district || '';
+      const region = payload.region || payload.regionName || payload.state || '';
+      const country = payload.country || payload.country_name || '';
+      const countryCode = (payload.country_code || payload.countryCode || payload.countryCode2 || '').toString().toUpperCase();
+      const ip = payload.ip || payload.query || '';
+
+      if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+
+      return {
+        ip,
+        city,
+        region,
+        country,
+        countryCode,
+        latitude,
+        longitude
+      };
+    };
+
+    const fetchIpLocationFromSources = async () => {
+      const endpoints = [
+        'https://ipwho.is',
+        'https://api.myip.com',
+        'https://ipapi.co/json',
+        'https://ident.me/json',
+        'http://ip-api.com/json',
+        'https://api.ip.sb/geoip',
+        'https://ipinfo.io/json'
+      ];
+
+      const requests = endpoints.map((url) => (
+        fetch(url, { cache: 'no-store' })
+          .then(async (resp) => {
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            const data = await resp.json();
+            const normalized = normalizeIpLocation(data);
+            if (!normalized) throw new Error('Invalid location payload');
+            return normalized;
+          })
+      ));
+
+      const settled = await Promise.allSettled(requests);
+      const hit = settled.find((item) => item.status === 'fulfilled');
+      if (hit && hit.status === 'fulfilled') {
+        return hit.value;
+      }
+      throw new Error('IP location lookup failed on all providers.');
+    };
+
+    const scheduleIpLocationRefresh = (force = false) => {
+      if (ipLocationDebounceTimer.value) {
+        clearTimeout(ipLocationDebounceTimer.value);
+      }
+
+      ipLocationDebounceTimer.value = setTimeout(async () => {
+        const now = Date.now();
+        const cache = ipLocationCache.value;
+        if (!force && cache?.expiresAt > now) {
+          ipLocationData.value = cache.data;
+          ipLocationError.value = '';
+          return;
+        }
+
+        ipLocationLoading.value = true;
+        ipLocationError.value = '';
+
+        try {
+          const data = await fetchIpLocationFromSources();
+          ipLocationData.value = data;
+          ipLocationCache.value = {
+            data,
+            expiresAt: now + 5 * 60 * 1000
+          };
+        } catch (error) {
+          console.error('Failed to fetch IP location:', error);
+          ipLocationError.value = t('trafficLog.errorLoadingTraffic');
+        } finally {
+          ipLocationLoading.value = false;
+        }
+      }, 2000);
+    };
+
+    const triggerIpLocationRefresh = () => {
+      scheduleIpLocationRefresh(true);
+    };
+
+    const ipLocationDisplayText = computed(() => {
+      if (!ipLocationData.value) return '';
+      return [ipLocationData.value.city, ipLocationData.value.region, ipLocationData.value.country]
+        .filter(Boolean)
+        .join(', ');
+    });
+
+    const ipLocationCode = computed(() => {
+      const code = (ipLocationData.value?.countryCode || '').trim().toUpperCase();
+      return /^[A-Z]{2}$/.test(code) ? code : '--';
+    });
+
+    const ipLocationPrimaryRegionText = computed(() => {
+      if (!ipLocationData.value) return '-';
+      return ipLocationData.value.city || ipLocationData.value.region || ipLocationData.value.country || '-';
+    });
+
+    const ipLocationCodeBadgeClass = computed(() => {
+      const code = ipLocationCode.value;
+      const badgeMap = DASHBOARD_CONFIG.ipRegionBadgeByCountryCode || {};
+      return badgeMap[code] || 'is-red';
+    });
+
+    const ipLocationServiceReferences = computed(() => {
+      const code = ipLocationCode.value;
+      const serviceMap = DASHBOARD_CONFIG.ipRegionServiceReferenceByCountryCode || {};
+      const defaultServices = DASHBOARD_CONFIG.ipRegionServiceReferenceDefault || [];
+      const services = serviceMap[code] || defaultServices;
+      return Array.isArray(services) ? services : [];
+    });
+
+    const ipLocationServiceIconMap = {
+      'Netflix': serviceNetflixIcon,
+      'Disney+': serviceDisneyPlusIcon,
+      'YouTube Premium': serviceYoutubePremiumIcon,
+      'ChatGPT': serviceChatgptIcon,
+      Claude: serviceClaudeIcon,
+      TikTok: serviceTiktokIcon,
+    };
+
+    const ipLocationServiceCatalog = computed(() => {
+      const serviceCatalog = DASHBOARD_CONFIG.ipRegionServiceCatalog || [];
+      return serviceCatalog.map((item) => ({
+        ...item,
+        icon: ipLocationServiceIconMap[item.key] || serviceChatgptIcon,
+      }));
+    });
+
+    const isIpServiceReferenced = (serviceKey) => {
+      return ipLocationServiceReferences.value.includes(serviceKey);
+    };
+
     const fetchTrafficTrend = async () => {
       trafficTrendLoading.value = true;
       trafficTrendError.value = false;
@@ -2057,6 +2233,7 @@ export default {
 
       fetchUserStats();
       fetchTrafficTrend();
+      scheduleIpLocationRefresh();
 
       updateQRCodeUrl();
     });
@@ -2144,6 +2321,10 @@ export default {
         trafficTrendChart.dispose();
         trafficTrendChart = null;
       }
+      if (ipLocationDebounceTimer.value) {
+        clearTimeout(ipLocationDebounceTimer.value);
+        ipLocationDebounceTimer.value = null;
+      }
     });
 
     const renewPlan = () => {
@@ -2184,6 +2365,7 @@ export default {
         fetchUserInfo();
         fetchUserStats();
         fetchNotices();
+        scheduleIpLocationRefresh();
         needRefreshData.value = false;
       }
 
@@ -2334,8 +2516,10 @@ export default {
       subscriptionStatus,
       subscriptionStatusLabel,
       primaryPlanActionLabel,
+      planExpireMetaText,
       secondaryPlanActionLabel,
       primaryActionClass,
+      secondaryActionClass,
       handlePrimaryPlanAction,
       handleSecondaryPlanAction,
       isLowTraffic,
@@ -2357,6 +2541,17 @@ export default {
       trafficTrendData,
       trafficTrendLoading,
       trafficTrendError,
+      ipLocationLoading,
+      ipLocationError,
+      ipLocationData,
+      ipLocationDisplayText,
+      ipLocationCode,
+      ipLocationPrimaryRegionText,
+      ipLocationCodeBadgeClass,
+      ipLocationServiceReferences,
+      ipLocationServiceCatalog,
+      isIpServiceReferenced,
+      triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
       showImportSubscription,
@@ -2392,30 +2587,36 @@ export default {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 16px;
 
-    > .welcome-card {
-      grid-column: span 5;
-      margin-bottom: 0;
+    > .overview-title {
+      grid-column: 1 / -1;
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.25;
+      font-weight: 700;
+      color: var(--heading-color);
     }
 
     > .pending-items-card {
-      grid-column: span 7;
+      grid-column: 1 / -1;
       margin-bottom: 0;
     }
 
     > .notice-card,
     > .subscription-card,
     > .stats-grid,
+    > .ip-location-summary-card,
     > .usage-trend-card,
     > .import-card {
       grid-column: 1 / -1;
     }
 
     @media (max-width: 992px) {
-      > .welcome-card,
+      > .overview-title,
       > .pending-items-card,
       > .notice-card,
       > .subscription-card,
       > .stats-grid,
+      > .ip-location-summary-card,
       > .usage-trend-card,
       > .import-card {
         grid-column: 1 / -1;
@@ -2423,33 +2624,18 @@ export default {
     }
   }
 
-  .welcome-card {
-    margin-bottom: 24px;
-
-    .user-email {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 12px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(var(--theme-color-rgb), 0.1);
-      color: var(--theme-text-secondary);
-      font-size: 14px;
-    }
-  }
-
   .dashboard-card {
-    background-color: var(--card-bg-color);
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    padding: 20px;
-    margin-bottom: 24px;
-    border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+    background-color: var(--card-background);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card-sm);
+    padding: var(--space-5);
+    margin-bottom: var(--space-5);
+    border: 1px solid var(--border-color-soft);
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
 
     &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      border-color: rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: var(--shadow-card-md);
+      transform: translateY(-1px);
     }
 
     .card-header {
@@ -2459,8 +2645,8 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 18px;
-        font-weight: 600;
+        font-size: 17px;
+        font-weight: 650;
         margin: 0;
       }
 
@@ -2477,7 +2663,7 @@ export default {
     .subscription-info {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 16px;
       margin-bottom: 15px;
 
       .info-item {
@@ -2563,7 +2749,7 @@ export default {
     position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
+    gap: 16px;
     margin-bottom: 24px;
 
     @media (min-width: 768px) {
@@ -2571,7 +2757,8 @@ export default {
     }
 
     @media (min-width: 1200px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1.86fr) minmax(0, 1fr);
+      grid-auto-rows: minmax(124px, auto);
     }
 
     .usage-panel-title-row {
@@ -2580,6 +2767,10 @@ export default {
       align-items: center;
       justify-content: space-between;
       margin-top: 2px;
+
+      @media (min-width: 1200px) {
+        grid-row: 1;
+      }
 
       h3 {
         margin: 0;
@@ -2615,11 +2806,11 @@ export default {
       position: relative;
       background-color: var(--card-bg-color);
       border-radius: 16px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
       display: flex;
       align-items: center;
       gap: 16px;
-      padding: 18px;
+      padding: 16px;
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
       border: 1px solid var(--border-color);
@@ -2686,7 +2877,8 @@ export default {
       &.traffic-board-card {
         width: 100%;
         min-width: 0;
-        min-height: 260px;
+        min-height: 232px;
+        overflow: visible;
         writing-mode: horizontal-tb;
         text-orientation: mixed;
         flex-direction: column;
@@ -2695,12 +2887,18 @@ export default {
         gap: 10px;
 
         .usage-card-title {
+          position: relative;
+          z-index: 5;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 600;
-          color: #6b7280;
+          color: var(--neutral-strong);
+          line-height: 1.35;
         }
 
         .usage-card-main {
@@ -2723,7 +2921,8 @@ export default {
             align-items: center;
             justify-content: center;
             color: #fff;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
+            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.2);
             cursor: pointer;
           }
         }
@@ -2733,7 +2932,7 @@ export default {
 
           .package-add-btn {
             color: #fff;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
           }
         }
         &.subscription-card-muted {
@@ -2749,26 +2948,108 @@ export default {
           }
         }
 
+        &.total-main-card {
+          background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+          border-color: var(--border-color-soft);
+          box-shadow: var(--shadow-card-md);
+
+          .usage-card-title {
+            color: #4b5563;
+            font-weight: 650;
+          }
+        }
+
+        &.expired-main-card {
+          background: #f3f4f6;
+          border-color: #d1d5db;
+
+          .usage-card-title {
+            color: #6b7280;
+          }
+        }
+
         .plan-summary-card {
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 12px;
-          margin-top: 4px;
+          gap: 16px;
+          margin-top: 6px;
+          overflow: visible;
+
+          .expired-status-strip {
+            border-radius: 10px;
+            padding: 9px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #b91c1c;
+            background: rgba(248, 113, 113, 0.16);
+            border: 1px solid rgba(239, 68, 68, 0.32);
+          }
+
+          .plan-summary-section {
+            border: 1px solid #e8edf4;
+            border-radius: 12px;
+            background: #f8fafc;
+            padding: 10px 12px;
+            overflow: visible;
+          }
+
+          .plan-summary-section-meta {
+            padding: 12px 14px;
+          }
+
+          .plan-status-hero {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+          }
+
+          .plan-name-main {
+            font-size: 24px;
+            line-height: 1.2;
+            font-weight: 700;
+            color: var(--heading-color);
+          }
+
+          .plan-expire-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: #64748b;
+          }
+
+          .plan-summary-section-renew {
+            background: #f8fafc;
+          }
+
+          .plan-summary-section-actions {
+            background: #f8fafc;
+            border-style: solid;
+            border-color: #e8edf4;
+            padding-top: 12px;
+            padding-bottom: 12px;
+          }
 
           .plan-summary-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            background: #f8fafc;
+            gap: 16px;
+            padding: 2px 0;
           }
 
           .plan-summary-label {
             font-size: 12px;
             color: #6b7280;
+
+            &.with-tooltip {
+              display: inline-flex;
+              align-items: center;
+              gap: 6px;
+            }
           }
 
           .plan-summary-value-wrap {
@@ -2824,7 +3105,7 @@ export default {
           .plan-summary-actions {
             display: flex;
             gap: 10px;
-            margin-top: 4px;
+            margin-top: 0;
 
             @media (max-width: 576px) {
               flex-direction: column;
@@ -2835,7 +3116,7 @@ export default {
               border-radius: 12px;
               border: 1px solid transparent;
               padding: 10px 14px;
-              font-size: 13px;
+              font-size: 14px;
               font-weight: 600;
               letter-spacing: 0.2px;
               cursor: pointer;
@@ -2851,23 +3132,37 @@ export default {
 
               &.primary {
                 color: #fff;
-                background: linear-gradient(135deg, #ef4444, #dc2626);
-                box-shadow: 0 8px 18px rgba(220, 38, 38, 0.24);
+                background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
+                box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
               }
 
               &.premium {
                 color: #fff;
-                background: linear-gradient(135deg, #3b82f6, #2563eb);
+                background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
                 box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
               }
 
+              &.theme {
+                color: #fff;
+                border-color: transparent;
+                background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 1));
+                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.28);
+              }
+
               &.subtle {
-                color: #6b7280;
-                border-color: #e5e7eb;
-                background: #f8fafc;
+                color: #475569;
+                border-color: var(--border-color-soft);
+                background: var(--surface-subtle);
                 box-shadow: none;
               }
             }
+          }
+
+          .plan-action-helper-text {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #475569;
+            text-align: center;
           }
 
           .switch {
@@ -2892,7 +3187,8 @@ export default {
               position: absolute;
               cursor: pointer;
               inset: 0;
-              background-color: #d1d5db;
+              background-color: var(--surface-subtle);
+              border: 1px solid var(--border-color-soft);
               transition: 0.3s;
 
               &::before {
@@ -2916,7 +3212,8 @@ export default {
             }
 
             input:checked + .slider {
-              background-color: rgba(var(--theme-color-rgb), 0.9);
+              background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
+              border-color: transparent;
             }
 
             input:checked + .slider::before {
@@ -2928,10 +3225,14 @@ export default {
         .usage-percent {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
-          font-size: 40px;
+          font-size: 36px;
           line-height: 1;
           font-weight: 700;
           color: #111827;
+
+          &.compact {
+            font-size: 32px;
+          }
         }
 
         .usage-percent-label {
@@ -2949,9 +3250,9 @@ export default {
 
         .usage-summary-line {
           grid-column: 1 / -1;
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 600;
-          color: #374151;
+          color: var(--neutral-strong);
         }
 
         .usage-kpi {
@@ -2967,7 +3268,7 @@ export default {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           font-size: 12px;
-          color: #6b7280;
+          color: var(--muted-text-color);
           line-height: 1;
         }
 
@@ -2984,8 +3285,8 @@ export default {
           width: 100%;
           margin-top: 6px;
           font-size: 12px;
-          color: #6b7280;
-          line-height: 1.45;
+          color: var(--muted-text-color);
+          line-height: 1.35;
         }
 
 
@@ -3005,7 +3306,7 @@ export default {
 
         .section-progress-fill {
           height: 100%;
-          background: linear-gradient(90deg, #3b82f6, #2563eb);
+          background: linear-gradient(90deg, #60a5fa, #3b82f6);
           border-radius: inherit;
           transition: width 0.35s ease;
         }
@@ -3013,6 +3314,74 @@ export default {
         @media (max-width: 576px) {
           .usage-kpis {
             grid-template-columns: 1fr;
+          }
+        }
+      }
+
+      @media (min-width: 1200px) {
+        &.traffic-board-card.total-main-card {
+          grid-column: 1;
+          grid-row: 1 / span 2;
+          min-height: 100%;
+        }
+
+        &.traffic-board-card:not(.total-main-card) {
+          grid-column: 2;
+          min-height: 152px;
+          padding: 16px;
+          gap: 8px;
+
+          .usage-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--neutral-strong);
+          }
+
+          .usage-percent {
+            font-size: 36px;
+
+            &.compact {
+              font-size: 30px;
+            }
+          }
+
+          .usage-percent-label {
+            font-size: 12px;
+          }
+
+          .section-progress-track {
+            height: 8px;
+          }
+
+          .usage-kpis {
+            display: flex;
+            gap: 16px;
+          }
+
+          .usage-kpi {
+            flex: 1;
+            background: rgba(241, 245, 249, 0.9);
+          }
+
+          .usage-kpi-label {
+            font-size: 12px;
+          }
+
+          .usage-kpi-value {
+            font-size: 14px;
+          }
+
+          .usage-package-note,
+          .usage-reset-hint {
+            display: none;
+          }
+
+          .usage-summary-line,
+          .usage-package-note,
+          .usage-reset-hint {
+            &.persist-visible {
+              display: block;
+            }
           }
         }
       }
@@ -3035,8 +3404,8 @@ export default {
       }
 
       &:hover {
-        border-color: rgba(var(--theme-color-rgb), 0.3);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        border-color: rgba(148, 163, 184, 0.24);
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
       }
 
       .stats-icon {
@@ -3083,6 +3452,318 @@ export default {
   }
 
 
+  .ip-location-summary-card {
+    border-radius: var(--radius-lg);
+
+    border-color: rgba(148, 163, 184, 0.24);
+    background: linear-gradient(180deg, rgba(10, 23, 40, 0.9), rgba(5, 13, 23, 0.92));
+    box-shadow: 0 8px 18px rgba(2, 10, 24, 0.24);
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .card-title {
+        color: #eaf5ff;
+        letter-spacing: 0.2px;
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+
+    .ip-location-refresh {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid rgba(112, 190, 255, 0.35);
+      background: rgba(18, 46, 73, 0.7);
+      color: #8ed0ff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+
+      .spin {
+        animation: spin 0.9s linear infinite;
+      }
+    }
+
+    .ip-location-summary-body {
+      padding-top: 0;
+    }
+
+    .ip-location-state {
+      color: #bddfff;
+      font-size: 13px;
+
+      &.error {
+        color: #ff9ba8;
+      }
+    }
+
+    .ip-location-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 8px 12px;
+      color: #d9ecff;
+      align-items: start;
+
+      @media (max-width: 920px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ip-location-main-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .ip-main-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ip-region-primary {
+      font-size: 40px;
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      color: #ecf6ff;
+    }
+
+    .ip-sub-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ip-address-secondary {
+      font-size: 11px;
+      color: rgba(189, 223, 255, 0.58);
+      letter-spacing: 0.2px;
+    }
+
+    .region-code-badge {
+      min-width: 44px;
+      height: 24px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
+
+      &.is-red { background: linear-gradient(135deg, #e11d48, #9f1239); }
+      &.is-pink { background: linear-gradient(135deg, #be185d, #831843); }
+      &.is-blue { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); }
+    }
+
+    .ip-region {
+      color: #bddfff;
+      font-size: 13px;
+    }
+
+    .ip-service-reference {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(10, 26, 44, 0.56);
+      border: none;
+      min-height: 100%;
+    }
+
+    .service-reference-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #9fd0f5;
+      letter-spacing: 0.2px;
+    }
+
+    .service-reference-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .service-reference-item {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: rgba(233, 243, 255, 0.45);
+      opacity: 0.42;
+      transition: all 0.2s ease;
+
+      .service-reference-icon-mask {
+        width: 18px;
+        height: 18px;
+        display: block;
+        background-color: currentColor;
+        mask-image: var(--service-icon-url);
+        -webkit-mask-image: var(--service-icon-url);
+        mask-repeat: no-repeat;
+        -webkit-mask-repeat: no-repeat;
+        mask-size: contain;
+        -webkit-mask-size: contain;
+        mask-position: center;
+        -webkit-mask-position: center;
+      }
+
+      &.active {
+        opacity: 1;
+        color: #eef6ff;
+        background: rgba(67, 86, 109, 0.28);
+
+
+        &.is-red {
+          background: rgba(157, 23, 77, 0.38);
+        }
+
+        &.is-pink {
+          background: rgba(190, 24, 93, 0.36);
+        }
+
+        &.is-blue {
+          background: rgba(30, 58, 138, 0.38);
+        }
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+        border-color: rgba(144, 196, 238, 0.45);
+      }
+    }
+
+    .info-tooltip {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      color: rgba(148, 163, 184, 0.95);
+      cursor: help;
+
+      .info-tooltip-content {
+        position: absolute;
+        right: 0;
+        bottom: calc(100% + 8px);
+        width: 200px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        background: rgba(15, 23, 42, 0.96);
+        color: #e2e8f0;
+        font-size: 12px;
+        line-height: 1.4;
+        font-weight: 500;
+        box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(4px);
+        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        transition-delay: 0s;
+        pointer-events: none;
+        z-index: 30;
+      }
+
+      .info-tooltip-content::after {
+        content: '';
+        position: absolute;
+        right: 12px;
+        top: 100%;
+        border-width: 5px;
+        border-style: solid;
+        border-color: rgba(15, 23, 42, 0.96) transparent transparent transparent;
+      }
+
+      &:hover .info-tooltip-content,
+      &:focus-visible .info-tooltip-content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+      }
+    }
+  }
+
+  .info-tooltip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    color: rgba(148, 163, 184, 0.95);
+    cursor: help;
+
+    .info-tooltip-content {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 8px);
+      width: 200px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.96);
+      color: #e2e8f0;
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 500;
+      box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(4px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+      transition-delay: 0s;
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    .info-tooltip-content::after {
+      content: '';
+      position: absolute;
+      right: 12px;
+      top: 100%;
+      border-width: 5px;
+      border-style: solid;
+      border-color: rgba(15, 23, 42, 0.96) transparent transparent transparent;
+    }
+
+    &:hover .info-tooltip-content,
+    &:focus-visible .info-tooltip-content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition-delay: 0.2s;
+    }
+  }
+
   .usage-trend-card {
     .card-body {
       padding-top: 6px;
@@ -3106,13 +3787,13 @@ export default {
   .notice-card {
     margin-bottom: 12px;
     padding: 12px;
-    border-color: rgba(var(--theme-color-rgb), 0.12);
-    background: color-mix(in srgb, var(--card-bg-color) 92%, rgba(var(--theme-color-rgb), 0.08));
+    border-color: rgba(148, 163, 184, 0.14);
+    background: color-mix(in srgb, var(--card-bg-color) 98%, rgba(var(--theme-color-rgb), 0.02));
     box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
 
     &:hover {
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-      border-color: rgba(var(--theme-color-rgb), 0.18);
+      border-color: rgba(148, 163, 184, 0.2);
       transform: none;
     }
 
@@ -3132,12 +3813,12 @@ export default {
       border-radius: 8px;
       background-color: rgba(var(--theme-color-rgb), 0.045);
       overflow: hidden;
-      min-height: 102px;
+      min-height: 84px;
 
       .notice-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.72), rgba(15, 23, 42, 0.28));
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.64), rgba(15, 23, 42, 0.2));
         pointer-events: none;
       }
 
@@ -3844,9 +4525,6 @@ export default {
   overflow: hidden;
   animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
-  @media (prefers-color-scheme: dark) {
-    background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
-  }
 }
 
 @keyframes modal-in {
@@ -3887,7 +4565,7 @@ export default {
     width: 220px;
     height: 220px;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
     background-color: white;
     padding: 15px;
     object-fit: cover;
@@ -4116,26 +4794,9 @@ export default {
 }
 
 
-.dark-theme .skeleton-header,
-.dark-theme .skeleton-row,
-.dark-theme .skeleton-circle,
-.dark-theme .skeleton-row-sm,
-.dark-theme .skeleton-row-xs {
-  background-color: rgba(255, 255, 255, 0.08);
-}
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-row {
-  background: rgba(148, 163, 184, 0.12);
-}
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-label,
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-desc {
-  color: #cbd5e1;
-}
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-value {
-  color: #f8fafc;
-}
 
 
 .skeleton-icon {
@@ -4369,9 +5030,6 @@ export default {
   max-height: 80vh;
   animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
-  @media (prefers-color-scheme: dark) {
-    background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
-  }
 }
 
 .notice-modal-header {
@@ -4972,48 +5630,27 @@ export default {
 
 }
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
-  color: #86efac;
-  background: rgba(34, 197, 94, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expiring {
-  color: #fcd34d;
-  background: rgba(245, 158, 11, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expired {
-  color: #fca5a5;
-  background: rgba(239, 68, 68, 0.2);
-}
-
-.dark-theme .traffic-board-card.package-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
-  background: rgba(148, 163, 184, 0.5);
-}
 
 
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle {
-  color: rgba(226, 232, 240, 0.75);
-  background: rgba(51, 65, 85, 0.45);
-  border-color: rgba(148, 163, 184, 0.35);
-}
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle:hover {
-  background: rgba(51, 65, 85, 0.65);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </style>
@@ -5285,48 +5922,17 @@ a.eztheme-btn {
   background-color: rgba(var(--theme-color-rgb), 0.06) !important;
 }
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
-  color: #86efac;
-  background: rgba(34, 197, 94, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expiring {
-  color: #fcd34d;
-  background: rgba(245, 158, 11, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expired {
-  color: #fca5a5;
-  background: rgba(239, 68, 68, 0.2);
-}
-
-.dark-theme .traffic-board-card.package-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
-  background: rgba(148, 163, 184, 0.5);
-}
 
 
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle {
-  color: rgba(226, 232, 240, 0.75);
-  background: rgba(51, 65, 85, 0.45);
-  border-color: rgba(148, 163, 184, 0.35);
-}
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle:hover {
-  background: rgba(51, 65, 85, 0.65);
-}
+
+
+
+
+
+
+
 
 
 </style>

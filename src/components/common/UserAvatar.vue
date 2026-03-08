@@ -141,16 +141,17 @@ export default {
   border-radius: 50%;
   cursor: pointer;
   overflow: hidden;
-  background-color: rgba(var(--theme-color-rgb), 0.1);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+  background-color: color-mix(in srgb, var(--card-bg-color, #ffffff) 92%, #fff 8%);
+  border: 1px solid rgba(148, 163, 184, 0.24);
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   
   &:hover {
-    box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.15);
-    transform: translateY(-2px);
+    border-color: rgba(var(--theme-color-rgb), 0.45);
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1);
+    transform: translateY(-1px);
   }
   
   .avatar-image {
@@ -169,7 +170,7 @@ export default {
     .user-icon {
       width: 20px;
       height: 20px;
-      color: var(--theme-color);
+      color: rgba(var(--theme-color-rgb), 0.9);
     }
   }
 }

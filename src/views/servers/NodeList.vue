@@ -862,14 +862,14 @@ onMounted(() => {
 
     .primary {
       color: #fff;
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
       box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
     }
 
     .secondary {
-      color: #475569;
-      border-color: #cbd5e1;
-      background: #f8fafc;
+      color: var(--neutral-strong);
+      border-color: var(--border-color-soft);
+      background: var(--surface-subtle);
     }
   }
 }

@@ -266,6 +266,7 @@ export default {
         overview: 'Overview',
         shop: 'Shop',
         subscription: 'Subscription',
+        announcement: 'Announcements',
         invite: 'Invite',
         docs: 'Docs',
         startUsing: 'Start Using',

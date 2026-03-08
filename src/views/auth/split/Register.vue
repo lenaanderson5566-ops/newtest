@@ -39,7 +39,6 @@
 
         <div class="top-toolbar">
 
-          <ThemeToggle />
 
           <LanguageSelector />
 
@@ -585,7 +584,6 @@ import { useI18n } from 'vue-i18n';
 
 import { useToast } from '@/composables/useToast';
 
-import ThemeToggle from '@/components/common/ThemeToggle.vue';
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 
@@ -687,7 +685,6 @@ export default {
 
   components: {
 
-    ThemeToggle,
 
     LanguageSelector,
 
@@ -1102,7 +1099,7 @@ export default {
 
                 'callback': 'onCaptchaModalVerified',
 
-                'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light'
+                'theme': 'light'
 
               });
 
@@ -1150,7 +1147,7 @@ export default {
 
                   },
 
-                  'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
+                  'theme': 'light',
 
                   'retry': 'auto',
                   'retry-interval': 5000,
@@ -1792,7 +1789,7 @@ export default {
 
                   },
 
-                  'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
+                  'theme': 'light',
 
                   'retry': 'auto',
                   'retry-interval': 5000,
@@ -1983,7 +1980,7 @@ export default {
 
                 },
 
-                'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light'
+                'theme': 'light'
 
               });
 
@@ -2033,7 +2030,7 @@ export default {
 
                 },
 
-                'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
+                'theme': 'light',
 
                 'retry': 'auto',
                 'retry-interval': 5000,
@@ -2103,7 +2100,7 @@ export default {
 
                   'callback': 'onCaptchaVerified',
 
-                  'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
+                  'theme': 'light',
 
                   'refresh-expired': 'auto'
 
@@ -3758,191 +3755,6 @@ export default {
 
 
 
-.dark-theme {
-
-  .loading-container .loading-spinner {
-
-    color: var(--theme-color);
-
-  }
-
-
-
-  .input-with-suffix {
-
-    background-color: var(--input-bg-color, #333);
-
-    border-color: var(--input-border-color, #444);
-
-
-
-    &:hover {
-
-      background-color: var(--input-hover-bg-color, #383838);
-
-    }
-
-
-
-    &:focus-within {
-
-      border-color: var(--theme-color);
-
-      background-color: var(--input-focus-bg-color, #3a3a3a);
-
-    }
-
-
-
-    .email-suffix {
-
-      border-left-color: var(--input-border-color, #444);
-
-
-
-      &:hover:not(.disabled) {
-
-        background-color: var(--input-hover-bg-color, #383838);
-
-      }
-
-
-
-      .suffix-dropdown {
-
-        background-color: var(--card-background);
-
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-
-        border-color: var(--input-border-color, #444);
-
-
-
-        &:before {
-
-          background-color: var(--card-background);
-
-          border-color: var(--input-border-color, #444);
-
-        }
-
-
-
-        .suffix-option {
-
-          &:hover {
-
-            background-color: rgba(var(--theme-color-rgb), 0.15);
-
-          }
-
-        }
-
-      }
-
-    }
-
-  }
-
-
-
-  .input-with-icon {
-
-    .input-icon {
-
-      color: var(--secondary-text-color);
-
-    }
-
-
-
-    .form-control {
-
-      background-color: var(--input-bg-color, #333);
-
-      border-color: var(--input-border-color, #444);
-
-
-
-      &:focus {
-
-        background-color: var(--input-focus-bg-color, #3a3a3a);
-
-        border-color: var(--theme-color);
-
-      }
-
-
-
-      &::placeholder {
-
-        color: var(--placeholder-color, #777);
-
-      }
-
-    }
-
-  }
-
-
-
-  .input-with-button {
-
-    .send-code-btn {
-
-      background-color: var(--theme-color);
-
-
-
-      &:hover:not(:disabled) {
-
-        background-color: var(--primary-color-hover);
-
-      }
-
-    }
-
-  }
-
-
-
-  .checkbox-container {
-
-    .checkbox-label {
-
-      color: var(--secondary-text-color);
-
-    }
-
-
-
-    .checkmark {
-
-      background-color: transparent;
-
-      border-color: var(--border-color, #555);
-
-    }
-
-  }
-
-
-
-  .btn-primary {
-
-    background-color: var(--theme-color);
-
-
-
-    &:hover:not(:disabled) {
-
-      background-color: var(--primary-color-hover);
-
-    }
-
-  }
-
-}
 
 
 
