@@ -26,7 +26,7 @@
             :title="`${primaryWallet.currency} ${primaryWalletDisplay}`"
             @click.stop="toggleWalletDropdown"
           >
-            <span class="wallet-icon" aria-hidden="true">💳</span>
+            <IconWallet class="wallet-icon" :size="16" aria-hidden="true" />
             <span class="wallet-main-amount">{{ primaryWalletDisplay }}</span>
           </button>
 
@@ -131,7 +131,7 @@ import CustomContextMenu from '@/components/common/CustomContextMenu.vue';
 import CustomerServiceIcon from '@/components/common/CustomerServiceIcon.vue';
 import CrispEmbed from '@/components/common/CrispEmbed.vue';
 import ResourcePreloader from '@/components/common/ResourcePreloader.vue';
-import { IconGift } from '@tabler/icons-vue';
+import { IconGift, IconWallet } from '@tabler/icons-vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import pageCache from '@/utils/pageCache';
@@ -156,7 +156,8 @@ export default {
     CustomerServiceIcon,
     CrispEmbed,
     ResourcePreloader,
-    IconGift
+    IconGift,
+    IconWallet
   },
   setup() {
     const router = useRouter();

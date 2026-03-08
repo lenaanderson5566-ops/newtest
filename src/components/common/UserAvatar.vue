@@ -8,7 +8,7 @@
         class="avatar-image"
       />
       <div v-else class="avatar-placeholder">
-        <IconUser class="user-icon" />
+        <IconUserCircle class="user-icon" />
       </div>
     </div>
     
@@ -48,6 +48,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
+import { IconUserCircle } from '@tabler/icons-vue';
 import IconUser from '@/components/icons/IconUser.vue';
 import IconLogout from '@/components/icons/IconLogout.vue';
 import IconWallet from '@/components/icons/IconWallet.vue';
@@ -57,6 +58,7 @@ import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 export default {
   name: 'UserAvatar',
   components: {
+    IconUserCircle,
     IconUser,
     IconLogout,
     IconWallet,
