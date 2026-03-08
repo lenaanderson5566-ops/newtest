@@ -698,7 +698,7 @@ export default {
     width: min(1180px, 100%);
     margin-right: auto;
     margin-left: 0;
-    padding: 0 24px 0 20px;
+    padding: 0 24px 0 56px;
   }
 
 }

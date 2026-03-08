@@ -2986,7 +2986,7 @@ export default {
           }
 
           .plan-summary-section {
-            border: 1px solid #e8edf4;
+            border: none;
             border-radius: 12px;
             background: #f8fafc;
             padding: 10px 12px;
@@ -3026,8 +3026,7 @@ export default {
 
           .plan-summary-section-actions {
             background: #f8fafc;
-            border-style: solid;
-            border-color: #e8edf4;
+            border: none;
             padding-top: 12px;
             padding-bottom: 12px;
           }
