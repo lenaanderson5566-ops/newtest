@@ -58,7 +58,9 @@
       </div>
 
       <div class="page-header-layer">
-        <div class="page-header-title">{{ pageHeaderTitle }}</div>
+        <div class="page-header-content">
+          <div class="page-header-title">{{ pageHeaderTitle }}</div>
+        </div>
       </div>
 
       <!-- 顶部导航栏 - 保持不变 -->
@@ -455,10 +457,15 @@ export default {
   height: 48px;
   background: #ffffff;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  z-index: 115;
+}
+
+.page-header-content {
+  height: 100%;
   display: flex;
   align-items: center;
+  width: 100%;
   padding: 0 24px;
-  z-index: 115;
 }
 
 .page-header-title {
@@ -649,6 +656,14 @@ export default {
   }
 }
 
+
+
+.app-content-wrapper.with-top-bar {
+  .dashboard-card.welcome-card > .card-header,
+  .dashboard-card.title-card > .card-header {
+    display: none !important;
+  }
+}
 .app-content-wrapper {
   width: 100%;
 
@@ -672,6 +687,17 @@ export default {
     margin-left: 0;
   }
 
+  .page-header-layer {
+    padding-left: 240px;
+  }
+
+  .page-header-content {
+    width: min(1180px, 100%);
+    margin-right: auto;
+    margin-left: 0;
+    padding: 0 24px 0 0;
+  }
+
 }
 
 
@@ -688,6 +714,10 @@ export default {
   .page-header-layer {
     top: 56px;
     height: 44px;
+    padding: 0;
+  }
+
+  .page-header-content {
     padding: 0 12px;
   }
 
