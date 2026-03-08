@@ -372,9 +372,9 @@ const DEFAULT_THEME_CONFIG = {
     surfaceSubtle: "#f1f5f9",
     headingColor: "#0f172a",
     neutralStrong: "#334155",
-    buttonPrimaryStart: "#2563eb",
-    buttonPrimarySoftStart: "#3b82f6",
-    buttonPrimaryEnd: "#1d4ed8",
+    buttonPrimaryStart: DEFAULT_CONFIG.primaryColor,
+    buttonPrimarySoftStart: DEFAULT_CONFIG.primaryColor,
+    buttonPrimaryEnd: calculateThemeColors(DEFAULT_CONFIG.primaryColor).primaryColorHover,
     buttonDisabledBg: "#94a3b8",
   },
 
