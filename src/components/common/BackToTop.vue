@@ -4,7 +4,7 @@
       v-show="visible && !isMobileDevice" 
       class="back-to-top"
       @click="scrollToTop"
-      :class="{ 'dark': isDarkTheme }"
+      
     >
       <IconChevronsUp :size="20" :stroke-width="1.5" class="icon" />
     </div>
@@ -24,8 +24,7 @@ export default {
   setup() {
     const visible = ref(false);
     const store = useStore();
-    const isDarkTheme = computed(() => store.getters.currentTheme === 'dark');
-    const isMobileDevice = ref(false);
+        const isMobileDevice = ref(false);
 
     const checkDeviceType = () => {
       isMobileDevice.value = window.innerWidth < 770;
@@ -157,18 +156,6 @@ export default {
     z-index: 2;
   }
   
-  &.dark {
-    background: linear-gradient(145deg, var(--theme-color), rgba(var(--theme-color-rgb), 0.7));
-    box-shadow: 0 2px 12px rgba(var(--theme-color-rgb), 0.45);
-    
-    &:hover {
-      box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.5);
-    }
-    
-    &::before {
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-    }
-  }
 }
 
 .fade-enter-active,

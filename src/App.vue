@@ -24,7 +24,6 @@
             <span class="wallet-amount">{{ wallet.amount }}</span>
           </div>
         </div>
-        <ThemeToggle />
         <LanguageSelector />
         <button 
           v-if="PROFILE_CONFIG.showGiftCardRedeem" 
@@ -40,7 +39,6 @@
     <!-- 认证页面顶部工具栏，确保认证页面也有语言切换器 -->
     <div class="auth-toolbar" v-if="!$route.meta.requiresAuth && $route.path.includes('/auth')">
       <div class="top-toolbar">
-        <ThemeToggle />
         <LanguageSelector />
       </div>
     </div>
@@ -101,7 +99,6 @@ import { normalizeWalletItems } from '@/utils/wallet';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
-import ThemeToggle from '@/components/common/ThemeToggle.vue';
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 import UserAvatar from '@/components/common/UserAvatar.vue';
 import BackToTop from '@/components/common/BackToTop.vue';
@@ -127,7 +124,6 @@ export default {
     Toast,
     IconDefinitions,
     SlideTabsNav,
-    ThemeToggle,
     LanguageSelector,
     UserAvatar,
     BackToTop,
@@ -366,9 +362,6 @@ export default {
 }
 
 
-.dark-theme .site-logo {
-  background-color: rgba(30, 30, 30, 0.7);
-}
 
 
 .top-toolbar {
@@ -449,7 +442,6 @@ export default {
     }
   }
 
-  :deep(.theme-toggle),
   :deep(.language-btn),
   :deep(.avatar-wrapper) {
     height: var(--toolbar-control-height);
@@ -460,7 +452,6 @@ export default {
     -webkit-backdrop-filter: blur(4px);
   }
 
-  :deep(.theme-toggle),
   :deep(.avatar-wrapper) {
     width: var(--toolbar-control-height);
   }

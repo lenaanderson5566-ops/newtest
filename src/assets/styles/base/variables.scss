@@ -37,16 +37,6 @@
 }
 
 // 黑暗模式变量
-body.dark-theme {
-  --background-color: #171A1D;
-  --card-background: rgba(30, 30, 30, 0.8);
-  --card-background-rgb: 30, 30, 30;
-  --text-color: rgba(255, 255, 255, 0.9);
-  --text-color-rgb: 255, 255, 255;
-  --secondary-text-color: rgba(255, 255, 255, 0.6);
-  --border-color: rgba(255, 255, 255, 0.1);
-  --shadow-color: rgba(0, 0, 0, 0.3);
-}
 
 // 断点变量
 $breakpoints: (

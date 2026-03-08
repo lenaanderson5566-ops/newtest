@@ -235,7 +235,7 @@ export const SITE_CONFIG = mergeDeep(
 // 默认主题配置
 const DEFAULT_BASE_CONFIG = {
   // 默认主题 ('light' 或 'dark') TODO
-  defaultTheme: "dark",
+  defaultTheme: "light",
 
   // 主题色 (16进制颜色值) TODO
   primaryColor: "#00947c",

@@ -1,6 +1,6 @@
 ﻿<template>
 
-  <div class="landing-page" :class="{ 'dark-theme': isDarkTheme }" @wheel="handleWheel" @scroll="handleScroll" ref="landingPageRef">
+  <div class="landing-page" @wheel="handleWheel" @scroll="handleScroll" ref="landingPageRef">
 
 
 
@@ -10,11 +10,11 @@
 
     <div class="background-decoration">
 
-      <div class="bg-circle circle-1" :class="{ 'dark-mode': isDarkTheme }"></div>
+      <div class="bg-circle circle-1"></div>
 
-      <div class="bg-circle circle-2" :class="{ 'dark-mode': isDarkTheme }"></div>
+      <div class="bg-circle circle-2"></div>
 
-      <div class="bg-circle circle-3" :class="{ 'dark-mode': isDarkTheme }"></div>
+      <div class="bg-circle circle-3"></div>
 
     </div>
 
@@ -24,7 +24,6 @@
 
     <div class="top-toolbar">
 
-      <ThemeToggle />
 
       <LanguageSelector />
 
@@ -89,7 +88,6 @@ import { useI18n } from 'vue-i18n';
 import { SITE_CONFIG, DEFAULT_CONFIG } from '@/utils/baseConfig';
 
 
-import ThemeToggle from '@/components/common/ThemeToggle.vue';
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 
@@ -105,7 +103,6 @@ export default {
 
   components: {
 
-    ThemeToggle,
 
     LanguageSelector,
 
@@ -127,8 +124,7 @@ export default {
 
     
 
-    const isDarkTheme = computed(() => store.getters.currentTheme === 'dark');
-
+    
     
 
     const siteConfig = ref(SITE_CONFIG);
@@ -274,7 +270,6 @@ export default {
 
       defaultConfig,
 
-      isDarkTheme,
 
       isTransitioning,
 
@@ -380,23 +375,6 @@ export default {
 
     
 
-    &.dark-mode {
-
-      opacity: 0.25; 
-
-      filter: blur(100px) saturate(0.7); 
-
-      
-
-      @supports (-webkit-touch-callout: none) {
-
-        filter: blur(15px) saturate(0.5);
-
-        opacity: 0.1;
-
-      }
-
-    }
 
   }
 
@@ -418,11 +396,6 @@ export default {
 
     
 
-    &.dark-mode {
-
-      background: rgba(0, 148, 124, 0.6); 
-
-    }
 
   }
 
@@ -444,11 +417,6 @@ export default {
 
     
 
-    &.dark-mode {
-
-      background: rgba(167, 71, 254, 0.5); 
-
-    }
 
   }
 
@@ -470,11 +438,6 @@ export default {
 
     
 
-    &.dark-mode {
-
-      background: rgba(55, 222, 201, 0.5); 
-
-    }
 
   }
 

@@ -18,7 +18,6 @@
       <div class="auth-split-right">
         <!-- 顶部工具栏：语言选择器和主题切换 -->
         <div class="top-toolbar">
-          <ThemeToggle />
           <LanguageSelector />
         </div>
 
@@ -143,7 +142,6 @@ import { ref, reactive, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
-import ThemeToggle from '@/components/common/ThemeToggle.vue';
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 import IconMail from '@/components/icons/IconMail.vue';
 import IconLock from '@/components/icons/IconLock.vue';
@@ -163,7 +161,6 @@ import { useNavigator } from "@/composables/useNavigator";
 export default {
   name: 'LoginView',
   components: {
-    ThemeToggle,
     LanguageSelector,
     IconMail,
     IconLock,
@@ -796,38 +793,6 @@ export default {
 }
 
 
-.dark-theme {
-  .input-with-icon {
-    .input-icon {
-      color: var(--secondary-text-color);
-    }
-
-    .form-control {
-      background-color: var(--input-bg-color, #333);
-      border-color: var(--input-border-color, #444);
-
-      &:focus {
-        background-color: var(--input-focus-bg-color, #3a3a3a);
-        border-color: var(--theme-color);
-      }
-
-      &::placeholder {
-        color: var(--placeholder-color, #777);
-      }
-    }
-  }
-
-  .checkbox-container {
-    .checkbox-label {
-      color: var(--secondary-text-color);
-    }
-
-    .checkmark {
-      background-color: transparent;
-      border-color: var(--border-color, #555);
-    }
-  }
-}
 
 .auth-footer {
   margin-top: 24px;

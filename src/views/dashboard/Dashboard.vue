@@ -4600,9 +4600,6 @@ export default {
   overflow: hidden;
   animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
-  @media (prefers-color-scheme: dark) {
-    background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
-  }
 }
 
 @keyframes modal-in {
@@ -4872,26 +4869,9 @@ export default {
 }
 
 
-.dark-theme .skeleton-header,
-.dark-theme .skeleton-row,
-.dark-theme .skeleton-circle,
-.dark-theme .skeleton-row-sm,
-.dark-theme .skeleton-row-xs {
-  background-color: rgba(255, 255, 255, 0.08);
-}
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-row {
-  background: rgba(148, 163, 184, 0.12);
-}
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-label,
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-desc {
-  color: #cbd5e1;
-}
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-value {
-  color: #f8fafc;
-}
 
 
 .skeleton-icon {
@@ -5125,9 +5105,6 @@ export default {
   max-height: 80vh;
   animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
-  @media (prefers-color-scheme: dark) {
-    background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
-  }
 }
 
 .notice-modal-header {
@@ -5728,92 +5705,27 @@ export default {
 
 }
 
-.dark-theme .traffic-board-card.total-main-card {
-  background: rgba(15, 23, 42, 0.66);
-  border-color: rgba(129, 160, 205, 0.46);
-  box-shadow: 0 6px 16px rgba(2, 6, 23, 0.2);
-}
-
-.dark-theme .traffic-board-card.total-main-card .usage-card-title {
-  color: rgba(226, 232, 240, 0.92);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-section {
-  background: rgba(30, 41, 59, 0.52);
-  border-color: rgba(148, 163, 184, 0.22);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-section-actions {
-  background: rgba(15, 23, 42, 0.18);
-  border-color: rgba(148, 163, 184, 0.3);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-name-main {
-  color: rgba(226, 232, 240, 0.95);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-expire-meta {
-  color: rgba(148, 163, 184, 0.9);
-}
-
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
-  color: #86efac;
-  background: rgba(34, 197, 94, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expiring {
-  color: #fcd34d;
-  background: rgba(245, 158, 11, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expired {
-  color: #fca5a5;
-  background: rgba(239, 68, 68, 0.2);
-}
-
-.dark-theme .traffic-board-card.package-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-.dark-theme .traffic-board-card.expired-main-card {
-  background: rgba(51, 65, 85, 0.62);
-  border-color: rgba(148, 163, 184, 0.42);
-}
-
-.dark-theme .traffic-board-card.expired-main-card .plan-summary-card .expired-status-strip {
-  color: #fecaca;
-  background: rgba(127, 29, 29, 0.35);
-  border-color: rgba(248, 113, 113, 0.36);
-}
-
-.dark-theme .traffic-board-card.expired-main-card .plan-summary-card .plan-action-helper-text {
-  color: rgba(203, 213, 225, 0.9);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
-  background: rgba(148, 163, 184, 0.5);
-}
 
 
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle {
-  color: rgba(226, 232, 240, 0.75);
-  background: rgba(51, 65, 85, 0.45);
-  border-color: rgba(148, 163, 184, 0.35);
-}
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle:hover {
-  background: rgba(51, 65, 85, 0.65);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </style>
@@ -6085,48 +5997,17 @@ a.eztheme-btn {
   background-color: rgba(var(--theme-color-rgb), 0.06) !important;
 }
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
-  color: #86efac;
-  background: rgba(34, 197, 94, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expiring {
-  color: #fcd34d;
-  background: rgba(245, 158, 11, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expired {
-  color: #fca5a5;
-  background: rgba(239, 68, 68, 0.2);
-}
-
-.dark-theme .traffic-board-card.package-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
-  background: rgba(148, 163, 184, 0.5);
-}
 
 
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle {
-  color: rgba(226, 232, 240, 0.75);
-  background: rgba(51, 65, 85, 0.45);
-  border-color: rgba(148, 163, 184, 0.35);
-}
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle:hover {
-  background: rgba(51, 65, 85, 0.65);
-}
+
+
+
+
+
+
+
 
 
 </style>

@@ -1987,11 +1987,6 @@ onMounted(() => {
 
 
 
-body.dark-theme {
-
-  --skeleton-color: rgba(255, 255, 255, 0.08);
-
-}
 
 
 
