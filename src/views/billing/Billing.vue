@@ -123,7 +123,7 @@ watch(
   &.active {
     background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
     color: #fff;
-    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.24);
+    box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.24);
   }
 }
 

@@ -2788,8 +2788,8 @@ export default {
         color: #6b7280;
 
         &.active {
-          background: rgba(34, 197, 94, 0.14);
-          color: #16a34a;
+          background: rgba(var(--theme-color-rgb), 0.14);
+          color: var(--theme-color);
         }
       }
     }
@@ -2922,7 +2922,7 @@ export default {
             justify-content: center;
             color: #fff;
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.2);
             cursor: pointer;
           }
         }
@@ -3133,13 +3133,13 @@ export default {
               &.primary {
                 color: #fff;
                 background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
-                box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
+                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
               }
 
               &.premium {
                 color: #fff;
                 background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-                box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
+                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
               }
 
               &.theme {
@@ -3150,7 +3150,7 @@ export default {
               }
 
               &.subtle {
-                color: #475569;
+                color: var(--neutral-strong);
                 border-color: var(--border-color-soft);
                 background: var(--surface-subtle);
                 box-shadow: none;

@@ -973,9 +973,9 @@ export default {
     font-size: 12px;
     line-height: 1;
     font-weight: 600;
-    color: #374151;
-    background: rgba(107, 114, 128, 0.12);
-    border: 1px solid rgba(107, 114, 128, 0.3);
+    color: var(--theme-color);
+    background: rgba(var(--theme-color-rgb), 0.1);
+    border: 1px solid rgba(var(--theme-color-rgb), 0.26);
     border-radius: 999px;
     padding: 5px 10px;
     white-space: nowrap;
@@ -1236,10 +1236,8 @@ export default {
       }
 
       &.current-plan-card {
-        border-color: rgba(37, 99, 235, 0.28);
-
-        border-color: rgba(59, 130, 246, 0.6);
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.18), 0 10px 24px rgba(59, 130, 246, 0.12);
+        border-color: rgba(var(--theme-color-rgb), 0.5);
+        box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.16), 0 10px 24px rgba(var(--theme-color-rgb), 0.12);
       }
 
       .card-header {
@@ -1547,7 +1545,7 @@ export default {
     margin-top: 4px;
     align-self: flex-start;
     background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
-    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
+    box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
 
     &.glassmorphism {
       backdrop-filter: none;
@@ -1557,7 +1555,7 @@ export default {
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.3);
+      box-shadow: 0 10px 24px rgba(var(--theme-color-rgb), 0.3);
       filter: brightness(1.03);
     }
 
@@ -1632,7 +1630,7 @@ export default {
 
         &.active {
           background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
-          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+          box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.22);
 
           .option-text {
             color: #fff;
