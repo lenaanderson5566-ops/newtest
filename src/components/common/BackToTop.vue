@@ -12,8 +12,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { useStore } from 'vuex';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { IconChevronsUp } from '@tabler/icons-vue';
 
 export default {
@@ -23,7 +22,6 @@ export default {
   },
   setup() {
     const visible = ref(false);
-    const store = useStore();
         const isMobileDevice = ref(false);
 
     const checkDeviceType = () => {
@@ -68,8 +66,7 @@ export default {
     return {
       visible,
       isMobileDevice,
-      scrollToTop,
-      isDarkTheme
+      scrollToTop
     };
   }
 };
