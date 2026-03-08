@@ -68,21 +68,23 @@
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
     <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth }]">
-    <router-view v-slot="{ Component, route }">
-      <transition 
-        name="page-transition" 
-        mode="out-in"
-        appear
-      >
-        <keep-alive :include="cachedRoutes" :max="5">
-          <component 
-            :is="Component" 
-            :key="route.path"
-            :is-active="true"
-          />
-        </keep-alive>
-      </transition>
-    </router-view>
+      <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
+        <router-view v-slot="{ Component, route }">
+          <transition 
+            name="page-transition" 
+            mode="out-in"
+            appear
+          >
+            <keep-alive :include="cachedRoutes" :max="5">
+              <component 
+                :is="Component" 
+                :key="route.path"
+                :is-active="true"
+              />
+            </keep-alive>
+          </transition>
+        </router-view>
+      </div>
     </div>
     
     <!-- 全局Toast通知 - 放在最外层，确保不受页面切换影响 -->
@@ -613,9 +615,19 @@ export default {
   width: 100%;
 }
 
+.content-layout-shell {
+  width: 100%;
+}
+
 @media (min-width: 906px) {
   .app-content-wrapper.with-left-nav {
     padding-left: 240px;
+  }
+
+  .content-layout-shell.fixed-content-width {
+    width: min(1180px, 100%);
+    margin-right: auto;
+    margin-left: 0;
   }
 
   .site-logo {
