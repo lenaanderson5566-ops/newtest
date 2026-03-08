@@ -460,7 +460,7 @@
                   :title="`${service.label} · ${isIpServiceReferenced(service.key) ? '地区参考可用' : '未在地区参考列表'}`"
                 >
                   <span class="service-reference-tile">
-                    <span class="service-reference-icon-mask" :style="{ '--service-icon-url': `url(${service.icon})` }"></span>
+                    <img class="service-reference-icon" :src="service.icon" :alt="service.label" loading="lazy" />
                   </span>
                   <span class="service-reference-label">{{ service.label }}</span>
                 </div>
@@ -3661,59 +3661,55 @@ export default {
     }
 
     .service-reference-tags {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-
-      @media (max-width: 680px) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      gap: 10px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
     }
 
     .service-reference-item {
-      min-height: 76px;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
+      flex: 0 0 auto;
+      min-height: 40px;
+      border-radius: 999px;
+      display: inline-flex;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      white-space: nowrap;
+      padding: 6px 12px;
       border: none;
       background: rgba(255, 255, 255, 0.06);
-      color: rgba(233, 243, 255, 0.74);
-      opacity: 0.58;
+      color: rgba(233, 243, 255, 0.86);
+      opacity: 0.72;
       transition: all 0.2s ease;
 
       .service-reference-tile {
-        width: 46px;
-        height: 46px;
-        border-radius: 12px;
+        width: 22px;
+        height: 22px;
+        border-radius: 0;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: rgba(14, 24, 45, 0.35);
+        background: transparent;
       }
 
       .service-reference-label {
-        font-size: 14px;
-        line-height: 1.1;
+        font-size: 13px;
+        line-height: 1;
         color: #ebf2ff;
-        font-weight: 500;
+        font-weight: 600;
       }
 
-      .service-reference-icon-mask {
-        width: 26px;
-        height: 26px;
+      .service-reference-icon {
+        width: 20px;
+        height: 20px;
         display: block;
-        background-color: currentColor;
-        mask-image: var(--service-icon-url);
-        -webkit-mask-image: var(--service-icon-url);
-        mask-repeat: no-repeat;
-        -webkit-mask-repeat: no-repeat;
-        mask-size: contain;
-        -webkit-mask-size: contain;
-        mask-position: center;
-        -webkit-mask-position: center;
+        object-fit: contain;
       }
 
       &.active {
