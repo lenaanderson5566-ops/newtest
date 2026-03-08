@@ -13,16 +13,40 @@
       
       <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
       <div class="top-toolbar">
-        <div class="toolbar-wallets" v-if="walletDisplayItems.length">
-          <div
-            v-for="wallet in walletDisplayItems"
-            :key="wallet.currency"
-            class="toolbar-wallet-chip"
-            :title="`${wallet.currency} ${wallet.amount}`"
+        <div
+          class="toolbar-wallets"
+          v-if="primaryWallet"
+          ref="walletContainer"
+          @mouseenter="openWalletDropdown"
+          @mouseleave="closeWalletDropdown"
+        >
+          <button
+            class="toolbar-wallet-main"
+            :title="`${primaryWallet.currency} ${primaryWalletDisplay}`"
+            @click.stop="toggleWalletDropdown"
           >
-            <span class="wallet-currency">{{ wallet.currency }}</span>
-            <span class="wallet-amount">{{ wallet.amount }}</span>
-          </div>
+            <span class="wallet-icon" aria-hidden="true">💳</span>
+            <span class="wallet-main-amount">{{ primaryWalletDisplay }}</span>
+          </button>
+
+          <transition name="fade">
+            <div
+              v-if="walletDropdownOpen && extraWalletItems.length"
+              class="wallet-dropdown"
+              @click.stop
+            >
+              <div class="wallet-dropdown-title">钱包余额</div>
+              <div
+                v-for="wallet in walletDisplayItems"
+                :key="wallet.currency"
+                class="wallet-row"
+              >
+                <span class="wallet-row-currency">{{ wallet.currency }}</span>
+                <span class="wallet-row-amount">{{ formatWalletDisplay(wallet) }}</span>
+              </div>
+              <button class="wallet-deposit-btn" @click="goToWalletDeposit">充值</button>
+            </div>
+          </transition>
         </div>
         <LanguageSelector />
         <button 
@@ -190,6 +214,62 @@ export default {
     const avatarUrl = computed(() => store.getters.avatarUrl || '');
     const walletDisplayItems = ref([]);
     const isLoadingWallets = ref(false);
+    const walletDropdownOpen = ref(false);
+    const walletContainer = ref(null);
+
+    const currencySymbols = {
+      USD: '$',
+      CNY: '¥',
+      EUR: '€',
+      GBP: '£',
+      JPY: '¥',
+      HKD: 'HK$',
+      TWD: 'NT$',
+    };
+
+    const primaryWallet = computed(() => {
+      if (!walletDisplayItems.value.length) return null;
+      return walletDisplayItems.value.find((item) => item.currency === 'USD') || walletDisplayItems.value[0];
+    });
+
+    const extraWalletItems = computed(() => {
+      if (!primaryWallet.value) return [];
+      return walletDisplayItems.value.filter((item) => item.currency !== primaryWallet.value.currency);
+    });
+
+    const formatWalletDisplay = (wallet) => {
+      const symbol = currencySymbols[wallet.currency] || `${wallet.currency} `;
+      return `${symbol}${wallet.amount}`;
+    };
+
+    const primaryWalletDisplay = computed(() => {
+      if (!primaryWallet.value) return '';
+      return formatWalletDisplay(primaryWallet.value);
+    });
+
+    const openWalletDropdown = () => {
+      if (extraWalletItems.value.length) walletDropdownOpen.value = true;
+    };
+
+    const closeWalletDropdown = () => {
+      walletDropdownOpen.value = false;
+    };
+
+    const toggleWalletDropdown = () => {
+      if (!extraWalletItems.value.length) return;
+      walletDropdownOpen.value = !walletDropdownOpen.value;
+    };
+
+    const goToWalletDeposit = () => {
+      walletDropdownOpen.value = false;
+      router.push('/billing?tab=wallet');
+    };
+
+    const handleWalletClickOutside = (event) => {
+      if (walletContainer.value && !walletContainer.value.contains(event.target)) {
+        walletDropdownOpen.value = false;
+      }
+    };
 
     const loadUserWallets = async () => {
       if (!route.meta.requiresAuth || isLoadingWallets.value) {
@@ -271,6 +351,7 @@ export default {
     
     onMounted(() => {
       window.addEventListener('languageChanged', onLanguageChanged);
+      document.addEventListener('click', handleWalletClickOutside);
       
       applyTheme(store.getters.currentTheme);
       
@@ -294,6 +375,7 @@ export default {
     
     onUnmounted(() => {
       window.removeEventListener('languageChanged', onLanguageChanged);
+      document.removeEventListener('click', handleWalletClickOutside);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     });
     
@@ -304,7 +386,17 @@ export default {
       PROFILE_CONFIG,
       cachedRoutes,
       customerServiceConfig,
-      walletDisplayItems
+      walletDisplayItems,
+      walletDropdownOpen,
+      walletContainer,
+      primaryWallet,
+      extraWalletItems,
+      primaryWalletDisplay,
+      formatWalletDisplay,
+      openWalletDropdown,
+      closeWalletDropdown,
+      toggleWalletDropdown,
+      goToWalletDeposit
     };
   }
 };
@@ -380,43 +472,84 @@ export default {
   z-index: 110;
 
   .toolbar-wallets {
+    position: relative;
     display: inline-flex;
     align-items: center;
     height: var(--toolbar-control-height);
-    padding: 0 8px;
     margin-right: 2px;
-    border-radius: var(--toolbar-control-radius);
-    border: 1px solid var(--toolbar-control-border);
-    background: var(--toolbar-control-bg);
-    box-shadow: var(--toolbar-control-shadow);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-  }
 
-  .toolbar-wallet-chip {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
-    padding: 0 10px;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1;
-    color: var(--text-color);
-
-    &:not(:last-child) {
-      border-right: 1px solid color-mix(in srgb, var(--border-color) 75%, transparent);
-    }
-
-    .wallet-currency {
-      color: var(--text-secondary);
-      letter-spacing: 0.2px;
-      font-size: 12px;
-    }
-
-    .wallet-amount {
+    .toolbar-wallet-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 100%;
+      padding: 0 12px;
+      border-radius: var(--toolbar-control-radius);
+      border: 1px solid var(--toolbar-control-border);
+      background: var(--toolbar-control-bg);
+      box-shadow: var(--toolbar-control-shadow);
       color: var(--text-color);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
       font-variant-numeric: tabular-nums;
-      min-width: 36px;
+
+      .wallet-icon {
+        font-size: 14px;
+        line-height: 1;
+      }
+    }
+
+    .wallet-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 200px;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: rgba(var(--card-background-rgb), 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-card-md);
+      z-index: 120;
+
+      .wallet-dropdown-title {
+        font-size: 12px;
+        color: var(--secondary-text-color);
+        margin-bottom: 8px;
+      }
+
+      .wallet-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 4px 0;
+        font-size: 13px;
+
+        .wallet-row-currency {
+          color: var(--secondary-text-color);
+          font-weight: 600;
+        }
+
+        .wallet-row-amount {
+          color: var(--text-color);
+          font-variant-numeric: tabular-nums;
+          font-weight: 600;
+        }
+      }
+
+      .wallet-deposit-btn {
+        margin-top: 10px;
+        width: 100%;
+        height: 32px;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+      }
     }
   }
   
@@ -496,14 +629,7 @@ export default {
     .toolbar-wallets {
       order: -1;
       height: 34px;
-      max-width: 100%;
       margin-left: auto;
-      overflow-x: auto;
-      scrollbar-width: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
     }
   }
   
