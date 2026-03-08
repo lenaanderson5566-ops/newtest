@@ -671,7 +671,7 @@ export default {
   width: 100%;
 
   &.with-top-bar {
-    padding-top: 56px;
+    padding-top: 120px;
   }
 }
 
@@ -706,7 +706,7 @@ export default {
 
 @media (max-width: 768px) {
   .app-content-wrapper.with-top-bar {
-    padding-top: 44px;
+    padding-top: 100px;
   }
 
   .top-fixed-bar {

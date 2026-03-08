@@ -440,9 +440,6 @@
               </div>
             </div>
 
-            <div class="ip-map-visual" aria-hidden="true">
-              <div class="map-glow-point"></div>
-            </div>
 
             <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
               <div class="service-reference-title">
@@ -3589,51 +3586,6 @@ export default {
         border-radius: 50%;
         background: #35c26b;
         box-shadow: 0 0 0 4px rgba(53, 194, 107, 0.2);
-      }
-    }
-
-    .ip-map-visual {
-      align-self: stretch;
-      min-height: 182px;
-      border-radius: 16px;
-      background:
-        radial-gradient(circle at 50% 55%, rgba(71, 127, 255, 0.28), rgba(18, 34, 68, 0.45) 58%, rgba(9, 18, 36, 0.65) 100%),
-        linear-gradient(160deg, rgba(20, 39, 75, 0.75), rgba(9, 18, 38, 0.55));
-      border: 1px solid rgba(145, 177, 238, 0.24);
-      position: relative;
-      overflow: hidden;
-
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-image:
-          radial-gradient(circle at 20% 30%, rgba(227, 236, 255, 0.45) 0.8px, transparent 1.2px),
-          radial-gradient(circle at 50% 28%, rgba(227, 236, 255, 0.38) 0.8px, transparent 1.2px),
-          radial-gradient(circle at 68% 42%, rgba(227, 236, 255, 0.32) 0.9px, transparent 1.3px),
-          radial-gradient(circle at 80% 62%, rgba(227, 236, 255, 0.28) 0.8px, transparent 1.3px);
-        background-size: 120px 90px;
-        opacity: 0.5;
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        inset: auto 0 0;
-        height: 30%;
-        background: radial-gradient(circle at 50% 100%, rgba(54, 108, 255, 0.5), transparent 62%);
-        opacity: 0.6;
-      }
-
-      .map-glow-point {
-        position: absolute;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        right: 28%;
-        top: 35%;
-        background: #fff;
-        box-shadow: 0 0 0 10px rgba(44, 114, 255, 0.15), 0 0 25px rgba(44, 114, 255, 0.9);
       }
     }
 
