@@ -877,6 +877,8 @@ export default {
 
 <style lang="scss" scoped>
 .shop-container {
+  --shop-card-radius: var(--radius-lg);
+
   padding: 20px;
 
   display: flex;
@@ -890,6 +892,10 @@ export default {
   }
 
   .welcome-card {
+    border: 1px solid var(--border-color-soft);
+    border-radius: var(--shop-card-radius);
+    box-shadow: var(--shadow-card-sm);
+
     margin-bottom: 24px;
 
     .card-body p {
@@ -1197,6 +1203,10 @@ export default {
     }
 
     .plan-card {
+      border-radius: var(--shop-card-radius);
+      border: 1px solid var(--border-color-soft);
+      box-shadow: var(--shadow-card-sm);
+
       background-color: var(--card-bg-color);
 
       border-radius: 16px;
@@ -1226,6 +1236,8 @@ export default {
       }
 
       &.current-plan-card {
+        border-color: rgba(37, 99, 235, 0.28);
+
         border-color: rgba(59, 130, 246, 0.6);
         box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.18), 0 10px 24px rgba(59, 130, 246, 0.12);
       }
@@ -1360,6 +1372,8 @@ export default {
         margin-bottom: 12px;
 
         .price-main-line {
+          align-items: baseline;
+
           display: inline-flex;
           align-items: baseline;
           justify-content: center;
@@ -1513,88 +1527,55 @@ export default {
 
   .btn-purchase {
     position: relative;
-
     bottom: auto;
-
     left: auto;
-
     height: 40px;
-
     width: auto;
-
     min-width: 120px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     gap: 8px;
-
     color: white;
-
-    border: none;
-
-    border-radius: 8px;
-
+    border: 1px solid transparent;
+    border-radius: 10px;
     font-size: 14px;
-
-    font-weight: 500;
-
+    font-weight: 600;
     cursor: pointer;
-
-    transition: all 0.3s ease;
-
+    transition: all 0.25s ease;
     padding: 0 16px;
-
     margin-top: 4px;
-
     align-self: flex-start;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
 
     &.glassmorphism {
-      background-color: rgba(var(--theme-color-rgb), 0.85);
-
-      backdrop-filter: blur(8px);
-
-      -webkit-backdrop-filter: blur(8px);
-
-      border: 1px solid rgba(var(--theme-color-rgb), 0.3);
-
-      box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 1px solid transparent;
     }
 
     &:hover {
       transform: translateY(-2px);
-
-      box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
-
-      background-color: rgba(var(--theme-color-rgb), 0.95);
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.3);
+      filter: brightness(1.03);
     }
 
     &.btn-disabled {
-      background-color: rgba(100, 116, 139, 0.55);
-
-      backdrop-filter: blur(8px);
-
-      -webkit-backdrop-filter: blur(8px);
-
+      background: #94a3b8;
       cursor: not-allowed;
-
       box-shadow: none;
-
-      border: 1px solid rgba(100, 116, 139, 0.5);
+      border: 1px solid #94a3b8;
 
       &:hover {
         transform: none;
-
         box-shadow: none;
+        filter: none;
       }
     }
 
     .btn-icon {
       width: 18px;
-
       height: 18px;
     }
 
@@ -1608,6 +1589,7 @@ export default {
       outline-offset: 2px;
     }
   }
+
 
 
   .shop-title-header {
@@ -1624,12 +1606,10 @@ export default {
       align-items: center;
       gap: 4px;
       padding: 3px;
-      border-radius: 999px;
-      border: 1px solid var(--border-color, rgba(15, 23, 42, 0.12));
-      background: rgba(var(--card-background-rgb, 255, 255, 255), 0.75);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+      border-radius: 12px;
+      border: 1px solid var(--border-color-soft);
+      background: #f1f5f9;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
 
       .filter-option {
         border: 0;
@@ -1637,7 +1617,7 @@ export default {
         min-width: 60px;
         height: 30px;
         padding: 0 10px;
-        border-radius: 999px;
+        border-radius: 9px;
         cursor: pointer;
         transition: all 0.22s ease;
 
@@ -1651,67 +1631,24 @@ export default {
         }
 
         &.active {
-          background-color: rgba(var(--theme-color-rgb), 0.18);
-          box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.26);
+          background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
 
           .option-text {
-            color: var(--text-color);
+            color: #fff;
             font-weight: 600;
           }
         }
 
         .option-text {
-          font-size: 13px;
-          line-height: 1;
-          color: var(--secondary-text-color);
-          transition: color 0.22s ease;
+          font-size: 12px;
+          color: #475569;
+          font-weight: 500;
           white-space: nowrap;
         }
       }
     }
-  }
 
-
-  .no-plans-message {
-    grid-column: 1 / -1;
-
-    background-color: var(--card-bg-color);
-
-    border-radius: 12px;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-
-    padding: 40px 20px;
-
-    margin-bottom: 24px;
-
-    border: 1px solid var(--border-color);
-
-    text-align: center;
-
-    .info-icon {
-      color: var(--theme-color);
-
-      opacity: 0.7;
-
-      margin-bottom: 16px;
-    }
-
-    h3 {
-      font-size: 18px;
-
-      font-weight: 600;
-
-      margin: 0 0 10px;
-
-      color: var(--text-color);
-    }
-
-    p {
-      color: var(--secondary-text-color);
-
-      margin-bottom: 24px;
-    }
 
     .btn-reset-filter {
       padding: 8px 20px;
@@ -1787,6 +1724,8 @@ export default {
 
 @media (max-width: 768px) {
   .shop-container {
+  --shop-card-radius: var(--radius-lg);
+
     padding: 15px;
 
     padding-bottom: 80px;
@@ -1810,6 +1749,10 @@ export default {
     width: 100%;
 
     .filter-toggle-wrapper {
+      border: 1px solid var(--border-color-soft);
+      border-radius: 12px;
+      background: #f1f5f9;
+
       width: fit-content;
     }
   }

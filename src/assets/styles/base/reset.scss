@@ -30,7 +30,7 @@ body {
   font-size: $font-size-base;
   line-height: 1.5;
   color: var(--text-color);
-  background-color: var(--background-color);
+  background: radial-gradient(circle at 12% -8%, #ffffff 0%, var(--background-elevated) 36%, var(--background-color) 100%);
   overflow-x: hidden;
   transition: color 0.3s ease, background-color 0.3s ease;
 }
@@ -150,3 +150,14 @@ input, button, textarea, select {
 .no-select {
   user-select: none;
 } 
+
+input, textarea, select {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color-soft);
+  background: var(--card-background);
+}
+
+button {
+  border-radius: var(--radius-md);
+  transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease;
+}

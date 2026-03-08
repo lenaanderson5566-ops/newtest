@@ -2590,7 +2590,7 @@ export default {
     > .overview-title {
       grid-column: 1 / -1;
       margin: 0;
-      font-size: 28px;
+      font-size: 30px;
       line-height: 1.25;
       font-weight: 700;
       color: #0f172a;
@@ -2625,17 +2625,17 @@ export default {
   }
 
   .dashboard-card {
-    background-color: var(--card-bg-color);
-    border-radius: 12px;
-    box-shadow: 0 1px 8px rgba(15, 23, 42, 0.04);
-    padding: 20px;
-    margin-bottom: 24px;
-    border: 1px solid rgba(148, 163, 184, 0.16);
-    transition: all 0.3s ease;
+    background-color: var(--card-background);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card-sm);
+    padding: var(--space-5);
+    margin-bottom: var(--space-5);
+    border: 1px solid var(--border-color-soft);
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
 
     &:hover {
-      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.07);
-      border-color: rgba(148, 163, 184, 0.24);
+      box-shadow: var(--shadow-card-md);
+      transform: translateY(-1px);
     }
 
     .card-header {
@@ -2645,8 +2645,8 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 18px;
-        font-weight: 600;
+        font-size: 17px;
+        font-weight: 650;
         margin: 0;
       }
 
@@ -2949,9 +2949,9 @@ export default {
         }
 
         &.total-main-card {
-          background: color-mix(in srgb, var(--card-bg-color) 92%, #eff6ff 8%);
-          border-color: rgba(100, 116, 139, 0.22);
-          box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
+          background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+          border-color: var(--border-color-soft);
+          box-shadow: var(--shadow-card-md);
 
           .usage-card-title {
             color: #4b5563;
@@ -2972,7 +2972,7 @@ export default {
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 16px;
           margin-top: 6px;
           overflow: visible;
 
@@ -3037,7 +3037,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 16px;
             padding: 2px 0;
           }
 
@@ -3150,9 +3150,9 @@ export default {
               }
 
               &.subtle {
-                color: #6b7280;
-                border-color: #e5e7eb;
-                background: #f8fafc;
+                color: #475569;
+                border-color: var(--border-color-soft);
+                background: #f1f5f9;
                 box-shadow: none;
               }
             }
@@ -3353,7 +3353,7 @@ export default {
 
           .usage-kpis {
             display: flex;
-            gap: 12px;
+            gap: 16px;
           }
 
           .usage-kpi {
@@ -3451,6 +3451,8 @@ export default {
 
 
   .ip-location-summary-card {
+    border-radius: var(--radius-lg);
+
     border-color: rgba(148, 163, 184, 0.24);
     background: linear-gradient(180deg, rgba(10, 23, 40, 0.9), rgba(5, 13, 23, 0.92));
     box-shadow: 0 8px 18px rgba(2, 10, 24, 0.24);
