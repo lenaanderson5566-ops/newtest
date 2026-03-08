@@ -266,6 +266,7 @@ export default {
         overview: '概览',
         shop: '商店',
         subscription: '订阅',
+        announcement: '公告',
         invite: '邀请',
         docs: '文档',
         startUsing: '开始使用',

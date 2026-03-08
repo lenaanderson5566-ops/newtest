@@ -26,75 +26,15 @@
         </div>
       </div>
 
-      <div class="dashboard-card notice-card" :class="{'card-animate': !loading.notices}"
-           v-if="notices && notices.data && notices.data.length > 0">
-        <div v-if="loading.notices" class="card-body skeleton-loading">
-          <div class="skeleton-row"></div>
-          <div class="skeleton-row"></div>
-          <div class="skeleton-row"></div>
-        </div>
-        <div v-else class="card-body">
-          <div class="notice-slider" v-if="notices.data && notices.data.length">
-            <transition name="fade-slide" mode="out-in">
-              <div
-                class="notice-item"
-                v-if="notices.data[currentNoticeIndex]"
-                :key="currentNoticeIndex"
-                :style="noticeBackgroundStyle(notices.data[currentNoticeIndex])"
-              >
-                <div class="notice-overlay"></div>
-                <div class="notice-content">
-                  <div class="notice-title">{{ notices.data[currentNoticeIndex].title }}</div>
-                  <div class="notice-footer">
-                    <div class="notice-date">{{ formatDate(notices.data[currentNoticeIndex].created_at) }}</div>
-                    <div class="notice-nav">
-                      <button
-                          class="btn-notice"
-                          @click="showNoticeModal">
-                        <IconEye :size="16"/>
-                        {{ $t('common.viewDetails') }}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </transition>
-            <div v-if="notices.data.length > 1" class="notice-dots">
-              <button
-                v-for="(notice, idx) in notices.data"
-                :key="notice.id || idx"
-                class="notice-dot"
-                :class="{ active: currentNoticeIndex === idx }"
-                @click="goToNotice(idx)"
-              />
-            </div>
-          </div>
+      <div class="dashboard-card welcome-card" :class="{'card-animate': !loading.userStats}">
+        <div class="card-body welcome-card-body">
+          <div class="welcome-title">{{ $t('dashboard.welcome') }}</div>
+          <div class="welcome-desc">{{ $t('dashboard.welcomeDesc') }}</div>
+          <button class="welcome-announcement-btn" @click="router.push('/announcements')">
+            {{ $t('dashboard.siteAnnouncement') }}
+          </button>
         </div>
       </div>
-
-      <!-- 公告弹窗 -->
-      <transition name="fade">
-        <div v-if="showNoticeDetails" class="notice-modal-overlay" @click="closeNoticeModal">
-          <transition name="popup-slide">
-            <div v-if="showNoticeDetails" class="notice-modal" :style="noticeModalStyle" @click.stop>
-              <div class="notice-modal-header">
-                <h2 class="popup-title">{{ notices.data[currentNoticeIndex].title }}</h2>
-                <button class="popup-close-btn" @click="closeNoticeModal">
-                  <IconX :size="20"/>
-                </button>
-              </div>
-              <div class="notice-modal-content">
-                <div v-html="processedNoticeContent" class="notice-content"></div>
-              </div>
-              <div class="notice-modal-footer">
-                <button class="popup-action-btn adaptive-btn" @click="closeNoticeModal">
-                  {{ $t('common.close') }}
-                </button>
-              </div>
-            </div>
-          </transition>
-        </div>
-      </transition>
 
 
       <!-- 订阅导入卡片 -->
@@ -2690,6 +2630,43 @@ export default {
 
   .welcome-card {
     margin-bottom: 24px;
+
+    .welcome-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .welcome-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.3;
+    }
+
+    .welcome-desc {
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    .welcome-announcement-btn {
+      align-self: flex-start;
+      margin-top: 4px;
+      border: 1px solid rgba(var(--theme-color-rgb), 0.22);
+      background: rgba(var(--theme-color-rgb), 0.08);
+      color: var(--theme-color);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(var(--theme-color-rgb), 0.14);
+        border-color: rgba(var(--theme-color-rgb), 0.35);
+      }
+    }
 
     .user-email {
       display: flex;
