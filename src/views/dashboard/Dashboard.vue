@@ -3187,7 +3187,8 @@ export default {
               position: absolute;
               cursor: pointer;
               inset: 0;
-              background-color: #d1d5db;
+              background-color: var(--surface-subtle);
+              border: 1px solid var(--border-color-soft);
               transition: 0.3s;
 
               &::before {
@@ -3211,7 +3212,8 @@ export default {
             }
 
             input:checked + .slider {
-              background-color: rgba(var(--theme-color-rgb), 0.9);
+              background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
+              border-color: transparent;
             }
 
             input:checked + .slider::before {
