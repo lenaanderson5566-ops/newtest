@@ -57,6 +57,10 @@
         </div>
       </div>
 
+      <div class="page-header-layer">
+        <div class="page-header-title">{{ pageHeaderTitle }}</div>
+      </div>
+
       <!-- 顶部导航栏 - 保持不变 -->
       <SlideTabsNav />
     </div>
@@ -117,6 +121,7 @@ import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { SITE_CONFIG, PROFILE_CONFIG, CUSTOMER_SERVICE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
@@ -165,6 +170,7 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
+    const { t } = useI18n();
     const { applyTheme } = useTheme();
     const siteConfig = ref(SITE_CONFIG);
     const cachedRoutes = computed(() => pageCache.getCachedRoutes());
@@ -376,6 +382,12 @@ export default {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     });
     
+
+    const pageHeaderTitle = computed(() => {
+      const titleKey = route.meta?.titleKey;
+      if (titleKey) return t(titleKey);
+      return route.meta?.title || route.name || siteConfig.value.siteName || 'Page';
+    });
     return {
       username,
       avatarUrl,
@@ -391,7 +403,8 @@ export default {
       primaryWalletDisplay,
       formatWalletDisplay,
       toggleWalletDropdown,
-      goToWalletDeposit
+      goToWalletDeposit,
+      pageHeaderTitle
     };
   }
 };
@@ -432,6 +445,27 @@ export default {
   justify-content: space-between;
   padding: 0 24px;
   z-index: 120;
+}
+
+.page-header-layer {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  z-index: 115;
+}
+
+.page-header-title {
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 
@@ -619,7 +653,7 @@ export default {
   width: 100%;
 
   &.with-top-bar {
-    padding-top: 72px;
+    padding-top: 120px;
   }
 }
 
@@ -643,12 +677,22 @@ export default {
 
 @media (max-width: 768px) {
   .app-content-wrapper.with-top-bar {
-    padding-top: 64px;
+    padding-top: 100px;
   }
 
   .top-fixed-bar {
     height: 56px;
     padding: 0 12px;
+  }
+
+  .page-header-layer {
+    top: 56px;
+    height: 44px;
+    padding: 0 12px;
+  }
+
+  .page-header-title {
+    font-size: 16px;
   }
 
   .site-logo {
