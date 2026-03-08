@@ -26,15 +26,7 @@
         </div>
       </div>
 
-      <div class="dashboard-card welcome-card" :class="{'card-animate': !loading.userStats}">
-        <div class="card-body welcome-card-body">
-          <div class="welcome-title">{{ $t('dashboard.welcome') }}</div>
-          <div class="welcome-desc">{{ $t('dashboard.welcomeDesc') }}</div>
-          <button class="welcome-announcement-btn" @click="router.push('/announcements')">
-            {{ $t('dashboard.siteAnnouncement') }}
-          </button>
-        </div>
-      </div>
+      <h1 class="overview-title" :class="{'card-animate': !loading.userStats}">{{ $t('dashboard.welcome') }}</h1>
 
 
       <!-- 订阅导入卡片 -->
@@ -2595,13 +2587,17 @@ export default {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 16px;
 
-    > .welcome-card {
-      grid-column: span 5;
-      margin-bottom: 0;
+    > .overview-title {
+      grid-column: 1 / -1;
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.25;
+      font-weight: 700;
+      color: #0f172a;
     }
 
     > .pending-items-card {
-      grid-column: span 7;
+      grid-column: 1 / -1;
       margin-bottom: 0;
     }
 
@@ -2615,7 +2611,7 @@ export default {
     }
 
     @media (max-width: 992px) {
-      > .welcome-card,
+      > .overview-title,
       > .pending-items-card,
       > .notice-card,
       > .subscription-card,
@@ -2625,58 +2621,6 @@ export default {
       > .import-card {
         grid-column: 1 / -1;
       }
-    }
-  }
-
-  .welcome-card {
-    margin-bottom: 24px;
-
-    .welcome-card-body {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .welcome-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: #0f172a;
-      line-height: 1.3;
-    }
-
-    .welcome-desc {
-      font-size: 14px;
-      color: #64748b;
-    }
-
-    .welcome-announcement-btn {
-      align-self: flex-start;
-      margin-top: 4px;
-      border: 1px solid rgba(var(--theme-color-rgb), 0.22);
-      background: rgba(var(--theme-color-rgb), 0.08);
-      color: var(--theme-color);
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      &:hover {
-        background: rgba(var(--theme-color-rgb), 0.14);
-        border-color: rgba(var(--theme-color-rgb), 0.35);
-      }
-    }
-
-    .user-email {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 12px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(var(--theme-color-rgb), 0.1);
-      color: var(--theme-text-secondary);
-      font-size: 14px;
     }
   }
 
