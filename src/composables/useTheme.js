@@ -8,23 +8,40 @@ export function useTheme() {
     const root = document.documentElement;
     const themeVars = THEME_CONFIG.light || THEME_CONFIG.default || {};
 
+    const map = {
+      '--theme-color': 'primaryColor',
+      '--theme-color-rgb': 'primaryColorRgb',
+      '--theme-hover-color': 'primaryColorHover',
+      '--primary-color-hover': 'primaryColorHover',
+      '--background-color': 'backgroundColor',
+      '--background-elevated': 'backgroundElevated',
+      '--card-background': 'cardBackground',
+      '--text-color': 'textColor',
+      '--secondary-text-color': 'secondaryTextColor',
+      '--muted-text-color': 'mutedTextColor',
+      '--border-color': 'borderColor',
+      '--border-color-soft': 'borderColorSoft',
+      '--shadow-color': 'shadowColor',
+      '--shadow-card-sm': 'shadowCardSm',
+      '--shadow-card-md': 'shadowCardMd',
+      '--radius-sm': 'radiusSm',
+      '--radius-md': 'radiusMd',
+      '--radius-lg': 'radiusLg',
+      '--surface-subtle': 'surfaceSubtle',
+      '--heading-color': 'headingColor',
+      '--neutral-strong': 'neutralStrong',
+      '--button-primary-start': 'buttonPrimaryStart',
+      '--button-primary-soft-start': 'buttonPrimarySoftStart',
+      '--button-primary-end': 'buttonPrimaryEnd',
+      '--button-disabled-bg': 'buttonDisabledBg'
+    };
 
-    if (themeVars.primaryColor) root.style.setProperty('--theme-color', themeVars.primaryColor);
-    if (themeVars.primaryColorRgb) root.style.setProperty('--theme-color-rgb', themeVars.primaryColorRgb);
-    if (themeVars.primaryColorHover) {
-      root.style.setProperty('--theme-hover-color', themeVars.primaryColorHover);
-      root.style.setProperty('--primary-color-hover', themeVars.primaryColorHover);
-    }
-    if (themeVars.backgroundColor) root.style.setProperty('--background-color', themeVars.backgroundColor);
-    if (themeVars.cardBackground) root.style.setProperty('--card-background', themeVars.cardBackground);
-    if (themeVars.textColor) root.style.setProperty('--text-color', themeVars.textColor);
-    if (themeVars.secondaryTextColor) root.style.setProperty('--secondary-text-color', themeVars.secondaryTextColor);
-    if (themeVars.borderColor) root.style.setProperty('--border-color', themeVars.borderColor);
-    if (themeVars.shadowColor) root.style.setProperty('--shadow-color', themeVars.shadowColor);
+    Object.entries(map).forEach(([cssVar, key]) => {
+      if (themeVars[key]) root.style.setProperty(cssVar, themeVars[key]);
+    });
   };
 
   const toggleTheme = () => {
-    // dark mode removed: keep light theme only
     theme.value = 'light';
     applyTheme();
   };

@@ -1546,7 +1546,7 @@ export default {
     padding: 0 16px;
     margin-top: 4px;
     align-self: flex-start;
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
     box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
 
     &.glassmorphism {
@@ -1562,10 +1562,10 @@ export default {
     }
 
     &.btn-disabled {
-      background: #94a3b8;
+      background: var(--button-disabled-bg);
       cursor: not-allowed;
       box-shadow: none;
-      border: 1px solid #94a3b8;
+      border: 1px solid var(--button-disabled-bg);
 
       &:hover {
         transform: none;
@@ -1608,7 +1608,7 @@ export default {
       padding: 3px;
       border-radius: 12px;
       border: 1px solid var(--border-color-soft);
-      background: #f1f5f9;
+      background: var(--surface-subtle);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
 
       .filter-option {
@@ -1631,7 +1631,7 @@ export default {
         }
 
         &.active {
-          background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+          background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
           box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
 
           .option-text {
@@ -1751,7 +1751,7 @@ export default {
     .filter-toggle-wrapper {
       border: 1px solid var(--border-color-soft);
       border-radius: 12px;
-      background: #f1f5f9;
+      background: var(--surface-subtle);
 
       width: fit-content;
     }

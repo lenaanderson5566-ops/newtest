@@ -2593,7 +2593,7 @@ export default {
       font-size: 30px;
       line-height: 1.25;
       font-weight: 700;
-      color: #0f172a;
+      color: var(--heading-color);
     }
 
     > .pending-items-card {
@@ -2897,7 +2897,7 @@ export default {
           white-space: normal;
           font-size: 16px;
           font-weight: 600;
-          color: #334155;
+          color: var(--neutral-strong);
           line-height: 1.35;
         }
 
@@ -2921,7 +2921,7 @@ export default {
             align-items: center;
             justify-content: center;
             color: #fff;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
             box-shadow: 0 6px 14px rgba(37, 99, 235, 0.2);
             cursor: pointer;
           }
@@ -2932,7 +2932,7 @@ export default {
 
           .package-add-btn {
             color: #fff;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
           }
         }
         &.subscription-card-muted {
@@ -3008,7 +3008,7 @@ export default {
             font-size: 24px;
             line-height: 1.2;
             font-weight: 700;
-            color: #0f172a;
+            color: var(--heading-color);
           }
 
           .plan-expire-meta {
@@ -3132,13 +3132,13 @@ export default {
 
               &.primary {
                 color: #fff;
-                background: linear-gradient(135deg, #2563eb, #1d4ed8);
+                background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
                 box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
               }
 
               &.premium {
                 color: #fff;
-                background: linear-gradient(135deg, #3b82f6, #2563eb);
+                background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
                 box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
               }
 
@@ -3152,7 +3152,7 @@ export default {
               &.subtle {
                 color: #475569;
                 border-color: var(--border-color-soft);
-                background: #f1f5f9;
+                background: var(--surface-subtle);
                 box-shadow: none;
               }
             }
@@ -3250,7 +3250,7 @@ export default {
           grid-column: 1 / -1;
           font-size: 13px;
           font-weight: 600;
-          color: #334155;
+          color: var(--neutral-strong);
         }
 
         .usage-kpi {
@@ -3266,7 +3266,7 @@ export default {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           font-size: 12px;
-          color: #94a3b8;
+          color: var(--muted-text-color);
           line-height: 1;
         }
 
@@ -3283,7 +3283,7 @@ export default {
           width: 100%;
           margin-top: 6px;
           font-size: 12px;
-          color: #94a3b8;
+          color: var(--muted-text-color);
           line-height: 1.35;
         }
 
@@ -3332,7 +3332,7 @@ export default {
           .usage-card-title {
             font-size: 16px;
             font-weight: 600;
-            color: #334155;
+            color: var(--neutral-strong);
           }
 
           .usage-percent {
@@ -3564,7 +3564,7 @@ export default {
       font-weight: 800;
       color: #fff;
       letter-spacing: 0.5px;
-      background: linear-gradient(135deg, #334155, #1e293b);
+      background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
       box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
 
       &.is-red { background: linear-gradient(135deg, #e11d48, #9f1239); }

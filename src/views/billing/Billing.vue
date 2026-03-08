@@ -100,7 +100,7 @@ watch(
   padding: 6px;
   border-radius: 12px;
   border: 1px solid var(--border-color-soft);
-  background: #f1f5f9;
+  background: var(--surface-subtle);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.65);
   margin-bottom: 16px;
 }
@@ -108,7 +108,7 @@ watch(
 .billing-tab {
   border: 0;
   background: transparent;
-  color: #334155;
+  color: var(--neutral-strong);
   height: 34px;
   padding: 0 16px;
   border-radius: 9px;
@@ -121,7 +121,7 @@ watch(
   }
 
   &.active {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
     color: #fff;
     box-shadow: 0 6px 14px rgba(37, 99, 235, 0.24);
   }
