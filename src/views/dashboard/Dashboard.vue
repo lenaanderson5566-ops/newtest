@@ -18,7 +18,7 @@
         <button class="banner-action" @click.stop="goToOrders">去支付</button>
       </div>
 
-      <h1 class="overview-title" :class="{'card-animate': !loading.userStats}">{{ $t('dashboard.welcome') }}</h1>
+      <h1 class="overview-title" :class="{'card-animate': !loading.userStats}">概览</h1>
 
 
       <!-- 订阅导入卡片 -->
@@ -3952,8 +3952,8 @@ export default {
     max-height: 48px;
     padding: 8px 12px;
     border-radius: 12px;
-    border: 1px solid #facc15;
-    background: #fef9c3;
+    border: 1px solid #FFE58F;
+    background: #FFFBE6;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -3962,8 +3962,8 @@ export default {
     transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 
     &:hover {
-      background: #fef08a;
-      border-color: #eab308;
+      background: #FFF7D6;
+      border-color: #FFD666;
       transform: translateY(-1px);
     }
 
@@ -3972,7 +3972,7 @@ export default {
       align-items: center;
       gap: 8px;
       min-width: 0;
-      color: #854d0e;
+      color: #8C6D1F;
       font-size: 13px;
       line-height: 1.35;
       font-weight: 500;
@@ -3980,7 +3980,7 @@ export default {
 
     .banner-icon {
       flex-shrink: 0;
-      color: #ca8a04;
+      color: #8C6D1F;
     }
 
     .banner-text {
