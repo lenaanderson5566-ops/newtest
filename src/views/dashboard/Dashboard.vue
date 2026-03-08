@@ -2569,7 +2569,6 @@ export default {
   padding: 20px;
   display: flex;
   justify-content: center;
-  background: #f6f7f9;
 
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
