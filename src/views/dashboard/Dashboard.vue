@@ -418,7 +418,7 @@
                 </div>
               </template>
             </div>
-            <div v-if="card.key === 'subscription'" class="usage-reset-hint">
+            <div v-if="card.key === 'subscription'" class="usage-reset-hint persist-visible">
               {{ $t('dashboard.resetTimeLabel') }} {{ userPlan.resetDateTime || '-' }}
             </div>
           </div>
