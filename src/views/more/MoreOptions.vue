@@ -116,6 +116,33 @@
 
 
 
+
+        <div class="stats-card" @click="$router.push('/announcements')">
+
+          <div class="stats-icon">
+
+            <IconBell :size="32" />
+
+          </div>
+
+          <div class="stats-info">
+
+            <div class="stats-value">{{ $t('menu.announcement') }}</div>
+
+            <div class="stats-label">{{ $t('dashboard.siteAnnouncement') }}</div>
+
+          </div>
+
+          <div class="chevron-icon">
+
+            <IconChevronRight :size="20" />
+
+          </div>
+
+        </div>
+
+        
+
         <div v-if="shouldShowBillingCard" class="stats-card" @click="$router.push('/billing?tab=orders')">
 
           <div class="stats-icon">
@@ -235,7 +262,9 @@ import {
 
   IconMessages,
 
-  IconWallet
+  IconWallet,
+
+  IconBell
 
 } from '@tabler/icons-vue';
 

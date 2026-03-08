@@ -6,7 +6,7 @@
       @click="toggleDropdown"
       :title="$t('common.language')"
     >
-      <span class="language-btn-text"><IconLanguage class="language-icon" :size="14" aria-hidden="true" />{{ currentLanguageShort }}</span>
+      <span class="language-btn-text"><IconWorld class="language-icon" :size="14" aria-hidden="true" />{{ currentLanguageShort }}</span>
     </button>
 
     <transition name="fade">
@@ -28,13 +28,13 @@
 <script>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { IconLanguage } from '@tabler/icons-vue';
+import { IconWorld } from '@tabler/icons-vue';
 import { setLanguage } from '@/i18n';
 
 export default {
   name: 'LanguageSelector',
   components: {
-    IconLanguage
+    IconWorld
   },
   setup() {
     const { locale } = useI18n();
