@@ -658,7 +658,45 @@ export default {
       margin-left: auto;
     }
   }
-  
+
+  /* Mobile density optimization: avoid oversized modules */
+  .app-content-wrapper {
+    .dashboard-card,
+    .stats-card,
+    .card,
+    .info-card {
+      border-radius: 12px !important;
+    }
+
+    .dashboard-card {
+      padding: 14px !important;
+    }
+
+    .card-header {
+      padding: 12px 14px !important;
+      min-height: auto !important;
+
+      .card-title,
+      h2,
+      h3 {
+        font-size: 16px !important;
+        line-height: 1.3 !important;
+      }
+    }
+
+    .card-body {
+      padding: 12px 14px !important;
+      font-size: 14px !important;
+      line-height: 1.45 !important;
+    }
+
+    .stats-grid,
+    .cards-grid,
+    .quick-grid,
+    .dashboard-grid {
+      gap: 10px !important;
+    }
+  }
   
   main, .main-content, .content-container {
     padding-bottom: 70px !important;
