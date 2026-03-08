@@ -419,22 +419,12 @@
       </div>
 
       <div class="dashboard-card ip-location-summary-card" v-if="hasPlan">
-        <div class="card-header">
-          <h2 class="card-title">当前出口地区</h2>
-          <button
-            class="ip-location-refresh"
-            :disabled="ipLocationLoading"
-            :title="ipLocationLoading ? $t('common.loading') : $t('common.retry')"
-            @click="triggerIpLocationRefresh"
-          >
-            <IconRefresh :size="16" :class="{ spin: ipLocationLoading }" />
-          </button>
-        </div>
         <div class="card-body ip-location-summary-body">
           <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
           <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
           <div v-else-if="ipLocationData" class="ip-location-content">
             <div class="ip-location-main-info">
+              <div class="ip-meta-title">当前出口地区</div>
               <div class="ip-main-line">
                 <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
                 <span class="ip-region-primary">{{ ipLocationPrimaryRegionText }}</span>
@@ -442,11 +432,19 @@
               <div class="ip-sub-line">
                 <span class="ip-region">{{ ipLocationDisplayText }}</span>
               </div>
-              <div class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</div>
+              <div class="ip-status-row">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span>流畅状态：正常</span>
+              </div>
             </div>
+
+            <div class="ip-map-visual" aria-hidden="true">
+              <div class="map-glow-point"></div>
+            </div>
+
             <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
               <div class="service-reference-title">
-                <span>地区服务参考</span>
+                <span>服务参考</span>
                 <span class="info-tooltip" tabindex="0" role="button" aria-label="地区服务参考说明">
                   <IconHelpCircle :size="14" />
                   <span class="info-tooltip-content">地区服务参考仅基于地区静态映射推测，不代表实时解锁检测结果。</span>
@@ -461,10 +459,15 @@
                   role="listitem"
                   :title="`${service.label} · ${isIpServiceReferenced(service.key) ? '地区参考可用' : '未在地区参考列表'}`"
                 >
-                  <span class="service-reference-icon-mask" :style="{ '--service-icon-url': `url(${service.icon})` }"></span>
+                  <span class="service-reference-tile">
+                    <span class="service-reference-icon-mask" :style="{ '--service-icon-url': `url(${service.icon})` }"></span>
+                  </span>
+                  <span class="service-reference-label">{{ service.label }}</span>
                 </div>
               </div>
             </div>
+
+            <IconChevronRight class="ip-card-arrow" :size="20" />
           </div>
           <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
         </div>
@@ -611,6 +614,7 @@ import {
   IconCalendar,
   IconCat,
   IconChevronLeft,
+  IconChevronRight,
   IconCoins,
   IconCopy,
   IconCrosshair,
@@ -622,7 +626,6 @@ import {
   IconMoon,
   IconPackage,
   IconQrcode,
-  IconRefresh,
   IconRocket,
   IconRouter,
   IconSend,
@@ -737,6 +740,7 @@ export default {
       IconTransferVertical,
     IconShare,
     IconChevronLeft,
+    IconChevronRight,
     IconCopy,
     IconQrcode,
     IconRocket,
@@ -753,7 +757,6 @@ export default {
     IconHelpCircle,
     IconCoins,
     IconEye,
-    IconRefresh,
     IconAlertTriangle,
     IconX,
     IconCalendarPlus,
@@ -3457,46 +3460,12 @@ export default {
 
 
   .ip-location-summary-card {
-    border-radius: var(--radius-lg);
-
-    border-color: rgba(148, 163, 184, 0.24);
-    background: linear-gradient(180deg, rgba(10, 23, 40, 0.9), rgba(5, 13, 23, 0.92));
-    box-shadow: 0 8px 18px rgba(2, 10, 24, 0.24);
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      .card-title {
-        color: #eaf5ff;
-        letter-spacing: 0.2px;
-        font-size: 18px;
-        font-weight: 600;
-      }
-    }
-
-    .ip-location-refresh {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
-      border: 1px solid rgba(112, 190, 255, 0.35);
-      background: rgba(18, 46, 73, 0.7);
-      color: #8ed0ff;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-
-      &:disabled {
-        opacity: 0.65;
-        cursor: not-allowed;
-      }
-
-      .spin {
-        animation: spin 0.9s linear infinite;
-      }
-    }
+    border-radius: 20px;
+    border: 1px solid rgba(131, 159, 213, 0.22);
+    background: radial-gradient(circle at 76% 50%, rgba(58, 103, 208, 0.26), transparent 40%),
+      radial-gradient(circle at 15% 105%, rgba(26, 65, 154, 0.3), transparent 35%),
+      linear-gradient(120deg, #0f172a 0%, #17233f 45%, #1c2747 100%);
+    box-shadow: 0 10px 24px rgba(10, 20, 42, 0.28);
 
     .ip-location-summary-body {
       padding-top: 0;
@@ -3513,21 +3482,41 @@ export default {
 
     .ip-location-content {
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-      gap: 8px 12px;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 1fr) minmax(0, 1.35fr);
+      gap: 8px 16px;
       color: #d9ecff;
       align-items: start;
+      position: relative;
+
+      @media (max-width: 1220px) {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
 
       @media (max-width: 920px) {
         grid-template-columns: 1fr;
       }
     }
 
+    .ip-card-arrow {
+      position: absolute;
+      top: 4px;
+      right: 0;
+      color: rgba(229, 236, 250, 0.86);
+    }
+
     .ip-location-main-info {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       min-width: 0;
+    }
+
+    .ip-meta-title {
+      color: rgba(233, 240, 255, 0.95);
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 700;
     }
 
     .ip-main-line {
@@ -3538,11 +3527,19 @@ export default {
     }
 
     .ip-region-primary {
-      font-size: 40px;
+      font-size: 56px;
       line-height: 1.15;
       font-weight: 700;
-      letter-spacing: 0.2px;
+      letter-spacing: -0.02em;
       color: #ecf6ff;
+
+      @media (max-width: 1220px) {
+        font-size: 46px;
+      }
+
+      @media (max-width: 680px) {
+        font-size: 38px;
+      }
     }
 
     .ip-sub-line {
@@ -3556,6 +3553,65 @@ export default {
       font-size: 11px;
       color: rgba(189, 223, 255, 0.58);
       letter-spacing: 0.2px;
+    }
+
+    .ip-status-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #e9f3ff;
+      font-size: 16px;
+      font-weight: 600;
+
+      .status-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #35c26b;
+        box-shadow: 0 0 0 4px rgba(53, 194, 107, 0.2);
+      }
+    }
+
+    .ip-map-visual {
+      align-self: stretch;
+      min-height: 182px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+          radial-gradient(circle at 20% 30%, rgba(227, 236, 255, 0.45) 0.8px, transparent 1.2px),
+          radial-gradient(circle at 50% 28%, rgba(227, 236, 255, 0.38) 0.8px, transparent 1.2px),
+          radial-gradient(circle at 68% 42%, rgba(227, 236, 255, 0.32) 0.9px, transparent 1.3px),
+          radial-gradient(circle at 80% 62%, rgba(227, 236, 255, 0.28) 0.8px, transparent 1.3px);
+        background-size: 120px 90px;
+        opacity: 0.5;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 0;
+        height: 30%;
+        background: radial-gradient(circle at 50% 100%, rgba(54, 108, 255, 0.5), transparent 62%);
+        opacity: 0.6;
+      }
+
+      .map-glow-point {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        right: 28%;
+        top: 35%;
+        background: #fff;
+        box-shadow: 0 0 0 10px rgba(44, 114, 255, 0.15), 0 0 25px rgba(44, 114, 255, 0.9);
+      }
     }
 
     .region-code-badge {
@@ -3586,10 +3642,10 @@ export default {
     .ip-service-reference {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      padding: 8px 10px;
+      gap: 12px;
+      padding-top: 2px;
       border-radius: 10px;
-      background: rgba(10, 26, 44, 0.56);
+      background: transparent;
       border: none;
       min-height: 100%;
     }
@@ -3598,34 +3654,56 @@ export default {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #9fd0f5;
+      font-size: 16px;
+      font-weight: 700;
+      color: #f3f7ff;
       letter-spacing: 0.2px;
     }
 
     .service-reference-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+
+      @media (max-width: 680px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     .service-reference-item {
-      width: 20px;
-      height: 20px;
-      border-radius: 6px;
-      display: inline-flex;
+      min-height: 76px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       border: none;
-      background: transparent;
-      color: rgba(233, 243, 255, 0.45);
-      opacity: 0.42;
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(233, 243, 255, 0.74);
+      opacity: 0.58;
       transition: all 0.2s ease;
 
+      .service-reference-tile {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(14, 24, 45, 0.35);
+      }
+
+      .service-reference-label {
+        font-size: 14px;
+        line-height: 1.1;
+        color: #ebf2ff;
+        font-weight: 500;
+      }
+
       .service-reference-icon-mask {
-        width: 18px;
-        height: 18px;
+        width: 26px;
+        height: 26px;
         display: block;
         background-color: currentColor;
         mask-image: var(--service-icon-url);
@@ -3641,25 +3719,25 @@ export default {
       &.active {
         opacity: 1;
         color: #eef6ff;
-        background: rgba(67, 86, 109, 0.28);
+        background: rgba(255, 255, 255, 0.11);
 
 
         &.is-red {
-          background: rgba(157, 23, 77, 0.38);
+          background: rgba(157, 23, 77, 0.22);
         }
 
         &.is-pink {
-          background: rgba(190, 24, 93, 0.36);
+          background: rgba(190, 24, 93, 0.22);
         }
 
         &.is-blue {
-          background: rgba(30, 58, 138, 0.38);
+          background: rgba(30, 58, 138, 0.22);
         }
       }
 
       &:hover {
+        opacity: 1;
         transform: translateY(-1px);
-        border-color: rgba(144, 196, 238, 0.45);
       }
     }
 
