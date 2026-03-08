@@ -5,7 +5,7 @@
       @click="toggleDropdown"
       :title="$t('common.language')"
     >
-      <span class="language-btn-text">🌐 {{ currentLanguageShort }}</span>
+      <span class="language-btn-text"><span class="language-icon" aria-hidden="true">🌐</span>{{ currentLanguageShort }}</span>
     </button>
 
     <transition name="fade">
@@ -134,8 +134,17 @@ export default {
   }
 
   .language-btn-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 14px;
     font-weight: 600;
+    line-height: 1;
+  }
+
+  .language-icon {
+    color: var(--theme-color);
+    font-size: 14px;
     line-height: 1;
   }
 }
