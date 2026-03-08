@@ -6,6 +6,10 @@
       <div class="dashboard-card welcome-card">
         <div class="card-header shop-title-header">
           <h2 class="card-title">{{ $t("shop.title") }}</h2>
+        </div>
+
+        <div class="card-body">
+          <p>{{ $t("shop.description") }}</p>
           <div class="filter-toggle-container" v-if="displayedFilters.length > 0">
             <div class="filter-toggle-wrapper" role="tablist" aria-label="billing period">
               <span class="filter-highlight" :style="filterHighlightStyle"></span>
@@ -21,10 +25,6 @@
               </button>
             </div>
           </div>
-        </div>
-
-        <div class="card-body">
-          <p>{{ $t("shop.description") }}</p>
         </div>
       </div>
 
@@ -1618,6 +1618,7 @@ export default {
   }
 
   .filter-toggle-container {
+    margin-top: 10px;
     margin-bottom: 0;
     flex-shrink: 0;
 
