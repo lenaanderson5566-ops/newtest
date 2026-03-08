@@ -497,8 +497,8 @@ export default {
 
 
 .top-toolbar {
-  --toolbar-control-height: 36px;
-  --toolbar-control-padding: 6px 10px;
+  --toolbar-control-height: 38px;
+  --toolbar-control-padding: 7px 12px;
   --toolbar-control-radius: 8px;
   --toolbar-control-border: transparent;
   --toolbar-control-bg: transparent;
@@ -508,7 +508,7 @@ export default {
   position: static;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   z-index: 110;
 
   .toolbar-wallets {
@@ -545,7 +545,7 @@ export default {
       }
 
       .wallet-icon {
-        font-size: 14px;
+        font-size: 15px;
         line-height: 1;
         opacity: 1;
       }
@@ -599,6 +599,7 @@ export default {
         background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
         cursor: pointer;
         font-size: 13px;
+        line-height: 1;
         font-weight: 600;
       }
     }
@@ -649,10 +650,12 @@ export default {
   :deep(.avatar-wrapper) {
     width: auto;
     min-width: var(--toolbar-control-height);
+    font-size: 14px;
   }
 
   :deep(.language-btn) {
     min-width: 110px;
+    font-size: 14px;
   }
 }
 
@@ -668,7 +671,7 @@ export default {
   width: 100%;
 
   &.with-top-bar {
-    padding-top: 120px;
+    padding-top: 112px;
   }
 }
 
@@ -695,7 +698,7 @@ export default {
     width: min(1180px, 100%);
     margin-right: auto;
     margin-left: 0;
-    padding: 0 24px 0 0;
+    padding: 0 24px 0 20px;
   }
 
 }

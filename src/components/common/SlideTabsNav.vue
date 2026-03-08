@@ -954,7 +954,7 @@ function debounce(fn, delay) {
 .slide-tabs-container {
   margin-bottom: 20px;
   position: fixed;
-  top: 86px;
+  top: 120px;
   left: 16px;
   z-index: 10;
   width: 210px;

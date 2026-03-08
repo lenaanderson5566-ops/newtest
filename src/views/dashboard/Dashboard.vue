@@ -18,8 +18,6 @@
         <button class="banner-action" @click.stop="goToOrders">去支付</button>
       </div>
 
-      <h1 class="overview-title" :class="{'card-animate': !loading.userStats}">概览</h1>
-
 
       <!-- 订阅导入卡片 -->
       <transition name="slide-fade">
@@ -2597,16 +2595,6 @@ export default {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 16px;
 
-    > .overview-title {
-      grid-column: 1 / -1;
-      margin: 0;
-      font-size: 28px;
-      line-height: 1.25;
-      font-weight: 650;
-      letter-spacing: -0.01em;
-      color: var(--saas-text-primary);
-    }
-
     > .pending-order-banner {
       grid-column: 1 / -1;
       margin-bottom: 0;
@@ -2622,7 +2610,6 @@ export default {
     }
 
     @media (max-width: 992px) {
-      > .overview-title,
       > .pending-order-banner,
       > .notice-card,
       > .subscription-card,

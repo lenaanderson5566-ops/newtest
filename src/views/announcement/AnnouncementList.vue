@@ -1,10 +1,5 @@
 <template>
   <div class="announcement-page">
-    <div class="announcement-header">
-      <h1>{{ $t('dashboard.siteAnnouncement') }}</h1>
-      <p>{{ $t('dashboard.welcomeDesc') }}</p>
-    </div>
-
     <div v-if="loading" class="announcement-loading">Loading...</div>
 
     <div v-else-if="!notices.length" class="announcement-empty">
@@ -69,22 +64,7 @@ export default {
 .announcement-page {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 96px 20px 24px;
-}
-
-.announcement-header {
-  margin-bottom: 20px;
-
-  h1 {
-    margin: 0;
-    font-size: 26px;
-    color: #0f172a;
-  }
-
-  p {
-    margin: 6px 0 0;
-    color: #64748b;
-  }
+  padding: 16px 20px 24px;
 }
 
 .announcement-list {
