@@ -31,6 +31,35 @@
       </section>
 
       <section class="section-block">
+        <h3 class="section-title">财务中心</h3>
+        <div class="settings-list">
+          <button class="nav-row" @click="go('/billing?tab=wallet')">
+            <div class="row-main">
+              <div class="row-title">账户余额</div>
+              <p>查看余额明细与充值记录</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+
+          <button class="nav-row" @click="go('/billing?tab=orders')">
+            <div class="row-main">
+              <div class="row-title">订单记录</div>
+              <p>查看历史订单与支付状态</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+
+          <button class="nav-row" @click="go('/billing?tab=referral')">
+            <div class="row-main">
+              <div class="row-title">邀请返利</div>
+              <p>查看邀请进度与佣金明细</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+        </div>
+      </section>
+
+      <section class="section-block">
         <h3 class="section-title">个人设置</h3>
         <div class="settings-list">
           <div class="settings-row">
@@ -59,35 +88,6 @@
             <div class="row-main">
               <div class="row-title">安全设置</div>
               <p>修改密码与账户安全选项</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-        </div>
-      </section>
-
-      <section class="section-block">
-        <h3 class="section-title">财务中心</h3>
-        <div class="settings-list">
-          <button class="nav-row" @click="go('/billing?tab=wallet')">
-            <div class="row-main">
-              <div class="row-title">账户余额</div>
-              <p>查看余额明细与充值记录</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-
-          <button class="nav-row" @click="go('/billing?tab=orders')">
-            <div class="row-main">
-              <div class="row-title">订单记录</div>
-              <p>查看历史订单与支付状态</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-
-          <button class="nav-row" @click="go('/billing?tab=referral')">
-            <div class="row-main">
-              <div class="row-title">邀请返利</div>
-              <p>查看邀请进度与佣金明细</p>
             </div>
             <IconChevronRight :size="18" />
           </button>
