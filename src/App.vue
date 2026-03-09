@@ -508,25 +508,25 @@ export default {
 
 @media (min-width: 906px) {
   .app-content-wrapper.with-left-nav {
-    padding-left: 202px;
+    padding-left: 224px;
   }
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
     width: min(1160px, 100%);
     margin-left: 0;
     margin-right: auto;
-    padding-inline: 0 72px;
+    padding-inline: 12px 72px;
   }
 
   .page-header-layer {
-    padding-left: 202px;
+    padding-left: 224px;
   }
 
   .page-header-content {
     width: min(1160px, 100%);
     margin-left: 0;
     margin-right: auto;
-    padding: 0 72px 0 0;
+    padding: 0 72px 0 12px;
   }
 
 }
