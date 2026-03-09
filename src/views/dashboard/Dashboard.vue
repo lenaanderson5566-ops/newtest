@@ -903,13 +903,15 @@ export default {
         userPlan.value.expireDate = t('dashboard.permanent');
       }
 
+      if (ipLocationError.value) {
+        ipLocationError.value = t('trafficLog.errorLoadingTraffic');
+      }
+
       await Promise.allSettled([
         fetchSubscribe(true),
         fetchNotices(true),
         fetchTrafficTrend()
       ]);
-
-      scheduleIpLocationRefresh(true);
     });
 
 
