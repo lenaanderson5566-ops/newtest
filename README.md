@@ -73,6 +73,27 @@ npm run build
 
 ---
 
+## 🌍 i18n 开发规范（避免切换语言后需刷新）
+
+- 语言切换必须等待 `setLanguage` 完成后，再广播 `languageChanged` 事件。
+- 模板中优先直接使用 `$t('key')`，避免在 `setup` 初始化阶段把翻译结果“写死”。
+- 当文案要传给图表、弹窗配置等对象时，使用 `computed` 或 `watch(() => locale.value)` 在语言变化时重建配置。
+- 禁止长期持有 `const config = reactive({ title: t('...') })` 这类一次性翻译值（除非后续会在 locale 变化时同步更新）。
+
+示例：
+
+```js
+// ✅ 推荐：响应式
+const dialogTitle = computed(() => t('invite.withdraw.tip'));
+
+// ❌ 不推荐：初始化后不会自动随语言变化
+const dialogConfig = reactive({
+  title: t('invite.withdraw.tip')
+});
+```
+
+---
+
 
 
 ## 🌎 浏览器支持

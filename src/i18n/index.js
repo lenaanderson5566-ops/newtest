@@ -208,63 +208,63 @@ export const setLanguage = async (lang) => {
 
   lang = normalizeLanguage(lang);
 
-  
+  try {
 
-  const isLoggedIn = checkLoginStatus();
+    const isLoggedIn = checkLoginStatus();
 
-  
+    /*for (const locale of supportedLocales) {
 
-  /*for (const locale of supportedLocales) {
+      i18n.global.setLocaleMessage(locale, {});
 
-    i18n.global.setLocaleMessage(locale, {});
+    }*/
 
-  }*/
+    const messages = await loadLocaleMessages(isLoggedIn);
 
-  
+    for (const locale in messages) {
 
-  const messages = await loadLocaleMessages(isLoggedIn);
+      if (messages[locale]) {
 
-  
+        i18n.global.mergeLocaleMessage(locale, messages[locale]);
 
-  for (const locale in messages) {
-
-    if (messages[locale]) {
-
-      i18n.global.mergeLocaleMessage(locale, messages[locale]);
+      }
 
     }
 
-  }
+    i18n.global.locale.value = lang;
 
-  
+    localStorage.setItem('language', lang);
 
-  i18n.global.locale.value = lang;
-
-  localStorage.setItem('language', lang);
-
-  document.querySelector('html').setAttribute('lang', lang);
-
-  
-
-  updatePageTitle();
-
-  
-
-  setTimeout(() => {
+    document.querySelector('html').setAttribute('lang', lang);
 
     updatePageTitle();
 
-  }, 300);
+    setTimeout(() => {
 
-  
+      updatePageTitle();
 
-  return {
+    }, 300);
 
-    success: true,
+    return {
 
-    availableLocales: Object.keys(messages)
+      success: true,
 
-  };
+      availableLocales: Object.keys(messages)
+
+    };
+
+  } catch (error) {
+
+    return {
+
+      success: false,
+
+      message: error?.message || 'Failed to load locale messages',
+
+      availableLocales: []
+
+    };
+
+  }
 
 };
 

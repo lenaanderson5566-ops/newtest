@@ -30,6 +30,7 @@ import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { IconWorld } from '@tabler/icons-vue';
 import { setLanguage } from '@/i18n';
+import { useToast } from '@/composables/useToast';
 
 export default {
   name: 'LanguageSelector',
@@ -38,6 +39,7 @@ export default {
   },
   setup() {
     const { locale } = useI18n();
+    const { showToast } = useToast();
     const isOpen = ref(false);
     const dropdown = ref(null);
 
@@ -77,11 +79,23 @@ export default {
       }
     };
 
-    const changeLanguage = (langCode) => {
-      setLanguage(langCode);
-      isOpen.value = false;
-      const event = new CustomEvent('languageChanged', { detail: langCode });
-      window.dispatchEvent(event);
+    const changeLanguage = async (langCode) => {
+      try {
+        const result = await setLanguage(langCode);
+
+        if (!result?.success) {
+          throw new Error(result?.message || 'Language switch failed');
+        }
+
+        isOpen.value = false;
+        const event = new CustomEvent('languageChanged', { detail: langCode });
+        window.dispatchEvent(event);
+      } catch (error) {
+        console.error('Failed to switch language:', error);
+        if (showToast) {
+          showToast('Failed to switch language, please try again.', 'error');
+        }
+      }
     };
 
     const handleClickOutside = (event) => {

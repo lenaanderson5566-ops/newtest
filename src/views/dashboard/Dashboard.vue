@@ -932,17 +932,6 @@ export default {
       }, 1000);
     };
     const showPopup = ref(false);
-    const popupConfig = reactive({
-
-      title: t('invite.withdraw.tip'),
-
-      content: t('dashboard.resetDataCycleNotice'),
-
-      cooldownHours: 0,
-
-      closeWaitSeconds: 0
-
-    });
     const handlePopupClose = () => {
 
       showPopup.value = false;
@@ -2480,7 +2469,6 @@ export default {
       checkForPopupNotices,
       noticeModalStyle,
       openResetTrafficModal,
-      popupConfig,
       handlePopupClose,
       handlePopupConfirm,
       showPopup,
