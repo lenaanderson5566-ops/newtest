@@ -1092,7 +1092,7 @@ export default {
       if (userStats.isRemainingDaysPermanent) return false;
 
       const days = parseInt(userStats.remainingDays, 10);
-      return !isNaN(days) && days > 0 && days <= DASHBOARD_CONFIG.expiringThreshold;
+      return !isNaN(days) && days > 0 && days <= 7;
     });
 
     const hasIOSClients = computed(() => {
@@ -1251,7 +1251,7 @@ export default {
 
       const percentage = (remainingBytes / totalBytes) * 100;
 
-      return percentage > 0 && percentage <= DASHBOARD_CONFIG.lowTrafficThreshold;
+      return percentage > 0 && percentage <= 10;
     });
 
     const isTrafficDepleted = computed(() => {
@@ -1270,34 +1270,11 @@ export default {
     });
 
     const showResetTrafficButton = computed(() => {
-      if (!DASHBOARD_CONFIG.enableResetTraffic) return false;
-
-      switch (DASHBOARD_CONFIG.resetTrafficDisplayMode) {
-        case 'always':
-          return true;
-        case 'low':
-          return isLowTraffic.value || isTrafficDepleted.value;
-        case 'depleted':
-          return isTrafficDepleted.value;
-        default:
-          return false;
-      }
+      return isLowTraffic.value || isTrafficDepleted.value;
     });
 
     const showRenewPlanButton = computed(() => {
-      if (!DASHBOARD_CONFIG.enableRenewPlan) return false;
-
-
-      switch (DASHBOARD_CONFIG.renewPlanDisplayMode) {
-        case 'always':
-          return true;
-        case 'expiring':
-          return isExpiringSoon.value;
-        case 'expired':
-          return isExpired.value;
-        default:
-          return false;
-      }
+      return true;
     });
 
 
@@ -2348,7 +2325,7 @@ export default {
     };
 
     const showDeviceLimit = computed(() => {
-      return isXiaoV2board() && DASHBOARD_CONFIG.showOnlineDevicesLimit;
+      return isXiaoV2board();
     });
 
     const timers = {};
