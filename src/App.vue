@@ -388,7 +388,7 @@ export default {
     const pageHeaderTitle = computed(() => {
       const titleKey = route.meta?.titleKey;
       if (titleKey) return t(titleKey);
-      return route.meta?.title || route.name || siteConfig.value.siteName || 'Page';
+      return route.meta?.title || route.name || siteConfig.value.siteName || t('common.page');
     });
     return {
       username,

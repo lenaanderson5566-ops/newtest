@@ -304,15 +304,15 @@
                 class="info-tooltip"
                 tabindex="0"
                 role="button"
-                aria-label="流量额度包说明"
+                :aria-label="$t('dashboard.trafficPackageHint')"
               >
                 <IconHelpCircle :size="14" />
-                <span class="info-tooltip-content">流量额度包为一次性补充流量，优先消耗月订阅流量，订阅用尽后再消耗额度包流量。</span>
+                <span class="info-tooltip-content">{{ $t('dashboard.trafficPackageHint') }}</span>
               </span>
             </div>
             <div v-if="card.key === 'total'" class="plan-summary-card">
               <div v-if="isPlanExpired" class="expired-status-strip">
-                订阅已过期，服务已暂停
+                {{ $t('dashboard.subscriptionPausedAfterExpiry') }}
               </div>
               <div class="plan-summary-section plan-summary-section-meta">
                 <div class="plan-status-hero">
@@ -329,7 +329,7 @@
                   <div>
                     <span class="plan-summary-label with-tooltip">
                       <span>{{ $t('profile.autoRenewal') }}</span>
-                      <span class="info-tooltip" tabindex="0" role="button" aria-label="自动续费说明">
+                      <span class="info-tooltip" tabindex="0" role="button" :aria-label="$t('profile.autoRenewalDesc')">
                         <IconHelpCircle :size="14" />
                         <span class="info-tooltip-content">{{ $t('profile.autoRenewalDesc') }}</span>
                       </span>
@@ -365,7 +365,7 @@
                   </button>
                 </div>
                 <div v-if="isPlanExpired" class="plan-action-helper-text">
-                  续费后将立即恢复节点访问
+                  {{ $t('dashboard.renewToRestoreAccess') }}
                 </div>
               </div>
             </div>
@@ -1163,28 +1163,28 @@ export default {
     });
 
     const subscriptionStatusLabel = computed(() => {
-      if (subscriptionStatus.value === 'expired') return '已过期';
-      if (subscriptionStatus.value === 'expiring') return '即将到期';
-      return '有效中';
+      if (subscriptionStatus.value === 'expired') return t('dashboard.subscriptionStatus.expired');
+      if (subscriptionStatus.value === 'expiring') return t('dashboard.subscriptionStatus.expiring');
+      return t('dashboard.subscriptionStatus.active');
     });
 
     const primaryPlanActionLabel = computed(() => {
-      if (subscriptionStatus.value === 'active') return '管理订阅';
-      if (subscriptionStatus.value === 'expired') return '立即恢复订阅';
-      return '立即续费';
+      if (subscriptionStatus.value === 'active') return t('dashboard.planAction.manageSubscription');
+      if (subscriptionStatus.value === 'expired') return t('dashboard.planAction.restoreNow');
+      return t('dashboard.planAction.renewNow');
     });
 
     const planExpireMetaText = computed(() => {
       if (subscriptionStatus.value === 'expired') {
-        return `已于 ${userPlan.value.expireDate || '-'} 到期`;
+        return t('dashboard.expiredOnDate', { date: userPlan.value.expireDate || '-' });
       }
       return `${t('dashboard.expiryDate')} · ${userPlan.value.expireDate || t('dashboard.permanent')}`;
     });
 
     const secondaryPlanActionLabel = computed(() => {
-      if (subscriptionStatus.value === 'expired') return '重新选择套餐';
-      if (subscriptionStatus.value === 'expiring') return '管理订阅';
-      return '续费';
+      if (subscriptionStatus.value === 'expired') return t('dashboard.planAction.reselectPlan');
+      if (subscriptionStatus.value === 'expiring') return t('dashboard.planAction.manageSubscription');
+      return t('dashboard.planAction.renew');
     });
 
     const primaryActionClass = computed(() => {
@@ -1193,7 +1193,7 @@ export default {
     });
 
     const secondaryActionClass = computed(() => {
-      if (secondaryPlanActionLabel.value === '管理订阅') return 'theme';
+      if (secondaryPlanActionLabel.value === t('dashboard.planAction.manageSubscription')) return 'theme';
       return 'subtle';
     });
 
@@ -1660,15 +1660,16 @@ export default {
 
     const formatResetDateTime = (date) => {
       if (!(date instanceof Date) || Number.isNaN(date.getTime())) return null;
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      const hours = String(date.getHours()).padStart(2, '0');
-      const minutes = String(date.getMinutes()).padStart(2, '0');
-      if (String(locale.value || '').toLowerCase().startsWith('zh')) {
-        return `${year}年${month}月${day}日 ${hours}:${minutes}`;
-      }
-      return `${year}-${month}-${day} ${hours}:${minutes}`;
+      const localeValue = locale.value || 'en-US';
+      const formatter = new Intl.DateTimeFormat(localeValue, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      });
+      return formatter.format(date);
     };
 
     const parseResetTimestamp = (value) => {
@@ -1830,7 +1831,7 @@ export default {
       }
 
       const subscribeUrl = userPlan.value.subscribeUrl;
-      const siteName = SITE_CONFIG.siteName || '订阅';
+      const siteName = SITE_CONFIG.siteName || t('dashboard.defaultSubscriptionName');
 
       let url = '';
       let shouldUseCurrentWindow = true;

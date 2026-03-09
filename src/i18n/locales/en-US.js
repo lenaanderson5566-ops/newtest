@@ -246,6 +246,24 @@ export default {
         serviceAvailableInRegion: 'Available in regional reference',
         serviceNotInRegion: 'Not in regional reference list',
 
+        trafficPackageHint: 'Traffic package quota is one-time supplemental traffic. Monthly subscription traffic is consumed first, then traffic package quota is used after subscription quota is exhausted.',
+        subscriptionPausedAfterExpiry: 'Subscription has expired and service is paused',
+        renewToRestoreAccess: 'Access will be restored immediately after renewal',
+        expiredOnDate: 'Expired on {date}',
+        defaultSubscriptionName: 'Subscription',
+        subscriptionStatus: {
+            expired: 'Expired',
+            expiring: 'Expiring Soon',
+            active: 'Active'
+        },
+        planAction: {
+            manageSubscription: 'Manage Subscription',
+            restoreNow: 'Restore Now',
+            renewNow: 'Renew Now',
+            reselectPlan: 'Choose a Plan Again',
+            renew: 'Renew'
+        },
+
         importTitle: 'Select Import Method',
         copySubscription: 'Copy Configuration Address',
         copySubscriptionDesc: 'Copy configuration address to clipboard',
@@ -527,6 +545,7 @@ export default {
         title: 'Subscription Plans',
         description: 'Choose the subscription service that suits you',
         loading: 'Loading plans...',
+        billingPeriodAria: 'Billing period switcher',
         filter: {
             all: 'All',
             recurring: 'Recurring',

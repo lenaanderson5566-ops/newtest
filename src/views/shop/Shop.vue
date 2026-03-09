@@ -11,7 +11,7 @@
         <div class="card-body">
           <p>{{ $t("shop.description") }}</p>
           <div class="filter-toggle-container" v-if="displayedFilters.length > 0">
-            <div class="filter-toggle-wrapper" role="tablist" aria-label="billing period">
+            <div class="filter-toggle-wrapper" role="tablist" :aria-label="$t('shop.billingPeriodAria')">
               <span class="filter-highlight" :style="filterHighlightStyle"></span>
               <button
                 v-for="filter in displayedFilters"

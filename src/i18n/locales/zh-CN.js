@@ -34,6 +34,7 @@ export default {
         toggleTheme: '切换主题',
         language: '语言',
         noData: '暂无数据',
+        page: '页面',
         confirm: '确认',
         dashboard: '仪表盘',
         overview: '概览',
@@ -245,6 +246,24 @@ export default {
         serviceReferenceAria: '地区服务参考',
         serviceAvailableInRegion: '地区参考可用',
         serviceNotInRegion: '未在地区参考列表',
+
+        trafficPackageHint: '流量额度包为一次性补充流量，优先消耗月订阅流量，订阅用尽后再消耗额度包流量。',
+        subscriptionPausedAfterExpiry: '订阅已过期，服务已暂停',
+        renewToRestoreAccess: '续费后将立即恢复节点访问',
+        expiredOnDate: '已于 {date} 到期',
+        defaultSubscriptionName: '订阅',
+        subscriptionStatus: {
+            expired: '已过期',
+            expiring: '即将到期',
+            active: '有效中'
+        },
+        planAction: {
+            manageSubscription: '管理订阅',
+            restoreNow: '立即恢复订阅',
+            renewNow: '立即续费',
+            reselectPlan: '重新选择套餐',
+            renew: '续费'
+        },
 
         importTitle: '选择导入方式',
         copySubscription: '复制配置地址',
@@ -526,6 +545,7 @@ export default {
         title: '订阅计划',
         description: '选择适合您的订阅服务',
         loading: '正在加载套餐...',
+        billingPeriodAria: '计费周期切换',
         filter: {
             all: '全部',
             recurring: '周期性',
