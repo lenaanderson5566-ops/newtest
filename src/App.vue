@@ -45,6 +45,7 @@
             </div>
           </transition>
         </div>
+        <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
         <LanguageSelector />
         <button 
           v-if="PROFILE_CONFIG.showGiftCardRedeem" 
@@ -128,6 +129,7 @@ import { SITE_CONFIG, PROFILE_CONFIG, CUSTOMER_SERVICE_CONFIG } from '@/utils/ba
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
 import { getUserInfo } from '@/api/user';
+import { getUnreadNoticeCount } from '@/api/notice';
 import { handleRedirectPath } from '@/utils/redirectHandler';
 import { normalizeWalletItems } from '@/utils/wallet';
 import Toast from '@/components/common/Toast.vue';
@@ -135,6 +137,7 @@ import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 import UserAvatar from '@/components/common/UserAvatar.vue';
+import ServiceNoticeButton from '@/components/common/ServiceNoticeButton.vue';
 import BackToTop from '@/components/common/BackToTop.vue';
 import CustomContextMenu from '@/components/common/CustomContextMenu.vue';
 import CustomerServiceIcon from '@/components/common/CustomerServiceIcon.vue';
@@ -160,6 +163,7 @@ export default {
     SlideTabsNav,
     LanguageSelector,
     UserAvatar,
+    ServiceNoticeButton,
     BackToTop,
     CustomContextMenu,
     CustomerServiceIcon,
@@ -228,6 +232,8 @@ export default {
     const isLoadingWallets = ref(false);
     const walletDropdownOpen = ref(false);
     const walletContainer = ref(null);
+    const unreadNoticeCount = ref(0);
+    const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
 
     const currencySymbols = {
       USD: '$',
@@ -302,14 +308,31 @@ export default {
       (requiresAuth) => {
         if (!requiresAuth) {
           walletDisplayItems.value = [];
+          unreadNoticeCount.value = 0;
           return;
         }
 
         loadUserWallets();
+        loadUnreadNoticeCount();
       },
       { immediate: true }
     );
     
+    const loadUnreadNoticeCount = async () => {
+      if (!route.meta.requiresAuth) {
+        unreadNoticeCount.value = 0;
+        return;
+      }
+
+      try {
+        const response = await getUnreadNoticeCount();
+        unreadNoticeCount.value = Number(response?.data?.unreadCount || response?.data?.count || 0);
+      } catch (error) {
+        unreadNoticeCount.value = 0;
+        console.warn('Failed to load unread notices, fallback to local state:', error);
+      }
+    };
+
     const languageChangedSignal = ref(0);
     
     const onLanguageChanged = () => {
@@ -327,6 +350,7 @@ export default {
       if (!document.hidden) {
         checkAuthAndReloadMessages();
         loadUserWallets();
+        loadUnreadNoticeCount();
 
         checkUserLoginStatus().then(result => {
           if (result.isLoggedIn === false && result.message) {
@@ -361,6 +385,7 @@ export default {
       applyTheme(store.getters.currentTheme);
       
       checkAuthAndReloadMessages();
+      loadUnreadNoticeCount();
 
       document.addEventListener('visibilitychange', handleVisibilityChange);
       
@@ -406,6 +431,7 @@ export default {
       formatWalletDisplay,
       toggleWalletDropdown,
       goToWalletDeposit,
+      hasUnreadNotice,
       pageHeaderTitle
     };
   }
