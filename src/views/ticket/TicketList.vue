@@ -2650,15 +2650,20 @@ onUnmounted(() => {
 }
 
 .message-item .message-content .message-text {
-  font-size: 0.82rem;
-  line-height: 1.4;
+  font-size: 0.76rem;
+  line-height: 1.35;
 }
 
 .message-item .message-content .message-text p,
 .message-item .message-content .message-text li,
 .message-item .message-content .message-text code,
-.message-item .message-content .message-text pre {
-  font-size: 0.82rem;
+.message-item .message-content .message-text pre,
+.message-item .message-content .message-text strong {
+  font-size: 0.76rem;
+}
+
+.message-item .message-content .message-text strong {
+  font-weight: 600;
 }
 
 .ticket-context-sidebar {
