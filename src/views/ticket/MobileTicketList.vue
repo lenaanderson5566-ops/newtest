@@ -340,16 +340,6 @@
       </div>
     </div>
 
-    <!-- 工单弹窗 -->
-
-    <TicketPopup
-      :show-popup="showTicketPopup"
-      :title="ticketPopupCfg.title"
-      :content="ticketPopupCfg.content"
-      :cooldown-hours="ticketPopupCfg.cooldownHours"
-      :close-wait-seconds="ticketPopupCfg.closeWaitSeconds"
-      @close="handleTicketPopupClose"
-    />
   </div>
 </template>
 
@@ -388,10 +378,6 @@ import {
   replyTicket,
   closeTicket,
 } from "@/api/ticket";
-
-import { TICKET_CONFIG } from "@/utils/baseConfig";
-
-import TicketPopup from "@/components/ticket/TicketPopup.vue";
 
 const { t } = useI18n();
 
@@ -433,10 +419,6 @@ const newTicket = ref({
 
 const isLargeScreen = ref(false);
 
-const showTicketPopup = ref(false);
-
-const ticketPopupCfg = TICKET_CONFIG?.popup || {};
-
 const checkScreenSize = () => {
   isLargeScreen.value = window.innerWidth >= 905;
 };
@@ -451,8 +433,6 @@ onMounted(() => {
   window.addEventListener("resize", checkScreenSize);
 
   fetchTickets();
-
-  checkTicketPopup();
 });
 
 onUnmounted(() => {
@@ -781,24 +761,6 @@ const submitTicket = async () => {
   } finally {
     submitting.value = false;
   }
-};
-
-const checkTicketPopup = () => {
-  if (!ticketPopupCfg.enabled) return;
-
-  const lastClose = Number(
-    localStorage.getItem("ticket_popup_close_time") || 0
-  );
-
-  const cooldownMs = (ticketPopupCfg.cooldownHours || 0) * 3600 * 1000;
-
-  if (!lastClose || Date.now() - lastClose >= cooldownMs) {
-    showTicketPopup.value = true;
-  }
-};
-
-const handleTicketPopupClose = () => {
-  showTicketPopup.value = false;
 };
 
 fetchTickets();
