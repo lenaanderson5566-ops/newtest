@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="user-avatar-container" ref="avatarContainer">
-    <div class="avatar-wrapper" @click="toggleDropdown">
+    <div class="avatar-wrapper" :class="{ 'is-active': isDropdownOpen }" @click="toggleDropdown">
       <img 
         v-if="avatarUrl" 
         :src="avatarUrl" 
@@ -8,7 +8,7 @@
         class="avatar-image"
       />
       <div v-else class="avatar-placeholder">
-        <IconUser class="user-icon" />
+        <IconUserCircle class="user-icon" />
       </div>
     </div>
     
@@ -48,6 +48,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
+import { IconUserCircle } from '@tabler/icons-vue';
 import IconUser from '@/components/icons/IconUser.vue';
 import IconLogout from '@/components/icons/IconLogout.vue';
 import IconWallet from '@/components/icons/IconWallet.vue';
@@ -57,6 +58,7 @@ import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 export default {
   name: 'UserAvatar',
   components: {
+    IconUserCircle,
     IconUser,
     IconLogout,
     IconWallet,
@@ -136,26 +138,32 @@ export default {
 }
 
 .avatar-wrapper {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   cursor: pointer;
   overflow: hidden;
-  background-color: rgba(var(--theme-color-rgb), 0.1);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.3);
-  transition: all 0.3s ease;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   &:hover {
-    box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.15);
-    transform: translateY(-2px);
+    background: #f5f7fa;
+    border-color: transparent;
   }
-  
+
+  &.is-active {
+    border-color: #e5e7eb;
+    background: #f5f7fa;
+  }
+
   .avatar-image {
     width: 100%;
     height: 100%;
+    border-radius: 8px;
     object-fit: cover;
   }
   
@@ -169,7 +177,7 @@ export default {
     .user-icon {
       width: 20px;
       height: 20px;
-      color: var(--theme-color);
+      color: rgba(var(--theme-color-rgb), 0.9);
     }
   }
 }

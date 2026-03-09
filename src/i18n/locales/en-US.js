@@ -236,6 +236,34 @@ export default {
         unlimited: 'Unlimited',
         nextResetTime: 'Next Reset Time',
 
+        pendingOrderBanner: 'You have {count} pending order(s). Please complete payment to activate the service.',
+        payNow: 'Pay Now',
+        currentExitRegion: 'Current Exit Region',
+        smoothStatusNormal: 'Connection status: normal',
+        serviceReference: 'Service Reference',
+        serviceReferenceHint: 'Regional service reference is estimated from static region mapping and does not represent real-time unlock checks.',
+        serviceReferenceAria: 'Regional service reference',
+        serviceAvailableInRegion: 'Available in regional reference',
+        serviceNotInRegion: 'Not in regional reference list',
+
+        trafficPackageHint: 'Traffic package quota is one-time supplemental traffic. Monthly subscription traffic is consumed first, then traffic package quota is used after subscription quota is exhausted.',
+        subscriptionPausedAfterExpiry: 'Subscription has expired and service is paused',
+        renewToRestoreAccess: 'Access will be restored immediately after renewal',
+        expiredOnDate: 'Expired on {date}',
+        defaultSubscriptionName: 'Subscription',
+        subscriptionStatus: {
+            expired: 'Expired',
+            expiring: 'Expiring Soon',
+            active: 'Active'
+        },
+        planAction: {
+            manageSubscription: 'Manage Subscription',
+            restoreNow: 'Restore Now',
+            renewNow: 'Renew Now',
+            reselectPlan: 'Choose a Plan Again',
+            renew: 'Renew'
+        },
+
         importTitle: 'Select Import Method',
         copySubscription: 'Copy Configuration Address',
         copySubscriptionDesc: 'Copy configuration address to clipboard',
@@ -266,6 +294,7 @@ export default {
         overview: 'Overview',
         shop: 'Shop',
         subscription: 'Subscription',
+        announcement: 'Announcements',
         invite: 'Invite',
         docs: 'Docs',
         startUsing: 'Start Using',
@@ -313,8 +342,27 @@ export default {
         qrcodeView: 'QR Code',
         invalidNodeData: 'Incomplete node data, unable to generate link',
         unsupportedNodeType: 'Unsupported node type',
+        viewSubscribeLink: 'View Subscription Link',
         userInfoError: 'Failed to retrieve user information',
-        viewSubscribeLink: 'View Subscription Link'
+        status: {
+            online: 'Online',
+            offline: 'Offline'
+        },
+        noPlan: {
+            coverageTitle: 'Global Node Coverage',
+            coverageDesc: 'Multiple access regions are deployed. Subscribe to unlock all lines.',
+            unlockAfterPurchase: 'Unlock after purchase',
+            subscribeNow: 'Subscribe Now',
+            comparePlans: 'Compare Plans',
+            regions: {
+                japan: { title: 'Japan Region', desc: 'Low latency / stable access' },
+                singapore: { title: 'Singapore Region', desc: 'Asia optimized / general scenarios' },
+                hongKong: { title: 'Hong Kong Region', desc: 'Fast access / high-frequency usage' },
+                us: { title: 'US Region', desc: 'International access / multi-scenario support' },
+                germany: { title: 'Germany Region', desc: 'Europe coverage / stable relay' },
+                global: { title: 'Global Mix Region', desc: 'Cross-region scheduling / backup lines' }
+            }
+        },
     },
     orders: {
         title: 'Order List',
@@ -516,6 +564,7 @@ export default {
         title: 'Subscription Plans',
         description: 'Choose the subscription service that suits you',
         loading: 'Loading plans...',
+        billingPeriodAria: 'Billing period switcher',
         filter: {
             all: 'All',
             recurring: 'Recurring',
@@ -888,7 +937,8 @@ export default {
         viewTrafficLog: 'View Traffic Details',
         days: 'Days',
         trafficLogDesc: 'View detailed traffic usage records and statistics',
-        trafficChart: 'Traffic Trend Chart'
+        unitGb: 'GB',
+    trafficChart: 'Traffic Trend Chart'
     },
     wallet: {
         balance: {

@@ -2,29 +2,49 @@
   <div>
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
     <div class="static-layout" v-if="$route.meta.requiresAuth">
-      <!-- 网站名称 -->
-      <div class="site-logo">
-        <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
-        {{ siteConfig.siteName }}
-      </div>
-      
-      <!-- 顶部导航栏 - 保持不变 -->
-      <SlideTabsNav />
-      
-      <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
-      <div class="top-toolbar">
-        <div class="toolbar-wallets" v-if="walletDisplayItems.length">
-          <div
-            v-for="wallet in walletDisplayItems"
-            :key="wallet.currency"
-            class="toolbar-wallet-chip"
-            :title="`${wallet.currency} ${wallet.amount}`"
-          >
-            <span class="wallet-currency">{{ wallet.currency }}</span>
-            <span class="wallet-amount">{{ wallet.amount }}</span>
-          </div>
+      <div class="top-fixed-bar">
+        <!-- 网站名称 -->
+        <div class="site-logo">
+          <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
+          {{ siteConfig.siteName }}
         </div>
-        <ThemeToggle />
+
+        <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
+        <div class="top-toolbar">
+        <div
+          class="toolbar-wallets"
+          v-if="primaryWallet"
+          ref="walletContainer"
+        >
+          <button
+            class="toolbar-wallet-main"
+            :class="{ 'is-active': walletDropdownOpen }"
+            :title="`${primaryWallet.currency} ${primaryWalletDisplay}`"
+            @click.stop="toggleWalletDropdown"
+          >
+            <IconWallet class="wallet-icon" :size="16" aria-hidden="true" />
+            <span class="wallet-main-amount">{{ primaryWalletDisplay }}</span>
+          </button>
+
+          <transition name="fade">
+            <div
+              v-if="walletDropdownOpen && extraWalletItems.length"
+              class="wallet-dropdown"
+              @click.stop
+            >
+              <div class="wallet-dropdown-title">{{ $t('wallet.balance.title') }}</div>
+              <div
+                v-for="wallet in walletDisplayItems"
+                :key="wallet.currency"
+                class="wallet-row"
+              >
+                <span class="wallet-row-currency">{{ wallet.currency }}</span>
+                <span class="wallet-row-amount">{{ formatWalletDisplay(wallet) }}</span>
+              </div>
+              <button class="wallet-deposit-btn" @click="goToWalletDeposit">{{ $t('wallet.deposit.title') }}</button>
+            </div>
+          </transition>
+        </div>
         <LanguageSelector />
         <button 
           v-if="PROFILE_CONFIG.showGiftCardRedeem" 
@@ -34,34 +54,45 @@
           <IconGift :size="18" />
         </button>
         <UserAvatar :username="username" :avatarUrl="avatarUrl" />
+        </div>
       </div>
+
+      <div class="page-header-layer">
+        <div class="page-header-content">
+          <div class="page-header-title">{{ pageHeaderTitle }}</div>
+        </div>
+      </div>
+
+      <!-- 顶部导航栏 - 保持不变 -->
+      <SlideTabsNav />
     </div>
 
     <!-- 认证页面顶部工具栏，确保认证页面也有语言切换器 -->
     <div class="auth-toolbar" v-if="!$route.meta.requiresAuth && $route.path.includes('/auth')">
       <div class="top-toolbar">
-        <ThemeToggle />
         <LanguageSelector />
       </div>
     </div>
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
-    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth }]">
-    <router-view v-slot="{ Component, route }">
-      <transition 
-        name="page-transition" 
-        mode="out-in"
-        appear
-      >
-        <keep-alive :include="cachedRoutes" :max="5">
-          <component 
-            :is="Component" 
-            :key="route.path"
-            :is-active="true"
-          />
-        </keep-alive>
-      </transition>
-    </router-view>
+    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]">
+      <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
+        <router-view v-slot="{ Component, route }">
+          <transition 
+            name="page-transition" 
+            mode="out-in"
+            appear
+          >
+            <keep-alive :include="cachedRoutes" :max="5">
+              <component 
+                :is="Component" 
+                :key="route.path"
+                :is-active="true"
+              />
+            </keep-alive>
+          </transition>
+        </router-view>
+      </div>
     </div>
     
     <!-- 全局Toast通知 - 放在最外层，确保不受页面切换影响 -->
@@ -92,6 +123,7 @@ import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { SITE_CONFIG, PROFILE_CONFIG, CUSTOMER_SERVICE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
@@ -101,7 +133,6 @@ import { normalizeWalletItems } from '@/utils/wallet';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
-import ThemeToggle from '@/components/common/ThemeToggle.vue';
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 import UserAvatar from '@/components/common/UserAvatar.vue';
 import BackToTop from '@/components/common/BackToTop.vue';
@@ -109,7 +140,7 @@ import CustomContextMenu from '@/components/common/CustomContextMenu.vue';
 import CustomerServiceIcon from '@/components/common/CustomerServiceIcon.vue';
 import CrispEmbed from '@/components/common/CrispEmbed.vue';
 import ResourcePreloader from '@/components/common/ResourcePreloader.vue';
-import { IconGift } from '@tabler/icons-vue';
+import { IconGift, IconWallet } from '@tabler/icons-vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import pageCache from '@/utils/pageCache';
@@ -127,7 +158,6 @@ export default {
     Toast,
     IconDefinitions,
     SlideTabsNav,
-    ThemeToggle,
     LanguageSelector,
     UserAvatar,
     BackToTop,
@@ -135,12 +165,14 @@ export default {
     CustomerServiceIcon,
     CrispEmbed,
     ResourcePreloader,
-    IconGift
+    IconGift,
+    IconWallet
   },
   setup() {
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
+    const { t } = useI18n();
     const { applyTheme } = useTheme();
     const siteConfig = ref(SITE_CONFIG);
     const cachedRoutes = computed(() => pageCache.getCachedRoutes());
@@ -194,6 +226,55 @@ export default {
     const avatarUrl = computed(() => store.getters.avatarUrl || '');
     const walletDisplayItems = ref([]);
     const isLoadingWallets = ref(false);
+    const walletDropdownOpen = ref(false);
+    const walletContainer = ref(null);
+
+    const currencySymbols = {
+      USD: '$',
+      CNY: '¥',
+      EUR: '€',
+      GBP: '£',
+      JPY: '¥',
+      HKD: 'HK$',
+      TWD: 'NT$',
+    };
+
+    const primaryWallet = computed(() => {
+      if (!walletDisplayItems.value.length) return null;
+      return walletDisplayItems.value.find((item) => item.currency === 'USD') || walletDisplayItems.value[0];
+    });
+
+    const extraWalletItems = computed(() => {
+      if (!primaryWallet.value) return [];
+      return walletDisplayItems.value.filter((item) => item.currency !== primaryWallet.value.currency);
+    });
+
+    const formatWalletDisplay = (wallet) => {
+      const symbol = currencySymbols[wallet.currency] || `${wallet.currency} `;
+      return `${symbol}${wallet.amount}`;
+    };
+
+    const primaryWalletDisplay = computed(() => {
+      if (!primaryWallet.value) return '';
+      return formatWalletDisplay(primaryWallet.value);
+    });
+
+
+    const toggleWalletDropdown = () => {
+      if (!extraWalletItems.value.length) return;
+      walletDropdownOpen.value = !walletDropdownOpen.value;
+    };
+
+    const goToWalletDeposit = () => {
+      walletDropdownOpen.value = false;
+      router.push('/billing?tab=wallet');
+    };
+
+    const handleWalletClickOutside = (event) => {
+      if (walletContainer.value && !walletContainer.value.contains(event.target)) {
+        walletDropdownOpen.value = false;
+      }
+    };
 
     const loadUserWallets = async () => {
       if (!route.meta.requiresAuth || isLoadingWallets.value) {
@@ -275,6 +356,7 @@ export default {
     
     onMounted(() => {
       window.addEventListener('languageChanged', onLanguageChanged);
+      document.addEventListener('click', handleWalletClickOutside);
       
       applyTheme(store.getters.currentTheme);
       
@@ -298,9 +380,16 @@ export default {
     
     onUnmounted(() => {
       window.removeEventListener('languageChanged', onLanguageChanged);
+      document.removeEventListener('click', handleWalletClickOutside);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     });
     
+
+    const pageHeaderTitle = computed(() => {
+      const titleKey = route.meta?.titleKey;
+      if (titleKey) return t(titleKey);
+      return route.meta?.title || route.name || siteConfig.value.siteName || t('common.page');
+    });
     return {
       username,
       avatarUrl,
@@ -308,7 +397,16 @@ export default {
       PROFILE_CONFIG,
       cachedRoutes,
       customerServiceConfig,
-      walletDisplayItems
+      walletDisplayItems,
+      walletDropdownOpen,
+      walletContainer,
+      primaryWallet,
+      extraWalletItems,
+      primaryWalletDisplay,
+      formatWalletDisplay,
+      toggleWalletDropdown,
+      goToWalletDeposit,
+      pageHeaderTitle
     };
   }
 };
@@ -335,28 +433,58 @@ export default {
   z-index: 100;
 }
 
+.top-fixed-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 120;
+}
+
+.page-header-layer {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  z-index: 115;
+}
+
+.page-header-content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 24px;
+}
+
+.page-header-title {
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 700;
+  color: #0f172a;
+}
+
 
 .site-logo {
-  position: fixed;
-  top: 20px;  
-  left: 25px;
-  font-size: 16px;  
+  font-size: 16px;
   font-weight: 700;
   color: var(--theme-color);
-  z-index: 110;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   letter-spacing: -0.5px;
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 6px 14px;
-  border-radius: 10px;  
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 10px;
-  
+
   .site-logo-img {
     height: 20px;
     width: 20px;
@@ -366,58 +494,114 @@ export default {
 }
 
 
-.dark-theme .site-logo {
-  background-color: rgba(30, 30, 30, 0.7);
-}
 
 
 .top-toolbar {
-  position: fixed;
-  top: 20px;
-  right: 25px;
+  --toolbar-control-height: 34px;
+  --toolbar-control-padding: 5px 8px;
+  --toolbar-control-radius: 8px;
+  --toolbar-control-border: transparent;
+  --toolbar-control-bg: transparent;
+  --toolbar-control-hover-bg: #f5f7fa;
+  --toolbar-control-active-border: #e5e7eb;
+
+  position: static;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 3px;
   z-index: 110;
 
   .toolbar-wallets {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    height: 36px;
-    padding: 0 8px;
+    height: var(--toolbar-control-height);
     margin-right: 2px;
-    border-radius: 999px;
-    border: 1px solid var(--border-color);
-    background: color-mix(in srgb, var(--card-bg-color) 88%, transparent);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-  }
 
-  .toolbar-wallet-chip {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
-    padding: 0 10px;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1;
-    color: var(--text-color);
-
-    &:not(:last-child) {
-      border-right: 1px solid color-mix(in srgb, var(--border-color) 75%, transparent);
-    }
-
-    .wallet-currency {
-      color: var(--text-secondary);
-      letter-spacing: 0.2px;
-      font-size: 12px;
-    }
-
-    .wallet-amount {
-      color: var(--text-color);
+    .toolbar-wallet-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: var(--toolbar-control-height);
+      padding: var(--toolbar-control-padding);
+      border-radius: var(--toolbar-control-radius);
+      border: 1px solid var(--toolbar-control-border);
+      background: var(--toolbar-control-bg);
+      color: var(--text-color, #111827);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
       font-variant-numeric: tabular-nums;
-      min-width: 36px;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+
+      &:hover {
+        background: var(--toolbar-control-hover-bg);
+      }
+
+      &:active,
+      &.is-active {
+        border-color: var(--toolbar-control-active-border);
+        background: var(--toolbar-control-hover-bg);
+      }
+
+      .wallet-icon {
+        font-size: 15px;
+        line-height: 1;
+        opacity: 1;
+      }
+    }
+
+    .wallet-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 200px;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: rgba(var(--card-background-rgb), 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-card-md);
+      z-index: 120;
+
+      .wallet-dropdown-title {
+        font-size: 12px;
+        color: var(--secondary-text-color);
+        margin-bottom: 8px;
+      }
+
+      .wallet-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 4px 0;
+        font-size: 13px;
+
+        .wallet-row-currency {
+          color: var(--secondary-text-color);
+          font-weight: 600;
+        }
+
+        .wallet-row-amount {
+          color: var(--text-color);
+          font-variant-numeric: tabular-nums;
+          font-weight: 600;
+        }
+      }
+
+      .wallet-deposit-btn {
+        margin-top: 10px;
+        width: 100%;
+        height: 32px;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
+        cursor: pointer;
+        font-size: 13px;
+        line-height: 1;
+        font-weight: 600;
+      }
     }
   }
   
@@ -425,23 +609,73 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
+    width: var(--toolbar-control-height);
+    height: var(--toolbar-control-height);
     border-radius: 50%;
-    background-color: rgba(var(--theme-color-rgb), 0.1);
-    border: 1px solid rgba(var(--theme-color-rgb), 0.3);
-    color: var(--theme-color);
+    background: var(--toolbar-control-bg);
+    border: 1px solid var(--toolbar-control-border);
+    box-shadow: var(--toolbar-control-shadow);
+    color: var(--text-color);
     cursor: pointer;
     transition: all 0.3s ease;
-    
+
     &:hover {
-      box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.15);
-      transform: translateY(-2px);
+      border-color: rgba(var(--theme-color-rgb), 0.45);
+      color: var(--theme-color);
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1);
+      transform: translateY(-1px);
     }
+  }
+
+  :deep(.language-btn),
+  :deep(.avatar-wrapper) {
+    min-height: var(--toolbar-control-height);
+    padding: var(--toolbar-control-padding);
+    border: 1px solid var(--toolbar-control-border);
+    background: var(--toolbar-control-bg);
+    border-radius: var(--toolbar-control-radius);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      background: var(--toolbar-control-hover-bg);
+    }
+
+    &:active,
+    &.is-active {
+      border-color: var(--toolbar-control-active-border);
+      background: var(--toolbar-control-hover-bg);
+    }
+  }
+
+  :deep(.avatar-wrapper) {
+    width: auto;
+    min-width: var(--toolbar-control-height);
+    font-size: 14px;
+  }
+
+  :deep(.language-btn) {
+    min-width: 88px;
+    font-size: 14px;
   }
 }
 
+
+
+.app-content-wrapper.with-top-bar {
+  .dashboard-card.welcome-card > .card-header,
+  .dashboard-card.title-card > .card-header {
+    display: none !important;
+  }
+}
 .app-content-wrapper {
+  width: 100%;
+
+  &.with-top-bar {
+    padding-top: 16px;
+  }
+}
+
+.content-layout-shell {
   width: 100%;
 }
 
@@ -450,42 +684,110 @@ export default {
     padding-left: 240px;
   }
 
-  .site-logo {
-    left: 24px;
+  .content-layout-shell.fixed-content-width {
+    width: min(1180px, 100%);
+    margin-right: auto;
+    margin-left: 0;
   }
+
+  .page-header-layer {
+    padding-left: 240px;
+  }
+
+  .page-header-content {
+    width: min(1180px, 100%);
+    margin-right: auto;
+    margin-left: 0;
+    padding: 0 24px 0 56px;
+  }
+
 }
 
 
 @media (max-width: 768px) {
-  .site-logo {
-    top: 12px;  
-    left: 20px;
-    font-size: 16px;  
-    padding: 5px 10px;
-    border-radius: 8px;
+  .app-content-wrapper.with-top-bar {
+    padding-top: 100px;
   }
-  
-  .top-toolbar {
-    top: 12px;  
-    right: 20px;
+
+  .top-fixed-bar {
+    height: 56px;
+    padding: 0 12px;
+  }
+
+  .page-header-layer {
+    top: 56px;
+    height: 44px;
+    padding: 0;
+  }
+
+  .page-header-content {
+    padding: 0 12px;
+  }
+
+  .page-header-title {
+    font-size: 16px;
+  }
+
+  .site-logo {
+    font-size: 14px;
     gap: 8px;
-    flex-wrap: wrap;
+
+    .site-logo-img {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .top-toolbar {
+    gap: 3px;
+    flex-wrap: nowrap;
     justify-content: flex-end;
 
     .toolbar-wallets {
       order: -1;
       height: 34px;
-      max-width: 100%;
       margin-left: auto;
-      overflow-x: auto;
-      scrollbar-width: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
     }
   }
-  
+
+  /* Mobile density optimization: avoid oversized modules */
+  .app-content-wrapper {
+    .dashboard-card,
+    .stats-card,
+    .card,
+    .info-card {
+      border-radius: 12px !important;
+    }
+
+    .dashboard-card {
+      padding: 14px !important;
+    }
+
+    .card-header {
+      padding: 12px 14px !important;
+      min-height: auto !important;
+
+      .card-title,
+      h2,
+      h3 {
+        font-size: 16px !important;
+        line-height: 1.3 !important;
+      }
+    }
+
+    .card-body {
+      padding: 12px 14px !important;
+      font-size: 14px !important;
+      line-height: 1.45 !important;
+    }
+
+    .stats-grid,
+    .cards-grid,
+    .quick-grid,
+    .dashboard-grid {
+      gap: 10px !important;
+    }
+  }
   
   main, .main-content, .content-container {
     padding-bottom: 70px !important;
@@ -581,7 +883,7 @@ html {
     top: 20px;
     right: 25px;
     display: flex;
-    gap: 10px;
+    gap: 16px;
     z-index: 110;
   }
 }

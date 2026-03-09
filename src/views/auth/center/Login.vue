@@ -26,7 +26,6 @@
 
     <div class="top-toolbar">
 
-      <ThemeToggle />
 
       <LanguageSelector />
 
@@ -248,7 +247,6 @@ import { useI18n } from 'vue-i18n';
 
 import { useToast } from '@/composables/useToast';
 
-import ThemeToggle from '@/components/common/ThemeToggle.vue';
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 
@@ -286,7 +284,6 @@ export default {
 
   components: {
 
-    ThemeToggle,
 
     LanguageSelector,
 
@@ -1072,69 +1069,6 @@ export default {
 
 
 
-.dark-theme {
-
-  .input-with-icon {
-
-    .input-icon {
-
-      color: var(--secondary-text-color);
-
-    }
-
-
-
-    .form-control {
-
-      background-color: var(--input-bg-color, #333);
-
-      border-color: var(--input-border-color, #444);
-
-
-
-      &:focus {
-
-        background-color: var(--input-focus-bg-color, #3a3a3a);
-
-        border-color: var(--theme-color);
-
-      }
-
-
-
-      &::placeholder {
-
-        color: var(--placeholder-color, #777);
-
-      }
-
-    }
-
-  }
-
-
-
-  .checkbox-container {
-
-    .checkbox-label {
-
-      color: var(--secondary-text-color);
-
-    }
-
-
-
-    .checkmark {
-
-      background-color: transparent;
-
-      border-color: var(--border-color, #555);
-
-    }
-
-  }
-
-}
 
 
 

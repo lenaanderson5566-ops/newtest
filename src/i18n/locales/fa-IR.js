@@ -236,6 +236,36 @@ export default {
     deviceLimit: 'دستگاه های آنلاین',
     unlimited: 'نامحدود',
     nextResetTime: 'زمان بازنشانی بعدی',
+
+    pendingOrderBanner: 'شما {count} سفارش در انتظار پرداخت دارید. لطفاً برای فعال‌سازی سرویس هرچه سریع‌تر پرداخت را انجام دهید.',
+    payNow: 'پرداخت',
+    currentExitRegion: 'منطقه خروج فعلی',
+    refreshing: 'در حال تازه‌سازی',
+    smoothStatusNormal: 'وضعیت اتصال: عادی',
+    serviceReference: 'مرجع سرویس',
+    serviceReferenceHint: 'مرجع سرویس منطقه‌ای بر اساس نگاشت ایستای منطقه تخمین زده می‌شود و نتیجه بررسی لحظه‌ای نیست.',
+    serviceReferenceAria: 'مرجع سرویس منطقه‌ای',
+    serviceAvailableInRegion: 'در مرجع منطقه‌ای قابل استفاده',
+    serviceNotInRegion: 'در فهرست مرجع منطقه‌ای نیست',
+
+
+    trafficPackageHint: 'بسته ترافیک یک مکمل یک‌باره است؛ ابتدا ترافیک اشتراک ماهانه مصرف می‌شود و پس از اتمام آن، از بسته ترافیک استفاده خواهد شد.',
+    subscriptionPausedAfterExpiry: 'اشتراک منقضی شده و سرویس متوقف شده است',
+    renewToRestoreAccess: 'پس از تمدید، دسترسی نودها بلافاصله بازیابی می‌شود',
+    expiredOnDate: 'در {date} منقضی شده است',
+    defaultSubscriptionName: 'اشتراک',
+    subscriptionStatus: {
+      expired: 'منقضی شده',
+      expiring: 'در آستانه انقضا',
+      active: 'فعال'
+    },
+    planAction: {
+      manageSubscription: 'مدیریت اشتراک',
+      restoreNow: 'بازیابی فوری اشتراک',
+      renewNow: 'تمدید فوری',
+      reselectPlan: 'انتخاب دوباره پلن',
+      renew: 'تمدید'
+    },
     
     importTitle: 'انتخاب روش وارد کردن',
     copySubscription: 'کپی آدرس پیکربندی',
@@ -314,8 +344,27 @@ export default {
     qrcodeView: 'QR کد',
     invalidNodeData: 'داده نود ناقص است، نمی توان لینک ایجاد کرد',
     unsupportedNodeType: 'نوع نود پشتیبانی نمی شود',
-    userInfoError: 'دریافت اطلاعات کاربر شکست خورد',
-    viewSubscribeLink: 'نمایش لینک اشتراک'
+    viewSubscribeLink: 'نمایش لینک اشتراک',
+    userInfoError: 'دریافت اطلاعات کاربر ناموفق بود',
+    status: {
+      online: 'آنلاین',
+      offline: 'آفلاین'
+    },
+    noPlan: {
+      coverageTitle: 'پوشش نودهای جهانی',
+      coverageDesc: 'چندین منطقه دسترسی فعال شده است. با خرید پلن، همه خطوط باز می‌شوند.',
+      unlockAfterPurchase: 'پس از خرید باز می‌شود',
+      subscribeNow: 'همین حالا اشتراک بگیرید',
+      comparePlans: 'مقایسه پلن‌ها',
+      regions: {
+        japan: { title: 'منطقه ژاپن', desc: 'تاخیر کم / دسترسی پایدار' },
+        singapore: { title: 'منطقه سنگاپور', desc: 'بهینه‌سازی آسیا / سناریوی عمومی' },
+        hongKong: { title: 'منطقه هنگ‌کنگ', desc: 'اتصال سریع / استفاده پرتکرار' },
+        us: { title: 'منطقه آمریکا', desc: 'دسترسی بین‌المللی / پشتیبانی چند سناریو' },
+        germany: { title: 'منطقه آلمان', desc: 'پوشش اروپا / مسیر پایدار' },
+        global: { title: 'منطقه ترکیبی جهانی', desc: 'زمان‌بندی بین‌منطقه‌ای / مسیر پشتیبان' }
+      }
+    },
   },
   orders: {
     title: 'لیست سفارش ها',
@@ -519,6 +568,7 @@ export default {
     title: 'فروشگاه',
     description: 'بسته های موجود را ببینید و خریداری کنید',
     loading: 'در حال بارگذاری بسته ها...',
+    billingPeriodAria: 'تغییر دوره صورتحساب',
     filter: {
       all: 'همه',
       recurring: 'دوره ای',
@@ -891,6 +941,7 @@ export default {
     viewTrafficLog: 'نمایش جزئیات ترافیک',
     days: 'روز',
     trafficLogDesc: 'رکوردهای دقیق ترافیک و آمار را ببینید',
+    unitGb: 'GB',
     trafficChart: 'نمودار روند ترافیک'
   },
   wallet: {

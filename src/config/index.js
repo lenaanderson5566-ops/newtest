@@ -218,6 +218,45 @@ export const config = {
 
     // 是否显示导入订阅
     showImportSubscription: true,
+
+    // 当前出口 IP 卡片：地区徽记颜色映射（国家/地区代码 -> 徽记色）
+    ipRegionBadgeByCountryCode: {
+      US: 'is-blue',
+      CA: 'is-blue',
+      NL: 'is-blue',
+      HK: 'is-pink',
+      SG: 'is-pink',
+      JP: 'is-red',
+      KR: 'is-red',
+      DE: 'is-red',
+      CN: 'is-red',
+    },
+
+    // 当前出口 IP 卡片：服务图标目录（统一小尺寸 SVG/icon，优先本地静态资源）
+    ipRegionServiceCatalog: [
+      { key: 'Netflix', label: 'Netflix' },
+      { key: 'Disney+', label: 'Disney+' },
+      { key: 'YouTube Premium', label: 'YouTube Premium' },
+      { key: 'ChatGPT', label: 'ChatGPT' },
+      { key: 'Claude', label: 'Claude' },
+      { key: 'Google', label: 'Google' },
+    ],
+
+    // 当前出口 IP 卡片：地区服务参考（静态映射，不做真实解锁检测）
+    ipRegionServiceReferenceByCountryCode: {
+      US: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      JP: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      SG: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      HK: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      UK: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      DE: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      TW: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      KR: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+      CN: ['YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
+    },
+
+    // 未命中地区映射时的默认地区服务参考
+    ipRegionServiceReferenceDefault: ['Netflix', 'Disney+', 'YouTube Premium', 'ChatGPT', 'Claude', 'Google'],
   },
 
   // 客户端下载配置

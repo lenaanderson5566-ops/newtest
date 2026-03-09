@@ -110,6 +110,7 @@ const Register = getAuthComponent('Register');
 const ForgotPassword = getAuthComponent('ForgotPassword');
 
 const Dashboard = () => import('@/views/dashboard/Dashboard.vue');
+const AnnouncementList = () => import('@/views/announcement/AnnouncementList.vue');
 
 const MainBoard = () => import('@/views/layout/MainBoard.vue');
 
@@ -305,6 +306,24 @@ const routes = [
           requiresAuth: true,
 
           keepAlive: true
+
+        }
+
+      },
+
+      {
+
+        path: 'announcements',
+
+        name: 'Announcements',
+
+        component: AnnouncementList,
+
+        meta: {
+
+          titleKey: 'menu.announcement',
+
+          requiresAuth: true
 
         }
 

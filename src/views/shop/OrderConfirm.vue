@@ -59,7 +59,7 @@
             <div class="card-header">
               <h3 class="card-title">{{ plan.name }}</h3>
 
-              <div class="card-badge" :class="getStockBadgeClass(plan)">
+              <div v-if="shouldShowStockBadge(plan)" class="card-badge" :class="getStockBadgeClass(plan)">
                 <IconBox :size="16" class="badge-icon" />
 
                 <span>{{ getPlanStockText(plan) }}</span>
@@ -494,6 +494,10 @@ export default {
       return bestPeriod;
     });
 
+    const shouldShowStockBadge = (plan) => {
+      return plan.capacity_limit === 0 || (plan.capacity_limit > 0 && plan.capacity_limit < 5);
+    };
+
     const getPlanStockText = (plan) => {
       if (plan.capacity_limit === 0) {
         return t("shop.plan.stock.sold_out");
@@ -898,6 +902,8 @@ export default {
       submitOrder,
 
       goBack,
+
+      shouldShowStockBadge,
 
       getPlanStockText,
 

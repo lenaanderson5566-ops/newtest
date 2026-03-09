@@ -244,7 +244,7 @@ import { createDebouncedUpdate } from '@/utils/componentLifecycle';
 
 
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 
 
@@ -426,7 +426,7 @@ const initChart = () => {
 
         params.forEach(param => {
 
-          let value = param.value + ' GB';
+          let value = `${param.value} ${t('trafficLog.unitGb')}`;
 
           result += param.marker + ' ' + param.seriesName + ': ' + value + '<br/>';
 
@@ -510,7 +510,7 @@ const initChart = () => {
 
       type: 'value',
 
-      name: 'GB',
+      name: t('trafficLog.unitGb'),
 
       nameTextStyle: {
 
@@ -522,7 +522,7 @@ const initChart = () => {
 
       axisLabel: {
 
-        formatter: '{value} GB',
+        formatter: (value) => `${value} ${t('trafficLog.unitGb')}`,
 
         color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || '#333333'
 
@@ -696,6 +696,15 @@ watch(trafficData, () => {
 }, { deep: true });
 
 
+
+
+watch(() => locale.value, () => {
+  if (!loading.value && !error.value && trafficData.value.length > 0) {
+    nextTick(() => {
+      initChart();
+    });
+  }
+});
 
 let themeObserver = null;
 

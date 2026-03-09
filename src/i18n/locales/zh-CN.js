@@ -34,6 +34,7 @@ export default {
         toggleTheme: '切换主题',
         language: '语言',
         noData: '暂无数据',
+        page: '页面',
         confirm: '确认',
         dashboard: '仪表盘',
         overview: '概览',
@@ -236,6 +237,34 @@ export default {
         unlimited: '不限制',
         nextResetTime: '下次重置时间',
 
+        pendingOrderBanner: '你有 {count} 个待支付订单，请尽快完成支付以激活服务。',
+        payNow: '去支付',
+        currentExitRegion: '当前出口地区',
+        smoothStatusNormal: '流畅状态：正常',
+        serviceReference: '服务参考',
+        serviceReferenceHint: '地区服务参考仅基于地区静态映射推测，不代表实时解锁检测结果。',
+        serviceReferenceAria: '地区服务参考',
+        serviceAvailableInRegion: '地区参考可用',
+        serviceNotInRegion: '未在地区参考列表',
+
+        trafficPackageHint: '流量额度包为一次性补充流量，优先消耗月订阅流量，订阅用尽后再消耗额度包流量。',
+        subscriptionPausedAfterExpiry: '订阅已过期，服务已暂停',
+        renewToRestoreAccess: '续费后将立即恢复节点访问',
+        expiredOnDate: '已于 {date} 到期',
+        defaultSubscriptionName: '订阅',
+        subscriptionStatus: {
+            expired: '已过期',
+            expiring: '即将到期',
+            active: '有效中'
+        },
+        planAction: {
+            manageSubscription: '管理订阅',
+            restoreNow: '立即恢复订阅',
+            renewNow: '立即续费',
+            reselectPlan: '重新选择套餐',
+            renew: '续费'
+        },
+
         importTitle: '选择导入方式',
         copySubscription: '复制配置地址',
         copySubscriptionDesc: '复制配置地址到剪贴板',
@@ -266,6 +295,7 @@ export default {
         overview: '概览',
         shop: '商店',
         subscription: '订阅',
+        announcement: '公告',
         invite: '邀请',
         docs: '文档',
         startUsing: '开始使用',
@@ -313,8 +343,27 @@ export default {
         qrcodeView: '二维码',
         invalidNodeData: '节点数据不完整，无法生成链接',
         unsupportedNodeType: '不支持的节点类型',
+        viewSubscribeLink: '查看订阅链接',
         userInfoError: '获取用户信息失败',
-        viewSubscribeLink: '查看订阅链接'
+        status: {
+            online: '在线',
+            offline: '离线'
+        },
+        noPlan: {
+            coverageTitle: '全球节点覆盖',
+            coverageDesc: '已部署多个接入区域，购买套餐后解锁完整线路',
+            unlockAfterPurchase: '购买后解锁',
+            subscribeNow: '立即订阅',
+            comparePlans: '查看套餐区别',
+            regions: {
+                japan: { title: '日本地区', desc: '低延迟连接 / 稳定访问' },
+                singapore: { title: '新加坡地区', desc: '亚洲优化 / 通用场景' },
+                hongKong: { title: '香港地区', desc: '快速接入 / 高频使用' },
+                us: { title: '美国地区', desc: '国际访问 / 多场景支持' },
+                germany: { title: '德国地区', desc: '欧洲覆盖 / 稳定中转' },
+                global: { title: '全球混合地区', desc: '跨区调度 / 备用线路' }
+            }
+        },
     },
     orders: {
         title: '订单列表',
@@ -515,6 +564,7 @@ export default {
         title: '订阅计划',
         description: '选择适合您的订阅服务',
         loading: '正在加载套餐...',
+        billingPeriodAria: '计费周期切换',
         filter: {
             all: '全部',
             recurring: '周期性',
@@ -533,7 +583,7 @@ export default {
             renew: '续费',
             add_quota: '添加额度',
             upgrade_to: '升级至{name}',
-            current: '您的当前套餐',
+            current: '您的当前订阅',
             sold_out_btn: '已售罄',
             stock: {
                 plenty: '库存充足',
@@ -887,7 +937,8 @@ export default {
         viewTrafficLog: '查看流量明细',
         days: '天',
         trafficLogDesc: '查看详细的流量使用记录和统计',
-        trafficChart: '流量趋势图'
+        unitGb: 'GB',
+    trafficChart: '流量趋势图'
     },
     wallet: {
         balance: {

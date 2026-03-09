@@ -16,13 +16,13 @@
 
         <div class="card-header">
 
-          <h2 class="card-title">{{ $t('lines.welcome.title') || '线路列表' }}</h2>
+          <h2 class="card-title">{{ $t('lines.welcome.title') }}</h2>
 
         </div>
 
         <div class="card-body">
 
-          <p>{{ $t('lines.welcome.description') || '查看并使用可用线路' }}</p>
+          <p>{{ $t('lines.welcome.description') }}</p>
 
         </div>
 
@@ -36,7 +36,7 @@
 
         <LoadingSpinner />
 
-        <p>{{ $t('lines.loading') || '正在加载线路...' }}</p>
+        <p>{{ $t('lines.loading') }}</p>
 
       </div>
 
@@ -50,7 +50,7 @@
 
         <p>{{ error }}</p>
 
-        <button class="retry-button" @click="fetchNodes">{{ $t('common.retry') || '重试' }}</button>
+        <button class="retry-button" @click="fetchNodes">{{ $t('common.retry') }}</button>
 
       </div>
 
@@ -59,8 +59,8 @@
       <!-- 无套餐解锁页 -->
       <div v-else-if="!hasActivePlan" class="nodes-no-plan">
         <div class="no-plan-head">
-          <h2>全球节点覆盖</h2>
-          <p>已部署多个接入区域，购买套餐后解锁完整线路</p>
+          <h2>{{ $t('lines.noPlan.coverageTitle') }}</h2>
+          <p>{{ $t('lines.noPlan.coverageDesc') }}</p>
         </div>
 
         <div class="no-plan-map">
@@ -88,13 +88,13 @@
           <div v-for="region in lockedRegions" :key="region.title" class="region-lock-card">
             <h3>{{ region.title }}</h3>
             <p>{{ region.desc }}</p>
-            <button class="unlock-tip-btn">购买后解锁</button>
+            <button class="unlock-tip-btn">{{ $t('lines.noPlan.unlockAfterPurchase') }}</button>
           </div>
         </div>
 
         <div class="no-plan-cta">
-          <button class="cta-btn primary" @click="goToShop">立即订阅</button>
-          <button class="cta-btn secondary" @click="goToShop">查看套餐区别</button>
+          <button class="cta-btn primary" @click="goToShop">{{ $t('lines.noPlan.subscribeNow') }}</button>
+          <button class="cta-btn secondary" @click="goToShop">{{ $t('lines.noPlan.comparePlans') }}</button>
         </div>
       </div>
 
@@ -121,7 +121,7 @@
               <div class="node-feature-tags" v-if="getFeatureTags(line.tags).length > 0">
                 <span v-for="(tag, index) in getFeatureTags(line.tags)" :key="index" class="node-tag feature-tag">{{ tag }}</span>
               </div>
-              <span class="node-online-status" :class="{ online: line.is_online === 1 }">{{ line.is_online === 1 ? '在线' : '离线' }}</span>
+              <span class="node-online-status" :class="{ online: line.is_online === 1 }">{{ line.is_online === 1 ? $t('lines.status.online') : $t('lines.status.offline') }}</span>
               <button v-if="showNodeRate && allowViewNodeInfo" class="more-btn" @click="openNodeDetail(line)">
                 <IconDotsVertical :size="20" />
               </button>
@@ -141,7 +141,7 @@
 
         <IconServer :size="48" class="empty-icon" />
 
-        <p>{{ $t('lines.noLines') || '暂无可用线路' }}</p>
+        <p>{{ $t('lines.noLines') }}</p>
 
       </div>
 
@@ -271,7 +271,7 @@ const fetchUserInfo = async () => {
 
     if ($toast) {
 
-      $toast.error(t('common.userInfoError') || '获取用户信息失败');
+      $toast.error(t('lines.userInfoError'));
 
     }
 
@@ -321,14 +321,14 @@ const hasActivePlan = computed(() => {
   return expiredAt * 1000 > Date.now();
 });
 
-const lockedRegions = [
-  { title: 'Japan Region', desc: '低延迟连接 / 稳定访问' },
-  { title: 'Singapore Region', desc: '亚洲优化 / 通用场景' },
-  { title: 'Hong Kong Region', desc: '快速接入 / 高频使用' },
-  { title: 'US Region', desc: '国际访问 / 多场景支持' },
-  { title: 'Germany Region', desc: '欧洲覆盖 / 稳定中转' },
-  { title: 'Global Mix Region', desc: '跨区调度 / 备用线路' }
-];
+const lockedRegions = computed(() => [
+  { title: t('lines.noPlan.regions.japan.title'), desc: t('lines.noPlan.regions.japan.desc') },
+  { title: t('lines.noPlan.regions.singapore.title'), desc: t('lines.noPlan.regions.singapore.desc') },
+  { title: t('lines.noPlan.regions.hongKong.title'), desc: t('lines.noPlan.regions.hongKong.desc') },
+  { title: t('lines.noPlan.regions.us.title'), desc: t('lines.noPlan.regions.us.desc') },
+  { title: t('lines.noPlan.regions.germany.title'), desc: t('lines.noPlan.regions.germany.desc') },
+  { title: t('lines.noPlan.regions.global.title'), desc: t('lines.noPlan.regions.global.desc') }
+]);
 
 const goToShop = () => {
   router.push('/shop');
@@ -362,7 +362,7 @@ const fetchNodes = async () => {
 
     console.error('Failed to fetch nodes:', err);
 
-    error.value = err.response?.message || (err && err.message ? err.message : t('common.networkError') || '网络错误');
+    error.value = err.response?.message || (err && err.message ? err.message : t('common.networkError'));
 
     
 
@@ -862,14 +862,14 @@ onMounted(() => {
 
     .primary {
       color: #fff;
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
       box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
     }
 
     .secondary {
-      color: #475569;
-      border-color: #cbd5e1;
-      background: #f8fafc;
+      color: var(--neutral-strong);
+      border-color: var(--border-color-soft);
+      background: var(--surface-subtle);
     }
   }
 }

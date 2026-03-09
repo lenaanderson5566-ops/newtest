@@ -40,17 +40,6 @@ html {
 }
 
 /* 暗色模式滚动条调整 */
-.dark-theme {
-  /* 暗色模式下轨道颜色调整 */
-  ::-webkit-scrollbar-track {
-    background-color: rgba(255, 255, 255, 0.05);
-  }
-  
-  /* 暗色模式下滚动条角落透明 */
-  ::-webkit-scrollbar-corner {
-    background-color: transparent;
-  }
-}
 
 /* 多彩滚动条效果（可选） */
 .gradient-scrollbar {

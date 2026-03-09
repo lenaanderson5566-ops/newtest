@@ -236,6 +236,36 @@ export default {
     deviceLimit: 'Лимит устройств',
     unlimited: 'Без ограничений',
     nextResetTime: 'Время следующего сброса',
+
+    pendingOrderBanner: 'У вас {count} неоплаченных заказов. Пожалуйста, оплатите их как можно скорее для активации сервиса.',
+    payNow: 'Оплатить',
+    currentExitRegion: 'Текущий регион выхода',
+    refreshing: 'Обновление',
+    smoothStatusNormal: 'Состояние соединения: нормальное',
+    serviceReference: 'Справка по сервисам',
+    serviceReferenceHint: 'Справка по сервисам региона основана на статическом сопоставлении регионов и не является результатом проверки в реальном времени.',
+    serviceReferenceAria: 'Справка по сервисам региона',
+    serviceAvailableInRegion: 'Доступно по региональной справке',
+    serviceNotInRegion: 'Нет в региональном списке',
+
+
+    trafficPackageHint: 'Пакет трафика — это разовое пополнение. Сначала расходуется трафик ежемесячной подписки, после его исчерпания — трафик пакета.',
+    subscriptionPausedAfterExpiry: 'Подписка истекла, сервис приостановлен',
+    renewToRestoreAccess: 'После продления доступ к узлам будет восстановлен немедленно',
+    expiredOnDate: 'Истекло: {date}',
+    defaultSubscriptionName: 'Подписка',
+    subscriptionStatus: {
+      expired: 'Истекла',
+      expiring: 'Скоро истечёт',
+      active: 'Активна'
+    },
+    planAction: {
+      manageSubscription: 'Управлять подпиской',
+      restoreNow: 'Восстановить сейчас',
+      renewNow: 'Продлить сейчас',
+      reselectPlan: 'Выбрать тариф заново',
+      renew: 'Продлить'
+    },
     
     importTitle: 'Выберите способ импорта',
     copySubscription: 'Скопировать адрес конфигурации',
@@ -314,8 +344,27 @@ export default {
     qrcodeView: 'QR-код',
     invalidNodeData: 'Данные узла неполные, ссылка не создана',
     unsupportedNodeType: 'Неподдерживаемый тип узла',
-    userInfoError: 'Ошибка получения информации пользователя',
-    viewSubscribeLink: 'Посмотреть ссылку подписки'
+    viewSubscribeLink: 'Посмотреть ссылку подписки',
+    userInfoError: 'Не удалось получить информацию пользователя',
+    status: {
+      online: 'Онлайн',
+      offline: 'Офлайн'
+    },
+    noPlan: {
+      coverageTitle: 'Покрытие глобальных узлов',
+      coverageDesc: 'Развернуто несколько регионов доступа. Купите тариф, чтобы открыть все линии.',
+      unlockAfterPurchase: 'Разблокируется после покупки',
+      subscribeNow: 'Оформить подписку',
+      comparePlans: 'Сравнить тарифы',
+      regions: {
+        japan: { title: 'Регион Япония', desc: 'Низкая задержка / стабильный доступ' },
+        singapore: { title: 'Регион Сингапур', desc: 'Оптимизация для Азии / общие сценарии' },
+        hongKong: { title: 'Регион Гонконг', desc: 'Быстрый доступ / частое использование' },
+        us: { title: 'Регион США', desc: 'Международный доступ / поддержка разных сценариев' },
+        germany: { title: 'Регион Германия', desc: 'Покрытие Европы / стабильная маршрутизация' },
+        global: { title: 'Смешанный глобальный регион', desc: 'Кросс-региональная маршрутизация / резервные линии' }
+      }
+    },
   },
   orders: {
     title: 'Список заказов',
@@ -519,6 +568,7 @@ export default {
     title: 'Магазин',
     description: 'Просмотрите и купите доступные планы',
     loading: 'Загрузка планов...',
+    billingPeriodAria: 'Переключение расчётного периода',
     filter: {
       all: 'Все',
       recurring: 'Периодические',
@@ -891,6 +941,7 @@ export default {
     viewTrafficLog: 'Просмотреть детали трафика',
     days: 'дней',
     trafficLogDesc: 'Просмотр подробных записей и статистики трафика',
+    unitGb: 'GB',
     trafficChart: 'График трафика'
   },
   wallet: {

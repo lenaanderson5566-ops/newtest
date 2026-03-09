@@ -952,7 +952,7 @@ function debounce(fn, delay) {
 .slide-tabs-container {
   margin-bottom: 20px;
   position: fixed;
-  top: 86px;
+  top: 120px;
   left: 16px;
   z-index: 10;
   width: 210px;
@@ -1062,13 +1062,13 @@ function debounce(fn, delay) {
 
         font-size: 12px;
 
-        flex-direction: column;
+        flex-direction: row;
 
-        gap: 4px;
+        gap: 6px;
 
         justify-content: center;
 
-        height: 64px;
+        height: 50px;
 
         
 
@@ -1090,9 +1090,9 @@ function debounce(fn, delay) {
 
         &:last-child {
 
-          height: 64px;
+          height: 50px;
 
-          min-width: 64px;  
+          min-width: 72px;  
 
         }
 
@@ -1114,9 +1114,9 @@ function debounce(fn, delay) {
 
           svg {
 
-            width: 22px;
+            width: 16px;
 
-            height: 22px;
+            height: 16px;
 
             transition: color 0.3s ease;
 
@@ -1196,9 +1196,12 @@ function debounce(fn, delay) {
 
       width: 100%;
 
-      justify-content: space-around;
-
-      
+      justify-content: flex-start;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 4px;
+      padding: 2px;
 
       .slider-indicator {
 
@@ -1240,7 +1243,7 @@ function debounce(fn, delay) {
 
         font-size: 11px;
 
-        height: 58px;
+        height: 46px;
 
         
 
@@ -1248,9 +1251,9 @@ function debounce(fn, delay) {
 
           svg {
 
-            width: 20px;
+            width: 14px;
 
-            height: 20px;
+            height: 14px;
 
           }
 

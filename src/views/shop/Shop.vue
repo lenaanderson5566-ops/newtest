@@ -4,33 +4,26 @@
       <!-- 欢迎卡片 -->
 
       <div class="dashboard-card welcome-card">
-        <div class="card-header">
+        <div class="card-header shop-title-header">
           <h2 class="card-title">{{ $t("shop.title") }}</h2>
         </div>
 
         <div class="card-body">
           <p>{{ $t("shop.description") }}</p>
-        </div>
-      </div>
-
-      <!-- 筛选选项卡 - 周期切换 -->
-
-      <div class="filter-toggle-container" v-if="filters.length > 0">
-        <div class="filter-toggle-wrapper">
-          <div
-            v-for="filter in filters"
-            :key="`${filter.value}-${currentLanguage}`"
-            class="filter-option"
-            :class="{ active: selectedFilter === filter.value }"
-            @click="setFilter(filter.value)"
-          >
-            <div class="option-icon">
-              <IconCircleCheck v-if="selectedFilter === filter.value" />
-
-              <IconCircle v-else />
+          <div class="filter-toggle-container" v-if="displayedFilters.length > 0">
+            <div class="filter-toggle-wrapper" role="tablist" :aria-label="$t('shop.billingPeriodAria')">
+              <span class="filter-highlight" :style="filterHighlightStyle"></span>
+              <button
+                v-for="filter in displayedFilters"
+                :key="`${filter.value}-${currentLanguage}`"
+                type="button"
+                class="filter-option"
+                :class="{ active: selectedFilter === filter.value }"
+                @click="setFilter(filter.value)"
+              >
+                <span class="option-text">{{ getFilterDisplayLabel(filter) }}</span>
+              </button>
             </div>
-
-            <span class="option-text">{{ $t(filter.labelKey) }}</span>
           </div>
         </div>
       </div>
@@ -97,7 +90,7 @@
             </div>
 
             <div v-if="isCurrentPlan(plan)" class="current-plan-meta">
-              <span class="current-plan-badge">{{ $t("shop.plan.current") }}</span>
+              <span class="current-plan-badge">{{ currentPlanBadgeLabel }}</span>
             </div>
 
             <div
@@ -128,17 +121,11 @@
 
             <div class="plan-price">
               <div class="price-display">
-                <span class="currency">{{ currencySymbol }}</span>
-
-                <span class="amount">{{ getPlanMainPrice(plan) }}</span>
-
-                <span class="period">{{
-                  $t(
-                    `shop.plan.periods.${getPriceTypeKey(
-                      getDisplayPriceType(plan)
-                    )}`
-                  )
-                }}</span>
+                <div class="price-main-line">
+                  <span class="currency">{{ currencySymbol }}</span>
+                  <span class="amount">{{ getPlanMainPrice(plan) }}</span>
+                </div>
+                <span class="unit-line">{{ currency }} {{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`) }}</span>
               </div>
             </div>
 
@@ -243,8 +230,6 @@ import {
   IconShoppingCart,
   IconBox,
   IconInfoCircle,
-  IconCircle,
-  IconCircleCheck,
 } from "@tabler/icons-vue";
 
 import { useRouter } from "vue-router";
@@ -265,11 +250,7 @@ export default {
 
     IconBox,
 
-    IconInfoCircle,
-
-    IconCircle,
-
-    IconCircleCheck
+    IconInfoCircle
   },
 
   setup() {
@@ -331,8 +312,33 @@ export default {
 
     const currentLanguage = computed(() => locale.value);
 
+    const displayedFilters = computed(() => {
+      const monthFilter = filters.value.find((item) => item.value === "month_price");
+      const yearFilter = filters.value.find((item) => item.value === "year_price");
+      if (monthFilter && yearFilter) {
+        return [monthFilter, yearFilter];
+      }
+      return filters.value;
+    });
+
+    const filterHighlightStyle = computed(() => {
+      const count = displayedFilters.value.length;
+      if (!count) return {};
+      const activeIndex = Math.max(0, displayedFilters.value.findIndex((item) => item.value === selectedFilter.value));
+      return {
+        width: `${100 / count}%`,
+        transform: `translateX(${activeIndex * 100}%)`,
+      };
+    });
+
+    const currentPlanBadgeLabel = computed(() => t("shop.plan.current"));
+
     const setFilter = (filter) => {
       selectedFilter.value = filter;
+    };
+
+    const getFilterDisplayLabel = (filter) => {
+      return t(filter?.labelKey || "");
     };
 
     const fetchCurrentSubscription = async () => {
@@ -389,6 +395,12 @@ export default {
       return priceTypes.find((type) => hasPeriodPrice(plan, type)) || priceTypes[0];
     };
 
+    const formatPriceNumber = (priceValue) => {
+      if (priceValue === null || priceValue === undefined) return '--';
+      const fixed = (priceValue / 100).toFixed(2);
+      return fixed.endsWith('.00') ? fixed.slice(0, -3) : fixed;
+    };
+
     const getPlanMainPrice = (plan) => {
       const priceType = getDisplayPriceType(plan);
       const priceValue = normalizePriceValue(plan, priceType);
@@ -396,11 +408,11 @@ export default {
         return "--";
       }
 
-      return (priceValue / 100).toFixed(2);
+      return formatPriceNumber(priceValue);
     };
 
     watch(
-      () => filters.value,
+      () => displayedFilters.value,
       (nextFilters) => {
         const validFilterValues = nextFilters.map((filter) => filter.value);
         if (!validFilterValues.includes(selectedFilter.value)) {
@@ -628,7 +640,7 @@ export default {
 
       if (priceValue === null) return "--";
 
-      return (priceValue / 100).toFixed(2);
+      return formatPriceNumber(priceValue);
     };
 
     const isJsonContent = (content) => {
@@ -853,12 +865,16 @@ export default {
       filters,
 
       setFilter,
+      getFilterDisplayLabel,
 
       getPlanMainPrice,
 
       getPlanMainPriceType,
 
       currentLanguage,
+      displayedFilters,
+      filterHighlightStyle,
+      currentPlanBadgeLabel,
 
       selectPlanPriceType,
 
@@ -877,6 +893,8 @@ export default {
 
 <style lang="scss" scoped>
 .shop-container {
+  --shop-card-radius: var(--radius-lg);
+
   padding: 20px;
 
   display: flex;
@@ -890,6 +908,10 @@ export default {
   }
 
   .welcome-card {
+    border: 1px solid var(--border-color-soft);
+    border-radius: var(--shop-card-radius);
+    box-shadow: var(--shadow-card-sm);
+
     margin-bottom: 24px;
 
     .card-body p {
@@ -955,27 +977,25 @@ export default {
     top: 18px;
     right: 18px;
     display: inline-flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
-    padding: 8px 10px;
-    border-radius: 10px;
-    background: rgba(59, 130, 246, 0.08);
-    border: 1px solid rgba(59, 130, 246, 0.18);
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.08);
+    align-items: center;
+    justify-content: center;
     max-width: min(62%, 280px);
+    pointer-events: none;
   }
 
   .current-plan-badge {
     display: inline-flex;
+    align-items: center;
     font-size: 12px;
-    font-weight: 700;
-    color: #1d4ed8;
-    background: rgba(59, 130, 246, 0.12);
-    border: 1px solid rgba(59, 130, 246, 0.42);
+    line-height: 1;
+    font-weight: 600;
+    color: var(--theme-color);
+    background: rgba(var(--theme-color-rgb), 0.1);
+    border: 1px solid rgba(var(--theme-color-rgb), 0.26);
     border-radius: 999px;
-    padding: 3px 10px;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
+    padding: 5px 10px;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
   }
 
       .card-badge {
@@ -1189,13 +1209,6 @@ export default {
     }
 
     @media (max-width: 768px) {
-    .current-plan-meta {
-      position: static;
-      align-items: flex-start;
-      max-width: 100%;
-      margin-bottom: 8px;
-    }
-
       grid-template-columns: 1fr;
     }
 
@@ -1206,6 +1219,10 @@ export default {
     }
 
     .plan-card {
+      border-radius: var(--shop-card-radius);
+      border: 1px solid var(--border-color-soft);
+      box-shadow: var(--shadow-card-sm);
+
       background-color: var(--card-bg-color);
 
       border-radius: 16px;
@@ -1235,32 +1252,31 @@ export default {
       }
 
       &.current-plan-card {
-        border-color: rgba(59, 130, 246, 0.6);
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.18), 0 10px 24px rgba(59, 130, 246, 0.12);
+        border-color: rgba(var(--theme-color-rgb), 0.5);
+        box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.16), 0 10px 24px rgba(var(--theme-color-rgb), 0.12);
       }
 
       .card-header {
+        position: relative;
         display: flex;
-
-        justify-content: space-between;
-
-        align-items: flex-start;
-
-        min-height: 52px;
-
-        margin-bottom: 15px;
+        justify-content: center;
+        align-items: center;
+        min-height: 64px;
+        margin-bottom: 18px;
+        padding-top: 6px;
 
         .header-main {
-          flex: 1;
+          width: 100%;
           min-width: 0;
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
-          gap: 6px;
+          align-items: center;
+          text-align: center;
+          gap: 4px;
         }
 
         .card-title {
-          font-size: 18px;
+          font-size: 22px;
 
           font-weight: 600;
 
@@ -1272,12 +1288,15 @@ export default {
 
           hyphens: auto;
 
-          flex: 1;
-
-          padding-right: 10px;
+          max-width: 100%;
+          padding: 0 48px;
+          line-height: 1.25;
         }
 
         .card-badge {
+          position: absolute;
+          top: 0;
+          right: 0;
           display: flex;
 
           align-items: center;
@@ -1290,7 +1309,7 @@ export default {
 
           font-weight: 500;
 
-          margin-left: 8px;
+          margin-left: 0;
 
           white-space: nowrap;
 
@@ -1347,39 +1366,52 @@ export default {
         display: flex;
 
         flex-direction: column;
+        align-items: center;
       }
     }
 
     .plan-price {
-      margin: 24px 0;
+      margin: 14px 0 18px;
 
       padding: 0 4px;
+      text-align: center;
 
       .price-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
         text-align: center;
-
         margin-bottom: 12px;
 
+        .price-main-line {
+          align-items: baseline;
+
+          display: inline-flex;
+          align-items: baseline;
+          justify-content: center;
+          gap: 6px;
+        }
+
         .currency {
-          font-size: 24px;
-
+          font-size: 22px;
           font-weight: 500;
-
-          color: var(--text-color);
+          color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
         }
 
         .amount {
-          font-size: 48px;
-
+          font-size: 42px;
+          line-height: 0.95;
           font-weight: 700;
-
           color: var(--text-color);
+          letter-spacing: -0.8px;
         }
 
-        .period {
-          font-size: 16px;
-
-          color: var(--text-color);
+        .unit-line {
+          font-size: 13px;
+          font-weight: 500;
+          color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
         }
       }
     }
@@ -1442,6 +1474,7 @@ export default {
     }
 
     .plan-features {
+      width: 100%;
       margin: 24px 0 10px 0;
 
       padding: 0 4px;
@@ -1508,88 +1541,55 @@ export default {
 
   .btn-purchase {
     position: relative;
-
     bottom: auto;
-
     left: auto;
-
     height: 40px;
-
     width: auto;
-
     min-width: 120px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     gap: 8px;
-
     color: white;
-
-    border: none;
-
-    border-radius: 8px;
-
+    border: 1px solid transparent;
+    border-radius: 10px;
     font-size: 14px;
-
-    font-weight: 500;
-
+    font-weight: 600;
     cursor: pointer;
-
-    transition: all 0.3s ease;
-
+    transition: all 0.25s ease;
     padding: 0 16px;
-
     margin-top: 4px;
-
     align-self: flex-start;
+    background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
+    box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
 
     &.glassmorphism {
-      background-color: rgba(var(--theme-color-rgb), 0.85);
-
-      backdrop-filter: blur(8px);
-
-      -webkit-backdrop-filter: blur(8px);
-
-      border: 1px solid rgba(var(--theme-color-rgb), 0.3);
-
-      box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 1px solid transparent;
     }
 
     &:hover {
       transform: translateY(-2px);
-
-      box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
-
-      background-color: rgba(var(--theme-color-rgb), 0.95);
+      box-shadow: 0 10px 24px rgba(var(--theme-color-rgb), 0.3);
+      filter: brightness(1.03);
     }
 
     &.btn-disabled {
-      background-color: rgba(100, 116, 139, 0.55);
-
-      backdrop-filter: blur(8px);
-
-      -webkit-backdrop-filter: blur(8px);
-
+      background: var(--button-disabled-bg);
       cursor: not-allowed;
-
       box-shadow: none;
-
-      border: 1px solid rgba(100, 116, 139, 0.5);
+      border: 1px solid var(--button-disabled-bg);
 
       &:hover {
         transform: none;
-
         box-shadow: none;
+        filter: none;
       }
     }
 
     .btn-icon {
       width: 18px;
-
       height: 18px;
     }
 
@@ -1604,241 +1604,78 @@ export default {
     }
   }
 
-  .dark-theme {
-    .plan-card,
-    .dashboard-card,
-    .no-plans-message {
-      background-color: #111827;
-      border-color: rgba(148, 163, 184, 0.28);
-    }
 
-    .card-title,
-    .plan-price .price-display .currency,
-    .plan-price .price-display .amount,
-    .plan-features .feature-item span,
-    .filter-option .option-text,
-    .no-plans-message h3 {
-      color: #e5e7eb !important;
-    }
 
-    .plan-price .price-display .period,
-    .welcome-card .card-body p,
-    .no-plans-message p {
-      color: #cbd5e1 !important;
-    }
-
-    .plan-features .feature-item .feature-icon.disabled,
-    .plan-features .feature-item span.disabled-text {
-      color: #94a3b8 !important;
-    }
-
-    .btn-purchase.btn-disabled {
-      background-color: rgba(71, 85, 105, 0.72);
-      border-color: rgba(148, 163, 184, 0.38);
-    }
-
-    .current-plan-meta {
-      background: rgba(37, 99, 235, 0.2);
-      border-color: rgba(147, 197, 253, 0.32);
-      box-shadow: none;
-    }
-
-    .plan-card.current-plan-card {
-      border-color: rgba(96, 165, 250, 0.78);
-      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.22), 0 10px 22px rgba(15, 23, 42, 0.35);
-    }
-
-    .current-plan-badge {
-      color: #dbeafe;
-      border-color: rgba(191, 219, 254, 0.38);
-      background: rgba(59, 130, 246, 0.28);
-    }
-
-    .filter-option:hover {
-      background-color: rgba(var(--theme-color-rgb), 0.16);
-    }
-
-    .filter-option:focus-visible,
-    .btn-purchase:focus-visible {
-      outline-color: rgba(191, 219, 254, 0.95);
-    }
-
-    .skeleton-header,
-    .skeleton-price,
-    .skeleton-feature,
-    .skeleton-button {
-      background-color: rgba(255, 255, 255, 0.08);
-
-      &::after {
-        background: linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0) 0%,
-
-          rgba(255, 255, 255, 0.05) 50%,
-
-          rgba(255, 255, 255, 0) 100%
-        );
-      }
-    }
-
-    .card-badge.glassmorphism {
-      &.stock-plenty {
-        background-color: rgba(76, 175, 80, 0.1);
-      }
-
-      &.stock-warning {
-        background-color: rgba(255, 152, 0, 0.1);
-      }
-
-      &.stock-danger {
-        background-color: rgba(244, 67, 54, 0.1);
-      }
-    }
+  .shop-title-header {
+    align-items: center !important;
+    gap: 14px;
   }
 
   .filter-toggle-container {
-    margin-bottom: 30px;
-
-    display: flex;
-
-    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 0;
+    flex-shrink: 0;
 
     .filter-toggle-wrapper {
-      background: rgba(var(--card-background-rgb, 255, 255, 255), 0.7);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      padding: 3px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color-soft);
+      background: var(--surface-subtle);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
 
-      backdrop-filter: blur(12px);
-
-      -webkit-backdrop-filter: blur(12px);
-
-      border-radius: 18px;
-
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-
-      padding: 8px 20px;
-
-      border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
-
-      display: flex;
-
-      flex-wrap: wrap;
-
-      justify-content: center;
-
-      gap: 15px;
-
-      max-width: 600px;
-
-      will-change: backdrop-filter, background-color;
-
-      transition: background-color 0.3s ease;
+      .filter-highlight {
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        bottom: 3px;
+        border-radius: 9px;
+        background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
+        box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.22);
+        transition: transform 0.22s ease, width 0.22s ease;
+        pointer-events: none;
+      }
 
       .filter-option {
-        display: flex;
-
-        align-items: center;
-
+        position: relative;
+        z-index: 1;
+        border: 0;
+        background: transparent;
+        min-width: 60px;
+        height: 30px;
+        padding: 0 10px;
+        border-radius: 9px;
         cursor: pointer;
-
-        transition: all 0.3s ease;
-
-        padding: 6px 10px;
-
-        border-radius: 12px;
+        transition: all 0.22s ease;
 
         &:hover {
           background-color: rgba(var(--theme-color-rgb), 0.08);
         }
 
         &:focus-visible {
-          outline: 2px solid rgba(var(--theme-color-rgb), 0.55);
-          outline-offset: 2px;
-          background-color: rgba(var(--theme-color-rgb), 0.1);
+          outline: 2px solid rgba(var(--theme-color-rgb), 0.45);
+          outline-offset: 1px;
         }
 
         &.active {
-          background-color: rgba(var(--theme-color-rgb), 0.08);
-
-          .option-icon {
-            color: var(--theme-color);
-          }
-
           .option-text {
-            color: var(--text-color);
-
+            color: #fff;
             font-weight: 600;
           }
         }
 
-        .option-icon {
-          margin-right: 6px;
-
-          display: flex;
-
-          align-items: center;
-
-          color: var(--text-color);
-
-          transition: color 0.3s ease;
-
-          svg {
-            width: 18px;
-
-            height: 18px;
-          }
-        }
-
         .option-text {
-          font-size: 14px;
-
-          color: var(--text-color);
-
-          transition: color 0.3s ease;
+          font-size: 12px;
+          color: #475569;
+          font-weight: 500;
+          white-space: nowrap;
         }
       }
     }
-  }
 
-
-  .no-plans-message {
-    grid-column: 1 / -1;
-
-    background-color: var(--card-bg-color);
-
-    border-radius: 12px;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-
-    padding: 40px 20px;
-
-    margin-bottom: 24px;
-
-    border: 1px solid var(--border-color);
-
-    text-align: center;
-
-    .info-icon {
-      color: var(--theme-color);
-
-      opacity: 0.7;
-
-      margin-bottom: 16px;
-    }
-
-    h3 {
-      font-size: 18px;
-
-      font-weight: 600;
-
-      margin: 0 0 10px;
-
-      color: var(--text-color);
-    }
-
-    p {
-      color: var(--secondary-text-color);
-
-      margin-bottom: 24px;
-    }
 
     .btn-reset-filter {
       padding: 8px 20px;
@@ -1914,6 +1751,8 @@ export default {
 
 @media (max-width: 768px) {
   .shop-container {
+  --shop-card-radius: var(--radius-lg);
+
     padding: 15px;
 
     padding-bottom: 80px;
@@ -1923,64 +1762,40 @@ export default {
     }
   }
 
+  .shop-container .shop-title-header {
+    align-items: flex-start !important;
+    flex-direction: column;
+    gap: 10px;
+
+    .card-title {
+      padding-right: 0;
+    }
+  }
+
   .shop-container .filter-toggle-container {
+    width: 100%;
+
     .filter-toggle-wrapper {
-      width: 100%;
+      border: 1px solid var(--border-color-soft);
+      border-radius: 12px;
+      background: var(--surface-subtle);
 
-      max-width: 100%;
-
-      padding: 10px;
-
-      flex-direction: row;
-
-      justify-content: space-around;
-
-      gap: 5px;
-
-      border-radius: 14px;
-
-      .filter-option {
-        padding: 8px 10px;
-
-        flex: 1;
-
-        justify-content: center;
-
-        min-width: 80px;
-
-        .option-icon {
-          margin-right: 4px;
-
-          svg {
-            width: 16px;
-
-            height: 16px;
-          }
-        }
-
-        .option-text {
-          font-size: 12px;
-
-          white-space: nowrap;
-        }
-      }
+      width: fit-content;
     }
   }
 }
 
 @media (max-width: 480px) {
-  .shop-container .filter-toggle-container {
-    .filter-toggle-wrapper {
-      padding: 8px;
+  .shop-container .filter-toggle-container .filter-toggle-wrapper {
+    padding: 2px;
 
-      .filter-option {
-        padding: 6px 8px;
+    .filter-option {
+      min-width: 56px;
+      height: 28px;
+      padding: 0 9px;
 
-        min-width: auto;
-
-        .option-icon {
-          margin-right: 3px;
-        }
+      .option-text {
+        font-size: 12px;
       }
     }
   }

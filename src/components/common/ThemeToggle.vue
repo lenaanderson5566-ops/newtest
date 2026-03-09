@@ -48,11 +48,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background-color: var(--card-background);
-  border: 1px solid var(--border-color);
+  background-color: color-mix(in srgb, var(--card-bg-color, var(--card-background)) 92%, #fff 8%);
+  border: 1px solid rgba(148, 163, 184, 0.24);
   color: var(--text-color);
   cursor: pointer;
   transition: all 0.3s ease;
@@ -60,10 +60,9 @@ export default {
   overflow: hidden;
   
   &:hover {
-    background-color: rgba(var(--theme-color-rgb), 0.1);
-    border-color: var(--theme-color);
-    transform: translateY(-2px);
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    border-color: rgba(var(--theme-color-rgb), 0.45);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1);
     color: var(--theme-color);
   }
   

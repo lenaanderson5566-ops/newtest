@@ -236,6 +236,36 @@ export default {
     deviceLimit: '線上設備',
     unlimited: '不限制',
     nextResetTime: '下次重設時間',
+
+    pendingOrderBanner: '您有 {count} 個待支付訂單，請盡快完成支付以啟用服務。',
+    payNow: '去支付',
+    currentExitRegion: '當前出口地區',
+    refreshing: '重新整理中',
+    smoothStatusNormal: '連線狀態：正常',
+    serviceReference: '服務參考',
+    serviceReferenceHint: '地區服務參考僅基於地區靜態映射推測，不代表即時解鎖檢測結果。',
+    serviceReferenceAria: '地區服務參考',
+    serviceAvailableInRegion: '地區參考可用',
+    serviceNotInRegion: '未在地區參考列表',
+
+
+    trafficPackageHint: '流量額度包為一次性補充流量，優先消耗月訂閱流量，訂閱用盡後再消耗額度包流量。',
+    subscriptionPausedAfterExpiry: '訂閱已過期，服務已暫停',
+    renewToRestoreAccess: '續費後將立即恢復節點訪問',
+    expiredOnDate: '已於 {date} 到期',
+    defaultSubscriptionName: '訂閱',
+    subscriptionStatus: {
+      expired: '已過期',
+      expiring: '即將到期',
+      active: '有效中'
+    },
+    planAction: {
+      manageSubscription: '管理訂閱',
+      restoreNow: '立即恢復訂閱',
+      renewNow: '立即續費',
+      reselectPlan: '重新選擇方案',
+      renew: '續費'
+    },
     
     importTitle: '選擇匯入方式',
     copySubscription: '複製配置地址',
@@ -314,8 +344,27 @@ export default {
     qrcodeView: '二維碼',
     invalidNodeData: '節點資料不完整，無法產生連結',
     unsupportedNodeType: '不支援的節點類型',
+    viewSubscribeLink: '檢視訂閱連結',
     userInfoError: '取得使用者資訊失敗',
-    viewSubscribeLink: '檢視訂閱連結'
+    status: {
+      online: '在線',
+      offline: '離線'
+    },
+    noPlan: {
+      coverageTitle: '全球節點覆蓋',
+      coverageDesc: '已部署多個接入區域，購買方案後解鎖完整線路',
+      unlockAfterPurchase: '購買後解鎖',
+      subscribeNow: '立即訂閱',
+      comparePlans: '查看方案差異',
+      regions: {
+        japan: { title: '日本地區', desc: '低延遲連接 / 穩定訪問' },
+        singapore: { title: '新加坡地區', desc: '亞洲優化 / 通用場景' },
+        hongKong: { title: '香港地區', desc: '快速接入 / 高頻使用' },
+        us: { title: '美國地區', desc: '國際訪問 / 多場景支援' },
+        germany: { title: '德國地區', desc: '歐洲覆蓋 / 穩定中轉' },
+        global: { title: '全球混合地區', desc: '跨區調度 / 備用線路' }
+      }
+    },
   },
   orders: {
     title: '訂單列表',
@@ -518,6 +567,7 @@ export default {
     title: '商店',
     description: '檢視並購買可用套餐',
     loading: '正在載入套餐...',
+    billingPeriodAria: '計費週期切換',
     filter: {
       all: '全部',
       recurring: '週期性',
@@ -890,6 +940,7 @@ export default {
     viewTrafficLog: '檢視流量明細',
     days: '天',
     trafficLogDesc: '檢視詳細的流量使用記錄與統計',
+    unitGb: 'GB',
     trafficChart: '流量趨勢圖'
   },
   wallet: {

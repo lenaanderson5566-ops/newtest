@@ -2,10 +2,11 @@
   <div class="language-selector">
     <button
       class="language-btn"
+      :class="{ 'is-active': isOpen }"
       @click="toggleDropdown"
       :title="$t('common.language')"
     >
-      <span class="language-btn-text">🌐 {{ currentLanguageShort }}</span>
+      <span class="language-btn-text"><IconWorld class="language-icon" :size="14" aria-hidden="true" />{{ currentLanguageShort }}</span>
     </button>
 
     <transition name="fade">
@@ -27,10 +28,14 @@
 <script>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { IconWorld } from '@tabler/icons-vue';
 import { setLanguage } from '@/i18n';
 
 export default {
   name: 'LanguageSelector',
+  components: {
+    IconWorld
+  },
   setup() {
     const { locale } = useI18n();
     const isOpen = ref(false);
@@ -117,25 +122,38 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 84px;
+  min-width: 120px;
   height: 36px;
-  padding: 0 12px;
-  border-radius: 999px;
-  background-color: var(--card-background);
-  border: 1px solid var(--border-color);
-  color: var(--text-color);
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-color, #111827);
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 
   &:hover {
-    background-color: rgba(var(--theme-color-rgb), 0.08);
-    border-color: var(--theme-color);
-    transform: translateY(-1px);
+    background: #f5f7fa;
+    border-color: transparent;
+  }
+
+  &.is-active {
+    border-color: #e5e7eb;
+    background: #f5f7fa;
   }
 
   .language-btn-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 14px;
     font-weight: 600;
+    line-height: 1;
+  }
+
+  .language-icon {
+    color: var(--theme-color);
+    font-size: 14px;
     line-height: 1;
   }
 }

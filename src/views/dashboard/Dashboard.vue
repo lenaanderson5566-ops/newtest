@@ -3,98 +3,20 @@
     <div class="dashboard-inner">
       <div class="overview-grid">
       <!-- 通知区域 -->
-      <!-- 待处理事项提示 -->
-      <div v-if="hasPendingItems" class="dashboard-card pending-items-card"
-           :class="{'card-animate': !loading.userStats}" style="animation-delay: 0.1s">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.pendingItems') }}</h2>
+      <!-- 待支付订单提醒条 -->
+      <div
+        v-if="hasPendingItems"
+        class="pending-order-banner"
+        :class="{'card-animate': !loading.userStats}"
+        style="animation-delay: 0.1s"
+        @click="goToOrders"
+      >
+        <div class="banner-main">
+          <IconAlertTriangle :size="16" class="banner-icon" />
+          <span class="banner-text">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
         </div>
-        <div class="card-body">
-          <div class="pending-items-list">
-            <div v-if="userStats.pendingOrders > 0" class="pending-item" @click="router.push('/billing?tab=orders')">
-              <div class="pending-icon">
-                <IconShoppingCart :size="20"/>
-              </div>
-              <div class="pending-info">
-                <span class="">{{ $t('dashboard.pendingOrders') }} ({{ userStats.pendingOrders }})</span>
-              </div>
-              <div class="pending-action">
-                <IconChevronRight :size="16"/>
-              </div>
-            </div>
-          </div>
-        </div>
+        <button class="banner-action" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
       </div>
-
-      <div class="dashboard-card notice-card" :class="{'card-animate': !loading.notices}"
-           v-if="notices && notices.data && notices.data.length > 0">
-        <div v-if="loading.notices" class="card-body skeleton-loading">
-          <div class="skeleton-row"></div>
-          <div class="skeleton-row"></div>
-          <div class="skeleton-row"></div>
-        </div>
-        <div v-else class="card-body">
-          <div class="notice-slider" v-if="notices.data && notices.data.length">
-            <transition name="fade-slide" mode="out-in">
-              <div
-                class="notice-item"
-                v-if="notices.data[currentNoticeIndex]"
-                :key="currentNoticeIndex"
-                :style="noticeBackgroundStyle(notices.data[currentNoticeIndex])"
-              >
-                <div class="notice-overlay"></div>
-                <div class="notice-content">
-                  <div class="notice-title">{{ notices.data[currentNoticeIndex].title }}</div>
-                  <div class="notice-footer">
-                    <div class="notice-date">{{ formatDate(notices.data[currentNoticeIndex].created_at) }}</div>
-                    <div class="notice-nav">
-                      <button
-                          class="btn-notice"
-                          @click="showNoticeModal">
-                        <IconEye :size="16"/>
-                        {{ $t('common.viewDetails') }}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </transition>
-            <div v-if="notices.data.length > 1" class="notice-dots">
-              <button
-                v-for="(notice, idx) in notices.data"
-                :key="notice.id || idx"
-                class="notice-dot"
-                :class="{ active: currentNoticeIndex === idx }"
-                @click="goToNotice(idx)"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 公告弹窗 -->
-      <transition name="fade">
-        <div v-if="showNoticeDetails" class="notice-modal-overlay" @click="closeNoticeModal">
-          <transition name="popup-slide">
-            <div v-if="showNoticeDetails" class="notice-modal" :style="noticeModalStyle" @click.stop>
-              <div class="notice-modal-header">
-                <h2 class="popup-title">{{ notices.data[currentNoticeIndex].title }}</h2>
-                <button class="popup-close-btn" @click="closeNoticeModal">
-                  <IconX :size="20"/>
-                </button>
-              </div>
-              <div class="notice-modal-content">
-                <div v-html="processedNoticeContent" class="notice-content"></div>
-              </div>
-              <div class="notice-modal-footer">
-                <button class="popup-action-btn adaptive-btn" @click="closeNoticeModal">
-                  {{ $t('common.close') }}
-                </button>
-              </div>
-            </div>
-          </transition>
-        </div>
-      </transition>
 
 
       <!-- 订阅导入卡片 -->
@@ -143,7 +65,7 @@
 
             <!-- iOS平台选项 -->
             <div v-if="activePlatform === 'ios'" class="platform-section">
-              <div class="platform-title">iOS</div>
+              <div class="platform-title">{{ $t('platforms.ios') }}</div>
               <div v-if="hasIOSClients" class="platform-options">
                 <div v-if="clientConfig.showShadowrocket" class="platform-option"
                      @click="importToClient('shadowrocket')">
@@ -182,7 +104,7 @@
 
             <!-- Android平台选项 -->
             <div v-if="activePlatform === 'android'" class="platform-section">
-              <div class="platform-title">Android</div>
+              <div class="platform-title">{{ $t('platforms.android') }}</div>
               <div v-if="hasAndroidClients" class="platform-options">
                 <div v-if="clientConfig.showFlClashAndroid" class="platform-option" @click="importToClient('flclash')">
                   <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
@@ -228,7 +150,7 @@
 
             <!-- Windows平台选项 -->
             <div v-if="activePlatform === 'windows'" class="platform-section">
-              <div class="platform-title">Windows</div>
+              <div class="platform-title">{{ $t('platforms.windows') }}</div>
               <div v-if="hasWindowsClients" class="platform-options">
                 <div v-if="clientConfig.showFlClashWindows" class="platform-option" @click="importToClient('flclash')">
                   <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
@@ -264,7 +186,7 @@
 
             <!-- MacOS平台选项 -->
             <div v-if="activePlatform === 'macos'" class="platform-section">
-              <div class="platform-title">MacOS</div>
+              <div class="platform-title">{{ $t('platforms.macos') }}</div>
               <div v-if="hasMacOSClients" class="platform-options">
                 <div v-if="clientConfig.showFlClashMac" class="platform-option" @click="importToClient('flclash')">
                   <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
@@ -368,64 +290,88 @@
         </template>
 
         <template v-else>
-          <div class="usage-panel-title-row">
-            <h3>{{ $t('dashboard.usagePanel') }}</h3>
-          </div>
-
           <div
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[{ 'card-animate': !loading.userStats }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
+            :class="[{ 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
-            <div class="usage-card-title">{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</div>
+            <div class="usage-card-title">
+              <span>{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</span>
+              <span
+                v-if="card.key === 'package'"
+                class="info-tooltip"
+                tabindex="0"
+                role="button"
+                :aria-label="$t('dashboard.trafficPackageHint')"
+              >
+                <IconHelpCircle :size="14" />
+                <span class="info-tooltip-content">{{ $t('dashboard.trafficPackageHint') }}</span>
+              </span>
+            </div>
             <div v-if="card.key === 'total'" class="plan-summary-card">
-              <div class="plan-summary-row">
-                <span class="plan-summary-label">{{ $t('dashboard.planName') }}</span>
-                <strong class="plan-summary-value">{{ userPlan.name || '-' }}</strong>
+              <div v-if="isPlanExpired" class="expired-status-strip">
+                {{ $t('dashboard.subscriptionPausedAfterExpiry') }}
               </div>
-              <div class="plan-summary-row">
-                <span class="plan-summary-label">{{ $t('dashboard.expiryDate') }}</span>
-                <div class="plan-summary-value-wrap">
-                  <strong class="plan-summary-value">{{ userPlan.expireDate || $t('dashboard.permanent') }}</strong>
-                  <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
+              <div class="plan-summary-section plan-summary-section-meta">
+                <div class="plan-status-hero">
+                  <div class="plan-name-main">{{ userPlan.name || '-' }}</div>
+                  <div class="plan-expire-meta">
+                    <span>{{ planExpireMetaText }}</span>
+                    <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
+                  </div>
                 </div>
               </div>
-              <div class="plan-summary-row auto-renewal-row">
-                <div>
-                  <span class="plan-summary-label">{{ $t('profile.autoRenewal') }}</span>
-                  <p class="plan-summary-desc">{{ $t('profile.autoRenewalDesc') }}</p>
+
+              <div class="plan-summary-section plan-summary-section-renew">
+                <div class="plan-summary-row auto-renewal-row">
+                  <div>
+                    <span class="plan-summary-label with-tooltip">
+                      <span>{{ $t('profile.autoRenewal') }}</span>
+                      <span class="info-tooltip" tabindex="0" role="button" :aria-label="$t('profile.autoRenewalDesc')">
+                        <IconHelpCircle :size="14" />
+                        <span class="info-tooltip-content">{{ $t('profile.autoRenewalDesc') }}</span>
+                      </span>
+                    </span>
+                  </div>
+                  <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
+                    <input
+                      type="checkbox"
+                      v-model="autoRenewalEnabled"
+                      :disabled="updatingAutoRenewalSetting"
+                      @change="updateAutoRenewalSetting"
+                    />
+                    <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
+                  </label>
                 </div>
-                <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
-                  <input
-                    type="checkbox"
-                    v-model="autoRenewalEnabled"
-                    :disabled="updatingAutoRenewalSetting"
-                    @change="updateAutoRenewalSetting"
-                  />
-                  <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
-                </label>
               </div>
-              <div class="plan-summary-actions">
-                <button
-                  class="plan-action-btn"
-                  :class="primaryActionClass"
-                  @click="handlePrimaryPlanAction"
-                >
-                  {{ primaryPlanActionLabel }}
-                </button>
-                <button
-                  class="plan-action-btn subtle"
-                  @click="handleSecondaryPlanAction"
-                >
-                  {{ secondaryPlanActionLabel }}
-                </button>
+
+              <div class="plan-summary-section plan-summary-section-actions">
+                <div class="plan-summary-actions">
+                  <button
+                    class="plan-action-btn"
+                    :class="primaryActionClass"
+                    @click="handlePrimaryPlanAction"
+                  >
+                    {{ primaryPlanActionLabel }}
+                  </button>
+                  <button
+                    class="plan-action-btn"
+                    :class="secondaryActionClass"
+                    @click="handleSecondaryPlanAction"
+                  >
+                    {{ secondaryPlanActionLabel }}
+                  </button>
+                </div>
+                <div v-if="isPlanExpired" class="plan-action-helper-text">
+                  {{ $t('dashboard.renewToRestoreAccess') }}
+                </div>
               </div>
             </div>
             <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
-                <span class="usage-percent">{{ formatPackageRemaining(card.remaining) }}</span>
+                <span class="usage-percent compact">{{ formatPackageRemaining(card.remaining) }}</span>
                 <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 <button class="package-add-btn" @click.stop="openTrafficPackageModal" :title="$t('dashboard.purchaseTrafficPackage')">
                   <IconPlus :size="14" />
@@ -433,7 +379,7 @@
               </template>
               <template v-else>
                 <template v-if="card.key === 'subscription'">
-                  <span class="usage-percent">{{ formatPackageRemaining(isPlanExpired ? 0 : card.remaining) }}</span>
+                  <span class="usage-percent compact">{{ formatPackageRemaining(isPlanExpired ? 0 : card.remaining) }}</span>
                   <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 </template>
                 <template v-else>
@@ -447,7 +393,7 @@
             </div>
             <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
               <template v-if="card.key === 'subscription'">
-                <div class="usage-summary-line">
+                <div class="usage-summary-line persist-visible">
                   {{ $t('dashboard.used') }} {{ formatPackageRemaining(isPlanExpired ? 0 : card.used) }} / {{ formatPackageRemaining(card.total) }}
                 </div>
               </template>
@@ -462,15 +408,68 @@
                 </div>
               </template>
             </div>
-            <div v-if="card.key === 'package'" class="usage-package-note">
-              {{ $t('dashboard.packageUsageNote') }}
-            </div>
-            <div v-if="card.key === 'subscription'" class="usage-reset-hint">
+            <div v-if="card.key === 'subscription'" class="usage-reset-hint persist-visible">
               {{ $t('dashboard.resetTimeLabel') }} {{ userPlan.resetDateTime || '-' }}
             </div>
           </div>
 
         </template>
+      </div>
+
+      <div class="dashboard-card ip-location-summary-card" v-if="hasPlan">
+        <div class="card-body ip-location-summary-body">
+          <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
+          <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
+          <div v-else-if="ipLocationData" class="ip-location-content">
+            <div class="ip-location-main-info">
+              <div class="ip-meta-title">{{ $t('dashboard.currentExitRegion') }}</div>
+              <div class="ip-main-line">
+                <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
+                <span class="ip-region-primary">{{ ipLocationPrimaryRegionText }}</span>
+              </div>
+              <div class="ip-sub-line">
+                <span class="ip-region">{{ ipLocationDisplayText }}</span>
+                <button class="ip-refresh-btn" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
+                  <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
+                  <span>{{ ipLocationLoading ? $t('dashboard.refreshing') : $t('common.refresh') }}</span>
+                </button>
+              </div>
+              <div class="ip-status-row">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span>{{ $t('dashboard.smoothStatusNormal') }}</span>
+              </div>
+            </div>
+
+
+            <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
+              <div class="service-reference-title">
+                <span>{{ $t('dashboard.serviceReference') }}</span>
+                <span class="info-tooltip" tabindex="0" role="button" :aria-label="$t('dashboard.serviceReferenceHint')">
+                  <IconHelpCircle :size="14" />
+                  <span class="info-tooltip-content">{{ $t('dashboard.serviceReferenceHint') }}</span>
+                </span>
+              </div>
+              <div class="service-reference-tags" role="list" :aria-label="$t('dashboard.serviceReferenceAria')">
+                <div
+                  v-for="service in ipLocationServiceCatalog"
+                  :key="`ip-service-${service.key}`"
+                  class="service-reference-item"
+                  :class="{ active: isIpServiceReferenced(service.key) }"
+                  role="listitem"
+                  :title="`${service.label} · ${isIpServiceReferenced(service.key) ? $t('dashboard.serviceAvailableInRegion') : $t('dashboard.serviceNotInRegion')}`"
+                >
+                  <span class="service-reference-tile">
+                    <img class="service-reference-icon" :src="service.icon" :alt="service.label" loading="lazy" />
+                  </span>
+                  <span class="service-reference-label">{{ service.label }}</span>
+                </div>
+              </div>
+            </div>
+
+            <IconChevronRight class="ip-card-arrow" :size="20" />
+          </div>
+          <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
+        </div>
       </div>
 
       <div class="dashboard-card usage-trend-card" v-if="hasPlan">
@@ -626,7 +625,6 @@ import {
   IconMoon,
   IconPackage,
   IconQrcode,
-  IconRefresh,
   IconRocket,
   IconRouter,
   IconSend,
@@ -640,7 +638,8 @@ import {
   IconWaveSine,
   IconX,
   IconCalendarPlus,
-  IconPlus
+  IconPlus,
+  IconRefresh
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/dashboard';
@@ -677,6 +676,12 @@ import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
 import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
 import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
 import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
+import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
+import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
+import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube.svg';
+import serviceChatgptIcon from '@/assets/images/service-icons/chatgpt.svg';
+import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
+import serviceGoogleIcon from '@/assets/images/service-icons/google.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 
@@ -732,10 +737,10 @@ export default {
     IconBrandDebian,
     IconRouter,
     IconBrandFinder,
-    IconChevronRight,
-    IconTransferVertical,
+      IconTransferVertical,
     IconShare,
     IconChevronLeft,
+    IconChevronRight,
     IconCopy,
     IconQrcode,
     IconRocket,
@@ -752,7 +757,6 @@ export default {
     IconHelpCircle,
     IconCoins,
     IconEye,
-    IconRefresh,
     IconAlertTriangle,
     IconX,
     IconCalendarPlus,
@@ -795,6 +799,12 @@ export default {
     const trafficTrendLoading = ref(false);
     const trafficTrendError = ref(false);
     let trafficTrendChart = null;
+
+    const ipLocationLoading = ref(false);
+    const ipLocationError = ref('');
+    const ipLocationData = ref(null);
+    const ipLocationCache = ref(null);
+    const ipLocationDebounceTimer = ref(null);
 
     const qrCodeLoading = ref(true);
     const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription)
@@ -892,6 +902,7 @@ export default {
       if (userPlan.value.isExpireDatePermanent) {
         userPlan.value.expireDate = t('dashboard.permanent');
       }
+      initTrafficTrendChart();
     });
 
 
@@ -1153,25 +1164,46 @@ export default {
     });
 
     const subscriptionStatusLabel = computed(() => {
-      if (subscriptionStatus.value === 'expired') return '已过期';
-      if (subscriptionStatus.value === 'expiring') return '即将到期';
-      return '有效中';
+      const currentLocale = locale.value;
+      void currentLocale;
+      if (subscriptionStatus.value === 'expired') return t('dashboard.subscriptionStatus.expired');
+      if (subscriptionStatus.value === 'expiring') return t('dashboard.subscriptionStatus.expiring');
+      return t('dashboard.subscriptionStatus.active');
     });
 
     const primaryPlanActionLabel = computed(() => {
-      if (subscriptionStatus.value === 'active') return '管理订阅';
-      return '立即续费';
+      const currentLocale = locale.value;
+      void currentLocale;
+      if (subscriptionStatus.value === 'active') return t('dashboard.planAction.manageSubscription');
+      if (subscriptionStatus.value === 'expired') return t('dashboard.planAction.restoreNow');
+      return t('dashboard.planAction.renewNow');
+    });
+
+    const planExpireMetaText = computed(() => {
+      const currentLocale = locale.value;
+      void currentLocale;
+      if (subscriptionStatus.value === 'expired') {
+        return t('dashboard.expiredOnDate', { date: userPlan.value.expireDate || '-' });
+      }
+      return `${t('dashboard.expiryDate')} · ${userPlan.value.expireDate || t('dashboard.permanent')}`;
     });
 
     const secondaryPlanActionLabel = computed(() => {
-      if (subscriptionStatus.value === 'expired') return '重新选择套餐';
-      if (subscriptionStatus.value === 'expiring') return '管理订阅';
-      return '续费';
+      const currentLocale = locale.value;
+      void currentLocale;
+      if (subscriptionStatus.value === 'expired') return t('dashboard.planAction.reselectPlan');
+      if (subscriptionStatus.value === 'expiring') return t('dashboard.planAction.manageSubscription');
+      return t('dashboard.planAction.renew');
     });
 
     const primaryActionClass = computed(() => {
-      if (subscriptionStatus.value === 'active') return 'premium';
+      if (subscriptionStatus.value === 'active') return 'theme';
       return 'primary';
+    });
+
+    const secondaryActionClass = computed(() => {
+      if (secondaryPlanActionLabel.value === t('dashboard.planAction.manageSubscription')) return 'theme';
+      return 'subtle';
     });
 
     const handlePrimaryPlanAction = () => {
@@ -1582,6 +1614,10 @@ export default {
       return userStats.pendingOrders > 0;
     });
 
+    const goToOrders = () => {
+      router.push('/billing?tab=orders');
+    };
+
     const prevNotice = () => {
       if (!notices.value?.data?.length) return;
       if (currentNoticeIndex.value > 0) {
@@ -1633,15 +1669,16 @@ export default {
 
     const formatResetDateTime = (date) => {
       if (!(date instanceof Date) || Number.isNaN(date.getTime())) return null;
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      const hours = String(date.getHours()).padStart(2, '0');
-      const minutes = String(date.getMinutes()).padStart(2, '0');
-      if (String(locale.value || '').toLowerCase().startsWith('zh')) {
-        return `${year}年${month}月${day}日 ${hours}:${minutes}`;
-      }
-      return `${year}-${month}-${day} ${hours}:${minutes}`;
+      const localeValue = locale.value || 'en-US';
+      const formatter = new Intl.DateTimeFormat(localeValue, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      });
+      return formatter.format(date);
     };
 
     const parseResetTimestamp = (value) => {
@@ -1803,7 +1840,7 @@ export default {
       }
 
       const subscribeUrl = userPlan.value.subscribeUrl;
-      const siteName = SITE_CONFIG.siteName || '订阅';
+      const siteName = SITE_CONFIG.siteName || t('dashboard.defaultSubscriptionName');
 
       let url = '';
       let shouldUseCurrentWindow = true;
@@ -1925,6 +1962,152 @@ export default {
       return [];
     };
 
+
+    const normalizeIpLocation = (payload = {}) => {
+      const latitude = Number(
+        payload.latitude ?? payload.lat ?? payload.location?.latitude ?? payload.loc?.split(',')?.[0]
+      );
+      const longitude = Number(
+        payload.longitude ?? payload.lon ?? payload.lng ?? payload.location?.longitude ?? payload.loc?.split(',')?.[1]
+      );
+      const city = payload.city || payload.town || payload.district || '';
+      const region = payload.region || payload.regionName || payload.state || '';
+      const country = payload.country || payload.country_name || '';
+      const countryCode = (payload.country_code || payload.countryCode || payload.countryCode2 || '').toString().toUpperCase();
+      const ip = payload.ip || payload.query || '';
+
+      if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+
+      return {
+        ip,
+        city,
+        region,
+        country,
+        countryCode,
+        latitude,
+        longitude
+      };
+    };
+
+    const fetchIpLocationFromSources = async () => {
+      const endpoints = [
+        'https://ipwho.is',
+        'https://api.myip.com',
+        'https://ipapi.co/json',
+        'https://ident.me/json',
+        'http://ip-api.com/json',
+        'https://api.ip.sb/geoip',
+        'https://ipinfo.io/json'
+      ];
+
+      const requests = endpoints.map((url) => (
+        fetch(url, { cache: 'no-store' })
+          .then(async (resp) => {
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            const data = await resp.json();
+            const normalized = normalizeIpLocation(data);
+            if (!normalized) throw new Error('Invalid location payload');
+            return normalized;
+          })
+      ));
+
+      const settled = await Promise.allSettled(requests);
+      const hit = settled.find((item) => item.status === 'fulfilled');
+      if (hit && hit.status === 'fulfilled') {
+        return hit.value;
+      }
+      throw new Error('IP location lookup failed on all providers.');
+    };
+
+    const scheduleIpLocationRefresh = (force = false) => {
+      if (ipLocationDebounceTimer.value) {
+        clearTimeout(ipLocationDebounceTimer.value);
+      }
+
+      ipLocationDebounceTimer.value = setTimeout(async () => {
+        const now = Date.now();
+        const cache = ipLocationCache.value;
+        if (!force && cache?.expiresAt > now) {
+          ipLocationData.value = cache.data;
+          ipLocationError.value = '';
+          return;
+        }
+
+        ipLocationLoading.value = true;
+        ipLocationError.value = '';
+
+        try {
+          const data = await fetchIpLocationFromSources();
+          ipLocationData.value = data;
+          ipLocationCache.value = {
+            data,
+            expiresAt: now + 5 * 60 * 1000
+          };
+        } catch (error) {
+          console.error('Failed to fetch IP location:', error);
+          ipLocationError.value = t('trafficLog.errorLoadingTraffic');
+        } finally {
+          ipLocationLoading.value = false;
+        }
+      }, 2000);
+    };
+
+    const triggerIpLocationRefresh = () => {
+      scheduleIpLocationRefresh(true);
+    };
+
+    const ipLocationDisplayText = computed(() => {
+      if (!ipLocationData.value) return '';
+      return [ipLocationData.value.city, ipLocationData.value.region, ipLocationData.value.country]
+        .filter(Boolean)
+        .join(', ');
+    });
+
+    const ipLocationCode = computed(() => {
+      const code = (ipLocationData.value?.countryCode || '').trim().toUpperCase();
+      return /^[A-Z]{2}$/.test(code) ? code : '--';
+    });
+
+    const ipLocationPrimaryRegionText = computed(() => {
+      if (!ipLocationData.value) return '-';
+      return ipLocationData.value.city || ipLocationData.value.region || ipLocationData.value.country || '-';
+    });
+
+    const ipLocationCodeBadgeClass = computed(() => {
+      const code = ipLocationCode.value;
+      const badgeMap = DASHBOARD_CONFIG.ipRegionBadgeByCountryCode || {};
+      return badgeMap[code] || 'is-red';
+    });
+
+    const ipLocationServiceReferences = computed(() => {
+      const code = ipLocationCode.value;
+      const serviceMap = DASHBOARD_CONFIG.ipRegionServiceReferenceByCountryCode || {};
+      const defaultServices = DASHBOARD_CONFIG.ipRegionServiceReferenceDefault || [];
+      const services = serviceMap[code] || defaultServices;
+      return Array.isArray(services) ? services : [];
+    });
+
+    const ipLocationServiceIconMap = {
+      'Netflix': serviceNetflixIcon,
+      'Disney+': serviceDisneyPlusIcon,
+      'YouTube Premium': serviceYoutubePremiumIcon,
+      'ChatGPT': serviceChatgptIcon,
+      Claude: serviceClaudeIcon,
+      Google: serviceGoogleIcon,
+    };
+
+    const ipLocationServiceCatalog = computed(() => {
+      const serviceCatalog = DASHBOARD_CONFIG.ipRegionServiceCatalog || [];
+      return serviceCatalog.map((item) => ({
+        ...item,
+        icon: ipLocationServiceIconMap[item.key] || serviceChatgptIcon,
+      }));
+    });
+
+    const isIpServiceReferenced = (serviceKey) => {
+      return ipLocationServiceReferences.value.includes(serviceKey);
+    };
+
     const fetchTrafficTrend = async () => {
       trafficTrendLoading.value = true;
       trafficTrendError.value = false;
@@ -1980,7 +2163,7 @@ export default {
           formatter: (params) => {
             let result = `${params[0]?.name || ''}<br/>`;
             params.forEach((param) => {
-              result += `${param.marker} ${param.seriesName}: ${param.value} GB<br/>`;
+              result += `${param.marker} ${param.seriesName}: ${param.value} ${t('trafficLog.unitGb')}<br/>`;
             });
             return result;
           }
@@ -2001,9 +2184,9 @@ export default {
         },
         yAxis: {
           type: 'value',
-          name: 'GB',
+          name: t('trafficLog.unitGb'),
           nameTextStyle: { padding: [0, 0, 0, 10], color: textColor },
-          axisLabel: { formatter: '{value} GB', color: textColor },
+          axisLabel: { formatter: (value) => `${value} ${t('trafficLog.unitGb')}`, color: textColor },
           axisLine: { lineStyle: { color: borderColor } },
           splitLine: { lineStyle: { color: borderColor } }
         },
@@ -2057,6 +2240,7 @@ export default {
 
       fetchUserStats();
       fetchTrafficTrend();
+      scheduleIpLocationRefresh();
 
       updateQRCodeUrl();
     });
@@ -2144,6 +2328,10 @@ export default {
         trafficTrendChart.dispose();
         trafficTrendChart = null;
       }
+      if (ipLocationDebounceTimer.value) {
+        clearTimeout(ipLocationDebounceTimer.value);
+        ipLocationDebounceTimer.value = null;
+      }
     });
 
     const renewPlan = () => {
@@ -2184,6 +2372,7 @@ export default {
         fetchUserInfo();
         fetchUserStats();
         fetchNotices();
+        scheduleIpLocationRefresh();
         needRefreshData.value = false;
       }
 
@@ -2212,6 +2401,8 @@ export default {
     });
 
     const trafficBoardSections = computed(() => {
+      const currentLocale = locale.value;
+      void currentLocale;
       const packageUsedBytes = Math.max(
         trafficMetrics.totalUsedBytes - trafficMetrics.subscriptionQuotaUsedBytes,
         0
@@ -2263,6 +2454,7 @@ export default {
       languageChangedSignal,
       goToShop,
       hasPendingItems,
+      goToOrders,
       router,
       currentNoticeIndex,
       prevNotice,
@@ -2334,8 +2526,10 @@ export default {
       subscriptionStatus,
       subscriptionStatusLabel,
       primaryPlanActionLabel,
+      planExpireMetaText,
       secondaryPlanActionLabel,
       primaryActionClass,
+      secondaryActionClass,
       handlePrimaryPlanAction,
       handleSecondaryPlanAction,
       isLowTraffic,
@@ -2357,6 +2551,17 @@ export default {
       trafficTrendData,
       trafficTrendLoading,
       trafficTrendError,
+      ipLocationLoading,
+      ipLocationError,
+      ipLocationData,
+      ipLocationDisplayText,
+      ipLocationCode,
+      ipLocationPrimaryRegionText,
+      ipLocationCodeBadgeClass,
+      ipLocationServiceReferences,
+      ipLocationServiceCatalog,
+      isIpServiceReferenced,
+      triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
       showImportSubscription,
@@ -2380,9 +2585,16 @@ export default {
   display: flex;
   justify-content: center;
 
-  --theme-text-primary: rgba(var(--theme-color-rgb), 0.96);
-  --theme-text-secondary: rgba(var(--theme-color-rgb), 0.78);
-  --theme-text-subtle: rgba(var(--theme-color-rgb), 0.64);
+  --saas-brand: #355cc2;
+  --saas-text-primary: #111827;
+  --saas-text-secondary: #6b7280;
+  --saas-border-soft: #eef1f5;
+  --saas-card-bg: #ffffff;
+  --saas-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 18px rgba(15, 23, 42, 0.04);
+
+  --theme-text-primary: #111827;
+  --theme-text-secondary: #6b7280;
+  --theme-text-subtle: #9ca3af;
 
   .dashboard-inner {
     width: 100%;
@@ -2392,30 +2604,26 @@ export default {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 16px;
 
-    > .welcome-card {
-      grid-column: span 5;
-      margin-bottom: 0;
-    }
-
-    > .pending-items-card {
-      grid-column: span 7;
+    > .pending-order-banner {
+      grid-column: 1 / -1;
       margin-bottom: 0;
     }
 
     > .notice-card,
     > .subscription-card,
     > .stats-grid,
+    > .ip-location-summary-card,
     > .usage-trend-card,
     > .import-card {
       grid-column: 1 / -1;
     }
 
     @media (max-width: 992px) {
-      > .welcome-card,
-      > .pending-items-card,
+      > .pending-order-banner,
       > .notice-card,
       > .subscription-card,
       > .stats-grid,
+      > .ip-location-summary-card,
       > .usage-trend-card,
       > .import-card {
         grid-column: 1 / -1;
@@ -2423,33 +2631,18 @@ export default {
     }
   }
 
-  .welcome-card {
-    margin-bottom: 24px;
-
-    .user-email {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 12px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(var(--theme-color-rgb), 0.1);
-      color: var(--theme-text-secondary);
-      font-size: 14px;
-    }
-  }
-
   .dashboard-card {
-    background-color: var(--card-bg-color);
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    background-color: var(--saas-card-bg);
+    border-radius: 14px;
+    box-shadow: var(--saas-card-shadow);
     padding: 20px;
-    margin-bottom: 24px;
-    border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+    margin-bottom: 16px;
+    border: none;
+    transition: box-shadow 0.2s ease;
 
     &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      border-color: rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 10px 24px rgba(15, 23, 42, 0.06);
+      transform: none;
     }
 
     .card-header {
@@ -2459,9 +2652,10 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
         margin: 0;
+        color: var(--saas-text-primary);
       }
 
       .card-actions {
@@ -2477,7 +2671,7 @@ export default {
     .subscription-info {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 16px;
       margin-bottom: 15px;
 
       .info-item {
@@ -2563,7 +2757,7 @@ export default {
     position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
+    gap: 16px;
     margin-bottom: 24px;
 
     @media (min-width: 768px) {
@@ -2571,7 +2765,8 @@ export default {
     }
 
     @media (min-width: 1200px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1.86fr) minmax(0, 1fr);
+      grid-auto-rows: minmax(124px, auto);
     }
 
     .usage-panel-title-row {
@@ -2580,6 +2775,10 @@ export default {
       align-items: center;
       justify-content: space-between;
       margin-top: 2px;
+
+      @media (min-width: 1200px) {
+        grid-row: 1;
+      }
 
       h3 {
         margin: 0;
@@ -2597,8 +2796,8 @@ export default {
         color: #6b7280;
 
         &.active {
-          background: rgba(34, 197, 94, 0.14);
-          color: #16a34a;
+          background: rgba(var(--theme-color-rgb), 0.14);
+          color: var(--theme-color);
         }
       }
     }
@@ -2615,11 +2814,11 @@ export default {
       position: relative;
       background-color: var(--card-bg-color);
       border-radius: 16px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
       display: flex;
       align-items: center;
       gap: 16px;
-      padding: 18px;
+      padding: 16px;
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
       border: 1px solid var(--border-color);
@@ -2686,7 +2885,8 @@ export default {
       &.traffic-board-card {
         width: 100%;
         min-width: 0;
-        min-height: 260px;
+        min-height: 232px;
+        overflow: visible;
         writing-mode: horizontal-tb;
         text-orientation: mixed;
         flex-direction: column;
@@ -2695,12 +2895,18 @@ export default {
         gap: 10px;
 
         .usage-card-title {
+          position: relative;
+          z-index: 5;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 600;
-          color: #6b7280;
+          color: var(--neutral-strong);
+          line-height: 1.35;
         }
 
         .usage-card-main {
@@ -2723,7 +2929,8 @@ export default {
             align-items: center;
             justify-content: center;
             color: #fff;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
+            box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.2);
             cursor: pointer;
           }
         }
@@ -2733,7 +2940,7 @@ export default {
 
           .package-add-btn {
             color: #fff;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
           }
         }
         &.subscription-card-muted {
@@ -2749,26 +2956,107 @@ export default {
           }
         }
 
+        &.total-main-card {
+          background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+          border-color: var(--border-color-soft);
+          box-shadow: var(--shadow-card-md);
+
+          .usage-card-title {
+            color: #4b5563;
+            font-weight: 650;
+          }
+        }
+
+        &.expired-main-card {
+          background: #f3f4f6;
+          border-color: #d1d5db;
+
+          .usage-card-title {
+            color: #6b7280;
+          }
+        }
+
         .plan-summary-card {
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 12px;
-          margin-top: 4px;
+          gap: 16px;
+          margin-top: 6px;
+          overflow: visible;
+
+          .expired-status-strip {
+            border-radius: 10px;
+            padding: 9px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #b91c1c;
+            background: rgba(248, 113, 113, 0.16);
+            border: 1px solid rgba(239, 68, 68, 0.32);
+          }
+
+          .plan-summary-section {
+            border: none;
+            border-radius: 12px;
+            background: #f8fafc;
+            padding: 10px 12px;
+            overflow: visible;
+          }
+
+          .plan-summary-section-meta {
+            padding: 12px 14px;
+          }
+
+          .plan-status-hero {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+          }
+
+          .plan-name-main {
+            font-size: 24px;
+            line-height: 1.2;
+            font-weight: 700;
+            color: var(--heading-color);
+          }
+
+          .plan-expire-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: #64748b;
+          }
+
+          .plan-summary-section-renew {
+            background: #f8fafc;
+          }
+
+          .plan-summary-section-actions {
+            background: #f8fafc;
+            border: none;
+            padding-top: 12px;
+            padding-bottom: 12px;
+          }
 
           .plan-summary-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            background: #f8fafc;
+            gap: 16px;
+            padding: 2px 0;
           }
 
           .plan-summary-label {
             font-size: 12px;
             color: #6b7280;
+
+            &.with-tooltip {
+              display: inline-flex;
+              align-items: center;
+              gap: 6px;
+            }
           }
 
           .plan-summary-value-wrap {
@@ -2824,7 +3112,7 @@ export default {
           .plan-summary-actions {
             display: flex;
             gap: 10px;
-            margin-top: 4px;
+            margin-top: 0;
 
             @media (max-width: 576px) {
               flex-direction: column;
@@ -2835,7 +3123,7 @@ export default {
               border-radius: 12px;
               border: 1px solid transparent;
               padding: 10px 14px;
-              font-size: 13px;
+              font-size: 14px;
               font-weight: 600;
               letter-spacing: 0.2px;
               cursor: pointer;
@@ -2851,23 +3139,37 @@ export default {
 
               &.primary {
                 color: #fff;
-                background: linear-gradient(135deg, #ef4444, #dc2626);
-                box-shadow: 0 8px 18px rgba(220, 38, 38, 0.24);
+                background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
+                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
               }
 
               &.premium {
                 color: #fff;
-                background: linear-gradient(135deg, #3b82f6, #2563eb);
-                box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
+                background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
+                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
+              }
+
+              &.theme {
+                color: #fff;
+                border-color: transparent;
+                background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 1));
+                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.28);
               }
 
               &.subtle {
-                color: #6b7280;
-                border-color: #e5e7eb;
-                background: #f8fafc;
+                color: var(--neutral-strong);
+                border-color: var(--border-color-soft);
+                background: var(--surface-subtle);
                 box-shadow: none;
               }
             }
+          }
+
+          .plan-action-helper-text {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #475569;
+            text-align: center;
           }
 
           .switch {
@@ -2892,7 +3194,8 @@ export default {
               position: absolute;
               cursor: pointer;
               inset: 0;
-              background-color: #d1d5db;
+              background-color: var(--surface-subtle);
+              border: 1px solid var(--border-color-soft);
               transition: 0.3s;
 
               &::before {
@@ -2916,7 +3219,8 @@ export default {
             }
 
             input:checked + .slider {
-              background-color: rgba(var(--theme-color-rgb), 0.9);
+              background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
+              border-color: transparent;
             }
 
             input:checked + .slider::before {
@@ -2928,10 +3232,14 @@ export default {
         .usage-percent {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
-          font-size: 40px;
+          font-size: 36px;
           line-height: 1;
           font-weight: 700;
           color: #111827;
+
+          &.compact {
+            font-size: 32px;
+          }
         }
 
         .usage-percent-label {
@@ -2949,9 +3257,9 @@ export default {
 
         .usage-summary-line {
           grid-column: 1 / -1;
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 600;
-          color: #374151;
+          color: var(--neutral-strong);
         }
 
         .usage-kpi {
@@ -2967,7 +3275,7 @@ export default {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           font-size: 12px;
-          color: #6b7280;
+          color: var(--muted-text-color);
           line-height: 1;
         }
 
@@ -2984,8 +3292,8 @@ export default {
           width: 100%;
           margin-top: 6px;
           font-size: 12px;
-          color: #6b7280;
-          line-height: 1.45;
+          color: var(--muted-text-color);
+          line-height: 1.35;
         }
 
 
@@ -3005,7 +3313,7 @@ export default {
 
         .section-progress-fill {
           height: 100%;
-          background: linear-gradient(90deg, #3b82f6, #2563eb);
+          background: linear-gradient(90deg, #60a5fa, #3b82f6);
           border-radius: inherit;
           transition: width 0.35s ease;
         }
@@ -3013,6 +3321,74 @@ export default {
         @media (max-width: 576px) {
           .usage-kpis {
             grid-template-columns: 1fr;
+          }
+        }
+      }
+
+      @media (min-width: 1200px) {
+        &.traffic-board-card.total-main-card {
+          grid-column: 1;
+          grid-row: 1 / span 2;
+          min-height: 100%;
+        }
+
+        &.traffic-board-card:not(.total-main-card) {
+          grid-column: 2;
+          min-height: 152px;
+          padding: 16px;
+          gap: 8px;
+
+          .usage-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--neutral-strong);
+          }
+
+          .usage-percent {
+            font-size: 36px;
+
+            &.compact {
+              font-size: 30px;
+            }
+          }
+
+          .usage-percent-label {
+            font-size: 12px;
+          }
+
+          .section-progress-track {
+            height: 8px;
+          }
+
+          .usage-kpis {
+            display: flex;
+            gap: 16px;
+          }
+
+          .usage-kpi {
+            flex: 1;
+            background: rgba(241, 245, 249, 0.9);
+          }
+
+          .usage-kpi-label {
+            font-size: 12px;
+          }
+
+          .usage-kpi-value {
+            font-size: 14px;
+          }
+
+          .usage-package-note,
+          .usage-reset-hint {
+            display: none;
+          }
+
+          .usage-summary-line,
+          .usage-package-note,
+          .usage-reset-hint {
+            &.persist-visible {
+              display: block;
+            }
           }
         }
       }
@@ -3035,8 +3411,8 @@ export default {
       }
 
       &:hover {
-        border-color: rgba(var(--theme-color-rgb), 0.3);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        border-color: rgba(148, 163, 184, 0.24);
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
       }
 
       .stats-icon {
@@ -3083,6 +3459,368 @@ export default {
   }
 
 
+  .ip-location-summary-card {
+    border-radius: 20px;
+    border: 1px solid rgba(131, 159, 213, 0.22);
+    background: radial-gradient(circle at 76% 50%, rgba(58, 103, 208, 0.26), transparent 40%),
+      radial-gradient(circle at 15% 105%, rgba(26, 65, 154, 0.3), transparent 35%),
+      linear-gradient(120deg, #0f172a 0%, #17233f 45%, #1c2747 100%);
+    box-shadow: 0 10px 24px rgba(10, 20, 42, 0.28);
+
+    .ip-location-summary-body {
+      padding-top: 0;
+    }
+
+    .ip-location-state {
+      color: #bddfff;
+      font-size: 13px;
+
+      &.error {
+        color: #ff9ba8;
+      }
+    }
+
+    .ip-location-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.35fr);
+      gap: 14px 18px;
+      color: #d9ecff;
+      align-items: start;
+      position: relative;
+
+      @media (max-width: 1220px) {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      @media (max-width: 920px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ip-card-arrow {
+      position: absolute;
+      top: 4px;
+      right: 0;
+      color: rgba(229, 236, 250, 0.86);
+    }
+
+    .ip-location-main-info {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .ip-meta-title {
+      color: rgba(233, 240, 255, 0.95);
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .ip-main-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ip-region-primary {
+      font-size: 44px;
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #ecf6ff;
+
+      @media (max-width: 1220px) {
+        font-size: 38px;
+      }
+
+      @media (max-width: 680px) {
+        font-size: 30px;
+      }
+    }
+
+    .ip-sub-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ip-refresh-btn {
+      border: 1px solid rgba(165, 194, 246, 0.35);
+      background: rgba(255, 255, 255, 0.08);
+      color: #e7f1ff;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.14);
+        border-color: rgba(188, 211, 248, 0.48);
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      .spinning {
+        animation: spin 0.9s linear infinite;
+      }
+    }
+
+    .ip-address-secondary {
+      font-size: 11px;
+      color: rgba(189, 223, 255, 0.58);
+      letter-spacing: 0.2px;
+    }
+
+    .ip-status-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #e9f3ff;
+      font-size: 16px;
+      font-weight: 600;
+
+      .status-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #35c26b;
+        box-shadow: 0 0 0 4px rgba(53, 194, 107, 0.2);
+      }
+    }
+
+    .region-code-badge {
+      min-width: 44px;
+      height: 24px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
+
+      &.is-red { background: linear-gradient(135deg, #e11d48, #9f1239); }
+      &.is-pink { background: linear-gradient(135deg, #be185d, #831843); }
+      &.is-blue { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); }
+    }
+
+    .ip-region {
+      color: #bddfff;
+      font-size: 13px;
+    }
+
+    .ip-service-reference {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(164, 191, 242, 0.24);
+      min-height: 100%;
+    }
+
+    .service-reference-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #f3f7ff;
+      letter-spacing: 0.2px;
+    }
+
+    .service-reference-tags {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      overflow: visible;
+      padding-bottom: 2px;
+    }
+
+    @media (max-width: 680px) {
+      .service-reference-tags {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .service-reference-item {
+      width: 100%;
+      min-height: 38px;
+      border-radius: 999px;
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      white-space: nowrap;
+      padding: 6px 12px;
+      border: none;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(233, 243, 255, 0.92);
+      opacity: 0.84;
+      transition: all 0.2s ease;
+
+      .service-reference-tile {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        box-shadow: 0 0 0 1px rgba(190, 209, 247, 0.25);
+      }
+
+      .service-reference-label {
+        font-size: 13px;
+        line-height: 1;
+        color: #ebf2ff;
+        font-weight: 600;
+      }
+
+      .service-reference-icon {
+        width: 18px;
+        height: 18px;
+        display: block;
+        object-fit: contain;
+        filter: none;
+      }
+
+      &.active {
+        opacity: 1;
+        color: #eef6ff;
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      &:hover {
+        opacity: 1;
+        transform: translateY(-1px);
+      }
+    }
+
+    .info-tooltip {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      color: rgba(148, 163, 184, 0.95);
+      cursor: help;
+
+      .info-tooltip-content {
+        position: absolute;
+        right: 0;
+        bottom: calc(100% + 8px);
+        width: 200px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        background: rgba(15, 23, 42, 0.96);
+        color: #e2e8f0;
+        font-size: 12px;
+        line-height: 1.4;
+        font-weight: 500;
+        box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(4px);
+        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        transition-delay: 0s;
+        pointer-events: none;
+        z-index: 30;
+      }
+
+      .info-tooltip-content::after {
+        content: '';
+        position: absolute;
+        right: 12px;
+        top: 100%;
+        border-width: 5px;
+        border-style: solid;
+        border-color: rgba(15, 23, 42, 0.96) transparent transparent transparent;
+      }
+
+      &:hover .info-tooltip-content,
+      &:focus-visible .info-tooltip-content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+      }
+    }
+  }
+
+  .info-tooltip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    color: rgba(148, 163, 184, 0.95);
+    cursor: help;
+
+    .info-tooltip-content {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 8px);
+      width: 200px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.96);
+      color: #e2e8f0;
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 500;
+      box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(4px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+      transition-delay: 0s;
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    .info-tooltip-content::after {
+      content: '';
+      position: absolute;
+      right: 12px;
+      top: 100%;
+      border-width: 5px;
+      border-style: solid;
+      border-color: rgba(15, 23, 42, 0.96) transparent transparent transparent;
+    }
+
+    &:hover .info-tooltip-content,
+    &:focus-visible .info-tooltip-content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition-delay: 0.2s;
+    }
+  }
+
   .usage-trend-card {
     .card-body {
       padding-top: 6px;
@@ -3106,13 +3844,13 @@ export default {
   .notice-card {
     margin-bottom: 12px;
     padding: 12px;
-    border-color: rgba(var(--theme-color-rgb), 0.12);
-    background: color-mix(in srgb, var(--card-bg-color) 92%, rgba(var(--theme-color-rgb), 0.08));
+    border-color: rgba(148, 163, 184, 0.14);
+    background: color-mix(in srgb, var(--card-bg-color) 98%, rgba(var(--theme-color-rgb), 0.02));
     box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
 
     &:hover {
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-      border-color: rgba(var(--theme-color-rgb), 0.18);
+      border-color: rgba(148, 163, 184, 0.2);
       transform: none;
     }
 
@@ -3132,12 +3870,12 @@ export default {
       border-radius: 8px;
       background-color: rgba(var(--theme-color-rgb), 0.045);
       overflow: hidden;
-      min-height: 102px;
+      min-height: 84px;
 
       .notice-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.72), rgba(15, 23, 42, 0.28));
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.64), rgba(15, 23, 42, 0.2));
         pointer-events: none;
       }
 
@@ -3270,57 +4008,79 @@ export default {
   }
 
 
-  .pending-items-card {
-    margin-bottom: 24px;
+  .pending-order-banner {
+    margin-bottom: 8px;
+    min-height: 44px;
+    max-height: 48px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: 1px solid #FFE58F;
+    background: #FFFBE6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 
-    .pending-items-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    &:hover {
+      background: #FFF7D6;
+      border-color: #FFD666;
+      transform: none;
     }
 
-    .pending-item {
-      display: flex;
+    .banner-main {
+      display: inline-flex;
       align-items: center;
-      padding: 15px;
-      border-radius: 10px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
+      gap: 8px;
+      min-width: 0;
+      color: #8C6D1F;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 500;
+    }
+
+    .banner-icon {
+      flex-shrink: 0;
+      color: #8C6D1F;
+    }
+
+    .banner-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .banner-action {
+      border: none;
+      border-radius: 8px;
+      height: 30px;
+      padding: 0 12px;
+      color: #fff;
+      background: var(--saas-brand);
+      box-shadow: none;
       cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-        transform: translateY(-2px);
-      }
-
-      .pending-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-        background-color: rgba(var(--theme-color-rgb), 0.15);
-        color: var(--theme-color);
-        margin-right: 15px;
-      }
-
-      .pending-info {
-        flex: 1;
-        font-weight: 500;
-      }
-
-      .pending-action {
-        color: var(--theme-text-secondary);
-        transition: transform 0.3s ease;
-      }
-
-      &:hover .pending-action {
-        transform: translateX(3px);
-        color: var(--theme-color);
-      }
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
     }
   }
+
+  .status-badge,
+  .status-tag {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+  }
+
+  .status-badge.success, .status-tag.success { background: #ecfdf3; color: #166534; }
+  .status-badge.warning, .status-tag.warning { background: #fff7e6; color: #8c6d1f; }
+  .status-badge.error, .status-tag.error { background: #fef2f2; color: #991b1b; }
 }
 
 
@@ -3373,26 +4133,25 @@ export default {
 }
 
 .btn-primary {
-  background-color: var(--theme-color);
-  color: white;
+  background-color: #355cc2;
+  color: #fff;
   border: none;
 
   &:hover {
-    background-color: var(--primary-color-hover);
-    transform: translateY(-1px);
+    background-color: #2f4fa8;
+    transform: none;
   }
 }
 
 .btn-outline {
-  background-color: transparent;
-  color: var(--theme-text-primary);
-  border: 1px solid var(--border-color);
+  background-color: #f3f4f6;
+  color: #374151;
+  border: none;
 
   &:hover {
-    border-color: var(--theme-color);
-    color: var(--theme-color);
-    background-color: rgba(var(--theme-color-rgb), 0.05);
-    transform: translateY(-1px);
+    background-color: #e5e7eb;
+    color: #111827;
+    transform: none;
   }
 
 
@@ -3844,9 +4603,6 @@ export default {
   overflow: hidden;
   animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
-  @media (prefers-color-scheme: dark) {
-    background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
-  }
 }
 
 @keyframes modal-in {
@@ -3887,7 +4643,7 @@ export default {
     width: 220px;
     height: 220px;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
     background-color: white;
     padding: 15px;
     object-fit: cover;
@@ -4116,26 +4872,9 @@ export default {
 }
 
 
-.dark-theme .skeleton-header,
-.dark-theme .skeleton-row,
-.dark-theme .skeleton-circle,
-.dark-theme .skeleton-row-sm,
-.dark-theme .skeleton-row-xs {
-  background-color: rgba(255, 255, 255, 0.08);
-}
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-row {
-  background: rgba(148, 163, 184, 0.12);
-}
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-label,
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-desc {
-  color: #cbd5e1;
-}
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-summary-value {
-  color: #f8fafc;
-}
 
 
 .skeleton-icon {
@@ -4369,9 +5108,6 @@ export default {
   max-height: 80vh;
   animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
-  @media (prefers-color-scheme: dark) {
-    background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
-  }
 }
 
 .notice-modal-header {
@@ -4972,48 +5708,27 @@ export default {
 
 }
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
-  color: #86efac;
-  background: rgba(34, 197, 94, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expiring {
-  color: #fcd34d;
-  background: rgba(245, 158, 11, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expired {
-  color: #fca5a5;
-  background: rgba(239, 68, 68, 0.2);
-}
-
-.dark-theme .traffic-board-card.package-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
-  background: rgba(148, 163, 184, 0.5);
-}
 
 
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle {
-  color: rgba(226, 232, 240, 0.75);
-  background: rgba(51, 65, 85, 0.45);
-  border-color: rgba(148, 163, 184, 0.35);
-}
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle:hover {
-  background: rgba(51, 65, 85, 0.65);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </style>
@@ -5285,48 +6000,17 @@ a.eztheme-btn {
   background-color: rgba(var(--theme-color-rgb), 0.06) !important;
 }
 
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-active {
-  color: #86efac;
-  background: rgba(34, 197, 94, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expiring {
-  color: #fcd34d;
-  background: rgba(245, 158, 11, 0.2);
-}
-
-.dark-theme .traffic-board-card .plan-summary-card .plan-status-tag.is-expired {
-  color: #fca5a5;
-  background: rgba(239, 68, 68, 0.2);
-}
-
-.dark-theme .traffic-board-card.package-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted {
-  background: rgba(71, 85, 105, 0.2);
-  border-color: rgba(148, 163, 184, 0.35);
-}
-
-
-.dark-theme .traffic-board-card.subscription-card-muted .section-progress-fill {
-  background: rgba(148, 163, 184, 0.5);
-}
 
 
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle {
-  color: rgba(226, 232, 240, 0.75);
-  background: rgba(51, 65, 85, 0.45);
-  border-color: rgba(148, 163, 184, 0.35);
-}
 
-.dark-theme .traffic-board-card .plan-summary-actions .plan-action-btn.subtle:hover {
-  background: rgba(51, 65, 85, 0.65);
-}
+
+
+
+
+
+
+
 
 
 </style>

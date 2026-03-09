@@ -244,14 +244,4 @@ export default {
 }
 
 
-:deep(.dark-theme) {
-  .custom-context-menu {
-    background-color: rgba(30, 30, 32, 0.8);
-    border-color: rgba(255, 255, 255, 0.05);
-  }
-  
-  .menu-icon {
-    background-color: rgba(255, 255, 255, 0.05);
-  }
-}
 </style> 

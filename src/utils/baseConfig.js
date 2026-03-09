@@ -136,11 +136,7 @@ export const API_BASE_URL = getApiBaseUrl();
  * 可以通过这些选项轻松启用或禁用各种安全功能
  */
 const DEFAULT_SECURITY_CONFIG = {
-  // 是否启用前端域名验证（前端域名检查，防止未授权域名访问）
-  enableFrontendDomainCheck: false,
-
-  // 是否启用授权码验证
-  enableLicenseCheck: true,
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const SECURITY_CONFIG = mergeDeep(
@@ -149,10 +145,7 @@ export const SECURITY_CONFIG = mergeDeep(
 );
 
 // 授权的前端域名列表
-const DEFAULT_AUTHORIZED_DOMAINS = [
-  "panghu.com",
-  // 在此处添加您授权的其他域名
-];
+const DEFAULT_AUTHORIZED_DOMAINS = [];
 
 export const AUTHORIZED_DOMAINS = getConfig(
   "AUTHORIZED_DOMAINS",
@@ -164,20 +157,7 @@ export const AUTHORIZED_DOMAINS = getConfig(
  * 控制注册和登录页面的验证方式
  */
 const DEFAULT_CAPTCHA_CONFIG = {
-  // 验证方式: 'google' 或 'cloudflare'
-  captchaType: "google",
-
-  // Google reCAPTCHA 配置 默认v2
-  google: {
-    // 验证API地址
-    verifyUrl: "https://www.google.com/recaptcha/api/siteverify",
-  },
-
-  // Cloudflare Turnstile 配置
-  cloudflare: {
-    // 验证API地址
-    verifyUrl: "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-  },
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const CAPTCHA_CONFIG = mergeDeep(
@@ -190,11 +170,7 @@ export const CAPTCHA_CONFIG = mergeDeep(
  * 允许用户自定义添加请求标头到所有API请求
  */
 const DEFAULT_CUSTOM_HEADERS_CONFIG = {
-  // 是否启用自定义标头
-  enabled: false,
-
-  // 自定义标头列表
-  headers: {},
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const CUSTOM_HEADERS_CONFIG = mergeDeep(
@@ -204,27 +180,7 @@ export const CUSTOM_HEADERS_CONFIG = mergeDeep(
 
 // 网站名称配置
 const DEFAULT_SITE_CONFIG = {
-  siteName: "EZ THEME",
-  siteDescription: "EZ UI",
-  copyright: `© ${new Date().getFullYear()} EZ THEME. All Rights Reserved.`,
-
-  // 是否显示标题中的网站Logo (true=显示, false=隐藏)
-  showLogo: true,
-
-  // Landing页面多语言标语
-  landingText: {
-    "zh-CN": "探索全球网络无限可能",
-    "vi-VN": "Khám phá khả năng vô hạn của mạng toàn cầu",
-    "en-US": "Explore Unlimited Possibilities of Global Network",
-    "zh-TW": "探索全球網絡無限可能",
-    "ja-JP": "グローバルネットワークの無限の可能性",
-    "ko-KR": "글로벌 네트워크의 무한한 가능성을 탐색하세요",
-    "ru-RU": "Исследуйте безграничные возможности глобальной сети",
-    "fa-IR": "امکانات نامحدود شبکه جهانی را کاوش کنید",
-  },
-
-  // 自定义landing页面路径（相对于public目录）
-  customLandingPage: "",
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const SITE_CONFIG = mergeDeep(
@@ -234,13 +190,10 @@ export const SITE_CONFIG = mergeDeep(
 
 // 默认主题配置
 const DEFAULT_BASE_CONFIG = {
-  // 默认主题 ('light' 或 'dark') TODO
-  defaultTheme: "dark",
-
-  // 主题色 (16进制颜色值) TODO
-  primaryColor: "#00947c",
-
-  // 是否启用落地页 (true=启用, false=禁用) TODO
+  // 配置以 src/config/index.js 为主，避免重复维护
+  // 保留最小兜底，防止未加载外部配置时主题计算报错
+  defaultTheme: "light",
+  primaryColor: "#355cc2",
   enableLandingPage: true,
 };
 
@@ -253,32 +206,7 @@ export const DEFAULT_CONFIG = mergeDeep(
  * 支付相关配置
  */
 const DEFAULT_PAYMENT_CONFIG = {
-  // 是否在新标签页打开支付链接 (true=新标签页打开, false=当前页面打开)
-  openPaymentInNewTab: true,
-
-  // 支付二维码大小 (像素)
-  qrcodeSize: 200,
-
-  // 支付二维码的颜色
-  qrcodeColor: "#000000",
-
-  // 支付二维码的背景色
-  qrcodeBackground: "#ffffff",
-
-  // 是否自动检测支付状态 (true=启用自动检测, false=手动检测)
-  autoCheckPayment: true,
-
-  // 自动检测支付状态的间隔时间 (毫秒)
-  autoCheckInterval: 5000,
-
-  // 自动检测支付状态的最大次数 (设置为0表示无限次)
-  autoCheckMaxTimes: 30,
-
-  // 是否对Safari浏览器使用支付弹窗模式，而不是直接跳转 (true=使用弹窗, false=直接跳转)
-  useSafariPaymentModal: true,
-
-  // 是否自动选择第一个支付方式 (true=自动选择, false=需要用户手动选择)
-  autoSelectFirstMethod: true,
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const PAYMENT_CONFIG = mergeDeep(
@@ -291,11 +219,7 @@ export const PAYMENT_CONFIG = mergeDeep(
  * 控制用户中心页面的功能显示
  */
 const DEFAULT_PROFILE_CONFIG = {
-  // 是否显示礼品卡兑换栏目 (true=显示, false=隐藏) TODO
-  showGiftCardRedeem: false,
-
-  // 是否显示最近登录设备栏目 (true=显示, false=隐藏)
-  showRecentDevices: true,
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const PROFILE_CONFIG = mergeDeep(
@@ -308,16 +232,7 @@ export const PROFILE_CONFIG = mergeDeep(
  * 控制工单功能的行为
  */
 const DEFAULT_TICKET_CONFIG = {
-  // 是否在创建工单时发送用户基础信息 (true=发送, false=不发送)
-  includeUserInfoInTicket: true,
-  // 弹窗配置
-  popup: {
-    enabled: true,
-    title: "工单须知",
-    content: "<p>请您准确描述您的问题，再提交工单，以便我们更快帮助您。</p>",
-    cooldownHours: 24,
-    closeWaitSeconds: 0,
-  },
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const TICKET_CONFIG = mergeDeep(
@@ -330,17 +245,7 @@ export const TICKET_CONFIG = mergeDeep(
  * 控制流量明细页面的行为
  */
 const DEFAULT_TRAFFICLOG_CONFIG = {
-  // 是否启用流量明细页面 (true=启用, false=禁用)
-  enableTrafficLog: true,
-
-  //是否启用流量明表格 (true=启用, false=禁用）
-  showTrafficTable: true,
-
-  // 显示多少天的流量记录
-  daysToShow: 30,
-
-  // 流量趋势图是否聚合每日流量 (如果你的节点倍率全为1倍则无需开启)
-  sumDailyTraffic: false,
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const TRAFFICLOG_CONFIG = mergeDeep(
@@ -353,67 +258,7 @@ export const TRAFFICLOG_CONFIG = mergeDeep(
  * 用于控制仪表板中的客户端下载选项
  */
 const DEFAULT_CLIENT_CONFIG = {
-  // 整个下载卡片显示控制 TODO
-  showDownloadCard: false, // 设置为false将隐藏整个客户端下载卡片
-
-  // 平台显示控制 (true=显示, false=隐藏)
-  showIOS: false, // iOS客户端显示控制
-  showAndroid: false, // Android客户端显示控制
-  showMacOS: false, // MacOS客户端显示控制
-  showWindows: false, // Windows客户端显示控制
-  showLinux: false, // Linux客户端显示控制
-  showOpenWrt: false, // OpenWrt客户端显示控制
-
-  // 客户端下载链接
-  clientLinks: {
-    ios: "https://apps.apple.com/app/xxx", // iOS客户端下载链接
-    android: "https://play.google.com/store/apps/xxx", // Android客户端下载链接
-    macos: "https://github.com/xxx/releases/latest", // MacOS客户端下载链接
-    windows: "https://github.com/xxx/releases/latest", // Windows客户端下载链接
-    linux: "https://github.com/xxx/releases/latest", // Linux客户端下载链接
-    openwrt: "https://github.com/xxx/releases/latest", // OpenWrt客户端下载链接
-  },
-
-  // ===========================================================
-
-  // 订阅导入客户端显示控制
-  // iOS平台客户端
-  showShadowrocket: true, // Shadowrocket
-  showSurge: true, // Surge
-  showStash: true, // Stash
-  showQuantumultX: true, // QuantumultX
-  showHiddifyIOS: true, // Hiddify for IOS
-  showSingboxIOS: true, // SingBox for iOS
-  showLoon: true, // Loon
-
-  // Android平台客户端
-  showFlClashAndroid: true, // FlClash for Android
-  showV2rayNG: true, // V2rayNG
-  showClashAndroid: true, // Clash for Android
-  showSurfboard: true, // Surfboard
-  showClashMetaAndroid: true, // Clash Meta for Android
-  showNekobox: true, // Nekobox
-  showSingboxAndroid: true, // SingBox for Android
-  showHiddifyAndroid: true, // Hiddify for Android
-
-  // Windows平台客户端
-  showFlClashWindows: true, // FlClash for Windows
-  showClashVergeWindows: true, // ClashVerge for Windows
-  showClashWindows: true, // Clash for Windows
-  showNekoray: true, // Nekoray
-  showSingboxWindows: true, // SingBox for Windows
-  showHiddifyWindows: true, // Hiddify for Windows
-
-  // MacOS平台客户端
-  showFlClashMac: true, // FlClash for Mac
-  showClashVergeMac: true, // ClashVerge for Mac
-  showClashX: true, // ClashX
-  showClashMetaX: true, // ClashX Meta
-  showSurgeMac: true, // Surge for Mac
-  showStashMac: true, // Stash for Mac
-  showQuantumultXMac: true, // QuantumultX for Mac
-  showSingboxMac: true, // SingBox for Mac
-  showHiddifyMac: true, // Hiddify for Mac
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const CLIENT_CONFIG = mergeDeep(
@@ -426,34 +271,7 @@ export const CLIENT_CONFIG = mergeDeep(
  * 控制商店页面的行为和显示
  */
 const DEFAULT_SHOP_CONFIG = {
-  // 是否在商店导航上显示热销标记
-  showHotSaleBadge: true,
-
-  // 是否显示套餐特性卡片 (true=显示, false=隐藏)
-  showPlanFeatureCards: true,
-
-  // 是否自动选择周期最大的标签，设为false则不会自动选择
-  autoSelectMaxPeriod: false,
-
-  // 是否隐藏周期选择标签 (true=隐藏, false=显示)
-  hidePeriodTabs: false,
-
-  // 库存紧张的阈值（当库存数量小于等于此值且大于0时显示库存紧张）
-  lowStockThreshold: 5,
-
-  // 是否启用周期折扣计算显示 (true=启用, false=禁用)
-  enableDiscountCalculation: true,
-
-  // 价格周期的显示顺序（从大到小）
-  periodOrder: [
-    "three_year_price", // 三年
-    "two_year_price", // 两年
-    "year_price", // 一年
-    "half_year_price", // 半年
-    "quarter_price", // 季度
-    "month_price", // 月付
-    "onetime_price", // 一次性
-  ],
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const SHOP_CONFIG = mergeDeep(
@@ -468,35 +286,11 @@ export const SHOP_CONFIG = mergeDeep(
  * 控制仪表盘页面的功能与显示
  */
 const DEFAULT_DASHBOARD_CONFIG = {
-  // 是否在欢迎卡片中显示用户邮箱 (true=显示, false=隐藏)
-  showUserEmail: true,
-
-  // 是否为导入订阅按钮添加高光效果和填充底色 (true=添加效果, false=不添加效果)
-  importButtonHighlightBtnbgcolor: true,
-
-  // 是否启用重置流量功能 (true=启用, false=禁用)
-  enableResetTraffic: true,
-
-  // 重置流量按钮显示条件 ('always'=始终显示, 'low'=流量低于阈值时显示, 'depleted'=流量耗尽时显示)
-  resetTrafficDisplayMode: "low",
-
-  // 低流量阈值百分比 (1-100)，当剩余流量百分比低于此值时触发低流量警告
-  lowTrafficThreshold: 10,
-
-  // 是否启用续费套餐功能 (true=启用, false=禁用)
-  enableRenewPlan: true,
-
-  // 续费套餐按钮显示条件 ('always'=始终显示, 'expiring'=套餐即将到期时显示, 'expired'=套餐已过期时显示)
-  renewPlanDisplayMode: "always",
-
-  // 即将过期的天数阈值 (1-30)，当剩余天数小于等于此值时触发即将过期警告
-  expiringThreshold: 7,
-
-  // 是否显示在线设备数量限制 (true=显示, false=隐藏，仅Xiao-V2board支持)
-  showOnlineDevicesLimit: true,
-
-  // 是否显示导入订阅
-  showImportSubscription: true,
+  /**
+   * 说明：
+   * Dashboard 功能开关以 src/config/index.js 的 DASHBOARD_CONFIG 为主。
+   * 这里仅保留空兜底，避免与外部配置重复维护造成分叉。
+   */
 };
 
 export const DASHBOARD_CONFIG = mergeDeep(
@@ -561,12 +355,27 @@ const DEFAULT_THEME_CONFIG = {
   // 主题颜色变量
   light: {
     ...calculateThemeColors(DEFAULT_CONFIG.primaryColor),
-    backgroundColor: "#f5f7fa",
+    backgroundColor: "#f3f6fb",
+    backgroundElevated: "#f8faff",
     cardBackground: "#ffffff",
-    textColor: "#333333",
-    secondaryTextColor: "#666666",
-    borderColor: "#e8e8e8",
-    shadowColor: "rgba(0, 0, 0, 0.1)",
+    textColor: "#0f172a",
+    secondaryTextColor: "#64748b",
+    mutedTextColor: "#94a3b8",
+    borderColor: "rgba(148, 163, 184, 0.22)",
+    borderColorSoft: "rgba(148, 163, 184, 0.14)",
+    shadowColor: "rgba(15, 23, 42, 0.06)",
+    shadowCardSm: "0 1px 3px rgba(15, 23, 42, 0.04), 0 6px 14px rgba(15, 23, 42, 0.04)",
+    shadowCardMd: "0 4px 20px rgba(15, 23, 42, 0.08)",
+    radiusSm: "8px",
+    radiusMd: "12px",
+    radiusLg: "16px",
+    surfaceSubtle: "#f1f5f9",
+    headingColor: "#0f172a",
+    neutralStrong: "#334155",
+    buttonPrimaryStart: DEFAULT_CONFIG.primaryColor,
+    buttonPrimarySoftStart: DEFAULT_CONFIG.primaryColor,
+    buttonPrimaryEnd: calculateThemeColors(DEFAULT_CONFIG.primaryColor).primaryColorHover,
+    buttonDisabledBg: "#94a3b8",
   },
 
   dark: {
@@ -617,25 +426,7 @@ export const BACKGROUND_BALLS_CONFIG = getConfig(
  * 控制哪些浏览器被禁止访问网站
  */
 const DEFAULT_BROWSER_RESTRICT_CONFIG = {
-  // 是否启用浏览器限制功能
-  enabled: false,
-
-  // 各浏览器是否被限制访问（true=限制访问，false=允许访问）
-  restrictBrowsers: {
-    360: true, // 360浏览器
-    QQ: true, // QQ浏览器
-    WeChat: true, // 微信内置浏览器
-    Baidu: true, // 百度浏览器
-    Sogou: true, // 搜狗浏览器
-    UC: false, // UC浏览器
-    Maxthon: false, // 傲游浏览器
-  },
-
-  // 推荐下载的浏览器链接
-  recommendedBrowsers: {
-    Chrome: "https://www.google.cn/chrome/",
-    Edge: "https://www.microsoft.com/zh-cn/edge",
-  },
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const BROWSER_RESTRICT_CONFIG = mergeDeep(
@@ -743,14 +534,7 @@ export const isBrowserRestricted = () => {
  * 充值相关配置
  */
 const DEFAULT_WALLET_CONFIG = {
-  // 预设充值金额选项（单位：元）
-  presetAmounts: [6, 30, 68, 128, 256, 328, 648, 1280],
-
-  // 默认选中的充值金额（如果设为null则不预选金额）
-  defaultSelectedAmount: null,
-
-  // 最小充值金额（单位：元）
-  minimumDepositAmount: 1,
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const WALLET_CONFIG = mergeDeep(
@@ -762,18 +546,7 @@ export const WALLET_CONFIG = mergeDeep(
  * 邀请页面配置
  */
 const DEFAULT_INVITE_CONFIG = {
-  // 是否在导航栏的邀请按钮上显示返利标记
-  showCommissionBadge: true,
-
-  // 返佣记录每页显示数量（最小值为10，API限制每次请求最少需要返回10条记录）
-  recordsPerPage: 10,
-  // 邀请链接配置
-  inviteLinkConfig: {
-    // 链接模式：'auto'=自动使用当前站点域名，'custom'=使用自定义域名
-    linkMode: "auto",
-    // 自定义域名，当linkMode为'custom'时使用
-    customDomain: "https://example.com",
-  },
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const INVITE_CONFIG = mergeDeep(
@@ -786,11 +559,7 @@ export const INVITE_CONFIG = mergeDeep(
  * 控制节点列表页面的显示内容
  */
 const DEFAULT_NODES_CONFIG = {
-  // 是否显示节点倍率 (true=显示, false=隐藏)
-  showNodeRate: true,
-
-  // 是否显示节点详细信息（主机和端口）
-  showNodeDetails: false,
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const NODES_CONFIG = mergeDeep(
@@ -802,34 +571,7 @@ export const NODES_CONFIG = mergeDeep(
  * 客服系统配置
  */
 const DEFAULT_CUSTOMER_SERVICE_CONFIG = {
-  // 是否启用客服系统
-  enabled: false,
-
-  // 客服系统类型: 'crisp' 或 'other'
-  type: "crisp",
-
-  // 客服系统HTML代码
-  customHtml: "",
-
-  // 是否在未登录状态下也显示客服图标
-  showWhenNotLoggedIn: true,
-
-  // 客服系统嵌入模式: 'popup'=弹出式页面, 'embed'=嵌入到每个页面(仅支持Crisp)
-  embedMode: "embed",
-
-  // 图标位置配置
-  iconPosition: {
-    // 桌面版图标距离左下角的距离
-    desktop: {
-      left: "20px",
-      bottom: "20px",
-    },
-    // 移动版图标距离右下角的距离
-    mobile: {
-      right: "20px",
-      bottom: "100px",
-    },
-  },
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 // 注意：当使用Crisp类型客服时，系统会自动向Crisp传递用户数据（邮箱、套餐名称、到期时间、可用流量、用户余额）
@@ -842,21 +584,7 @@ export const CUSTOMER_SERVICE_CONFIG = mergeDeep(
  * More页面自定义卡片配置
  */
 const DEFAULT_MORE_PAGE_CONFIG = {
-  // 是否启用自定义卡片功能
-  enableCustomCards: true,
-
-  // 自定义卡片列表
-  customCards: [
-    // 示例自定义卡片
-    // {
-    //   id: 'example_card',           // 卡片唯一ID
-    //   title: '示例卡片',             // 卡片标题
-    //   description: '这是一个示例',   // 卡片描述
-    //   icon: 'IconWorld',            // 卡片图标（使用@tabler/icons-vue图标名称）
-    //   url: 'https://example.com',   // 点击卡片跳转的URL
-    //   openInNewTab: true            // 是否在新标签页打开
-    // }
-  ],
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const MORE_PAGE_CONFIG = mergeDeep(
@@ -868,31 +596,7 @@ export const MORE_PAGE_CONFIG = mergeDeep(
  * 认证页面布局配置
  */
 const DEFAULT_AUTH_LAYOUT_CONFIG = {
-  // 布局类型: 'center' 为居中卡片布局, 'split' 为左右分栏布局
-  layoutType: "center",
-
-  // 左右分栏布局配置 (仅当 layoutType 为 'split' 时生效)
-  splitLayout: {
-    // 左侧区域内容配置
-    leftContent: {
-      // 左侧背景图片URL (如不设置则不设置图片背景)
-      backgroundImage: "",
-      // 左上角网站名称配置
-      siteName: {
-        // 是否显示网站名称
-        show: true,
-        // 文字颜色 (white或black)
-        color: "white",
-      },
-      // 左下角问候语配置
-      greeting: {
-        // 是否显示问候语
-        show: true,
-        // 文字颜色 (white或black)
-        color: "white",
-      },
-    },
-  },
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const AUTH_LAYOUT_CONFIG = mergeDeep(
@@ -904,8 +608,7 @@ export const AUTH_LAYOUT_CONFIG = mergeDeep(
  * 认证页面功能配置
  */
 const DEFAULT_AUTH_CONFIG = {
-  // 是否自动勾选同意条款复选框 (true=自动勾选, false=默认不勾选)
-  autoAgreeTerms: false,
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 export const AUTH_CONFIG = mergeDeep(
@@ -917,13 +620,7 @@ export const AUTH_CONFIG = mergeDeep(
  * 添加默认导航栏配置
  */
 const DEFAULT_NAVIGATION_CONFIG = {
-  // 设置导航栏第三个位置显示的内容
-  // 可选值: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'billing', 'traffic', 'wallet', 'profile'
-  thirdNavItem: "invite", // 默认显示邀请
-
-  // 可选的第四个导航项，插入在 "更多" 之前；为空字符串或未设置则不插入
-  // 可选值同上: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'billing', 'traffic', 'wallet', 'profile'
-  fourthNavItem: "",
+  // 配置以 src/config/index.js 为主，避免重复维护
 };
 
 // 导出合并后的导航栏配置
