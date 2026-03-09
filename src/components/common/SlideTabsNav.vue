@@ -799,20 +799,20 @@ function debounce(fn, delay) {
 <style lang="scss" scoped>
 
 .slide-tabs-container {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   position: fixed;
-  top: 120px;
-  left: 16px;
+  top: 112px;
+  left: 12px;
   z-index: 10;
-  width: 192px;
+  width: 168px;
 
   .slide-tabs-wrapper {
     background: rgba(var(--card-background-rgb), 0.72);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding: 6px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
     border: 1px solid var(--border-color);
     overflow: hidden;
   }
@@ -820,7 +820,7 @@ function debounce(fn, delay) {
   .slide-tabs-nav {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
     position: relative;
 
     .indicator-container {
@@ -828,10 +828,10 @@ function debounce(fn, delay) {
     }
 
     .nav-item {
-      padding: 8px 10px;
-      border-radius: 9px;
+      padding: 8px 9px;
+      border-radius: 8px;
       font-weight: 500;
-      font-size: 12px;
+      font-size: 13px;
       color: var(--secondary-text-color);
       text-decoration: none;
       text-align: left;
@@ -840,8 +840,8 @@ function debounce(fn, delay) {
       white-space: nowrap;
       display: flex;
       align-items: center;
-      gap: 7px;
-      min-height: 34px;
+      gap: 8px;
+      min-height: 36px;
 
       .badge-dot {
         position: static;
@@ -863,15 +863,16 @@ function debounce(fn, delay) {
         justify-content: center;
 
         svg {
-          width: 15px;
-          height: 15px;
+          width: 16px;
+          height: 16px;
           transition: color 0.25s ease;
         }
       }
 
       &.active {
         color: var(--text-color);
-        background: rgba(var(--theme-color-rgb), 0.14);
+        background: rgba(var(--theme-color-rgb), 0.16);
+        box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.18);
 
         .nav-icon svg {
           color: var(--theme-color);
@@ -910,7 +911,7 @@ function debounce(fn, delay) {
 
         padding: 6px 10px;
 
-        font-size: 12px;
+        font-size: 13px;
 
         flex-direction: row;
 
@@ -1050,7 +1051,7 @@ function debounce(fn, delay) {
       flex-direction: row;
       flex-wrap: nowrap;
       overflow-x: auto;
-      gap: 4px;
+      gap: 3px;
       padding: 2px;
 
       .slider-indicator {

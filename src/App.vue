@@ -724,7 +724,7 @@ export default {
 
 @media (min-width: 906px) {
   .app-content-wrapper.with-left-nav {
-    padding-left: 240px;
+    padding-left: 212px;
   }
 
   .content-layout-shell.fixed-content-width {
@@ -733,7 +733,7 @@ export default {
   }
 
   .page-header-layer {
-    padding-left: 240px;
+    padding-left: 212px;
   }
 
   .page-header-content {
