@@ -3224,6 +3224,17 @@ export default {
           font-weight: 500;
         }
 
+      &.traffic-board-subscription,
+      &.traffic-board-package {
+        .usage-percent {
+          font-size: 30px;
+
+          &.compact {
+            font-size: 26px;
+          }
+        }
+      }
+
         .usage-kpis {
           width: 100%;
           display: grid;
@@ -4226,7 +4237,19 @@ export default {
 
     .stats-card.traffic-board-subscription,
     .stats-card.traffic-board-package {
-      min-height: 196px;
+      min-height: 188px;
+
+      .usage-percent {
+        font-size: 24px;
+
+        &.compact {
+          font-size: 22px;
+        }
+      }
+
+      .usage-percent-label {
+        font-size: 12px;
+      }
     }
   }
 

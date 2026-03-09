@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="page-header-layer">
+      <div class="page-header-layer" v-if="pageHeaderTitle">
         <div class="page-header-content">
           <div class="page-header-title">{{ pageHeaderTitle }}</div>
         </div>
@@ -75,7 +75,7 @@
     </div>
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
-    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]">
+    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth, 'with-page-header': $route.meta.requiresAuth && !!pageHeaderTitle }]">
       <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
         <router-view v-slot="{ Component, route }">
           <transition 
@@ -435,8 +435,8 @@ export default {
 
 
 :global(body) {
-  --top-fixed-bar-height: 64px;
-  --page-header-height: 48px;
+  --top-fixed-bar-height: 60px;
+  --page-header-height: 42px;
 }
 
 .top-fixed-bar {
@@ -683,11 +683,19 @@ export default {
   width: 100%;
 
   &.with-top-bar {
-    --page-content-top-gap: 14px;
+    --page-content-top-gap: 8px;
     padding-top: calc(
-      var(--top-fixed-bar-height, 64px) +
-      var(--page-header-height, 48px) +
-      var(--page-content-top-gap, 12px) +
+      var(--top-fixed-bar-height, 60px) +
+      var(--page-content-top-gap, 8px) +
+      env(safe-area-inset-top, 0px)
+    );
+  }
+
+  &.with-top-bar.with-page-header {
+    padding-top: calc(
+      var(--top-fixed-bar-height, 60px) +
+      var(--page-header-height, 42px) +
+      var(--page-content-top-gap, 8px) +
       env(safe-area-inset-top, 0px)
     );
   }
@@ -724,12 +732,12 @@ export default {
 
 @media (max-width: 768px) {
   :global(body) {
-    --top-fixed-bar-height: 56px;
-    --page-header-height: 44px;
+    --top-fixed-bar-height: 54px;
+    --page-header-height: 38px;
   }
 
   .app-content-wrapper.with-top-bar {
-    --page-content-top-gap: 10px;
+    --page-content-top-gap: 6px;
   }
 
   .top-fixed-bar {
