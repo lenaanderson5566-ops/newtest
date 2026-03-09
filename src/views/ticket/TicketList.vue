@@ -2617,6 +2617,17 @@ onUnmounted(() => {
   border: 1px solid var(--border-color);
   border-radius: 12px;
   margin-bottom: 10px;
+
+  .ticket-subject-info {
+    h2 {
+      font-size: 1.06rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .ticket-detail-meta {
+      font-size: 0.78rem;
+    }
+  }
 }
 
 .messages-container {
@@ -2630,6 +2641,17 @@ onUnmounted(() => {
   border-radius: 12px;
   border: 1px solid var(--border-color);
   padding: 10px;
+
+  textarea {
+    font-size: 0.92rem;
+    min-height: 78px;
+    line-height: 1.45;
+  }
+}
+
+.message-item .message-content .message-text {
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 .ticket-context-sidebar {
