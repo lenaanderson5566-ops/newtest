@@ -321,52 +321,6 @@
 
 
 
-        <!-- 邀请码输入框 (显示在所有情况下，但根据is_invite_force决定是否必填) -->
-
-        <div class="form-group">
-
-          <label for="inviteCode" class="form-label">
-
-            {{ $t('auth.inviteCode') }}
-
-            <span class="required" v-if="config.is_invite_force === 1">*</span>
-
-            <span class="optional" v-else>{{ $t('common.optional') }}</span>
-
-          </label>
-
-          <div class="input-with-icon">
-
-            <IconTicket class="input-icon" />
-
-            <input
-
-              type="text"
-
-              id="inviteCode"
-
-              class="form-control"
-
-              v-model="formData.inviteCode"
-
-              :placeholder="$t('auth.inviteCodePlaceholder')"
-
-              :required="config.is_invite_force === 1"
-
-              :disabled="inviteCodeFromUrl"
-
-              :readonly="inviteCodeFromUrl"
-
-            />
-
-          </div>
-
-          <span v-if="errors.inviteCode" class="error-message">{{ errors.inviteCode }}</span>
-
-        </div>
-
-
-
         <!-- 验证码组件 -->
 
         <div class="form-group" v-if="config.is_recaptcha === 1">
@@ -578,7 +532,6 @@ import IconCode from '@/components/icons/IconCode.vue';
 
 import IconLock from '@/components/icons/IconLock.vue';
 
-import IconTicket from '@/components/icons/IconTicket.vue';
 
 import IconSend from '@/components/icons/IconSend.vue';
 
@@ -647,7 +600,6 @@ export default {
 
     IconLock,
 
-    IconTicket,
 
     IconSend,
 
@@ -1364,7 +1316,7 @@ export default {
 
 
 
-      if (config.is_invite_force === 1 && !formData.inviteCode) {
+      if (!inviteCodeFromUrl.value || !formData.inviteCode) {
 
         errors.inviteCode = t('auth.inviteCodeRequired');
 
