@@ -12,21 +12,10 @@
 
       <!-- 欢迎卡片 -->
 
-      <div class="dashboard-card welcome-card">
-
-        <div class="card-header">
-
-          <h2 class="card-title">{{ $t('more.title') }}</h2>
-
-        </div>
-
-        <div class="card-body">
-
-          <p>{{ $t('more.description') }}</p>
-
-        </div>
-
-      </div>
+      <InfoCard class="dashboard-card welcome-card">
+        <template #title>{{ $t('more.title') }}</template>
+        <template #description>{{ $t('more.description') }}</template>
+      </InfoCard>
 
       
 
@@ -249,6 +238,7 @@ import { useRouter } from 'vue-router';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 
 import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
+import InfoCard from '@/components/common/InfoCard.vue';
 
 
 

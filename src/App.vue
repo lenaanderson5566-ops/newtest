@@ -460,15 +460,11 @@ export default {
 }
 
 
-:global(body) {
-  --top-fixed-bar-height: 60px;
-  --page-header-height: 42px;
-}
-
 .top-fixed-bar {
-  height: var(--top-fixed-bar-height);
+  height: calc(var(--top-fixed-bar-height) + var(--safe-top));
   position: fixed;
   top: 0;
+  padding-top: var(--safe-top);
   left: 0;
   right: 0;
   background: rgba(255, 255, 255, 0.88);
@@ -479,14 +475,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
   z-index: 120;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .page-header-layer {
   position: fixed;
-  top: var(--top-fixed-bar-height);
+  top: calc(var(--top-fixed-bar-height) + var(--safe-top));
   left: 0;
   right: 0;
   height: var(--page-header-height);
@@ -503,7 +499,7 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 0 24px;
+  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
 }
 
 .page-header-title {
@@ -710,25 +706,20 @@ export default {
 
   &.with-top-bar {
     --page-content-top-gap: 8px;
-    padding-top: calc(
-      var(--top-fixed-bar-height, 60px) +
-      var(--page-content-top-gap, 8px) +
-      env(safe-area-inset-top, 0px)
-    );
+    padding-top: calc(var(--top-fixed-bar-height) + var(--safe-top) + var(--page-content-top-gap, 8px));
   }
 
   &.with-top-bar.with-page-header {
-    padding-top: calc(
-      var(--top-fixed-bar-height, 60px) +
-      var(--page-header-height, 42px) +
-      var(--page-content-top-gap, 8px) +
-      env(safe-area-inset-top, 0px)
-    );
+    padding-top: calc(var(--top-fixed-bar-height) + var(--page-header-height) + var(--safe-top) + var(--page-content-top-gap, 8px));
   }
 }
 
 .content-layout-shell {
   width: 100%;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding-inline: var(--layout-padding-x) var(--layout-padding-x-right);
+  box-sizing: border-box;
 }
 
 @media (min-width: 906px) {
@@ -737,9 +728,8 @@ export default {
   }
 
   .content-layout-shell.fixed-content-width {
-    width: min(1180px, 100%);
-    margin-right: auto;
-    margin-left: 0;
+    width: 100%;
+    margin: 0 auto;
   }
 
   .page-header-layer {
@@ -747,27 +737,18 @@ export default {
   }
 
   .page-header-content {
-    width: min(1180px, 100%);
-    margin-right: auto;
-    margin-left: 0;
-    padding: 0 24px 0 56px;
+    width: 100%;
+    max-width: var(--layout-max-width);
+    margin: 0 auto;
+    padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
   }
 
 }
 
 
 @media (max-width: 768px) {
-  :global(body) {
-    --top-fixed-bar-height: 54px;
-    --page-header-height: 38px;
-  }
-
   .app-content-wrapper.with-top-bar {
     --page-content-top-gap: 6px;
-  }
-
-  .top-fixed-bar {
-    padding: 0 12px;
   }
 
   .page-header-layer {
@@ -775,7 +756,7 @@ export default {
   }
 
   .page-header-content {
-    padding: 0 12px;
+    padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
   }
 
   .page-header-title {
@@ -928,7 +909,7 @@ html {
 
 .auth-toolbar {
   position: fixed;
-  top: 0;
+  top: var(--safe-top);
   right: 0;
   z-index: 100;
   

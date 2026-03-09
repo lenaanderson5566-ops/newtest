@@ -270,23 +270,21 @@
 
         <template v-else-if="!hasPlan">
           <!-- 没有套餐时显示的提示卡片 -->
-          <div class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
+          <InfoCard class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
                style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: 1200px; width: 100%;">
-            <div class="no-plan-content">
+            <template #icon>
               <div class="no-plan-icon">
                 <IconShoppingCart :size="45" class="icon-cart"/>
               </div>
-              <div class="no-plan-message">
-                <div class="no-plan-title">{{ $t('dashboard.noPlanPrompt') }}</div>
-                <div class="no-plan-actions">
-                  <button class="action-button primary" @click="goToShop">
-                    <IconShoppingBag :size="18" class="btn-icon"/>
-                    <span>{{ $t('dashboard.purchasePlan') }}</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+            </template>
+            <template #title>{{ $t('dashboard.noPlanPrompt') }}</template>
+            <template #action>
+              <button class="action-button primary" @click="goToShop">
+                <IconShoppingBag :size="18" class="btn-icon"/>
+                <span>{{ $t('dashboard.purchasePlan') }}</span>
+              </button>
+            </template>
+          </InfoCard>
         </template>
 
         <template v-else>
@@ -642,6 +640,7 @@ import {
   IconRefresh
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
+import InfoCard from '@/components/common/InfoCard.vue';
 import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/dashboard';
 import { updateRemindSettings as apiUpdateRemind } from '@/api/user';
 import { getTrafficLog } from '@/api/trafficLog';
@@ -758,6 +757,7 @@ export default {
     IconCoins,
     IconEye,
     IconAlertTriangle,
+    InfoCard,
     IconX,
     IconCalendarPlus,
     IconPlus,

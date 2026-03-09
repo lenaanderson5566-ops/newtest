@@ -9,23 +9,23 @@
         :created-at="userInfo.created_at"
       />
 
-      <div class="center-card">
-        <h3>当前订阅</h3>
+      <InfoCard class="center-card">
+        <template #title>当前订阅</template>
         <p class="main">{{ subscriptionText }}</p>
-        <p class="sub">{{ subscriptionSubText }}</p>
-      </div>
+        <template #description>{{ subscriptionSubText }}</template>
+      </InfoCard>
 
-      <div class="center-card">
-        <div class="section-head">
-          <h3>账户余额</h3>
+      <InfoCard class="center-card">
+        <template #title>账户余额</template>
+        <template #action>
           <button class="mini-action" @click="go('/billing?tab=wallet')">余额充值</button>
-        </div>
+        </template>
         <p class="main">{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</p>
-        <p class="sub">可用于购买或续费套餐</p>
-      </div>
+        <template #description>可用于购买或续费套餐</template>
+      </InfoCard>
 
-      <div class="center-card">
-        <h3>邮件通知</h3>
+      <InfoCard class="center-card">
+        <template #title>邮件通知</template>
         <div class="setting-item">
           <div>
             <strong>到期提醒</strong>
@@ -46,37 +46,29 @@
             <span class="slider round"></span>
           </label>
         </div>
-      </div>
+      </InfoCard>
 
       <div class="entry-list">
-        <button class="entry-card" @click="go('/trafficlog')">
-          <div>
-            <strong>使用记录</strong>
-            <p>查看近30天用量</p>
-          </div>
-          <IconChevronRight :size="20" />
-        </button>
-        <button class="entry-card" @click="go('/billing?tab=orders')">
-          <div>
-            <strong>订单记录</strong>
-            <p>查看历史订单与支付状态</p>
-          </div>
-          <IconChevronRight :size="20" />
-        </button>
-        <button class="entry-card" @click="go('/billing?tab=referral')">
-          <div>
-            <strong>邀请返利</strong>
-            <p>查看邀请进度与佣金明细</p>
-          </div>
-          <IconChevronRight :size="20" />
-        </button>
-        <button class="entry-card" @click="go('/security')">
-          <div>
-            <strong>安全设置</strong>
-            <p>修改密码与账户安全选项</p>
-          </div>
-          <IconChevronRight :size="20" />
-        </button>
+        <InfoCard class="entry-card" tag="button" clickable @click="go('/trafficlog')">
+          <template #title>使用记录</template>
+          <template #description>查看近30天用量</template>
+          <template #suffix><IconChevronRight :size="20" /></template>
+        </InfoCard>
+        <InfoCard class="entry-card" tag="button" clickable @click="go('/billing?tab=orders')">
+          <template #title>订单记录</template>
+          <template #description>查看历史订单与支付状态</template>
+          <template #suffix><IconChevronRight :size="20" /></template>
+        </InfoCard>
+        <InfoCard class="entry-card" tag="button" clickable @click="go('/billing?tab=referral')">
+          <template #title>邀请返利</template>
+          <template #description>查看邀请进度与佣金明细</template>
+          <template #suffix><IconChevronRight :size="20" /></template>
+        </InfoCard>
+        <InfoCard class="entry-card" tag="button" clickable @click="go('/security')">
+          <template #title>安全设置</template>
+          <template #description>修改密码与账户安全选项</template>
+          <template #suffix><IconChevronRight :size="20" /></template>
+        </InfoCard>
       </div>
 
       <button class="logout-btn" @click="logout">退出登录</button>
@@ -93,6 +85,7 @@ import { getUserInfo, getUserSubscribe, updateRemindSettings as apiUpdateRemind 
 import { getUserConfig } from '@/api/wallet';
 import { formatDate } from '@/utils/formatters';
 import AccountInfoCard from '@/components/profile/AccountInfoCard.vue';
+import InfoCard from '@/components/common/InfoCard.vue';
 import { useToast } from '@/composables/useToast';
 
 const router = useRouter();
@@ -160,25 +153,15 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-.my-center { padding: 16px; }
+.my-center { padding: var(--space-4) 0; }
 .my-center-inner { max-width: 820px; margin: 0 auto; }
 .center-card {
-  background: var(--card-bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 12px;
-  .main { font-size: 18px; font-weight: 600; margin: 6px 0; }
-  .sub { margin: 0; opacity: .75; font-size: 13px; }
-}
-.section-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  .main { font-size: var(--font-size-4); font-weight: 600; margin: var(--space-2) 0; }
 }
 .mini-action {
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   height: 32px;
   padding: 0 12px;
   background: transparent;
@@ -191,21 +174,8 @@ onMounted(async () => {
   gap: 10px;
   p { margin: 4px 0 0; font-size: 12px; opacity: 0.75; }
 }
-.entry-list { display: grid; grid-template-columns: 1fr; gap: 12px; }
-.entry-card {
-  width: 100%;
-  min-height: 72px;
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px;
-  text-align: left;
-  strong { display: block; margin-bottom: 4px; }
-  p { margin: 0; font-size: 13px; opacity: .75; }
-}
+.entry-list { display: grid; grid-template-columns: 1fr; gap: var(--space-3); }
+.entry-card { min-height: 72px; }
 .switch {
   position: relative;
   display: inline-block;
@@ -247,9 +217,9 @@ input:checked + .slider:before {
   margin-top: 14px;
   height: 44px;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   background: #ef4444;
   color: #fff;
 }
-.bottom-safe-area { height: calc(env(safe-area-inset-bottom, 0px) + 24px); }
+.bottom-safe-area { height: calc(var(--safe-bottom) + 24px); }
 </style>
