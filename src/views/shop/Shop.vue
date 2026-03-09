@@ -331,20 +331,14 @@ export default {
       };
     });
 
-    const currentPlanBadgeLabel = computed(() =>
-      locale.value?.startsWith("zh") ? "当前套餐" : "Current Plan"
-    );
+    const currentPlanBadgeLabel = computed(() => t("shop.plan.current"));
 
     const setFilter = (filter) => {
       selectedFilter.value = filter;
     };
 
     const getFilterDisplayLabel = (filter) => {
-      const quickLabels = {
-        month_price: "每月",
-        year_price: "每年",
-      };
-      return quickLabels[filter?.value] || t(filter?.labelKey || "");
+      return t(filter?.labelKey || "");
     };
 
     const fetchCurrentSubscription = async () => {

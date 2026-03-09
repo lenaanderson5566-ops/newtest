@@ -32,7 +32,7 @@
               class="wallet-dropdown"
               @click.stop
             >
-              <div class="wallet-dropdown-title">钱包余额</div>
+              <div class="wallet-dropdown-title">{{ $t('wallet.balance.title') }}</div>
               <div
                 v-for="wallet in walletDisplayItems"
                 :key="wallet.currency"
@@ -41,7 +41,7 @@
                 <span class="wallet-row-currency">{{ wallet.currency }}</span>
                 <span class="wallet-row-amount">{{ formatWalletDisplay(wallet) }}</span>
               </div>
-              <button class="wallet-deposit-btn" @click="goToWalletDeposit">充值</button>
+              <button class="wallet-deposit-btn" @click="goToWalletDeposit">{{ $t('wallet.deposit.title') }}</button>
             </div>
           </transition>
         </div>

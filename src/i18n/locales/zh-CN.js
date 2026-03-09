@@ -236,6 +236,16 @@ export default {
         unlimited: '不限制',
         nextResetTime: '下次重置时间',
 
+        pendingOrderBanner: '你有 {count} 个待支付订单，请尽快完成支付以激活服务。',
+        payNow: '去支付',
+        currentExitRegion: '当前出口地区',
+        smoothStatusNormal: '流畅状态：正常',
+        serviceReference: '服务参考',
+        serviceReferenceHint: '地区服务参考仅基于地区静态映射推测，不代表实时解锁检测结果。',
+        serviceReferenceAria: '地区服务参考',
+        serviceAvailableInRegion: '地区参考可用',
+        serviceNotInRegion: '未在地区参考列表',
+
         importTitle: '选择导入方式',
         copySubscription: '复制配置地址',
         copySubscriptionDesc: '复制配置地址到剪贴板',

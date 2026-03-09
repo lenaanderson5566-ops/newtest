@@ -236,6 +236,16 @@ export default {
         unlimited: 'Unlimited',
         nextResetTime: 'Next Reset Time',
 
+        pendingOrderBanner: 'You have {count} pending order(s). Please complete payment to activate the service.',
+        payNow: 'Pay Now',
+        currentExitRegion: 'Current Exit Region',
+        smoothStatusNormal: 'Connection status: normal',
+        serviceReference: 'Service Reference',
+        serviceReferenceHint: 'Regional service reference is estimated from static region mapping and does not represent real-time unlock checks.',
+        serviceReferenceAria: 'Regional service reference',
+        serviceAvailableInRegion: 'Available in regional reference',
+        serviceNotInRegion: 'Not in regional reference list',
+
         importTitle: 'Select Import Method',
         copySubscription: 'Copy Configuration Address',
         copySubscriptionDesc: 'Copy configuration address to clipboard',

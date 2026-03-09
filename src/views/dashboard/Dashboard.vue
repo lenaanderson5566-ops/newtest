@@ -13,9 +13,9 @@
       >
         <div class="banner-main">
           <IconAlertTriangle :size="16" class="banner-icon" />
-          <span class="banner-text">你有 {{ userStats.pendingOrders }} 个待支付订单，请尽快完成支付以激活服务。</span>
+          <span class="banner-text">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
         </div>
-        <button class="banner-action" @click.stop="goToOrders">去支付</button>
+        <button class="banner-action" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
       </div>
 
 
@@ -65,7 +65,7 @@
 
             <!-- iOS平台选项 -->
             <div v-if="activePlatform === 'ios'" class="platform-section">
-              <div class="platform-title">iOS</div>
+              <div class="platform-title">{{ $t('platforms.ios') }}</div>
               <div v-if="hasIOSClients" class="platform-options">
                 <div v-if="clientConfig.showShadowrocket" class="platform-option"
                      @click="importToClient('shadowrocket')">
@@ -104,7 +104,7 @@
 
             <!-- Android平台选项 -->
             <div v-if="activePlatform === 'android'" class="platform-section">
-              <div class="platform-title">Android</div>
+              <div class="platform-title">{{ $t('platforms.android') }}</div>
               <div v-if="hasAndroidClients" class="platform-options">
                 <div v-if="clientConfig.showFlClashAndroid" class="platform-option" @click="importToClient('flclash')">
                   <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
@@ -150,7 +150,7 @@
 
             <!-- Windows平台选项 -->
             <div v-if="activePlatform === 'windows'" class="platform-section">
-              <div class="platform-title">Windows</div>
+              <div class="platform-title">{{ $t('platforms.windows') }}</div>
               <div v-if="hasWindowsClients" class="platform-options">
                 <div v-if="clientConfig.showFlClashWindows" class="platform-option" @click="importToClient('flclash')">
                   <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
@@ -186,7 +186,7 @@
 
             <!-- MacOS平台选项 -->
             <div v-if="activePlatform === 'macos'" class="platform-section">
-              <div class="platform-title">MacOS</div>
+              <div class="platform-title">{{ $t('platforms.macos') }}</div>
               <div v-if="hasMacOSClients" class="platform-options">
                 <div v-if="clientConfig.showFlClashMac" class="platform-option" @click="importToClient('flclash')">
                   <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
@@ -422,7 +422,7 @@
           <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
           <div v-else-if="ipLocationData" class="ip-location-content">
             <div class="ip-location-main-info">
-              <div class="ip-meta-title">当前出口地区</div>
+              <div class="ip-meta-title">{{ $t('dashboard.currentExitRegion') }}</div>
               <div class="ip-main-line">
                 <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
                 <span class="ip-region-primary">{{ ipLocationPrimaryRegionText }}</span>
@@ -431,32 +431,32 @@
                 <span class="ip-region">{{ ipLocationDisplayText }}</span>
                 <button class="ip-refresh-btn" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
                   <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
-                  <span>{{ ipLocationLoading ? '刷新中' : '刷新' }}</span>
+                  <span>{{ ipLocationLoading ? $t('dashboard.refreshing') : $t('common.refresh') }}</span>
                 </button>
               </div>
               <div class="ip-status-row">
                 <span class="status-dot" aria-hidden="true"></span>
-                <span>流畅状态：正常</span>
+                <span>{{ $t('dashboard.smoothStatusNormal') }}</span>
               </div>
             </div>
 
 
             <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
               <div class="service-reference-title">
-                <span>服务参考</span>
-                <span class="info-tooltip" tabindex="0" role="button" aria-label="地区服务参考说明">
+                <span>{{ $t('dashboard.serviceReference') }}</span>
+                <span class="info-tooltip" tabindex="0" role="button" :aria-label="$t('dashboard.serviceReferenceHint')">
                   <IconHelpCircle :size="14" />
-                  <span class="info-tooltip-content">地区服务参考仅基于地区静态映射推测，不代表实时解锁检测结果。</span>
+                  <span class="info-tooltip-content">{{ $t('dashboard.serviceReferenceHint') }}</span>
                 </span>
               </div>
-              <div class="service-reference-tags" role="list" aria-label="地区服务参考">
+              <div class="service-reference-tags" role="list" :aria-label="$t('dashboard.serviceReferenceAria')">
                 <div
                   v-for="service in ipLocationServiceCatalog"
                   :key="`ip-service-${service.key}`"
                   class="service-reference-item"
                   :class="{ active: isIpServiceReferenced(service.key) }"
                   role="listitem"
-                  :title="`${service.label} · ${isIpServiceReferenced(service.key) ? '地区参考可用' : '未在地区参考列表'}`"
+                  :title="`${service.label} · ${isIpServiceReferenced(service.key) ? $t('dashboard.serviceAvailableInRegion') : $t('dashboard.serviceNotInRegion')}`"
                 >
                   <span class="service-reference-tile">
                     <img class="service-reference-icon" :src="service.icon" :alt="service.label" loading="lazy" />

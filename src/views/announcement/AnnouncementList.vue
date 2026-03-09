@@ -1,6 +1,6 @@
 <template>
   <div class="announcement-page">
-    <div v-if="loading" class="announcement-loading">Loading...</div>
+    <div v-if="loading" class="announcement-loading">{{ $t('common.loading') }}</div>
 
     <div v-else-if="!notices.length" class="announcement-empty">
       {{ $t('common.noData') }}
