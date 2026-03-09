@@ -2650,8 +2650,15 @@ onUnmounted(() => {
 }
 
 .message-item .message-content .message-text {
-  font-size: 0.9rem;
-  line-height: 1.45;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.message-item .message-content .message-text p,
+.message-item .message-content .message-text li,
+.message-item .message-content .message-text code,
+.message-item .message-content .message-text pre {
+  font-size: 0.82rem;
 }
 
 .ticket-context-sidebar {
