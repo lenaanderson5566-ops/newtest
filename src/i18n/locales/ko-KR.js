@@ -237,6 +237,17 @@ export default {
     unlimited: '무제한',
     nextResetTime: '다음 초기화 시간',
 
+    pendingOrderBanner: '결제 대기 주문이 {count}건 있습니다. 서비스를 활성화하려면 빠르게 결제를 완료하세요.',
+    payNow: '지금 결제',
+    currentExitRegion: '현재 출구 지역',
+    refreshing: '새로고침 중',
+    smoothStatusNormal: '연결 상태: 정상',
+    serviceReference: '서비스 참고',
+    serviceReferenceHint: '지역 서비스 참고는 정적 지역 매핑 기반 추정이며 실시간 해제 검사 결과를 의미하지 않습니다.',
+    serviceReferenceAria: '지역 서비스 참고',
+    serviceAvailableInRegion: '지역 참고에서 사용 가능',
+    serviceNotInRegion: '지역 참고 목록에 없음',
+
 
     trafficPackageHint: '트래픽 패키지는 1회성 추가 트래픽입니다. 월간 구독 트래픽이 먼저 소모되고, 구독 트래픽 소진 후 패키지 트래픽이 소모됩니다.',
     subscriptionPausedAfterExpiry: '구독이 만료되어 서비스가 일시 중지되었습니다',
@@ -333,8 +344,27 @@ export default {
     qrcodeView: 'QR 코드',
     invalidNodeData: '노드 데이터가 완전하지 않아 링크를 생성할 수 없습니다',
     unsupportedNodeType: '지원되지 않는 노드 유형',
-    userInfoError: '사용자 정보 가져오기 실패',
-    viewSubscribeLink: '구독 링크 보기'
+    viewSubscribeLink: '구독 링크 보기',
+    userInfoError: '사용자 정보 조회에 실패했습니다',
+    status: {
+      online: '온라인',
+      offline: '오프라인'
+    },
+    noPlan: {
+      coverageTitle: '글로벌 노드 커버리지',
+      coverageDesc: '여러 접속 지역이 배치되어 있습니다. 구독 후 전체 라인을 잠금 해제할 수 있습니다.',
+      unlockAfterPurchase: '구매 후 잠금 해제',
+      subscribeNow: '지금 구독',
+      comparePlans: '요금제 비교',
+      regions: {
+        japan: { title: '일본 지역', desc: '저지연 연결 / 안정적 접속' },
+        singapore: { title: '싱가포르 지역', desc: '아시아 최적화 / 일반 시나리오' },
+        hongKong: { title: '홍콩 지역', desc: '빠른 접속 / 고빈도 사용' },
+        us: { title: '미국 지역', desc: '국제 접속 / 다양한 시나리오 지원' },
+        germany: { title: '독일 지역', desc: '유럽 커버리지 / 안정적 중계' },
+        global: { title: '글로벌 혼합 지역', desc: '교차 지역 스케줄링 / 예비 회선' }
+      }
+    },
   },
   orders: {
     title: '주문 목록',

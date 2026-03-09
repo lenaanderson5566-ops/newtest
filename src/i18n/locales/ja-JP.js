@@ -237,6 +237,17 @@ export default {
     unlimited: '無制限',
     nextResetTime: '次回リセット時間',
 
+    pendingOrderBanner: '{count} 件の未払い注文があります。サービスを有効化するため、できるだけ早くお支払いください。',
+    payNow: '支払う',
+    currentExitRegion: '現在の出口地域',
+    refreshing: '更新中',
+    smoothStatusNormal: '接続状態：正常',
+    serviceReference: 'サービス参照',
+    serviceReferenceHint: '地域サービス参照は静的な地域マッピングに基づく推定であり、リアルタイムの解放判定結果ではありません。',
+    serviceReferenceAria: '地域サービス参照',
+    serviceAvailableInRegion: '地域参照で利用可能',
+    serviceNotInRegion: '地域参照リストにありません',
+
 
     trafficPackageHint: '流量パッケージは一回限りの追加流量です。月間サブスク流量が優先して消費され、使い切った後にパッケージ流量が消費されます。',
     subscriptionPausedAfterExpiry: 'サブスクリプションの有効期限が切れており、サービスは停止中です',
@@ -333,8 +344,27 @@ export default {
     qrcodeView: 'QRコード',
     invalidNodeData: 'ノードデータが不完全でリンク生成不可',
     unsupportedNodeType: 'サポートされていないノードタイプ',
-    userInfoError: 'ユーザー情報取得失敗',
-    viewSubscribeLink: 'サブスクリプションリンクを見る'
+    viewSubscribeLink: 'サブスクリプションリンクを見る',
+    userInfoError: 'ユーザー情報の取得に失敗しました',
+    status: {
+      online: 'オンライン',
+      offline: 'オフライン'
+    },
+    noPlan: {
+      coverageTitle: 'グローバルノードカバレッジ',
+      coverageDesc: '複数の接続地域を配備しています。プラン購入後に全ラインが解放されます。',
+      unlockAfterPurchase: '購入後に解放',
+      subscribeNow: '今すぐ購読',
+      comparePlans: 'プラン比較',
+      regions: {
+        japan: { title: '日本リージョン', desc: '低遅延接続 / 安定アクセス' },
+        singapore: { title: 'シンガポールリージョン', desc: 'アジア最適化 / 一般用途' },
+        hongKong: { title: '香港リージョン', desc: '高速接続 / 高頻度利用' },
+        us: { title: '米国リージョン', desc: '国際アクセス / 複数シナリオ対応' },
+        germany: { title: 'ドイツリージョン', desc: '欧州カバレッジ / 安定中継' },
+        global: { title: 'グローバル混合リージョン', desc: 'クロスリージョン調整 / 予備回線' }
+      }
+    },
   },
   orders: {
     title: '注文リスト',

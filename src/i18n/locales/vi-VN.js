@@ -244,6 +244,17 @@ export default {
         unlimited: 'Không giới hạn',
         nextResetTime: 'Thời gian đặt lại tiếp theo',
 
+        pendingOrderBanner: 'Bạn có {count} đơn hàng chờ thanh toán. Vui lòng thanh toán sớm để kích hoạt dịch vụ.',
+        payNow: 'Thanh toán ngay',
+        currentExitRegion: 'Khu vực thoát hiện tại',
+        refreshing: 'Đang làm mới',
+        smoothStatusNormal: 'Trạng thái kết nối: bình thường',
+        serviceReference: 'Tham chiếu dịch vụ',
+        serviceReferenceHint: 'Tham chiếu dịch vụ theo khu vực chỉ là ước tính từ ánh xạ khu vực tĩnh, không phải kết quả kiểm tra mở khóa theo thời gian thực.',
+        serviceReferenceAria: 'Tham chiếu dịch vụ theo khu vực',
+        serviceAvailableInRegion: 'Khả dụng theo tham chiếu khu vực',
+        serviceNotInRegion: 'Không có trong danh sách tham chiếu khu vực',
+
 
         trafficPackageHint: 'Gói lưu lượng là lưu lượng bổ sung một lần. Lưu lượng gói thuê bao tháng sẽ được dùng trước, sau khi hết mới dùng đến lưu lượng gói bổ sung.',
         subscriptionPausedAfterExpiry: 'Gói thuê bao đã hết hạn, dịch vụ đã tạm dừng',
@@ -339,8 +350,27 @@ export default {
         qrcodeView: 'Mã QR',
         invalidNodeData: 'Dữ liệu node không đầy đủ, không thể tạo liên kết',
         unsupportedNodeType: 'Loại node không được hỗ trợ',
-        userInfoError: 'Lấy thông tin người dùng thất bại',
-        viewSubscribeLink: 'Xem liên kết đăng ký'
+        viewSubscribeLink: 'Xem liên kết đăng ký',
+        userInfoError: 'Không thể lấy thông tin người dùng',
+        status: {
+            online: 'Trực tuyến',
+            offline: 'Ngoại tuyến'
+        },
+        noPlan: {
+            coverageTitle: 'Phạm vi node toàn cầu',
+            coverageDesc: 'Đã triển khai nhiều khu vực truy cập. Mua gói để mở khóa toàn bộ tuyến.',
+            unlockAfterPurchase: 'Mở khóa sau khi mua',
+            subscribeNow: 'Đăng ký ngay',
+            comparePlans: 'So sánh gói',
+            regions: {
+                japan: { title: 'Khu vực Nhật Bản', desc: 'Độ trễ thấp / truy cập ổn định' },
+                singapore: { title: 'Khu vực Singapore', desc: 'Tối ưu cho Châu Á / kịch bản phổ biến' },
+                hongKong: { title: 'Khu vực Hồng Kông', desc: 'Truy cập nhanh / tần suất cao' },
+                us: { title: 'Khu vực Mỹ', desc: 'Truy cập quốc tế / hỗ trợ nhiều kịch bản' },
+                germany: { title: 'Khu vực Đức', desc: 'Phủ sóng Châu Âu / trung chuyển ổn định' },
+                global: { title: 'Khu vực toàn cầu hỗn hợp', desc: 'Điều phối liên vùng / tuyến dự phòng' }
+            }
+        },
     },
     orders: {
         title: 'Danh sách Đơn hàng',

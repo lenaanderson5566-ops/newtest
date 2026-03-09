@@ -902,6 +902,7 @@ export default {
       if (userPlan.value.isExpireDatePermanent) {
         userPlan.value.expireDate = t('dashboard.permanent');
       }
+      initTrafficTrendChart();
     });
 
 

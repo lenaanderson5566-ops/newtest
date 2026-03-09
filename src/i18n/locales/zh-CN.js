@@ -343,8 +343,27 @@ export default {
         qrcodeView: '二维码',
         invalidNodeData: '节点数据不完整，无法生成链接',
         unsupportedNodeType: '不支持的节点类型',
+        viewSubscribeLink: '查看订阅链接',
         userInfoError: '获取用户信息失败',
-        viewSubscribeLink: '查看订阅链接'
+        status: {
+            online: '在线',
+            offline: '离线'
+        },
+        noPlan: {
+            coverageTitle: '全球节点覆盖',
+            coverageDesc: '已部署多个接入区域，购买套餐后解锁完整线路',
+            unlockAfterPurchase: '购买后解锁',
+            subscribeNow: '立即订阅',
+            comparePlans: '查看套餐区别',
+            regions: {
+                japan: { title: '日本地区', desc: '低延迟连接 / 稳定访问' },
+                singapore: { title: '新加坡地区', desc: '亚洲优化 / 通用场景' },
+                hongKong: { title: '香港地区', desc: '快速接入 / 高频使用' },
+                us: { title: '美国地区', desc: '国际访问 / 多场景支持' },
+                germany: { title: '德国地区', desc: '欧洲覆盖 / 稳定中转' },
+                global: { title: '全球混合地区', desc: '跨区调度 / 备用线路' }
+            }
+        },
     },
     orders: {
         title: '订单列表',

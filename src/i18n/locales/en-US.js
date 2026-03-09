@@ -342,8 +342,27 @@ export default {
         qrcodeView: 'QR Code',
         invalidNodeData: 'Incomplete node data, unable to generate link',
         unsupportedNodeType: 'Unsupported node type',
+        viewSubscribeLink: 'View Subscription Link',
         userInfoError: 'Failed to retrieve user information',
-        viewSubscribeLink: 'View Subscription Link'
+        status: {
+            online: 'Online',
+            offline: 'Offline'
+        },
+        noPlan: {
+            coverageTitle: 'Global Node Coverage',
+            coverageDesc: 'Multiple access regions are deployed. Subscribe to unlock all lines.',
+            unlockAfterPurchase: 'Unlock after purchase',
+            subscribeNow: 'Subscribe Now',
+            comparePlans: 'Compare Plans',
+            regions: {
+                japan: { title: 'Japan Region', desc: 'Low latency / stable access' },
+                singapore: { title: 'Singapore Region', desc: 'Asia optimized / general scenarios' },
+                hongKong: { title: 'Hong Kong Region', desc: 'Fast access / high-frequency usage' },
+                us: { title: 'US Region', desc: 'International access / multi-scenario support' },
+                germany: { title: 'Germany Region', desc: 'Europe coverage / stable relay' },
+                global: { title: 'Global Mix Region', desc: 'Cross-region scheduling / backup lines' }
+            }
+        },
     },
     orders: {
         title: 'Order List',
