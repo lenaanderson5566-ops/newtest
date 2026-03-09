@@ -37,111 +37,7 @@
         </div>
       </div>
       
-      <!-- 返佣统计卡片组 -->
-      <div class="stats-grid">
-        <template v-if="loading.inviteData">
-          <div v-for="i in 4" :key="i" class="stats-card skeleton-card">
-            <div class="skeleton-icon"></div>
-            <div class="skeleton-content">
-              <div class="skeleton-row-sm"></div>
-              <div class="skeleton-row-xs"></div>
-            </div>
-          </div>
-        </template>
-        
-        <template v-else>
-        <div class="stats-card">
-          <div class="stats-icon">
-            <IconUsers :size="32" />
-          </div>
-          <div class="stats-info">
-              <div class="stats-value">{{ inviteStats.registeredUsers }}</div>
-            <div class="stats-label">{{ $t('invite.stats.registeredUsers') }}</div>
-          </div>
-        </div>
-        
-        <div class="stats-card">
-          <div class="stats-icon">
-            <IconCoin :size="32" />
-          </div>
-          <div class="stats-info">
-              <div class="stats-value">{{ currencySymbol }}{{ inviteStats.pendingCommission }}</div>
-            <div class="stats-label">{{ $t('invite.stats.pendingCommission') }}</div>
-          </div>
-        </div>
-        
-        <div class="stats-card">
-          <div class="stats-icon">
-            <IconWallet :size="32" />
-          </div>
-          <div class="stats-info">
-              <div class="stats-value">{{ currencySymbol }}{{ inviteStats.validCommission }}</div>
-            <div class="stats-label">{{ $t('invite.stats.availableCommission') }}</div>
-          </div>
-        </div>
-        
-        <div class="stats-card">
-          <div class="stats-icon">
-            <IconChartBar :size="32" />
-          </div>
-          <div class="stats-info">
-              <div class="stats-value">{{ inviteStats.commissionRate }}%</div>
-            <div class="stats-label">{{ $t('invite.stats.commissionRate') }}</div>
-          </div>
-        </div>
-        </template>
-      </div>
-      
-      <!-- 返佣规则卡片 -->
-      <div class="dashboard-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('invite.rules.title') }}</h2>
-        </div>
-        <div class="card-body">
-          <div class="rules-grid">
-            <div class="rule-item">
-              <div class="rule-icon">
-                <IconShare :size="24" />
-              </div>
-              <div class="rule-content">
-                <h3>{{ $t('invite.rules.share.title') }}</h3>
-                <p>{{ $t('invite.rules.share.desc') }}</p>
-              </div>
-            </div>
-            
-            <div class="rule-item">
-              <div class="rule-icon">
-                <IconUserPlus :size="24" />
-              </div>
-              <div class="rule-content">
-                <h3>{{ $t('invite.rules.register.title') }}</h3>
-                <p>{{ $t('invite.rules.register.desc') }}</p>
-              </div>
-            </div>
-            
-            <div class="rule-item">
-              <div class="rule-icon">
-                <IconShoppingCart :size="24" />
-              </div>
-              <div class="rule-content">
-                <h3>{{ $t('invite.rules.purchase.title') }}</h3>
-                <p>{{ $t('invite.rules.purchase.desc') }}</p>
-              </div>
-            </div>
-            
-            <div class="rule-item">
-              <div class="rule-icon">
-                <IconCash :size="24" />
-              </div>
-              <div class="rule-content">
-                <h3>{{ $t('invite.rules.commission.title') }}</h3>
-                <p>{{ $t('invite.rules.commission.desc', { rate: inviteStats.commissionRate }) }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
+
       <!-- 佣金余额卡片 -->
       <div class="dashboard-card balance-card">
         <div class="card-header">
@@ -168,6 +64,27 @@
                 {{ $t('invite.balance.withdraw') }}
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-card referral-kpi-card" v-if="!loading.inviteData">
+        <div class="referral-kpi-grid">
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.registeredUsers') }}</div>
+            <div class="kpi-value">{{ inviteStats.registeredUsers }}</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.commissionRate') }}</div>
+            <div class="kpi-value">{{ inviteStats.commissionRate }}%</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.pendingCommission') }}</div>
+            <div class="kpi-value">{{ currencySymbol }}{{ inviteStats.pendingCommission }}</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.availableCommission') }}</div>
+            <div class="kpi-value">{{ currencySymbol }}{{ inviteStats.validCommission }}</div>
           </div>
         </div>
       </div>
@@ -603,17 +520,10 @@ import { useToast } from '@/composables/useToast';
 import { INVITE_CONFIG } from '@/utils/baseConfig';
 import { getInviteData, getInviteDetails, getCommissionConfig, generateInviteCode, transferCommission, withdrawCommission } from '@/api/invite';
 import {
-  IconUsers,
-  IconCoin,
-  IconWallet,
-  IconChartBar,
   IconCopy,
   IconBrandWechat,
   IconBrandTwitter,
   IconBrandTelegram,
-  IconShare,
-  IconUserPlus,
-  IconShoppingCart,
   IconCash,
   IconRefresh,
   IconPlus,
@@ -631,17 +541,10 @@ import {
 export default {
   name: 'InviteView',
   components: {
-    IconUsers,
-    IconCoin,
-    IconWallet,
-    IconChartBar,
     IconCopy,
     IconBrandWechat,
     IconBrandTwitter,
     IconBrandTelegram,
-    IconShare,
-    IconUserPlus,
-    IconShoppingCart,
     IconCash,
     IconRefresh,
     IconPlus,
@@ -859,7 +762,265 @@ export default {
               img { max-width: 100%; height: auto; margin-bottom: 20px; }
               h2 { color: #333; }
               p { color: #666; }
-            </style>
+            
+
+/* Compact dashboard layout overrides for Billing / Referral */
+.account-container {
+  padding: 16px;
+
+  .account-inner {
+    max-width: 1160px;
+  }
+
+  .dashboard-card {
+    padding: 22px;
+    margin-bottom: 20px;
+
+    .card-header {
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .card-body > p {
+      margin: 0;
+      line-height: 1.45;
+    }
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+
+    .stats-card {
+      min-height: 112px;
+      padding: 20px;
+      align-items: flex-start;
+      gap: 12px;
+
+      .stats-icon {
+        width: 44px;
+        height: 44px;
+        margin-right: 0;
+        border-radius: 10px;
+
+        :deep(svg) {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .stats-info {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .stats-value {
+          font-size: 26px;
+          font-weight: 700;
+          margin-bottom: 0;
+          line-height: 1.05;
+        }
+
+        .stats-label {
+          font-size: 13px;
+          line-height: 1.35;
+        }
+      }
+    }
+  }
+
+  .compact-stepper {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+
+    .rule-item {
+      position: relative;
+      border-radius: 12px;
+      padding: 12px 12px 12px 44px;
+      gap: 10px;
+      min-height: 96px;
+
+      .rule-step-index {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        font-size: 11px;
+        font-weight: 700;
+        color: rgba(var(--theme-color-rgb), 0.78);
+      }
+
+      .rule-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+
+        :deep(svg) {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .rule-content {
+        h3 {
+          font-size: 14px;
+          margin-bottom: 3px;
+        }
+
+        p {
+          font-size: 12px;
+          line-height: 1.35;
+        }
+      }
+    }
+  }
+
+  .balance-container {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 16px;
+    align-items: center;
+
+    .balance-info {
+      .balance-label {
+        margin-bottom: 4px;
+      }
+
+      .balance-value {
+        margin-bottom: 6px;
+      }
+    }
+
+    .balance-actions {
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+
+      .btn-primary {
+        min-width: 122px;
+        height: 40px;
+        padding: 0 14px;
+      }
+    }
+  }
+
+  .referral-kpi-card {
+    padding: 16px 20px;
+  }
+
+  .referral-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .kpi-item {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px;
+    background: rgba(var(--theme-color-rgb), 0.03);
+  }
+
+  .kpi-label {
+    font-size: 12px;
+    color: var(--secondary-text-color);
+    margin-bottom: 6px;
+  }
+
+  .kpi-value {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .invite-cards-container {
+    margin: 16px 0 10px;
+    padding: 0;
+  }
+
+  .invite-card {
+    min-height: 140px;
+  }
+
+  .invite-card-inner {
+    padding: 14px;
+  }
+
+  .invite-card-header {
+    margin-bottom: 10px;
+  }
+
+  .invite-card-body {
+    min-height: auto;
+  }
+
+  .invite-code-display {
+    font-size: 20px;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .account-container {
+    .stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .compact-stepper {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .balance-container {
+      grid-template-columns: 1fr;
+
+      .balance-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+
+    .referral-kpi-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .account-container {
+    .dashboard-card {
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .stats-grid,
+    .compact-stepper {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .balance-container {
+      .balance-actions {
+        flex-direction: column;
+
+        .btn-primary {
+          width: 100%;
+        }
+      }
+    }
+
+    .referral-kpi-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+  }
+}
+
+</style>
           </head>
           <body>
             <h2>${t('invite.share.scanQRCode')}</h2>
@@ -3904,4 +4065,198 @@ export default {
     color: var(--theme-color);
   }
 }
+
+
+/* Compact dashboard layout overrides for Billing / Referral */
+.account-container {
+  padding: 16px;
+
+  .account-inner {
+    max-width: 1160px;
+  }
+
+  .dashboard-card {
+    padding: 22px;
+    margin-bottom: 20px;
+
+    .card-header {
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .card-body > p {
+      margin: 0;
+      line-height: 1.45;
+    }
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+
+    .stats-card {
+      min-height: 112px;
+      padding: 20px;
+      align-items: flex-start;
+      gap: 12px;
+
+      .stats-icon {
+        width: 44px;
+        height: 44px;
+        margin-right: 0;
+        border-radius: 10px;
+
+        :deep(svg) {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .stats-info {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .stats-value {
+          font-size: 26px;
+          font-weight: 700;
+          margin-bottom: 0;
+          line-height: 1.05;
+        }
+
+        .stats-label {
+          font-size: 13px;
+          line-height: 1.35;
+        }
+      }
+    }
+  }
+
+  .compact-stepper {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+
+    .rule-item {
+      position: relative;
+      border-radius: 12px;
+      padding: 12px 12px 12px 44px;
+      gap: 10px;
+      min-height: 96px;
+
+      .rule-step-index {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        font-size: 11px;
+        font-weight: 700;
+        color: rgba(var(--theme-color-rgb), 0.78);
+      }
+
+      .rule-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+
+        :deep(svg) {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .rule-content {
+        h3 {
+          font-size: 14px;
+          margin-bottom: 3px;
+        }
+
+        p {
+          font-size: 12px;
+          line-height: 1.35;
+        }
+      }
+    }
+  }
+
+  .balance-container {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 16px;
+    align-items: center;
+
+    .balance-info {
+      .balance-label {
+        margin-bottom: 4px;
+      }
+
+      .balance-value {
+        margin-bottom: 6px;
+      }
+    }
+
+    .balance-actions {
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+
+      .btn-primary {
+        min-width: 122px;
+        height: 40px;
+        padding: 0 14px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .account-container {
+    .stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .compact-stepper {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .balance-container {
+      grid-template-columns: 1fr;
+
+      .balance-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .account-container {
+    .dashboard-card {
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .stats-grid,
+    .compact-stepper {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .balance-container {
+      .balance-actions {
+        flex-direction: column;
+
+        .btn-primary {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
 </style> 

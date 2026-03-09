@@ -296,6 +296,7 @@ export default {
         subscription: 'Subscription',
         announcement: 'Announcements',
         invite: 'Invite',
+        referral: 'Referral',
         docs: 'Docs',
         startUsing: 'Start Using',
         tickets: 'Tickets',

@@ -298,6 +298,7 @@ export default {
     shop: 'ストア',
     subscription: 'サブスクリプション',
     invite: '招待',
+        referral: 'Referral',
     docs: 'ドキュメント',
     startUsing: 'クライアント',
     tickets: 'チケット',

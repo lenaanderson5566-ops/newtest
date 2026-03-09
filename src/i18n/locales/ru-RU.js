@@ -298,6 +298,7 @@ export default {
     shop: 'Магазин',
     subscription: 'Подписка',
     invite: 'Приглашение',
+    referral: 'Referral',
     docs: 'Документы',
     startUsing: 'Клиент',
     tickets: 'Тикеты',

@@ -304,6 +304,7 @@ export default {
         shop: 'Cửa hàng',
         subscription: 'Gói đăng ký',
         invite: 'Mời bạn',
+        referral: 'Referral',
         docs: 'Tài liệu',
         startUsing: 'Ứng dụng khách',
         tickets: 'Vé hỗ trợ',

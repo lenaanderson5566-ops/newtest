@@ -898,11 +898,20 @@ export default {
       subscribe: true
     });
 
-    watch(() => locale.value, () => {
+    watch(() => locale.value, async () => {
       if (userPlan.value.isExpireDatePermanent) {
         userPlan.value.expireDate = t('dashboard.permanent');
       }
-      initTrafficTrendChart();
+
+      if (ipLocationError.value) {
+        ipLocationError.value = t('trafficLog.errorLoadingTraffic');
+      }
+
+      await Promise.allSettled([
+        fetchSubscribe(true),
+        fetchNotices(true),
+        fetchTrafficTrend()
+      ]);
     });
 
 
@@ -932,17 +941,6 @@ export default {
       }, 1000);
     };
     const showPopup = ref(false);
-    const popupConfig = reactive({
-
-      title: t('invite.withdraw.tip'),
-
-      content: t('dashboard.resetDataCycleNotice'),
-
-      cooldownHours: 0,
-
-      closeWaitSeconds: 0
-
-    });
     const handlePopupClose = () => {
 
       showPopup.value = false;
@@ -1334,14 +1332,14 @@ export default {
       };
     };
 
-    const fetchSubscribe = async () => {
+    const fetchSubscribe = async (force = false) => {
       // 如果showResetTrafficButton为true，强制执行（跳过缓存逻辑）
       // if (showResetTrafficButton.value) {
       //   // 强制执行，但仍要防止并发
       //   if (loading.subscribe === true) return;
       // } else {
       // 正常的缓存逻辑
-      if (loading.subscribe === false && userPlan.value.subscribeUrl) return;
+      if (!force && loading.subscribe === false && userPlan.value.subscribeUrl) return;
       // }
 
       loading.subscribe = true;
@@ -1453,8 +1451,8 @@ export default {
       }
     };
 
-    const fetchNotices = async () => {
-      if (loading.notices === false && notices.value.data && notices.value.data.length > 0) return;
+    const fetchNotices = async (force = false) => {
+      if (!force && loading.notices === false && notices.value.data && notices.value.data.length > 0) return;
 
       loading.notices = true;
       try {
@@ -2480,7 +2478,6 @@ export default {
       checkForPopupNotices,
       noticeModalStyle,
       openResetTrafficModal,
-      popupConfig,
       handlePopupClose,
       handlePopupConfirm,
       showPopup,

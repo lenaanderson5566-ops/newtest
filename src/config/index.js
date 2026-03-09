@@ -474,8 +474,6 @@ export const config = {
 
   // 工单配置
   TICKET_CONFIG: {
-    // 是否在创建工单时发送用户基础信息 (true=发送, false=不发送)
-    includeUserInfoInTicket: true, // 默认发送用户信息
     // 弹窗配置
     popup: {
       // 是否启用弹窗

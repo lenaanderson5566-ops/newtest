@@ -191,7 +191,7 @@ export default {
 
           docs: { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'startUsing' },
 
-          invite: { title: 'Billing', path: '/billing?tab=referral', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
+          invite: { title: 'Billing', path: '/billing?tab=referral', name: 'Billing', icon: 'IconWallet', i18nKey: 'referral' },
 
           tickets: {
 
@@ -955,14 +955,14 @@ function debounce(fn, delay) {
   top: 120px;
   left: 16px;
   z-index: 10;
-  width: 210px;
+  width: 192px;
 
   .slide-tabs-wrapper {
     background: rgba(var(--card-background-rgb), 0.72);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-radius: 14px;
-    padding: 8px;
+    border-radius: 12px;
+    padding: 6px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--border-color);
     overflow: hidden;
@@ -979,10 +979,10 @@ function debounce(fn, delay) {
     }
 
     .nav-item {
-      padding: 9px 12px;
-      border-radius: 10px;
+      padding: 8px 10px;
+      border-radius: 9px;
       font-weight: 500;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--secondary-text-color);
       text-decoration: none;
       text-align: left;
@@ -991,7 +991,8 @@ function debounce(fn, delay) {
       white-space: nowrap;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
+      min-height: 34px;
 
       .badge-dot {
         position: static;
@@ -1013,8 +1014,8 @@ function debounce(fn, delay) {
         justify-content: center;
 
         svg {
-          width: 16px;
-          height: 16px;
+          width: 15px;
+          height: 15px;
           transition: color 0.25s ease;
         }
       }
