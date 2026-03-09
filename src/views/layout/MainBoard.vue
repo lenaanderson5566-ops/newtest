@@ -111,11 +111,9 @@ export default {
 
   --content-space-y: clamp(12px, 3.5vw, 20px);
 
-  --content-top-gap: var(--page-content-top-gap, 8px);
-
   padding: var(--content-space-y) var(--content-space-x);
 
-  padding-top: var(--content-top-gap);
+  padding-top: 0;
 
   
 
@@ -124,8 +122,6 @@ export default {
     --content-space-x: 2rem;
 
     --content-space-y: 2rem;
-
-    --content-top-gap: var(--page-content-top-gap, 12px);
 
   }
 
