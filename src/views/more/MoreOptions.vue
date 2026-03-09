@@ -117,7 +117,7 @@
 
 
 
-        <div class="stats-card" @click="$router.push('/announcements')">
+        <div class="stats-card announcement-secondary" @click="$router.push('/announcements')">
 
           <div class="stats-icon">
 
@@ -130,6 +130,7 @@
             <div class="stats-value">{{ $t('menu.announcement') }}</div>
 
             <div class="stats-label">{{ $t('dashboard.siteAnnouncement') }}</div>
+            <div class="stats-sub-label">次级入口（主入口位于右上角）</div>
 
           </div>
 
@@ -597,6 +598,12 @@ onUnmounted(() => {
 
           color: var(--secondary-text-color);
 
+        }
+
+        .stats-sub-label {
+          margin-top: 4px;
+          font-size: 12px;
+          color: rgba(var(--theme-color-rgb), 0.85);
         }
 
       }
