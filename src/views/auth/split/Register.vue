@@ -1415,16 +1415,6 @@ export default {
 
 
 
-      if (!inviteCodeFromUrl.value || !formData.inviteCode) {
-
-        errors.inviteCode = t('auth.inviteCodeRequired');
-
-        isValid = false;
-
-      }
-
-
-
       if (!formData.agreeTerms) {
 
         errors.agreeTerms = t('auth.mustAgreeToTerms');
