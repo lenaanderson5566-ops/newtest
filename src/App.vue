@@ -683,8 +683,13 @@ export default {
   width: 100%;
 
   &.with-top-bar {
-    --page-content-top-gap: 10px;
-    padding-top: calc(var(--top-fixed-bar-height) + var(--page-header-height) + var(--page-content-top-gap));
+    --page-content-top-gap: 14px;
+    padding-top: calc(
+      var(--top-fixed-bar-height, 64px) +
+      var(--page-header-height, 48px) +
+      var(--page-content-top-gap, 12px) +
+      env(safe-area-inset-top, 0px)
+    );
   }
 }
 
@@ -724,7 +729,7 @@ export default {
   }
 
   .app-content-wrapper.with-top-bar {
-    --page-content-top-gap: 8px;
+    --page-content-top-gap: 12px;
   }
 
   .top-fixed-bar {
