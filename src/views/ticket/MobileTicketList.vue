@@ -389,15 +389,6 @@ import {
   closeTicket,
 } from "@/api/ticket";
 
-import {
-  getUserInfo,
-  getIpLocationInfo,
-  getCommConfig,
-  getUserSubscribe,
-} from "@/api/user";
-
-import { formatUserInfoForTicket } from "@/utils/formatters";
-
 import { TICKET_CONFIG } from "@/utils/baseConfig";
 
 import TicketPopup from "@/components/ticket/TicketPopup.vue";
@@ -757,48 +748,10 @@ const submitTicket = async () => {
   submitting.value = true;
 
   try {
-    let messageContent = newTicket.value.message;
-
-    if (TICKET_CONFIG.includeUserInfoInTicket) {
-      const [
-        userInfoResponse,
-        commConfigResponse,
-        subscribeResponse,
-        ipInfoResponse,
-      ] = await Promise.all([
-        getUserInfo(),
-
-        getCommConfig(),
-
-        getUserSubscribe(),
-
-        getIpLocationInfo(),
-      ]);
-
-      if (
-        commConfigResponse &&
-        commConfigResponse.data &&
-        commConfigResponse.data.currency_symbol
-      ) {
-        userInfoResponse.currency_symbol =
-          commConfigResponse.data.currency_symbol;
-      }
-
-      const userInfoText = formatUserInfoForTicket(
-        userInfoResponse,
-
-        ipInfoResponse,
-
-        subscribeResponse
-      );
-
-      messageContent = `${newTicket.value.message}\n\n${userInfoText}`;
-    }
-
     const data = await createTicket({
       subject: newTicket.value.subject,
 
-      message: messageContent,
+      message: newTicket.value.message,
 
       level: parseInt(newTicket.value.level),
     });

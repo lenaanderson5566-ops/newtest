@@ -536,15 +536,6 @@ import {
   closeTicket,
 } from "@/api/ticket";
 
-import {
-  getUserInfo,
-  getIpLocationInfo,
-  getCommConfig,
-  getUserSubscribe,
-} from "@/api/user";
-
-import { formatUserInfoForTicket } from "@/utils/formatters";
-
 import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
 
 import { useToast } from "@/composables/useToast";
@@ -648,44 +639,10 @@ const submitTicket = async () => {
   isSubmitting.value = true;
 
   try {
-    const [
-      userInfoResponse,
-      commConfigResponse,
-      subscribeResponse,
-      ipLocationResponse,
-    ] = await Promise.all([
-      getUserInfo(),
-
-      getCommConfig(),
-
-      getUserSubscribe(),
-
-      getIpLocationInfo(),
-    ]);
-
-    if (
-      commConfigResponse &&
-      commConfigResponse.data &&
-      commConfigResponse.data.currency_symbol
-    ) {
-      userInfoResponse.currency_symbol =
-        commConfigResponse.data.currency_symbol;
-    }
-
-    const userInfoText = formatUserInfoForTicket(
-      userInfoResponse,
-
-      ipLocationResponse,
-
-      subscribeResponse
-    );
-
-    const messageWithUserInfo = `${newTicket.value.message}\n\n${userInfoText}`;
-
     const data = await createTicket({
       subject: newTicket.value.subject,
 
-      message: messageWithUserInfo,
+      message: newTicket.value.message,
 
       level: parseInt(newTicket.value.level),
     });
