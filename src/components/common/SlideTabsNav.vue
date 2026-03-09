@@ -804,7 +804,7 @@ function debounce(fn, delay) {
   top: 108px;
   left: 10px;
   z-index: 10;
-  width: 170px;
+  width: 168px;
 
   .slide-tabs-wrapper {
     background: transparent;

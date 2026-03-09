@@ -508,25 +508,25 @@ export default {
 
 @media (min-width: 906px) {
   .app-content-wrapper.with-left-nav {
-    padding-left: 194px;
+    padding-left: 202px;
   }
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
-    width: min(1120px, 100%);
+    width: min(1160px, 100%);
     margin-left: 0;
     margin-right: auto;
-    padding-inline: 14px 30px;
+    padding-inline: 0 72px;
   }
 
   .page-header-layer {
-    padding-left: 194px;
+    padding-left: 202px;
   }
 
   .page-header-content {
-    width: min(1120px, 100%);
+    width: min(1160px, 100%);
     margin-left: 0;
     margin-right: auto;
-    padding: 0 30px 0 14px;
+    padding: 0 72px 0 0;
   }
 
 }
