@@ -294,7 +294,7 @@
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[{ 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
+            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">
@@ -2558,6 +2558,8 @@ export default {
   padding: 20px;
   display: flex;
   justify-content: center;
+  --dashboard-card-padding: 20px;
+  --dashboard-card-gap: 16px;
 
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
@@ -2609,8 +2611,8 @@ export default {
     background-color: var(--saas-card-bg);
     border-radius: 14px;
     box-shadow: var(--saas-card-shadow);
-    padding: 20px;
-    margin-bottom: 16px;
+    padding: var(--dashboard-card-padding);
+    margin-bottom: var(--dashboard-card-gap);
     border: none;
     transition: box-shadow 0.2s ease;
 
@@ -3221,6 +3223,17 @@ export default {
           color: #4b5563;
           font-weight: 500;
         }
+
+      &.traffic-board-subscription,
+      &.traffic-board-package {
+        .usage-percent {
+          font-size: 30px;
+
+          &.compact {
+            font-size: 26px;
+          }
+        }
+      }
 
         .usage-kpis {
           width: 100%;
@@ -4208,17 +4221,41 @@ export default {
 
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 15px;
-    padding-bottom: 80px;
+    padding: 10px;
+    padding-bottom: 74px;
+    --dashboard-card-padding: 12px;
+    --dashboard-card-gap: 10px;
   }
 
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+
+    .stats-card.traffic-board-total {
+      grid-column: 1 / -1;
+    }
+
+    .stats-card.traffic-board-subscription,
+    .stats-card.traffic-board-package {
+      min-height: 188px;
+
+      .usage-percent {
+        font-size: 24px;
+
+        &.compact {
+          font-size: 22px;
+        }
+      }
+
+      .usage-percent-label {
+        font-size: 12px;
+      }
+    }
   }
 
   .subscription-card .subscription-info {
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
   }
 
   .subscription-card .info-item {
@@ -4226,7 +4263,7 @@ export default {
     padding: 0;
     border-right: none;
     border-bottom: 1px solid var(--border-light-color);
-    padding-bottom: 15px;
+    padding-bottom: 12px;
   }
 
   .subscription-card .info-item:last-child {
@@ -4235,7 +4272,7 @@ export default {
 
   .subscription-actions {
     flex-direction: column;
-    margin-top: 15px;
+    margin-top: 12px;
   }
 
   .platform-selector {
