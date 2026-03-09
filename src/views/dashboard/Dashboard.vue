@@ -3090,9 +3090,6 @@ export default {
             gap: 10px;
             margin-top: 0;
 
-            @media (max-width: 576px) {
-              flex-direction: column;
-            }
 
             .plan-action-btn {
               flex: 1;
@@ -3137,6 +3134,11 @@ export default {
                 border-color: var(--border-color-soft);
                 background: var(--surface-subtle);
                 box-shadow: none;
+              }
+
+              @media (max-width: 576px) {
+                padding: 9px 10px;
+                font-size: 13px;
               }
             }
           }
@@ -4237,10 +4239,11 @@ export default {
 
     .stats-card.traffic-board-subscription,
     .stats-card.traffic-board-package {
+      grid-column: 1 / -1;
       min-height: auto;
       height: auto;
-      padding: 12px;
-      gap: 6px;
+      padding: 10px;
+      gap: 5px;
 
       .usage-percent {
         font-size: 24px;
@@ -4260,6 +4263,10 @@ export default {
 
       .usage-kpi {
         padding: 6px;
+      }
+
+      .usage-package-note {
+        margin-top: 2px;
       }
     }
   }
