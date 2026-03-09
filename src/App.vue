@@ -1,7 +1,7 @@
 ﻿<template>
   <div>
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
-    <div class="static-layout" v-if="$route.meta.requiresAuth">
+    <div class="static-layout" v-if="requiresAuth">
       <div class="top-fixed-bar">
         <!-- 网站名称 -->
         <div class="site-logo">
@@ -35,15 +35,15 @@
     </div>
 
     <!-- 认证页面顶部工具栏，确保认证页面也有语言切换器 -->
-    <div class="auth-toolbar" v-if="!$route.meta.requiresAuth && $route.path.includes('/auth')">
+    <div class="auth-toolbar" v-if="!requiresAuth && $route.path.includes('/auth')">
       <div class="top-toolbar">
         <LanguageSelector />
       </div>
     </div>
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
-    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth, 'with-page-header': $route.meta.requiresAuth && !!pageHeaderTitle }]">
-      <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
+    <div :class="['app-content-wrapper', { 'with-left-nav': requiresAuth, 'with-top-bar': requiresAuth, 'with-page-header': hasPageHeader }]">
+      <div :class="['content-layout-shell', { 'fixed-content-width': requiresAuth }]">
         <router-view v-slot="{ Component, route }">
           <transition 
             name="page-transition" 
@@ -87,6 +87,7 @@
 
 <script>
 import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue';
+import { useLayoutShell } from '@/composables/useLayoutShell';
 import { useStore } from 'vuex';
 import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
@@ -138,6 +139,7 @@ export default {
   setup() {
     const router = useRouter();
     const route = useRoute();
+    const { requiresAuth, hasPageHeader } = useLayoutShell();
     const store = useStore();
     const { t } = useI18n();
     const { applyTheme } = useTheme();
@@ -195,7 +197,7 @@ export default {
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
 
     watch(
-      () => route.meta.requiresAuth,
+      () => requiresAuth.value,
       (requiresAuth) => {
         if (!requiresAuth) {
           unreadNoticeCount.value = 0;
@@ -208,7 +210,7 @@ export default {
     );
     
     const loadUnreadNoticeCount = async () => {
-      if (!route.meta.requiresAuth) {
+      if (!requiresAuth.value) {
         unreadNoticeCount.value = 0;
         return;
       }
@@ -309,7 +311,9 @@ export default {
       cachedRoutes,
       customerServiceConfig,
       hasUnreadNotice,
-      pageHeaderTitle
+      pageHeaderTitle,
+      requiresAuth,
+      hasPageHeader
     };
   }
 };
@@ -333,7 +337,7 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: var(--app-topbar-z);
 }
 
 
@@ -344,16 +348,16 @@ export default {
   padding-top: var(--safe-top);
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.88);
+  background: var(--topbar-surface);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: 1px solid var(--surface-border-weak);
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
-  z-index: 120;
+  z-index: var(--app-topbar-z);
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -363,12 +367,12 @@ export default {
   left: 0;
   right: 0;
   height: var(--page-header-height);
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--page-header-surface);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  border-bottom: 1px solid var(--surface-border-subtle);
   box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.8);
-  z-index: 115;
+  z-index: var(--app-page-header-z);
 }
 
 .page-header-content {
@@ -500,7 +504,7 @@ export default {
 
 .content-layout-shell {
   width: 100%;
-  max-width: var(--layout-max-width);
+  max-width: var(--layout-content-max-width);
   margin: 0 auto;
   padding-inline: var(--layout-padding-x) var(--layout-padding-x-right);
   box-sizing: border-box;
@@ -508,25 +512,25 @@ export default {
 
 @media (min-width: 906px) {
   .app-content-wrapper.with-left-nav {
-    padding-left: 194px;
+    padding-left: var(--app-sidebar-width);
   }
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
-    width: min(1120px, 100%);
+    width: min(var(--layout-shell-max-width), 100%);
     margin-left: 0;
     margin-right: auto;
-    padding-inline: 14px 30px;
+    padding-inline: var(--layout-shell-inline-start) var(--layout-shell-inline-end);
   }
 
   .page-header-layer {
-    padding-left: 194px;
+    padding-left: var(--app-sidebar-width);
   }
 
   .page-header-content {
-    width: min(1120px, 100%);
+    width: min(var(--layout-shell-max-width), 100%);
     margin-left: 0;
     margin-right: auto;
-    padding: 0 30px 0 14px;
+    padding: 0 var(--layout-shell-inline-end) 0 var(--layout-shell-inline-start);
   }
 
 }

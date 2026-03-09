@@ -99,7 +99,7 @@ export default {
 
   overflow-x: hidden;
 
-  z-index: 1;
+  z-index: var(--app-content-z);
 
 }
 
@@ -107,7 +107,7 @@ export default {
 
 .content-area {
 
-  width: min(var(--layout-max-width), 100%);
+  width: min(var(--layout-content-max-width), 100%);
 
   margin: 0 auto;
 
