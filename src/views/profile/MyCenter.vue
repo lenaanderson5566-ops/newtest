@@ -1,11 +1,6 @@
 <template>
   <div class="my-center">
     <div class="my-center-inner">
-      <header class="page-intro">
-        <h1>用户中心</h1>
-        <p>查看账户状态、通知偏好与常用设置</p>
-      </header>
-
       <section class="summary-panel section-block">
         <div class="summary-top">
           <div>
@@ -189,18 +184,6 @@ onMounted(async () => {
 .my-center { padding: var(--space-4) 0; }
 .my-center-inner { max-width: 1024px; margin: 0 auto; display: grid; gap: var(--space-4); }
 
-.page-intro h1 {
-  margin: 0;
-  font-size: 26px;
-  line-height: 1.2;
-  color: var(--text-color);
-}
-.page-intro p {
-  margin: 6px 0 0;
-  color: var(--secondary-text-color);
-  font-size: var(--font-size-2);
-}
-
 .section-block {
   border: 1px solid var(--border-color-soft);
   border-radius: var(--radius-lg);
@@ -346,7 +329,6 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 @media (max-width: 768px) {
   .my-center-inner { max-width: 100%; gap: var(--space-3); }
-  .page-intro h1 { font-size: 22px; }
   .summary-panel { padding: 12px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
