@@ -1003,6 +1003,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+/* base */
 .ticket-container {
   padding: 20px;
 
@@ -2288,36 +2289,6 @@ onUnmounted(() => {
   }
 }
 
-@media (max-width: 768px) {
-  .ticket-container {
-    flex-direction: column;
-
-    height: calc(100vh - 120px);
-  }
-
-  .ticket-sidebar {
-    width: 100%;
-
-    height: 40%;
-
-    border-right: none;
-
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  .ticket-content {
-    height: 60%;
-  }
-
-  .reply-container {
-    flex-direction: column;
-
-    .send-reply-btn {
-      align-self: flex-end;
-    }
-  }
-}
-
 .ticket-loading {
   display: flex;
 
@@ -2530,5 +2501,39 @@ onUnmounted(() => {
 }
 .reply-tools .send-reply-btn {
   width: 100%; /* 按钮填满右侧容器宽度 */
+}
+
+/* workspace overrides */
+/* 当前 SaaS workspace 对核心 class 无额外覆盖，最终生效值已回填到 base。 */
+
+/* responsive */
+@media (max-width: 768px) {
+  .ticket-container {
+    flex-direction: column;
+
+    height: calc(100vh - 120px);
+  }
+
+  .ticket-sidebar {
+    width: 100%;
+
+    height: 40%;
+
+    border-right: none;
+
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .ticket-content {
+    height: 60%;
+  }
+
+  .reply-container {
+    flex-direction: column;
+
+    .send-reply-btn {
+      align-self: flex-end;
+    }
+  }
 }
 </style>
