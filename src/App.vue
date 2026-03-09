@@ -11,40 +11,6 @@
 
         <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
         <div class="top-toolbar">
-        <div
-          class="toolbar-wallets"
-          v-if="primaryWallet"
-          ref="walletContainer"
-        >
-          <button
-            class="toolbar-wallet-main"
-            :class="{ 'is-active': walletDropdownOpen }"
-            :title="`${primaryWallet.currency} ${primaryWalletDisplay}`"
-            @click.stop="toggleWalletDropdown"
-          >
-            <IconWallet class="wallet-icon" :size="16" aria-hidden="true" />
-            <span class="wallet-main-amount">{{ primaryWalletDisplay }}</span>
-          </button>
-
-          <transition name="fade">
-            <div
-              v-if="walletDropdownOpen && extraWalletItems.length"
-              class="wallet-dropdown"
-              @click.stop
-            >
-              <div class="wallet-dropdown-title">{{ $t('wallet.balance.title') }}</div>
-              <div
-                v-for="wallet in walletDisplayItems"
-                :key="wallet.currency"
-                class="wallet-row"
-              >
-                <span class="wallet-row-currency">{{ wallet.currency }}</span>
-                <span class="wallet-row-amount">{{ formatWalletDisplay(wallet) }}</span>
-              </div>
-              <button class="wallet-deposit-btn" @click="goToWalletDeposit">{{ $t('wallet.deposit.title') }}</button>
-            </div>
-          </transition>
-        </div>
         <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
         <LanguageSelector />
         <button 
@@ -128,10 +94,8 @@ import { useI18n } from 'vue-i18n';
 import { SITE_CONFIG, PROFILE_CONFIG, CUSTOMER_SERVICE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
-import { getUserInfo } from '@/api/user';
 import { getUnreadNoticeCount } from '@/api/notice';
 import { handleRedirectPath } from '@/utils/redirectHandler';
-import { normalizeWalletItems } from '@/utils/wallet';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
@@ -143,7 +107,7 @@ import CustomContextMenu from '@/components/common/CustomContextMenu.vue';
 import CustomerServiceIcon from '@/components/common/CustomerServiceIcon.vue';
 import CrispEmbed from '@/components/common/CrispEmbed.vue';
 import ResourcePreloader from '@/components/common/ResourcePreloader.vue';
-import { IconGift, IconWallet } from '@tabler/icons-vue';
+import { IconGift } from '@tabler/icons-vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import pageCache from '@/utils/pageCache';
@@ -169,8 +133,7 @@ export default {
     CustomerServiceIcon,
     CrispEmbed,
     ResourcePreloader,
-    IconGift,
-    IconWallet
+    IconGift
   },
   setup() {
     const router = useRouter();
@@ -228,91 +191,17 @@ export default {
 
     const username = computed(() => store.getters.username);
     const avatarUrl = computed(() => store.getters.avatarUrl || '');
-    const walletDisplayItems = ref([]);
-    const isLoadingWallets = ref(false);
-    const walletDropdownOpen = ref(false);
-    const walletContainer = ref(null);
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
-
-    const currencySymbols = {
-      USD: '$',
-      CNY: '¥',
-      EUR: '€',
-      GBP: '£',
-      JPY: '¥',
-      HKD: 'HK$',
-      TWD: 'NT$',
-    };
-
-    const primaryWallet = computed(() => {
-      if (!walletDisplayItems.value.length) return null;
-      return walletDisplayItems.value.find((item) => item.currency === 'USD') || walletDisplayItems.value[0];
-    });
-
-    const extraWalletItems = computed(() => {
-      if (!primaryWallet.value) return [];
-      return walletDisplayItems.value.filter((item) => item.currency !== primaryWallet.value.currency);
-    });
-
-    const formatWalletDisplay = (wallet) => {
-      const symbol = currencySymbols[wallet.currency] || `${wallet.currency} `;
-      return `${symbol}${wallet.amount}`;
-    };
-
-    const primaryWalletDisplay = computed(() => {
-      if (!primaryWallet.value) return '';
-      return formatWalletDisplay(primaryWallet.value);
-    });
-
-
-    const toggleWalletDropdown = () => {
-      if (!extraWalletItems.value.length) return;
-      walletDropdownOpen.value = !walletDropdownOpen.value;
-    };
-
-    const goToWalletDeposit = () => {
-      walletDropdownOpen.value = false;
-      router.push('/billing?tab=wallet');
-    };
-
-    const handleWalletClickOutside = (event) => {
-      if (walletContainer.value && !walletContainer.value.contains(event.target)) {
-        walletDropdownOpen.value = false;
-      }
-    };
-
-    const loadUserWallets = async () => {
-      if (!route.meta.requiresAuth || isLoadingWallets.value) {
-        if (!route.meta.requiresAuth) {
-          walletDisplayItems.value = [];
-        }
-        return;
-      }
-
-      isLoadingWallets.value = true;
-
-      try {
-        const response = await getUserInfo();
-        walletDisplayItems.value = normalizeWalletItems(response?.data?.wallets);
-      } catch (error) {
-        walletDisplayItems.value = [];
-        console.error('Failed to refresh user wallets:', error);
-      } finally {
-        isLoadingWallets.value = false;
-      }
-    };
 
     watch(
       () => route.meta.requiresAuth,
       (requiresAuth) => {
         if (!requiresAuth) {
-          walletDisplayItems.value = [];
           unreadNoticeCount.value = 0;
           return;
         }
 
-        loadUserWallets();
         loadUnreadNoticeCount();
       },
       { immediate: true }
@@ -349,7 +238,6 @@ export default {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         checkAuthAndReloadMessages();
-        loadUserWallets();
         loadUnreadNoticeCount();
 
         checkUserLoginStatus().then(result => {
@@ -380,7 +268,6 @@ export default {
     
     onMounted(() => {
       window.addEventListener('languageChanged', onLanguageChanged);
-      document.addEventListener('click', handleWalletClickOutside);
       
       applyTheme(store.getters.currentTheme);
       
@@ -405,7 +292,6 @@ export default {
     
     onUnmounted(() => {
       window.removeEventListener('languageChanged', onLanguageChanged);
-      document.removeEventListener('click', handleWalletClickOutside);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     });
     
@@ -422,15 +308,6 @@ export default {
       PROFILE_CONFIG,
       cachedRoutes,
       customerServiceConfig,
-      walletDisplayItems,
-      walletDropdownOpen,
-      walletContainer,
-      primaryWallet,
-      extraWalletItems,
-      primaryWalletDisplay,
-      formatWalletDisplay,
-      toggleWalletDropdown,
-      goToWalletDeposit,
       hasUnreadNotice,
       pageHeaderTitle
     };
@@ -460,15 +337,11 @@ export default {
 }
 
 
-:global(body) {
-  --top-fixed-bar-height: 60px;
-  --page-header-height: 42px;
-}
-
 .top-fixed-bar {
-  height: var(--top-fixed-bar-height);
+  height: calc(var(--top-fixed-bar-height) + var(--safe-top));
   position: fixed;
   top: 0;
+  padding-top: var(--safe-top);
   left: 0;
   right: 0;
   background: rgba(255, 255, 255, 0.88);
@@ -479,14 +352,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
   z-index: 120;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .page-header-layer {
   position: fixed;
-  top: var(--top-fixed-bar-height);
+  top: calc(var(--top-fixed-bar-height) + var(--safe-top));
   left: 0;
   right: 0;
   height: var(--page-header-height);
@@ -503,7 +376,7 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 0 24px;
+  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
 }
 
 .page-header-title {
@@ -549,101 +422,8 @@ export default {
   gap: 3px;
   z-index: 110;
 
-  .toolbar-wallets {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    height: var(--toolbar-control-height);
-    margin-right: 2px;
-
-    .toolbar-wallet-main {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      min-height: var(--toolbar-control-height);
-      padding: var(--toolbar-control-padding);
-      border-radius: var(--toolbar-control-radius);
-      border: 1px solid var(--toolbar-control-border);
-      background: var(--toolbar-control-bg);
-      color: var(--text-color, #111827);
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-      transition: background-color 0.2s ease, border-color 0.2s ease;
-
-      &:hover {
-        background: var(--toolbar-control-hover-bg);
-      }
-
-      &:active,
-      &.is-active {
-        border-color: var(--toolbar-control-active-border);
-        background: var(--toolbar-control-hover-bg);
-      }
-
-      .wallet-icon {
-        font-size: 15px;
-        line-height: 1;
-        opacity: 1;
-      }
-    }
-
-    .wallet-dropdown {
-      position: absolute;
-      top: calc(100% + 8px);
-      right: 0;
-      min-width: 200px;
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      background: rgba(var(--card-background-rgb), 0.95);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow-card-md);
-      z-index: 120;
-
-      .wallet-dropdown-title {
-        font-size: 12px;
-        color: var(--secondary-text-color);
-        margin-bottom: 8px;
-      }
-
-      .wallet-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 4px 0;
-        font-size: 13px;
-
-        .wallet-row-currency {
-          color: var(--secondary-text-color);
-          font-weight: 600;
-        }
-
-        .wallet-row-amount {
-          color: var(--text-color);
-          font-variant-numeric: tabular-nums;
-          font-weight: 600;
-        }
-      }
-
-      .wallet-deposit-btn {
-        margin-top: 10px;
-        width: 100%;
-        height: 32px;
-        border: none;
-        border-radius: 8px;
-        color: #fff;
-        background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
-        cursor: pointer;
-        font-size: 13px;
-        line-height: 1;
-        font-weight: 600;
-      }
-    }
-  }
-  
   .gift-btn {
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -710,64 +490,51 @@ export default {
 
   &.with-top-bar {
     --page-content-top-gap: 8px;
-    padding-top: calc(
-      var(--top-fixed-bar-height, 60px) +
-      var(--page-content-top-gap, 8px) +
-      env(safe-area-inset-top, 0px)
-    );
+    padding-top: calc(var(--top-fixed-bar-height) + var(--safe-top) + var(--page-content-top-gap, 8px));
   }
 
   &.with-top-bar.with-page-header {
-    padding-top: calc(
-      var(--top-fixed-bar-height, 60px) +
-      var(--page-header-height, 42px) +
-      var(--page-content-top-gap, 8px) +
-      env(safe-area-inset-top, 0px)
-    );
+    padding-top: calc(var(--top-fixed-bar-height) + var(--page-header-height) + var(--safe-top) + var(--page-content-top-gap, 8px));
   }
 }
 
 .content-layout-shell {
   width: 100%;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding-inline: var(--layout-padding-x) var(--layout-padding-x-right);
+  box-sizing: border-box;
 }
 
 @media (min-width: 906px) {
   .app-content-wrapper.with-left-nav {
-    padding-left: 240px;
+    padding-left: 194px;
   }
 
-  .content-layout-shell.fixed-content-width {
-    width: min(1180px, 100%);
-    margin-right: auto;
+  .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
+    width: min(1120px, 100%);
     margin-left: 0;
+    margin-right: auto;
+    padding-inline: 14px 30px;
   }
 
   .page-header-layer {
-    padding-left: 240px;
+    padding-left: 194px;
   }
 
   .page-header-content {
-    width: min(1180px, 100%);
-    margin-right: auto;
+    width: min(1120px, 100%);
     margin-left: 0;
-    padding: 0 24px 0 56px;
+    margin-right: auto;
+    padding: 0 30px 0 14px;
   }
 
 }
 
 
 @media (max-width: 768px) {
-  :global(body) {
-    --top-fixed-bar-height: 54px;
-    --page-header-height: 38px;
-  }
-
   .app-content-wrapper.with-top-bar {
     --page-content-top-gap: 6px;
-  }
-
-  .top-fixed-bar {
-    padding: 0 12px;
   }
 
   .page-header-layer {
@@ -775,7 +542,7 @@ export default {
   }
 
   .page-header-content {
-    padding: 0 12px;
+    padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
   }
 
   .page-header-title {
@@ -796,12 +563,6 @@ export default {
     gap: 3px;
     flex-wrap: nowrap;
     justify-content: flex-end;
-
-    .toolbar-wallets {
-      order: -1;
-      height: 34px;
-      margin-left: auto;
-    }
   }
 
   /* Mobile density optimization: avoid oversized modules */
@@ -928,7 +689,7 @@ html {
 
 .auth-toolbar {
   position: fixed;
-  top: 0;
+  top: var(--safe-top);
   right: 0;
   z-index: 100;
   

@@ -270,23 +270,21 @@
 
         <template v-else-if="!hasPlan">
           <!-- 没有套餐时显示的提示卡片 -->
-          <div class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
+          <InfoCard class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
                style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: 1200px; width: 100%;">
-            <div class="no-plan-content">
+            <template #icon>
               <div class="no-plan-icon">
                 <IconShoppingCart :size="45" class="icon-cart"/>
               </div>
-              <div class="no-plan-message">
-                <div class="no-plan-title">{{ $t('dashboard.noPlanPrompt') }}</div>
-                <div class="no-plan-actions">
-                  <button class="action-button primary" @click="goToShop">
-                    <IconShoppingBag :size="18" class="btn-icon"/>
-                    <span>{{ $t('dashboard.purchasePlan') }}</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+            </template>
+            <template #title>{{ $t('dashboard.noPlanPrompt') }}</template>
+            <template #action>
+              <button class="action-button primary" @click="goToShop">
+                <IconShoppingBag :size="18" class="btn-icon"/>
+                <span>{{ $t('dashboard.purchasePlan') }}</span>
+              </button>
+            </template>
+          </InfoCard>
         </template>
 
         <template v-else>
@@ -642,6 +640,7 @@ import {
   IconRefresh
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
+import InfoCard from '@/components/common/InfoCard.vue';
 import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/dashboard';
 import { updateRemindSettings as apiUpdateRemind } from '@/api/user';
 import { getTrafficLog } from '@/api/trafficLog';
@@ -758,6 +757,7 @@ export default {
     IconCoins,
     IconEye,
     IconAlertTriangle,
+    InfoCard,
     IconX,
     IconCalendarPlus,
     IconPlus,
@@ -2861,7 +2861,7 @@ export default {
       &.traffic-board-card {
         width: 100%;
         min-width: 0;
-        min-height: 232px;
+        min-height: clamp(172px, 18vw, 232px);
         overflow: visible;
         writing-mode: horizontal-tb;
         text-orientation: mixed;
@@ -3090,9 +3090,6 @@ export default {
             gap: 10px;
             margin-top: 0;
 
-            @media (max-width: 576px) {
-              flex-direction: column;
-            }
 
             .plan-action-btn {
               flex: 1;
@@ -3137,6 +3134,11 @@ export default {
                 border-color: var(--border-color-soft);
                 background: var(--surface-subtle);
                 box-shadow: none;
+              }
+
+              @media (max-width: 576px) {
+                padding: 9px 10px;
+                font-size: 13px;
               }
             }
           }
@@ -4237,7 +4239,11 @@ export default {
 
     .stats-card.traffic-board-subscription,
     .stats-card.traffic-board-package {
-      min-height: 188px;
+      grid-column: 1 / -1;
+      min-height: auto;
+      height: auto;
+      padding: 10px;
+      gap: 5px;
 
       .usage-percent {
         font-size: 24px;
@@ -4249,6 +4255,18 @@ export default {
 
       .usage-percent-label {
         font-size: 12px;
+      }
+
+      .usage-kpis {
+        gap: 6px;
+      }
+
+      .usage-kpi {
+        padding: 6px;
+      }
+
+      .usage-package-note {
+        margin-top: 2px;
       }
     }
   }

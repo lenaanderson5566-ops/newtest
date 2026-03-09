@@ -49,7 +49,7 @@
 
 <script>
 
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 
 
 
@@ -107,31 +107,15 @@ export default {
 
 .content-area {
 
-  --content-space-x: clamp(8px, 2.2vw, 12px);
+  width: min(var(--layout-max-width), 100%);
 
-  --content-space-y: clamp(8px, 2.6vw, 12px);
+  margin: 0 auto;
 
-  padding: var(--content-space-y) var(--content-space-x);
+  padding: var(--layout-gap-y) var(--layout-padding-x-right) calc(var(--layout-gap-y) + var(--safe-bottom)) var(--layout-padding-x);
 
   padding-top: 0;
 
-  
-
-  @media (min-width: 768px) {
-
-    --content-space-x: 2rem;
-
-    --content-space-y: 2rem;
-
-  }
-
-  
-
-  @media (min-width: 1200px) {
-
-    padding: 2rem 4rem;
-
-  }
+  box-sizing: border-box;
 
 }
 
@@ -166,6 +150,12 @@ export default {
 }
 
 
+
+@media (max-width: 768px) {
+  .background-decoration {
+    display: none;
+  }
+}
 
 .floating-ball {
 

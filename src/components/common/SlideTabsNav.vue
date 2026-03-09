@@ -799,20 +799,18 @@ function debounce(fn, delay) {
 <style lang="scss" scoped>
 
 .slide-tabs-container {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   position: fixed;
-  top: 120px;
-  left: 16px;
+  top: 108px;
+  left: 10px;
   z-index: 10;
-  width: 192px;
+  width: 170px;
 
   .slide-tabs-wrapper {
-    background: rgba(var(--card-background-rgb), 0.72);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding: 6px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    background: rgba(var(--card-background-rgb), 0.98);
+    border-radius: 10px;
+    padding: 2px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
     border: 1px solid var(--border-color);
     overflow: hidden;
   }
@@ -820,7 +818,7 @@ function debounce(fn, delay) {
   .slide-tabs-nav {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
     position: relative;
 
     .indicator-container {
@@ -829,9 +827,9 @@ function debounce(fn, delay) {
 
     .nav-item {
       padding: 8px 10px;
-      border-radius: 9px;
+      border-radius: 8px;
       font-weight: 500;
-      font-size: 12px;
+      font-size: 13px;
       color: var(--secondary-text-color);
       text-decoration: none;
       text-align: left;
@@ -840,8 +838,8 @@ function debounce(fn, delay) {
       white-space: nowrap;
       display: flex;
       align-items: center;
-      gap: 7px;
-      min-height: 34px;
+      gap: 8px;
+      min-height: 38px;
 
       .badge-dot {
         position: static;
@@ -853,7 +851,7 @@ function debounce(fn, delay) {
         font-size: 8px;
         font-weight: 700;
         line-height: 1.2;
-        box-shadow: none;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
         transform: none;
       }
 
@@ -863,15 +861,16 @@ function debounce(fn, delay) {
         justify-content: center;
 
         svg {
-          width: 15px;
-          height: 15px;
+          width: 16px;
+          height: 16px;
           transition: color 0.25s ease;
         }
       }
 
       &.active {
         color: var(--text-color);
-        background: rgba(var(--theme-color-rgb), 0.14);
+        background: rgba(var(--theme-color-rgb), 0.12);
+        box-shadow: inset 2px 0 0 rgba(var(--theme-color-rgb), 0.65);
 
         .nav-icon svg {
           color: var(--theme-color);
@@ -884,8 +883,8 @@ function debounce(fn, delay) {
       }
 
       &:last-child {
-        border: none;
-        background: transparent;
+        border: 1px solid var(--border-color);
+        background: rgba(var(--card-background-rgb), 0.98);
 
         &:hover,
         &.active {
@@ -908,9 +907,11 @@ function debounce(fn, delay) {
 
       .nav-item {
 
-        padding: 6px 10px;
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 6px 8px;
 
-        font-size: 12px;
+        font-size: 13px;
 
         flex-direction: row;
 
@@ -941,8 +942,6 @@ function debounce(fn, delay) {
         &:last-child {
 
           height: 50px;
-
-          min-width: 72px;  
 
         }
 
@@ -1046,11 +1045,11 @@ function debounce(fn, delay) {
 
       width: 100%;
 
-      justify-content: flex-start;
+      justify-content: space-between;
       flex-direction: row;
       flex-wrap: nowrap;
-      overflow-x: auto;
-      gap: 4px;
+      overflow: hidden;
+      gap: 0;
       padding: 2px;
 
       .slider-indicator {
@@ -1089,7 +1088,9 @@ function debounce(fn, delay) {
 
       .nav-item {
 
-        padding: 5px 8px;
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 5px 6px;
 
         font-size: 11px;
 
