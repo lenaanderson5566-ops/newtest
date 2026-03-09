@@ -294,7 +294,7 @@
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[{ 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
+            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">
@@ -4210,14 +4210,24 @@ export default {
 
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 12px;
-    padding-bottom: 80px;
-    --dashboard-card-padding: 14px;
-    --dashboard-card-gap: 12px;
+    padding: 10px;
+    padding-bottom: 74px;
+    --dashboard-card-padding: 12px;
+    --dashboard-card-gap: 10px;
   }
 
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+
+    .stats-card.traffic-board-total {
+      grid-column: 1 / -1;
+    }
+
+    .stats-card.traffic-board-subscription,
+    .stats-card.traffic-board-package {
+      min-height: 196px;
+    }
   }
 
   .subscription-card .subscription-info {

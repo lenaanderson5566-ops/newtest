@@ -729,7 +729,7 @@ export default {
   }
 
   .app-content-wrapper.with-top-bar {
-    --page-content-top-gap: 12px;
+    --page-content-top-gap: 10px;
   }
 
   .top-fixed-bar {
@@ -776,15 +776,15 @@ export default {
     .stats-card,
     .card,
     .info-card {
-      border-radius: 12px !important;
+      border-radius: 10px !important;
     }
 
     .dashboard-card {
-      padding: 14px !important;
+      padding: 12px !important;
     }
 
     .card-header {
-      padding: 12px 14px !important;
+      padding: 10px 12px !important;
       min-height: auto !important;
 
       .card-title,
@@ -796,7 +796,7 @@ export default {
     }
 
     .card-body {
-      padding: 12px 14px !important;
+      padding: 10px 12px !important;
       font-size: 14px !important;
       line-height: 1.45 !important;
     }
@@ -805,13 +805,13 @@ export default {
     .cards-grid,
     .quick-grid,
     .dashboard-grid {
-      gap: 10px !important;
+      gap: 8px !important;
     }
   }
   
   main, .main-content, .content-container {
-    padding-bottom: 70px !important;
-    margin-bottom: 10px !important;
+    padding-bottom: 64px !important;
+    margin-bottom: 6px !important;
   }
 }
 

@@ -107,9 +107,9 @@ export default {
 
 .content-area {
 
-  --content-space-x: clamp(12px, 3vw, 16px);
+  --content-space-x: clamp(10px, 2.6vw, 14px);
 
-  --content-space-y: clamp(12px, 3.5vw, 20px);
+  --content-space-y: clamp(10px, 3vw, 16px);
 
   padding: var(--content-space-y) var(--content-space-x);
 
