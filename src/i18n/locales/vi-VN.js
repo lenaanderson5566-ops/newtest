@@ -243,6 +243,25 @@ export default {
         deviceLimit: 'Thiết bị trực tuyến',
         unlimited: 'Không giới hạn',
         nextResetTime: 'Thời gian đặt lại tiếp theo',
+
+
+        trafficPackageHint: 'Gói lưu lượng là lưu lượng bổ sung một lần. Lưu lượng gói thuê bao tháng sẽ được dùng trước, sau khi hết mới dùng đến lưu lượng gói bổ sung.',
+        subscriptionPausedAfterExpiry: 'Gói thuê bao đã hết hạn, dịch vụ đã tạm dừng',
+        renewToRestoreAccess: 'Sau khi gia hạn, quyền truy cập node sẽ được khôi phục ngay',
+        expiredOnDate: 'Đã hết hạn vào {date}',
+        defaultSubscriptionName: 'Đăng ký',
+        subscriptionStatus: {
+            expired: 'Đã hết hạn',
+            expiring: 'Sắp hết hạn',
+            active: 'Đang hiệu lực'
+        },
+        planAction: {
+            manageSubscription: 'Quản lý gói thuê bao',
+            restoreNow: 'Khôi phục ngay',
+            renewNow: 'Gia hạn ngay',
+            reselectPlan: 'Chọn lại gói',
+            renew: 'Gia hạn'
+        },
         importTitle: 'Chọn cách nhập',
         copySubscription: 'Sao chép địa chỉ cấu hình',
         copySubscriptionDesc: 'Sao chép địa chỉ cấu hình vào clipboard',
@@ -512,6 +531,7 @@ export default {
         title: 'Cửa hàng',
         description: 'Xem và mua các gói cước khả dụng',
         loading: 'Đang tải gói cước...',
+        billingPeriodAria: 'Chuyển chu kỳ thanh toán',
         filter: {
             all: 'Tất cả',
             recurring: 'Định kỳ',
@@ -884,6 +904,7 @@ export default {
         viewTrafficLog: 'Xem chi tiết lưu lượng',
         days: 'ngày',
         trafficLogDesc: 'Xem bản ghi và thống kê chi tiết việc sử dụng lưu lượng',
+        unitGb: 'GB',
         trafficChart: 'Biểu đồ xu hướng lưu lượng'
     },
     wallet: {

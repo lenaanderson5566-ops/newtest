@@ -236,6 +236,25 @@ export default {
     deviceLimit: 'Лимит устройств',
     unlimited: 'Без ограничений',
     nextResetTime: 'Время следующего сброса',
+
+
+    trafficPackageHint: 'Пакет трафика — это разовое пополнение. Сначала расходуется трафик ежемесячной подписки, после его исчерпания — трафик пакета.',
+    subscriptionPausedAfterExpiry: 'Подписка истекла, сервис приостановлен',
+    renewToRestoreAccess: 'После продления доступ к узлам будет восстановлен немедленно',
+    expiredOnDate: 'Истекло: {date}',
+    defaultSubscriptionName: 'Подписка',
+    subscriptionStatus: {
+      expired: 'Истекла',
+      expiring: 'Скоро истечёт',
+      active: 'Активна'
+    },
+    planAction: {
+      manageSubscription: 'Управлять подпиской',
+      restoreNow: 'Восстановить сейчас',
+      renewNow: 'Продлить сейчас',
+      reselectPlan: 'Выбрать тариф заново',
+      renew: 'Продлить'
+    },
     
     importTitle: 'Выберите способ импорта',
     copySubscription: 'Скопировать адрес конфигурации',
@@ -519,6 +538,7 @@ export default {
     title: 'Магазин',
     description: 'Просмотрите и купите доступные планы',
     loading: 'Загрузка планов...',
+    billingPeriodAria: 'Переключение расчётного периода',
     filter: {
       all: 'Все',
       recurring: 'Периодические',
@@ -891,6 +911,7 @@ export default {
     viewTrafficLog: 'Просмотреть детали трафика',
     days: 'дней',
     trafficLogDesc: 'Просмотр подробных записей и статистики трафика',
+    unitGb: 'GB',
     trafficChart: 'График трафика'
   },
   wallet: {

@@ -236,6 +236,25 @@ export default {
     deviceLimit: 'オンライン機器',
     unlimited: '無制限',
     nextResetTime: '次回リセット時間',
+
+
+    trafficPackageHint: '流量パッケージは一回限りの追加流量です。月間サブスク流量が優先して消費され、使い切った後にパッケージ流量が消費されます。',
+    subscriptionPausedAfterExpiry: 'サブスクリプションの有効期限が切れており、サービスは停止中です',
+    renewToRestoreAccess: '更新後、ノードアクセスは即時復旧します',
+    expiredOnDate: '{date} に期限切れ',
+    defaultSubscriptionName: 'サブスクリプション',
+    subscriptionStatus: {
+      expired: '期限切れ',
+      expiring: 'まもなく期限切れ',
+      active: '有効'
+    },
+    planAction: {
+      manageSubscription: 'サブスクリプションを管理',
+      restoreNow: '今すぐ復旧',
+      renewNow: '今すぐ更新',
+      reselectPlan: 'プランを再選択',
+      renew: '更新'
+    },
     
     importTitle: 'インポート方法選択',
     copySubscription: '設定アドレスをコピー',
@@ -519,6 +538,7 @@ export default {
     title: 'ストア',
     description: '利用可能なプランを表示・購入',
     loading: 'プラン読み込み中...',
+    billingPeriodAria: '請求周期の切り替え',
     filter: {
       all: 'すべて',
       recurring: '定期',
@@ -891,6 +911,7 @@ export default {
     viewTrafficLog: '流量明細を見る',
     days: '日',
     trafficLogDesc: '詳細な流量使用記録と統計を閲覧',
+    unitGb: 'GB',
     trafficChart: '流量トレンドグラフ'
   },
   wallet: {

@@ -236,6 +236,25 @@ export default {
     deviceLimit: '온라인 기기',
     unlimited: '무제한',
     nextResetTime: '다음 초기화 시간',
+
+
+    trafficPackageHint: '트래픽 패키지는 1회성 추가 트래픽입니다. 월간 구독 트래픽이 먼저 소모되고, 구독 트래픽 소진 후 패키지 트래픽이 소모됩니다.',
+    subscriptionPausedAfterExpiry: '구독이 만료되어 서비스가 일시 중지되었습니다',
+    renewToRestoreAccess: '갱신 후 노드 접근이 즉시 복구됩니다',
+    expiredOnDate: '{date}에 만료됨',
+    defaultSubscriptionName: '구독',
+    subscriptionStatus: {
+      expired: '만료됨',
+      expiring: '곧 만료',
+      active: '활성'
+    },
+    planAction: {
+      manageSubscription: '구독 관리',
+      restoreNow: '지금 복구',
+      renewNow: '지금 갱신',
+      reselectPlan: '요금제 다시 선택',
+      renew: '갱신'
+    },
     
     importTitle: '가져오기 방식 선택',
     copySubscription: '구성 주소 복사',
@@ -520,6 +539,7 @@ export default {
     title: '상점',
     description: '사용 가능한 플랜을 확인하고 구매하세요',
     loading: '플랜 로딩 중...',
+    billingPeriodAria: '청구 주기 전환',
     filter: {
       all: '전체',
       recurring: '주기적',
@@ -892,6 +912,7 @@ export default {
     viewTrafficLog: '트래픽 상세 보기',
     days: '일',
     trafficLogDesc: '트래픽 사용 기록 및 통계 상세 보기',
+    unitGb: 'GB',
     trafficChart: '트래픽 추세 그래프'
   },
   wallet: {

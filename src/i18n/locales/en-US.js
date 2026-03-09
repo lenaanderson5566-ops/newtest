@@ -918,7 +918,8 @@ export default {
         viewTrafficLog: 'View Traffic Details',
         days: 'Days',
         trafficLogDesc: 'View detailed traffic usage records and statistics',
-        trafficChart: 'Traffic Trend Chart'
+        unitGb: 'GB',
+    trafficChart: 'Traffic Trend Chart'
     },
     wallet: {
         balance: {

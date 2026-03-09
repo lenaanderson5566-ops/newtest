@@ -2154,7 +2154,7 @@ export default {
           formatter: (params) => {
             let result = `${params[0]?.name || ''}<br/>`;
             params.forEach((param) => {
-              result += `${param.marker} ${param.seriesName}: ${param.value} GB<br/>`;
+              result += `${param.marker} ${param.seriesName}: ${param.value} ${t('trafficLog.unitGb')}<br/>`;
             });
             return result;
           }
@@ -2175,9 +2175,9 @@ export default {
         },
         yAxis: {
           type: 'value',
-          name: 'GB',
+          name: t('trafficLog.unitGb'),
           nameTextStyle: { padding: [0, 0, 0, 10], color: textColor },
-          axisLabel: { formatter: '{value} GB', color: textColor },
+          axisLabel: { formatter: (value) => `${value} ${t('trafficLog.unitGb')}`, color: textColor },
           axisLine: { lineStyle: { color: borderColor } },
           splitLine: { lineStyle: { color: borderColor } }
         },

@@ -236,6 +236,25 @@ export default {
     deviceLimit: '線上設備',
     unlimited: '不限制',
     nextResetTime: '下次重設時間',
+
+
+    trafficPackageHint: '流量額度包為一次性補充流量，優先消耗月訂閱流量，訂閱用盡後再消耗額度包流量。',
+    subscriptionPausedAfterExpiry: '訂閱已過期，服務已暫停',
+    renewToRestoreAccess: '續費後將立即恢復節點訪問',
+    expiredOnDate: '已於 {date} 到期',
+    defaultSubscriptionName: '訂閱',
+    subscriptionStatus: {
+      expired: '已過期',
+      expiring: '即將到期',
+      active: '有效中'
+    },
+    planAction: {
+      manageSubscription: '管理訂閱',
+      restoreNow: '立即恢復訂閱',
+      renewNow: '立即續費',
+      reselectPlan: '重新選擇方案',
+      renew: '續費'
+    },
     
     importTitle: '選擇匯入方式',
     copySubscription: '複製配置地址',
@@ -518,6 +537,7 @@ export default {
     title: '商店',
     description: '檢視並購買可用套餐',
     loading: '正在載入套餐...',
+    billingPeriodAria: '計費週期切換',
     filter: {
       all: '全部',
       recurring: '週期性',
@@ -890,6 +910,7 @@ export default {
     viewTrafficLog: '檢視流量明細',
     days: '天',
     trafficLogDesc: '檢視詳細的流量使用記錄與統計',
+    unitGb: 'GB',
     trafficChart: '流量趨勢圖'
   },
   wallet: {

@@ -918,7 +918,8 @@ export default {
         viewTrafficLog: '查看流量明细',
         days: '天',
         trafficLogDesc: '查看详细的流量使用记录和统计',
-        trafficChart: '流量趋势图'
+        unitGb: 'GB',
+    trafficChart: '流量趋势图'
     },
     wallet: {
         balance: {
