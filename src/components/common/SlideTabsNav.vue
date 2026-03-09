@@ -950,10 +950,10 @@ function debounce(fn, delay) {
 <style lang="scss" scoped>
 
 .slide-tabs-container {
-  margin-bottom: 20px;
+  margin-bottom: var(--space-5);
   position: fixed;
   top: 120px;
-  left: 16px;
+  left: var(--space-4);
   z-index: 10;
   width: 210px;
 
@@ -961,9 +961,9 @@ function debounce(fn, delay) {
     background: rgba(var(--card-background-rgb), 0.72);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-radius: 14px;
-    padding: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-md);
+    padding: var(--space-2);
+    box-shadow: var(--shadow-md);
     border: 1px solid var(--border-color);
     overflow: hidden;
   }
@@ -971,7 +971,7 @@ function debounce(fn, delay) {
   .slide-tabs-nav {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--space-1);
     position: relative;
 
     .indicator-container {
@@ -979,10 +979,10 @@ function debounce(fn, delay) {
     }
 
     .nav-item {
-      padding: 9px 12px;
-      border-radius: 10px;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
       font-weight: 500;
-      font-size: 13px;
+      font-size: var(--font-size-sm);
       color: var(--secondary-text-color);
       text-decoration: none;
       text-align: left;
@@ -991,16 +991,16 @@ function debounce(fn, delay) {
       white-space: nowrap;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--space-2);
 
       .badge-dot {
         position: static;
         margin-left: auto;
         background-color: rgba(var(--theme-color-rgb), 0.88);
         color: #fff;
-        border-radius: 10px;
-        padding: 1px 6px;
-        font-size: 8px;
+        border-radius: var(--radius-sm);
+        padding: 1px var(--space-2);
+        font-size: var(--font-size-xs);
         font-weight: 700;
         line-height: 1.2;
         box-shadow: none;
@@ -1168,7 +1168,7 @@ function debounce(fn, delay) {
 
     top: auto;
 
-    bottom: 20px;  
+    bottom: var(--space-5);
 
     width: 92%;
 
@@ -1184,9 +1184,9 @@ function debounce(fn, delay) {
 
       display: block;
 
-      border-radius: 20px;
+      border-radius: var(--radius-xl);
 
-      padding: 3px;
+      padding: var(--space-1);
 
     }
 
@@ -1200,8 +1200,8 @@ function debounce(fn, delay) {
       flex-direction: row;
       flex-wrap: nowrap;
       overflow-x: auto;
-      gap: 4px;
-      padding: 2px;
+      gap: var(--space-1);
+      padding: var(--space-1);
 
       .slider-indicator {
 
@@ -1221,7 +1221,7 @@ function debounce(fn, delay) {
 
   .slide-tabs-container {
 
-    bottom: 12px; 
+    bottom: var(--space-3);
 
     width: 94%;
 
@@ -1229,7 +1229,7 @@ function debounce(fn, delay) {
 
     .slide-tabs-wrapper {
 
-      border-radius: 18px;
+      border-radius: var(--radius-lg);
 
     }
 

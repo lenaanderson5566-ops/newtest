@@ -85,7 +85,7 @@ watch(
 
 <style lang="scss" scoped>
 .billing-container {
-  padding: 24px;
+  padding: var(--space-5);
   background: transparent;
 }
 
@@ -96,24 +96,24 @@ watch(
 
 .billing-tabs-card {
   display: inline-flex;
-  gap: 6px;
-  padding: 6px;
-  border-radius: 12px;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-color-soft);
   background: var(--surface-subtle);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.65);
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
 }
 
 .billing-tab {
   border: 0;
   background: transparent;
   color: var(--neutral-strong);
-  height: 34px;
-  padding: 0 16px;
-  border-radius: 9px;
+  height: 36px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 14px;
+  font-size: var(--font-size-md);
   transition: all 0.2s ease;
 
   &:hover {
@@ -123,7 +123,7 @@ watch(
   &.active {
     background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
     color: #fff;
-    box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.24);
+    box-shadow: var(--shadow-sm);
   }
 }
 
@@ -133,7 +133,7 @@ watch(
 
 @media (max-width: 768px) {
   .billing-container {
-    padding: 14px;
+    padding: var(--space-3);
   }
 
   .billing-tabs-card {

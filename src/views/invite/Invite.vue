@@ -1375,7 +1375,7 @@ export default {
 
 <style lang="scss" scoped>
 .account-container {
-  padding: 20px;
+  padding: var(--space-5);
   display: flex;
   justify-content: center;
   
@@ -1385,15 +1385,15 @@ export default {
   }
   
   .welcome-card {
-    margin-bottom: 24px;
+    margin-bottom: var(--space-5);
   }
   
   .dashboard-card {
     background-color: var(--card-bg-color);
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    padding: 20px;
-    margin-bottom: 24px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-5);
+    margin-bottom: var(--space-5);
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     position: relative;
@@ -1408,17 +1408,17 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: var(--space-3);
       
       .card-title {
-        font-size: 18px;
+        font-size: var(--font-size-xl);
         font-weight: 600;
         margin: 0;
       }
       
       .card-actions {
         display: flex;
-        gap: 10px;
+        gap: var(--space-3);
       }
     }
   }
@@ -1426,8 +1426,8 @@ export default {
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 24px;
+    gap: var(--space-5);
+    margin-bottom: var(--space-5);
     
     @media (max-width: 1200px) {
       grid-template-columns: repeat(2, 1fr);
@@ -1439,9 +1439,9 @@ export default {
     
     .stats-card {
       background-color: var(--card-bg-color);
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      padding: 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-5);
       display: flex;
       align-items: center;
       border: 1px solid var(--border-color);
@@ -1459,7 +1459,7 @@ export default {
         width: 60px;
         height: 60px;
         background-color: rgba(var(--theme-color-rgb), 0.1);
-        border-radius: 12px;
+        border-radius: var(--radius-md);
         margin-right: 15px;
         color: var(--theme-color);
       }
@@ -1468,14 +1468,14 @@ export default {
         flex: 1;
         
         .stats-value {
-          font-size: 18px;
+          font-size: var(--font-size-xl);
           font-weight: 600;
           color: var(--text-color);
           margin-bottom: 5px;
         }
         
         .stats-label {
-          font-size: 14px;
+          font-size: var(--font-size-md);
           color: var(--secondary-text-color);
         }
       }
@@ -1491,8 +1491,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 30px 0 20px;
-    padding: 10px 0;
+    margin: var(--space-6) 0 var(--space-5);
+    padding: var(--space-3) 0;
   }
   
   .invite-cards-nav {
@@ -1575,10 +1575,10 @@ export default {
   .invite-card-inner {
     width: 100%;
     height: 100%;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     background: var(--theme-color);
     color: white;
-    padding: 20px;
+    padding: var(--space-5);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -1646,7 +1646,7 @@ export default {
   .invite-card-title {
     display: flex;
     align-items: center;
-    font-size: 18px;
+    font-size: var(--font-size-xl);
     font-weight: 600;
     letter-spacing: 0.3px;
     
@@ -1668,7 +1668,7 @@ export default {
     font-weight: 500;
     letter-spacing: 1px;
     background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     padding: 10px 16px;
     display: flex;
     justify-content: center;
@@ -1742,7 +1742,7 @@ export default {
   
   .invite-link-wrapper {
     display: flex;
-    gap: 10px;
+    gap: var(--space-3);
     margin-top: 16px;
     margin-bottom: 20px;
     
@@ -1765,12 +1765,12 @@ export default {
       .invite-link {
         width: 100%;
         height: 42px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
         background-color: var(--input-bg-color, rgba(0, 0, 0, 0.03));
         padding: 0 15px 0 40px;
       color: var(--text-color);
-      font-size: 14px;
+      font-size: var(--font-size-md);
         transition: all 0.3s ease;
         outline: none;
         box-sizing: border-box;
@@ -1798,7 +1798,7 @@ export default {
   
   .share-buttons {
     display: flex;
-    gap: 10px;
+    gap: var(--space-3);
     flex-wrap: wrap;
     
     .btn-outline {
@@ -1808,11 +1808,11 @@ export default {
       gap: 6px;
       height: 42px;
       padding: 0 16px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
       background-color: transparent;
       color: var(--text-color);
-      font-size: 14px;
+      font-size: var(--font-size-md);
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -1858,7 +1858,7 @@ export default {
   .rules-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
+    gap: var(--space-5);
     
     @media (min-width: 768px) {
       grid-template-columns: repeat(2, 1fr);
@@ -1903,7 +1903,7 @@ export default {
         }
         
         p {
-          font-size: 14px;
+          font-size: var(--font-size-md);
           color: var(--secondary-text-color);
           margin: 0;
         }
@@ -1915,7 +1915,7 @@ export default {
     width: 100%;
     overflow-x: auto;
     margin-bottom: 20px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     background-color: var(--card-bg-color);
     
@@ -1946,7 +1946,7 @@ export default {
       }
       
       td {
-        font-size: 14px;
+        font-size: var(--font-size-md);
         color: var(--text-color);
         transition: all 0.2s ease;
       }
@@ -2021,7 +2021,7 @@ export default {
         }
         
         td:nth-child(2), td:nth-child(3) {
-          font-size: 14px;
+          font-size: var(--font-size-md);
           font-weight: 600;
         }
         
@@ -2038,7 +2038,7 @@ export default {
       text-align: center;
       color: var(--secondary-text-color);
       background-color: var(--card-bg-color);
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       border: 1px dashed var(--border-color);
       font-size: 15px;
       
@@ -2046,7 +2046,7 @@ export default {
         content: '📋';
         display: block;
         font-size: 32px;
-        margin-bottom: 15px;
+        margin-bottom: var(--space-3);
         opacity: 0.5;
       }
     }
@@ -2076,8 +2076,8 @@ export default {
   justify-content: center;
   gap: 6px;
   padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-md);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -2103,7 +2103,7 @@ export default {
   background-color: var(--theme-color);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-weight: 500;
   box-shadow: 0 2px 5px rgba(var(--theme-color-rgb), 0.2);
   transition: all 0.3s ease;
@@ -2198,7 +2198,7 @@ export default {
 
 .skeleton-card {
   width: 100%;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   position: relative;
   display: flex !important;
@@ -2229,7 +2229,7 @@ export default {
 .skeleton-icon {
   width: 48px;
   height: 48px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
   margin-right: 16px;
   flex-shrink: 0;
@@ -2290,7 +2290,7 @@ export default {
 
 .skeleton-table {
   width: 100%;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
@@ -2315,7 +2315,7 @@ export default {
     
     .invite-link-wrapper {
       flex-direction: column;
-      margin-bottom: 15px;
+      margin-bottom: var(--space-3);
       
       .input-with-icon {
         width: 100%;
@@ -2476,7 +2476,7 @@ export default {
 }
 
 .modal-header {
-  padding: 20px;
+  padding: var(--space-5);
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
@@ -2494,7 +2494,7 @@ export default {
     color: var(--text-color);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--space-3);
     
     &::before {
       content: '';
@@ -2549,8 +2549,8 @@ export default {
   .alert {
     display: flex;
     align-items: center;
-    margin-bottom: 24px;
-    border-radius: 12px;
+    margin-bottom: var(--space-5);
+    border-radius: var(--radius-md);
     padding: 16px;
     position: relative;
     overflow: hidden;
@@ -2599,7 +2599,7 @@ export default {
       .alert-desc {
         color: var(--text-color);
         opacity: 0.9;
-        font-size: 14px;
+        font-size: var(--font-size-md);
         line-height: 1.5;
       }
     }
@@ -2766,14 +2766,14 @@ export default {
 .withdraw-methods {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--space-3);
   margin-bottom: 20px;
   width: 100%;
   
   .withdraw-method {
     padding: 12px 20px;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: var(--font-size-md);
     font-weight: 500;
     border: 1px solid var(--border-color);
     background-color: rgba(var(--theme-color-rgb), 0.02);
@@ -2910,7 +2910,7 @@ export default {
   }
   
   .invite-code-display {
-    font-size: 18px;
+    font-size: var(--font-size-xl);
     padding: 8px 12px;
   }
   
@@ -2940,7 +2940,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: var(--space-5);
   
   @media (max-width: 768px) {
     flex-direction: column;
@@ -2949,7 +2949,7 @@ export default {
   
   .balance-info {
     .balance-label {
-      font-size: 14px;
+      font-size: var(--font-size-md);
       color: var(--secondary-text-color);
       margin-bottom: 6px;
       font-weight: 500;
@@ -2975,7 +2975,7 @@ export default {
   
   .balance-actions {
     display: flex;
-    gap: 10px;
+    gap: var(--space-3);
     
     .btn-primary {
       height: 44px;
@@ -3006,12 +3006,12 @@ export default {
 
 
 .transfer-card {
-  margin-bottom: 24px;
+  margin-bottom: var(--space-5);
   overflow: hidden;
   will-change: transform, opacity;
   transform-origin: top center;
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background-color: var(--card-bg-color);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   
@@ -3049,14 +3049,14 @@ export default {
   }
   
   .card-body {
-    padding: 20px;
+    padding: var(--space-5);
   }
   
   .alert {
     display: flex;
     align-items: center;
-    margin-bottom: 24px;
-    border-radius: 12px;
+    margin-bottom: var(--space-5);
+    border-radius: var(--radius-md);
     padding: 16px;
     position: relative;
     overflow: hidden;
@@ -3105,7 +3105,7 @@ export default {
       .alert-desc {
         color: var(--text-color);
         opacity: 0.9;
-        font-size: 14px;
+        font-size: var(--font-size-md);
         line-height: 1.5;
       }
     }
@@ -3117,7 +3117,7 @@ export default {
       
       .form-label {
         display: block;
-        font-size: 14px;
+        font-size: var(--font-size-md);
         margin-bottom: 6px;
         color: var(--text-color);
         font-weight: 500;
@@ -3128,7 +3128,7 @@ export default {
         align-items: stretch;
         width: 100%;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        border-radius: 8px;
+        border-radius: var(--radius-sm);
         overflow: hidden;
         
         .input-prefix {
@@ -3153,7 +3153,7 @@ export default {
           background-color: var(--input-bg-color, rgba(0, 0, 0, 0.03));
           padding: 0 15px;
           color: var(--text-color);
-          font-size: 14px;
+          font-size: var(--font-size-md);
           transition: all 0.3s ease;
           outline: none;
           font-weight: 500;
@@ -3219,7 +3219,7 @@ export default {
       font-weight: 600;
       letter-spacing: 0.3px;
       transition: all 0.25s ease;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       
       &:not(:disabled):hover {
         transform: translateY(-2px);
@@ -3258,7 +3258,7 @@ export default {
   height: 42px;
   background-color: var(--input-bg-color, rgba(0, 0, 0, 0.03));
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -3272,7 +3272,7 @@ export default {
 }
 
 .select-value {
-  font-size: 14px;
+  font-size: var(--font-size-md);
   color: var(--text-color);
   flex: 1;
   white-space: nowrap;
@@ -3308,7 +3308,7 @@ export default {
     overflow-y: auto;
     background-color: var(--card-bg-color, #1e1e1e);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     z-index: 3001; 
     padding: 5px 0;
@@ -3329,7 +3329,7 @@ export default {
   .select-option {
     padding: 8px 15px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: var(--font-size-md);
     color: var(--text-color);
     transition: all 0.2s ease;
     text-align: center;
@@ -3361,19 +3361,19 @@ export default {
 .withdraw-methods {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
 }
 
 .method-tag {
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   background-color: transparent;
   color: var(--text-color);
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 14px;
+  font-size: var(--font-size-md);
   
   &:hover {
     border-color: var(--theme-color);
@@ -3438,7 +3438,7 @@ export default {
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-  padding: 10px 0;
+  padding: var(--space-3) 0;
   gap: 6px;
   
   .page-size-container {
@@ -3461,11 +3461,11 @@ export default {
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     background-color: transparent;
     border: 1px solid var(--border-color);
     color: var(--text-color);
-    font-size: 14px;
+    font-size: var(--font-size-md);
     cursor: pointer;
     transition: all 0.2s ease;
     
@@ -3567,7 +3567,7 @@ export default {
   justify-content: space-between;
   padding: 0 15px;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -3578,7 +3578,7 @@ export default {
   }
   
   .select-value {
-    font-size: 14px;
+    font-size: var(--font-size-md);
     color: var(--text-color);
     flex: 1;
     white-space: nowrap;
@@ -3614,7 +3614,7 @@ export default {
     overflow-y: auto;
     background-color: var(--card-bg-color);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     z-index: 3001; 
     padding: 5px 0;
@@ -3635,7 +3635,7 @@ export default {
   .select-option {
     padding: 12px 15px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: var(--font-size-md);
     color: var(--text-color);
     transition: all 0.2s ease;
     text-align: center;

@@ -1005,7 +1005,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 /* base */
 .ticket-container {
-  padding: 20px;
+  padding: var(--space-5);
 
   display: flex;
 
@@ -1015,13 +1015,13 @@ onUnmounted(() => {
 .dashboard-card {
   background-color: var(--card-bg-color);
 
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 
-  padding: 20px;
+  padding: var(--space-5);
 
-  margin-bottom: 24px;
+  margin-bottom: var(--space-5);
 
   border: 1px solid var(--border-color);
 
@@ -1040,10 +1040,10 @@ onUnmounted(() => {
 
     align-items: center;
 
-    margin-bottom: 15px;
+    margin-bottom: var(--space-3);
 
     .card-title {
-      font-size: 18px;
+      font-size: var(--font-size-xl);
 
       font-weight: 600;
 
@@ -1057,13 +1057,13 @@ onUnmounted(() => {
 
       margin: 0;
 
-      line-height: 1.5;
+      line-height: var(--line-height-normal);
     }
   }
 }
 
 .welcome-card {
-  margin-bottom: 24px;
+  margin-bottom: var(--space-5);
 }
 
 .ticket-list-container {
@@ -1075,7 +1075,7 @@ onUnmounted(() => {
 
   background-color: var(--card-bg);
 
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 
   overflow: hidden;
 
@@ -1113,13 +1113,13 @@ onUnmounted(() => {
 
       border: 1px solid var(--border-color);
 
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
 
       background-color: var(--bg-secondary);
 
       color: var(--text-color);
 
-      font-size: 14px;
+      font-size: var(--font-size-md);
 
       transition: all 0.3s ease;
 
@@ -1170,13 +1170,13 @@ onUnmounted(() => {
 
     justify-content: center;
 
-    gap: 8px;
+    gap: var(--space-2);
 
-    padding: 0 16px;
+    padding: 0 var(--space-4);
 
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
 
-    font-size: 14px;
+    font-size: var(--font-size-md);
 
     font-weight: 500;
 
@@ -1223,13 +1223,13 @@ onUnmounted(() => {
 .ticket-item {
   padding: 1rem;
 
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 
   cursor: pointer;
 
   transition: all 0.3s ease;
 
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 
   position: relative;
 
@@ -1248,7 +1248,7 @@ onUnmounted(() => {
 
     font-size: 0.95rem;
 
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
 
     color: var(--text-color);
   }
@@ -1282,11 +1282,11 @@ onUnmounted(() => {
 
   justify-content: center;
 
-  padding: 0.25rem 0.5rem;
+  padding: var(--space-1) var(--space-2);
 
   border-radius: 4px;
 
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
 
   font-weight: 500;
 }
@@ -1346,7 +1346,7 @@ onUnmounted(() => {
     h2 {
       margin: 0;
 
-      margin-bottom: 0.5rem;
+      margin-bottom: var(--space-2);
 
       font-size: 1.2rem;
     }
@@ -1457,9 +1457,9 @@ onUnmounted(() => {
 
       background-color: rgba(var(--theme-color-rgb), 0.1);
 
-      border-radius: 12px;
+      border-radius: var(--radius-md);
 
-      font-size: 0.75rem;
+      font-size: var(--font-size-xs);
 
       margin: 0 0.75rem;
 
@@ -1643,7 +1643,7 @@ onUnmounted(() => {
     .message-text {
       font-size: 0.97rem;
 
-      line-height: 1.5;
+      line-height: var(--line-height-normal);
 
       white-space: pre-wrap;
 
@@ -1702,7 +1702,7 @@ onUnmounted(() => {
 
     font-size: 1rem;
 
-    line-height: 1.5;
+    line-height: var(--line-height-normal);
 
     transition: all 0.3s ease;
 
@@ -1745,7 +1745,7 @@ onUnmounted(() => {
 
     height: 40px;
 
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
 
     background-color: rgba(var(--theme-color-rgb), 0.85);
 
@@ -2121,7 +2121,7 @@ onUnmounted(() => {
 
         padding: 8px 14px;
 
-        border-radius: 8px;
+        border-radius: var(--radius-sm);
 
         cursor: pointer;
 
@@ -2195,13 +2195,13 @@ onUnmounted(() => {
 
     min-width: 120px;
 
-    padding: 0 16px;
+    padding: 0 var(--space-4);
 
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
 
     font-weight: 500;
 
-    font-size: 14px;
+    font-size: var(--font-size-md);
 
     cursor: pointer;
 
@@ -2213,7 +2213,7 @@ onUnmounted(() => {
 
     justify-content: center;
 
-    gap: 8px;
+    gap: var(--space-2);
 
     &.btn-cancel {
       background-color: transparent;
@@ -2451,7 +2451,7 @@ onUnmounted(() => {
 
 .image-upload-area {
   border: 2px dashed #2196f3;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background: rgba(33, 150, 243, 0.03);
   padding: 24px 0;
   text-align: center;
