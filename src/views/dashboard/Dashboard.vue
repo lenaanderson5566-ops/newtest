@@ -2558,6 +2558,8 @@ export default {
   padding: 20px;
   display: flex;
   justify-content: center;
+  --dashboard-card-padding: 20px;
+  --dashboard-card-gap: 16px;
 
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
@@ -2609,8 +2611,8 @@ export default {
     background-color: var(--saas-card-bg);
     border-radius: 14px;
     box-shadow: var(--saas-card-shadow);
-    padding: 20px;
-    margin-bottom: 16px;
+    padding: var(--dashboard-card-padding);
+    margin-bottom: var(--dashboard-card-gap);
     border: none;
     transition: box-shadow 0.2s ease;
 
@@ -4208,8 +4210,10 @@ export default {
 
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 15px;
+    padding: 12px;
     padding-bottom: 80px;
+    --dashboard-card-padding: 14px;
+    --dashboard-card-gap: 12px;
   }
 
   .stats-grid {
@@ -4218,7 +4222,7 @@ export default {
 
   .subscription-card .subscription-info {
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
   }
 
   .subscription-card .info-item {
@@ -4226,7 +4230,7 @@ export default {
     padding: 0;
     border-right: none;
     border-bottom: 1px solid var(--border-light-color);
-    padding-bottom: 15px;
+    padding-bottom: 12px;
   }
 
   .subscription-card .info-item:last-child {
@@ -4235,7 +4239,7 @@ export default {
 
   .subscription-actions {
     flex-direction: column;
-    margin-top: 15px;
+    margin-top: 12px;
   }
 
   .platform-selector {

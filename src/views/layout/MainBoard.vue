@@ -107,15 +107,21 @@ export default {
 
 .content-area {
 
-  padding: 2rem 1rem;
+  --content-space-x: clamp(12px, 3vw, 16px);
 
-  padding-top: 80px; 
+  --content-space-y: clamp(12px, 3.5vw, 20px);
+
+  padding: var(--content-space-y) var(--content-space-x);
+
+  padding-top: calc(64px + var(--content-space-y));
 
   
 
   @media (min-width: 768px) {
 
-    padding: 2rem;
+    --content-space-x: 2rem;
+
+    --content-space-y: 2rem;
 
     padding-top: 90px;
 
