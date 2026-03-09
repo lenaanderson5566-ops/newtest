@@ -143,31 +143,6 @@
 
         
 
-        <div v-if="shouldShowBillingCard" class="stats-card" @click="$router.push('/billing?tab=orders')">
-
-          <div class="stats-icon">
-
-            <IconWallet :size="32" />
-
-          </div>
-
-          <div class="stats-info">
-
-            <div class="stats-value">{{ $t('menu.billing') }}</div>
-
-            <div class="stats-label">{{ $t('more.manageOrders') }}</div>
-
-          </div>
-
-          <div class="chevron-icon">
-
-            <IconChevronRight :size="20" />
-
-          </div>
-
-        </div>
-
-        
 
         <!-- 自定义卡片 -->
 
@@ -262,8 +237,6 @@ import {
 
   IconMessages,
 
-  IconWallet,
-
   IconBell
 
 } from '@tabler/icons-vue';
@@ -318,7 +291,6 @@ const shouldShowNodesCard = computed(() => !isHiddenByTopNav('nodes'));
 
 const shouldShowTicketsCard = computed(() => !isHiddenByTopNav('tickets'));
 
-const shouldShowBillingCard = computed(() => !isHiddenByTopNav('orders') || !isHiddenByTopNav('wallet'));
 
 const checkScreenSize = () => {
 
@@ -382,7 +354,7 @@ const getIconComponent = (iconName) => {
 
     IconMailForward, IconChevronRight, IconServer, 
 
-    IconMessages, IconChartBar, IconWallet
+    IconMessages, IconChartBar
 
   };
 
