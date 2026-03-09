@@ -21,10 +21,6 @@
             <strong>{{ userInfo.email || '-' }}</strong>
           </div>
           <div class="summary-item">
-            <span class="label">注册时间</span>
-            <strong>{{ createdAtText }}</strong>
-          </div>
-          <div class="summary-item">
             <span class="label">当前计划</span>
             <strong>{{ subscriptionText }}</strong>
           </div>
@@ -144,11 +140,6 @@ const subscriptionExpireText = computed(() => {
   return formatDate(subscribeInfo.value.expired_at);
 });
 
-const createdAtText = computed(() => {
-  if (!userInfo.value?.created_at) return '-';
-  return formatDate(userInfo.value.created_at);
-});
-
 const formatBalance = (balance) => ((Number(balance || 0) / 100).toFixed(2));
 const go = (path) => router.push(path);
 
@@ -230,7 +221,7 @@ onMounted(async () => {
 
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
 .summary-item {
@@ -350,7 +341,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .bottom-safe-area { height: calc(var(--safe-bottom) + 10px); }
 
 @media (max-width: 1100px) {
-  .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 768px) {

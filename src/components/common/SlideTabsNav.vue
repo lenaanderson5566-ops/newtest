@@ -907,7 +907,9 @@ function debounce(fn, delay) {
 
       .nav-item {
 
-        padding: 6px 10px;
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 6px 8px;
 
         font-size: 13px;
 
@@ -940,8 +942,6 @@ function debounce(fn, delay) {
         &:last-child {
 
           height: 50px;
-
-          min-width: 72px;  
 
         }
 
@@ -1045,11 +1045,11 @@ function debounce(fn, delay) {
 
       width: 100%;
 
-      justify-content: flex-start;
+      justify-content: space-between;
       flex-direction: row;
       flex-wrap: nowrap;
-      overflow-x: auto;
-      gap: 3px;
+      overflow: hidden;
+      gap: 0;
       padding: 2px;
 
       .slider-indicator {
@@ -1088,7 +1088,9 @@ function debounce(fn, delay) {
 
       .nav-item {
 
-        padding: 5px 8px;
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 5px 6px;
 
         font-size: 11px;
 
