@@ -2650,8 +2650,8 @@ onUnmounted(() => {
 }
 
 .message-item .message-content .message-text {
-  font-size: 0.76rem;
-  line-height: 1.35;
+  font-size: 0.7rem;
+  line-height: 1.3;
 }
 
 .message-item .message-content .message-text p,
@@ -2659,7 +2659,7 @@ onUnmounted(() => {
 .message-item .message-content .message-text code,
 .message-item .message-content .message-text pre,
 .message-item .message-content .message-text strong {
-  font-size: 0.76rem;
+  font-size: 0.7rem;
 }
 
 .message-item .message-content .message-text strong {
