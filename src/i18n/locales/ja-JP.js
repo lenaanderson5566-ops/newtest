@@ -295,6 +295,9 @@ export default {
   menu: {
     dashboard: 'ダッシュボード',
     overview: '概要',
+    region: 'エリア',
+    usage: '利用',
+    my: 'マイ',
     shop: 'ストア',
     subscription: 'サブスクリプション',
     invite: '招待',

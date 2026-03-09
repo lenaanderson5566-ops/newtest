@@ -292,6 +292,9 @@ export default {
     menu: {
         dashboard: 'Dashboard',
         overview: 'Overview',
+        region: 'Region',
+        usage: 'Usage',
+        my: 'My',
         shop: 'Shop',
         subscription: 'Subscription',
         announcement: 'Announcements',

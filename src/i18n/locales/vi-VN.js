@@ -301,6 +301,9 @@ export default {
     menu: {
         dashboard: 'Trang chủ',
         overview: 'Tổng quan',
+        region: 'Khu vực',
+        usage: 'Sử dụng',
+        my: 'Của tôi',
         shop: 'Cửa hàng',
         subscription: 'Gói đăng ký',
         invite: 'Mời bạn',

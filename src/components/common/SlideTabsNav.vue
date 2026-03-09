@@ -28,10 +28,6 @@
 
             <span class="nav-text">{{ $t(`menu.${item.i18nKey}`) }}</span>
 
-            <span v-if="item.name === 'Invite' && showInviteBadge" class="badge-dot">{{ $t('menu.commission') }}</span>
-
-            <span v-if="item.name === 'Shop' && showShopBadge" class="badge-dot">{{ $t('menu.hotSale') }}</span>
-
           </router-link>
 
         </template>
@@ -58,31 +54,13 @@ import { ref, onMounted, watch, nextTick, onBeforeUnmount, computed, reactive, o
 
 import { useRoute, useRouter } from 'vue-router';
 
-import { INVITE_CONFIG, SHOP_CONFIG, NAVIGATION_CONFIG } from '@/utils/baseConfig';
-
 import IconDashboard from '@/components/icons/IconDashboard.vue';
-
-import IconShop from '@/components/icons/IconShop.vue';
-
-import IconInvite from '@/components/icons/IconInvite.vue';
 
 import IconFileText from '@/components/icons/IconFileText.vue';
 
-import IconWallet from '@/components/icons/IconWallet.vue';
-
 import IconUser from '@/components/icons/IconUser.vue';
 
-import IconMore from '@/components/icons/IconMore.vue';
-
-import {
-
-  IconServer,     
-
-  IconChartBar,
-
-  IconHeadset   
-
-} from '@tabler/icons-vue';  
+import { IconServer } from '@tabler/icons-vue';
 
 
 
@@ -114,22 +92,6 @@ export default {
 
     
 
-    const showInviteBadge = computed(() => {
-
-      return INVITE_CONFIG && INVITE_CONFIG.showCommissionBadge === true;
-
-    });
-
-    
-
-    const showShopBadge = computed(() => {
-
-      return SHOP_CONFIG && SHOP_CONFIG.showHotSaleBadge === true;
-
-    });
-
-
-
     const sliderState = reactive({
 
       width: 0,
@@ -158,90 +120,12 @@ export default {
 
 
 
-    const isSmallScreen = ref(false);
-
-
-    const checkScreenSize = () => {
-
-      isSmallScreen.value = window.innerWidth < 905;
-
-    };
-
-
-
-
-    // 替换原有的 navItems 定义
-    const getNavItems = () => {
-
-        // 基础导航项
-        const baseNavItems = [
-
-            { title: 'Dashboard', path: '/dashboard', name: 'Dashboard', icon: 'IconDashboard', i18nKey: 'overview' },
-
-            { title: 'Shop', path: '/shop', name: 'Shop', icon: 'IconShop', i18nKey: 'subscription' },
-
-        ];
-
-        // 获取第三、第四个导航项配置
-        const thirdNavItem = NAVIGATION_CONFIG?.thirdNavItem || 'invite';
-        const fourthNavItem = NAVIGATION_CONFIG?.fourthNavItem || '';
-
-        // 导航项配置映射（可复用）
-        const navMap = {
-
-          docs: { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'startUsing' },
-
-          invite: { title: 'Billing', path: '/billing?tab=referral', name: 'Billing', icon: 'IconWallet', i18nKey: 'referral' },
-
-          tickets: {
-
-            title: 'Tickets',
-
-            path: isSmallScreen.value ? '/mobile/tickets' : '/tickets',
-
-            name: 'Tickets',
-
-            icon: 'IconHeadset',
-
-            i18nKey: 'tickets'
-          },
-
-          nodes: { title: 'Nodes', path: '/nodes', name: 'Nodes', icon: 'IconServer', i18nKey: 'lines' },
-
-          billing: { title: 'Billing', path: '/billing?tab=orders', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
-
-          orders: { title: 'Billing', path: '/billing?tab=orders', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
-
-          traffic: { title: 'Traffic', path: '/trafficlog', name: 'TrafficLog', icon: 'IconChartBar', i18nKey: 'traffic' },
-
-          wallet: { title: 'Billing', path: '/billing?tab=wallet', name: 'Billing', icon: 'IconWallet', i18nKey: 'billing' },
-
-          profile: { title: 'Profile', path: '/profile', name: 'Profile', icon: 'IconUser', i18nKey: 'profile' }
-
-        };
-
-        // 添加配置的第三个导航项（有效值才插入）
-        const third = navMap[thirdNavItem];
-        if (third) {
-          baseNavItems.push(third);
-        }
-
-        // 可选：添加第四个导航项（非空、有效且不与第三重复时插入）
-        const fourth = fourthNavItem && navMap[fourthNavItem] ? navMap[fourthNavItem] : null;
-        if (fourth && fourth.i18nKey !== (third?.i18nKey)) {
-          baseNavItems.push(fourth);
-        }
-
-        // 添加更多选项
-        baseNavItems.push({ title: 'More', path: '/more', name: 'More', icon: 'IconMore', i18nKey: 'more' });
-
-        return baseNavItems;
-        
-    };
-
-    const navItems = getNavItems();
-
-    
+    const navItems = [
+      { title: 'Dashboard', path: '/dashboard', name: 'Dashboard', icon: 'IconDashboard', i18nKey: 'overview' },
+      { title: 'Nodes', path: '/nodes', name: 'Nodes', icon: 'IconServer', i18nKey: 'region' },
+      { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'usage' },
+      { title: 'Profile', path: '/profile', name: 'Profile', icon: 'IconUser', i18nKey: 'my' }
+    ];
 
     const getIcon = (iconName) => {
 
@@ -249,21 +133,10 @@ export default {
 
         case 'IconDashboard': return IconDashboard;
 
-        case 'IconShop': return IconShop;
-
-        case 'IconInvite': return IconInvite;
-
-        case 'IconMore': return IconMore;
-
         case 'IconFileText': return IconFileText;
-
-        case 'IconHeadset': return IconHeadset;
 
         case 'IconServer': return IconServer;
 
-        case 'IconChartBar': return IconChartBar;
-
-        case 'IconWallet': return IconWallet;
 
         case 'IconUser': return IconUser;
 
@@ -297,18 +170,7 @@ export default {
 
         if (isComponentMounted.value) {
 
-          // 特殊处理工单跳转
-          if (item.i18nKey === 'tickets') {
-
-            const targetPath = isSmallScreen.value ? '/mobile/tickets' : '/tickets';
-
-            router.push(targetPath);
-
-          } else {
-
-            router.push(item.path);
-
-          }
+          router.push(item.path);
 
         }
 
@@ -627,11 +489,6 @@ export default {
 
       
 
-      // 初始化屏幕尺寸检测
-      checkScreenSize();
-
-      window.addEventListener('resize', checkScreenSize);
-
 
 
       document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -867,10 +724,6 @@ export default {
       isComponentMounted.value = false;
 
 
-      // 移除屏幕尺寸监听器
-      window.removeEventListener('resize', checkScreenSize);
-
-
       
 
       positionTimers.forEach(timer => clearTimeout(timer));
@@ -911,11 +764,7 @@ export default {
 
       languageKey,
 
-      route,
-
-      showInviteBadge,
-
-      showShopBadge
+      route
 
     };
 

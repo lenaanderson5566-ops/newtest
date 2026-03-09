@@ -506,18 +506,11 @@ export const config = {
     },
   },
 
-  // 设置导航栏第三个位置显示的内容
+  // 导航配置（已迁移为固定四项：概览/区域/使用/我的）
   NAVIGATION_CONFIG: {
-    // 可选值: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'billing', 'traffic', 'wallet', 'profile'
-    // 'wallet' 只有 xiao-v2board 支持 非 xiao-v2board 面板请勿设置为 wallet
-    // 默认值为 'invite'
-    thirdNavItem: "invite",
-
-    // 可选：第四个导航项（插入在“更多”之前）。为空字符串或未设置则不插入
-    // 可选值同上: 'invite', 'docs', 'tickets', 'nodes', 'orders', 'billing', 'traffic', 'wallet', 'profile'
-    // 默认值为 'docs'
-    // 注意：如果第三个导航项设置为 'invite'，则第四个导航项不能设置为 'invite'
-    fourthNavItem: "docs",
+    // 废弃：thirdNavItem/fourthNavItem 不再参与侧边导航生成，仅保留兼容字段避免旧配置报错
+    // thirdNavItem: "invite",
+    // fourthNavItem: "docs",
   },
 
   // More页面自定义卡片配置

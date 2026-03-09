@@ -28,79 +28,31 @@ const getAuthComponent = (componentName) => {
 
 
 
-const getThirdNavItem = () => {
-
-  const { NAVIGATION_CONFIG } = require('@/utils/baseConfig');
-
-  return NAVIGATION_CONFIG?.thirdNavItem || 'docs';
-};
-
-const getFourthNavItem = () => {
-  const { NAVIGATION_CONFIG } = require('@/utils/baseConfig');
-  return NAVIGATION_CONFIG?.fourthNavItem || '';
-};
-
-
 
 const getActiveNavForRoute = (routeName) => {
-  const thirdNavItem = getThirdNavItem();
-  const fourthNavItem = getFourthNavItem();
+  const dashboardRoutes = new Set(['Dashboard']);
+  const regionRoutes = new Set(['NodeList']);
+  const usageRoutes = new Set(['Docs', 'DocDetail']);
+  const myRoutes = new Set([
+    'Profile',
+    'SecuritySettings',
+    'Billing',
+    'TicketList',
+    'MobileTickets',
+    'TrafficLog',
+    'More',
+    'Shop',
+    'OrderConfirm',
+    'Payment',
+    'AnnouncementList'
+  ]);
 
-  // 导航项对应的路由名称映射
-  const routeMap = {
-
-    docs: 'Docs',
-
-    invite: 'Billing',
-
-    tickets: 'TicketList',
-
-    nodes: 'NodeList',
-
-    orders: 'Billing',
-
-    billing: 'Billing',
-
-    traffic: 'TrafficLog',
-
-    wallet: 'Billing',
-
-    profile: 'Profile',
-
-    security: 'SecuritySettings'
-    
-  };
-
-  // 路由名称 -> 导航名称 映射（与 SlideTabsNav 中的 item.name 对齐）
-  const navNameMap = {
-    Docs: 'Docs',
-    Invite: 'Billing',
-    TicketList: 'Tickets',
-    NodeList: 'Nodes',
-    OrderList: 'Billing',
-    Billing: 'Billing',
-    TrafficLog: 'Traffic',
-    Deposit: 'Billing',
-    Profile: 'Profile',
-    SecuritySettings: 'Profile'
-  };
-
-  // 如果当前路由匹配第三个导航项，则返回第三项对应的导航名
-  const thirdNavRouteName = routeMap[thirdNavItem];
-  if (thirdNavRouteName && routeName === thirdNavRouteName) {
-    return navNameMap[thirdNavRouteName] || 'More';
-  }
-
-  // 如果当前路由匹配第四个导航项（且第四项存在且有效），返回第四项对应的导航名
-  const fourthNavRouteName = fourthNavItem ? routeMap[fourthNavItem] : '';
-  if (fourthNavRouteName && routeName === fourthNavRouteName) {
-    return navNameMap[fourthNavRouteName] || 'More';
-  }
-
-  // 其他情况归类为“更多”
-  return 'More';
+  if (regionRoutes.has(routeName)) return 'Nodes';
+  if (usageRoutes.has(routeName)) return 'Docs';
+  if (myRoutes.has(routeName)) return 'Profile';
+  if (dashboardRoutes.has(routeName)) return 'Dashboard';
+  return 'Dashboard';
 };
-
 
 
 const Login = getAuthComponent('Login');
@@ -415,7 +367,7 @@ const routes = [
 
         meta: {
 
-          titleKey: 'menu.startUsing',
+          titleKey: 'menu.usage',
 
           requiresAuth: true,
 

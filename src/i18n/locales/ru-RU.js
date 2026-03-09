@@ -295,6 +295,9 @@ export default {
   menu: {
     dashboard: 'Панель управления',
     overview: 'Обзор',
+    region: 'Регион',
+    usage: 'Использование',
+    my: 'Моё',
     shop: 'Магазин',
     subscription: 'Подписка',
     invite: 'Приглашение',

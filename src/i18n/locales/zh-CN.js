@@ -293,6 +293,9 @@ export default {
     menu: {
         dashboard: '仪表盘',
         overview: '概览',
+        region: '区域',
+        usage: '使用',
+        my: '我的',
         shop: '商店',
         subscription: '订阅',
         announcement: '服务通知',
