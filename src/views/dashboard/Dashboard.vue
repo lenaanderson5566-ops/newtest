@@ -2558,7 +2558,7 @@ export default {
   padding: 20px;
   display: flex;
   justify-content: center;
-  --dashboard-card-padding: 24px;
+  --dashboard-card-padding: 20px;
   --dashboard-card-gap: 16px;
 
   --saas-brand: #355cc2;
@@ -2578,7 +2578,7 @@ export default {
     .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 24px;
+    gap: 16px;
 
     > .pending-order-banner {
       grid-column: 1 / -1;
@@ -2609,7 +2609,7 @@ export default {
 
   .dashboard-card {
     background-color: var(--saas-card-bg);
-    border-radius: 16px;
+    border-radius: 14px;
     box-shadow: var(--saas-card-shadow);
     padding: var(--dashboard-card-padding);
     margin-bottom: var(--dashboard-card-gap);
@@ -2794,7 +2794,7 @@ export default {
       display: flex;
       align-items: center;
       gap: 16px;
-      padding: 24px;
+      padding: 16px;
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
       border: 1px solid var(--border-color);
