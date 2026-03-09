@@ -1164,18 +1164,24 @@ export default {
     });
 
     const subscriptionStatusLabel = computed(() => {
+      const currentLocale = locale.value;
+      void currentLocale;
       if (subscriptionStatus.value === 'expired') return t('dashboard.subscriptionStatus.expired');
       if (subscriptionStatus.value === 'expiring') return t('dashboard.subscriptionStatus.expiring');
       return t('dashboard.subscriptionStatus.active');
     });
 
     const primaryPlanActionLabel = computed(() => {
+      const currentLocale = locale.value;
+      void currentLocale;
       if (subscriptionStatus.value === 'active') return t('dashboard.planAction.manageSubscription');
       if (subscriptionStatus.value === 'expired') return t('dashboard.planAction.restoreNow');
       return t('dashboard.planAction.renewNow');
     });
 
     const planExpireMetaText = computed(() => {
+      const currentLocale = locale.value;
+      void currentLocale;
       if (subscriptionStatus.value === 'expired') {
         return t('dashboard.expiredOnDate', { date: userPlan.value.expireDate || '-' });
       }
@@ -1183,6 +1189,8 @@ export default {
     });
 
     const secondaryPlanActionLabel = computed(() => {
+      const currentLocale = locale.value;
+      void currentLocale;
       if (subscriptionStatus.value === 'expired') return t('dashboard.planAction.reselectPlan');
       if (subscriptionStatus.value === 'expiring') return t('dashboard.planAction.manageSubscription');
       return t('dashboard.planAction.renew');
@@ -2393,6 +2401,8 @@ export default {
     });
 
     const trafficBoardSections = computed(() => {
+      const currentLocale = locale.value;
+      void currentLocale;
       const packageUsedBytes = Math.max(
         trafficMetrics.totalUsedBytes - trafficMetrics.subscriptionQuotaUsedBytes,
         0
