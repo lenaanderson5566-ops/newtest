@@ -148,39 +148,19 @@
 
         <!-- 基本信息 -->
 
-        <div class="profile-card">
+        <AccountInfoCard
 
-          <div class="card-header">
+          :title="$t('profile.basicInfo')"
 
-            <h3>{{ $t('profile.basicInfo') }}</h3>
+          :email-label="$t('profile.email')"
 
-          </div>
+          :created-at-label="$t('profile.createdAt')"
 
-          <div class="info-content">
+          :email="userInfo.email"
 
-            <div class="info-list">
+          :created-at="userInfo.created_at"
 
-              <div class="info-item">
-
-                <span class="info-label">{{ $t('profile.email') }}</span>
-
-                <span class="info-value">{{ userInfo.email }}</span>
-
-              </div>
-
-              <div class="info-item">
-
-                <span class="info-label">{{ $t('profile.createdAt') }}</span>
-
-                <span class="info-value">{{ formatDate(userInfo.created_at) }}</span>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
+        />
 
 
 
@@ -308,31 +288,19 @@
 
         <!-- 安全设置 -->
 
-        <div v-if="false" class="profile-card">
+        <SecurityCard
 
-          <div class="card-header">
+          v-if="false"
 
-            <h3>{{ $t('profile.security') }}</h3>
+          :title="$t('profile.security')"
 
-          </div>
+          :label="$t('profile.changePassword')"
 
-          <div class="settings-content">
+          subtitle="前往安全中心修改密码"
 
-            <div class="action-buttons">
+          path="/security"
 
-              <button class="action-btn" @click="showPasswordModal = true">
-
-                <IconLock :size="18" />
-
-                {{ $t('profile.changePassword') }}
-
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
+        />
 
 
 
@@ -737,14 +705,10 @@ import {
 
 } from '@/api/user';
 
-import { formatDate } from '@/utils/formatters';
 
 import {
 
   IconAlertTriangle,
-
-  IconLock,
-
 
   IconCopy,
 
@@ -769,6 +733,8 @@ import useToast from '@/hooks/useToast';
 import { reloadMessages } from '@/i18n';
 
 import { PROFILE_CONFIG } from '@/utils/baseConfig';
+import AccountInfoCard from '@/components/profile/AccountInfoCard.vue';
+import SecurityCard from '@/components/profile/SecurityCard.vue';
 
 
 

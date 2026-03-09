@@ -66,7 +66,7 @@ const AnnouncementList = () => import('@/views/announcement/AnnouncementList.vue
 
 const MainBoard = () => import('@/views/layout/MainBoard.vue');
 
-const Profile = () => import('@/views/profile/UserProfile.vue');
+const Profile = () => import('@/views/profile/MyCenter.vue');
 
 const BrowserRestricted = () => import('@/views/errors/BrowserRestricted.vue');
 
@@ -500,11 +500,13 @@ const routes = [
 
       {
 
-        path: 'security-settings',
+        path: 'security',
 
         name: 'SecuritySettings',
 
         component: () => import('@/views/security/SecuritySettings.vue'),
+
+        alias: ['security-settings'],
 
         meta: {
 
