@@ -98,8 +98,9 @@
           <h2 class="card-title">{{ $t('invite.rules.title') }}</h2>
         </div>
         <div class="card-body">
-          <div class="rules-grid">
+          <div class="rules-grid compact-stepper">
             <div class="rule-item">
+              <span class="rule-step-index">01</span>
               <div class="rule-icon">
                 <IconShare :size="24" />
               </div>
@@ -110,6 +111,7 @@
             </div>
             
             <div class="rule-item">
+              <span class="rule-step-index">02</span>
               <div class="rule-icon">
                 <IconUserPlus :size="24" />
               </div>
@@ -120,6 +122,7 @@
             </div>
             
             <div class="rule-item">
+              <span class="rule-step-index">03</span>
               <div class="rule-icon">
                 <IconShoppingCart :size="24" />
               </div>
@@ -130,6 +133,7 @@
             </div>
             
             <div class="rule-item">
+              <span class="rule-step-index">04</span>
               <div class="rule-icon">
                 <IconCash :size="24" />
               </div>
@@ -859,7 +863,201 @@ export default {
               img { max-width: 100%; height: auto; margin-bottom: 20px; }
               h2 { color: #333; }
               p { color: #666; }
-            </style>
+            
+
+/* Compact dashboard layout overrides for Billing / Referral */
+.account-container {
+  padding: 16px;
+
+  .account-inner {
+    max-width: 1160px;
+  }
+
+  .dashboard-card {
+    padding: 22px;
+    margin-bottom: 20px;
+
+    .card-header {
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .card-body > p {
+      margin: 0;
+      line-height: 1.45;
+    }
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+
+    .stats-card {
+      min-height: 112px;
+      padding: 20px;
+      align-items: flex-start;
+      gap: 12px;
+
+      .stats-icon {
+        width: 44px;
+        height: 44px;
+        margin-right: 0;
+        border-radius: 10px;
+
+        :deep(svg) {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .stats-info {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .stats-value {
+          font-size: 26px;
+          font-weight: 700;
+          margin-bottom: 0;
+          line-height: 1.05;
+        }
+
+        .stats-label {
+          font-size: 13px;
+          line-height: 1.35;
+        }
+      }
+    }
+  }
+
+  .compact-stepper {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+
+    .rule-item {
+      position: relative;
+      border-radius: 12px;
+      padding: 12px 12px 12px 44px;
+      gap: 10px;
+      min-height: 96px;
+
+      .rule-step-index {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        font-size: 11px;
+        font-weight: 700;
+        color: rgba(var(--theme-color-rgb), 0.78);
+      }
+
+      .rule-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+
+        :deep(svg) {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .rule-content {
+        h3 {
+          font-size: 14px;
+          margin-bottom: 3px;
+        }
+
+        p {
+          font-size: 12px;
+          line-height: 1.35;
+        }
+      }
+    }
+  }
+
+  .balance-container {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 16px;
+    align-items: center;
+
+    .balance-info {
+      .balance-label {
+        margin-bottom: 4px;
+      }
+
+      .balance-value {
+        margin-bottom: 6px;
+      }
+    }
+
+    .balance-actions {
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+
+      .btn-primary {
+        min-width: 122px;
+        height: 40px;
+        padding: 0 14px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .account-container {
+    .stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .compact-stepper {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .balance-container {
+      grid-template-columns: 1fr;
+
+      .balance-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .account-container {
+    .dashboard-card {
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .stats-grid,
+    .compact-stepper {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .balance-container {
+      .balance-actions {
+        flex-direction: column;
+
+        .btn-primary {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+</style>
           </head>
           <body>
             <h2>${t('invite.share.scanQRCode')}</h2>
@@ -3904,4 +4102,198 @@ export default {
     color: var(--theme-color);
   }
 }
+
+
+/* Compact dashboard layout overrides for Billing / Referral */
+.account-container {
+  padding: 16px;
+
+  .account-inner {
+    max-width: 1160px;
+  }
+
+  .dashboard-card {
+    padding: 22px;
+    margin-bottom: 20px;
+
+    .card-header {
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .card-body > p {
+      margin: 0;
+      line-height: 1.45;
+    }
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+
+    .stats-card {
+      min-height: 112px;
+      padding: 20px;
+      align-items: flex-start;
+      gap: 12px;
+
+      .stats-icon {
+        width: 44px;
+        height: 44px;
+        margin-right: 0;
+        border-radius: 10px;
+
+        :deep(svg) {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .stats-info {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .stats-value {
+          font-size: 26px;
+          font-weight: 700;
+          margin-bottom: 0;
+          line-height: 1.05;
+        }
+
+        .stats-label {
+          font-size: 13px;
+          line-height: 1.35;
+        }
+      }
+    }
+  }
+
+  .compact-stepper {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+
+    .rule-item {
+      position: relative;
+      border-radius: 12px;
+      padding: 12px 12px 12px 44px;
+      gap: 10px;
+      min-height: 96px;
+
+      .rule-step-index {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        font-size: 11px;
+        font-weight: 700;
+        color: rgba(var(--theme-color-rgb), 0.78);
+      }
+
+      .rule-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+
+        :deep(svg) {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .rule-content {
+        h3 {
+          font-size: 14px;
+          margin-bottom: 3px;
+        }
+
+        p {
+          font-size: 12px;
+          line-height: 1.35;
+        }
+      }
+    }
+  }
+
+  .balance-container {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 16px;
+    align-items: center;
+
+    .balance-info {
+      .balance-label {
+        margin-bottom: 4px;
+      }
+
+      .balance-value {
+        margin-bottom: 6px;
+      }
+    }
+
+    .balance-actions {
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+
+      .btn-primary {
+        min-width: 122px;
+        height: 40px;
+        padding: 0 14px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .account-container {
+    .stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .compact-stepper {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .balance-container {
+      grid-template-columns: 1fr;
+
+      .balance-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .account-container {
+    .dashboard-card {
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .stats-grid,
+    .compact-stepper {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .balance-container {
+      .balance-actions {
+        flex-direction: column;
+
+        .btn-primary {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
 </style> 

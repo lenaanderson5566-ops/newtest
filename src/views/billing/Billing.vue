@@ -85,7 +85,7 @@ watch(
 
 <style lang="scss" scoped>
 .billing-container {
-  padding: 24px;
+  padding: 16px 20px 12px;
   background: transparent;
 }
 
@@ -97,12 +97,12 @@ watch(
 .billing-tabs-card {
   display: inline-flex;
   gap: 6px;
-  padding: 6px;
-  border-radius: 12px;
+  padding: 5px;
+  border-radius: 10px;
   border: 1px solid var(--border-color-soft);
   background: var(--surface-subtle);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.65);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .billing-tab {
@@ -110,8 +110,8 @@ watch(
   background: transparent;
   color: var(--neutral-strong);
   height: 34px;
-  padding: 0 16px;
-  border-radius: 9px;
+  padding: 0 14px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s ease;
@@ -129,6 +129,7 @@ watch(
 
 .billing-panel {
   border-radius: var(--radius-lg);
+  margin-top: 0;
 }
 
 @media (max-width: 768px) {
