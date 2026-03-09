@@ -37,115 +37,7 @@
         </div>
       </div>
       
-      <!-- 返佣统计卡片组 -->
-      <div class="stats-grid">
-        <template v-if="loading.inviteData">
-          <div v-for="i in 4" :key="i" class="stats-card skeleton-card">
-            <div class="skeleton-icon"></div>
-            <div class="skeleton-content">
-              <div class="skeleton-row-sm"></div>
-              <div class="skeleton-row-xs"></div>
-            </div>
-          </div>
-        </template>
-        
-        <template v-else>
-        <div class="stats-card">
-          <div class="stats-icon">
-            <IconUsers :size="32" />
-          </div>
-          <div class="stats-info">
-              <div class="stats-value">{{ inviteStats.registeredUsers }}</div>
-            <div class="stats-label">{{ $t('invite.stats.registeredUsers') }}</div>
-          </div>
-        </div>
-        
-        <div class="stats-card">
-          <div class="stats-icon">
-            <IconCoin :size="32" />
-          </div>
-          <div class="stats-info">
-              <div class="stats-value">{{ currencySymbol }}{{ inviteStats.pendingCommission }}</div>
-            <div class="stats-label">{{ $t('invite.stats.pendingCommission') }}</div>
-          </div>
-        </div>
-        
-        <div class="stats-card">
-          <div class="stats-icon">
-            <IconWallet :size="32" />
-          </div>
-          <div class="stats-info">
-              <div class="stats-value">{{ currencySymbol }}{{ inviteStats.validCommission }}</div>
-            <div class="stats-label">{{ $t('invite.stats.availableCommission') }}</div>
-          </div>
-        </div>
-        
-        <div class="stats-card">
-          <div class="stats-icon">
-            <IconChartBar :size="32" />
-          </div>
-          <div class="stats-info">
-              <div class="stats-value">{{ inviteStats.commissionRate }}%</div>
-            <div class="stats-label">{{ $t('invite.stats.commissionRate') }}</div>
-          </div>
-        </div>
-        </template>
-      </div>
-      
-      <!-- 返佣规则卡片 -->
-      <div class="dashboard-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('invite.rules.title') }}</h2>
-        </div>
-        <div class="card-body">
-          <div class="rules-grid compact-stepper">
-            <div class="rule-item">
-              <span class="rule-step-index">01</span>
-              <div class="rule-icon">
-                <IconShare :size="24" />
-              </div>
-              <div class="rule-content">
-                <h3>{{ $t('invite.rules.share.title') }}</h3>
-                <p>{{ $t('invite.rules.share.desc') }}</p>
-              </div>
-            </div>
-            
-            <div class="rule-item">
-              <span class="rule-step-index">02</span>
-              <div class="rule-icon">
-                <IconUserPlus :size="24" />
-              </div>
-              <div class="rule-content">
-                <h3>{{ $t('invite.rules.register.title') }}</h3>
-                <p>{{ $t('invite.rules.register.desc') }}</p>
-              </div>
-            </div>
-            
-            <div class="rule-item">
-              <span class="rule-step-index">03</span>
-              <div class="rule-icon">
-                <IconShoppingCart :size="24" />
-              </div>
-              <div class="rule-content">
-                <h3>{{ $t('invite.rules.purchase.title') }}</h3>
-                <p>{{ $t('invite.rules.purchase.desc') }}</p>
-              </div>
-            </div>
-            
-            <div class="rule-item">
-              <span class="rule-step-index">04</span>
-              <div class="rule-icon">
-                <IconCash :size="24" />
-              </div>
-              <div class="rule-content">
-                <h3>{{ $t('invite.rules.commission.title') }}</h3>
-                <p>{{ $t('invite.rules.commission.desc', { rate: inviteStats.commissionRate }) }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
+
       <!-- 佣金余额卡片 -->
       <div class="dashboard-card balance-card">
         <div class="card-header">
@@ -607,17 +499,10 @@ import { useToast } from '@/composables/useToast';
 import { INVITE_CONFIG } from '@/utils/baseConfig';
 import { getInviteData, getInviteDetails, getCommissionConfig, generateInviteCode, transferCommission, withdrawCommission } from '@/api/invite';
 import {
-  IconUsers,
-  IconCoin,
-  IconWallet,
-  IconChartBar,
   IconCopy,
   IconBrandWechat,
   IconBrandTwitter,
   IconBrandTelegram,
-  IconShare,
-  IconUserPlus,
-  IconShoppingCart,
   IconCash,
   IconRefresh,
   IconPlus,
@@ -635,17 +520,10 @@ import {
 export default {
   name: 'InviteView',
   components: {
-    IconUsers,
-    IconCoin,
-    IconWallet,
-    IconChartBar,
     IconCopy,
     IconBrandWechat,
     IconBrandTwitter,
     IconBrandTelegram,
-    IconShare,
-    IconUserPlus,
-    IconShoppingCart,
     IconCash,
     IconRefresh,
     IconPlus,
