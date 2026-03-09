@@ -22,7 +22,7 @@
           :class="{ active: activeTab === 'referral' }"
           @click="switchTab('referral')"
         >
-          Referral
+          {{ $t('menu.referral') }}
         </button>
       </div>
 

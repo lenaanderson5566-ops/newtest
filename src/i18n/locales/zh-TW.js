@@ -298,13 +298,14 @@ export default {
     shop: '商店',
     subscription: '訂閱',
     invite: '邀請',
+    referral: '邀請返利',
     docs: '文件',
     startUsing: '開始使用',
-    tickets: '工單',
-    orders: '訂單',
-    lines: '線路',
-    traffic: '流量',
-    wallet: '錢包',
+    tickets: '支援中心',
+    orders: '訂單記錄',
+    lines: '連線區域',
+    traffic: '用量記錄',
+    wallet: '帳戶餘額',
     billing: '帳單',
     profile: '帳號',
     more: '更多',
@@ -316,18 +317,18 @@ export default {
     description: '探索更多功能與服務',
     inviteDescription: '邀請好友獲得返佣獎勵',
     viewHelp: '檢視使用幫助與常見問題',
-    viewLines: '檢視可用線路',
-    manageOrders: '管理您的訂單',
+    viewLines: '檢視連線區域',
+    manageOrders: '管理訂單記錄',
     getTechnicalSupport: '取得技術支援',
     manageProfile: '管理個人資料'
   },
   lines: {
-    title: '線路列表',
+    title: '連線區域',
     loading: '正在載入線路...',
     noLines: '暫無可用線路',
     copiedToClipboard: '已複製到剪貼簿',
     welcome: {
-      title: '線路列表',
+      title: '連線區域',
       description: '檢視並使用可用伺服器節點'
     },
     type: '線路類型',
@@ -367,7 +368,7 @@ export default {
     },
   },
   orders: {
-    title: '訂單列表',
+    title: '訂單記錄',
     loading: '正在載入訂單...',
     tradeNo: '訂單號',
     createdAt: '建立時間',
@@ -384,7 +385,7 @@ export default {
     cancelSuccess: '訂單已取消',
     cancelFailed: '取消訂單失敗',
     welcome: {
-      title: '訂單列表',
+      title: '訂單記錄',
       description: '檢視並管理您的訂單'
     },
     status: {
@@ -401,7 +402,7 @@ export default {
     payment: '支付訂單',
   },
   tickets: {
-    title: '工單系統',
+    title: '支援中心',
     description: '與我們的支援團隊聯繫',
     
     searchPlaceholder: '搜尋工單...',
@@ -922,7 +923,7 @@ export default {
     }
   },
   trafficLog: {
-    title: '流量明細',
+    title: '用量記錄',
     description: '檢視您的流量使用情況明細記錄',
     uploadTraffic: '上行流量',
     downloadTraffic: '下行流量',
@@ -937,7 +938,7 @@ export default {
     loadingTraffic: '正在載入流量資料...',
     errorLoadingTraffic: '載入流量資料失敗',
     retry: '重試',
-    viewTrafficLog: '檢視流量明細',
+    viewTrafficLog: '檢視用量記錄',
     days: '天',
     trafficLogDesc: '檢視詳細的流量使用記錄與統計',
     unitGb: 'GB',

@@ -298,6 +298,7 @@ export default {
     shop: 'فروشگاه',
     subscription: 'اشتراک',
     invite: 'دعوت',
+    referral: 'Referral',
     docs: 'مستندات',
     startUsing: 'کلاینت',
     tickets: 'تیکت‌ها',

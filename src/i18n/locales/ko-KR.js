@@ -298,6 +298,7 @@ export default {
     shop: '상점',
     subscription: '구독',
     invite: '초대',
+        referral: 'Referral',
     docs: '문서',
     startUsing: '클라이언트',
     tickets: '티켓',

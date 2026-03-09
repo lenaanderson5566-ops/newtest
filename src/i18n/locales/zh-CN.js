@@ -182,7 +182,7 @@ export default {
         welcome: '欢迎回来',
         welcomeDesc: '查看您的服务和使用情况',
         announcement: '公告',
-        siteAnnouncement: '网站公告',
+        siteAnnouncement: '服务通知',
         subscriptionInfo: '订阅',
         planName: '套餐名称',
         expiryDate: '到期时间',
@@ -295,15 +295,16 @@ export default {
         overview: '概览',
         shop: '商店',
         subscription: '订阅',
-        announcement: '公告',
+        announcement: '服务通知',
         invite: '邀请',
+        referral: '邀请返利',
         docs: '文档',
         startUsing: '开始使用',
-        tickets: '工单',
-        orders: '订单',
-        lines: '线路',
-        traffic: '流量',
-        wallet: '钱包',
+        tickets: '支持中心',
+        orders: '订单记录',
+        lines: '连接区域',
+        traffic: '用量记录',
+        wallet: '账户余额',
         billing: '账单',
         profile: '账号',
         more: '更多',
@@ -315,18 +316,18 @@ export default {
         description: '探索更多功能和服务',
         inviteDescription: '邀请好友获得返佣奖励',
         viewHelp: '查看使用帮助和常见问题',
-        viewLines: '查看可用线路',
-        manageOrders: '管理您的订单',
+        viewLines: '查看连接区域',
+        manageOrders: '管理订单记录',
         getTechnicalSupport: '获取技术支持',
         manageProfile: '管理个人资料'
     },
     lines: {
-        title: '线路列表',
+        title: '连接区域',
         loading: '正在加载线路...',
         noLines: '暂无可用线路',
         copiedToClipboard: '已复制到剪贴板',
         welcome: {
-            title: '线路列表',
+            title: '连接区域',
             description: '查看并使用可用线路'
         },
         type: '线路类型',
@@ -366,7 +367,7 @@ export default {
         },
     },
     orders: {
-        title: '订单列表',
+        title: '订单记录',
         loading: '正在加载订单...',
         tradeNo: '订单号',
         createdAt: '创建时间',
@@ -383,7 +384,7 @@ export default {
         cancelSuccess: '订单已取消',
         cancelFailed: '取消订单失败',
         welcome: {
-            title: '订单列表',
+            title: '订单记录',
             description: '查看并管理您的订单'
         },
         status: {
@@ -398,7 +399,7 @@ export default {
         payment: '支付订单',
     },
     tickets: {
-        title: '工单系统',
+        title: '支持中心',
         description: '与我们的支持团队联系',
 
         searchPlaceholder: '搜索工单...',
@@ -919,7 +920,7 @@ export default {
         }
     },
     trafficLog: {
-        title: '流量明细',
+        title: '用量记录',
         description: '查看您的流量使用情况明细记录',
         uploadTraffic: '上行流量',
         downloadTraffic: '下行流量',
@@ -934,7 +935,7 @@ export default {
         loadingTraffic: '正在加载流量数据...',
         errorLoadingTraffic: '加载流量数据失败',
         retry: '重试',
-        viewTrafficLog: '查看流量明细',
+        viewTrafficLog: '查看用量记录',
         days: '天',
         trafficLogDesc: '查看详细的流量使用记录和统计',
         unitGb: 'GB',
