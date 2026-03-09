@@ -2861,7 +2861,7 @@ export default {
       &.traffic-board-card {
         width: 100%;
         min-width: 0;
-        min-height: 232px;
+        min-height: clamp(172px, 18vw, 232px);
         overflow: visible;
         writing-mode: horizontal-tb;
         text-orientation: mixed;
@@ -4237,7 +4237,10 @@ export default {
 
     .stats-card.traffic-board-subscription,
     .stats-card.traffic-board-package {
-      min-height: 188px;
+      min-height: auto;
+      height: auto;
+      padding: 12px;
+      gap: 6px;
 
       .usage-percent {
         font-size: 24px;
@@ -4249,6 +4252,14 @@ export default {
 
       .usage-percent-label {
         font-size: 12px;
+      }
+
+      .usage-kpis {
+        gap: 6px;
+      }
+
+      .usage-kpi {
+        padding: 6px;
       }
     }
   }
