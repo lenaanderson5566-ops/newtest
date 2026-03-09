@@ -801,19 +801,17 @@ function debounce(fn, delay) {
 .slide-tabs-container {
   margin-bottom: 14px;
   position: fixed;
-  top: 112px;
-  left: 12px;
+  top: 108px;
+  left: 10px;
   z-index: 10;
-  width: 168px;
+  width: 170px;
 
   .slide-tabs-wrapper {
-    background: rgba(var(--card-background-rgb), 0.72);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: transparent;
     border-radius: 10px;
-    padding: 5px;
-    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
-    border: 1px solid var(--border-color);
+    padding: 2px;
+    box-shadow: none;
+    border: none;
     overflow: hidden;
   }
 
@@ -828,7 +826,7 @@ function debounce(fn, delay) {
     }
 
     .nav-item {
-      padding: 8px 9px;
+      padding: 8px 10px;
       border-radius: 8px;
       font-weight: 500;
       font-size: 13px;
@@ -841,7 +839,7 @@ function debounce(fn, delay) {
       display: flex;
       align-items: center;
       gap: 8px;
-      min-height: 36px;
+      min-height: 38px;
 
       .badge-dot {
         position: static;
@@ -871,8 +869,8 @@ function debounce(fn, delay) {
 
       &.active {
         color: var(--text-color);
-        background: rgba(var(--theme-color-rgb), 0.16);
-        box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.18);
+        background: rgba(var(--theme-color-rgb), 0.12);
+        box-shadow: inset 2px 0 0 rgba(var(--theme-color-rgb), 0.65);
 
         .nav-icon svg {
           color: var(--theme-color);
