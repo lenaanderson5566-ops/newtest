@@ -295,6 +295,9 @@ export default {
   menu: {
     dashboard: 'داشبورد',
     overview: 'نمای کلی',
+    region: 'منطقه',
+    usage: 'استفاده',
+    my: 'حساب من',
     shop: 'فروشگاه',
     subscription: 'اشتراک',
     invite: 'دعوت',

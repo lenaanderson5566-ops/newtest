@@ -295,6 +295,9 @@ export default {
   menu: {
     dashboard: '儀表板',
     overview: '概覽',
+    region: '區域',
+    usage: '使用',
+    my: '我的',
     shop: '商店',
     subscription: '訂閱',
     invite: '邀請',

@@ -295,6 +295,9 @@ export default {
   menu: {
     dashboard: '대시보드',
     overview: '개요',
+    region: '지역',
+    usage: '사용',
+    my: '내 정보',
     shop: '상점',
     subscription: '구독',
     invite: '초대',

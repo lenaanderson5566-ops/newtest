@@ -617,13 +617,15 @@ export const AUTH_CONFIG = mergeDeep(
 );
 
 /**
- * 添加默认导航栏配置
+ * 导航配置（兼容导出）
+ * thirdNavItem/fourthNavItem 已废弃：侧边导航改为固定四项。
  */
 const DEFAULT_NAVIGATION_CONFIG = {
-  // 配置以 src/config/index.js 为主，避免重复维护
+  // 保留兼容字段，避免历史配置访问报错
+  thirdNavItem: null,
+  fourthNavItem: null
 };
 
-// 导出合并后的导航栏配置
 export const NAVIGATION_CONFIG = mergeDeep(
   DEFAULT_NAVIGATION_CONFIG,
   getConfig("NAVIGATION_CONFIG")
