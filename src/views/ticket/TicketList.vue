@@ -272,6 +272,46 @@
             <p>{{ $t("tickets.selectTicket") }}</p>
           </div>
         </div>
+
+        <div class="ticket-context-sidebar">
+          <div class="context-card" v-if="selectedTicket">
+            <h3 class="context-title">{{ $t('tickets.title') }}</h3>
+            <div class="context-list">
+              <div class="context-item">
+                <span class="context-label">ID</span>
+                <span class="context-value">#{{ selectedTicket.id }}</span>
+              </div>
+              <div class="context-item">
+                <span class="context-label">{{ $t('tickets.statusOpen') }}/{{ $t('tickets.statusClosed') }}</span>
+                <span class="context-value">
+                  <span class="status-badge" :class="getStatusClass(selectedTicket.status)">
+                    {{ getStatusText(selectedTicket.status) }}
+                  </span>
+                </span>
+              </div>
+              <div class="context-item">
+                <span class="context-label">{{ $t('tickets.level') }}</span>
+                <span class="context-value">
+                  <span class="level-badge" :class="getLevelClass(selectedTicket.level)">
+                    {{ getLevelText(selectedTicket.level) }}
+                  </span>
+                </span>
+              </div>
+              <div class="context-item">
+                <span class="context-label">{{ $t('tickets.createdAt') }}</span>
+                <span class="context-value">{{ formatTime(selectedTicket.created_at) }}</span>
+              </div>
+              <div class="context-item">
+                <span class="context-label">{{ $t('tickets.loadingMessages') }}</span>
+                <span class="context-value">{{ loadingMessages ? '…' : ticketMessages.length }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="context-card context-empty" v-else>
+            <h3 class="context-title">{{ $t('tickets.title') }}</h3>
+            <p>{{ $t('tickets.selectTicket') }}</p>
+          </div>
+        </div>
       </div>
 
       <!-- 新建工单弹窗 并将弹窗置顶-->
@@ -2531,4 +2571,124 @@ onUnmounted(() => {
 .reply-tools .send-reply-btn {
   width: 100%; /* 按钮填满右侧容器宽度 */
 }
+
+/* SaaS support workspace layout */
+.ticket-container {
+  padding: 16px;
+}
+
+.ticket-list-container {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr) 260px;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.ticket-sidebar,
+.ticket-content,
+.ticket-context-sidebar .context-card {
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  background: var(--card-bg-color);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.ticket-sidebar {
+  padding: 12px;
+}
+
+.ticket-header {
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ticket-item {
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.ticket-content {
+  padding: 12px;
+}
+
+.ticket-detail-header {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.messages-container {
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  padding: 10px;
+}
+
+.reply-container {
+  margin-top: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  padding: 10px;
+}
+
+.ticket-context-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket-context-sidebar .context-card {
+  padding: 14px;
+}
+
+.context-title {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.context-list {
+  display: grid;
+  gap: 8px;
+}
+
+.context-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(var(--theme-color-rgb), 0.03);
+  border: 1px solid rgba(var(--theme-color-rgb), 0.08);
+}
+
+.context-label {
+  font-size: 12px;
+  color: var(--secondary-text-color);
+}
+
+.context-value {
+  font-size: 12px;
+  color: var(--text-color);
+  text-align: right;
+}
+
+.context-empty p {
+  margin: 0;
+  color: var(--secondary-text-color);
+  font-size: 13px;
+}
+
+@media (max-width: 1320px) {
+  .ticket-list-container {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  .ticket-context-sidebar {
+    grid-column: 1 / -1;
+  }
+}
+
 </style>

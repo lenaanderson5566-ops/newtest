@@ -67,6 +67,27 @@
           </div>
         </div>
       </div>
+
+      <div class="dashboard-card referral-kpi-card" v-if="!loading.inviteData">
+        <div class="referral-kpi-grid">
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.registeredUsers') }}</div>
+            <div class="kpi-value">{{ inviteStats.registeredUsers }}</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.commissionRate') }}</div>
+            <div class="kpi-value">{{ inviteStats.commissionRate }}%</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.pendingCommission') }}</div>
+            <div class="kpi-value">{{ currencySymbol }}{{ inviteStats.pendingCommission }}</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.availableCommission') }}</div>
+            <div class="kpi-value">{{ currencySymbol }}{{ inviteStats.validCommission }}</div>
+          </div>
+        </div>
+      </div>
       
       <!-- 划转到余额弹窗 -->
       <transition name="modal-fade">
@@ -887,6 +908,61 @@ export default {
       }
     }
   }
+
+  .referral-kpi-card {
+    padding: 16px 20px;
+  }
+
+  .referral-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .kpi-item {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px;
+    background: rgba(var(--theme-color-rgb), 0.03);
+  }
+
+  .kpi-label {
+    font-size: 12px;
+    color: var(--secondary-text-color);
+    margin-bottom: 6px;
+  }
+
+  .kpi-value {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .invite-cards-container {
+    margin: 16px 0 10px;
+    padding: 0;
+  }
+
+  .invite-card {
+    min-height: 140px;
+  }
+
+  .invite-card-inner {
+    padding: 14px;
+  }
+
+  .invite-card-header {
+    margin-bottom: 10px;
+  }
+
+  .invite-card-body {
+    min-height: auto;
+  }
+
+  .invite-code-display {
+    font-size: 20px;
+    padding: 8px 12px;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -906,6 +982,10 @@ export default {
         width: 100%;
         justify-content: flex-start;
       }
+    }
+
+    .referral-kpi-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 }
@@ -931,6 +1011,11 @@ export default {
           width: 100%;
         }
       }
+    }
+
+    .referral-kpi-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
     }
   }
 }
