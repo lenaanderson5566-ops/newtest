@@ -5,7 +5,7 @@
 - [~] Phase 2: Shell standardization and reusable layout primitives (进行中，约 90%)
 - [x] Phase 3: Base component unification (已完成)
 - [~] Phase 4: P0 page migration (overview/profile/billing/support)（已完成，100%）
-- [~] Phase 5: P1/P2 page migration and cleanup（进行中，约 15%）
+- [~] Phase 5: P1/P2 page migration and cleanup（进行中，约 25%）
 
 ## This iteration
 - 启动 Phase 3：新增 `BaseCard` / `BaseListRow` / `BaseSettingsRow` 三个基础组件并接入个人中心页面。
@@ -25,6 +25,7 @@
 - MainBoard 背景装饰与容器高度关键常量完成 token 化，减少壳层散落样式。
 - Dashboard 页面容器/gap/宽度改为全局 token 驱动，完成 P0 页面迁移收口。
 - 启动 Phase 5：Dashboard 语义色板与卡片阴影抽离为全局 token，减少页面内品牌色硬编码。
+- Phase 5 持续推进：AuthTopToolbar 与 NProgress 偏移/层级常量完成 token 化。
 - 将 App 壳层顶部导航从 `App.vue` 拆分为 `AppTopBar` / `AuthTopToolbar`，降低根组件复杂度。
 - Added reusable layout container component (`AppContainer`) for unified content width/padding behavior.
 - Integrated `AppContainer` into `MainBoard` to reduce page-level container ownership.

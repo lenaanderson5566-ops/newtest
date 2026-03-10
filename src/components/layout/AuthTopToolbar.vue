@@ -26,19 +26,19 @@ export default {
 
   .top-toolbar {
     position: fixed;
-    top: 20px;
-    right: 25px;
+    top: var(--auth-toolbar-top-offset);
+    right: var(--auth-toolbar-right-offset);
     display: flex;
-    gap: 16px;
+    gap: var(--auth-toolbar-gap);
     z-index: var(--toolbar-z);
   }
 }
 
 @media (max-width: 768px) {
   .auth-toolbar .top-toolbar {
-    top: 12px;
-    right: 12px;
-    gap: 10px;
+    top: var(--auth-toolbar-top-offset-mobile);
+    right: var(--auth-toolbar-right-offset-mobile);
+    gap: var(--auth-toolbar-gap-mobile);
   }
 }
 </style>

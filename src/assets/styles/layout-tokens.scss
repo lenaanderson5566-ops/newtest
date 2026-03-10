@@ -75,6 +75,20 @@
   --app-toolbar-control-active-border: #e5e7eb;
   --toolbar-control-shadow-hover: 0 3px 10px rgba(15, 23, 42, 0.1);
   --logo-radius: 6px;
+
+  --auth-toolbar-top-offset: 20px;
+  --auth-toolbar-right-offset: 25px;
+  --auth-toolbar-gap: 16px;
+  --auth-toolbar-top-offset-mobile: 12px;
+  --auth-toolbar-right-offset-mobile: 12px;
+  --auth-toolbar-gap-mobile: 10px;
+
+  --nprogress-z: 1031;
+  --nprogress-bar-height: 2px;
+  --nprogress-glow-strong: 0 0 10px var(--theme-color);
+  --nprogress-glow-soft: 0 0 5px var(--theme-color);
+  --nprogress-spinner-top: 10px;
+  --nprogress-spinner-left: 10px;
 }
 
 @media (min-width: 768px) {

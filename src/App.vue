@@ -540,21 +540,21 @@ html {
   .bar {
     background: var(--theme-color);
     position: fixed;
-    z-index: 1031;
+    z-index: var(--nprogress-z);
     top: 0;
     left: 0;
     width: 100%;
-    height: 2px;
-    box-shadow: 0 0 10px var(--theme-color), 0 0 5px var(--theme-color);
+    height: var(--nprogress-bar-height);
+    box-shadow: var(--nprogress-glow-strong), var(--nprogress-glow-soft);
   }
   
   
   .spinner {
     display: block;
     position: fixed;
-    z-index: 1031;
-    top: 10px;  
-    left: 10px; 
+    z-index: var(--nprogress-z);
+    top: var(--nprogress-spinner-top);  
+    left: var(--nprogress-spinner-left); 
     
     .spinner-icon {
       width: var(--site-logo-icon-size-mobile);
