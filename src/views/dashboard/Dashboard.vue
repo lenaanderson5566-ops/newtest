@@ -2562,16 +2562,16 @@ export default {
   --dashboard-card-padding: var(--space-4);
   --dashboard-card-gap: var(--space-3);
 
-  --saas-brand: #355cc2;
-  --saas-text-primary: #111827;
-  --saas-text-secondary: #6b7280;
-  --saas-border-soft: #eef1f5;
-  --saas-card-bg: #ffffff;
-  --saas-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 18px rgba(15, 23, 42, 0.04);
+  --saas-brand: var(--dashboard-brand);
+  --saas-text-primary: var(--dashboard-text-primary);
+  --saas-text-secondary: var(--dashboard-text-secondary);
+  --saas-border-soft: var(--dashboard-border-soft);
+  --saas-card-bg: var(--dashboard-card-bg);
+  --saas-card-shadow: var(--dashboard-card-shadow);
 
-  --theme-text-primary: #111827;
-  --theme-text-secondary: #6b7280;
-  --theme-text-subtle: #9ca3af;
+  --theme-text-primary: var(--dashboard-text-primary);
+  --theme-text-secondary: var(--dashboard-text-secondary);
+  --theme-text-subtle: var(--dashboard-text-subtle);
 
   .dashboard-inner {
     width: 100%;
@@ -2621,7 +2621,7 @@ export default {
     transition: box-shadow 0.2s ease;
 
     &:hover {
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 10px 24px rgba(15, 23, 42, 0.06);
+      box-shadow: var(--dashboard-card-hover-shadow);
       transform: none;
     }
 
