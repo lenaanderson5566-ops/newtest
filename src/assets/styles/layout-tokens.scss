@@ -20,6 +20,40 @@
   --layout-shell-inline-start: 14px;
   --layout-shell-inline-end: 30px;
 
+  --layout-sidebar-breakpoint: 906px;
+
+  --surface-blur-strong: blur(10px);
+  --topbar-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  --page-header-divider-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.8);
+
+  --page-header-title-size: 18px;
+  --page-header-title-size-mobile: 16px;
+  --site-logo-size: 16px;
+  --site-logo-size-mobile: 14px;
+  --site-logo-gap: 10px;
+  --site-logo-gap-mobile: 8px;
+  --site-logo-icon-size: 20px;
+  --site-logo-icon-size-mobile: 18px;
+
+  --toolbar-control-height: 34px;
+  --toolbar-control-padding: 5px 8px;
+  --toolbar-control-radius: 8px;
+  --toolbar-control-gap: 3px;
+  --toolbar-language-min-width: 88px;
+
+  --page-content-top-gap: 8px;
+  --page-content-top-gap-mobile: 6px;
+
+  --mobile-card-radius: 10px;
+  --mobile-card-padding: 12px;
+  --mobile-card-header-padding: 10px 12px;
+  --mobile-card-body-padding: 10px 12px;
+  --mobile-card-title-size: 16px;
+  --mobile-card-body-size: 14px;
+  --mobile-grid-gap: 8px;
+  --mobile-content-bottom-padding: 64px;
+  --mobile-content-bottom-margin: 6px;
+
   --text-strong: #0f172a;
   --toolbar-z: 110;
   --app-toolbar-control-hover-bg: #f5f7fa;

@@ -2,7 +2,7 @@
 
 ## Overall phases
 - [x] Phase 1: Layout/token baseline
-- [~] Phase 2: Shell standardization and reusable layout primitives (进行中，约 70%)
+- [~] Phase 2: Shell standardization and reusable layout primitives (进行中，约 80%)
 - [x] Phase 3: Base component unification (已完成)
 - [~] Phase 4: P0 page migration (overview/profile/billing/support)（进行中，约 85%）
 - [ ] Phase 5: P1/P2 page migration and cleanup
@@ -25,6 +25,7 @@
 - Integrated `AppContainer` into `MainBoard` to reduce page-level container ownership.
 - Continued tokenization of app-shell styles in `App.vue` (header text color, toolbar layer, toolbar hover/active visual tokens, logo radius).
 - Fixed page-header rendering guard to use shell-computed `hasPageHeader`.
+- App 壳层关键样式常量（header/toolbar/mobile density）进一步 token 化，降低页面级硬编码。
 
 ## Next
 1. Introduce base shell components for topbar/sidebar/bottom-nav responsibilities.
