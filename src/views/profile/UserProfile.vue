@@ -1557,17 +1557,19 @@ onMounted(() => {
 
 .profile-container {
 
-  padding: 1.25rem;
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
 
-  padding-bottom: calc(1.25rem + 70px);
+  padding: var(--layout-gutter-mobile, 1rem);
+
+  padding-bottom: calc(var(--layout-gutter-mobile, 1rem) + 70px + var(--safe-bottom));
 
 
 
   @media (min-width: 768px) {
 
-    padding: 2rem;
+    padding: var(--layout-gutter-desktop, 2rem);
 
-    padding-bottom: 3rem;
+    padding-bottom: calc(var(--layout-gutter-desktop, 2rem) + 24px);
 
   }
 
@@ -2262,6 +2264,8 @@ onMounted(() => {
 
           padding: 10px 12px;
 
+          min-height: 44px;
+
           border: 1px solid var(--border-color);
 
           border-radius: 8px;
@@ -2301,6 +2305,8 @@ onMounted(() => {
           gap: 8px;
 
           padding: 10px 16px;
+
+          min-height: 44px;
 
           border-radius: 8px;
 
@@ -2958,7 +2964,9 @@ onMounted(() => {
 
   .profile-container {
 
-    padding: 1rem;
+    padding: var(--layout-gutter-mobile, 1rem);
+
+    padding-bottom: calc(var(--layout-gutter-mobile, 1rem) + 72px + var(--safe-bottom));
 
   }
 
