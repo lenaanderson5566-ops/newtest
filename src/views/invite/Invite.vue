@@ -28,18 +28,18 @@
     
     <div class="account-inner">
       <!-- 欢迎卡片 -->
-      <div class="dashboard-card welcome-card">
+      <BaseCard class="dashboard-card welcome-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('invite.title') }}</h2>
         </div>
         <div class="card-body">
           <p>{{ $t('invite.description') }}</p>
         </div>
-      </div>
+      </BaseCard>
       
 
       <!-- 佣金余额卡片 -->
-      <div class="dashboard-card balance-card">
+      <BaseCard class="dashboard-card balance-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('invite.balance.title') }}</h2>
         </div>
@@ -66,9 +66,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </BaseCard>
 
-      <div class="dashboard-card referral-kpi-card" v-if="!loading.inviteData">
+      <BaseCard class="dashboard-card referral-kpi-card" v-if="!loading.inviteData">
         <div class="referral-kpi-grid">
           <div class="kpi-item">
             <div class="kpi-label">{{ $t('invite.stats.registeredUsers') }}</div>
@@ -87,7 +87,7 @@
             <div class="kpi-value">{{ currencySymbol }}{{ inviteStats.validCommission }}</div>
           </div>
         </div>
-      </div>
+      </BaseCard>
       
       <!-- 划转到余额弹窗 -->
       <transition name="modal-fade">
@@ -245,7 +245,7 @@
       </transition>
       
       <!-- 邀请链接卡片 -->
-      <div class="dashboard-card">
+      <BaseCard class="dashboard-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('invite.inviteLink.title') }}</h2>
           <div class="card-actions">
@@ -363,10 +363,10 @@
             </button>
           </div>
         </div>
-      </div>
+      </BaseCard>
       
       <!-- 邀请记录卡片 -->
-      <div class="dashboard-card">
+      <BaseCard class="dashboard-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('invite.records.title') }}</h2>
           <div class="card-actions">
@@ -508,7 +508,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </BaseCard>
     </div>
   </div>
 </template>
@@ -517,6 +517,7 @@
 import { useI18n } from 'vue-i18n';
 import { ref, computed, onMounted, onUnmounted, reactive, nextTick } from 'vue';
 import { useToast } from '@/composables/useToast';
+import BaseCard from '@/components/base/BaseCard.vue';
 import { INVITE_CONFIG } from '@/utils/baseConfig';
 import { getInviteData, getInviteDetails, getCommissionConfig, generateInviteCode, transferCommission, withdrawCommission } from '@/api/invite';
 import {
@@ -541,6 +542,7 @@ import {
 export default {
   name: 'InviteView',
   components: {
+    BaseCard,
     IconCopy,
     IconBrandWechat,
     IconBrandTwitter,
