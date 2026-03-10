@@ -2764,7 +2764,7 @@ export default {
         margin: 0;
         font-size: 18px;
         font-weight: 700;
-        color: #111827;
+        color: var(--dashboard-text-primary);
       }
 
       .traffic-package-status {
@@ -2772,8 +2772,8 @@ export default {
         font-weight: 600;
         border-radius: 999px;
         padding: 6px 10px;
-        background: #f3f4f6;
-        color: #6b7280;
+        background: var(--dashboard-status-chip-bg);
+        color: var(--dashboard-status-chip-text);
 
         &.active {
           background: rgba(var(--theme-color-rgb), 0.14);
@@ -2783,8 +2783,8 @@ export default {
     }
 
     .expired-blur-target {
-      filter: blur(2.5px) saturate(0.65);
-      opacity: 0.65;
+      filter: var(--dashboard-expired-filter);
+      opacity: var(--dashboard-expired-opacity);
       pointer-events: none;
       user-select: none;
       transition: filter 0.2s ease, opacity 0.2s ease;
@@ -2794,7 +2794,7 @@ export default {
       position: relative;
       background-color: var(--card-bg-color);
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      box-shadow: var(--dashboard-stat-shadow-soft);
       display: flex;
       align-items: center;
       gap: 16px;
@@ -2819,7 +2819,7 @@ export default {
         left: 0;
         bottom: 0;
         width: 100%;
-        background-color: rgba(var(--theme-color-rgb), 0.12);
+        background-color: var(--dashboard-water-bg);
         transition: none;
         border-radius: 0 0 16px 16px;
         height: 0;
@@ -2915,7 +2915,7 @@ export default {
           }
         }
         &.package-card-muted {
-          background: #f3f4f6;
+          background: var(--dashboard-status-chip-bg);
           border-color: #e5e7eb;
 
           .package-add-btn {
@@ -2924,7 +2924,7 @@ export default {
           }
         }
         &.subscription-card-muted {
-          background: #f3f4f6;
+          background: var(--dashboard-status-chip-bg);
           border-color: #e5e7eb;
 
           .section-progress-track {
@@ -2948,11 +2948,11 @@ export default {
         }
 
         &.expired-main-card {
-          background: #f3f4f6;
+          background: var(--dashboard-status-chip-bg);
           border-color: #d1d5db;
 
           .usage-card-title {
-            color: #6b7280;
+            color: var(--dashboard-status-chip-text);
           }
         }
 
@@ -3030,7 +3030,7 @@ export default {
 
           .plan-summary-label {
             font-size: 12px;
-            color: #6b7280;
+            color: var(--dashboard-status-chip-text);
 
             &.with-tooltip {
               display: inline-flex;
@@ -3049,7 +3049,7 @@ export default {
 
           .plan-summary-value {
             font-size: 14px;
-            color: #111827;
+            color: var(--dashboard-text-primary);
             font-weight: 600;
             text-align: right;
             word-break: break-word;
@@ -3082,7 +3082,7 @@ export default {
           .plan-summary-desc {
             margin: 4px 0 0;
             font-size: 12px;
-            color: #6b7280;
+            color: var(--dashboard-status-chip-text);
           }
 
           .auto-renewal-row {
@@ -3217,7 +3217,7 @@ export default {
           font-size: 36px;
           line-height: 1;
           font-weight: 700;
-          color: #111827;
+          color: var(--dashboard-text-primary);
 
           &.compact {
             font-size: 32px;
@@ -3293,7 +3293,7 @@ export default {
         .usage-reset-hint {
           width: 100%;
           font-size: 12px;
-          color: #6b7280;
+          color: var(--dashboard-status-chip-text);
         }
 
         .section-progress-track {
@@ -4143,7 +4143,7 @@ export default {
 
   &:hover {
     background-color: #e5e7eb;
-    color: #111827;
+    color: var(--dashboard-text-primary);
     transform: none;
   }
 
@@ -5889,7 +5889,7 @@ a.eztheme-btn {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  background-color: rgba(0, 0, 0, 0.7) !important;
+  background-color: var(--dashboard-modal-overlay-bg) !important;
   z-index: 1200 !important;
   padding: 16px !important;
 }
@@ -5899,7 +5899,7 @@ a.eztheme-btn {
   max-height: calc(100vh - 32px) !important;
   border-radius: 12px !important;
   overflow: hidden !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: var(--dashboard-modal-shadow) !important;
 }
 
 .traffic-package-modal-card-global {
@@ -5907,8 +5907,8 @@ a.eztheme-btn {
   display: flex !important;
   flex-direction: column !important;
   border-radius: 16px !important;
-  border: 1px solid rgba(var(--theme-color-rgb), 0.15) !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid var(--dashboard-modal-border) !important;
+  box-shadow: var(--dashboard-modal-card-shadow) !important;
   max-height: calc(100vh - 32px) !important;
   overflow: hidden !important;
 }
@@ -5919,7 +5919,7 @@ a.eztheme-btn {
   justify-content: space-between !important;
   align-items: center !important;
   border-bottom: 1px solid var(--border-color) !important;
-  background-color: rgba(var(--theme-color-rgb), 0.03) !important;
+  background-color: var(--dashboard-modal-header-bg) !important;
 }
 
 .traffic-package-modal-card-global .modal-header h3 {
@@ -6010,7 +6010,7 @@ a.eztheme-btn {
   border-radius: 8px !important;
   font-size: 14px !important;
   font-weight: 500 !important;
-  background-color: rgba(var(--theme-color-rgb), 0.92) !important;
+  background-color: var(--dashboard-modal-buy-btn-bg) !important;
   color: #fff !important;
   cursor: pointer !important;
 }

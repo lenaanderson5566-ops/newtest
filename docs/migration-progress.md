@@ -6,8 +6,10 @@
 - [x] Phase 3: Base component unification (已完成)
 - [~] Phase 4: P0 page migration (overview/profile/billing/support)（已完成，100%）
 - [~] Phase 5: P1/P2 page migration and cleanup（已完成，100%）
+- [~] Phase 6: Dashboard/long-tail visual consistency and cleanup（进行中，约 25%）
 
 ## This iteration
+- 启动 Phase 6：Dashboard 统计卡片状态色/过期态与流量包弹层关键样式完成首批 token 化（覆盖阴影、边框、遮罩、按钮底色）。
 - 启动 Phase 3：新增 `BaseCard` / `BaseListRow` / `BaseSettingsRow` 三个基础组件并接入个人中心页面。
 - 将安全设置页（SecuritySettings）迁移到 BaseCard/BaseListRow 结构，减少重复卡片与行样式。
 - 将 Billing 页面 Tab 结构迁移到 `BaseTabs`，统一分段导航样式实现。
