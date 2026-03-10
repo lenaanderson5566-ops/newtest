@@ -1,30 +1,17 @@
 ﻿<template>
   <div>
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
-    <div class="static-layout" v-if="$route.meta.requiresAuth">
-      <div class="top-fixed-bar">
-        <!-- 网站名称 -->
-        <div class="site-logo">
-          <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
-          {{ siteConfig.siteName }}
-        </div>
+    <div class="static-layout" v-if="requiresAuth">
+      <AppTopBar
+        :site-config="siteConfig"
+        :username="username"
+        :avatar-url="avatarUrl"
+        :has-unread-notice="hasUnreadNotice"
+        :show-gift-card-redeem="PROFILE_CONFIG.showGiftCardRedeem"
+        @navigate-profile="$router.push('/profile')"
+      />
 
-        <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
-        <div class="top-toolbar">
-        <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
-        <LanguageSelector />
-        <button 
-          v-if="PROFILE_CONFIG.showGiftCardRedeem" 
-          class="gift-btn" 
-          @click="$router.push('/profile')"
-        >
-          <IconGift :size="18" />
-        </button>
-        <UserAvatar :username="username" :avatarUrl="avatarUrl" />
-        </div>
-      </div>
-
-      <div class="page-header-layer" v-if="pageHeaderTitle">
+      <div class="page-header-layer" v-if="hasPageHeader">
         <div class="page-header-content">
           <div class="page-header-title">{{ pageHeaderTitle }}</div>
         </div>
@@ -35,15 +22,11 @@
     </div>
 
     <!-- 认证页面顶部工具栏，确保认证页面也有语言切换器 -->
-    <div class="auth-toolbar" v-if="!$route.meta.requiresAuth && $route.path.includes('/auth')">
-      <div class="top-toolbar">
-        <LanguageSelector />
-      </div>
-    </div>
+    <AuthTopToolbar v-if="!requiresAuth && $route.path.includes('/auth')" />
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
-    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth, 'with-page-header': $route.meta.requiresAuth && !!pageHeaderTitle }]">
-      <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
+    <div :class="['app-content-wrapper', { 'with-left-nav': requiresAuth, 'with-top-bar': requiresAuth, 'with-page-header': hasPageHeader }]">
+      <div :class="['content-layout-shell', { 'fixed-content-width': requiresAuth }]">
         <router-view v-slot="{ Component, route }">
           <transition 
             name="page-transition" 
@@ -87,6 +70,7 @@
 
 <script>
 import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue';
+import { useLayoutShell } from '@/composables/useLayoutShell';
 import { useStore } from 'vuex';
 import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
@@ -99,15 +83,13 @@ import { handleRedirectPath } from '@/utils/redirectHandler';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
-import LanguageSelector from '@/components/common/LanguageSelector.vue';
-import UserAvatar from '@/components/common/UserAvatar.vue';
-import ServiceNoticeButton from '@/components/common/ServiceNoticeButton.vue';
 import BackToTop from '@/components/common/BackToTop.vue';
 import CustomContextMenu from '@/components/common/CustomContextMenu.vue';
 import CustomerServiceIcon from '@/components/common/CustomerServiceIcon.vue';
 import CrispEmbed from '@/components/common/CrispEmbed.vue';
 import ResourcePreloader from '@/components/common/ResourcePreloader.vue';
-import { IconGift } from '@tabler/icons-vue';
+import AppTopBar from '@/components/layout/AppTopBar.vue';
+import AuthTopToolbar from '@/components/layout/AuthTopToolbar.vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import pageCache from '@/utils/pageCache';
@@ -125,19 +107,18 @@ export default {
     Toast,
     IconDefinitions,
     SlideTabsNav,
-    LanguageSelector,
-    UserAvatar,
-    ServiceNoticeButton,
     BackToTop,
     CustomContextMenu,
     CustomerServiceIcon,
     CrispEmbed,
     ResourcePreloader,
-    IconGift
+    AppTopBar,
+    AuthTopToolbar
   },
   setup() {
     const router = useRouter();
     const route = useRoute();
+    const { requiresAuth, hasPageHeader } = useLayoutShell();
     const store = useStore();
     const { t } = useI18n();
     const { applyTheme } = useTheme();
@@ -195,7 +176,7 @@ export default {
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
 
     watch(
-      () => route.meta.requiresAuth,
+      () => requiresAuth.value,
       (requiresAuth) => {
         if (!requiresAuth) {
           unreadNoticeCount.value = 0;
@@ -208,7 +189,7 @@ export default {
     );
     
     const loadUnreadNoticeCount = async () => {
-      if (!route.meta.requiresAuth) {
+      if (!requiresAuth.value) {
         unreadNoticeCount.value = 0;
         return;
       }
@@ -309,7 +290,9 @@ export default {
       cachedRoutes,
       customerServiceConfig,
       hasUnreadNotice,
-      pageHeaderTitle
+      pageHeaderTitle,
+      requiresAuth,
+      hasPageHeader
     };
   }
 };
@@ -333,7 +316,7 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: var(--app-topbar-z);
 }
 
 
@@ -344,16 +327,16 @@ export default {
   padding-top: var(--safe-top);
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.88);
+  background: var(--topbar-surface);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: 1px solid var(--surface-border-weak);
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
-  z-index: 120;
+  z-index: var(--app-topbar-z);
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -363,12 +346,12 @@ export default {
   left: 0;
   right: 0;
   height: var(--page-header-height);
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--page-header-surface);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  border-bottom: 1px solid var(--surface-border-subtle);
   box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.8);
-  z-index: 115;
+  z-index: var(--app-page-header-z);
 }
 
 .page-header-content {
@@ -383,7 +366,7 @@ export default {
   font-size: 18px;
   line-height: 1;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-strong);
 }
 
 
@@ -399,7 +382,7 @@ export default {
   .site-logo-img {
     height: 20px;
     width: 20px;
-    border-radius: 6px;
+    border-radius: var(--logo-radius);
     object-fit: cover;
   }
 }
@@ -413,14 +396,14 @@ export default {
   --toolbar-control-radius: 8px;
   --toolbar-control-border: transparent;
   --toolbar-control-bg: transparent;
-  --toolbar-control-hover-bg: #f5f7fa;
-  --toolbar-control-active-border: #e5e7eb;
+  --toolbar-control-hover-bg: var(--app-toolbar-control-hover-bg);
+  --toolbar-control-active-border: var(--app-toolbar-control-active-border);
 
   position: static;
   display: flex;
   align-items: center;
   gap: 3px;
-  z-index: 110;
+  z-index: var(--toolbar-z);
 
   .gift-btn {
 
@@ -440,7 +423,7 @@ export default {
     &:hover {
       border-color: rgba(var(--theme-color-rgb), 0.45);
       color: var(--theme-color);
-      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1);
+      box-shadow: var(--toolbar-control-shadow-hover);
       transform: translateY(-1px);
     }
   }
@@ -500,7 +483,7 @@ export default {
 
 .content-layout-shell {
   width: 100%;
-  max-width: var(--layout-max-width);
+  max-width: var(--layout-content-max-width);
   margin: 0 auto;
   padding-inline: var(--layout-padding-x) var(--layout-padding-x-right);
   box-sizing: border-box;
@@ -508,25 +491,25 @@ export default {
 
 @media (min-width: 906px) {
   .app-content-wrapper.with-left-nav {
-    padding-left: 194px;
+    padding-left: var(--app-sidebar-width);
   }
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
-    width: min(1120px, 100%);
+    width: min(var(--layout-shell-max-width), 100%);
     margin-left: 0;
     margin-right: auto;
-    padding-inline: 14px 30px;
+    padding-inline: var(--layout-shell-inline-start) var(--layout-shell-inline-end);
   }
 
   .page-header-layer {
-    padding-left: 194px;
+    padding-left: var(--app-sidebar-width);
   }
 
   .page-header-content {
-    width: min(1120px, 100%);
+    width: min(var(--layout-shell-max-width), 100%);
     margin-left: 0;
     margin-right: auto;
-    padding: 0 30px 0 14px;
+    padding: 0 var(--layout-shell-inline-end) 0 var(--layout-shell-inline-start);
   }
 
 }
@@ -699,7 +682,7 @@ html {
     right: 25px;
     display: flex;
     gap: 16px;
-    z-index: 110;
+    z-index: var(--toolbar-z);
   }
 }
 

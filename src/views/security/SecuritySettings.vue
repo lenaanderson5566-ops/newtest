@@ -1,24 +1,15 @@
 <template>
   <div class="security-container">
     <div class="security-inner">
-      <div class="profile-card">
-        <div class="card-header">
-          <h3>{{ $t('profile.security') }}</h3>
-        </div>
-        <div class="settings-content">
-          <div class="action-buttons">
-            <button class="action-btn" @click="showPasswordModal = true">
-              <IconLock :size="18" />
-              {{ $t('profile.changePassword') }}
-            </button>
-          </div>
-        </div>
-      </div>
+      <BaseCard title="安全设置">
+        <BaseListRow :title="$t('profile.changePassword')" description="修改账户登录密码" @click="showPasswordModal = true">
+          <template #action>
+            <IconLock :size="18" />
+          </template>
+        </BaseListRow>
+      </BaseCard>
 
-      <div v-if="PROFILE_CONFIG.showRecentDevices" class="profile-card">
-        <div class="card-header">
-          <h3>{{ $t('profile.recentDevices') }}</h3>
-        </div>
+      <BaseCard v-if="PROFILE_CONFIG.showRecentDevices" :title="$t('profile.recentDevices')">
         <div class="settings-content">
           <div v-if="loadingSessions" class="device-loading">
             <div class="session-skeleton" v-for="i in 3" :key="i">
@@ -57,7 +48,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </BaseCard>
     </div>
 
     <transition name="modal-fade">
@@ -111,6 +102,8 @@ import {
 } from '@tabler/icons-vue';
 import useToast from '@/hooks/useToast';
 import { PROFILE_CONFIG } from '@/utils/baseConfig';
+import BaseCard from '@/components/base/BaseCard.vue';
+import BaseListRow from '@/components/base/BaseListRow.vue';
 
 const { t } = useI18n();
 const { success, error: showError } = useToast();
@@ -257,37 +250,12 @@ onMounted(() => {
 .security-inner {
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.profile-card {
-  background: var(--card-bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
-
-.card-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border-color);
-
-  h3 {
-    margin: 0;
-  }
+  display: grid;
+  gap: 20px;
 }
 
 .settings-content {
-  padding: 16px 20px;
-}
-
-.action-btn {
-  border: 1px solid var(--border-color);
-  background: var(--card-bg-color);
-  padding: 8px 12px;
-  border-radius: 8px;
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  cursor: pointer;
+  padding: 12px 16px;
 }
 
 .device-item {

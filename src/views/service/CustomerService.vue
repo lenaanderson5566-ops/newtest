@@ -387,7 +387,6 @@ export default {
     });
     
     onUnmounted(() => {
-      window.removeEventListener('storage', () => {});
       
       sessionStorage.removeItem('cs_page_reloaded');
       
@@ -418,31 +417,33 @@ export default {
 .customer-service-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   background-color: var(--background-color);
   color: var(--text-color);
-  
-  
 }
 
 .service-header {
   display: flex;
   align-items: center;
-  padding: 20px;
-  position: relative;
-  z-index: 10;
+  padding: calc(var(--space-3) + var(--safe-top)) var(--space-4) var(--space-3);
+  position: sticky;
+  top: 0;
+  z-index: var(--app-topbar-z, 120);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   background-color: var(--card-background);
+  border-bottom: 1px solid var(--border-color-soft);
 }
 
 .back-button, .refresh-button {
-  background: none;
-  border: none;
+  background: transparent;
+  border: 1px solid var(--border-color-soft);
   color: var(--theme-color);
   cursor: pointer;
-  padding: 8px;
-  display: flex;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 }
@@ -464,7 +465,7 @@ export default {
   overflow: hidden;
   position: relative;
   width: 100%;
-  height: calc(100vh - 70px);
+  min-height: 0;
 }
 
 .service-crisp-container {
@@ -519,15 +520,11 @@ export default {
 
 @media (max-width: 768px) {
   .service-header {
-    padding: 16px;
+    padding: calc(var(--space-2) + var(--safe-top)) var(--space-3) var(--space-2);
   }
-  
+
   .service-title {
     font-size: 16px;
-  }
-  
-  .service-content {
-    height: calc(100vh - 60px);
   }
 }
 </style> 

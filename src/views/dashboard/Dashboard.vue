@@ -2558,6 +2558,7 @@ export default {
   padding: 20px;
   display: flex;
   justify-content: center;
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
   --dashboard-card-padding: 20px;
   --dashboard-card-gap: 16px;
 
@@ -2575,6 +2576,9 @@ export default {
   .dashboard-inner {
     width: 100%;
     max-width: 1200px;
+    display: grid;
+    gap: 8px;
+
     .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -4224,9 +4228,18 @@ export default {
 @media (max-width: 768px) {
   .dashboard-container {
     padding: 10px;
-    padding-bottom: 74px;
+    padding-bottom: calc(74px + var(--safe-bottom));
     --dashboard-card-padding: 12px;
     --dashboard-card-gap: 10px;
+  }
+
+  .dashboard-inner {
+    gap: 6px;
+  }
+
+  .dashboard-inner .overview-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .stats-grid {

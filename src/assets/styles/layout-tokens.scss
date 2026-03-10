@@ -1,0 +1,35 @@
+:root {
+  --bp-mobile-max: 767px;
+  --bp-tablet-max: 1199px;
+
+  --layout-shell-max-width: 1120px;
+  --layout-content-max-width: var(--layout-max-width, 1180px);
+  --layout-gutter-mobile: 12px;
+  --layout-gutter-desktop: 24px;
+
+  --app-sidebar-width: 194px;
+  --app-topbar-z: 120;
+  --app-page-header-z: 115;
+  --app-content-z: 1;
+
+  --topbar-surface: rgba(255, 255, 255, 0.88);
+  --page-header-surface: rgba(255, 255, 255, 0.92);
+  --surface-border-weak: rgba(15, 23, 42, 0.08);
+  --surface-border-subtle: rgba(15, 23, 42, 0.06);
+
+  --layout-shell-inline-start: 14px;
+  --layout-shell-inline-end: 30px;
+
+  --text-strong: #0f172a;
+  --toolbar-z: 110;
+  --app-toolbar-control-hover-bg: #f5f7fa;
+  --app-toolbar-control-active-border: #e5e7eb;
+  --toolbar-control-shadow-hover: 0 3px 10px rgba(15, 23, 42, 0.1);
+  --logo-radius: 6px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --layout-gutter-mobile: 16px;
+  }
+}
