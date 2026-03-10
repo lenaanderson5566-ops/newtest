@@ -797,53 +797,64 @@ function debounce(fn, delay) {
 
 
 <style lang="scss" scoped>
-
 .slide-tabs-container {
-  margin-bottom: 14px;
   position: fixed;
-  top: 108px;
-  left: 10px;
-  z-index: 10;
-  width: 170px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 12px;
+  z-index: 20;
+  width: min(94vw, 460px);
 
   .slide-tabs-wrapper {
     background: rgba(var(--card-background-rgb), 0.98);
-    border-radius: 10px;
-    padding: 2px;
+    border-radius: 18px;
+    padding: 3px;
     box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
     border: 1px solid var(--border-color);
     overflow: hidden;
+    width: 100%;
   }
 
   .slide-tabs-nav {
     display: flex;
-    flex-direction: column;
-    gap: 3px;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    gap: 0;
+    padding: 2px;
     position: relative;
 
-    .indicator-container {
+    .indicator-container,
+    .slider-indicator {
       display: none;
     }
 
     .nav-item {
-      padding: 8px 10px;
+      flex: 1 1 0;
+      min-width: 0;
+      padding: 6px 8px;
       border-radius: 8px;
       font-weight: 500;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--secondary-text-color);
       text-decoration: none;
-      text-align: left;
+      text-align: center;
       position: relative;
       transition: all 0.25s ease;
       white-space: nowrap;
       display: flex;
       align-items: center;
-      gap: 8px;
-      min-height: 38px;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+      height: 50px;
 
       .badge-dot {
-        position: static;
-        margin-left: auto;
+        position: absolute;
+        top: 2px;
+        right: calc(50% - 20px);
         background-color: rgba(var(--theme-color-rgb), 0.88);
         color: #fff;
         border-radius: 10px;
@@ -852,7 +863,7 @@ function debounce(fn, delay) {
         font-weight: 700;
         line-height: 1.2;
         box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
-        transform: none;
+        transform: scale(0.88);
       }
 
       .nav-icon {
@@ -861,17 +872,21 @@ function debounce(fn, delay) {
         justify-content: center;
 
         svg {
-          width: 16px;
-          height: 16px;
+          width: 15px;
+          height: 15px;
           transition: color 0.25s ease;
         }
+      }
+
+      .nav-text {
+        line-height: 1.2;
       }
 
       &.active {
         color: var(--text-color);
         background: rgba(var(--theme-color-rgb), 0.12);
-        box-shadow: inset 2px 0 0 rgba(var(--theme-color-rgb), 0.65);
 
+        .nav-text,
         .nav-icon svg {
           color: var(--theme-color);
         }
@@ -883,8 +898,8 @@ function debounce(fn, delay) {
       }
 
       &:last-child {
-        border: 1px solid var(--border-color);
-        background: rgba(var(--card-background-rgb), 0.98);
+        border: 0;
+        background: transparent;
 
         &:hover,
         &.active {
@@ -892,230 +907,81 @@ function debounce(fn, delay) {
         }
       }
     }
-
-    .slider-indicator {
-      display: none;
-    }
   }
 }
 
-@media (max-width: 768px) {
-
+@media (min-width: 769px) {
   .slide-tabs-container {
+    margin-bottom: 14px;
+    top: 108px;
+    left: 10px;
+    bottom: auto;
+    transform: none;
+    z-index: 10;
+    width: 170px;
+
+    .slide-tabs-wrapper {
+      border-radius: 10px;
+      padding: 2px;
+    }
 
     .slide-tabs-nav {
+      flex-direction: column;
+      gap: 3px;
+      padding: 0;
 
       .nav-item {
-
-        flex: 1 1 0;
-        min-width: 0;
-        padding: 6px 8px;
-
+        padding: 8px 10px;
         font-size: 13px;
-
+        text-align: left;
         flex-direction: row;
-
-        gap: 6px;
-
-        justify-content: center;
-
-        height: 50px;
-
-        
-
-        
+        justify-content: flex-start;
+        gap: 8px;
+        min-height: 38px;
+        height: auto;
 
         .badge-dot {
-
-          top: -1px;
-
-          right: auto; 
-
-          left: 50%; 
-
-          transform: translateX(-50%) scale(0.9); 
-
+          position: static;
+          transform: none;
+          margin-left: auto;
         }
 
-        
-
-        &:last-child {
-
-          height: 50px;
-
+        .nav-icon svg {
+          width: 16px;
+          height: 16px;
         }
-
-        
-
-        .nav-icon {
-
-          display: block; 
-
-          height: 24px;
-
-          display: flex;
-
-          align-items: center;
-
-          justify-content: center;
-
-          
-
-          svg {
-
-            width: 16px;
-
-            height: 16px;
-
-            transition: color 0.3s ease;
-
-          }
-
-        }
-
-        
-
-        .nav-text {
-
-          font-weight: 500;
-
-          line-height: 1.2;
-
-        }
-
-        
 
         &.active {
-
-          .nav-text {
-
-            color: var(--theme-color);
-
-          }
-
-          .nav-icon svg {
-
-            transform: scale(1); 
-
-          }
-
+          box-shadow: inset 2px 0 0 rgba(var(--theme-color-rgb), 0.65);
         }
 
+        &:last-child {
+          border: 1px solid var(--border-color);
+          background: rgba(var(--card-background-rgb), 0.98);
+        }
       }
-
     }
-
   }
-
 }
-
-
-
-@media (max-width: 768px) {
-
-  .slide-tabs-container {
-
-    top: auto;
-
-    bottom: 20px;  
-
-    width: 92%;
-
-    max-width: 450px;
-
-    margin-bottom: 0;
-
-    
-
-    .slide-tabs-wrapper {
-
-      width: 100%;
-
-      display: block;
-
-      border-radius: 20px;
-
-      padding: 3px;
-
-    }
-
-    
-
-    .slide-tabs-nav {
-
-      width: 100%;
-
-      justify-content: space-between;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      overflow: hidden;
-      gap: 0;
-      padding: 2px;
-
-      .slider-indicator {
-
-        display: none; 
-
-      }
-
-    }
-
-  }
-
-}
-
-
 
 @media (max-width: 480px) {
-
   .slide-tabs-container {
+    bottom: 10px;
 
-    bottom: 12px; 
+    .slide-tabs-nav .nav-item {
+      padding: 5px 6px;
+      font-size: 11px;
+      height: 46px;
 
-    width: 94%;
-
-    
-
-    .slide-tabs-wrapper {
-
-      border-radius: 18px;
-
-    }
-
-    
-
-    .slide-tabs-nav {
-
-      .nav-item {
-
-        flex: 1 1 0;
-        min-width: 0;
-        padding: 5px 6px;
-
-        font-size: 11px;
-
-        height: 46px;
-
-        
-
-        .nav-icon {
-
-          svg {
-
-            width: 14px;
-
-            height: 14px;
-
-          }
-
-        }
-
+      .nav-text {
+        font-size: 10px;
       }
 
+      .nav-icon svg {
+        width: 14px;
+        height: 14px;
+      }
     }
-
   }
-
 }
-
 </style> 

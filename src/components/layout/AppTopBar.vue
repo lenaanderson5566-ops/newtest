@@ -1,16 +1,18 @@
 <template>
   <div class="top-fixed-bar">
-    <div class="site-logo">
+    <div class="site-brand">
       <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
-      {{ siteConfig.siteName }}
+      <div class="site-brand-text">
+        <span class="site-logo">{{ siteConfig.siteName }}</span>
+      </div>
     </div>
 
     <div class="top-toolbar">
-      <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
+      <ServiceNoticeButton class="toolbar-control" :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
       <LanguageSelector />
       <button
         v-if="showGiftCardRedeem"
-        class="gift-btn"
+        class="gift-btn toolbar-control"
         @click="$emit('navigate-profile')"
       >
         <IconGift :size="18" />
@@ -79,22 +81,36 @@ export default {
   padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
   z-index: var(--app-topbar-z);
   transition: background-color var(--app-topbar-transition-duration) var(--app-transition-ease), box-shadow var(--app-topbar-transition-duration) var(--app-transition-ease);
+  gap: 8px;
 }
 
-.site-logo {
-  font-size: var(--site-logo-size);
-  font-weight: 700;
-  color: var(--theme-color);
-  letter-spacing: -0.5px;
+.site-brand {
   display: flex;
   align-items: center;
-  gap: var(--site-logo-gap);
+  gap: var(--site-logo-gap-mobile);
+  min-width: 0;
+
+  .site-brand-text {
+    min-width: 0;
+  }
+
+  .site-logo {
+    display: block;
+    font-size: var(--site-logo-size-mobile);
+    font-weight: 700;
+    color: var(--theme-color);
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   .site-logo-img {
-    height: var(--site-logo-icon-size);
-    width: var(--site-logo-icon-size);
+    height: var(--site-logo-icon-size-mobile);
+    width: var(--site-logo-icon-size-mobile);
     border-radius: var(--logo-radius);
     object-fit: cover;
+    flex-shrink: 0;
   }
 }
 
@@ -110,7 +126,7 @@ export default {
   gap: var(--toolbar-control-gap);
   z-index: var(--toolbar-z);
 
-  .gift-btn {
+  .toolbar-control {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,6 +139,7 @@ export default {
     color: var(--text-color);
     cursor: pointer;
     transition: all var(--app-control-transition-duration) var(--app-transition-ease);
+    flex-shrink: 0;
 
     &:hover {
       border-color: rgba(var(--theme-color-rgb), 0.45);
@@ -155,30 +172,52 @@ export default {
   :deep(.avatar-wrapper) {
     width: auto;
     min-width: var(--toolbar-control-height);
-    font-size: var(--site-logo-size-mobile);
+    font-size: 13px;
   }
 
   :deep(.language-btn) {
     min-width: var(--toolbar-language-min-width);
-    font-size: var(--site-logo-size-mobile);
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 769px) {
+  .site-brand {
+    gap: var(--site-logo-gap);
+
+    .site-logo {
+      font-size: var(--site-logo-size);
+    }
+
+    .site-logo-img {
+      width: var(--site-logo-icon-size);
+      height: var(--site-logo-icon-size);
+    }
   }
 }
 
 @media (max-width: 768px) {
-  .site-logo {
-    font-size: var(--site-logo-size-mobile);
-    gap: var(--site-logo-gap-mobile);
+  .top-fixed-bar {
+    padding-inline: 10px;
+  }
 
-    .site-logo-img {
-      width: var(--site-logo-icon-size-mobile);
-      height: var(--site-logo-icon-size-mobile);
-    }
+  .site-brand {
+    max-width: 40%;
   }
 
   .top-toolbar {
-    gap: var(--toolbar-control-gap);
-    flex-wrap: nowrap;
+    gap: 6px;
     justify-content: flex-end;
+
+    :deep(.language-text) {
+      display: none;
+    }
+
+    :deep(.language-btn) {
+      min-width: var(--toolbar-control-height);
+      width: var(--toolbar-control-height);
+      padding-inline: 0;
+    }
   }
 }
 </style>
