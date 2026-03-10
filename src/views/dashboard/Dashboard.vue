@@ -2908,7 +2908,7 @@ export default {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: var(--dashboard-text-inverse);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
             box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.2);
             cursor: pointer;
@@ -2919,7 +2919,7 @@ export default {
           border-color: #e5e7eb;
 
           .package-add-btn {
-            color: #fff;
+            color: var(--dashboard-text-inverse);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
           }
         }
@@ -3115,19 +3115,19 @@ export default {
               }
 
               &.primary {
-                color: #fff;
+                color: var(--dashboard-text-inverse);
                 background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
               }
 
               &.premium {
-                color: #fff;
+                color: var(--dashboard-text-inverse);
                 background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
               }
 
               &.theme {
-                color: #fff;
+                color: var(--dashboard-text-inverse);
                 border-color: transparent;
                 background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 1));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.28);
@@ -3187,7 +3187,7 @@ export default {
                 width: 18px;
                 left: 3px;
                 bottom: 3px;
-                background-color: #fff;
+                background-color: var(--dashboard-text-inverse);
                 transition: 0.3s;
               }
 
@@ -3604,7 +3604,7 @@ export default {
       padding: 0 8px;
       font-size: 11px;
       font-weight: 800;
-      color: #fff;
+      color: var(--dashboard-text-inverse);
       letter-spacing: 0.5px;
       background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
       box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
@@ -3881,7 +3881,7 @@ export default {
         font-size: 14px;
         font-weight: 600;
         margin-bottom: 6px;
-        color: #fff;
+        color: var(--dashboard-text-inverse);
         line-height: 1.35;
       }
 
@@ -3910,7 +3910,7 @@ export default {
             border-radius: 6px;
             font-size: 12px;
             background-color: rgba(var(--theme-color-rgb), 0.14);
-            color: #fff;
+            color: var(--dashboard-text-inverse);
             border: none;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -4049,7 +4049,7 @@ export default {
       border-radius: 8px;
       height: 30px;
       padding: 0 12px;
-      color: #fff;
+      color: var(--dashboard-text-inverse);
       background: var(--saas-brand);
       box-shadow: none;
       cursor: pointer;
@@ -4127,7 +4127,7 @@ export default {
 
 .btn-primary {
   background-color: #355cc2;
-  color: #fff;
+  color: var(--dashboard-text-inverse);
   border: none;
 
   &:hover {
@@ -5419,7 +5419,7 @@ export default {
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1200;
+  z-index: var(--dashboard-modal-z);
   padding: 16px;
 }
 
@@ -5494,8 +5494,8 @@ export default {
     gap: var(--dashboard-overview-gap-mobile);
     background: linear-gradient(
         180deg,
-        rgba(var(--theme-color-rgb), 0.06) 0%,
-        rgba(var(--theme-color-rgb), 0.02) 100%
+        var(--dashboard-soft-tint-strong) 0%,
+        var(--dashboard-soft-tint-light) 100%
     );
 
     .item-title-row {
@@ -5534,7 +5534,7 @@ export default {
       font-size: 14px;
       font-weight: 500;
       background-color: rgba(var(--theme-color-rgb), 0.92);
-      color: #fff;
+      color: var(--dashboard-text-inverse);
       cursor: pointer;
       transition: all 0.3s ease;
 
@@ -5890,7 +5890,7 @@ a.eztheme-btn {
   align-items: center !important;
   justify-content: center !important;
   background-color: var(--dashboard-modal-overlay-bg) !important;
-  z-index: 1200 !important;
+  z-index: var(--dashboard-modal-z) !important;
   padding: 16px !important;
 }
 
@@ -5971,8 +5971,8 @@ a.eztheme-btn {
   gap: 10px !important;
   background: linear-gradient(
     180deg,
-    rgba(var(--theme-color-rgb), 0.06) 0%,
-    rgba(var(--theme-color-rgb), 0.02) 100%
+    var(--dashboard-soft-tint-strong) 0%,
+    var(--dashboard-soft-tint-light) 100%
   ) !important;
 }
 
@@ -6011,7 +6011,7 @@ a.eztheme-btn {
   font-size: 14px !important;
   font-weight: 500 !important;
   background-color: var(--dashboard-modal-buy-btn-bg) !important;
-  color: #fff !important;
+  color: var(--dashboard-text-inverse) !important;
   cursor: pointer !important;
 }
 
@@ -6039,7 +6039,7 @@ a.eztheme-btn {
 }
 
 .traffic-package-modal-card-global .cancel-btn:hover {
-  background-color: rgba(var(--theme-color-rgb), 0.06) !important;
+  background-color: var(--dashboard-soft-tint-strong) !important;
 }
 
 

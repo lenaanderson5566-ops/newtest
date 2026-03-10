@@ -123,6 +123,10 @@
   --dashboard-modal-border: rgba(var(--theme-color-rgb), 0.15);
   --dashboard-modal-header-bg: rgba(var(--theme-color-rgb), 0.03);
   --dashboard-modal-buy-btn-bg: rgba(var(--theme-color-rgb), 0.92);
+  --dashboard-modal-z: 1200;
+  --dashboard-text-inverse: #fff;
+  --dashboard-soft-tint-strong: rgba(var(--theme-color-rgb), 0.06);
+  --dashboard-soft-tint-light: rgba(var(--theme-color-rgb), 0.02);
 }
 
 @media (min-width: 768px) {
