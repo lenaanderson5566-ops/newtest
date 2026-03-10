@@ -1,8 +1,12 @@
 <template>
   <button class="base-list-row" type="button">
+    <div v-if="$slots.leading" class="row-leading">
+      <slot name="leading" />
+    </div>
     <div class="row-main">
       <div class="row-title">{{ title }}</div>
       <p v-if="description">{{ description }}</p>
+      <slot />
     </div>
     <div class="row-action">
       <slot name="action" />
@@ -47,7 +51,19 @@ export default {
 .base-list-row:hover { background: rgba(15, 23, 42, 0.03); }
 .base-list-row:active { background: rgba(15, 23, 42, 0.06); }
 
-.row-main { min-width: 0; }
+.row-leading {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--theme-color-rgb), 0.1);
+  color: var(--theme-color);
+  flex-shrink: 0;
+}
+
+.row-main { min-width: 0; flex: 1; }
 .row-title {
   font-size: 14px;
   font-weight: 600;
