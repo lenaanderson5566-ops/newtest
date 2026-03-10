@@ -45,7 +45,7 @@
 
 
 
-        <div class="auth-form-container" v-if="configLoading">
+        <BaseCard class="auth-form-container" v-if="configLoading">
 
           <div class="loading-container">
 
@@ -55,11 +55,11 @@
 
           </div>
 
-        </div>
+        </BaseCard>
 
 
 
-        <div class="auth-form-container" v-else>
+        <BaseCard class="auth-form-container" v-else>
 
           <div class="auth-header">
 
@@ -295,7 +295,7 @@
 
           </div>
 
-        </div>
+        </BaseCard>
 
       </div>
 
@@ -393,6 +393,7 @@ import LanguageSelector from '@/components/common/LanguageSelector.vue';
 import { isValidEmail } from '@/utils/validators';
 
 import { useToast } from '@/composables/useToast';
+import BaseCard from '@/components/base/BaseCard.vue';
 
 import IconMail from '@/components/icons/IconMail.vue';
 
@@ -484,6 +485,7 @@ export default {
   name: 'ForgotPasswordView',
 
   components: {
+    BaseCard,
 
 
     LanguageSelector,

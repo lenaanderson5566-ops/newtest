@@ -33,7 +33,7 @@
 
 
 
-    <div class="auth-card">
+    <BaseCard class="auth-card">
 
       <div class="auth-header">
 
@@ -209,7 +209,7 @@
 
       </div>
 
-    </div>
+    </BaseCard>
 
 
 
@@ -246,6 +246,7 @@ import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 import { useToast } from '@/composables/useToast';
+import BaseCard from '@/components/base/BaseCard.vue';
 
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
@@ -283,6 +284,7 @@ export default {
   name: 'LoginView',
 
   components: {
+    BaseCard,
 
 
     LanguageSelector,

@@ -46,7 +46,7 @@
 
 
 
-        <div class="auth-form-container" v-if="configLoading">
+        <BaseCard class="auth-form-container" v-if="configLoading">
 
           <div class="loading-container">
 
@@ -56,11 +56,11 @@
 
           </div>
 
-        </div>
+        </BaseCard>
 
 
 
-        <div class="auth-form-container" v-else>
+        <BaseCard class="auth-form-container" v-else>
 
           <div class="auth-header">
 
@@ -444,7 +444,7 @@
 
           </div>
 
-        </div>
+        </BaseCard>
 
       </div>
 
@@ -537,6 +537,7 @@ import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 import { useToast } from '@/composables/useToast';
+import BaseCard from '@/components/base/BaseCard.vue';
 
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
@@ -637,6 +638,7 @@ export default {
   name: 'RegisterView',
 
   components: {
+    BaseCard,
 
 
     LanguageSelector,

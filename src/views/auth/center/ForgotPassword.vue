@@ -33,7 +33,7 @@
 
 
 
-    <div class="auth-card">
+    <BaseCard class="auth-card">
 
       <div class="auth-header">
 
@@ -269,7 +269,7 @@
 
       </div>
 
-    </div>
+    </BaseCard>
 
 
 
@@ -363,6 +363,7 @@ import LanguageSelector from '@/components/common/LanguageSelector.vue';
 import { isValidEmail } from '@/utils/validators';
 
 import { useToast } from '@/composables/useToast';
+import BaseCard from '@/components/base/BaseCard.vue';
 
 import IconMail from '@/components/icons/IconMail.vue';
 
@@ -425,6 +426,7 @@ export default {
   name: 'ForgotPasswordView',
 
   components: {
+    BaseCard,
 
 
     LanguageSelector,

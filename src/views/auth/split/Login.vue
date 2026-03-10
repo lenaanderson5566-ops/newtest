@@ -21,14 +21,14 @@
           <LanguageSelector />
         </div>
 
-        <div class="auth-form-container" v-if="configLoading">
+        <BaseCard class="auth-form-container" v-if="configLoading">
           <div class="loading-container">
             <div class="loading-spinner"></div>
             <p>{{ $t('common.loading') }}</p>
           </div>
-        </div>
+        </BaseCard>
 
-        <div class="auth-form-container" v-else>
+        <BaseCard class="auth-form-container" v-else>
           <div class="auth-header">
             <div class="auth-logo">
               <img
@@ -116,7 +116,7 @@
               {{ $t('auth.createAccount') }}
             </router-link>
           </div>
-        </div>
+        </BaseCard>
       </div>
     </div>
 
@@ -142,6 +142,7 @@ import { ref, reactive, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
+import BaseCard from '@/components/base/BaseCard.vue';
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 import IconMail from '@/components/icons/IconMail.vue';
 import IconLock from '@/components/icons/IconLock.vue';
@@ -161,6 +162,7 @@ import { useNavigator } from "@/composables/useNavigator";
 export default {
   name: 'LoginView',
   components: {
+    BaseCard,
     LanguageSelector,
     IconMail,
     IconLock,
