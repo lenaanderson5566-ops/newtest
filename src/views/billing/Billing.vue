@@ -1,12 +1,14 @@
 <template>
   <div class="billing-container">
     <div class="billing-inner">
-      <BaseTabs
-        class="billing-tabs-card"
-        :model-value="activeTab"
-        :items="tabItems"
-        @update:model-value="switchTab"
-      />
+      <div class="billing-tabs-wrap">
+        <BaseTabs
+          class="billing-tabs-card"
+          :model-value="activeTab"
+          :items="tabItems"
+          @update:model-value="switchTab"
+        />
+      </div>
 
       <div class="billing-panel">
         <WalletDeposit v-if="activeTab === 'wallet' && showWalletTab" />
@@ -85,26 +87,40 @@ watch(
 .billing-container {
   padding: 16px 20px 12px;
   background: transparent;
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
 }
 
 .billing-inner {
   max-width: 1240px;
   margin: 0 auto;
+  display: grid;
+  gap: 12px;
+}
+
+.billing-tabs-wrap {
+  position: sticky;
+  top: calc(var(--top-fixed-bar-height) + var(--safe-top) + 8px);
+  z-index: 8;
 }
 
 .billing-tabs-card {
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .billing-panel {
   border-radius: var(--radius-lg);
   margin-top: 0;
+  min-height: 0;
 }
 
 @media (max-width: 768px) {
   .billing-container {
-    padding: 14px;
+    padding: 12px;
+    padding-bottom: calc(72px + var(--safe-bottom));
   }
 
+  .billing-tabs-wrap {
+    top: calc(var(--top-fixed-bar-height) + var(--safe-top) + 6px);
+  }
 }
 </style>
