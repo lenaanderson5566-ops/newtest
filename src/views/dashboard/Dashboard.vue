@@ -2613,7 +2613,7 @@ export default {
 
   .dashboard-card {
     background-color: var(--saas-card-bg);
-    border-radius: 14px;
+    border-radius: var(--dashboard-card-radius);
     box-shadow: var(--saas-card-shadow);
     padding: var(--dashboard-card-padding);
     margin-bottom: var(--dashboard-card-gap);
@@ -2846,7 +2846,7 @@ export default {
         min-width: 0;
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: var(--dashboard-overview-gap-mobile);
 
         .stats-info {
           width: 100%;
@@ -2872,7 +2872,7 @@ export default {
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        gap: 10px;
+        gap: var(--dashboard-overview-gap-mobile);
 
         .usage-card-title {
           position: relative;
@@ -3091,7 +3091,7 @@ export default {
 
           .plan-summary-actions {
             display: flex;
-            gap: 10px;
+            gap: var(--dashboard-overview-gap-mobile);
             margin-top: 0;
 
 
@@ -3501,7 +3501,7 @@ export default {
     .ip-location-main-info {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: var(--dashboard-overview-gap-mobile);
       min-width: 0;
     }
 
@@ -3515,7 +3515,7 @@ export default {
     .ip-main-line {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: var(--dashboard-overview-gap-mobile);
       flex-wrap: wrap;
     }
 
@@ -4012,7 +4012,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: var(--dashboard-overview-gap-mobile);
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 
@@ -4239,12 +4239,12 @@ export default {
 
   .dashboard-inner .overview-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: var(--dashboard-overview-gap-mobile);
   }
 
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    gap: var(--dashboard-overview-gap-mobile);
 
     .stats-card.traffic-board-total {
       grid-column: 1 / -1;
@@ -4347,7 +4347,7 @@ export default {
   .no-plan-actions {
     justify-content: center;
     width: 100%;
-    gap: 10px;
+    gap: var(--dashboard-overview-gap-mobile);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -5482,7 +5482,7 @@ export default {
   .traffic-package-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--dashboard-overview-gap-mobile);
   }
 
   .traffic-package-item {
@@ -5491,7 +5491,7 @@ export default {
     padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--dashboard-overview-gap-mobile);
     background: linear-gradient(
         180deg,
         rgba(var(--theme-color-rgb), 0.06) 0%,
@@ -5502,7 +5502,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: var(--dashboard-overview-gap-mobile);
 
       strong {
         font-size: 15px;
