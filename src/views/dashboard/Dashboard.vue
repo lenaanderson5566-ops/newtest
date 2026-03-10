@@ -270,21 +270,21 @@
 
         <template v-else-if="!hasPlan">
           <!-- 没有套餐时显示的提示卡片 -->
-          <InfoCard class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
+          <BaseCard class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
                style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: 1200px; width: 100%;">
-            <template #icon>
-              <div class="no-plan-icon">
-                <IconShoppingCart :size="45" class="icon-cart"/>
+            <template #header>
+              <div class="no-plan-header">
+                <div class="no-plan-icon">
+                  <IconShoppingCart :size="45" class="icon-cart"/>
+                </div>
+                <h2 class="card-title">{{ $t('dashboard.noPlanPrompt') }}</h2>
+                <button class="action-button primary" @click="goToShop">
+                  <IconShoppingBag :size="18" class="btn-icon"/>
+                  <span>{{ $t('dashboard.purchasePlan') }}</span>
+                </button>
               </div>
             </template>
-            <template #title>{{ $t('dashboard.noPlanPrompt') }}</template>
-            <template #action>
-              <button class="action-button primary" @click="goToShop">
-                <IconShoppingBag :size="18" class="btn-icon"/>
-                <span>{{ $t('dashboard.purchasePlan') }}</span>
-              </button>
-            </template>
-          </InfoCard>
+          </BaseCard>
         </template>
 
         <template v-else>
@@ -640,7 +640,7 @@ import {
   IconRefresh
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
-import InfoCard from '@/components/common/InfoCard.vue';
+import BaseCard from '@/components/base/BaseCard.vue';
 import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/dashboard';
 import { updateRemindSettings as apiUpdateRemind } from '@/api/user';
 import { getTrafficLog } from '@/api/trafficLog';
@@ -757,11 +757,11 @@ export default {
     IconCoins,
     IconEye,
     IconAlertTriangle,
-    InfoCard,
     IconX,
     IconCalendarPlus,
     IconPlus,
-    CommonDialog
+    CommonDialog,
+    BaseCard
   },
   setup() {
     const {t, locale} = useI18n();
@@ -4318,7 +4318,19 @@ export default {
     width: 100%;
   }
 
-  .no-plan-icon {
+  .no-plan-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.no-plan-header .card-title {
+  flex: 1;
+  margin: 0;
+}
+
+.no-plan-icon {
     width: 65px;
     height: 65px;
     margin: 0 auto;

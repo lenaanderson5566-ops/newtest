@@ -100,13 +100,15 @@ import {
   IconDeviceDesktop,
   IconBrowser
 } from '@tabler/icons-vue';
-import useToast from '@/hooks/useToast';
+import { useToast } from '@/composables/useToast';
 import { PROFILE_CONFIG } from '@/utils/baseConfig';
 import BaseCard from '@/components/base/BaseCard.vue';
 import BaseListRow from '@/components/base/BaseListRow.vue';
 
 const { t } = useI18n();
-const { success, error: showError } = useToast();
+const { showToast } = useToast();
+const success = (message) => showToast.success(message);
+const showError = (message) => showToast.error(message);
 
 const showPasswordModal = ref(false);
 const changingPassword = ref(false);

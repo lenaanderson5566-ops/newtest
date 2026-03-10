@@ -30,17 +30,9 @@ This baseline tracks global layout/style consistency issues before phased migrat
 
 
 ## Phase 12 baseline
-- Dashboard / DocDetail 的 `eztheme-btn` 与 no-plan 共享样式已对齐到统一语义 token，作为后续可视回归基线。
+- Dashboard / DocDetail 的 `eztheme-btn` 与 no-plan 共享样式已对齐到统一语义 token。
 
 ## Phase 13 baseline
 - DocDetail 页面内链接、表单、卡片等交互 transition 已对齐到全局时序 token（`--app-transition-*`），降低跨模块交互漂移。
-- 新增页面级可视回归清单：`docs/visual-regression-checklist.md`，用于后续 Phase 14 截图回归执行。
 
-## Phase 14 baseline
-- 已执行关键路由截图回归（桌面/平板/移动）并形成基线记录，覆盖清单内核心页面。
-- 差异阈值治理规则已明确：默认像素差异阈值 0.30%，高风险组件建议拆分为局部阈值策略。
-
-## Phase 15 baseline
-- 视觉回归已接入 CI（GitHub Actions），PR 默认执行截图回归并上传 diff/current/report 工件。
-- Dashboard 路由采用更严格阈值（0.20%），其余关键路由采用默认阈值（0.30%）。
 

@@ -25,6 +25,19 @@
   --radius-md: 12px;
   --radius-lg: 16px;
 
+
+  /* Unified card system */
+  --app-card-bg: var(--card-background);
+  --app-card-border-color: var(--border-color-soft);
+  --app-card-radius: var(--radius-lg);
+  --app-card-radius-mobile: var(--mobile-card-radius, var(--radius-md));
+  --app-card-shadow: var(--shadow-card-sm);
+  --app-card-header-padding: 14px 16px 10px;
+  --app-card-header-padding-mobile: 12px 12px 8px;
+  --app-card-body-padding: 16px;
+  --app-card-body-padding-mobile: 12px;
+  --app-card-title-size: 16px;
+  --app-card-title-weight: 700;
   /* Action colors */
   --theme-color: #355cc2;
   --theme-color-rgb: 53, 92, 194;

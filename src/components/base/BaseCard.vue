@@ -29,36 +29,44 @@ export default {
 
 <style scoped lang="scss">
 .base-card {
-  border: 1px solid var(--border-color-soft);
-  border-radius: var(--radius-lg);
-  background: var(--card-level-2);
-  box-shadow: var(--shadow-card-sm);
+  border: 1px solid var(--app-card-border-color);
+  border-radius: var(--app-card-radius);
+  background: var(--app-card-bg);
+  box-shadow: var(--app-card-shadow);
   overflow: hidden;
 }
 
 .base-card-header {
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid var(--border-color-soft);
+  padding: var(--app-card-header-padding);
+  border-bottom: 1px solid var(--app-card-border-color);
 }
 
 .base-card-title {
   margin: 0;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: var(--app-card-title-size);
+  font-weight: var(--app-card-title-weight);
   color: var(--text-color);
 }
 
 .base-card-body {
-  padding: 0;
+  padding: var(--app-card-body-padding);
 }
 
 .base-card.density-comfortable .base-card-header {
-  padding: 16px;
+  padding: var(--app-card-header-padding);
 }
 
 @media (max-width: 768px) {
+  .base-card {
+    border-radius: var(--app-card-radius-mobile);
+  }
+
   .base-card-header {
-    padding: 12px 12px 8px;
+    padding: var(--app-card-header-padding-mobile);
+  }
+
+  .base-card-body {
+    padding: var(--app-card-body-padding-mobile);
   }
 }
 </style>

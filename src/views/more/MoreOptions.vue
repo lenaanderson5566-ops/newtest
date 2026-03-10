@@ -1,10 +1,9 @@
 <template>
   <div class="more-container">
     <div class="more-inner">
-      <InfoCard class="dashboard-card welcome-card">
-        <template #title>{{ $t('more.title') }}</template>
-        <template #description>{{ $t('more.description') }}</template>
-      </InfoCard>
+      <BaseCard class="dashboard-card welcome-card" :title="$t('more.title')">
+        <p class="card-desc">{{ $t('more.description') }}</p>
+      </BaseCard>
 
       <BaseCard :title="$t('more.title')">
         <div class="options-list">
@@ -40,7 +39,6 @@ import {
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import InfoCard from '@/components/common/InfoCard.vue';
 import BaseCard from '@/components/base/BaseCard.vue';
 import BaseListRow from '@/components/base/BaseListRow.vue';
 import { MORE_PAGE_CONFIG, NAVIGATION_CONFIG } from '@/utils/baseConfig';
@@ -190,5 +188,10 @@ onUnmounted(() => {
     padding: var(--layout-gutter-mobile);
     padding-bottom: calc(72px + var(--safe-bottom));
   }
+}
+
+.card-desc {
+  margin: 0;
+  color: var(--secondary-text-color);
 }
 </style>

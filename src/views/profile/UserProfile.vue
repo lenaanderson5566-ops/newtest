@@ -148,19 +148,20 @@
 
         <!-- 基本信息 -->
 
-        <AccountInfoCard
-
-          :title="$t('profile.basicInfo')"
-
-          :email-label="$t('profile.email')"
-
-          :created-at-label="$t('profile.createdAt')"
-
-          :email="userInfo.email"
-
-          :created-at="userInfo.created_at"
-
-        />
+        <BaseCard :title="$t('profile.basicInfo')">
+          <div class="info-content">
+            <div class="info-list">
+              <div class="info-item">
+                <span class="info-label">{{ $t('profile.email') }}</span>
+                <span class="info-value">{{ userInfo.email || '-' }}</span>
+              </div>
+              <div v-if="userInfo.created_at" class="info-item">
+                <span class="info-label">{{ $t('profile.createdAt') }}</span>
+                <span class="info-value">{{ formatDate(userInfo.created_at) }}</span>
+              </div>
+            </div>
+          </div>
+        </BaseCard>
 
 
 
@@ -247,24 +248,6 @@
           </div>
 
         </BaseCard>
-
-
-
-        <!-- 安全设置 -->
-
-        <SecurityCard
-
-          v-if="false"
-
-          :title="$t('profile.security')"
-
-          :label="$t('profile.changePassword')"
-
-          subtitle="前往安全中心修改密码"
-
-          path="/security"
-
-        />
 
 
 
@@ -692,13 +675,11 @@ import {
 
 } from '@tabler/icons-vue';
 
-import useToast from '@/hooks/useToast';
+import { useToast } from '@/composables/useToast';
 
 import { reloadMessages } from '@/i18n';
 
 import { PROFILE_CONFIG } from '@/utils/baseConfig';
-import AccountInfoCard from '@/components/profile/AccountInfoCard.vue';
-import SecurityCard from '@/components/profile/SecurityCard.vue';
 import BaseCard from '@/components/base/BaseCard.vue';
 import BaseSettingsRow from '@/components/base/BaseSettingsRow.vue';
 
@@ -718,7 +699,9 @@ reloadMessages();
 
 const { t } = useI18n();
 
-const { success, error: showError } = useToast();
+const { showToast } = useToast();
+const success = (message) => showToast.success(message);
+const showError = (message) => showToast.error(message);
 
 
 
@@ -1386,6 +1369,14 @@ const getDeviceIcon = (ua) => {
 };
 
 
+
+
+const formatDate = (value) => {
+  if (!value) return '-';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value);
+  return date.toLocaleString();
+};
 
 const formatDeviceInfo = (ua) => {
 

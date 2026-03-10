@@ -71,7 +71,9 @@
         </div>
       </div>
 
-      <ImportConfigCard v-if="showImportConfigCard" />
+      <BaseCard v-if="showImportConfigCard" :title="$t('dashboard.importSubscription')">
+        <div class="card-body">{{ $t('dashboard.importSubscription') }}</div>
+      </BaseCard>
 
       <!-- 标题栏 -->
 
@@ -238,7 +240,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
-import ImportConfigCard from '@/components/common/ImportConfigCard.vue';
+import BaseCard from '@/components/base/BaseCard.vue';
 
 import { 
 
