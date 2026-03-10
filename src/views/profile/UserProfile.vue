@@ -692,7 +692,7 @@ import {
 
 } from '@tabler/icons-vue';
 
-import useToast from '@/hooks/useToast';
+import { useToast } from '@/composables/useToast';
 
 import { reloadMessages } from '@/i18n';
 
@@ -718,7 +718,9 @@ reloadMessages();
 
 const { t } = useI18n();
 
-const { success, error: showError } = useToast();
+const { showToast } = useToast();
+const success = (message) => showToast.success(message);
+const showError = (message) => showToast.error(message);
 
 
 
