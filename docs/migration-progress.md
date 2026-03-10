@@ -10,8 +10,10 @@
 - [~] Phase 7: Performance and cleanup hardening（已完成，100%）
 - [~] Phase 8: Dashboard style modularization and override retirement（已完成，100%）
 - [~] Phase 9: Dashboard override retirement and scoped-style restoration（已完成，100%）
+- [~] Phase 10: Dashboard override down-migration to scoped/component boundaries（进行中，约 30%）
 
 ## This iteration
+- 启动 Phase 10：将 eztheme-btn override 从全局模块下沉回 Dashboard scoped :deep 作用域。
 - Phase 9 收口完成：Dashboard overrides（风险卡片/按钮/流量包弹层）历史 `!important` 已完成清退。
 - 启动 Phase 9：风险态卡片兜底样式首批移除 `!important`，验证在模块化后依赖常规层叠优先级仍可稳定生效。
 - Phase 8 收口完成：Dashboard 全局兜底样式按风险卡片/按钮/弹层拆分为独立模块，并补齐对应语义 token，完成首轮结构化清理。

@@ -5303,20 +5303,54 @@ export default {
       }
     }
 
-    :deep(a.eztheme-btn) {
-      display: inline-block;
+    :deep(.eztheme-btn) {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       padding: var(--dashboard-modal-cancel-padding);
-      background-color: var(--theme-color);
-      color: white;
-      border-radius: var(--dashboard-modal-action-radius);
-      margin: 10px 0;
+      border-radius: var(--dashboard-ez-btn-radius);
+      font-size: var(--dashboard-ez-btn-font-size);
+      background-color: var(--dashboard-ez-btn-bg);
+      color: var(--theme-color);
+      border: none;
+      cursor: pointer;
+      transition: all var(--dashboard-transition-fast) var(--dashboard-transition-ease);
+      font-weight: var(--dashboard-ez-btn-font-weight);
+      margin: var(--dashboard-ez-btn-margin);
       text-decoration: none;
-      transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
+      border-bottom: none;
+      text-align: center;
+      box-shadow: none;
+      border-color: transparent;
+      width: auto;
 
-      &:hover {
-        background-color: var(--primary-color-hover);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(var(--theme-color-rgb), 0.3);
+      &:hover,
+      &:active,
+      &:focus,
+      &:visited {
+        background-color: var(--dashboard-ez-btn-bg-hover);
+        transform: translateY(var(--dashboard-ez-btn-hover-offset));
+        box-shadow: var(--dashboard-ez-btn-shadow-hover);
+        border-bottom: none;
+        text-decoration: none;
+        color: var(--theme-color);
+        border-color: transparent;
+      }
+
+      &:active {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: var(--dashboard-ez-btn-focus-ring);
+      }
+
+      &::after,
+      &::before {
+        display: none;
+        content: none;
       }
     }
   }
