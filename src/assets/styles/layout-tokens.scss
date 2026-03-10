@@ -100,6 +100,9 @@
   --app-transition-fast: 0.3s;
   --app-language-fade-start-opacity: 0.2;
   --app-scroll-behavior: smooth;
+  --app-transition-ease: ease;
+  --app-transition-ease-out: ease-out;
+  --app-scrollbar-track-bg: var(--input-bg-color, rgba(0, 0, 0, 0.05));
 }
 
 @media (min-width: 768px) {
