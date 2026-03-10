@@ -91,6 +91,8 @@
   --nprogress-glow-soft: 0 0 5px var(--theme-color);
   --nprogress-spinner-top: 10px;
   --nprogress-spinner-left: 10px;
+  --nprogress-spinner-border-width: 2px;
+  --nprogress-spinner-duration: 400ms;
 }
 
 @media (min-width: 768px) {

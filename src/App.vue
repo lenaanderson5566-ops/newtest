@@ -560,11 +560,11 @@ html {
       width: var(--site-logo-icon-size-mobile);
       height: var(--site-logo-icon-size-mobile);
       box-sizing: border-box;
-      border: solid 2px transparent;
+      border: solid var(--nprogress-spinner-border-width) transparent;
       border-top-color: var(--theme-color);
       border-left-color: var(--theme-color);
       border-radius: 50%;
-      animation: nprogress-spinner 400ms linear infinite;
+      animation: nprogress-spinner var(--nprogress-spinner-duration) linear infinite;
     }
   }
 }
