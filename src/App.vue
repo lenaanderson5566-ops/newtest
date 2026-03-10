@@ -2,27 +2,14 @@
   <div>
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
     <div class="static-layout" v-if="requiresAuth">
-      <div class="top-fixed-bar">
-        <!-- 网站名称 -->
-        <div class="site-logo">
-          <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
-          {{ siteConfig.siteName }}
-        </div>
-
-        <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
-        <div class="top-toolbar">
-        <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
-        <LanguageSelector />
-        <button 
-          v-if="PROFILE_CONFIG.showGiftCardRedeem" 
-          class="gift-btn" 
-          @click="$router.push('/profile')"
-        >
-          <IconGift :size="18" />
-        </button>
-        <UserAvatar :username="username" :avatarUrl="avatarUrl" />
-        </div>
-      </div>
+      <AppTopBar
+        :site-config="siteConfig"
+        :username="username"
+        :avatar-url="avatarUrl"
+        :has-unread-notice="hasUnreadNotice"
+        :show-gift-card-redeem="PROFILE_CONFIG.showGiftCardRedeem"
+        @navigate-profile="$router.push('/profile')"
+      />
 
       <div class="page-header-layer" v-if="hasPageHeader">
         <div class="page-header-content">
@@ -35,11 +22,7 @@
     </div>
 
     <!-- 认证页面顶部工具栏，确保认证页面也有语言切换器 -->
-    <div class="auth-toolbar" v-if="!requiresAuth && $route.path.includes('/auth')">
-      <div class="top-toolbar">
-        <LanguageSelector />
-      </div>
-    </div>
+    <AuthTopToolbar v-if="!requiresAuth && $route.path.includes('/auth')" />
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
     <div :class="['app-content-wrapper', { 'with-left-nav': requiresAuth, 'with-top-bar': requiresAuth, 'with-page-header': hasPageHeader }]">
@@ -100,15 +83,13 @@ import { handleRedirectPath } from '@/utils/redirectHandler';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
-import LanguageSelector from '@/components/common/LanguageSelector.vue';
-import UserAvatar from '@/components/common/UserAvatar.vue';
-import ServiceNoticeButton from '@/components/common/ServiceNoticeButton.vue';
 import BackToTop from '@/components/common/BackToTop.vue';
 import CustomContextMenu from '@/components/common/CustomContextMenu.vue';
 import CustomerServiceIcon from '@/components/common/CustomerServiceIcon.vue';
 import CrispEmbed from '@/components/common/CrispEmbed.vue';
 import ResourcePreloader from '@/components/common/ResourcePreloader.vue';
-import { IconGift } from '@tabler/icons-vue';
+import AppTopBar from '@/components/layout/AppTopBar.vue';
+import AuthTopToolbar from '@/components/layout/AuthTopToolbar.vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import pageCache from '@/utils/pageCache';
@@ -126,15 +107,13 @@ export default {
     Toast,
     IconDefinitions,
     SlideTabsNav,
-    LanguageSelector,
-    UserAvatar,
-    ServiceNoticeButton,
     BackToTop,
     CustomContextMenu,
     CustomerServiceIcon,
     CrispEmbed,
     ResourcePreloader,
-    IconGift
+    AppTopBar,
+    AuthTopToolbar
   },
   setup() {
     const router = useRouter();
