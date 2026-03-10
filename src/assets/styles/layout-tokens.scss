@@ -19,6 +19,13 @@
 
   --layout-shell-inline-start: 14px;
   --layout-shell-inline-end: 30px;
+
+  --text-strong: #0f172a;
+  --toolbar-z: 110;
+  --app-toolbar-control-hover-bg: #f5f7fa;
+  --app-toolbar-control-active-border: #e5e7eb;
+  --toolbar-control-shadow-hover: 0 3px 10px rgba(15, 23, 42, 0.1);
+  --logo-radius: 6px;
 }
 
 @media (min-width: 768px) {

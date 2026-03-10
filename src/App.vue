@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <div class="page-header-layer" v-if="pageHeaderTitle">
+      <div class="page-header-layer" v-if="hasPageHeader">
         <div class="page-header-content">
           <div class="page-header-title">{{ pageHeaderTitle }}</div>
         </div>
@@ -387,7 +387,7 @@ export default {
   font-size: 18px;
   line-height: 1;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-strong);
 }
 
 
@@ -403,7 +403,7 @@ export default {
   .site-logo-img {
     height: 20px;
     width: 20px;
-    border-radius: 6px;
+    border-radius: var(--logo-radius);
     object-fit: cover;
   }
 }
@@ -417,14 +417,14 @@ export default {
   --toolbar-control-radius: 8px;
   --toolbar-control-border: transparent;
   --toolbar-control-bg: transparent;
-  --toolbar-control-hover-bg: #f5f7fa;
-  --toolbar-control-active-border: #e5e7eb;
+  --toolbar-control-hover-bg: var(--app-toolbar-control-hover-bg);
+  --toolbar-control-active-border: var(--app-toolbar-control-active-border);
 
   position: static;
   display: flex;
   align-items: center;
   gap: 3px;
-  z-index: 110;
+  z-index: var(--toolbar-z);
 
   .gift-btn {
 
@@ -444,7 +444,7 @@ export default {
     &:hover {
       border-color: rgba(var(--theme-color-rgb), 0.45);
       color: var(--theme-color);
-      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1);
+      box-shadow: var(--toolbar-control-shadow-hover);
       transform: translateY(-1px);
     }
   }
@@ -703,7 +703,7 @@ html {
     right: 25px;
     display: flex;
     gap: 16px;
-    z-index: 110;
+    z-index: var(--toolbar-z);
   }
 }
 

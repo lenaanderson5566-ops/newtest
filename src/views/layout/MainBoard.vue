@@ -1,4 +1,4 @@
-﻿<template>
+<template>
 
   <div class="main-board">
 
@@ -9,7 +9,7 @@
 
     <!-- 内容区域 - 路由视图 -->
 
-    <div class="content-area">
+    <AppContainer class="content-area" mode="default">
 
       <router-view v-slot="{ Component }">
 
@@ -25,7 +25,7 @@
 
       </router-view>
 
-    </div>
+    </AppContainer>
 
     
 
@@ -54,6 +54,7 @@ import { onMounted } from 'vue';
 
 
 import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
+import AppContainer from '@/components/layout/AppContainer.vue';
 
 
 
@@ -63,7 +64,8 @@ export default {
 
   components: {
 
-    DomainAuthAlert
+    DomainAuthAlert,
+    AppContainer
 
   },
 
@@ -106,18 +108,9 @@ export default {
 
 
 .content-area {
-
-  width: min(var(--layout-content-max-width), 100%);
-
-  margin: 0 auto;
-
-  padding: var(--layout-gap-y) var(--layout-padding-x-right) calc(var(--layout-gap-y) + var(--safe-bottom)) var(--layout-padding-x);
-
   padding-top: 0;
-
-  box-sizing: border-box;
-
 }
+
 
 
 
