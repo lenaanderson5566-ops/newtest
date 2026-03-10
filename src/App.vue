@@ -320,143 +320,6 @@ export default {
 }
 
 
-.top-fixed-bar {
-  height: calc(var(--top-fixed-bar-height) + var(--safe-top));
-  position: fixed;
-  top: 0;
-  padding-top: var(--safe-top);
-  left: 0;
-  right: 0;
-  background: var(--topbar-surface);
-  backdrop-filter: var(--surface-blur-strong);
-  -webkit-backdrop-filter: var(--surface-blur-strong);
-  border-bottom: 1px solid var(--surface-border-weak);
-  box-shadow: var(--topbar-shadow);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
-  z-index: var(--app-topbar-z);
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.page-header-layer {
-  position: fixed;
-  top: calc(var(--top-fixed-bar-height) + var(--safe-top));
-  left: 0;
-  right: 0;
-  height: var(--page-header-height);
-  background: var(--page-header-surface);
-  backdrop-filter: var(--surface-blur-strong);
-  -webkit-backdrop-filter: var(--surface-blur-strong);
-  border-bottom: 1px solid var(--surface-border-subtle);
-  box-shadow: var(--page-header-divider-shadow);
-  z-index: var(--app-page-header-z);
-}
-
-.page-header-content {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
-}
-
-.page-header-title {
-  font-size: var(--page-header-title-size);
-  line-height: 1;
-  font-weight: 700;
-  color: var(--text-strong);
-}
-
-
-.site-logo {
-  font-size: var(--site-logo-size);
-  font-weight: 700;
-  color: var(--theme-color);
-  letter-spacing: -0.5px;
-  display: flex;
-  align-items: center;
-  gap: var(--site-logo-gap);
-
-  .site-logo-img {
-    height: var(--site-logo-icon-size);
-    width: var(--site-logo-icon-size);
-    border-radius: var(--logo-radius);
-    object-fit: cover;
-  }
-}
-
-
-
-
-.top-toolbar {
-  --toolbar-control-border: transparent;
-  --toolbar-control-bg: transparent;
-  --toolbar-control-hover-bg: var(--app-toolbar-control-hover-bg);
-  --toolbar-control-active-border: var(--app-toolbar-control-active-border);
-
-  position: static;
-  display: flex;
-  align-items: center;
-  gap: var(--toolbar-control-gap);
-  z-index: var(--toolbar-z);
-
-  .gift-btn {
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--toolbar-control-height);
-    height: var(--toolbar-control-height);
-    border-radius: 50%;
-    background: var(--toolbar-control-bg);
-    border: 1px solid var(--toolbar-control-border);
-    box-shadow: var(--toolbar-control-shadow);
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      border-color: rgba(var(--theme-color-rgb), 0.45);
-      color: var(--theme-color);
-      box-shadow: var(--toolbar-control-shadow-hover);
-      transform: translateY(-1px);
-    }
-  }
-
-  :deep(.language-btn),
-  :deep(.avatar-wrapper) {
-    min-height: var(--toolbar-control-height);
-    padding: var(--toolbar-control-padding);
-    border: 1px solid var(--toolbar-control-border);
-    background: var(--toolbar-control-bg);
-    border-radius: var(--toolbar-control-radius);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-
-    &:hover {
-      background: var(--toolbar-control-hover-bg);
-    }
-
-    &:active,
-    &.is-active {
-      border-color: var(--toolbar-control-active-border);
-      background: var(--toolbar-control-hover-bg);
-    }
-  }
-
-  :deep(.avatar-wrapper) {
-    width: auto;
-    min-width: var(--toolbar-control-height);
-    font-size: var(--site-logo-size-mobile);
-  }
-
-  :deep(.language-btn) {
-    min-width: var(--toolbar-language-min-width);
-    font-size: var(--site-logo-size-mobile);
-  }
-}
-
 
 
 .app-content-wrapper.with-top-bar {
@@ -527,22 +390,6 @@ export default {
 
   .page-header-title {
     font-size: var(--page-header-title-size-mobile);
-  }
-
-  .site-logo {
-    font-size: var(--site-logo-size-mobile);
-    gap: var(--site-logo-gap-mobile);
-
-    .site-logo-img {
-      width: var(--site-logo-icon-size-mobile);
-      height: var(--site-logo-icon-size-mobile);
-    }
-  }
-
-  .top-toolbar {
-    gap: var(--toolbar-control-gap);
-    flex-wrap: nowrap;
-    justify-content: flex-end;
   }
 
   /* Mobile density optimization: avoid oversized modules */
@@ -664,23 +511,6 @@ export default {
 
 html {
   scroll-behavior: smooth;
-}
-
-
-.auth-toolbar {
-  position: fixed;
-  top: var(--safe-top);
-  right: 0;
-  z-index: 100;
-  
-  .top-toolbar {
-    position: fixed;
-    top: 20px;
-    right: 25px;
-    display: flex;
-    gap: 16px;
-    z-index: var(--toolbar-z);
-  }
 }
 
 
