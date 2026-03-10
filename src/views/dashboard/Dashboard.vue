@@ -2674,7 +2674,7 @@ export default {
 
     .subscription-actions {
       display: flex;
-      gap: 12px;
+      gap: var(--dashboard-modal-footer-gap);
       margin-top: 15px;
 
       @media (min-width: 769px) {
@@ -2762,7 +2762,7 @@ export default {
 
       h3 {
         margin: 0;
-        font-size: 18px;
+        font-size: var(--dashboard-modal-header-title-size);
         font-weight: 700;
         color: var(--dashboard-text-primary);
       }
@@ -2993,7 +2993,7 @@ export default {
           }
 
           .plan-name-main {
-            font-size: 24px;
+            font-size: var(--dashboard-modal-close-icon-size);
             line-height: 1.2;
             font-weight: 700;
             color: var(--heading-color);
@@ -3048,7 +3048,7 @@ export default {
           }
 
           .plan-summary-value {
-            font-size: 14px;
+            font-size: var(--dashboard-modal-action-font-size);
             color: var(--dashboard-text-primary);
             font-weight: 600;
             text-align: right;
@@ -3100,7 +3100,7 @@ export default {
               border-radius: var(--dashboard-modal-item-radius);
               border: 1px solid transparent;
               padding: 10px 14px;
-              font-size: 14px;
+              font-size: var(--dashboard-modal-action-font-size);
               font-weight: 600;
               letter-spacing: 0.2px;
               cursor: pointer;
@@ -3368,7 +3368,7 @@ export default {
           }
 
           .usage-kpi-value {
-            font-size: 14px;
+            font-size: var(--dashboard-modal-action-font-size);
           }
 
           .usage-package-note,
@@ -3424,14 +3424,14 @@ export default {
         flex: 1;
 
         .stats-value {
-          font-size: 18px;
+          font-size: var(--dashboard-modal-header-title-size);
           font-weight: 600;
           color: var(--theme-text-primary);
           margin-bottom: 5px;
         }
 
         .stats-label {
-          font-size: 14px;
+          font-size: var(--dashboard-modal-action-font-size);
           color: var(--theme-text-secondary);
         }
       }
@@ -3507,7 +3507,7 @@ export default {
 
     .ip-meta-title {
       color: rgba(233, 240, 255, 0.95);
-      font-size: 18px;
+      font-size: var(--dashboard-modal-header-title-size);
       line-height: 1.2;
       font-weight: 700;
     }
@@ -3562,7 +3562,7 @@ export default {
       }
 
       &:disabled {
-        opacity: 0.7;
+        opacity: var(--dashboard-modal-disabled-opacity-soft);
         cursor: not-allowed;
       }
 
@@ -3622,7 +3622,7 @@ export default {
     .ip-service-reference {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: var(--dashboard-modal-footer-gap);
       padding: 10px 12px;
       border-radius: var(--dashboard-modal-item-radius);
       background: rgba(255, 255, 255, 0.05);
@@ -3825,7 +3825,7 @@ export default {
       align-items: center;
       justify-content: center;
       color: var(--theme-text-secondary);
-      font-size: 14px;
+      font-size: var(--dashboard-modal-action-font-size);
     }
 
     .usage-trend-chart {
@@ -3878,7 +3878,7 @@ export default {
       }
 
       .notice-title {
-        font-size: 14px;
+        font-size: var(--dashboard-modal-action-font-size);
         font-weight: 600;
         margin-bottom: 6px;
         color: var(--dashboard-text-inverse);
@@ -4259,7 +4259,7 @@ export default {
       gap: 5px;
 
       .usage-percent {
-        font-size: 24px;
+        font-size: var(--dashboard-modal-close-icon-size);
 
         &.compact {
           font-size: 22px;
@@ -4286,7 +4286,7 @@ export default {
 
   .subscription-card .subscription-info {
     flex-direction: column;
-    gap: 12px;
+    gap: var(--dashboard-modal-footer-gap);
   }
 
   .subscription-card .info-item {
@@ -4360,7 +4360,7 @@ export default {
   }
 
   .no-plan-actions .action-button span {
-    font-size: 14px;
+    font-size: var(--dashboard-modal-action-font-size);
   }
 
   .no-plan-actions .action-button .btn-icon {
@@ -4377,7 +4377,7 @@ export default {
   .subscription-actions {
     display: flex;
     flex-direction: row;
-    gap: 12px;
+    gap: var(--dashboard-modal-footer-gap);
   }
 }
 
@@ -4553,7 +4553,7 @@ export default {
     flex: 1;
 
     .import-title {
-      font-size: 14px;
+      font-size: var(--dashboard-modal-action-font-size);
       font-weight: 600;
       margin-bottom: 4px;
     }
@@ -4579,7 +4579,7 @@ export default {
   margin-bottom: 24px;
 
   .platform-title {
-    font-size: 14px;
+    font-size: var(--dashboard-modal-action-font-size);
     font-weight: 600;
     margin-bottom: 12px;
     padding-bottom: 8px;
@@ -4589,7 +4589,7 @@ export default {
   .platform-options {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 12px;
+    gap: var(--dashboard-modal-footer-gap);
 
     .platform-option {
       display: flex;
@@ -4631,7 +4631,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: var(--dashboard-modal-z);
   backdrop-filter: blur(4px);
 }
 
@@ -4668,7 +4668,7 @@ export default {
 
   h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: var(--dashboard-modal-header-title-size);
     color: var(--theme-text-primary);
     font-weight: 600;
   }
@@ -4769,7 +4769,7 @@ export default {
     border: 1px solid var(--border-color);
     border-radius: 20px;
     padding: var(--dashboard-modal-cancel-padding);
-    font-size: 14px;
+    font-size: var(--dashboard-modal-action-font-size);
     font-weight: 500;
     cursor: pointer;
     transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
@@ -4822,7 +4822,7 @@ export default {
   }
 
   span {
-    font-size: 14px;
+    font-size: var(--dashboard-modal-action-font-size);
   }
 }
 
@@ -4999,7 +4999,7 @@ export default {
 
 .no-clients-message p {
   color: var(--theme-text-primary);
-  font-size: 14px;
+  font-size: var(--dashboard-modal-action-font-size);
   margin: 0;
 }
 
@@ -5019,7 +5019,7 @@ export default {
     border: 1px solid var(--border-color);
     border-radius: 20px;
     padding: var(--dashboard-modal-cancel-padding);
-    font-size: 14px;
+    font-size: var(--dashboard-modal-action-font-size);
     font-weight: 500;
     cursor: pointer;
     transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
@@ -5070,7 +5070,7 @@ export default {
 .no-plan-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--dashboard-modal-footer-gap);
 }
 
 .no-plan-actions .action-button {
@@ -5128,7 +5128,7 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: var(--dashboard-modal-z);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5162,7 +5162,7 @@ export default {
 
   .popup-title {
     margin: 0;
-    font-size: 18px;
+    font-size: var(--dashboard-modal-header-title-size);
     font-weight: 600;
     color: var(--theme-text-primary);
   }
@@ -5181,7 +5181,7 @@ export default {
     transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
+      background-color: var(--dashboard-neutral-tint-soft);
       color: var(--theme-text-primary);
       transform: rotate(90deg);
     }
@@ -5195,7 +5195,7 @@ export default {
   background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
 
   .notice-content {
-    font-size: 14px;
+    font-size: var(--dashboard-modal-action-font-size);
     line-height: 1.6;
 
     :deep(p) {
@@ -5357,18 +5357,18 @@ export default {
 }
 
 .notice-modal-footer {
-  padding: 15px 20px;
+  padding: var(--dashboard-modal-footer-padding-compact);
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;
 
   .popup-action-btn {
-    padding: 8px 20px;
+    padding: var(--dashboard-modal-action-padding-compact);
     background-color: var(--theme-color);
     color: white;
     border: none;
     border-radius: var(--dashboard-modal-action-radius);
-    font-size: 14px;
+    font-size: var(--dashboard-modal-action-font-size);
     font-weight: 500;
     cursor: pointer;
     transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
@@ -5376,7 +5376,7 @@ export default {
 
     &.adaptive-btn {
       min-width: auto;
-      padding: 8px 20px;
+      padding: var(--dashboard-modal-action-padding-compact);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -5388,7 +5388,7 @@ export default {
     }
 
     &:disabled {
-      opacity: 0.7;
+      opacity: var(--dashboard-modal-disabled-opacity-soft);
       cursor: not-allowed;
       background-color: var(--theme-text-secondary);
     }
@@ -5474,7 +5474,7 @@ export default {
 
     h3 {
       margin: 0;
-      font-size: 18px;
+      font-size: var(--dashboard-modal-header-title-size);
       font-weight: 600;
       color: var(--theme-text-primary);
     }
@@ -5482,7 +5482,7 @@ export default {
     .close-button {
       background: none;
       border: none;
-      font-size: 24px;
+      font-size: var(--dashboard-modal-close-icon-size);
       color: var(--theme-text-secondary);
       cursor: pointer;
       padding: 0;
@@ -5502,7 +5502,7 @@ export default {
   .traffic-package-desc {
     margin: 0 0 14px;
     color: var(--theme-text-secondary);
-    font-size: 14px;
+    font-size: var(--dashboard-modal-action-font-size);
     line-height: 1.5;
   }
 
@@ -5546,7 +5546,7 @@ export default {
     }
 
     .item-price {
-      font-size: 24px;
+      font-size: var(--dashboard-modal-close-icon-size);
       font-weight: 700;
       color: var(--theme-color);
     }
@@ -5565,7 +5565,7 @@ export default {
       padding: var(--dashboard-modal-action-padding);
       border: none;
       border-radius: var(--dashboard-modal-action-radius);
-      font-size: 14px;
+      font-size: var(--dashboard-modal-action-font-size);
       font-weight: 500;
       background-color: var(--dashboard-theme-solid-soft);
       color: var(--dashboard-text-inverse);
@@ -5596,7 +5596,7 @@ export default {
       border: 1px solid var(--border-color);
       background-color: transparent;
       color: var(--theme-text-primary);
-      font-size: 14px;
+      font-size: var(--dashboard-modal-action-font-size);
       font-weight: 500;
       cursor: pointer;
       transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
@@ -5618,7 +5618,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: var(--dashboard-modal-z);
 }
 
 .modal-container {
@@ -5647,7 +5647,7 @@ export default {
 
     h3 {
       margin: 0;
-      font-size: 18px;
+      font-size: var(--dashboard-modal-header-title-size);
       font-weight: 600;
       color: var(--theme-text-primary);
     }
@@ -5655,7 +5655,7 @@ export default {
     .close-button {
       background: none;
       border: none;
-      font-size: 24px;
+      font-size: var(--dashboard-modal-close-icon-size);
       color: var(--theme-text-secondary);
       cursor: pointer;
       padding: 0;
@@ -5686,7 +5686,7 @@ export default {
     }
 
     .note-text {
-      font-size: 14px;
+      font-size: var(--dashboard-modal-action-font-size);
       color: var(--theme-text-secondary);
       text-align: center;
       margin-bottom: 0;
@@ -5701,19 +5701,19 @@ export default {
     padding: var(--dashboard-modal-footer-padding);
     display: flex;
     justify-content: flex-end;
-    gap: 12px;
+    gap: var(--dashboard-modal-footer-gap);
     border-top: 1px solid var(--border-color);
 
     button {
       padding: var(--dashboard-modal-cancel-padding);
       border-radius: var(--dashboard-modal-action-radius);
-      font-size: 14px;
+      font-size: var(--dashboard-modal-action-font-size);
       font-weight: 500;
       cursor: pointer;
       transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
       &:disabled {
-        opacity: 0.7;
+        opacity: var(--dashboard-modal-disabled-opacity-soft);
         cursor: not-allowed;
         transform: none !important;
       }
@@ -5725,7 +5725,7 @@ export default {
       color: var(--theme-text-primary);
 
       &:hover:not(:disabled) {
-        background-color: rgba(0, 0, 0, 0.05);
+        background-color: var(--dashboard-neutral-tint-soft);
       }
     }
 
@@ -5737,7 +5737,7 @@ export default {
       &:hover:not(:disabled) {
         background-color: var(--dashboard-theme-solid-soft);
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+        box-shadow: var(--dashboard-danger-shadow-hover);
       }
     }
   }

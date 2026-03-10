@@ -195,6 +195,13 @@
   --dashboard-modal-item-content-line-height: 1.45;
   --dashboard-modal-item-content-min-height: 32px;
   --dashboard-modal-disabled-opacity: 0.75;
+  --dashboard-modal-close-icon-size: 24px;
+  --dashboard-modal-footer-gap: 12px;
+  --dashboard-modal-footer-padding-compact: 15px 20px;
+  --dashboard-modal-action-padding-compact: 8px 20px;
+  --dashboard-modal-disabled-opacity-soft: 0.7;
+  --dashboard-neutral-tint-soft: rgba(0, 0, 0, 0.05);
+  --dashboard-danger-shadow-hover: 0 4px 8px rgba(244, 67, 54, 0.3);
 }
 
 @media (min-width: 768px) {
