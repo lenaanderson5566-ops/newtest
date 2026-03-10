@@ -6,13 +6,14 @@
 - [x] Phase 3: Base component unification (已完成)
 - [~] Phase 4: P0 page migration (overview/profile/billing/support)（已完成，100%）
 - [~] Phase 5: P1/P2 page migration and cleanup（已完成，100%）
-- [~] Phase 6: Dashboard/long-tail visual consistency and cleanup（进行中，约 55%）
+- [~] Phase 6: Dashboard/long-tail visual consistency and cleanup（已完成，100%）
 
 ## This iteration
 - 启动 Phase 6：Dashboard 统计卡片状态色/过期态与流量包弹层关键样式完成首批 token 化（覆盖阴影、边框、遮罩、按钮底色）。
 - Phase 6 持续推进：Dashboard 弹层层级/反色文本与软色渐变背景进一步 token 化，减少重复 rgba 常量。
 - Phase 6 持续推进：Dashboard 大量交互动效时长/easing 完成语义 token 化，降低页面内 transition 硬编码。
 - Phase 6 持续推进：Dashboard 流量包弹层尺寸/间距/圆角常量完成 token 化，进一步为去除 !important 做准备。
+- Phase 6 收口完成：Dashboard 主题浅色层级、风险态色块与内联弹层常量完成集中 token 化，长尾视觉一致性清理完成。
 - 启动 Phase 3：新增 `BaseCard` / `BaseListRow` / `BaseSettingsRow` 三个基础组件并接入个人中心页面。
 - 将安全设置页（SecuritySettings）迁移到 BaseCard/BaseListRow 结构，减少重复卡片与行样式。
 - 将 Billing 页面 Tab 结构迁移到 `BaseTabs`，统一分段导航样式实现。
@@ -49,4 +50,4 @@
 ## Next
 1. Introduce base shell components for topbar/sidebar/bottom-nav responsibilities.
 2. Replace remaining shell hardcoded values in `App.vue` and high-traffic screens.
-3. 启动 Phase 6：聚焦 Dashboard 与长尾页面视觉一致性验收、删除历史兜底样式。
+3. 启动 Phase 7：性能与包体收敛（大块按需加载、重资源延迟初始化、历史 !important 清退）。

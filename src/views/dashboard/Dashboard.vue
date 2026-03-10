@@ -2702,15 +2702,15 @@ export default {
         overflow: hidden;
 
         &.reset-warning {
-          color: rgba(var(--theme-color-rgb), 0.85);
-          border-color: rgba(var(--theme-color-rgb), 0.85);
-          background-color: rgba(255, 152, 0, 0.1);
+          color: color-mix(in srgb, var(--theme-color) 85%, #fff 15%);
+          border-color: color-mix(in srgb, var(--theme-color) 85%, #fff 15%);
+          background-color: var(--dashboard-warning-tint);
         }
 
         &.reset-danger {
-          color: rgba(var(--theme-color-rgb), 0.95);
-          border-color: rgba(var(--theme-color-rgb), 0.95);
-          background-color: rgba(244, 67, 54, 0.1);
+          color: color-mix(in srgb, var(--theme-color) 95%, #fff 5%);
+          border-color: color-mix(in srgb, var(--theme-color) 95%, #fff 5%);
+          background-color: var(--dashboard-danger-tint);
         }
       }
 
@@ -2719,15 +2719,15 @@ export default {
         overflow: hidden;
 
         &.renew-warning {
-          color: rgba(var(--theme-color-rgb), 0.85);
-          border-color: rgba(var(--theme-color-rgb), 0.85);
-          background-color: rgba(255, 152, 0, 0.1);
+          color: color-mix(in srgb, var(--theme-color) 85%, #fff 15%);
+          border-color: color-mix(in srgb, var(--theme-color) 85%, #fff 15%);
+          background-color: var(--dashboard-warning-tint);
         }
 
         &.renew-danger {
-          color: rgba(var(--theme-color-rgb), 0.95);
-          border-color: rgba(var(--theme-color-rgb), 0.95);
-          background-color: rgba(244, 67, 54, 0.1);
+          color: color-mix(in srgb, var(--theme-color) 95%, #fff 5%);
+          border-color: color-mix(in srgb, var(--theme-color) 95%, #fff 5%);
+          background-color: var(--dashboard-danger-tint);
         }
       }
     }
@@ -3129,7 +3129,7 @@ export default {
               &.theme {
                 color: var(--dashboard-text-inverse);
                 border-color: transparent;
-                background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 1));
+                background: linear-gradient(135deg, color-mix(in srgb, var(--theme-color) 90%, #fff 10%), var(--theme-color));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.28);
               }
 
@@ -3414,7 +3414,7 @@ export default {
         justify-content: center;
         width: 60px;
         height: 60px;
-        background-color: rgba(var(--theme-color-rgb), 0.1);
+        background-color: var(--dashboard-theme-tint-sm);
         border-radius: 12px;
         margin-right: 15px;
         color: var(--theme-color);
@@ -4199,7 +4199,7 @@ export default {
 
   &:hover {
     color: var(--theme-color);
-    background-color: rgba(var(--theme-color-rgb), 0.05);
+    background-color: var(--dashboard-theme-tint-xs);
   }
 
   .action-icon {
@@ -4437,7 +4437,7 @@ export default {
 
 
 .btn-active {
-  background-color: rgba(var(--theme-color-rgb), 0.1);
+  background-color: var(--dashboard-theme-tint-sm);
   color: var(--theme-color);
   border-color: var(--theme-color);
 }
@@ -4480,7 +4480,7 @@ export default {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
-    background-color: rgba(var(--theme-color-rgb), 0.1);
+    background-color: var(--dashboard-theme-tint-sm);
     transform: rotate(90deg);
 
     .close-icon::before,
@@ -4528,12 +4528,12 @@ export default {
   padding: 16px;
   border-radius: 10px;
   cursor: pointer;
-  background-color: rgba(var(--theme-color-rgb), 0.05);
+  background-color: var(--dashboard-theme-tint-xs);
   margin-bottom: 16px;
   transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
   &:hover {
-    background-color: rgba(var(--theme-color-rgb), 0.1);
+    background-color: var(--dashboard-theme-tint-sm);
     transform: translateY(-2px);
   }
 
@@ -4545,7 +4545,7 @@ export default {
     height: 50px;
     border-radius: 10px;
     margin-right: 16px;
-    background-color: rgba(var(--theme-color-rgb), 0.1);
+    background-color: var(--dashboard-theme-tint-sm);
     color: var(--theme-color);
   }
 
@@ -4598,12 +4598,12 @@ export default {
       justify-content: center;
       padding: 16px;
       border-radius: 10px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
+      background-color: var(--dashboard-theme-tint-xs);
       cursor: pointer;
       transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
       &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.1);
+        background-color: var(--dashboard-theme-tint-sm);
         transform: translateY(-3px);
         border-color: var(--theme-color);
       }
@@ -4765,7 +4765,7 @@ export default {
     display: flex;
     align-items: center;
     gap: var(--mobile-grid-gap);
-    background-color: rgba(var(--theme-color-rgb), 0.05);
+    background-color: var(--dashboard-theme-tint-xs);
     border: 1px solid var(--border-color);
     border-radius: 20px;
     padding: 8px 16px;
@@ -4776,7 +4776,7 @@ export default {
     color: var(--theme-text-primary);
 
     &:hover {
-      background-color: rgba(var(--theme-color-rgb), 0.1);
+      background-color: var(--dashboard-theme-tint-sm);
       transform: translateY(-1px);
       border-color: rgba(var(--theme-color-rgb), 0.2);
     }
@@ -4812,7 +4812,7 @@ export default {
   justify-content: center;
   padding: 16px;
   border-radius: 10px;
-  background-color: rgba(var(--theme-color-rgb), 0.05);
+  background-color: var(--dashboard-theme-tint-xs);
   cursor: pointer;
   transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
@@ -4828,30 +4828,30 @@ export default {
 
 
 .stats-card.warning-card {
-  border-color: rgba(var(--theme-color-rgb), 0.85);
+  border-color: color-mix(in srgb, var(--theme-color) 85%, #fff 15%);
   box-shadow: 0 4px 10px rgba(255, 152, 0, 0.15);
 
   .stats-icon {
-    background-color: rgba(255, 152, 0, 0.1);
-    color: rgba(var(--theme-color-rgb), 0.85);
+    background-color: var(--dashboard-warning-tint);
+    color: color-mix(in srgb, var(--theme-color) 85%, #fff 15%);
   }
 
   .stats-value {
-    color: rgba(var(--theme-color-rgb), 0.85);
+    color: color-mix(in srgb, var(--theme-color) 85%, #fff 15%);
   }
 }
 
 .stats-card.danger-card {
-  border-color: rgba(var(--theme-color-rgb), 0.95);
+  border-color: color-mix(in srgb, var(--theme-color) 95%, #fff 5%);
   box-shadow: 0 4px 10px rgba(244, 67, 54, 0.15);
 
   .stats-icon {
-    background-color: rgba(244, 67, 54, 0.1);
-    color: rgba(var(--theme-color-rgb), 0.95);
+    background-color: var(--dashboard-danger-tint);
+    color: color-mix(in srgb, var(--theme-color) 95%, #fff 5%);
   }
 
   .stats-value {
-    color: rgba(var(--theme-color-rgb), 0.95);
+    color: color-mix(in srgb, var(--theme-color) 95%, #fff 5%);
   }
 }
 
@@ -4991,7 +4991,7 @@ export default {
 .no-clients-message {
   padding: var(--layout-gutter-desktop);
   text-align: center;
-  background-color: rgba(var(--theme-color-rgb), 0.05);
+  background-color: var(--dashboard-theme-tint-xs);
   border-radius: 12px;
   margin: 10px 0;
   border: 1px dashed rgba(var(--theme-color-rgb), 0.3);
@@ -5015,7 +5015,7 @@ export default {
     display: flex;
     align-items: center;
     gap: var(--mobile-grid-gap);
-    background-color: rgba(var(--theme-color-rgb), 0.05);
+    background-color: var(--dashboard-theme-tint-xs);
     border: 1px solid var(--border-color);
     border-radius: 20px;
     padding: 8px 16px;
@@ -5026,7 +5026,7 @@ export default {
     color: var(--theme-text-primary);
 
     &:hover {
-      background-color: rgba(var(--theme-color-rgb), 0.1);
+      background-color: var(--dashboard-theme-tint-sm);
       transform: translateY(-1px);
       border-color: rgba(var(--theme-color-rgb), 0.2);
     }
@@ -5253,7 +5253,7 @@ export default {
       border-left: 4px solid var(--theme-color);
       padding: 10px 15px;
       margin: 16px 0;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
+      background-color: var(--dashboard-theme-tint-xs);
       border-radius: 0 6px 6px 0;
 
       p {
@@ -5263,14 +5263,14 @@ export default {
 
     :deep(code) {
       font-family: monospace;
-      background-color: rgba(var(--theme-color-rgb), 0.1);
+      background-color: var(--dashboard-theme-tint-sm);
       padding: 2px 4px;
       border-radius: 4px;
       font-size: 0.9em;
     }
 
     :deep(pre) {
-      background-color: rgba(var(--theme-color-rgb), 0.05);
+      background-color: var(--dashboard-theme-tint-xs);
       padding: 12px;
       border-radius: 6px;
       overflow-x: auto;
@@ -5294,12 +5294,12 @@ export default {
       }
 
       th {
-        background-color: rgba(var(--theme-color-rgb), 0.05);
+        background-color: var(--dashboard-theme-tint-xs);
         font-weight: 600;
       }
 
       tr:nth-child(even) {
-        background-color: rgba(var(--theme-color-rgb), 0.02);
+        background-color: var(--dashboard-theme-tint-xxs);
       }
     }
 
@@ -5418,18 +5418,18 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--dashboard-overlay-dark);
   z-index: var(--dashboard-modal-z);
   padding: 16px;
 }
 
 .traffic-package-container {
-  width: min(100%, 420px);
-  max-height: calc(100vh - 32px);
+  width: min(100%, var(--dashboard-modal-max-width));
+  max-height: calc(100vh - var(--dashboard-modal-viewport-gap));
 }
 
 .traffic-package-modal-card {
-  max-height: calc(100vh - 32px);
+  max-height: calc(100vh - var(--dashboard-modal-viewport-gap));
 
   .modal-header {
     padding: 16px 20px;
@@ -5533,7 +5533,7 @@ export default {
       border-radius: 8px;
       font-size: 14px;
       font-weight: 500;
-      background-color: rgba(var(--theme-color-rgb), 0.92);
+      background-color: var(--dashboard-theme-solid-soft);
       color: var(--dashboard-text-inverse);
       cursor: pointer;
       transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
@@ -5580,7 +5580,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--dashboard-overlay-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5640,7 +5640,7 @@ export default {
 
     .warning-icon {
       margin-bottom: 16px;
-      color: rgba(var(--theme-color-rgb), 0.85);
+      color: color-mix(in srgb, var(--theme-color) 85%, #fff 15%);
     }
 
     .warning-text {
@@ -5657,7 +5657,7 @@ export default {
       text-align: center;
       margin-bottom: 0;
       padding: 8px 12px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
+      background-color: var(--dashboard-theme-tint-xs);
       border-radius: 6px;
       width: 100%;
     }
@@ -5696,12 +5696,12 @@ export default {
     }
 
     .confirm-btn {
-      background-color: rgba(var(--theme-color-rgb), 0.92);
+      background-color: var(--dashboard-theme-solid-soft);
       color: white;
       border: none;
 
       &:hover:not(:disabled) {
-        background-color: rgba(var(--theme-color-rgb), 0.92);
+        background-color: var(--dashboard-theme-solid-soft);
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
       }
@@ -5725,9 +5725,9 @@ export default {
   display: inline-block;
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid var(--dashboard-spinner-track);
   border-radius: 50%;
-  border-top: 2px solid #fff;
+  border-top: 2px solid var(--dashboard-text-inverse);
   animation: spin 1s linear infinite;
   margin-right: 8px;
 }
@@ -5781,7 +5781,7 @@ export default {
 
 .stats-card.warning-card {
   border-color: rgba(var(--theme-color-rgb), 0.85) !important;
-  box-shadow: 0 4px 10px rgba(255, 152, 0, 0.15) !important;
+  box-shadow: var(--dashboard-warning-shadow-soft) !important;
 
   .stats-icon {
     background-color: rgba(255, 152, 0, 0.1) !important;
@@ -5795,7 +5795,7 @@ export default {
 
 .stats-card.danger-card {
   border-color: rgba(var(--theme-color-rgb), 0.95) !important;
-  box-shadow: 0 4px 10px rgba(244, 67, 54, 0.15) !important;
+  box-shadow: var(--dashboard-danger-shadow-soft) !important;
 
   .stats-icon {
     background-color: rgba(244, 67, 54, 0.1) !important;

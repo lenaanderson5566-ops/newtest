@@ -150,6 +150,19 @@
   --dashboard-modal-action-padding: 8px 12px;
   --dashboard-modal-action-radius: 8px;
   --dashboard-modal-cancel-padding: 8px 16px;
+
+  --dashboard-theme-tint-xxs: rgba(var(--theme-color-rgb), 0.02);
+  --dashboard-theme-tint-xs: rgba(var(--theme-color-rgb), 0.05);
+  --dashboard-theme-tint-sm: rgba(var(--theme-color-rgb), 0.1);
+  --dashboard-theme-tint-md: rgba(var(--theme-color-rgb), 0.15);
+  --dashboard-theme-solid-soft: rgba(var(--theme-color-rgb), 0.92);
+  --dashboard-overlay-dark: rgba(0, 0, 0, 0.7);
+
+  --dashboard-danger-tint: rgba(244, 67, 54, 0.1);
+  --dashboard-warning-tint: rgba(255, 152, 0, 0.1);
+  --dashboard-danger-shadow-soft: 0 4px 10px rgba(244, 67, 54, 0.15);
+  --dashboard-warning-shadow-soft: 0 4px 10px rgba(255, 152, 0, 0.15);
+  --dashboard-spinner-track: rgba(255, 255, 255, 0.3);
 }
 
 @media (min-width: 768px) {
