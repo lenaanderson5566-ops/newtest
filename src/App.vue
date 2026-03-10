@@ -440,7 +440,7 @@ export default {
 
 .page-transition-enter-active,
 .page-transition-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity var(--app-transition-fast) ease;
 }
 
 .page-transition-enter-from {
@@ -453,7 +453,7 @@ export default {
 
 
 .language-transitioning .language-transition-item {
-  animation: language-fade 0.3s ease-out;
+  animation: language-fade var(--app-transition-fast) ease-out;
 }
 
 @keyframes language-fade {
@@ -468,7 +468,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity var(--app-transition-fast) ease;
 }
 
 .fade-enter-from,
@@ -490,8 +490,8 @@ export default {
 ::-webkit-scrollbar-thumb {
   background-color: var(--theme-color);
   border-radius: var(--app-scrollbar-radius);
-  opacity: 0.7;
-  transition: background-color 0.3s ease;
+  opacity: var(--app-scrollbar-thumb-opacity);
+  transition: background-color var(--app-transition-fast) ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
