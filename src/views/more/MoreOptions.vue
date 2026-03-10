@@ -146,26 +146,28 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .more-container {
-  padding: 20px;
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
+  padding: var(--layout-gutter-desktop);
+  padding-bottom: calc(var(--layout-gutter-desktop) + var(--safe-bottom));
   display: flex;
   justify-content: center;
 }
 
 .more-inner {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--layout-content-max-width);
 }
 
 .welcome-card {
-  margin-bottom: 24px;
+  margin-bottom: var(--space-4);
 }
 
 .dashboard-card {
   background-color: var(--card-bg-color);
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  padding: 20px;
-  margin-bottom: 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card-sm);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
   border: 1px solid var(--border-color);
 }
 
@@ -178,15 +180,15 @@ onUnmounted(() => {
 }
 
 .row-sub-label {
-  margin-top: 4px;
+  margin-top: var(--space-1);
   font-size: 12px;
   color: rgba(var(--theme-color-rgb), 0.85);
 }
 
 @media (max-width: 768px) {
   .more-container {
-    padding: 15px;
-    padding-bottom: 80px;
+    padding: var(--layout-gutter-mobile);
+    padding-bottom: calc(72px + var(--safe-bottom));
   }
 }
 </style>
