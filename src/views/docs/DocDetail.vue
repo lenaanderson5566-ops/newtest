@@ -2320,7 +2320,7 @@ onUnmounted(() => {
 <!-- 全局样式，不受scoped限制 -->
 
 <style lang="scss">
-@use '@/assets/styles/no-plan-card' as *;
+@use '@/assets/styles/_no-plan-card' as *;
 
 
 
@@ -2332,13 +2332,13 @@ onUnmounted(() => {
 
   justify-content: center !important;
 
-  padding: 8px 16px !important;
+  padding: var(--cross-ez-btn-padding) !important;
 
-  border-radius: 6px !important;
+  border-radius: var(--cross-ez-btn-radius) !important;
 
-  font-size: 14px !important;
+  font-size: var(--cross-ez-btn-font-size) !important;
 
-  background-color: rgba(var(--theme-color-rgb), 0.1) !important;
+  background-color: var(--cross-ez-btn-bg) !important;
 
   color: var(--theme-color) !important;
 
@@ -2346,11 +2346,11 @@ onUnmounted(() => {
 
   cursor: pointer !important;
 
-  transition: all 0.2s ease !important;
+  transition: all var(--dashboard-transition-fast) var(--dashboard-transition-ease) !important;
 
   font-weight: 500 !important;
 
-  margin: 8px 4px !important;
+  margin: var(--cross-ez-btn-margin) !important;
 
   text-decoration: none !important;
 
@@ -2380,7 +2380,7 @@ onUnmounted(() => {
 
   i, .icon, svg {
 
-    margin-right: 6px !important;
+    margin-right: var(--cross-ez-btn-icon-gap) !important;
 
     display: inline-flex !important;
 
@@ -2392,11 +2392,11 @@ onUnmounted(() => {
 
   &:hover, &:active, &:focus, &:visited {
 
-    background-color: rgba(var(--theme-color-rgb), 0.2) !important;
+    background-color: var(--cross-ez-btn-bg-hover) !important;
 
     transform: translateY(-1px) !important;
 
-    box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.1) !important;
+    box-shadow: var(--cross-ez-btn-shadow-hover) !important;
 
     border-bottom: none !important;
 
@@ -2424,7 +2424,7 @@ onUnmounted(() => {
 
     outline: none !important;
 
-    box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.3) !important;
+    box-shadow: var(--cross-ez-btn-focus-ring) !important;
 
   }
 

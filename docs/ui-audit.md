@@ -27,3 +27,7 @@ This baseline tracks global layout/style consistency issues before phased migrat
 2. Token source-of-truth for spacing, radii, surfaces, layers, breakpoints.
 3. Base components (button/card/list/settings row/input/switch/tab/topbar/sidebar).
 4. P0 pages first: dashboard/profile/billing/support.
+
+
+## Phase 12 baseline
+- Dashboard / DocDetail 的 `eztheme-btn` 与 no-plan 共享样式已对齐到统一语义 token，作为后续可视回归基线。

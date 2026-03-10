@@ -216,6 +216,16 @@
   --no-plan-action-gap: 12px;
   --no-plan-action-padding: 10px 18px;
   --no-plan-action-radius: 10px;
+
+  --cross-ez-btn-padding: var(--dashboard-modal-cancel-padding);
+  --cross-ez-btn-radius: var(--dashboard-ez-btn-radius);
+  --cross-ez-btn-font-size: var(--dashboard-ez-btn-font-size);
+  --cross-ez-btn-bg: var(--dashboard-ez-btn-bg);
+  --cross-ez-btn-bg-hover: var(--dashboard-ez-btn-bg-hover);
+  --cross-ez-btn-shadow-hover: var(--dashboard-ez-btn-shadow-hover);
+  --cross-ez-btn-focus-ring: var(--dashboard-ez-btn-focus-ring);
+  --cross-ez-btn-margin: 8px 4px;
+  --cross-ez-btn-icon-gap: 6px;
 }
 
 @media (min-width: 768px) {

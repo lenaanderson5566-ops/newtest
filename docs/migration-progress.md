@@ -12,8 +12,10 @@
 - [~] Phase 9: Dashboard override retirement and scoped-style restoration（已完成，100%）
 - [~] Phase 10: Dashboard override down-migration to scoped/component boundaries（已完成，100%）
 - [~] Phase 11: Cross-page style de-dup and token baseline hardening（已完成，100%）
+- [~] Phase 12: Dashboard/DocDetail semantic token naming alignment and visual regression baseline（已完成，100%）
 
 ## This iteration
+- Phase 12 收口完成：DocDetail eztheme-btn 与 no-plan 共享样式切换到统一语义 token 命名。
 - Phase 11 收口完成：no-plan 跨页面共享样式完成语义 token 化并对齐 Dashboard scoped 常量。
 - 启动 Phase 11：Dashboard scoped 弹层/按钮硬编码常量继续 token 化，统一 footer gap/禁用态/危险阴影等语义变量。
 - Phase 10 收口完成：Dashboard 全局 overrides 文件已清退，相关样式已回归 Dashboard scoped 作用域。
@@ -65,4 +67,4 @@
 ## Next
 1. Introduce base shell components for topbar/sidebar/bottom-nav responsibilities.
 2. Replace remaining shell hardcoded values in `App.vue` and high-traffic screens.
-3. 启动 Phase 12：逐步统一 Dashboard/DocDetail 的弹层与卡片语义 token 命名并补充可视回归。
+3. 启动 Phase 13：继续梳理文档与业务页的跨模块交互 token 并建立页面级可视回归清单。
