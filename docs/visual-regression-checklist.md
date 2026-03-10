@@ -1,6 +1,6 @@
 # Visual Regression Checklist
 
-## Scope (Phase 13 baseline)
+## Scope (Phase 14 baseline)
 - Dashboard
 - DocDetail
 - Billing
@@ -24,3 +24,9 @@
 ## Acceptance
 - No unexpected spacing/radius/color/transition drift against baseline screenshots.
 - Any intentional visual updates must be accompanied by token/document updates in the same PR.
+
+## Threshold governance
+- Default global pixel-diff threshold: **0.30%**
+- Warning threshold: **0.30% ~ 0.80%** (manual review required)
+- Failure threshold: **> 0.80%** (must block until reviewed/fixed)
+- High-risk routes/components may define stricter local thresholds in follow-up phases.

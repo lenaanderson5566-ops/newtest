@@ -14,8 +14,10 @@
 - [~] Phase 11: Cross-page style de-dup and token baseline hardening（已完成，100%）
 - [~] Phase 12: Dashboard/DocDetail semantic token naming alignment and visual regression baseline（已完成，100%）
 - [~] Phase 13: Cross-module interaction token cleanup and visual regression checklist（已完成，100%）
+- [~] Phase 14: Key-route screenshot regression automation and threshold governance（已完成，100%）
 
 ## This iteration
+- Phase 14 收口完成：按清单完成关键路由截图回归执行，并固化差异阈值治理规则。
 - Phase 13 收口完成：DocDetail 交互态 transition/focus 等剩余硬编码时序完成 token 化，并补齐页面级可视回归清单。
 - Phase 12 收口完成：DocDetail eztheme-btn 与 no-plan 共享样式切换到统一语义 token 命名。
 - Phase 11 收口完成：no-plan 跨页面共享样式完成语义 token 化并对齐 Dashboard scoped 常量。
@@ -69,4 +71,4 @@
 ## Next
 1. Introduce base shell components for topbar/sidebar/bottom-nav responsibilities.
 2. Replace remaining shell hardcoded values in `App.vue` and high-traffic screens.
-3. 启动 Phase 14：按清单执行关键路由的截图回归自动化与异常阈值治理。
+3. 启动 Phase 15：将截图回归接入 CI，并对高风险路由引入按组件分层阈值。
