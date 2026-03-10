@@ -163,6 +163,15 @@
   --dashboard-danger-shadow-soft: 0 4px 10px rgba(244, 67, 54, 0.15);
   --dashboard-warning-shadow-soft: 0 4px 10px rgba(255, 152, 0, 0.15);
   --dashboard-spinner-track: rgba(255, 255, 255, 0.3);
+  --dashboard-warning-border-strong: rgba(var(--theme-color-rgb), 0.85);
+  --dashboard-danger-border-strong: rgba(var(--theme-color-rgb), 0.95);
+  --dashboard-warning-text-strong: color-mix(in srgb, var(--theme-color) 85%, #fff 15%);
+  --dashboard-danger-text-strong: color-mix(in srgb, var(--theme-color) 95%, #fff 5%);
+
+  --dashboard-ez-btn-radius: var(--dashboard-modal-action-radius);
+  --dashboard-ez-btn-bg: var(--dashboard-theme-tint-sm);
+  --dashboard-ez-btn-bg-hover: var(--dashboard-theme-tint-md);
+  --dashboard-ez-btn-shadow-hover: 0 2px 8px rgba(var(--theme-color-rgb), 0.1);
 }
 
 @media (min-width: 768px) {

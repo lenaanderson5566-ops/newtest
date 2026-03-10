@@ -5780,30 +5780,30 @@ export default {
 @use '@/assets/styles/no-plan-card' as *;
 
 .stats-card.warning-card {
-  border-color: rgba(var(--theme-color-rgb), 0.85) !important;
+  border-color: var(--dashboard-warning-border-strong) !important;
   box-shadow: var(--dashboard-warning-shadow-soft) !important;
 
   .stats-icon {
-    background-color: rgba(255, 152, 0, 0.1) !important;
-    color: rgba(var(--theme-color-rgb), 0.85) !important;
+    background-color: var(--dashboard-warning-tint) !important;
+    color: var(--dashboard-warning-text-strong) !important;
   }
 
   .stats-value {
-    color: rgba(var(--theme-color-rgb), 0.85) !important;
+    color: var(--dashboard-warning-text-strong) !important;
   }
 }
 
 .stats-card.danger-card {
-  border-color: rgba(var(--theme-color-rgb), 0.95) !important;
+  border-color: var(--dashboard-danger-border-strong) !important;
   box-shadow: var(--dashboard-danger-shadow-soft) !important;
 
   .stats-icon {
-    background-color: rgba(244, 67, 54, 0.1) !important;
-    color: rgba(var(--theme-color-rgb), 0.95) !important;
+    background-color: var(--dashboard-danger-tint) !important;
+    color: var(--dashboard-danger-text-strong) !important;
   }
 
   .stats-value {
-    color: rgba(var(--theme-color-rgb), 0.95) !important;
+    color: var(--dashboard-danger-text-strong) !important;
   }
 }
 
@@ -5813,9 +5813,9 @@ export default {
   align-items: center !important;
   justify-content: center !important;
   padding: var(--dashboard-modal-cancel-padding) !important;
-  border-radius: 6px !important;
+  border-radius: var(--dashboard-ez-btn-radius) !important;
   font-size: 14px !important;
-  background-color: rgba(var(--theme-color-rgb), 0.1) !important;
+  background-color: var(--dashboard-ez-btn-bg) !important;
   color: var(--theme-color) !important;
   border: none !important;
   cursor: pointer !important;
@@ -5830,9 +5830,9 @@ export default {
   width: auto !important;
 
   &:hover, &:active, &:focus, &:visited {
-    background-color: rgba(var(--theme-color-rgb), 0.2) !important;
+    background-color: var(--dashboard-ez-btn-bg-hover) !important;
     transform: translateY(-1px) !important;
-    box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.1) !important;
+    box-shadow: var(--dashboard-ez-btn-shadow-hover) !important;
     border-bottom: none !important;
     text-decoration: none !important;
     color: var(--theme-color) !important;
