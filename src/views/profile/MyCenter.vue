@@ -162,7 +162,10 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-.my-center { padding: var(--space-4) 0; }
+.my-center {
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
+  padding: var(--space-4) 0 calc(var(--space-4) + var(--safe-bottom));
+}
 .my-center-inner { max-width: 1024px; margin: 0 auto; display: grid; gap: var(--space-4); }
 
 .section-block {
@@ -222,7 +225,7 @@ onMounted(async () => {
 }
 
 .mini-action {
-  height: 32px;
+  min-height: 40px;
   padding: 0 12px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
@@ -252,7 +255,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   font-size: 12px;
 }
 .logout-btn {
-  height: 34px;
+  min-height: 40px;
   padding: 0 14px;
   border-radius: var(--radius-sm);
   border: 1px solid rgba(220, 38, 38, 0.35);
@@ -267,10 +270,22 @@ input:checked + .slider:before { transform: translateX(18px); }
 }
 
 @media (max-width: 768px) {
+  .my-center {
+    padding: var(--space-3) 0 calc(72px + var(--safe-bottom));
+  }
+
   .my-center-inner { max-width: 100%; gap: var(--space-3); }
   .summary-panel { padding: 12px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
+  .mini-action,
+  .logout-btn { min-height: 44px; }
   .session-panel { flex-direction: column; align-items: stretch; padding: 12px; }
+}
+
+@media (max-width: 576px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
