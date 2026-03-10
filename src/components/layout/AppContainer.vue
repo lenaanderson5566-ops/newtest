@@ -1,7 +1,7 @@
 <template>
-  <div class="app-container" :class="[`mode-${mode}`]">
+  <main class="app-container" :class="[`mode-${mode}`]">
     <slot />
-  </div>
+  </main>
 </template>
 
 <script>
@@ -20,7 +20,7 @@ export default {
 .app-container {
   width: min(var(--layout-content-max-width), 100%);
   margin: 0 auto;
-  padding: var(--layout-gap-y) var(--layout-padding-x-right) calc(var(--layout-gap-y) + var(--safe-bottom)) var(--layout-padding-x);
+  padding: var(--layout-gap-y) var(--layout-padding-x-right) calc(84px + var(--safe-bottom)) var(--layout-padding-x);
   box-sizing: border-box;
 
   &.mode-shell {

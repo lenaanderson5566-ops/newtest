@@ -1,23 +1,19 @@
 <template>
-  <div class="top-fixed-bar">
+  <header class="top-fixed-bar">
     <div class="site-logo">
       <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
-      {{ siteConfig.siteName }}
+      <span class="site-name">{{ siteConfig.siteName }}</span>
     </div>
 
     <div class="top-toolbar">
       <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
       <LanguageSelector />
-      <button
-        v-if="showGiftCardRedeem"
-        class="gift-btn"
-        @click="$emit('navigate-profile')"
-      >
+      <button v-if="showGiftCardRedeem" class="gift-btn" @click="$emit('navigate-profile')">
         <IconGift :size="18" />
       </button>
       <UserAvatar :username="username" :avatarUrl="avatarUrl" />
     </div>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -28,157 +24,77 @@ import { IconGift } from '@tabler/icons-vue';
 
 export default {
   name: 'AppTopBar',
-  components: {
-    LanguageSelector,
-    UserAvatar,
-    ServiceNoticeButton,
-    IconGift
-  },
+  components: { LanguageSelector, UserAvatar, ServiceNoticeButton, IconGift },
   emits: ['navigate-profile'],
   props: {
-    siteConfig: {
-      type: Object,
-      required: true
-    },
-    username: {
-      type: String,
-      default: ''
-    },
-    avatarUrl: {
-      type: String,
-      default: ''
-    },
-    hasUnreadNotice: {
-      type: Boolean,
-      default: false
-    },
-    showGiftCardRedeem: {
-      type: Boolean,
-      default: false
-    }
+    siteConfig: { type: Object, required: true },
+    username: { type: String, default: '' },
+    avatarUrl: { type: String, default: '' },
+    hasUnreadNotice: { type: Boolean, default: false },
+    showGiftCardRedeem: { type: Boolean, default: false }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .top-fixed-bar {
-  height: calc(var(--top-fixed-bar-height) + var(--safe-top));
   position: fixed;
   top: 0;
-  padding-top: var(--safe-top);
   left: 0;
   right: 0;
-  background: var(--topbar-surface);
-  backdrop-filter: var(--surface-blur-strong);
-  -webkit-backdrop-filter: var(--surface-blur-strong);
-  border-bottom: 1px solid var(--surface-border-weak);
-  box-shadow: var(--topbar-shadow);
+  z-index: var(--app-topbar-z);
+  height: calc(var(--top-fixed-bar-height) + var(--safe-top));
+  padding: var(--safe-top) var(--layout-padding-x-right) 0 var(--layout-padding-x);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
-  z-index: var(--app-topbar-z);
-  transition: background-color var(--app-topbar-transition-duration) var(--app-transition-ease), box-shadow var(--app-topbar-transition-duration) var(--app-transition-ease);
+  background: var(--fx-glass-strong);
+  border-bottom: 1px solid var(--fx-border);
+  backdrop-filter: blur(18px);
 }
 
 .site-logo {
-  font-size: var(--site-logo-size);
-  font-weight: 700;
-  color: var(--theme-color);
-  letter-spacing: -0.5px;
   display: flex;
   align-items: center;
-  gap: var(--site-logo-gap);
+  gap: 8px;
+  min-width: 0;
+}
 
-  .site-logo-img {
-    height: var(--site-logo-icon-size);
-    width: var(--site-logo-icon-size);
-    border-radius: var(--logo-radius);
-    object-fit: cover;
-  }
+.site-logo-img {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+}
+
+.site-name {
+  font-size: 14px;
+  color: var(--fx-text);
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .top-toolbar {
-  --toolbar-control-border: transparent;
-  --toolbar-control-bg: transparent;
-  --toolbar-control-hover-bg: var(--app-toolbar-control-hover-bg);
-  --toolbar-control-active-border: var(--app-toolbar-control-active-border);
-
-  position: static;
   display: flex;
   align-items: center;
-  gap: var(--toolbar-control-gap);
-  z-index: var(--toolbar-z);
-
-  .gift-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--toolbar-control-height);
-    height: var(--toolbar-control-height);
-    border-radius: 50%;
-    background: var(--toolbar-control-bg);
-    border: 1px solid var(--toolbar-control-border);
-    box-shadow: var(--toolbar-control-shadow);
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all var(--app-control-transition-duration) var(--app-transition-ease);
-
-    &:hover {
-      border-color: rgba(var(--theme-color-rgb), 0.45);
-      color: var(--theme-color);
-      box-shadow: var(--toolbar-control-shadow-hover);
-      transform: translateY(-1px);
-    }
-  }
+  gap: 4px;
 
   :deep(.language-btn),
-  :deep(.avatar-wrapper) {
-    min-height: var(--toolbar-control-height);
-    padding: var(--toolbar-control-padding);
-    border: 1px solid var(--toolbar-control-border);
-    background: var(--toolbar-control-bg);
-    border-radius: var(--toolbar-control-radius);
-    transition: background-color var(--app-topbar-transition-duration) var(--app-transition-ease), border-color var(--app-topbar-transition-duration) var(--app-transition-ease);
-
-    &:hover {
-      background: var(--toolbar-control-hover-bg);
-    }
-
-    &:active,
-    &.is-active {
-      border-color: var(--toolbar-control-active-border);
-      background: var(--toolbar-control-hover-bg);
-    }
+  :deep(.avatar-wrapper),
+  .gift-btn {
+    min-height: 34px;
+    border-radius: 10px;
+    border: 1px solid var(--fx-border);
+    background: var(--fx-glass-soft);
   }
 
-  :deep(.avatar-wrapper) {
-    width: auto;
-    min-width: var(--toolbar-control-height);
-    font-size: var(--site-logo-size-mobile);
-  }
-
-  :deep(.language-btn) {
-    min-width: var(--toolbar-language-min-width);
-    font-size: var(--site-logo-size-mobile);
-  }
-}
-
-@media (max-width: 768px) {
-  .site-logo {
-    font-size: var(--site-logo-size-mobile);
-    gap: var(--site-logo-gap-mobile);
-
-    .site-logo-img {
-      width: var(--site-logo-icon-size-mobile);
-      height: var(--site-logo-icon-size-mobile);
-    }
-  }
-
-  .top-toolbar {
-    gap: var(--toolbar-control-gap);
-    flex-wrap: nowrap;
-    justify-content: flex-end;
+  .gift-btn {
+    width: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fx-text);
   }
 }
 </style>
