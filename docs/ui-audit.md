@@ -30,7 +30,7 @@ This baseline tracks global layout/style consistency issues before phased migrat
 
 
 ## Phase 12 baseline
-- Dashboard / DocDetail 的 `eztheme-btn` 与 no-plan 共享样式已对齐到统一语义 token，作为后续可视回归基线。
+- Dashboard / DocDetail 的 `eztheme-btn` 与 no-plan 共享样式已对齐到统一语义 token。
 
 ## Phase 13 baseline
 - DocDetail 页面内链接、表单、卡片等交互 transition 已对齐到全局时序 token（`--app-transition-*`），降低跨模块交互漂移。

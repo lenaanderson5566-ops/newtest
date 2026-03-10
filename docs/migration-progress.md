@@ -12,16 +12,8 @@
 - [~] Phase 9: Dashboard override retirement and scoped-style restoration（已完成，100%）
 - [~] Phase 10: Dashboard override down-migration to scoped/component boundaries（已完成，100%）
 - [~] Phase 11: Cross-page style de-dup and token baseline hardening（已完成，100%）
-- [~] Phase 12: Dashboard/DocDetail semantic token naming alignment and visual regression baseline（已完成，100%）
-- [~] Phase 13: Cross-module interaction token cleanup and visual regression checklist（已完成，100%）
-- [~] Phase 14: Key-route screenshot regression automation and threshold governance（已完成，100%）
-- [~] Phase 15: CI screenshot regression integration and layered thresholds（已完成，100%）
 
 ## This iteration
-- Phase 15 收口完成：截图回归已接入 CI workflow，并为 Dashboard 路由启用更严格阈值策略。
-- Phase 14 收口完成：按清单完成关键路由截图回归执行，并固化差异阈值治理规则。
-- Phase 13 收口完成：DocDetail 交互态 transition/focus 等剩余硬编码时序完成 token 化，并补齐页面级可视回归清单。
-- Phase 12 收口完成：DocDetail eztheme-btn 与 no-plan 共享样式切换到统一语义 token 命名。
 - Phase 11 收口完成：no-plan 跨页面共享样式完成语义 token 化并对齐 Dashboard scoped 常量。
 - 启动 Phase 11：Dashboard scoped 弹层/按钮硬编码常量继续 token 化，统一 footer gap/禁用态/危险阴影等语义变量。
 - Phase 10 收口完成：Dashboard 全局 overrides 文件已清退，相关样式已回归 Dashboard scoped 作用域。
@@ -73,4 +65,3 @@
 ## Next
 1. Introduce base shell components for topbar/sidebar/bottom-nav responsibilities.
 2. Replace remaining shell hardcoded values in `App.vue` and high-traffic screens.
-3. 启动 Phase 16：将 visual baseline 与变更审阅流程绑定，并补齐更多高风险业务路由覆盖。
