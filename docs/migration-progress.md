@@ -4,7 +4,7 @@
 - [x] Phase 1: Layout/token baseline
 - [~] Phase 2: Shell standardization and reusable layout primitives (进行中，约 70%)
 - [x] Phase 3: Base component unification (已完成)
-- [~] Phase 4: P0 page migration (overview/profile/billing/support)（进行中，约 45%）
+- [~] Phase 4: P0 page migration (overview/profile/billing/support)（进行中，约 55%）
 - [ ] Phase 5: P1/P2 page migration and cleanup
 
 ## This iteration
@@ -16,6 +16,7 @@
 - 启动 Phase 4：支持中心入口页（CustomerService）完成移动端壳层与间距稳定化改造。
 - Billing 页面完成粘性分段导航与移动端安全区重排优化。
 - Dashboard 页面完成移动端容器与网格重排优化。
+- CustomerService 页面完成移动端头部触达区与底部安全区统一优化。
 - 将 App 壳层顶部导航从 `App.vue` 拆分为 `AppTopBar` / `AuthTopToolbar`，降低根组件复杂度。
 - Added reusable layout container component (`AppContainer`) for unified content width/padding behavior.
 - Integrated `AppContainer` into `MainBoard` to reduce page-level container ownership.

@@ -419,6 +419,7 @@ export default {
   flex-direction: column;
   min-height: 100dvh;
   width: 100%;
+  padding-bottom: var(--safe-bottom);
   background-color: var(--background-color);
   color: var(--text-color);
 }
@@ -426,6 +427,7 @@ export default {
 .service-header {
   display: flex;
   align-items: center;
+  gap: var(--space-2, 8px);
   padding: calc(var(--space-3) + var(--safe-top)) var(--space-4) var(--space-3);
   position: sticky;
   top: 0;
@@ -440,8 +442,8 @@ export default {
   border: 1px solid var(--border-color-soft);
   color: var(--theme-color);
   cursor: pointer;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-sm);
   display: inline-flex;
   align-items: center;
@@ -466,6 +468,7 @@ export default {
   position: relative;
   width: 100%;
   min-height: 0;
+  padding-bottom: var(--safe-bottom);
 }
 
 .service-crisp-container {
@@ -517,14 +520,25 @@ export default {
   100% { transform: rotate(360deg); }
 }
 
-
 @media (max-width: 768px) {
+  .customer-service-container {
+    min-height: calc(100dvh - var(--top-fixed-bar-height));
+  }
+
   .service-header {
     padding: calc(var(--space-2) + var(--safe-top)) var(--space-3) var(--space-2);
   }
 
   .service-title {
+    margin-left: 8px;
     font-size: 16px;
   }
+
+  .service-other-container .other-service-tips {
+    margin-top: 24px;
+    padding: 12px;
+    font-size: 14px;
+  }
 }
+
 </style> 
