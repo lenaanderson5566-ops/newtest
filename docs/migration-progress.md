@@ -10,9 +10,10 @@
 - [~] Phase 7: Performance and cleanup hardening（已完成，100%）
 - [~] Phase 8: Dashboard style modularization and override retirement（已完成，100%）
 - [~] Phase 9: Dashboard override retirement and scoped-style restoration（已完成，100%）
-- [~] Phase 10: Dashboard override down-migration to scoped/component boundaries（进行中，约 60%）
+- [~] Phase 10: Dashboard override down-migration to scoped/component boundaries（已完成，100%）
 
 ## This iteration
+- Phase 10 收口完成：Dashboard 全局 overrides 文件已清退，相关样式已回归 Dashboard scoped 作用域。
 - Phase 10 持续推进：traffic-package-modal override 已从全局模块清退，回归 Dashboard scoped 样式维护。
 - 启动 Phase 10：将 eztheme-btn override 从全局模块下沉回 Dashboard scoped :deep 作用域。
 - Phase 9 收口完成：Dashboard overrides（风险卡片/按钮/流量包弹层）历史 `!important` 已完成清退。
@@ -61,4 +62,4 @@
 ## Next
 1. Introduce base shell components for topbar/sidebar/bottom-nav responsibilities.
 2. Replace remaining shell hardcoded values in `App.vue` and high-traffic screens.
-3. 启动 Phase 10：将 Dashboard overrides 逐步下沉回页面 scoped 样式并按组件边界继续收敛。
+3. 启动 Phase 11：继续清理跨页面历史样式共享并补齐 token 文档与回归基线。

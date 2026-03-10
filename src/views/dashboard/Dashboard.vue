@@ -5809,7 +5809,3 @@ export default {
 
 </style>
 
-<!-- 全局样式，不受scoped限制 -->
-<style lang="scss">
-@use '@/assets/styles/dashboard-global-overrides';
-</style>
