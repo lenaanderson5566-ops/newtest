@@ -478,18 +478,18 @@ export default {
 
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: var(--app-scrollbar-size);
+  height: var(--app-scrollbar-size);
 }
 
 ::-webkit-scrollbar-track {
   background-color: var(--input-bg-color, rgba(0, 0, 0, 0.05));
-  border-radius: 3px;
+  border-radius: var(--app-scrollbar-radius);
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--theme-color);
-  border-radius: 3px;
+  border-radius: var(--app-scrollbar-radius);
   opacity: 0.7;
   transition: background-color 0.3s ease;
 }
