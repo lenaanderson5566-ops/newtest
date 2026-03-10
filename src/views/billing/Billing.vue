@@ -85,21 +85,22 @@ watch(
 
 <style lang="scss" scoped>
 .billing-container {
-  padding: 16px 20px 12px;
+  padding: var(--layout-gutter-desktop) var(--layout-gutter-desktop) 12px;
+  padding-bottom: calc(12px + var(--safe-bottom));
   background: transparent;
   min-height: calc(100dvh - var(--top-fixed-bar-height));
 }
 
 .billing-inner {
-  max-width: 1240px;
+  max-width: var(--layout-content-max-width);
   margin: 0 auto;
   display: grid;
-  gap: 12px;
+  gap: var(--mobile-card-padding);
 }
 
 .billing-tabs-wrap {
   position: sticky;
-  top: calc(var(--top-fixed-bar-height) + var(--safe-top) + 8px);
+  top: calc(var(--top-fixed-bar-height) + var(--safe-top) + var(--page-content-top-gap));
   z-index: 8;
 }
 
@@ -115,12 +116,12 @@ watch(
 
 @media (max-width: 768px) {
   .billing-container {
-    padding: 12px;
+    padding: var(--layout-gutter-mobile);
     padding-bottom: calc(72px + var(--safe-bottom));
   }
 
   .billing-tabs-wrap {
-    top: calc(var(--top-fixed-bar-height) + var(--safe-top) + 6px);
+    top: calc(var(--top-fixed-bar-height) + var(--safe-top) + var(--page-content-top-gap-mobile));
   }
 }
 </style>
