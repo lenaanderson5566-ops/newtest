@@ -95,7 +95,7 @@ export default {
 
 .main-board {
 
-  min-height: 100vh;
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
 
   position: relative;
 
@@ -156,9 +156,9 @@ export default {
 
   border-radius: 50%;
 
-  filter: blur(60px);
+  filter: blur(var(--layout-bg-orb-blur));
 
-  opacity: 0.3;
+  opacity: var(--layout-bg-orb-opacity);
 
   mix-blend-mode: lighten;
 
@@ -168,9 +168,9 @@ export default {
 
 .ball-1 {
 
-  width: 600px;
+  width: var(--layout-bg-orb-1-size);
 
-  height: 600px;
+  height: var(--layout-bg-orb-1-size);
 
   background: radial-gradient(circle at 30% 30%, 
 
@@ -194,9 +194,9 @@ export default {
 
 .ball-2 {
 
-  width: 500px;
+  width: var(--layout-bg-orb-2-size);
 
-  height: 500px;
+  height: var(--layout-bg-orb-2-size);
 
   background: radial-gradient(circle at 70% 70%, 
 
@@ -220,9 +220,9 @@ export default {
 
 .ball-3 {
 
-  width: 450px;
+  width: var(--layout-bg-orb-3-size);
 
-  height: 450px;
+  height: var(--layout-bg-orb-3-size);
 
   background: radial-gradient(circle at 50% 50%, 
 
