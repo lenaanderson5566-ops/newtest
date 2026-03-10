@@ -1,59 +1,59 @@
 .eztheme-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: var(--dashboard-modal-cancel-padding) !important;
-  border-radius: var(--dashboard-ez-btn-radius) !important;
-  font-size: var(--dashboard-ez-btn-font-size) !important;
-  background-color: var(--dashboard-ez-btn-bg) !important;
-  color: var(--theme-color) !important;
-  border: none !important;
-  cursor: pointer !important;
-  transition: all var(--dashboard-transition-fast) var(--dashboard-transition-ease) !important;
-  font-weight: var(--dashboard-ez-btn-font-weight) !important;
-  margin: var(--dashboard-ez-btn-margin) !important;
-  text-decoration: none !important;
-  border-bottom: none !important;
-  text-align: center !important;
-  box-shadow: none !important;
-  border-color: transparent !important;
-  width: auto !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--dashboard-modal-cancel-padding);
+  border-radius: var(--dashboard-ez-btn-radius);
+  font-size: var(--dashboard-ez-btn-font-size);
+  background-color: var(--dashboard-ez-btn-bg);
+  color: var(--theme-color);
+  border: none;
+  cursor: pointer;
+  transition: all var(--dashboard-transition-fast) var(--dashboard-transition-ease);
+  font-weight: var(--dashboard-ez-btn-font-weight);
+  margin: var(--dashboard-ez-btn-margin);
+  text-decoration: none;
+  border-bottom: none;
+  text-align: center;
+  box-shadow: none;
+  border-color: transparent;
+  width: auto;
 
   &:hover,
   &:active,
   &:focus,
   &:visited {
-    background-color: var(--dashboard-ez-btn-bg-hover) !important;
-    transform: translateY(var(--dashboard-ez-btn-hover-offset)) !important;
-    box-shadow: var(--dashboard-ez-btn-shadow-hover) !important;
-    border-bottom: none !important;
-    text-decoration: none !important;
-    color: var(--theme-color) !important;
-    border-color: transparent !important;
+    background-color: var(--dashboard-ez-btn-bg-hover);
+    transform: translateY(var(--dashboard-ez-btn-hover-offset));
+    box-shadow: var(--dashboard-ez-btn-shadow-hover);
+    border-bottom: none;
+    text-decoration: none;
+    color: var(--theme-color);
+    border-color: transparent;
   }
 
   &:active {
-    transform: translateY(0) !important;
-    box-shadow: none !important;
+    transform: translateY(0);
+    box-shadow: none;
   }
 
   &:focus {
-    outline: none !important;
-    box-shadow: var(--dashboard-ez-btn-focus-ring) !important;
+    outline: none;
+    box-shadow: var(--dashboard-ez-btn-focus-ring);
   }
 }
 
 a.eztheme-btn {
-  background-image: none !important;
-  background-repeat: no-repeat !important;
-  background-position: initial !important;
-  background-size: initial !important;
-  text-decoration: none !important;
-  border-bottom: none !important;
+  background-image: none;
+  background-repeat: no-repeat;
+  background-position: initial;
+  background-size: initial;
+  text-decoration: none;
+  border-bottom: none;
 
   &::after,
   &::before {
-    display: none !important;
-    content: none !important;
+    display: none;
+    content: none;
   }
 }

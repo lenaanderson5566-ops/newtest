@@ -1,158 +1,158 @@
 .traffic-package-modal-overlay {
-  position: fixed !important;
-  inset: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background-color: var(--dashboard-modal-overlay-bg) !important;
-  z-index: var(--dashboard-modal-z) !important;
-  padding: var(--dashboard-modal-padding) !important;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dashboard-modal-overlay-bg);
+  z-index: var(--dashboard-modal-z);
+  padding: var(--dashboard-modal-padding);
 }
 
 .traffic-package-modal-container {
-  width: min(100%, var(--dashboard-modal-max-width)) !important;
-  max-height: calc(100vh - var(--dashboard-modal-viewport-gap)) !important;
-  border-radius: var(--dashboard-modal-radius-sm) !important;
-  overflow: hidden !important;
-  box-shadow: var(--dashboard-modal-shadow) !important;
+  width: min(100%, var(--dashboard-modal-max-width));
+  max-height: calc(100vh - var(--dashboard-modal-viewport-gap));
+  border-radius: var(--dashboard-modal-radius-sm);
+  overflow: hidden;
+  box-shadow: var(--dashboard-modal-shadow);
 }
 
 .traffic-package-modal-card-global {
-  background-color: var(--card-background) !important;
-  display: flex !important;
-  flex-direction: column !important;
-  border-radius: var(--dashboard-modal-radius-lg) !important;
-  border: 1px solid var(--dashboard-modal-border) !important;
-  box-shadow: var(--dashboard-modal-card-shadow) !important;
-  max-height: calc(100vh - var(--dashboard-modal-viewport-gap)) !important;
-  overflow: hidden !important;
+  background-color: var(--card-background);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--dashboard-modal-radius-lg);
+  border: 1px solid var(--dashboard-modal-border);
+  box-shadow: var(--dashboard-modal-card-shadow);
+  max-height: calc(100vh - var(--dashboard-modal-viewport-gap));
+  overflow: hidden;
 }
 
 .traffic-package-modal-card-global .modal-header {
-  padding: var(--dashboard-modal-header-padding) !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  border-bottom: 1px solid var(--border-color) !important;
-  background-color: var(--dashboard-modal-header-bg) !important;
+  padding: var(--dashboard-modal-header-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--dashboard-modal-header-bg);
 }
 
 .traffic-package-modal-card-global .modal-header h3 {
-  margin: 0 !important;
-  font-size: var(--dashboard-modal-header-title-size) !important;
-  font-weight: var(--dashboard-modal-title-weight) !important;
-  color: var(--theme-text-primary) !important;
+  margin: 0;
+  font-size: var(--dashboard-modal-header-title-size);
+  font-weight: var(--dashboard-modal-title-weight);
+  color: var(--theme-text-primary);
 }
 
 .traffic-package-modal-card-global .modal-header .close-button {
-  border: none !important;
-  background: transparent !important;
-  color: var(--theme-text-secondary) !important;
-  cursor: pointer !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  border: none;
+  background: transparent;
+  color: var(--theme-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .traffic-package-modal-card-global .modal-header .close-button:hover {
-  color: var(--theme-text-primary) !important;
+  color: var(--theme-text-primary);
 }
 
 .traffic-package-modal-card-global .modal-body {
-  display: block !important;
-  padding: var(--dashboard-modal-body-padding) !important;
-  overflow-y: auto !important;
+  display: block;
+  padding: var(--dashboard-modal-body-padding);
+  overflow-y: auto;
 }
 
 .traffic-package-modal-card-global .traffic-package-desc {
-  margin: 0 0 var(--dashboard-modal-desc-margin-bottom) !important;
-  color: var(--theme-text-secondary) !important;
-  font-size: var(--dashboard-modal-desc-font-size) !important;
-  line-height: var(--dashboard-modal-desc-line-height) !important;
+  margin: 0 0 var(--dashboard-modal-desc-margin-bottom);
+  color: var(--theme-text-secondary);
+  font-size: var(--dashboard-modal-desc-font-size);
+  line-height: var(--dashboard-modal-desc-line-height);
 }
 
 .traffic-package-modal-card-global .traffic-package-list {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: var(--dashboard-modal-list-gap) !important;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dashboard-modal-list-gap);
 }
 
 .traffic-package-modal-card-global .traffic-package-item {
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--dashboard-modal-radius-sm) !important;
-  padding: var(--dashboard-modal-item-padding) !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: var(--dashboard-modal-list-gap) !important;
+  border: 1px solid var(--border-color);
+  border-radius: var(--dashboard-modal-radius-sm);
+  padding: var(--dashboard-modal-item-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--dashboard-modal-list-gap);
   background: linear-gradient(
     180deg,
     var(--dashboard-soft-tint-strong) 0%,
     var(--dashboard-soft-tint-light) 100%
-  ) !important;
+  );
 }
 
 .traffic-package-modal-card-global .item-title-row {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  gap: var(--dashboard-modal-list-gap) !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--dashboard-modal-list-gap);
 }
 
 .traffic-package-modal-card-global .item-title-row strong {
-  font-size: var(--dashboard-modal-item-title-size) !important;
-  font-weight: var(--dashboard-modal-title-weight) !important;
-  color: var(--theme-text-primary) !important;
+  font-size: var(--dashboard-modal-item-title-size);
+  font-weight: var(--dashboard-modal-title-weight);
+  color: var(--theme-text-primary);
 }
 
 .traffic-package-modal-card-global .item-price {
-  font-size: var(--dashboard-modal-item-price-size) !important;
-  font-weight: var(--dashboard-modal-price-weight) !important;
-  color: var(--theme-color) !important;
+  font-size: var(--dashboard-modal-item-price-size);
+  font-weight: var(--dashboard-modal-price-weight);
+  color: var(--theme-color);
 }
 
 .traffic-package-modal-card-global .item-content {
-  color: var(--theme-text-secondary) !important;
-  font-size: var(--dashboard-modal-item-content-size) !important;
-  line-height: var(--dashboard-modal-item-content-line-height) !important;
-  min-height: var(--dashboard-modal-item-content-min-height) !important;
+  color: var(--theme-text-secondary);
+  font-size: var(--dashboard-modal-item-content-size);
+  line-height: var(--dashboard-modal-item-content-line-height);
+  min-height: var(--dashboard-modal-item-content-min-height);
 }
 
 .traffic-package-modal-card-global .buy-btn {
-  width: 100% !important;
-  margin-top: auto !important;
-  padding: var(--dashboard-modal-action-padding) !important;
-  border: none !important;
-  border-radius: var(--dashboard-modal-action-radius) !important;
-  font-size: var(--dashboard-modal-action-font-size) !important;
-  font-weight: var(--dashboard-modal-action-weight) !important;
-  background-color: var(--dashboard-modal-buy-btn-bg) !important;
-  color: var(--dashboard-text-inverse) !important;
-  cursor: pointer !important;
+  width: 100%;
+  margin-top: auto;
+  padding: var(--dashboard-modal-action-padding);
+  border: none;
+  border-radius: var(--dashboard-modal-action-radius);
+  font-size: var(--dashboard-modal-action-font-size);
+  font-weight: var(--dashboard-modal-action-weight);
+  background-color: var(--dashboard-modal-buy-btn-bg);
+  color: var(--dashboard-text-inverse);
+  cursor: pointer;
 }
 
 .traffic-package-modal-card-global .buy-btn:disabled {
-  opacity: var(--dashboard-modal-disabled-opacity) !important;
-  cursor: not-allowed !important;
+  opacity: var(--dashboard-modal-disabled-opacity);
+  cursor: not-allowed;
 }
 
 .traffic-package-modal-card-global .modal-footer {
-  padding: var(--dashboard-modal-footer-padding) !important;
-  border-top: 1px solid var(--border-color) !important;
-  display: flex !important;
-  justify-content: flex-end !important;
+  padding: var(--dashboard-modal-footer-padding);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
 }
 
 .traffic-package-modal-card-global .cancel-btn {
-  padding: var(--dashboard-modal-cancel-padding) !important;
-  border-radius: var(--dashboard-modal-action-radius) !important;
-  border: 1px solid var(--border-color) !important;
-  background-color: transparent !important;
-  color: var(--theme-text-primary) !important;
-  font-size: var(--dashboard-modal-action-font-size) !important;
-  font-weight: var(--dashboard-modal-action-weight) !important;
-  cursor: pointer !important;
+  padding: var(--dashboard-modal-cancel-padding);
+  border-radius: var(--dashboard-modal-action-radius);
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  color: var(--theme-text-primary);
+  font-size: var(--dashboard-modal-action-font-size);
+  font-weight: var(--dashboard-modal-action-weight);
+  cursor: pointer;
 }
 
 .traffic-package-modal-card-global .cancel-btn:hover {
-  background-color: var(--dashboard-soft-tint-strong) !important;
+  background-color: var(--dashboard-soft-tint-strong);
 }
