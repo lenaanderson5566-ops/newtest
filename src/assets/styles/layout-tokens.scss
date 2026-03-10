@@ -172,6 +172,29 @@
   --dashboard-ez-btn-bg: var(--dashboard-theme-tint-sm);
   --dashboard-ez-btn-bg-hover: var(--dashboard-theme-tint-md);
   --dashboard-ez-btn-shadow-hover: 0 2px 8px rgba(var(--theme-color-rgb), 0.1);
+  --dashboard-balance-hover-bg: rgba(var(--theme-color-rgb), 0.08);
+  --dashboard-balance-hover-offset: -3px;
+
+  --dashboard-ez-btn-font-size: 14px;
+  --dashboard-ez-btn-font-weight: 500;
+  --dashboard-ez-btn-margin: 8px 0;
+  --dashboard-ez-btn-hover-offset: -1px;
+  --dashboard-ez-btn-focus-ring: 0 0 0 2px rgba(var(--theme-color-rgb), 0.3);
+
+  --dashboard-modal-header-title-size: 18px;
+  --dashboard-modal-title-weight: 600;
+  --dashboard-modal-price-weight: 700;
+  --dashboard-modal-action-weight: 500;
+  --dashboard-modal-action-font-size: 14px;
+  --dashboard-modal-desc-font-size: 14px;
+  --dashboard-modal-desc-line-height: 1.5;
+  --dashboard-modal-desc-margin-bottom: 14px;
+  --dashboard-modal-item-title-size: 15px;
+  --dashboard-modal-item-price-size: 24px;
+  --dashboard-modal-item-content-size: 13px;
+  --dashboard-modal-item-content-line-height: 1.45;
+  --dashboard-modal-item-content-min-height: 32px;
+  --dashboard-modal-disabled-opacity: 0.75;
 }
 
 @media (min-width: 768px) {

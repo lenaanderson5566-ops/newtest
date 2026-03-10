@@ -1,0 +1,43 @@
+.stats-card.warning-card {
+  border-color: var(--dashboard-warning-border-strong) !important;
+  box-shadow: var(--dashboard-warning-shadow-soft) !important;
+
+  .stats-icon {
+    background-color: var(--dashboard-warning-tint) !important;
+    color: var(--dashboard-warning-text-strong) !important;
+  }
+
+  .stats-value {
+    color: var(--dashboard-warning-text-strong) !important;
+  }
+}
+
+.stats-card.danger-card {
+  border-color: var(--dashboard-danger-border-strong) !important;
+  box-shadow: var(--dashboard-danger-shadow-soft) !important;
+
+  .stats-icon {
+    background-color: var(--dashboard-danger-tint) !important;
+    color: var(--dashboard-danger-text-strong) !important;
+  }
+
+  .stats-value {
+    color: var(--dashboard-danger-text-strong) !important;
+  }
+}
+
+.stats-card.balance-card.clickable {
+  cursor: pointer;
+  transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-card.balance-card.clickable:hover {
+  background-color: var(--dashboard-balance-hover-bg);
+  transform: translateY(var(--dashboard-balance-hover-offset));
+}
+
+.stats-card.balance-card .stats-value {
+  color: var(--theme-color);
+}
