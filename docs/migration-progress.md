@@ -4,7 +4,7 @@
 - [x] Phase 1: Layout/token baseline
 - [~] Phase 2: Shell standardization and reusable layout primitives (进行中，约 90%)
 - [x] Phase 3: Base component unification (已完成)
-- [~] Phase 4: P0 page migration (overview/profile/billing/support)（进行中，约 98%）
+- [~] Phase 4: P0 page migration (overview/profile/billing/support)（已完成，100%）
 - [ ] Phase 5: P1/P2 page migration and cleanup
 
 ## This iteration
@@ -23,6 +23,7 @@
 - Billing 页面容器与粘性导航偏移改为统一 token 驱动，减少页面硬编码。
 - MoreOptions 页面容器与卡片间距完成 token 化，统一移动端安全区留白。
 - MainBoard 背景装饰与容器高度关键常量完成 token 化，减少壳层散落样式。
+- Dashboard 页面容器/gap/宽度改为全局 token 驱动，完成 P0 页面迁移收口。
 - 将 App 壳层顶部导航从 `App.vue` 拆分为 `AppTopBar` / `AuthTopToolbar`，降低根组件复杂度。
 - Added reusable layout container component (`AppContainer`) for unified content width/padding behavior.
 - Integrated `AppContainer` into `MainBoard` to reduce page-level container ownership.

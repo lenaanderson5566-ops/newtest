@@ -2555,12 +2555,12 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-container {
-  padding: 20px;
+  padding: var(--layout-gutter-desktop);
   display: flex;
   justify-content: center;
   min-height: calc(100dvh - var(--top-fixed-bar-height));
-  --dashboard-card-padding: 20px;
-  --dashboard-card-gap: 16px;
+  --dashboard-card-padding: var(--space-4);
+  --dashboard-card-gap: var(--space-3);
 
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
@@ -2575,14 +2575,14 @@ export default {
 
   .dashboard-inner {
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--layout-content-max-width);
     display: grid;
-    gap: 8px;
+    gap: var(--mobile-grid-gap);
 
     .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 16px;
+    gap: var(--space-4);
 
     > .pending-order-banner {
       grid-column: 1 / -1;
@@ -2640,7 +2640,7 @@ export default {
 
       .card-actions {
         display: flex;
-        gap: 10px;
+        gap: var(--mobile-grid-gap);
       }
     }
   }
@@ -2690,7 +2690,7 @@ export default {
 
       @media (max-width: 768px) {
         flex-direction: column;
-        gap: 10px;
+        gap: var(--mobile-grid-gap);
 
         button {
           width: 100%;
@@ -2879,7 +2879,7 @@ export default {
           z-index: 5;
           display: inline-flex;
           align-items: center;
-          gap: 6px;
+          gap: var(--mobile-grid-gap);
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
@@ -2892,7 +2892,7 @@ export default {
         .usage-card-main {
           display: flex;
           align-items: baseline;
-          gap: 8px;
+          gap: var(--mobile-grid-gap);
 
           &.package-main {
             align-items: baseline;
@@ -2989,7 +2989,7 @@ export default {
           .plan-status-hero {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: var(--mobile-grid-gap);
           }
 
           .plan-name-main {
@@ -3003,7 +3003,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
+            gap: var(--mobile-grid-gap);
             flex-wrap: wrap;
             font-size: 13px;
             color: #64748b;
@@ -3035,14 +3035,14 @@ export default {
             &.with-tooltip {
               display: inline-flex;
               align-items: center;
-              gap: 6px;
+              gap: var(--mobile-grid-gap);
             }
           }
 
           .plan-summary-value-wrap {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: var(--mobile-grid-gap);
             justify-content: flex-end;
             flex-wrap: wrap;
           }
@@ -3245,7 +3245,7 @@ export default {
           width: 100%;
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 8px;
+          gap: var(--mobile-grid-gap);
         }
 
         .usage-summary-line {
@@ -3329,7 +3329,7 @@ export default {
           grid-column: 2;
           min-height: 152px;
           padding: 16px;
-          gap: 8px;
+          gap: var(--mobile-grid-gap);
 
           .usage-card-title {
             font-size: 16px;
@@ -3538,7 +3538,7 @@ export default {
     .ip-sub-line {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
       flex-wrap: wrap;
     }
 
@@ -3552,7 +3552,7 @@ export default {
       line-height: 1;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--mobile-grid-gap);
       cursor: pointer;
       transition: all 0.2s ease;
 
@@ -3580,7 +3580,7 @@ export default {
     .ip-status-row {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
       color: #e9f3ff;
       font-size: 16px;
       font-weight: 600;
@@ -3633,7 +3633,7 @@ export default {
     .service-reference-title {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--mobile-grid-gap);
       font-size: 16px;
       font-weight: 700;
       color: #f3f7ff;
@@ -3643,7 +3643,7 @@ export default {
     .service-reference-tags {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
       overflow: visible;
       padding-bottom: 2px;
     }
@@ -3662,7 +3662,7 @@ export default {
       flex-direction: row;
       align-items: center;
       justify-content: flex-start;
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
       white-space: nowrap;
       padding: 6px 12px;
       border: none;
@@ -3854,7 +3854,7 @@ export default {
     .notice-slider {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
     }
 
     .notice-item {
@@ -3890,7 +3890,7 @@ export default {
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: var(--mobile-grid-gap);
 
         .notice-date {
           font-size: 11px;
@@ -3899,7 +3899,7 @@ export default {
 
         .notice-nav {
           display: flex;
-          gap: 8px;
+          gap: var(--mobile-grid-gap);
 
           .btn-notice {
             display: inline-flex;
@@ -3946,7 +3946,7 @@ export default {
           .notice-nav {
             display: grid;
             grid-template-rows: auto auto;
-            gap: 8px;
+            gap: var(--mobile-grid-gap);
             width: 100%;
 
             .btn-notice:nth-child(2) {
@@ -3979,7 +3979,7 @@ export default {
     .notice-dots {
       display: flex;
       justify-content: center;
-      gap: 6px;
+      gap: var(--mobile-grid-gap);
       margin-top: 2px;
 
       .notice-dot {
@@ -4025,7 +4025,7 @@ export default {
     .banner-main {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
       min-width: 0;
       color: #8C6D1F;
       font-size: 13px;
@@ -4227,14 +4227,14 @@ export default {
 
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 10px;
-    padding-bottom: calc(74px + var(--safe-bottom));
-    --dashboard-card-padding: 12px;
-    --dashboard-card-gap: 10px;
+    padding: var(--layout-gutter-mobile);
+    padding-bottom: calc(72px + var(--safe-bottom));
+    --dashboard-card-padding: var(--mobile-card-padding);
+    --dashboard-card-gap: var(--mobile-grid-gap);
   }
 
   .dashboard-inner {
-    gap: 6px;
+    gap: var(--mobile-grid-gap);
   }
 
   .dashboard-inner .overview-grid {
@@ -4255,7 +4255,7 @@ export default {
       grid-column: 1 / -1;
       min-height: auto;
       height: auto;
-      padding: 10px;
+      padding: var(--layout-gutter-mobile);
       gap: 5px;
 
       .usage-percent {
@@ -4271,7 +4271,7 @@ export default {
       }
 
       .usage-kpis {
-        gap: 6px;
+        gap: var(--mobile-grid-gap);
       }
 
       .usage-kpi {
@@ -4764,7 +4764,7 @@ export default {
   .platform-button {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--mobile-grid-gap);
     background-color: rgba(var(--theme-color-rgb), 0.05);
     border: 1px solid var(--border-color);
     border-radius: 20px;
@@ -4989,7 +4989,7 @@ export default {
 }
 
 .no-clients-message {
-  padding: 20px;
+  padding: var(--layout-gutter-desktop);
   text-align: center;
   background-color: rgba(var(--theme-color-rgb), 0.05);
   border-radius: 12px;
@@ -5014,7 +5014,7 @@ export default {
   .platform-button {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--mobile-grid-gap);
     background-color: rgba(var(--theme-color-rgb), 0.05);
     border: 1px solid var(--border-color);
     border-radius: 20px;
@@ -5132,7 +5132,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: var(--layout-gutter-desktop);
   box-sizing: border-box;
   backdrop-filter: blur(4px);
 }
@@ -5153,7 +5153,7 @@ export default {
 }
 
 .notice-modal-header {
-  padding: 20px;
+  padding: var(--layout-gutter-desktop);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -5189,7 +5189,7 @@ export default {
 }
 
 .notice-modal-content {
-  padding: 20px;
+  padding: var(--layout-gutter-desktop);
   overflow-y: auto;
   flex: 1;
   background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
@@ -5461,7 +5461,7 @@ export default {
 
   .modal-body {
     display: block;
-    padding: 20px;
+    padding: var(--layout-gutter-desktop);
     overflow-y: auto;
   }
 
@@ -5633,7 +5633,7 @@ export default {
   }
 
   .modal-body {
-    padding: 20px;
+    padding: var(--layout-gutter-desktop);
     display: flex;
     flex-direction: column;
     align-items: center;
