@@ -9,8 +9,10 @@
 - [~] Phase 6: Dashboard/long-tail visual consistency and cleanup（已完成，100%）
 - [~] Phase 7: Performance and cleanup hardening（已完成，100%）
 - [~] Phase 8: Dashboard style modularization and override retirement（已完成，100%）
+- [~] Phase 9: Dashboard override retirement and scoped-style restoration（进行中，约 20%）
 
 ## This iteration
+- 启动 Phase 9：风险态卡片兜底样式首批移除 `!important`，验证在模块化后依赖常规层叠优先级仍可稳定生效。
 - Phase 8 收口完成：Dashboard 全局兜底样式按风险卡片/按钮/弹层拆分为独立模块，并补齐对应语义 token，完成首轮结构化清理。
 - 启动 Phase 7：Dashboard 内联流量包弹层与全局兜底块尺寸/间距语义对齐，减少双套样式漂移风险。
 - Phase 7 收口完成：Dashboard 风险态卡片与全局按钮兜底样式语义 token 化，历史硬编码颜色/圆角常量进一步清退。
@@ -55,4 +57,4 @@
 ## Next
 1. Introduce base shell components for topbar/sidebar/bottom-nav responsibilities.
 2. Replace remaining shell hardcoded values in `App.vue` and high-traffic screens.
-3. 启动 Phase 9：逐段移除 Dashboard 历史 `!important` 兜底并转回 scoped/组件内语义样式。
+3. 持续推进 Phase 9：分批移除 Dashboard 历史 `!important` 兜底并转回 scoped/组件内语义样式。

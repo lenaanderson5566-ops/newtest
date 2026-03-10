@@ -1,28 +1,28 @@
 .stats-card.warning-card {
-  border-color: var(--dashboard-warning-border-strong) !important;
-  box-shadow: var(--dashboard-warning-shadow-soft) !important;
+  border-color: var(--dashboard-warning-border-strong);
+  box-shadow: var(--dashboard-warning-shadow-soft);
 
   .stats-icon {
-    background-color: var(--dashboard-warning-tint) !important;
-    color: var(--dashboard-warning-text-strong) !important;
+    background-color: var(--dashboard-warning-tint);
+    color: var(--dashboard-warning-text-strong);
   }
 
   .stats-value {
-    color: var(--dashboard-warning-text-strong) !important;
+    color: var(--dashboard-warning-text-strong);
   }
 }
 
 .stats-card.danger-card {
-  border-color: var(--dashboard-danger-border-strong) !important;
-  box-shadow: var(--dashboard-danger-shadow-soft) !important;
+  border-color: var(--dashboard-danger-border-strong);
+  box-shadow: var(--dashboard-danger-shadow-soft);
 
   .stats-icon {
-    background-color: var(--dashboard-danger-tint) !important;
-    color: var(--dashboard-danger-text-strong) !important;
+    background-color: var(--dashboard-danger-tint);
+    color: var(--dashboard-danger-text-strong);
   }
 
   .stats-value {
-    color: var(--dashboard-danger-text-strong) !important;
+    color: var(--dashboard-danger-text-strong);
   }
 }
 
