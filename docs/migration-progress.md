@@ -7,8 +7,10 @@
 - [~] Phase 4: P0 page migration (overview/profile/billing/support)（已完成，100%）
 - [~] Phase 5: P1/P2 page migration and cleanup（已完成，100%）
 - [~] Phase 6: Dashboard/long-tail visual consistency and cleanup（已完成，100%）
+- [~] Phase 7: Performance and cleanup hardening（进行中，约 20%）
 
 ## This iteration
+- 启动 Phase 7：Dashboard 内联流量包弹层与全局兜底块尺寸/间距语义对齐，减少双套样式漂移风险。
 - 启动 Phase 6：Dashboard 统计卡片状态色/过期态与流量包弹层关键样式完成首批 token 化（覆盖阴影、边框、遮罩、按钮底色）。
 - Phase 6 持续推进：Dashboard 弹层层级/反色文本与软色渐变背景进一步 token 化，减少重复 rgba 常量。
 - Phase 6 持续推进：Dashboard 大量交互动效时长/easing 完成语义 token 化，降低页面内 transition 硬编码。

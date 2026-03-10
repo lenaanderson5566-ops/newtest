@@ -2555,7 +2555,7 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-container {
-  padding: var(--layout-gutter-desktop);
+  padding: var(--dashboard-modal-body-padding);
   display: flex;
   justify-content: center;
   min-height: calc(100dvh - var(--top-fixed-bar-height));
@@ -2798,7 +2798,7 @@ export default {
       display: flex;
       align-items: center;
       gap: 16px;
-      padding: 16px;
+      padding: var(--dashboard-modal-padding);
       transition: transform var(--dashboard-transition-normal) var(--dashboard-transition-ease), box-shadow var(--dashboard-transition-normal) var(--dashboard-transition-ease), background-color var(--dashboard-transition-normal) var(--dashboard-transition-ease), border-color var(--dashboard-transition-normal) var(--dashboard-transition-ease);
       overflow: hidden;
       border: 1px solid var(--border-color);
@@ -2976,7 +2976,7 @@ export default {
 
           .plan-summary-section {
             border: none;
-            border-radius: 12px;
+            border-radius: var(--dashboard-modal-item-radius);
             background: #f8fafc;
             padding: 10px 12px;
             overflow: visible;
@@ -3097,7 +3097,7 @@ export default {
 
             .plan-action-btn {
               flex: 1;
-              border-radius: 12px;
+              border-radius: var(--dashboard-modal-item-radius);
               border: 1px solid transparent;
               padding: 10px 14px;
               font-size: 14px;
@@ -3328,7 +3328,7 @@ export default {
         &.traffic-board-card:not(.total-main-card) {
           grid-column: 2;
           min-height: 152px;
-          padding: 16px;
+          padding: var(--dashboard-modal-padding);
           gap: var(--mobile-grid-gap);
 
           .usage-card-title {
@@ -3415,7 +3415,7 @@ export default {
         width: 60px;
         height: 60px;
         background-color: var(--dashboard-theme-tint-sm);
-        border-radius: 12px;
+        border-radius: var(--dashboard-modal-item-radius);
         margin-right: 15px;
         color: var(--theme-color);
       }
@@ -3624,7 +3624,7 @@ export default {
       flex-direction: column;
       gap: 12px;
       padding: 10px 12px;
-      border-radius: 12px;
+      border-radius: var(--dashboard-modal-item-radius);
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(164, 191, 242, 0.24);
       min-height: 100%;
@@ -3674,7 +3674,7 @@ export default {
       .service-reference-tile {
         width: 24px;
         height: 24px;
-        border-radius: 6px;
+        border-radius: var(--dashboard-modal-action-radius);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -3726,7 +3726,7 @@ export default {
         bottom: calc(100% + 8px);
         width: 200px;
         padding: 8px 10px;
-        border-radius: 6px;
+        border-radius: var(--dashboard-modal-action-radius);
         background: rgba(15, 23, 42, 0.96);
         color: #e2e8f0;
         font-size: 12px;
@@ -3779,7 +3779,7 @@ export default {
       bottom: calc(100% + 8px);
       width: 200px;
       padding: 8px 10px;
-      border-radius: 6px;
+      border-radius: var(--dashboard-modal-action-radius);
       background: rgba(15, 23, 42, 0.96);
       color: #e2e8f0;
       font-size: 12px;
@@ -3860,7 +3860,7 @@ export default {
     .notice-item {
       position: relative;
       padding: 12px 14px;
-      border-radius: 8px;
+      border-radius: var(--dashboard-modal-action-radius);
       background-color: rgba(var(--theme-color-rgb), 0.045);
       overflow: hidden;
       min-height: 84px;
@@ -3907,7 +3907,7 @@ export default {
             justify-content: center;
             gap: 3px;
             padding: 5px 8px;
-            border-radius: 6px;
+            border-radius: var(--dashboard-modal-action-radius);
             font-size: 12px;
             background-color: rgba(var(--theme-color-rgb), 0.14);
             color: var(--dashboard-text-inverse);
@@ -4046,7 +4046,7 @@ export default {
 
     .banner-action {
       border: none;
-      border-radius: 8px;
+      border-radius: var(--dashboard-modal-action-radius);
       height: 30px;
       padding: 0 12px;
       color: var(--dashboard-text-inverse);
@@ -4113,8 +4113,8 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: var(--dashboard-modal-cancel-padding);
+  border-radius: var(--dashboard-modal-action-radius);
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -4468,7 +4468,7 @@ export default {
 .close-btn {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
+  border-radius: var(--dashboard-modal-action-radius);
   background-color: transparent;
   border: none;
   position: relative;
@@ -4525,7 +4525,7 @@ export default {
 .import-action {
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: var(--dashboard-modal-padding);
   border-radius: 10px;
   cursor: pointer;
   background-color: var(--dashboard-theme-tint-xs);
@@ -4596,7 +4596,7 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: var(--dashboard-modal-padding);
       border-radius: 10px;
       background-color: var(--dashboard-theme-tint-xs);
       cursor: pointer;
@@ -4662,7 +4662,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: var(--dashboard-modal-header-padding);
   border-bottom: 1px solid var(--border-color);
   background-color: rgba(var(--theme-color-rgb), 0.03);
 
@@ -4684,7 +4684,7 @@ export default {
   img {
     width: 220px;
     height: 220px;
-    border-radius: 12px;
+    border-radius: var(--dashboard-modal-item-radius);
     box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
     background-color: white;
     padding: 15px;
@@ -4768,7 +4768,7 @@ export default {
     background-color: var(--dashboard-theme-tint-xs);
     border: 1px solid var(--border-color);
     border-radius: 20px;
-    padding: 8px 16px;
+    padding: var(--dashboard-modal-cancel-padding);
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
@@ -4810,7 +4810,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: var(--dashboard-modal-padding);
   border-radius: 10px;
   background-color: var(--dashboard-theme-tint-xs);
   cursor: pointer;
@@ -4889,7 +4889,7 @@ export default {
   height: 24px;
   margin-bottom: 20px;
   background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
-  border-radius: 6px;
+  border-radius: var(--dashboard-modal-action-radius);
   width: 30%;
   margin: 16px 20px;
   position: relative;
@@ -4922,7 +4922,7 @@ export default {
 .skeleton-icon {
   width: 48px;
   height: 48px;
-  border-radius: 12px;
+  border-radius: var(--dashboard-modal-item-radius);
   background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
   margin-right: 16px;
   flex-shrink: 0;
@@ -4955,7 +4955,7 @@ export default {
 .stats-card.skeleton-card {
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: var(--dashboard-modal-padding);
   animation: none;
   background-color: var(--card-bg-color);
   box-shadow: var(--card-shadow);
@@ -4989,10 +4989,10 @@ export default {
 }
 
 .no-clients-message {
-  padding: var(--layout-gutter-desktop);
+  padding: var(--dashboard-modal-body-padding);
   text-align: center;
   background-color: var(--dashboard-theme-tint-xs);
-  border-radius: 12px;
+  border-radius: var(--dashboard-modal-item-radius);
   margin: 10px 0;
   border: 1px dashed rgba(var(--theme-color-rgb), 0.3);
 }
@@ -5018,7 +5018,7 @@ export default {
     background-color: var(--dashboard-theme-tint-xs);
     border: 1px solid var(--border-color);
     border-radius: 20px;
-    padding: 8px 16px;
+    padding: var(--dashboard-modal-cancel-padding);
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
@@ -5132,7 +5132,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--layout-gutter-desktop);
+  padding: var(--dashboard-modal-body-padding);
   box-sizing: border-box;
   backdrop-filter: blur(4px);
 }
@@ -5153,7 +5153,7 @@ export default {
 }
 
 .notice-modal-header {
-  padding: var(--layout-gutter-desktop);
+  padding: var(--dashboard-modal-body-padding);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -5189,7 +5189,7 @@ export default {
 }
 
 .notice-modal-content {
-  padding: var(--layout-gutter-desktop);
+  padding: var(--dashboard-modal-body-padding);
   overflow-y: auto;
   flex: 1;
   background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
@@ -5222,7 +5222,7 @@ export default {
       max-width: 100%;
       height: auto;
       margin: 10px 0;
-      border-radius: 8px;
+      border-radius: var(--dashboard-modal-action-radius);
     }
 
     :deep(ul), :deep(ol) {
@@ -5272,7 +5272,7 @@ export default {
     :deep(pre) {
       background-color: var(--dashboard-theme-tint-xs);
       padding: 12px;
-      border-radius: 6px;
+      border-radius: var(--dashboard-modal-action-radius);
       overflow-x: auto;
       margin: 16px 0;
 
@@ -5289,7 +5289,7 @@ export default {
 
       th, td {
         border: 1px solid var(--border-color);
-        padding: 8px 12px;
+        padding: var(--dashboard-modal-action-padding);
         text-align: left;
       }
 
@@ -5305,10 +5305,10 @@ export default {
 
     :deep(a.eztheme-btn) {
       display: inline-block;
-      padding: 8px 16px;
+      padding: var(--dashboard-modal-cancel-padding);
       background-color: var(--theme-color);
       color: white;
-      border-radius: 8px;
+      border-radius: var(--dashboard-modal-action-radius);
       margin: 10px 0;
       text-decoration: none;
       transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
@@ -5333,7 +5333,7 @@ export default {
     background-color: var(--theme-color);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: var(--dashboard-modal-action-radius);
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
@@ -5420,7 +5420,7 @@ export default {
   justify-content: center;
   background-color: var(--dashboard-overlay-dark);
   z-index: var(--dashboard-modal-z);
-  padding: 16px;
+  padding: var(--dashboard-modal-padding);
 }
 
 .traffic-package-container {
@@ -5432,7 +5432,7 @@ export default {
   max-height: calc(100vh - var(--dashboard-modal-viewport-gap));
 
   .modal-header {
-    padding: 16px 20px;
+    padding: var(--dashboard-modal-header-padding);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -5461,7 +5461,7 @@ export default {
 
   .modal-body {
     display: block;
-    padding: var(--layout-gutter-desktop);
+    padding: var(--dashboard-modal-body-padding);
     overflow-y: auto;
   }
 
@@ -5487,8 +5487,8 @@ export default {
 
   .traffic-package-item {
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 14px;
+    border-radius: var(--dashboard-modal-item-radius);
+    padding: var(--dashboard-modal-item-padding);
     display: flex;
     flex-direction: column;
     gap: var(--dashboard-overview-gap-mobile);
@@ -5521,16 +5521,16 @@ export default {
       color: var(--theme-text-secondary);
       font-size: 13px;
       line-height: 1.45;
-      min-height: 32px;
+      min-height: var(--dashboard-modal-viewport-gap);
     }
 
     .buy-btn {
       width: 100%;
       justify-content: center;
       margin-top: auto;
-      padding: 8px 12px;
+      padding: var(--dashboard-modal-action-padding);
       border: none;
-      border-radius: 8px;
+      border-radius: var(--dashboard-modal-action-radius);
       font-size: 14px;
       font-weight: 500;
       background-color: var(--dashboard-theme-solid-soft);
@@ -5551,14 +5551,14 @@ export default {
   }
 
   .modal-footer {
-    padding: 16px 20px;
+    padding: var(--dashboard-modal-footer-padding);
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: flex-end;
 
     .cancel-btn {
-      padding: 8px 16px;
-      border-radius: 6px;
+      padding: var(--dashboard-modal-cancel-padding);
+      border-radius: var(--dashboard-modal-action-radius);
       border: 1px solid var(--border-color);
       background-color: transparent;
       color: var(--theme-text-primary);
@@ -5568,7 +5568,7 @@ export default {
       transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
       &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.06);
+        background-color: var(--dashboard-soft-tint-strong);
       }
     }
   }
@@ -5591,7 +5591,7 @@ export default {
   width: 90%;
   max-width: 400px;
   max-height: 90vh;
-  border-radius: 12px;
+  border-radius: var(--dashboard-modal-item-radius);
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
@@ -5605,7 +5605,7 @@ export default {
 
 .reset-traffic-modal {
   .modal-header {
-    padding: 16px 20px;
+    padding: var(--dashboard-modal-footer-padding);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -5633,7 +5633,7 @@ export default {
   }
 
   .modal-body {
-    padding: var(--layout-gutter-desktop);
+    padding: var(--dashboard-modal-body-padding);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -5656,23 +5656,23 @@ export default {
       color: var(--theme-text-secondary);
       text-align: center;
       margin-bottom: 0;
-      padding: 8px 12px;
+      padding: var(--dashboard-modal-action-padding);
       background-color: var(--dashboard-theme-tint-xs);
-      border-radius: 6px;
+      border-radius: var(--dashboard-modal-action-radius);
       width: 100%;
     }
   }
 
   .modal-footer {
-    padding: 16px 20px;
+    padding: var(--dashboard-modal-footer-padding);
     display: flex;
     justify-content: flex-end;
     gap: 12px;
     border-top: 1px solid var(--border-color);
 
     button {
-      padding: 8px 16px;
-      border-radius: 6px;
+      padding: var(--dashboard-modal-cancel-padding);
+      border-radius: var(--dashboard-modal-action-radius);
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
