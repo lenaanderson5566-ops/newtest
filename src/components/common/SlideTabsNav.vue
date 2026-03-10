@@ -802,14 +802,14 @@ function debounce(fn, delay) {
   left: 50%;
   transform: translateX(-50%);
   bottom: 12px;
-  z-index: 20;
+  z-index: var(--app-nav-z-mobile);
   width: min(94vw, 460px);
 
   .slide-tabs-wrapper {
-    background: rgba(var(--card-background-rgb), 0.98);
-    border-radius: 18px;
+    background: var(--card-level-2);
+    border-radius: var(--radius-xl);
     padding: 3px;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+    box-shadow: var(--shadow-card-sm);
     border: 1px solid var(--border-color);
     overflow: hidden;
     width: 100%;
@@ -835,7 +835,7 @@ function debounce(fn, delay) {
       flex: 1 1 0;
       min-width: 0;
       padding: 6px 8px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       font-weight: 500;
       font-size: 12px;
       color: var(--secondary-text-color);
@@ -857,12 +857,12 @@ function debounce(fn, delay) {
         right: calc(50% - 20px);
         background-color: rgba(var(--theme-color-rgb), 0.88);
         color: #fff;
-        border-radius: 10px;
+        border-radius: var(--radius-md);
         padding: 1px 6px;
         font-size: 8px;
         font-weight: 700;
         line-height: 1.2;
-        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+        box-shadow: var(--shadow-card-sm);
         transform: scale(0.88);
       }
 
@@ -917,11 +917,11 @@ function debounce(fn, delay) {
     left: 10px;
     bottom: auto;
     transform: none;
-    z-index: 10;
+    z-index: var(--app-nav-z-desktop);
     width: 170px;
 
     .slide-tabs-wrapper {
-      border-radius: 10px;
+      border-radius: var(--radius-md);
       padding: 2px;
     }
 
@@ -957,7 +957,7 @@ function debounce(fn, delay) {
 
         &:last-child {
           border: 1px solid var(--border-color);
-          background: rgba(var(--card-background-rgb), 0.98);
+          background: var(--card-level-2);
         }
       }
     }

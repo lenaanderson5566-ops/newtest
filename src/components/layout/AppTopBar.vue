@@ -81,7 +81,7 @@ export default {
   padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
   z-index: var(--app-topbar-z);
   transition: background-color var(--app-topbar-transition-duration) var(--app-transition-ease), box-shadow var(--app-topbar-transition-duration) var(--app-transition-ease);
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .site-brand {
@@ -172,12 +172,12 @@ export default {
   :deep(.avatar-wrapper) {
     width: auto;
     min-width: var(--toolbar-control-height);
-    font-size: 13px;
+    font-size: var(--font-size-1);
   }
 
   :deep(.language-btn) {
     min-width: var(--toolbar-language-min-width);
-    font-size: 13px;
+    font-size: var(--font-size-1);
   }
 }
 
@@ -198,7 +198,7 @@ export default {
 
 @media (max-width: 768px) {
   .top-fixed-bar {
-    padding-inline: 10px;
+    padding-inline: var(--space-2);
   }
 
   .site-brand {
@@ -206,7 +206,7 @@ export default {
   }
 
   .top-toolbar {
-    gap: 6px;
+    gap: var(--space-1);
     justify-content: flex-end;
 
     :deep(.language-text) {
