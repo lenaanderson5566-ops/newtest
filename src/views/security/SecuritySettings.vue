@@ -244,7 +244,9 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .security-container {
-  padding: 20px;
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
+  padding: var(--layout-gutter-desktop, 20px);
+  padding-bottom: calc(var(--layout-gutter-desktop, 20px) + var(--safe-bottom));
 }
 
 .security-inner {
@@ -287,6 +289,7 @@ onMounted(() => {
   background: transparent;
   border-radius: 8px;
   padding: 6px 10px;
+  min-height: 40px;
   cursor: pointer;
 }
 
@@ -399,6 +402,7 @@ onMounted(() => {
     input {
       width: 100%;
       padding: 10px 12px;
+      min-height: 44px;
       border: 1px solid var(--border-color);
       border-radius: 8px;
       background-color: var(--bg-secondary);
@@ -430,6 +434,7 @@ onMounted(() => {
 
   button {
     padding: 8px 16px;
+    min-height: 40px;
     border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
@@ -483,6 +488,50 @@ onMounted(() => {
 .modal-fade-enter-from,
 .modal-fade-leave-to {
   opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .security-container {
+    padding: var(--layout-gutter-mobile, 12px);
+    padding-bottom: calc(72px + var(--safe-bottom));
+  }
+
+  .security-inner {
+    gap: 12px;
+  }
+
+  .settings-content {
+    padding: 10px 12px;
+  }
+
+  .device-item {
+    padding: 12px 0;
+  }
+
+  .device-meta {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .modal-content {
+    width: calc(100% - 20px);
+    max-height: calc(100dvh - 40px - var(--safe-bottom));
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-inline: 14px;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .modal-footer button {
+    width: 100%;
+    min-height: 44px;
+  }
 }
 
 @keyframes spin {
