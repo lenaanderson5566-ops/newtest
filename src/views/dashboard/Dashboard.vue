@@ -21,7 +21,7 @@
 
       <!-- 订阅导入卡片 -->
       <transition name="slide-fade">
-        <div v-if="showImportCard && userPlan.subscribeUrl" class="dashboard-card import-card">
+        <BaseCard v-if="showImportCard && userPlan.subscribeUrl" class="dashboard-card import-card">
           <div class="card-header">
             <h2 class="card-title">{{ $t('dashboard.importSubscription') }}</h2>
             <button class="close-btn" @click="showImportCard = false">
@@ -233,7 +233,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </BaseCard>
       </transition>
 
       <!-- QR码模态窗口 -->
@@ -414,7 +414,7 @@
         </template>
       </div>
 
-      <div class="dashboard-card ip-location-summary-card" v-if="hasPlan">
+      <BaseCard class="dashboard-card ip-location-summary-card" v-if="hasPlan">
         <div class="card-body ip-location-summary-body">
           <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
           <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
@@ -468,9 +468,9 @@
           </div>
           <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
         </div>
-      </div>
+      </BaseCard>
 
-      <div class="dashboard-card usage-trend-card" v-if="hasPlan">
+      <BaseCard class="dashboard-card usage-trend-card" v-if="hasPlan">
         <div class="card-header">
           <h2 class="card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
@@ -480,7 +480,7 @@
           <div v-else-if="!trafficTrendData.length" class="trend-state">{{ $t('trafficLog.noTrafficData') }}</div>
           <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
         </div>
-      </div>
+      </BaseCard>
 
     </div>
     <!-- 弹窗组件 -->
@@ -640,6 +640,7 @@ import {
   IconRefresh
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
+import BaseCard from '@/components/base/BaseCard.vue';
 import InfoCard from '@/components/common/InfoCard.vue';
 import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/dashboard';
 import { updateRemindSettings as apiUpdateRemind } from '@/api/user';
@@ -757,6 +758,7 @@ export default {
     IconCoins,
     IconEye,
     IconAlertTriangle,
+    BaseCard,
     InfoCard,
     IconX,
     IconCalendarPlus,
@@ -5808,4 +5810,3 @@ export default {
 
 
 </style>
-

@@ -12,7 +12,7 @@
 
       <!-- 欢迎卡片 -->
 
-      <div v-if="hasActivePlan" class="dashboard-card welcome-card">
+      <BaseCard v-if="hasActivePlan" class="dashboard-card welcome-card">
 
         <div class="card-header">
 
@@ -26,7 +26,7 @@
 
         </div>
 
-      </div>
+      </BaseCard>
 
       
 
@@ -177,6 +177,8 @@ import { ref, onMounted, inject, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { useI18n } from 'vue-i18n';
+
+import BaseCard from '@/components/base/BaseCard.vue';
 
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 
