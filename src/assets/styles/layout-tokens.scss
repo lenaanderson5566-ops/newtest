@@ -103,6 +103,12 @@
   --app-transition-ease: ease;
   --app-transition-ease-out: ease-out;
   --app-scrollbar-track-bg: var(--input-bg-color, rgba(0, 0, 0, 0.05));
+  --app-topbar-transition-duration: 0.2s;
+  --app-control-transition-duration: 0.3s;
+
+  --nprogress-easing: var(--app-transition-ease);
+  --nprogress-speed-ms: 400;
+  --nprogress-minimum: 0.2;
 }
 
 @media (min-width: 768px) {

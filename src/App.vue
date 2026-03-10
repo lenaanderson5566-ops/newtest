@@ -94,12 +94,29 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import pageCache from '@/utils/pageCache';
 
-NProgress.configure({ 
-  showSpinner: true,   
-  easing: 'ease',      
-  speed: 400,          
-  minimum: 0.2         
-});
+const readCssNumberVar = (name, fallback) => {
+  if (typeof window === 'undefined') return fallback;
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const value = Number.parseFloat(raw);
+  return Number.isFinite(value) ? value : fallback;
+};
+
+const readCssStringVar = (name, fallback) => {
+  if (typeof window === 'undefined') return fallback;
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return raw || fallback;
+};
+
+const configureNProgress = () => {
+  NProgress.configure({
+    showSpinner: true,
+    easing: readCssStringVar('--nprogress-easing', 'ease'),
+    speed: readCssNumberVar('--nprogress-speed-ms', 400),
+    minimum: readCssNumberVar('--nprogress-minimum', 0.2)
+  });
+};
+
+configureNProgress();
 
 export default {
   name: 'App',

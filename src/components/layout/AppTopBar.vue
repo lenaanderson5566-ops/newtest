@@ -78,7 +78,7 @@ export default {
   justify-content: space-between;
   padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
   z-index: var(--app-topbar-z);
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color var(--app-topbar-transition-duration) var(--app-transition-ease), box-shadow var(--app-topbar-transition-duration) var(--app-transition-ease);
 }
 
 .site-logo {
@@ -122,7 +122,7 @@ export default {
     box-shadow: var(--toolbar-control-shadow);
     color: var(--text-color);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--app-control-transition-duration) var(--app-transition-ease);
 
     &:hover {
       border-color: rgba(var(--theme-color-rgb), 0.45);
@@ -139,7 +139,7 @@ export default {
     border: 1px solid var(--toolbar-control-border);
     background: var(--toolbar-control-bg);
     border-radius: var(--toolbar-control-radius);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    transition: background-color var(--app-topbar-transition-duration) var(--app-transition-ease), border-color var(--app-topbar-transition-duration) var(--app-transition-ease);
 
     &:hover {
       background: var(--toolbar-control-hover-bg);

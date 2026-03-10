@@ -5,7 +5,7 @@
 - [~] Phase 2: Shell standardization and reusable layout primitives (进行中，约 90%)
 - [x] Phase 3: Base component unification (已完成)
 - [~] Phase 4: P0 page migration (overview/profile/billing/support)（已完成，100%）
-- [~] Phase 5: P1/P2 page migration and cleanup（进行中，约 70%）
+- [~] Phase 5: P1/P2 page migration and cleanup（已完成，100%）
 
 ## This iteration
 - 启动 Phase 3：新增 `BaseCard` / `BaseListRow` / `BaseSettingsRow` 三个基础组件并接入个人中心页面。
@@ -32,6 +32,7 @@
 - Phase 5 持续推进：App 过渡动画与滚动条透明度常量完成 token 化。
 - Phase 5 持续推进：语言渐隐起始透明度与全局滚动行为完成 token 化。
 - Phase 5 持续推进：过渡 easing 与滚动条轨道背景常量完成 token 化。
+- Phase 5 收口完成：TopBar 交互过渡与 NProgress 运行参数（easing/speed/minimum）完成 token 驱动。
 - 将 App 壳层顶部导航从 `App.vue` 拆分为 `AppTopBar` / `AuthTopToolbar`，降低根组件复杂度。
 - Added reusable layout container component (`AppContainer`) for unified content width/padding behavior.
 - Integrated `AppContainer` into `MainBoard` to reduce page-level container ownership.
@@ -43,4 +44,4 @@
 ## Next
 1. Introduce base shell components for topbar/sidebar/bottom-nav responsibilities.
 2. Replace remaining shell hardcoded values in `App.vue` and high-traffic screens.
-3. 持续推进 Phase 4：优先完成概览/财务/支持中心的移动端重排与视觉统一。
+3. 启动 Phase 6：聚焦 Dashboard 与长尾页面视觉一致性验收、删除历史兜底样式。
