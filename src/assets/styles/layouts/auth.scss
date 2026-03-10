@@ -19,16 +19,16 @@
 
 .auth-card {
   width: 100%;
-  max-width: 420px;
+  max-width: var(--auth-card-max-width);
   background: var(--card-background);
   border-radius: $border-radius-xl;
-  box-shadow: 0 10px 30px var(--shadow-color);
+  box-shadow: var(--auth-card-shadow);
   padding: 2.5rem;
   position: relative;
   z-index: 2;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.1);
+  backdrop-filter: var(--auth-card-backdrop-blur);
+  -webkit-backdrop-filter: var(--auth-card-backdrop-blur);
+  border: 1px solid var(--auth-card-border-color);
   
   @media (min-width: map.get($breakpoints, md)) {
     padding: 3rem;
@@ -43,7 +43,7 @@
     margin-bottom: 1.5rem;
     
     img {
-      height: 60px;
+      height: var(--auth-logo-height);
       width: auto;
     }
   }
@@ -120,8 +120,8 @@
 .floating-ball {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.3;
+  filter: blur(var(--layout-bg-orb-blur));
+  opacity: var(--layout-bg-orb-opacity);
   mix-blend-mode: lighten;
   
   // iOS设备完全隐藏装饰球
@@ -131,8 +131,8 @@
 }
 
 .ball-1 {
-  width: 600px;
-  height: 600px;
+  width: var(--layout-bg-orb-1-size);
+  height: var(--layout-bg-orb-1-size);
   background: radial-gradient(circle at 30% 30%, 
     rgba(var(--theme-color-rgb), 0.4),
     rgba(var(--theme-color-rgb), 0.1) 70%,
@@ -144,11 +144,11 @@
 }
 
 .ball-2 {
-  width: 500px;
-  height: 500px;
+  width: var(--layout-bg-orb-2-size);
+  height: var(--layout-bg-orb-2-size);
   background: radial-gradient(circle at 70% 70%, 
-    rgba(167, 71, 254, 0.35),
-    rgba(167, 71, 254, 0.08) 70%,
+    rgba(var(--auth-orb-violet-rgb), 0.35),
+    rgba(var(--auth-orb-violet-rgb), 0.08) 70%,
     transparent
   );
   top: 40%;
@@ -157,11 +157,11 @@
 }
 
 .ball-3 {
-  width: 450px;
-  height: 450px;
+  width: var(--layout-bg-orb-3-size);
+  height: var(--layout-bg-orb-3-size);
   background: radial-gradient(circle at 50% 50%, 
-    rgba(55, 222, 201, 0.3),
-    rgba(55, 222, 201, 0.05) 70%,
+    rgba(var(--auth-orb-teal-rgb), 0.3),
+    rgba(var(--auth-orb-teal-rgb), 0.05) 70%,
     transparent
   );
   bottom: -10%;

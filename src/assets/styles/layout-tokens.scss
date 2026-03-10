@@ -78,6 +78,14 @@
   --toolbar-control-shadow-hover: 0 3px 10px rgba(15, 23, 42, 0.1);
   --logo-radius: 6px;
 
+
+  --auth-card-max-width: 420px;
+  --auth-card-shadow: 0 10px 30px var(--shadow-color);
+  --auth-card-backdrop-blur: blur(10px);
+  --auth-card-border-color: rgba(var(--theme-color-rgb), 0.1);
+  --auth-logo-height: 60px;
+  --auth-orb-violet-rgb: 167, 71, 254;
+  --auth-orb-teal-rgb: 55, 222, 201;
   --auth-toolbar-top-offset: 20px;
   --auth-toolbar-right-offset: 25px;
   --auth-toolbar-gap: 16px;
