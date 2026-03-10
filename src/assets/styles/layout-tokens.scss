@@ -202,6 +202,20 @@
   --dashboard-modal-disabled-opacity-soft: 0.7;
   --dashboard-neutral-tint-soft: rgba(0, 0, 0, 0.05);
   --dashboard-danger-shadow-hover: 0 4px 8px rgba(244, 67, 54, 0.3);
+  --dashboard-radius-md: 10px;
+
+  --no-plan-accent: #ff9800;
+  --no-plan-shadow-soft: 0 4px 10px rgba(255, 152, 0, 0.15);
+  --no-plan-gradient-start: rgba(255, 152, 0, 0.05);
+  --no-plan-gradient-end: rgba(255, 152, 0, 0.1);
+  --no-plan-blob-strong: rgba(255, 152, 0, 0.08);
+  --no-plan-blob-soft: rgba(255, 152, 0, 0.05);
+  --no-plan-icon-bg: rgba(255, 152, 0, 0.15);
+  --no-plan-icon-shadow: 0 6px 12px rgba(255, 152, 0, 0.1);
+  --no-plan-content-gap: 24px;
+  --no-plan-action-gap: 12px;
+  --no-plan-action-padding: 10px 18px;
+  --no-plan-action-radius: 10px;
 }
 
 @media (min-width: 768px) {

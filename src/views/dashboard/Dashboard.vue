@@ -2965,7 +2965,7 @@ export default {
           overflow: visible;
 
           .expired-status-strip {
-            border-radius: 10px;
+            border-radius: var(--dashboard-radius-md);
             padding: 9px 12px;
             font-size: 13px;
             font-weight: 600;
@@ -3260,7 +3260,7 @@ export default {
           flex-direction: column;
           gap: 4px;
           padding: 8px;
-          border-radius: 10px;
+          border-radius: var(--dashboard-radius-md);
           background: #f8fafc;
         }
 
@@ -4006,7 +4006,7 @@ export default {
     min-height: 44px;
     max-height: 48px;
     padding: 6px 12px;
-    border-radius: 10px;
+    border-radius: var(--dashboard-radius-md);
     border: 1px solid #FFE58F;
     background: #FFFBE6;
     display: flex;
@@ -4354,7 +4354,7 @@ export default {
   }
 
   .no-plan-actions .action-button {
-    padding: 8px 15px;
+    padding: var(--dashboard-modal-action-padding-compact);
     min-width: 120px;
     justify-content: center;
   }
@@ -4369,7 +4369,7 @@ export default {
   }
 
   .stats-card.no-plan-card {
-    padding: 15px 12px;
+    padding: var(--dashboard-modal-footer-padding-compact);
   }
 }
 
@@ -4526,7 +4526,7 @@ export default {
   display: flex;
   align-items: center;
   padding: var(--dashboard-modal-padding);
-  border-radius: 10px;
+  border-radius: var(--dashboard-radius-md);
   cursor: pointer;
   background-color: var(--dashboard-theme-tint-xs);
   margin-bottom: 16px;
@@ -4543,7 +4543,7 @@ export default {
     justify-content: center;
     width: 50px;
     height: 50px;
-    border-radius: 10px;
+    border-radius: var(--dashboard-radius-md);
     margin-right: 16px;
     background-color: var(--dashboard-theme-tint-sm);
     color: var(--theme-color);
@@ -4597,7 +4597,7 @@ export default {
       align-items: center;
       justify-content: center;
       padding: var(--dashboard-modal-padding);
-      border-radius: 10px;
+      border-radius: var(--dashboard-radius-md);
       background-color: var(--dashboard-theme-tint-xs);
       cursor: pointer;
       transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
@@ -4811,7 +4811,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding: var(--dashboard-modal-padding);
-  border-radius: 10px;
+  border-radius: var(--dashboard-radius-md);
   background-color: var(--dashboard-theme-tint-xs);
   cursor: pointer;
   transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
@@ -5053,7 +5053,7 @@ export default {
   }
 
   .no-plan-content {
-    gap: 30px;
+    gap: calc(var(--no-plan-content-gap) + 6px);
   }
 
   .no-plan-title {
@@ -5076,9 +5076,9 @@ export default {
 .no-plan-actions .action-button {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 10px;
+  gap: var(--mobile-grid-gap);
+  padding: var(--no-plan-action-padding);
+  border-radius: var(--dashboard-radius-md);
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
@@ -5090,7 +5090,7 @@ export default {
   .no-plan-content {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: var(--no-plan-content-gap);
     position: relative;
     z-index: 1;
     flex-direction: row;
