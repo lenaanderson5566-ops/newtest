@@ -30,3 +30,9 @@
 - Warning threshold: **0.30% ~ 0.80%** (manual review required)
 - Failure threshold: **> 0.80%** (must block until reviewed/fixed)
 - High-risk routes/components may define stricter local thresholds in follow-up phases.
+
+## CI integration
+- Workflow: `.github/workflows/visual-regression.yml`
+- Command: `npm run visual:regression`
+- Artifacts: `tests/visual/current`, `tests/visual/diff`, `tests/visual/report.json`
+

@@ -40,3 +40,7 @@ This baseline tracks global layout/style consistency issues before phased migrat
 - 已执行关键路由截图回归（桌面/平板/移动）并形成基线记录，覆盖清单内核心页面。
 - 差异阈值治理规则已明确：默认像素差异阈值 0.30%，高风险组件建议拆分为局部阈值策略。
 
+## Phase 15 baseline
+- 视觉回归已接入 CI（GitHub Actions），PR 默认执行截图回归并上传 diff/current/report 工件。
+- Dashboard 路由采用更严格阈值（0.20%），其余关键路由采用默认阈值（0.30%）。
+
