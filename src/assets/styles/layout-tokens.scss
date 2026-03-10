@@ -1,0 +1,159 @@
+:root {
+  --bp-mobile-max: 767px;
+  --bp-tablet-max: 1199px;
+
+  --layout-shell-max-width: 1120px;
+  --layout-content-max-width: var(--layout-max-width, 1180px);
+  --layout-gutter-mobile: 12px;
+  --layout-gutter-desktop: 24px;
+
+  --app-sidebar-width: 194px;
+  --app-topbar-z: 120;
+  --app-page-header-z: 115;
+  --app-content-z: 1;
+
+  --topbar-surface: rgba(255, 255, 255, 0.88);
+  --page-header-surface: rgba(255, 255, 255, 0.92);
+  --surface-border-weak: rgba(15, 23, 42, 0.08);
+  --surface-border-subtle: rgba(15, 23, 42, 0.06);
+
+  --layout-shell-inline-start: 14px;
+  --layout-shell-inline-end: 30px;
+
+  --layout-sidebar-breakpoint: 906px;
+
+  --surface-blur-strong: blur(10px);
+  --topbar-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  --page-header-divider-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.8);
+
+  --page-header-title-size: 18px;
+  --page-header-title-size-mobile: 16px;
+  --site-logo-size: 16px;
+  --site-logo-size-mobile: 14px;
+  --site-logo-gap: 10px;
+  --site-logo-gap-mobile: 8px;
+  --site-logo-icon-size: 20px;
+  --site-logo-icon-size-mobile: 18px;
+
+  --toolbar-control-height: 34px;
+  --toolbar-control-padding: 5px 8px;
+  --toolbar-control-radius: 8px;
+  --toolbar-control-gap: 3px;
+  --toolbar-language-min-width: 88px;
+
+  --page-content-top-gap: 8px;
+  --page-content-top-gap-mobile: 6px;
+
+  --mobile-card-radius: 10px;
+  --mobile-card-padding: 12px;
+  --mobile-card-header-padding: 10px 12px;
+  --mobile-card-body-padding: 10px 12px;
+  --mobile-card-title-size: 16px;
+  --mobile-card-body-size: 14px;
+  --mobile-grid-gap: 8px;
+  --mobile-content-bottom-padding: 64px;
+  --mobile-content-bottom-margin: 6px;
+
+  --layout-bg-orb-blur: 60px;
+  --layout-bg-orb-opacity: 0.3;
+  --layout-bg-orb-1-size: 600px;
+  --layout-bg-orb-2-size: 500px;
+  --layout-bg-orb-3-size: 450px;
+
+  --dashboard-brand: #355cc2;
+  --dashboard-text-primary: #111827;
+  --dashboard-text-secondary: #6b7280;
+  --dashboard-text-subtle: #9ca3af;
+  --dashboard-border-soft: #eef1f5;
+  --dashboard-card-bg: #ffffff;
+  --dashboard-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 18px rgba(15, 23, 42, 0.04);
+  --dashboard-card-hover-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 10px 24px rgba(15, 23, 42, 0.06);
+  --dashboard-card-radius: 14px;
+  --dashboard-overview-gap-mobile: var(--mobile-grid-gap);
+
+  --text-strong: #0f172a;
+  --toolbar-z: 110;
+  --app-toolbar-control-hover-bg: #f5f7fa;
+  --app-toolbar-control-active-border: #e5e7eb;
+  --toolbar-control-shadow-hover: 0 3px 10px rgba(15, 23, 42, 0.1);
+  --logo-radius: 6px;
+
+  --auth-toolbar-top-offset: 20px;
+  --auth-toolbar-right-offset: 25px;
+  --auth-toolbar-gap: 16px;
+  --auth-toolbar-top-offset-mobile: 12px;
+  --auth-toolbar-right-offset-mobile: 12px;
+  --auth-toolbar-gap-mobile: 10px;
+
+  --nprogress-z: 1031;
+  --nprogress-bar-height: 2px;
+  --nprogress-glow-strong: 0 0 10px var(--theme-color);
+  --nprogress-glow-soft: 0 0 5px var(--theme-color);
+  --nprogress-spinner-top: 10px;
+  --nprogress-spinner-left: 10px;
+  --nprogress-spinner-border-width: 2px;
+  --nprogress-spinner-duration: 400ms;
+
+  --app-scrollbar-size: 6px;
+  --app-scrollbar-radius: 3px;
+  --app-scrollbar-thumb-opacity: 0.7;
+  --app-transition-fast: 0.3s;
+  --app-language-fade-start-opacity: 0.2;
+  --app-scroll-behavior: smooth;
+  --app-transition-ease: ease;
+  --app-transition-ease-out: ease-out;
+  --app-scrollbar-track-bg: var(--input-bg-color, rgba(0, 0, 0, 0.05));
+  --app-topbar-transition-duration: 0.2s;
+  --app-control-transition-duration: 0.3s;
+
+  --nprogress-easing: var(--app-transition-ease);
+  --nprogress-speed-ms: 400;
+  --nprogress-minimum: 0.2;
+
+  --dashboard-status-chip-bg: #f3f4f6;
+  --dashboard-status-chip-text: #6b7280;
+  --dashboard-expired-filter: blur(2.5px) saturate(0.65);
+  --dashboard-expired-opacity: 0.65;
+  --dashboard-stat-shadow-soft: 0 4px 12px rgba(15, 23, 42, 0.04);
+  --dashboard-water-bg: rgba(var(--theme-color-rgb), 0.12);
+
+  --dashboard-modal-overlay-bg: rgba(0, 0, 0, 0.7);
+  --dashboard-modal-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --dashboard-modal-card-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --dashboard-modal-border: rgba(var(--theme-color-rgb), 0.15);
+  --dashboard-modal-header-bg: rgba(var(--theme-color-rgb), 0.03);
+  --dashboard-modal-buy-btn-bg: rgba(var(--theme-color-rgb), 0.92);
+  --dashboard-modal-z: 1200;
+  --dashboard-text-inverse: #fff;
+  --dashboard-soft-tint-strong: rgba(var(--theme-color-rgb), 0.06);
+  --dashboard-soft-tint-light: rgba(var(--theme-color-rgb), 0.02);
+
+  --dashboard-transition-ease: var(--app-transition-ease);
+  --dashboard-transition-ease-out: var(--app-transition-ease-out);
+  --dashboard-transition-quick: 0.18s;
+  --dashboard-transition-fast: 0.2s;
+  --dashboard-transition-normal: 0.3s;
+  --dashboard-transition-emphasis: 0.35s;
+  --dashboard-transition-medium: 0.25s;
+
+  --dashboard-modal-padding: 16px;
+  --dashboard-modal-max-width: 420px;
+  --dashboard-modal-viewport-gap: 32px;
+  --dashboard-modal-radius-sm: 12px;
+  --dashboard-modal-radius-lg: 16px;
+  --dashboard-modal-header-padding: 16px 20px;
+  --dashboard-modal-body-padding: 20px;
+  --dashboard-modal-footer-padding: 16px 20px;
+  --dashboard-modal-list-gap: 10px;
+  --dashboard-modal-item-padding: 14px;
+  --dashboard-modal-item-radius: 12px;
+  --dashboard-modal-action-padding: 8px 12px;
+  --dashboard-modal-action-radius: 8px;
+  --dashboard-modal-cancel-padding: 8px 16px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --layout-gutter-mobile: 16px;
+  }
+}

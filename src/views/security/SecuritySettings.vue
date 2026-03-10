@@ -1,24 +1,15 @@
 <template>
   <div class="security-container">
     <div class="security-inner">
-      <div class="profile-card">
-        <div class="card-header">
-          <h3>{{ $t('profile.security') }}</h3>
-        </div>
-        <div class="settings-content">
-          <div class="action-buttons">
-            <button class="action-btn" @click="showPasswordModal = true">
-              <IconLock :size="18" />
-              {{ $t('profile.changePassword') }}
-            </button>
-          </div>
-        </div>
-      </div>
+      <BaseCard title="安全设置">
+        <BaseListRow :title="$t('profile.changePassword')" description="修改账户登录密码" @click="showPasswordModal = true">
+          <template #action>
+            <IconLock :size="18" />
+          </template>
+        </BaseListRow>
+      </BaseCard>
 
-      <div v-if="PROFILE_CONFIG.showRecentDevices" class="profile-card">
-        <div class="card-header">
-          <h3>{{ $t('profile.recentDevices') }}</h3>
-        </div>
+      <BaseCard v-if="PROFILE_CONFIG.showRecentDevices" :title="$t('profile.recentDevices')">
         <div class="settings-content">
           <div v-if="loadingSessions" class="device-loading">
             <div class="session-skeleton" v-for="i in 3" :key="i">
@@ -57,7 +48,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </BaseCard>
     </div>
 
     <transition name="modal-fade">
@@ -111,6 +102,8 @@ import {
 } from '@tabler/icons-vue';
 import useToast from '@/hooks/useToast';
 import { PROFILE_CONFIG } from '@/utils/baseConfig';
+import BaseCard from '@/components/base/BaseCard.vue';
+import BaseListRow from '@/components/base/BaseListRow.vue';
 
 const { t } = useI18n();
 const { success, error: showError } = useToast();
@@ -251,43 +244,20 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .security-container {
-  padding: 20px;
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
+  padding: var(--layout-gutter-desktop, 20px);
+  padding-bottom: calc(var(--layout-gutter-desktop, 20px) + var(--safe-bottom));
 }
 
 .security-inner {
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.profile-card {
-  background: var(--card-bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
-
-.card-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border-color);
-
-  h3 {
-    margin: 0;
-  }
+  display: grid;
+  gap: 20px;
 }
 
 .settings-content {
-  padding: 16px 20px;
-}
-
-.action-btn {
-  border: 1px solid var(--border-color);
-  background: var(--card-bg-color);
-  padding: 8px 12px;
-  border-radius: 8px;
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  cursor: pointer;
+  padding: 12px 16px;
 }
 
 .device-item {
@@ -319,6 +289,7 @@ onMounted(() => {
   background: transparent;
   border-radius: 8px;
   padding: 6px 10px;
+  min-height: 40px;
   cursor: pointer;
 }
 
@@ -431,6 +402,7 @@ onMounted(() => {
     input {
       width: 100%;
       padding: 10px 12px;
+      min-height: 44px;
       border: 1px solid var(--border-color);
       border-radius: 8px;
       background-color: var(--bg-secondary);
@@ -462,6 +434,7 @@ onMounted(() => {
 
   button {
     padding: 8px 16px;
+    min-height: 40px;
     border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
@@ -515,6 +488,50 @@ onMounted(() => {
 .modal-fade-enter-from,
 .modal-fade-leave-to {
   opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .security-container {
+    padding: var(--layout-gutter-mobile, 12px);
+    padding-bottom: calc(72px + var(--safe-bottom));
+  }
+
+  .security-inner {
+    gap: 12px;
+  }
+
+  .settings-content {
+    padding: 10px 12px;
+  }
+
+  .device-item {
+    padding: 12px 0;
+  }
+
+  .device-meta {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .modal-content {
+    width: calc(100% - 20px);
+    max-height: calc(100dvh - 40px - var(--safe-bottom));
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-inline: 14px;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .modal-footer button {
+    width: 100%;
+    min-height: 44px;
+  }
 }
 
 @keyframes spin {

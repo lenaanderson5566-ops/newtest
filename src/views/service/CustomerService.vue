@@ -387,7 +387,6 @@ export default {
     });
     
     onUnmounted(() => {
-      window.removeEventListener('storage', () => {});
       
       sessionStorage.removeItem('cs_page_reloaded');
       
@@ -418,31 +417,35 @@ export default {
 .customer-service-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100dvh;
   width: 100%;
+  padding-bottom: var(--safe-bottom);
   background-color: var(--background-color);
   color: var(--text-color);
-  
-  
 }
 
 .service-header {
   display: flex;
   align-items: center;
-  padding: 20px;
-  position: relative;
-  z-index: 10;
+  gap: var(--space-2, 8px);
+  padding: calc(var(--space-3) + var(--safe-top)) var(--space-4) var(--space-3);
+  position: sticky;
+  top: 0;
+  z-index: var(--app-topbar-z, 120);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   background-color: var(--card-background);
+  border-bottom: 1px solid var(--border-color-soft);
 }
 
 .back-button, .refresh-button {
-  background: none;
-  border: none;
+  background: transparent;
+  border: 1px solid var(--border-color-soft);
   color: var(--theme-color);
   cursor: pointer;
-  padding: 8px;
-  display: flex;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 }
@@ -464,7 +467,8 @@ export default {
   overflow: hidden;
   position: relative;
   width: 100%;
-  height: calc(100vh - 70px);
+  min-height: 0;
+  padding-bottom: var(--safe-bottom);
 }
 
 .service-crisp-container {
@@ -516,18 +520,25 @@ export default {
   100% { transform: rotate(360deg); }
 }
 
-
 @media (max-width: 768px) {
-  .service-header {
-    padding: 16px;
+  .customer-service-container {
+    min-height: calc(100dvh - var(--top-fixed-bar-height));
   }
-  
+
+  .service-header {
+    padding: calc(var(--space-2) + var(--safe-top)) var(--space-3) var(--space-2);
+  }
+
   .service-title {
+    margin-left: 8px;
     font-size: 16px;
   }
-  
-  .service-content {
-    height: calc(100vh - 60px);
+
+  .service-other-container .other-service-tips {
+    margin-top: 24px;
+    padding: 12px;
+    font-size: 14px;
   }
 }
+
 </style> 

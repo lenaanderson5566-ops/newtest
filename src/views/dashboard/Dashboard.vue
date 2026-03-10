@@ -2555,30 +2555,34 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-container {
-  padding: 20px;
+  padding: var(--layout-gutter-desktop);
   display: flex;
   justify-content: center;
-  --dashboard-card-padding: 20px;
-  --dashboard-card-gap: 16px;
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
+  --dashboard-card-padding: var(--space-4);
+  --dashboard-card-gap: var(--space-3);
 
-  --saas-brand: #355cc2;
-  --saas-text-primary: #111827;
-  --saas-text-secondary: #6b7280;
-  --saas-border-soft: #eef1f5;
-  --saas-card-bg: #ffffff;
-  --saas-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 18px rgba(15, 23, 42, 0.04);
+  --saas-brand: var(--dashboard-brand);
+  --saas-text-primary: var(--dashboard-text-primary);
+  --saas-text-secondary: var(--dashboard-text-secondary);
+  --saas-border-soft: var(--dashboard-border-soft);
+  --saas-card-bg: var(--dashboard-card-bg);
+  --saas-card-shadow: var(--dashboard-card-shadow);
 
-  --theme-text-primary: #111827;
-  --theme-text-secondary: #6b7280;
-  --theme-text-subtle: #9ca3af;
+  --theme-text-primary: var(--dashboard-text-primary);
+  --theme-text-secondary: var(--dashboard-text-secondary);
+  --theme-text-subtle: var(--dashboard-text-subtle);
 
   .dashboard-inner {
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--layout-content-max-width);
+    display: grid;
+    gap: var(--mobile-grid-gap);
+
     .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 16px;
+    gap: var(--space-4);
 
     > .pending-order-banner {
       grid-column: 1 / -1;
@@ -2609,15 +2613,15 @@ export default {
 
   .dashboard-card {
     background-color: var(--saas-card-bg);
-    border-radius: 14px;
+    border-radius: var(--dashboard-card-radius);
     box-shadow: var(--saas-card-shadow);
     padding: var(--dashboard-card-padding);
     margin-bottom: var(--dashboard-card-gap);
     border: none;
-    transition: box-shadow 0.2s ease;
+    transition: box-shadow var(--dashboard-transition-fast) var(--dashboard-transition-ease);
 
     &:hover {
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 10px 24px rgba(15, 23, 42, 0.06);
+      box-shadow: var(--dashboard-card-hover-shadow);
       transform: none;
     }
 
@@ -2636,7 +2640,7 @@ export default {
 
       .card-actions {
         display: flex;
-        gap: 10px;
+        gap: var(--mobile-grid-gap);
       }
     }
   }
@@ -2686,7 +2690,7 @@ export default {
 
       @media (max-width: 768px) {
         flex-direction: column;
-        gap: 10px;
+        gap: var(--mobile-grid-gap);
 
         button {
           width: 100%;
@@ -2760,7 +2764,7 @@ export default {
         margin: 0;
         font-size: 18px;
         font-weight: 700;
-        color: #111827;
+        color: var(--dashboard-text-primary);
       }
 
       .traffic-package-status {
@@ -2768,8 +2772,8 @@ export default {
         font-weight: 600;
         border-radius: 999px;
         padding: 6px 10px;
-        background: #f3f4f6;
-        color: #6b7280;
+        background: var(--dashboard-status-chip-bg);
+        color: var(--dashboard-status-chip-text);
 
         &.active {
           background: rgba(var(--theme-color-rgb), 0.14);
@@ -2779,23 +2783,23 @@ export default {
     }
 
     .expired-blur-target {
-      filter: blur(2.5px) saturate(0.65);
-      opacity: 0.65;
+      filter: var(--dashboard-expired-filter);
+      opacity: var(--dashboard-expired-opacity);
       pointer-events: none;
       user-select: none;
-      transition: filter 0.2s ease, opacity 0.2s ease;
+      transition: filter var(--dashboard-transition-fast) var(--dashboard-transition-ease), opacity var(--dashboard-transition-fast) var(--dashboard-transition-ease);
     }
 
     .stats-card {
       position: relative;
       background-color: var(--card-bg-color);
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      box-shadow: var(--dashboard-stat-shadow-soft);
       display: flex;
       align-items: center;
       gap: 16px;
       padding: 16px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+      transition: transform var(--dashboard-transition-normal) var(--dashboard-transition-ease), box-shadow var(--dashboard-transition-normal) var(--dashboard-transition-ease), background-color var(--dashboard-transition-normal) var(--dashboard-transition-ease), border-color var(--dashboard-transition-normal) var(--dashboard-transition-ease);
       overflow: hidden;
       border: 1px solid var(--border-color);
 
@@ -2815,7 +2819,7 @@ export default {
         left: 0;
         bottom: 0;
         width: 100%;
-        background-color: rgba(var(--theme-color-rgb), 0.12);
+        background-color: var(--dashboard-water-bg);
         transition: none;
         border-radius: 0 0 16px 16px;
         height: 0;
@@ -2842,7 +2846,7 @@ export default {
         min-width: 0;
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: var(--dashboard-overview-gap-mobile);
 
         .stats-info {
           width: 100%;
@@ -2868,14 +2872,14 @@ export default {
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        gap: 10px;
+        gap: var(--dashboard-overview-gap-mobile);
 
         .usage-card-title {
           position: relative;
           z-index: 5;
           display: inline-flex;
           align-items: center;
-          gap: 6px;
+          gap: var(--mobile-grid-gap);
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
@@ -2888,7 +2892,7 @@ export default {
         .usage-card-main {
           display: flex;
           align-items: baseline;
-          gap: 8px;
+          gap: var(--mobile-grid-gap);
 
           &.package-main {
             align-items: baseline;
@@ -2904,23 +2908,23 @@ export default {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: var(--dashboard-text-inverse);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
             box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.2);
             cursor: pointer;
           }
         }
         &.package-card-muted {
-          background: #f3f4f6;
+          background: var(--dashboard-status-chip-bg);
           border-color: #e5e7eb;
 
           .package-add-btn {
-            color: #fff;
+            color: var(--dashboard-text-inverse);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
           }
         }
         &.subscription-card-muted {
-          background: #f3f4f6;
+          background: var(--dashboard-status-chip-bg);
           border-color: #e5e7eb;
 
           .section-progress-track {
@@ -2944,11 +2948,11 @@ export default {
         }
 
         &.expired-main-card {
-          background: #f3f4f6;
+          background: var(--dashboard-status-chip-bg);
           border-color: #d1d5db;
 
           .usage-card-title {
-            color: #6b7280;
+            color: var(--dashboard-status-chip-text);
           }
         }
 
@@ -2985,7 +2989,7 @@ export default {
           .plan-status-hero {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: var(--mobile-grid-gap);
           }
 
           .plan-name-main {
@@ -2999,7 +3003,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
+            gap: var(--mobile-grid-gap);
             flex-wrap: wrap;
             font-size: 13px;
             color: #64748b;
@@ -3026,26 +3030,26 @@ export default {
 
           .plan-summary-label {
             font-size: 12px;
-            color: #6b7280;
+            color: var(--dashboard-status-chip-text);
 
             &.with-tooltip {
               display: inline-flex;
               align-items: center;
-              gap: 6px;
+              gap: var(--mobile-grid-gap);
             }
           }
 
           .plan-summary-value-wrap {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: var(--mobile-grid-gap);
             justify-content: flex-end;
             flex-wrap: wrap;
           }
 
           .plan-summary-value {
             font-size: 14px;
-            color: #111827;
+            color: var(--dashboard-text-primary);
             font-weight: 600;
             text-align: right;
             word-break: break-word;
@@ -3078,7 +3082,7 @@ export default {
           .plan-summary-desc {
             margin: 4px 0 0;
             font-size: 12px;
-            color: #6b7280;
+            color: var(--dashboard-status-chip-text);
           }
 
           .auto-renewal-row {
@@ -3087,7 +3091,7 @@ export default {
 
           .plan-summary-actions {
             display: flex;
-            gap: 10px;
+            gap: var(--dashboard-overview-gap-mobile);
             margin-top: 0;
 
 
@@ -3100,7 +3104,7 @@ export default {
               font-weight: 600;
               letter-spacing: 0.2px;
               cursor: pointer;
-              transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+              transition: transform var(--dashboard-transition-quick) var(--dashboard-transition-ease), box-shadow var(--dashboard-transition-fast) var(--dashboard-transition-ease), background-color var(--dashboard-transition-fast) var(--dashboard-transition-ease), border-color var(--dashboard-transition-fast) var(--dashboard-transition-ease), color var(--dashboard-transition-fast) var(--dashboard-transition-ease);
 
               &:hover {
                 transform: translateY(-1px);
@@ -3111,19 +3115,19 @@ export default {
               }
 
               &.primary {
-                color: #fff;
+                color: var(--dashboard-text-inverse);
                 background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
               }
 
               &.premium {
-                color: #fff;
+                color: var(--dashboard-text-inverse);
                 background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
               }
 
               &.theme {
-                color: #fff;
+                color: var(--dashboard-text-inverse);
                 border-color: transparent;
                 background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 1));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.28);
@@ -3183,7 +3187,7 @@ export default {
                 width: 18px;
                 left: 3px;
                 bottom: 3px;
-                background-color: #fff;
+                background-color: var(--dashboard-text-inverse);
                 transition: 0.3s;
               }
 
@@ -3213,7 +3217,7 @@ export default {
           font-size: 36px;
           line-height: 1;
           font-weight: 700;
-          color: #111827;
+          color: var(--dashboard-text-primary);
 
           &.compact {
             font-size: 32px;
@@ -3241,7 +3245,7 @@ export default {
           width: 100%;
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 8px;
+          gap: var(--mobile-grid-gap);
         }
 
         .usage-summary-line {
@@ -3289,7 +3293,7 @@ export default {
         .usage-reset-hint {
           width: 100%;
           font-size: 12px;
-          color: #6b7280;
+          color: var(--dashboard-status-chip-text);
         }
 
         .section-progress-track {
@@ -3304,7 +3308,7 @@ export default {
           height: 100%;
           background: linear-gradient(90deg, #60a5fa, #3b82f6);
           border-radius: inherit;
-          transition: width 0.35s ease;
+          transition: width var(--dashboard-transition-emphasis) var(--dashboard-transition-ease);
         }
 
         @media (max-width: 576px) {
@@ -3325,7 +3329,7 @@ export default {
           grid-column: 2;
           min-height: 152px;
           padding: 16px;
-          gap: 8px;
+          gap: var(--mobile-grid-gap);
 
           .usage-card-title {
             font-size: 16px;
@@ -3435,7 +3439,7 @@ export default {
       .chevron-icon {
         color: var(--theme-color);
         opacity: 0.5;
-        transition: all 0.3s ease;
+        transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
       }
 
       &:hover {
@@ -3497,7 +3501,7 @@ export default {
     .ip-location-main-info {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: var(--dashboard-overview-gap-mobile);
       min-width: 0;
     }
 
@@ -3511,7 +3515,7 @@ export default {
     .ip-main-line {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: var(--dashboard-overview-gap-mobile);
       flex-wrap: wrap;
     }
 
@@ -3534,7 +3538,7 @@ export default {
     .ip-sub-line {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
       flex-wrap: wrap;
     }
 
@@ -3548,9 +3552,9 @@ export default {
       line-height: 1;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--mobile-grid-gap);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all var(--dashboard-transition-fast) var(--dashboard-transition-ease);
 
       &:hover:not(:disabled) {
         background: rgba(255, 255, 255, 0.14);
@@ -3576,7 +3580,7 @@ export default {
     .ip-status-row {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
       color: #e9f3ff;
       font-size: 16px;
       font-weight: 600;
@@ -3600,7 +3604,7 @@ export default {
       padding: 0 8px;
       font-size: 11px;
       font-weight: 800;
-      color: #fff;
+      color: var(--dashboard-text-inverse);
       letter-spacing: 0.5px;
       background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
       box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
@@ -3629,7 +3633,7 @@ export default {
     .service-reference-title {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--mobile-grid-gap);
       font-size: 16px;
       font-weight: 700;
       color: #f3f7ff;
@@ -3639,7 +3643,7 @@ export default {
     .service-reference-tags {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
       overflow: visible;
       padding-bottom: 2px;
     }
@@ -3658,14 +3662,14 @@ export default {
       flex-direction: row;
       align-items: center;
       justify-content: flex-start;
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
       white-space: nowrap;
       padding: 6px 12px;
       border: none;
       background: rgba(255, 255, 255, 0.08);
       color: rgba(233, 243, 255, 0.92);
       opacity: 0.84;
-      transition: all 0.2s ease;
+      transition: all var(--dashboard-transition-fast) var(--dashboard-transition-ease);
 
       .service-reference-tile {
         width: 24px;
@@ -3732,7 +3736,7 @@ export default {
         opacity: 0;
         visibility: hidden;
         transform: translateY(4px);
-        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        transition: opacity var(--dashboard-transition-fast) var(--dashboard-transition-ease), transform var(--dashboard-transition-fast) var(--dashboard-transition-ease), visibility var(--dashboard-transition-fast) var(--dashboard-transition-ease);
         transition-delay: 0s;
         pointer-events: none;
         z-index: 30;
@@ -3785,7 +3789,7 @@ export default {
       opacity: 0;
       visibility: hidden;
       transform: translateY(4px);
-      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+      transition: opacity var(--dashboard-transition-fast) var(--dashboard-transition-ease), transform var(--dashboard-transition-fast) var(--dashboard-transition-ease), visibility var(--dashboard-transition-fast) var(--dashboard-transition-ease);
       transition-delay: 0s;
       pointer-events: none;
       z-index: 30;
@@ -3850,7 +3854,7 @@ export default {
     .notice-slider {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
     }
 
     .notice-item {
@@ -3877,7 +3881,7 @@ export default {
         font-size: 14px;
         font-weight: 600;
         margin-bottom: 6px;
-        color: #fff;
+        color: var(--dashboard-text-inverse);
         line-height: 1.35;
       }
 
@@ -3886,7 +3890,7 @@ export default {
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: var(--mobile-grid-gap);
 
         .notice-date {
           font-size: 11px;
@@ -3895,7 +3899,7 @@ export default {
 
         .notice-nav {
           display: flex;
-          gap: 8px;
+          gap: var(--mobile-grid-gap);
 
           .btn-notice {
             display: inline-flex;
@@ -3906,10 +3910,10 @@ export default {
             border-radius: 6px;
             font-size: 12px;
             background-color: rgba(var(--theme-color-rgb), 0.14);
-            color: #fff;
+            color: var(--dashboard-text-inverse);
             border: none;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all var(--dashboard-transition-fast) var(--dashboard-transition-ease);
 
             &:hover:not(:disabled) {
               background-color: rgba(var(--theme-color-rgb), 0.35);
@@ -3942,7 +3946,7 @@ export default {
           .notice-nav {
             display: grid;
             grid-template-rows: auto auto;
-            gap: 8px;
+            gap: var(--mobile-grid-gap);
             width: 100%;
 
             .btn-notice:nth-child(2) {
@@ -3975,7 +3979,7 @@ export default {
     .notice-dots {
       display: flex;
       justify-content: center;
-      gap: 6px;
+      gap: var(--mobile-grid-gap);
       margin-top: 2px;
 
       .notice-dot {
@@ -3986,7 +3990,7 @@ export default {
         padding: 0;
         background: rgba(var(--theme-color-rgb), 0.25);
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all var(--dashboard-transition-fast) var(--dashboard-transition-ease);
 
         &.active {
           width: 14px;
@@ -4008,9 +4012,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: var(--dashboard-overview-gap-mobile);
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    transition: background-color var(--dashboard-transition-fast) var(--dashboard-transition-ease), border-color var(--dashboard-transition-fast) var(--dashboard-transition-ease), transform var(--dashboard-transition-fast) var(--dashboard-transition-ease);
 
     &:hover {
       background: #FFF7D6;
@@ -4021,7 +4025,7 @@ export default {
     .banner-main {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--mobile-grid-gap);
       min-width: 0;
       color: #8C6D1F;
       font-size: 13px;
@@ -4045,7 +4049,7 @@ export default {
       border-radius: 8px;
       height: 30px;
       padding: 0 12px;
-      color: #fff;
+      color: var(--dashboard-text-inverse);
       background: var(--saas-brand);
       box-shadow: none;
       cursor: pointer;
@@ -4114,7 +4118,7 @@ export default {
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
   .btn-icon {
     margin-right: 4px;
@@ -4123,7 +4127,7 @@ export default {
 
 .btn-primary {
   background-color: #355cc2;
-  color: #fff;
+  color: var(--dashboard-text-inverse);
   border: none;
 
   &:hover {
@@ -4139,7 +4143,7 @@ export default {
 
   &:hover {
     background-color: #e5e7eb;
-    color: #111827;
+    color: var(--dashboard-text-primary);
     transform: none;
   }
 
@@ -4207,7 +4211,7 @@ export default {
 
 .fade-slide-enter-active,
 .fade-slide-leave-active {
-  transition: all 0.3s ease;
+  transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 }
 
 .fade-slide-enter-from {
@@ -4223,15 +4227,24 @@ export default {
 
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 10px;
-    padding-bottom: 74px;
-    --dashboard-card-padding: 12px;
-    --dashboard-card-gap: 10px;
+    padding: var(--layout-gutter-mobile);
+    padding-bottom: calc(72px + var(--safe-bottom));
+    --dashboard-card-padding: var(--mobile-card-padding);
+    --dashboard-card-gap: var(--mobile-grid-gap);
+  }
+
+  .dashboard-inner {
+    gap: var(--mobile-grid-gap);
+  }
+
+  .dashboard-inner .overview-grid {
+    grid-template-columns: 1fr;
+    gap: var(--dashboard-overview-gap-mobile);
   }
 
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    gap: var(--dashboard-overview-gap-mobile);
 
     .stats-card.traffic-board-total {
       grid-column: 1 / -1;
@@ -4242,7 +4255,7 @@ export default {
       grid-column: 1 / -1;
       min-height: auto;
       height: auto;
-      padding: 10px;
+      padding: var(--layout-gutter-mobile);
       gap: 5px;
 
       .usage-percent {
@@ -4258,7 +4271,7 @@ export default {
       }
 
       .usage-kpis {
-        gap: 6px;
+        gap: var(--mobile-grid-gap);
       }
 
       .usage-kpi {
@@ -4334,7 +4347,7 @@ export default {
   .no-plan-actions {
     justify-content: center;
     width: 100%;
-    gap: 10px;
+    gap: var(--dashboard-overview-gap-mobile);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -4377,7 +4390,7 @@ export default {
 
 .stats-card.doc-card {
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
   position: relative;
   overflow: hidden;
 }
@@ -4441,7 +4454,7 @@ export default {
 
 .slide-fade-enter-active,
 .slide-fade-leave-active {
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity var(--dashboard-transition-medium) var(--dashboard-transition-ease), transform var(--dashboard-transition-medium) var(--dashboard-transition-ease);
   will-change: opacity, transform;
   backface-visibility: hidden;
 }
@@ -4496,7 +4509,7 @@ export default {
       border-radius: 2px;
       top: 50%;
       left: 0;
-      transition: background-color 0.2s ease;
+      transition: background-color var(--dashboard-transition-fast) var(--dashboard-transition-ease);
     }
 
     &::before {
@@ -4517,7 +4530,7 @@ export default {
   cursor: pointer;
   background-color: rgba(var(--theme-color-rgb), 0.05);
   margin-bottom: 16px;
-  transition: all 0.3s ease;
+  transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
   &:hover {
     background-color: rgba(var(--theme-color-rgb), 0.1);
@@ -4587,7 +4600,7 @@ export default {
       border-radius: 10px;
       background-color: rgba(var(--theme-color-rgb), 0.05);
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
       &:hover {
         background-color: rgba(var(--theme-color-rgb), 0.1);
@@ -4676,7 +4689,7 @@ export default {
     background-color: white;
     padding: 15px;
     object-fit: cover;
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
     &:hover {
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
@@ -4717,7 +4730,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 }
 
 .fade-enter-from,
@@ -4751,7 +4764,7 @@ export default {
   .platform-button {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--mobile-grid-gap);
     background-color: rgba(var(--theme-color-rgb), 0.05);
     border: 1px solid var(--border-color);
     border-radius: 20px;
@@ -4759,7 +4772,7 @@ export default {
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
     color: var(--theme-text-primary);
 
     &:hover {
@@ -4801,7 +4814,7 @@ export default {
   border-radius: 10px;
   background-color: rgba(var(--theme-color-rgb), 0.05);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
   svg {
     margin-bottom: 8px;
@@ -4976,7 +4989,7 @@ export default {
 }
 
 .no-clients-message {
-  padding: 20px;
+  padding: var(--layout-gutter-desktop);
   text-align: center;
   background-color: rgba(var(--theme-color-rgb), 0.05);
   border-radius: 12px;
@@ -5001,7 +5014,7 @@ export default {
   .platform-button {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--mobile-grid-gap);
     background-color: rgba(var(--theme-color-rgb), 0.05);
     border: 1px solid var(--border-color);
     border-radius: 20px;
@@ -5009,7 +5022,7 @@ export default {
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
     color: var(--theme-text-primary);
 
     &:hover {
@@ -5069,7 +5082,7 @@ export default {
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 }
 
 
@@ -5119,7 +5132,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: var(--layout-gutter-desktop);
   box-sizing: border-box;
   backdrop-filter: blur(4px);
 }
@@ -5140,7 +5153,7 @@ export default {
 }
 
 .notice-modal-header {
-  padding: 20px;
+  padding: var(--layout-gutter-desktop);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -5165,7 +5178,7 @@ export default {
     padding: 8px;
     margin: -8px;
     border-radius: 50%;
-    transition: all 0.3s ease;
+    transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
@@ -5176,7 +5189,7 @@ export default {
 }
 
 .notice-modal-content {
-  padding: 20px;
+  padding: var(--layout-gutter-desktop);
   overflow-y: auto;
   flex: 1;
   background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
@@ -5298,7 +5311,7 @@ export default {
       border-radius: 8px;
       margin: 10px 0;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
       &:hover {
         background-color: var(--primary-color-hover);
@@ -5324,7 +5337,7 @@ export default {
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
     min-width: 120px;
 
     &.adaptive-btn {
@@ -5353,7 +5366,7 @@ export default {
 }
 
 .popup-slide-leave-active {
-  transition: all 0.2s ease-out;
+  transition: all var(--dashboard-transition-fast) var(--dashboard-transition-ease-out);
 }
 
 .popup-slide-enter-from {
@@ -5406,7 +5419,7 @@ export default {
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1200;
+  z-index: var(--dashboard-modal-z);
   padding: 16px;
 }
 
@@ -5448,7 +5461,7 @@ export default {
 
   .modal-body {
     display: block;
-    padding: 20px;
+    padding: var(--layout-gutter-desktop);
     overflow-y: auto;
   }
 
@@ -5469,7 +5482,7 @@ export default {
   .traffic-package-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--dashboard-overview-gap-mobile);
   }
 
   .traffic-package-item {
@@ -5478,18 +5491,18 @@ export default {
     padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--dashboard-overview-gap-mobile);
     background: linear-gradient(
         180deg,
-        rgba(var(--theme-color-rgb), 0.06) 0%,
-        rgba(var(--theme-color-rgb), 0.02) 100%
+        var(--dashboard-soft-tint-strong) 0%,
+        var(--dashboard-soft-tint-light) 100%
     );
 
     .item-title-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: var(--dashboard-overview-gap-mobile);
 
       strong {
         font-size: 15px;
@@ -5521,9 +5534,9 @@ export default {
       font-size: 14px;
       font-weight: 500;
       background-color: rgba(var(--theme-color-rgb), 0.92);
-      color: #fff;
+      color: var(--dashboard-text-inverse);
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
       &:hover:not(:disabled) {
         transform: translateY(-2px);
@@ -5552,7 +5565,7 @@ export default {
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
       &:hover {
         background-color: rgba(var(--theme-color-rgb), 0.06);
@@ -5620,7 +5633,7 @@ export default {
   }
 
   .modal-body {
-    padding: 20px;
+    padding: var(--layout-gutter-desktop);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -5663,7 +5676,7 @@ export default {
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 
       &:disabled {
         opacity: 0.7;
@@ -5699,7 +5712,7 @@ export default {
 
 .modal-fade-enter-active,
 .modal-fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity var(--dashboard-transition-normal) var(--dashboard-transition-ease);
 }
 
 .modal-fade-enter-from,
@@ -5799,14 +5812,14 @@ export default {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding: 8px 16px !important;
+  padding: var(--dashboard-modal-cancel-padding) !important;
   border-radius: 6px !important;
   font-size: 14px !important;
   background-color: rgba(var(--theme-color-rgb), 0.1) !important;
   color: var(--theme-color) !important;
   border: none !important;
   cursor: pointer !important;
-  transition: all 0.2s ease !important;
+  transition: all var(--dashboard-transition-fast) var(--dashboard-transition-ease) !important;
   font-weight: 500 !important;
   margin: 8px 0 !important;
   text-decoration: none !important;
@@ -5855,7 +5868,7 @@ a.eztheme-btn {
 
 .stats-card.balance-card.clickable {
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--dashboard-transition-normal) var(--dashboard-transition-ease);
   position: relative;
   overflow: hidden;
 }
@@ -5876,37 +5889,37 @@ a.eztheme-btn {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  background-color: rgba(0, 0, 0, 0.7) !important;
-  z-index: 1200 !important;
-  padding: 16px !important;
+  background-color: var(--dashboard-modal-overlay-bg) !important;
+  z-index: var(--dashboard-modal-z) !important;
+  padding: var(--dashboard-modal-padding) !important;
 }
 
 .traffic-package-modal-container {
-  width: min(100%, 420px) !important;
-  max-height: calc(100vh - 32px) !important;
-  border-radius: 12px !important;
+  width: min(100%, var(--dashboard-modal-max-width)) !important;
+  max-height: calc(100vh - var(--dashboard-modal-viewport-gap)) !important;
+  border-radius: var(--dashboard-modal-radius-sm) !important;
   overflow: hidden !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: var(--dashboard-modal-shadow) !important;
 }
 
 .traffic-package-modal-card-global {
   background-color: var(--card-background) !important;
   display: flex !important;
   flex-direction: column !important;
-  border-radius: 16px !important;
-  border: 1px solid rgba(var(--theme-color-rgb), 0.15) !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
-  max-height: calc(100vh - 32px) !important;
+  border-radius: var(--dashboard-modal-radius-lg) !important;
+  border: 1px solid var(--dashboard-modal-border) !important;
+  box-shadow: var(--dashboard-modal-card-shadow) !important;
+  max-height: calc(100vh - var(--dashboard-modal-viewport-gap)) !important;
   overflow: hidden !important;
 }
 
 .traffic-package-modal-card-global .modal-header {
-  padding: 16px 20px !important;
+  padding: var(--dashboard-modal-header-padding) !important;
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
   border-bottom: 1px solid var(--border-color) !important;
-  background-color: rgba(var(--theme-color-rgb), 0.03) !important;
+  background-color: var(--dashboard-modal-header-bg) !important;
 }
 
 .traffic-package-modal-card-global .modal-header h3 {
@@ -5932,7 +5945,7 @@ a.eztheme-btn {
 
 .traffic-package-modal-card-global .modal-body {
   display: block !important;
-  padding: 20px !important;
+  padding: var(--dashboard-modal-body-padding) !important;
   overflow-y: auto !important;
 }
 
@@ -5946,20 +5959,20 @@ a.eztheme-btn {
 .traffic-package-modal-card-global .traffic-package-list {
   display: flex !important;
   flex-direction: column !important;
-  gap: 10px !important;
+  gap: var(--dashboard-modal-list-gap) !important;
 }
 
 .traffic-package-modal-card-global .traffic-package-item {
   border: 1px solid var(--border-color) !important;
-  border-radius: 12px !important;
-  padding: 14px !important;
+  border-radius: var(--dashboard-modal-radius-sm) !important;
+  padding: var(--dashboard-modal-item-padding) !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 10px !important;
+  gap: var(--dashboard-modal-list-gap) !important;
   background: linear-gradient(
     180deg,
-    rgba(var(--theme-color-rgb), 0.06) 0%,
-    rgba(var(--theme-color-rgb), 0.02) 100%
+    var(--dashboard-soft-tint-strong) 0%,
+    var(--dashboard-soft-tint-light) 100%
   ) !important;
 }
 
@@ -5967,7 +5980,7 @@ a.eztheme-btn {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  gap: 10px !important;
+  gap: var(--dashboard-modal-list-gap) !important;
 }
 
 .traffic-package-modal-card-global .item-title-row strong {
@@ -5992,13 +6005,13 @@ a.eztheme-btn {
 .traffic-package-modal-card-global .buy-btn {
   width: 100% !important;
   margin-top: auto !important;
-  padding: 8px 12px !important;
+  padding: var(--dashboard-modal-action-padding) !important;
   border: none !important;
-  border-radius: 8px !important;
+  border-radius: var(--dashboard-modal-action-radius) !important;
   font-size: 14px !important;
   font-weight: 500 !important;
-  background-color: rgba(var(--theme-color-rgb), 0.92) !important;
-  color: #fff !important;
+  background-color: var(--dashboard-modal-buy-btn-bg) !important;
+  color: var(--dashboard-text-inverse) !important;
   cursor: pointer !important;
 }
 
@@ -6008,15 +6021,15 @@ a.eztheme-btn {
 }
 
 .traffic-package-modal-card-global .modal-footer {
-  padding: 16px 20px !important;
+  padding: var(--dashboard-modal-footer-padding) !important;
   border-top: 1px solid var(--border-color) !important;
   display: flex !important;
   justify-content: flex-end !important;
 }
 
 .traffic-package-modal-card-global .cancel-btn {
-  padding: 8px 16px !important;
-  border-radius: 8px !important;
+  padding: var(--dashboard-modal-cancel-padding) !important;
+  border-radius: var(--dashboard-modal-action-radius) !important;
   border: 1px solid var(--border-color) !important;
   background-color: transparent !important;
   color: var(--theme-text-primary) !important;
@@ -6026,7 +6039,7 @@ a.eztheme-btn {
 }
 
 .traffic-package-modal-card-global .cancel-btn:hover {
-  background-color: rgba(var(--theme-color-rgb), 0.06) !important;
+  background-color: var(--dashboard-soft-tint-strong) !important;
 }
 
 

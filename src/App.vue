@@ -1,30 +1,17 @@
 ﻿<template>
   <div>
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
-    <div class="static-layout" v-if="$route.meta.requiresAuth">
-      <div class="top-fixed-bar">
-        <!-- 网站名称 -->
-        <div class="site-logo">
-          <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
-          {{ siteConfig.siteName }}
-        </div>
+    <div class="static-layout" v-if="requiresAuth">
+      <AppTopBar
+        :site-config="siteConfig"
+        :username="username"
+        :avatar-url="avatarUrl"
+        :has-unread-notice="hasUnreadNotice"
+        :show-gift-card-redeem="PROFILE_CONFIG.showGiftCardRedeem"
+        @navigate-profile="$router.push('/profile')"
+      />
 
-        <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
-        <div class="top-toolbar">
-        <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
-        <LanguageSelector />
-        <button 
-          v-if="PROFILE_CONFIG.showGiftCardRedeem" 
-          class="gift-btn" 
-          @click="$router.push('/profile')"
-        >
-          <IconGift :size="18" />
-        </button>
-        <UserAvatar :username="username" :avatarUrl="avatarUrl" />
-        </div>
-      </div>
-
-      <div class="page-header-layer" v-if="pageHeaderTitle">
+      <div class="page-header-layer" v-if="hasPageHeader">
         <div class="page-header-content">
           <div class="page-header-title">{{ pageHeaderTitle }}</div>
         </div>
@@ -35,15 +22,11 @@
     </div>
 
     <!-- 认证页面顶部工具栏，确保认证页面也有语言切换器 -->
-    <div class="auth-toolbar" v-if="!$route.meta.requiresAuth && $route.path.includes('/auth')">
-      <div class="top-toolbar">
-        <LanguageSelector />
-      </div>
-    </div>
+    <AuthTopToolbar v-if="!requiresAuth && $route.path.includes('/auth')" />
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
-    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth, 'with-page-header': $route.meta.requiresAuth && !!pageHeaderTitle }]">
-      <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
+    <div :class="['app-content-wrapper', { 'with-left-nav': requiresAuth, 'with-top-bar': requiresAuth, 'with-page-header': hasPageHeader }]">
+      <div :class="['content-layout-shell', { 'fixed-content-width': requiresAuth }]">
         <router-view v-slot="{ Component, route }">
           <transition 
             name="page-transition" 
@@ -87,6 +70,7 @@
 
 <script>
 import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue';
+import { useLayoutShell } from '@/composables/useLayoutShell';
 import { useStore } from 'vuex';
 import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
@@ -99,25 +83,40 @@ import { handleRedirectPath } from '@/utils/redirectHandler';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
-import LanguageSelector from '@/components/common/LanguageSelector.vue';
-import UserAvatar from '@/components/common/UserAvatar.vue';
-import ServiceNoticeButton from '@/components/common/ServiceNoticeButton.vue';
 import BackToTop from '@/components/common/BackToTop.vue';
 import CustomContextMenu from '@/components/common/CustomContextMenu.vue';
 import CustomerServiceIcon from '@/components/common/CustomerServiceIcon.vue';
 import CrispEmbed from '@/components/common/CrispEmbed.vue';
 import ResourcePreloader from '@/components/common/ResourcePreloader.vue';
-import { IconGift } from '@tabler/icons-vue';
+import AppTopBar from '@/components/layout/AppTopBar.vue';
+import AuthTopToolbar from '@/components/layout/AuthTopToolbar.vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import pageCache from '@/utils/pageCache';
 
-NProgress.configure({ 
-  showSpinner: true,   
-  easing: 'ease',      
-  speed: 400,          
-  minimum: 0.2         
-});
+const readCssNumberVar = (name, fallback) => {
+  if (typeof window === 'undefined') return fallback;
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const value = Number.parseFloat(raw);
+  return Number.isFinite(value) ? value : fallback;
+};
+
+const readCssStringVar = (name, fallback) => {
+  if (typeof window === 'undefined') return fallback;
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return raw || fallback;
+};
+
+const configureNProgress = () => {
+  NProgress.configure({
+    showSpinner: true,
+    easing: readCssStringVar('--nprogress-easing', 'ease'),
+    speed: readCssNumberVar('--nprogress-speed-ms', 400),
+    minimum: readCssNumberVar('--nprogress-minimum', 0.2)
+  });
+};
+
+configureNProgress();
 
 export default {
   name: 'App',
@@ -125,19 +124,18 @@ export default {
     Toast,
     IconDefinitions,
     SlideTabsNav,
-    LanguageSelector,
-    UserAvatar,
-    ServiceNoticeButton,
     BackToTop,
     CustomContextMenu,
     CustomerServiceIcon,
     CrispEmbed,
     ResourcePreloader,
-    IconGift
+    AppTopBar,
+    AuthTopToolbar
   },
   setup() {
     const router = useRouter();
     const route = useRoute();
+    const { requiresAuth, hasPageHeader } = useLayoutShell();
     const store = useStore();
     const { t } = useI18n();
     const { applyTheme } = useTheme();
@@ -195,7 +193,7 @@ export default {
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
 
     watch(
-      () => route.meta.requiresAuth,
+      () => requiresAuth.value,
       (requiresAuth) => {
         if (!requiresAuth) {
           unreadNoticeCount.value = 0;
@@ -208,7 +206,7 @@ export default {
     );
     
     const loadUnreadNoticeCount = async () => {
-      if (!route.meta.requiresAuth) {
+      if (!requiresAuth.value) {
         unreadNoticeCount.value = 0;
         return;
       }
@@ -309,7 +307,9 @@ export default {
       cachedRoutes,
       customerServiceConfig,
       hasUnreadNotice,
-      pageHeaderTitle
+      pageHeaderTitle,
+      requiresAuth,
+      hasPageHeader
     };
   }
 };
@@ -333,149 +333,9 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: var(--app-topbar-z);
 }
 
-
-.top-fixed-bar {
-  height: calc(var(--top-fixed-bar-height) + var(--safe-top));
-  position: fixed;
-  top: 0;
-  padding-top: var(--safe-top);
-  left: 0;
-  right: 0;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
-  z-index: 120;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.page-header-layer {
-  position: fixed;
-  top: calc(var(--top-fixed-bar-height) + var(--safe-top));
-  left: 0;
-  right: 0;
-  height: var(--page-header-height);
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.8);
-  z-index: 115;
-}
-
-.page-header-content {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
-}
-
-.page-header-title {
-  font-size: 18px;
-  line-height: 1;
-  font-weight: 700;
-  color: #0f172a;
-}
-
-
-.site-logo {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--theme-color);
-  letter-spacing: -0.5px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  .site-logo-img {
-    height: 20px;
-    width: 20px;
-    border-radius: 6px;
-    object-fit: cover;
-  }
-}
-
-
-
-
-.top-toolbar {
-  --toolbar-control-height: 34px;
-  --toolbar-control-padding: 5px 8px;
-  --toolbar-control-radius: 8px;
-  --toolbar-control-border: transparent;
-  --toolbar-control-bg: transparent;
-  --toolbar-control-hover-bg: #f5f7fa;
-  --toolbar-control-active-border: #e5e7eb;
-
-  position: static;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  z-index: 110;
-
-  .gift-btn {
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--toolbar-control-height);
-    height: var(--toolbar-control-height);
-    border-radius: 50%;
-    background: var(--toolbar-control-bg);
-    border: 1px solid var(--toolbar-control-border);
-    box-shadow: var(--toolbar-control-shadow);
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      border-color: rgba(var(--theme-color-rgb), 0.45);
-      color: var(--theme-color);
-      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1);
-      transform: translateY(-1px);
-    }
-  }
-
-  :deep(.language-btn),
-  :deep(.avatar-wrapper) {
-    min-height: var(--toolbar-control-height);
-    padding: var(--toolbar-control-padding);
-    border: 1px solid var(--toolbar-control-border);
-    background: var(--toolbar-control-bg);
-    border-radius: var(--toolbar-control-radius);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-
-    &:hover {
-      background: var(--toolbar-control-hover-bg);
-    }
-
-    &:active,
-    &.is-active {
-      border-color: var(--toolbar-control-active-border);
-      background: var(--toolbar-control-hover-bg);
-    }
-  }
-
-  :deep(.avatar-wrapper) {
-    width: auto;
-    min-width: var(--toolbar-control-height);
-    font-size: 14px;
-  }
-
-  :deep(.language-btn) {
-    min-width: 88px;
-    font-size: 14px;
-  }
-}
 
 
 
@@ -489,7 +349,7 @@ export default {
   width: 100%;
 
   &.with-top-bar {
-    --page-content-top-gap: 8px;
+    --page-content-top-gap: var(--page-content-top-gap);
     padding-top: calc(var(--top-fixed-bar-height) + var(--safe-top) + var(--page-content-top-gap, 8px));
   }
 
@@ -500,33 +360,33 @@ export default {
 
 .content-layout-shell {
   width: 100%;
-  max-width: var(--layout-max-width);
+  max-width: var(--layout-content-max-width);
   margin: 0 auto;
   padding-inline: var(--layout-padding-x) var(--layout-padding-x-right);
   box-sizing: border-box;
 }
 
-@media (min-width: 906px) {
+@media (min-width: var(--layout-sidebar-breakpoint)) {
   .app-content-wrapper.with-left-nav {
-    padding-left: 194px;
+    padding-left: var(--app-sidebar-width);
   }
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
-    width: min(1120px, 100%);
+    width: min(var(--layout-shell-max-width), 100%);
     margin-left: 0;
     margin-right: auto;
-    padding-inline: 14px 30px;
+    padding-inline: var(--layout-shell-inline-start) var(--layout-shell-inline-end);
   }
 
   .page-header-layer {
-    padding-left: 194px;
+    padding-left: var(--app-sidebar-width);
   }
 
   .page-header-content {
-    width: min(1120px, 100%);
+    width: min(var(--layout-shell-max-width), 100%);
     margin-left: 0;
     margin-right: auto;
-    padding: 0 30px 0 14px;
+    padding: 0 var(--layout-shell-inline-end) 0 var(--layout-shell-inline-start);
   }
 
 }
@@ -534,7 +394,7 @@ export default {
 
 @media (max-width: 768px) {
   .app-content-wrapper.with-top-bar {
-    --page-content-top-gap: 6px;
+    --page-content-top-gap: var(--page-content-top-gap-mobile);
   }
 
   .page-header-layer {
@@ -546,23 +406,7 @@ export default {
   }
 
   .page-header-title {
-    font-size: 16px;
-  }
-
-  .site-logo {
-    font-size: 14px;
-    gap: 8px;
-
-    .site-logo-img {
-      width: 18px;
-      height: 18px;
-    }
-  }
-
-  .top-toolbar {
-    gap: 3px;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
+    font-size: var(--page-header-title-size-mobile);
   }
 
   /* Mobile density optimization: avoid oversized modules */
@@ -571,28 +415,28 @@ export default {
     .stats-card,
     .card,
     .info-card {
-      border-radius: 10px !important;
+      border-radius: var(--mobile-card-radius) !important;
     }
 
     .dashboard-card {
-      padding: 12px !important;
+      padding: var(--mobile-card-padding) !important;
     }
 
     .card-header {
-      padding: 10px 12px !important;
+      padding: var(--mobile-card-header-padding) !important;
       min-height: auto !important;
 
       .card-title,
       h2,
       h3 {
-        font-size: 16px !important;
+        font-size: var(--mobile-card-title-size) !important;
         line-height: 1.3 !important;
       }
     }
 
     .card-body {
-      padding: 10px 12px !important;
-      font-size: 14px !important;
+      padding: var(--mobile-card-body-padding) !important;
+      font-size: var(--mobile-card-body-size) !important;
       line-height: 1.45 !important;
     }
 
@@ -600,20 +444,20 @@ export default {
     .cards-grid,
     .quick-grid,
     .dashboard-grid {
-      gap: 8px !important;
+      gap: var(--mobile-grid-gap) !important;
     }
   }
   
   main, .main-content, .content-container {
-    padding-bottom: 64px !important;
-    margin-bottom: 6px !important;
+    padding-bottom: var(--mobile-content-bottom-padding) !important;
+    margin-bottom: var(--mobile-content-bottom-margin) !important;
   }
 }
 
 
 .page-transition-enter-active,
 .page-transition-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity var(--app-transition-fast) var(--app-transition-ease);
 }
 
 .page-transition-enter-from {
@@ -626,12 +470,12 @@ export default {
 
 
 .language-transitioning .language-transition-item {
-  animation: language-fade 0.3s ease-out;
+  animation: language-fade var(--app-transition-fast) var(--app-transition-ease-out);
 }
 
 @keyframes language-fade {
   0% {
-    opacity: 0.2;
+    opacity: var(--app-language-fade-start-opacity);
   }
   100% {
     opacity: 1;
@@ -641,7 +485,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity var(--app-transition-fast) var(--app-transition-ease);
 }
 
 .fade-enter-from,
@@ -651,20 +495,20 @@ export default {
 
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: var(--app-scrollbar-size);
+  height: var(--app-scrollbar-size);
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--input-bg-color, rgba(0, 0, 0, 0.05));
-  border-radius: 3px;
+  background-color: var(--app-scrollbar-track-bg);
+  border-radius: var(--app-scrollbar-radius);
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--theme-color);
-  border-radius: 3px;
-  opacity: 0.7;
-  transition: background-color 0.3s ease;
+  border-radius: var(--app-scrollbar-radius);
+  opacity: var(--app-scrollbar-thumb-opacity);
+  transition: background-color var(--app-transition-fast) var(--app-transition-ease);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -678,29 +522,12 @@ export default {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--theme-color) var(--input-bg-color, rgba(0, 0, 0, 0.05));
+  scrollbar-color: var(--theme-color) var(--app-scrollbar-track-bg);
 }
 
 
 html {
-  scroll-behavior: smooth;
-}
-
-
-.auth-toolbar {
-  position: fixed;
-  top: var(--safe-top);
-  right: 0;
-  z-index: 100;
-  
-  .top-toolbar {
-    position: fixed;
-    top: 20px;
-    right: 25px;
-    display: flex;
-    gap: 16px;
-    z-index: 110;
-  }
+  scroll-behavior: var(--app-scroll-behavior);
 }
 
 
@@ -730,31 +557,31 @@ html {
   .bar {
     background: var(--theme-color);
     position: fixed;
-    z-index: 1031;
+    z-index: var(--nprogress-z);
     top: 0;
     left: 0;
     width: 100%;
-    height: 2px;
-    box-shadow: 0 0 10px var(--theme-color), 0 0 5px var(--theme-color);
+    height: var(--nprogress-bar-height);
+    box-shadow: var(--nprogress-glow-strong), var(--nprogress-glow-soft);
   }
   
   
   .spinner {
     display: block;
     position: fixed;
-    z-index: 1031;
-    top: 10px;  
-    left: 10px; 
+    z-index: var(--nprogress-z);
+    top: var(--nprogress-spinner-top);  
+    left: var(--nprogress-spinner-left); 
     
     .spinner-icon {
-      width: 18px;
-      height: 18px;
+      width: var(--site-logo-icon-size-mobile);
+      height: var(--site-logo-icon-size-mobile);
       box-sizing: border-box;
-      border: solid 2px transparent;
+      border: solid var(--nprogress-spinner-border-width) transparent;
       border-top-color: var(--theme-color);
       border-left-color: var(--theme-color);
       border-radius: 50%;
-      animation: nprogress-spinner 400ms linear infinite;
+      animation: nprogress-spinner var(--nprogress-spinner-duration) linear infinite;
     }
   }
 }

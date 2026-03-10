@@ -30,69 +30,47 @@
         </div>
       </section>
 
-      <section class="section-block">
-        <h3 class="section-title">财务中心</h3>
+      <BaseCard class="section-block" title="财务中心">
         <div class="settings-list">
-          <button class="nav-row" @click="go('/billing?tab=wallet')">
-            <div class="row-main">
-              <div class="row-title">账户余额</div>
-              <p>查看余额明细与充值记录</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
+          <BaseListRow title="账户余额" description="查看余额明细与充值记录" @click="go('/billing?tab=wallet')">
+            <template #action><IconChevronRight :size="18" /></template>
+          </BaseListRow>
 
-          <button class="nav-row" @click="go('/billing?tab=orders')">
-            <div class="row-main">
-              <div class="row-title">订单记录</div>
-              <p>查看历史订单与支付状态</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
+          <BaseListRow title="订单记录" description="查看历史订单与支付状态" @click="go('/billing?tab=orders')">
+            <template #action><IconChevronRight :size="18" /></template>
+          </BaseListRow>
 
-          <button class="nav-row" @click="go('/billing?tab=referral')">
-            <div class="row-main">
-              <div class="row-title">邀请返利</div>
-              <p>查看邀请进度与佣金明细</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
+          <BaseListRow title="邀请返利" description="查看邀请进度与佣金明细" @click="go('/billing?tab=referral')">
+            <template #action><IconChevronRight :size="18" /></template>
+          </BaseListRow>
         </div>
-      </section>
+      </BaseCard>
 
-      <section class="section-block">
-        <h3 class="section-title">个人设置</h3>
+      <BaseCard class="section-block" title="个人设置">
         <div class="settings-list">
-          <div class="settings-row">
-            <div class="row-main">
-              <div class="row-title">到期提醒</div>
-              <p>订阅即将到期时发送邮件提醒</p>
-            </div>
-            <label class="switch" :class="{ disabled: updatingSettings }">
-              <input type="checkbox" v-model="remindExpire" @change="updateRemindSettings" :disabled="updatingSettings" />
-              <span class="slider round"></span>
-            </label>
-          </div>
+          <BaseSettingsRow title="到期提醒" description="订阅即将到期时发送邮件提醒">
+            <template #action>
+              <label class="switch" :class="{ disabled: updatingSettings }">
+                <input type="checkbox" v-model="remindExpire" @change="updateRemindSettings" :disabled="updatingSettings" />
+                <span class="slider round"></span>
+              </label>
+            </template>
+          </BaseSettingsRow>
 
-          <div class="settings-row">
-            <div class="row-main">
-              <div class="row-title">流量提醒</div>
-              <p>流量不足时发送邮件提醒</p>
-            </div>
-            <label class="switch" :class="{ disabled: updatingSettings }">
-              <input type="checkbox" v-model="remindTraffic" @change="updateRemindSettings" :disabled="updatingSettings" />
-              <span class="slider round"></span>
-            </label>
-          </div>
+          <BaseSettingsRow title="流量提醒" description="流量不足时发送邮件提醒">
+            <template #action>
+              <label class="switch" :class="{ disabled: updatingSettings }">
+                <input type="checkbox" v-model="remindTraffic" @change="updateRemindSettings" :disabled="updatingSettings" />
+                <span class="slider round"></span>
+              </label>
+            </template>
+          </BaseSettingsRow>
 
-          <button class="nav-row" @click="go('/security')">
-            <div class="row-main">
-              <div class="row-title">安全设置</div>
-              <p>修改密码与账户安全选项</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
+          <BaseListRow title="安全设置" description="修改密码与账户安全选项" @click="go('/security')">
+            <template #action><IconChevronRight :size="18" /></template>
+          </BaseListRow>
         </div>
-      </section>
+      </BaseCard>
 
       <section class="session-panel section-block">
         <div>
@@ -111,6 +89,9 @@
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { IconChevronRight } from '@tabler/icons-vue';
+import BaseCard from '@/components/base/BaseCard.vue';
+import BaseListRow from '@/components/base/BaseListRow.vue';
+import BaseSettingsRow from '@/components/base/BaseSettingsRow.vue';
 import { getUserInfo, getUserSubscribe, updateRemindSettings as apiUpdateRemind } from '@/api/user';
 import { getUserConfig } from '@/api/wallet';
 import { formatDate } from '@/utils/formatters';
@@ -181,7 +162,10 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-.my-center { padding: var(--space-4) 0; }
+.my-center {
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
+  padding: var(--space-4) 0 calc(var(--space-4) + var(--safe-bottom));
+}
 .my-center-inner { max-width: 1024px; margin: 0 auto; display: grid; gap: var(--space-4); }
 
 .section-block {
@@ -229,61 +213,19 @@ onMounted(async () => {
   background: rgba(var(--theme-color-rgb), 0.05);
 }
 
+.settings-list {
+  overflow: hidden;
+}
+
 .section-title {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
   color: var(--text-color);
 }
-.section-block > .section-title {
-  padding: 14px 16px 10px;
-}
-
-.settings-list {
-  overflow: hidden;
-  border-top: 1px solid var(--border-color-soft);
-}
-
-.settings-row,
-.nav-row {
-  min-height: 62px;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.settings-row + .settings-row,
-.nav-row + .nav-row {
-  border-top: 1px solid var(--border-color-soft);
-}
-
-.row-main { min-width: 0; }
-.row-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-color);
-}
-.row-main p {
-  margin: 3px 0 0;
-  font-size: 12px;
-  color: var(--secondary-text-color);
-}
-
-.nav-row {
-  width: 100%;
-  border: none;
-  background: transparent;
-  text-align: left;
-  color: var(--text-color);
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-.nav-row:hover { background: rgba(15, 23, 42, 0.03); }
-.nav-row:active { background: rgba(15, 23, 42, 0.06); }
 
 .mini-action {
-  height: 32px;
+  min-height: 40px;
   padding: 0 12px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
@@ -313,7 +255,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   font-size: 12px;
 }
 .logout-btn {
-  height: 34px;
+  min-height: 40px;
   padding: 0 14px;
   border-radius: var(--radius-sm);
   border: 1px solid rgba(220, 38, 38, 0.35);
@@ -328,13 +270,22 @@ input:checked + .slider:before { transform: translateX(18px); }
 }
 
 @media (max-width: 768px) {
+  .my-center {
+    padding: var(--space-3) 0 calc(72px + var(--safe-bottom));
+  }
+
   .my-center-inner { max-width: 100%; gap: var(--space-3); }
   .summary-panel { padding: 12px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
-  .section-block > .section-title { padding: 12px 12px 8px; }
-  .settings-row,
-  .nav-row { min-height: 58px; padding: 10px 12px; }
+  .mini-action,
+  .logout-btn { min-height: 44px; }
   .session-panel { flex-direction: column; align-items: stretch; padding: 12px; }
+}
+
+@media (max-width: 576px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

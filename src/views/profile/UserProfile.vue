@@ -222,67 +222,31 @@
 
         <!-- 邮件提醒设置 -->
 
-        <div class="profile-card">
-
-          <div class="card-header">
-
-            <h3>{{ $t('profile.notifications') }}</h3>
-
-          </div>
+        <BaseCard :title="$t('profile.notifications')">
 
           <div class="settings-content">
 
-            <div class="setting-item">
-
-              <div class="setting-info">
-
-                <span class="setting-label">{{ $t('profile.expireRemind') }}</span>
-
-                <span class="setting-description">{{ $t('profile.expireRemindDesc') }}</span>
-
-              </div>
-
-              <div class="setting-toggle">
-
+            <BaseSettingsRow :title="$t('profile.expireRemind')" :description="$t('profile.expireRemindDesc')">
+              <template #action>
                 <label class="switch" :class="{ 'disabled': updatingSettings }">
-
                   <input type="checkbox" v-model="remindExpire" @change="updateRemindSettings('expire')" :disabled="updatingSettings" />
-
                   <span class="slider round" :class="{ 'loading': updatingExpire }"></span>
-
                 </label>
+              </template>
+            </BaseSettingsRow>
 
-              </div>
-
-            </div>
-
-            <div class="setting-item">
-
-              <div class="setting-info">
-
-                <span class="setting-label">{{ $t('profile.trafficRemind') }}</span>
-
-                <span class="setting-description">{{ $t('profile.trafficRemindDesc') }}</span>
-
-              </div>
-
-              <div class="setting-toggle">
-
+            <BaseSettingsRow :title="$t('profile.trafficRemind')" :description="$t('profile.trafficRemindDesc')">
+              <template #action>
                 <label class="switch" :class="{ 'disabled': updatingSettings }">
-
                   <input type="checkbox" v-model="remindTraffic" @change="updateRemindSettings('traffic')" :disabled="updatingSettings" />
-
                   <span class="slider round" :class="{ 'loading': updatingTraffic }"></span>
-
                 </label>
-
-              </div>
-
-            </div>
+              </template>
+            </BaseSettingsRow>
 
           </div>
 
-        </div>
+        </BaseCard>
 
 
 
@@ -735,6 +699,8 @@ import { reloadMessages } from '@/i18n';
 import { PROFILE_CONFIG } from '@/utils/baseConfig';
 import AccountInfoCard from '@/components/profile/AccountInfoCard.vue';
 import SecurityCard from '@/components/profile/SecurityCard.vue';
+import BaseCard from '@/components/base/BaseCard.vue';
+import BaseSettingsRow from '@/components/base/BaseSettingsRow.vue';
 
 
 
@@ -1591,17 +1557,19 @@ onMounted(() => {
 
 .profile-container {
 
-  padding: 1.25rem;
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
 
-  padding-bottom: calc(1.25rem + 70px);
+  padding: var(--layout-gutter-mobile, 1rem);
+
+  padding-bottom: calc(var(--layout-gutter-mobile, 1rem) + 70px + var(--safe-bottom));
 
 
 
   @media (min-width: 768px) {
 
-    padding: 2rem;
+    padding: var(--layout-gutter-desktop, 2rem);
 
-    padding-bottom: 3rem;
+    padding-bottom: calc(var(--layout-gutter-desktop, 2rem) + 24px);
 
   }
 
@@ -2194,66 +2162,6 @@ onMounted(() => {
 
 
 
-    .setting-item {
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      padding: 12px 0;
-
-      border-bottom: 1px solid rgba(var(--border-color-rgb), 0.5);
-
-
-
-      &:last-child {
-
-        border-bottom: none;
-
-      }
-
-
-
-      .setting-info {
-
-        flex: 1;
-
-        margin-right: 16px;
-
-
-
-        .setting-label {
-
-          display: block;
-
-          font-size: 15px;
-
-          font-weight: 500;
-
-          color: var(--text-color);
-
-          margin-bottom: 4px;
-
-        }
-
-
-
-        .setting-description {
-
-          font-size: 13px;
-
-          color: var(--text-muted);
-
-        }
-
-      }
-
-    }
-
-
-
     .action-buttons {
 
       display: flex;
@@ -2356,6 +2264,8 @@ onMounted(() => {
 
           padding: 10px 12px;
 
+          min-height: 44px;
+
           border: 1px solid var(--border-color);
 
           border-radius: 8px;
@@ -2395,6 +2305,8 @@ onMounted(() => {
           gap: 8px;
 
           padding: 10px 16px;
+
+          min-height: 44px;
 
           border-radius: 8px;
 
@@ -3052,7 +2964,9 @@ onMounted(() => {
 
   .profile-container {
 
-    padding: 1rem;
+    padding: var(--layout-gutter-mobile, 1rem);
+
+    padding-bottom: calc(var(--layout-gutter-mobile, 1rem) + 72px + var(--safe-bottom));
 
   }
 

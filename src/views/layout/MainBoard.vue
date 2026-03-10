@@ -1,4 +1,4 @@
-﻿<template>
+<template>
 
   <div class="main-board">
 
@@ -9,7 +9,7 @@
 
     <!-- 内容区域 - 路由视图 -->
 
-    <div class="content-area">
+    <AppContainer class="content-area" mode="default">
 
       <router-view v-slot="{ Component }">
 
@@ -25,7 +25,7 @@
 
       </router-view>
 
-    </div>
+    </AppContainer>
 
     
 
@@ -54,6 +54,7 @@ import { onMounted } from 'vue';
 
 
 import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
+import AppContainer from '@/components/layout/AppContainer.vue';
 
 
 
@@ -63,7 +64,8 @@ export default {
 
   components: {
 
-    DomainAuthAlert
+    DomainAuthAlert,
+    AppContainer
 
   },
 
@@ -93,31 +95,22 @@ export default {
 
 .main-board {
 
-  min-height: 100vh;
+  min-height: calc(100dvh - var(--top-fixed-bar-height));
 
   position: relative;
 
   overflow-x: hidden;
 
-  z-index: 1;
+  z-index: var(--app-content-z);
 
 }
 
 
 
 .content-area {
-
-  width: min(var(--layout-max-width), 100%);
-
-  margin: 0 auto;
-
-  padding: var(--layout-gap-y) var(--layout-padding-x-right) calc(var(--layout-gap-y) + var(--safe-bottom)) var(--layout-padding-x);
-
   padding-top: 0;
-
-  box-sizing: border-box;
-
 }
+
 
 
 
@@ -163,9 +156,9 @@ export default {
 
   border-radius: 50%;
 
-  filter: blur(60px);
+  filter: blur(var(--layout-bg-orb-blur));
 
-  opacity: 0.3;
+  opacity: var(--layout-bg-orb-opacity);
 
   mix-blend-mode: lighten;
 
@@ -175,9 +168,9 @@ export default {
 
 .ball-1 {
 
-  width: 600px;
+  width: var(--layout-bg-orb-1-size);
 
-  height: 600px;
+  height: var(--layout-bg-orb-1-size);
 
   background: radial-gradient(circle at 30% 30%, 
 
@@ -201,9 +194,9 @@ export default {
 
 .ball-2 {
 
-  width: 500px;
+  width: var(--layout-bg-orb-2-size);
 
-  height: 500px;
+  height: var(--layout-bg-orb-2-size);
 
   background: radial-gradient(circle at 70% 70%, 
 
@@ -227,9 +220,9 @@ export default {
 
 .ball-3 {
 
-  width: 450px;
+  width: var(--layout-bg-orb-3-size);
 
-  height: 450px;
+  height: var(--layout-bg-orb-3-size);
 
   background: radial-gradient(circle at 50% 50%, 
 
