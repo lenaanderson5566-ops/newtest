@@ -458,7 +458,7 @@ export default {
 
 @keyframes language-fade {
   0% {
-    opacity: 0.2;
+    opacity: var(--app-language-fade-start-opacity);
   }
   100% {
     opacity: 1;
@@ -510,7 +510,7 @@ export default {
 
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: var(--app-scroll-behavior);
 }
 
 
