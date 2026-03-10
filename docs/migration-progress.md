@@ -3,8 +3,8 @@
 ## Overall phases
 - [x] Phase 1: Layout/token baseline
 - [~] Phase 2: Shell standardization and reusable layout primitives (进行中，约 70%)
-- [~] Phase 3: Base component unification (进行中，约 85%)
-- [ ] Phase 4: P0 page migration (overview/profile/billing/support)
+- [x] Phase 3: Base component unification (已完成)
+- [~] Phase 4: P0 page migration (overview/profile/billing/support)（进行中，约 15%）
 - [ ] Phase 5: P1/P2 page migration and cleanup
 
 ## This iteration
@@ -12,6 +12,7 @@
 - 将 Billing 页面 Tab 结构迁移到 `BaseTabs`，统一分段导航样式实现。
 - UserProfile 的提醒设置区块已迁移到 BaseCard/BaseSettingsRow，减少页面内重复 settings-row 样式。
 - MoreOptions 页面迁移到 BaseCard/BaseListRow 列表模式，统一“更多入口”样式与交互。
+- 启动 Phase 4：支持中心入口页（CustomerService）完成移动端壳层与间距稳定化改造。
 - 将 App 壳层顶部导航从 `App.vue` 拆分为 `AppTopBar` / `AuthTopToolbar`，降低根组件复杂度。
 - Added reusable layout container component (`AppContainer`) for unified content width/padding behavior.
 - Integrated `AppContainer` into `MainBoard` to reduce page-level container ownership.
@@ -21,4 +22,4 @@
 ## Next
 1. Introduce base shell components for topbar/sidebar/bottom-nav responsibilities.
 2. Replace remaining shell hardcoded values in `App.vue` and high-traffic screens.
-3. 完成 Phase 3 收尾后，启动 Phase 4：P0 页面整体统一与移动端重排。
+3. 持续推进 Phase 4：优先完成概览/财务/支持中心的移动端重排与视觉统一。
