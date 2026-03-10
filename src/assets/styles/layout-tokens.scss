@@ -226,6 +226,11 @@
   --cross-ez-btn-focus-ring: var(--dashboard-ez-btn-focus-ring);
   --cross-ez-btn-margin: 8px 4px;
   --cross-ez-btn-icon-gap: 6px;
+
+  --cross-interaction-transition-fast: var(--app-transition-fast);
+  --cross-interaction-transition-normal: var(--dashboard-transition-normal);
+  --cross-interaction-ease: var(--app-transition-ease);
+  --cross-interaction-ease-out: var(--app-transition-ease-out);
 }
 
 @media (min-width: 768px) {

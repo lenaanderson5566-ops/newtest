@@ -13,8 +13,10 @@
 - [~] Phase 10: Dashboard override down-migration to scoped/component boundaries（已完成，100%）
 - [~] Phase 11: Cross-page style de-dup and token baseline hardening（已完成，100%）
 - [~] Phase 12: Dashboard/DocDetail semantic token naming alignment and visual regression baseline（已完成，100%）
+- [~] Phase 13: Cross-module interaction token cleanup and visual regression checklist（已完成，100%）
 
 ## This iteration
+- Phase 13 收口完成：DocDetail 交互态 transition/focus 等剩余硬编码时序完成 token 化，并补齐页面级可视回归清单。
 - Phase 12 收口完成：DocDetail eztheme-btn 与 no-plan 共享样式切换到统一语义 token 命名。
 - Phase 11 收口完成：no-plan 跨页面共享样式完成语义 token 化并对齐 Dashboard scoped 常量。
 - 启动 Phase 11：Dashboard scoped 弹层/按钮硬编码常量继续 token 化，统一 footer gap/禁用态/危险阴影等语义变量。
@@ -67,4 +69,4 @@
 ## Next
 1. Introduce base shell components for topbar/sidebar/bottom-nav responsibilities.
 2. Replace remaining shell hardcoded values in `App.vue` and high-traffic screens.
-3. 启动 Phase 13：继续梳理文档与业务页的跨模块交互 token 并建立页面级可视回归清单。
+3. 启动 Phase 14：按清单执行关键路由的截图回归自动化与异常阈值治理。

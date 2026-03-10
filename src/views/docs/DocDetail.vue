@@ -1309,7 +1309,7 @@ onUnmounted(() => {
 
   border-radius: 8px;
 
-  transition: all 0.3s ease;
+  transition: all var(--cross-interaction-transition-normal) var(--cross-interaction-ease);
 
   
 
@@ -1525,7 +1525,7 @@ onUnmounted(() => {
 
   cursor: pointer;
 
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all var(--cross-interaction-transition-normal) cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.3);
 
@@ -1541,7 +1541,7 @@ onUnmounted(() => {
 
   .retry-icon {
 
-    transition: transform 0.4s ease;
+    transition: transform 0.4s var(--cross-interaction-ease);
 
   }
 
@@ -1589,7 +1589,7 @@ onUnmounted(() => {
 
   border: 1px solid var(--border-color);
 
-  transition: all 0.3s ease;
+  transition: all var(--cross-interaction-transition-normal) var(--cross-interaction-ease);
 
   width: 100%;
 
@@ -1675,7 +1675,7 @@ onUnmounted(() => {
 
       font-weight: 500;
 
-      transition: all 0.3s ease;
+      transition: all var(--cross-interaction-transition-normal) var(--cross-interaction-ease);
 
       
 
@@ -1727,7 +1727,7 @@ onUnmounted(() => {
 
     position: relative;
 
-    transition: color 0.2s ease;
+    transition: color var(--cross-interaction-transition-fast) var(--cross-interaction-ease);
 
   }
 
@@ -1899,7 +1899,7 @@ onUnmounted(() => {
 
     display: block;
 
-    transition: all 0.3s ease;
+    transition: all var(--cross-interaction-transition-normal) var(--cross-interaction-ease);
 
     border: 1px solid var(--border-color);
 
@@ -1939,7 +1939,7 @@ onUnmounted(() => {
 
     border: 1px solid rgba(var(--theme-color-rgb), 0.1);
 
-    transition: background-color 0.2s ease;
+    transition: background-color var(--cross-interaction-transition-fast) var(--cross-interaction-ease);
 
     margin: 0 2px;
 
@@ -1965,7 +1965,7 @@ onUnmounted(() => {
 
     position: relative;
 
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color var(--cross-interaction-transition-fast) var(--cross-interaction-ease), box-shadow var(--cross-interaction-transition-fast) var(--cross-interaction-ease);
 
     
 
@@ -2009,7 +2009,7 @@ onUnmounted(() => {
 
     text-decoration: none;
 
-    transition: color 0.2s ease;
+    transition: color var(--cross-interaction-transition-fast) var(--cross-interaction-ease);
 
     font-weight: 500;
 
@@ -2049,7 +2049,7 @@ onUnmounted(() => {
 
     position: relative;
 
-    transition: background-color 0.2s ease, border-left-color 0.2s ease;
+    transition: background-color var(--cross-interaction-transition-fast) var(--cross-interaction-ease), border-left-color var(--cross-interaction-transition-fast) var(--cross-interaction-ease);
 
     
 
@@ -2101,7 +2101,7 @@ onUnmounted(() => {
 
     border: 1px solid var(--border-color);
 
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: box-shadow var(--cross-interaction-transition-fast) var(--cross-interaction-ease), border-color var(--cross-interaction-transition-fast) var(--cross-interaction-ease);
 
     
 
@@ -2163,7 +2163,7 @@ onUnmounted(() => {
 
     tr {
 
-      transition: background-color 0.2s ease;
+      transition: background-color var(--cross-interaction-transition-fast) var(--cross-interaction-ease);
 
       
 
@@ -2271,7 +2271,7 @@ onUnmounted(() => {
 
     overflow: hidden;
 
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: box-shadow var(--cross-interaction-transition-fast) var(--cross-interaction-ease), border-color var(--cross-interaction-transition-fast) var(--cross-interaction-ease);
 
     
 
