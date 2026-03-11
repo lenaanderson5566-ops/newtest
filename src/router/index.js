@@ -1,4 +1,4 @@
-﻿
+
 
 import { createRouter, createWebHashHistory } from 'vue-router';
 
@@ -71,8 +71,6 @@ const Profile = () => import('@/views/profile/MyCenter.vue');
 const BrowserRestricted = () => import('@/views/errors/BrowserRestricted.vue');
 
 const NotFound = () => import('@/views/errors/NotFound.vue');
-
-const CustomerService = () => import('@/views/service/CustomerService.vue');
 
 
 
@@ -208,23 +206,6 @@ const routes = [
 
       requiresAuth: false
 
-    }
-
-  },
-
-  {
-
-    path: '/customer-service',
-
-    name: 'CustomerService',
-
-    component: CustomerService,
-
-    meta: {
-
-      titleKey: 'service.title',
-
-      requiresAuth: false 
     }
 
   },

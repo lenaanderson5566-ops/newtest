@@ -24,7 +24,6 @@
     "chart.js": "^4.5.1",
     "core-js": "^3.48.0",
     "crisp": "^1.0.0",
-    "crisp-sdk-web": "^1.0.27",
     "crypto-js": "^4.2.0",
     "disable-devtool": "^0.3.9",
     "dompurify": "^3.3.2",

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div>
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
     <div class="static-layout" v-if="$route.meta.requiresAuth">
@@ -71,12 +71,6 @@
     <!-- 自定义鼠标右键菜单 -->
     <CustomContextMenu />
     
-    <!-- 客服图标 -->
-    <CustomerServiceIcon v-if="$route.path !== '/customer-service'" />
-    
-    <!-- Crisp嵌入组件（第二种客服系统方案） -->
-    <CrispEmbed v-if="customerServiceConfig.embedMode === 'embed'" />
-    
     <!-- 资源预加载组件 -->
     <ResourcePreloader />
     
@@ -91,7 +85,8 @@ import { useStore } from 'vuex';
 import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { SITE_CONFIG, PROFILE_CONFIG, CUSTOMER_SERVICE_CONFIG } from '@/utils/baseConfig';
+
+import { SITE_CONFIG, PROFILE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
 import { getUnreadNoticeCount } from '@/api/notice';
@@ -104,8 +99,6 @@ import UserAvatar from '@/components/common/UserAvatar.vue';
 import ServiceNoticeButton from '@/components/common/ServiceNoticeButton.vue';
 import BackToTop from '@/components/common/BackToTop.vue';
 import CustomContextMenu from '@/components/common/CustomContextMenu.vue';
-import CustomerServiceIcon from '@/components/common/CustomerServiceIcon.vue';
-import CrispEmbed from '@/components/common/CrispEmbed.vue';
 import ResourcePreloader from '@/components/common/ResourcePreloader.vue';
 import { IconGift } from '@tabler/icons-vue';
 import NProgress from 'nprogress';
@@ -130,8 +123,6 @@ export default {
     ServiceNoticeButton,
     BackToTop,
     CustomContextMenu,
-    CustomerServiceIcon,
-    CrispEmbed,
     ResourcePreloader,
     IconGift
   },
@@ -143,8 +134,6 @@ export default {
     const { applyTheme } = useTheme();
     const siteConfig = ref(SITE_CONFIG);
     const cachedRoutes = computed(() => pageCache.getCachedRoutes());
-    
-    const customerServiceConfig = computed(() => CUSTOMER_SERVICE_CONFIG);
     
     router.beforeEach((to, from, next) => {
       if (to.meta.keepAlive && to.name) {
@@ -307,7 +296,6 @@ export default {
       siteConfig,
       PROFILE_CONFIG,
       cachedRoutes,
-      customerServiceConfig,
       hasUnreadNotice,
       pageHeaderTitle
     };
