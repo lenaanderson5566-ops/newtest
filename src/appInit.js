@@ -6,7 +6,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import { pinia, useAppStore } from './store';
-import i18n from './i18n';
+import i18n, { initializeLanguageFromUserSettings } from './i18n';
 import { MotionPlugin } from '@vueuse/motion';
 import { useToast } from './composables/useToast';
 import initPageTitle from './utils/exposeConfig';
@@ -38,6 +38,8 @@ const initApp = async () => {
 
     const appStore = useAppStore();
     appStore.initUserInfo();
+
+    await initializeLanguageFromUserSettings();
   } catch (error) {
     console.error('应用初始化失败:', error);
   }

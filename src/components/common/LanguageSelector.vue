@@ -30,6 +30,9 @@ import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { IconWorld } from '@tabler/icons-vue';
 import { setLanguage } from '@/i18n';
+import { checkLoginStatus } from '@/api/auth';
+import { getUserInfo, updateUserLanguage } from '@/api/user';
+import { extractUserLanguage, matchSupportedLanguage } from '@/utils/userLanguage';
 import { useToast } from '@/composables/useToast';
 
 export default {
@@ -81,10 +84,35 @@ export default {
 
     const changeLanguage = async (langCode) => {
       try {
+        if (currentLanguage.value === langCode) {
+          isOpen.value = false;
+          return;
+        }
+
         const result = await setLanguage(langCode);
 
         if (!result?.success) {
           throw new Error(result?.message || 'Language switch failed');
+        }
+
+        if (checkLoginStatus()) {
+          let storedUserLanguage = null;
+
+          try {
+            const infoResponse = await getUserInfo();
+            const userData = infoResponse?.data?.data && typeof infoResponse.data.data === 'object'
+              ? infoResponse.data.data
+              : infoResponse?.data;
+            storedUserLanguage = matchSupportedLanguage(extractUserLanguage(userData));
+          } catch (e) {
+          }
+
+          if (storedUserLanguage !== langCode) {
+            try {
+              await updateUserLanguage(langCode);
+            } catch (e) {
+            }
+          }
         }
 
         isOpen.value = false;

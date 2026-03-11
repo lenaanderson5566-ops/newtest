@@ -10,6 +10,15 @@ export function getUserInfo() {
 }
 
 
+
+
+export function updateUserLanguage(language) {
+  return request({
+    url: '/user/update',
+    method: 'post',
+    data: { language }
+  });
+}
 export function getIpLocationInfo() {
   return request({
     url: 'https://ipinfo.io/json',
