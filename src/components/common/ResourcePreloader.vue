@@ -1,4 +1,4 @@
-﻿<!-- 资源预加载组件 -->
+<!-- 资源预加载组件 -->
 <template>
   <!-- 这个组件不会显示任何内容，仅用于资源预加载 -->
   <div class="resource-preloader" style="display: none;">
@@ -21,7 +21,7 @@
 import { onMounted, ref, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import preloadManager from '@/utils/preloadManager';
-import { CUSTOMER_SERVICE_CONFIG, AUTH_LAYOUT_CONFIG } from '@/utils/baseConfig';
+import { AUTH_LAYOUT_CONFIG } from '@/utils/baseConfig';
 
 export default {
   name: 'ResourcePreloader',
@@ -33,7 +33,6 @@ export default {
       scripts: false
     });
 
-    const isCustomerServiceEnabled = CUSTOMER_SERVICE_CONFIG && CUSTOMER_SERVICE_CONFIG.enabled;
 
     const preloadImages = ref([
       '/images/logo.png'
@@ -45,14 +44,6 @@ export default {
     const authLayoutType = computed(() => {
       return AUTH_LAYOUT_CONFIG?.layoutType || 'center';
     });
-
-    const customerServiceComponent = { 
-      path: 'CustomerService', 
-      name: 'CustomerService', 
-      priority: 0, 
-      component: () => import('@/views/service/CustomerService.vue') 
-    };
-
     const componentsConfig = {
       base: [
         { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/dashboard/Dashboard.vue') },
@@ -257,13 +248,7 @@ export default {
         '/order-confirm': [
           { path: 'Shop', name: 'Shop', priority: 1, component: () => import('@/views/shop/Shop.vue') },
           { path: 'Payment', name: 'Payment', priority: 2, component: () => import('@/views/shop/Payment.vue') }
-        ],
-        '/customer-service': [
-          { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/dashboard/Dashboard.vue') },
-          { path: 'More', name: 'More', priority: 2, component: () => import('@/views/more/MoreOptions.vue') },
-          { path: 'TicketList', name: 'TicketList', priority: 3, component: () => import('@/views/ticket/TicketList.vue') }
-        ]
-      }
+        ],      }
     };
 
     const onImageLoaded = (src) => {
@@ -344,22 +329,13 @@ export default {
       
       preloadManager.startPreloadTimer();
       
-      if (isCustomerServiceEnabled) {
-        enqueueComponents([customerServiceComponent]);
-      }
       
       setTimeout(() => {
-        if (isCustomerServiceEnabled) {
-          componentsConfig.base.unshift(customerServiceComponent);
-        }
         enqueueComponents(componentsConfig.base);
       }, 3000);
       
       setTimeout(() => {
         if (route.path in componentsConfig.route) {
-          if (isCustomerServiceEnabled && route.path !== '/customer-service') {
-            componentsConfig.route[route.path].unshift(customerServiceComponent);
-          }
           enqueueComponents(componentsConfig.route[route.path]);
         }
       }, 1500);
@@ -393,9 +369,6 @@ export default {
     watch(() => route.path, (newPath, oldPath) => {
       if (newPath !== oldPath && newPath in componentsConfig.route) {
         
-        if (isCustomerServiceEnabled && newPath !== '/customer-service' && !componentsConfig.route[newPath].some(comp => comp.name === 'CustomerService')) {
-          componentsConfig.route[newPath].unshift(customerServiceComponent);
-        }
         enqueueComponents(componentsConfig.route[newPath]);
       }
     });

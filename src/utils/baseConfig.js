@@ -568,19 +568,6 @@ export const NODES_CONFIG = mergeDeep(
 );
 
 /**
- * 客服系统配置
- */
-const DEFAULT_CUSTOMER_SERVICE_CONFIG = {
-  // 配置以 src/config/index.js 为主，避免重复维护
-};
-
-// 注意：当使用Crisp类型客服时，系统会自动向Crisp传递用户数据（邮箱、套餐名称、到期时间、可用流量、用户余额）
-export const CUSTOMER_SERVICE_CONFIG = mergeDeep(
-  DEFAULT_CUSTOMER_SERVICE_CONFIG,
-  getConfig("CUSTOMER_SERVICE_CONFIG")
-);
-
-/**
  * More页面自定义卡片配置
  */
 const DEFAULT_MORE_PAGE_CONFIG = {

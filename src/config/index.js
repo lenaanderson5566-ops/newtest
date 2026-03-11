@@ -470,42 +470,6 @@ export const config = {
     allowViewNodeInfo: true,
   },
 
-  // 客服系统配置
-  CUSTOMER_SERVICE_CONFIG: {
-    // 是否启用客服系统
-    enabled: false,
-
-    // 客服系统类型: 'crisp' 或 'other'
-    // 注意：当客服类型为crisp时，系统会自动向Crisp传递用户数据
-    // 包括：用户邮箱、套餐名称、到期时间、可用流量、用户余额
-    type: "crisp",
-
-    // 客服系统JS代码，请将您的客服系统提供的嵌入代码粘贴在这里
-    customHtml: "",
-
-    // 客服系统嵌入模式: 'popup'=弹出式页面, 'embed'=嵌入到每个页面
-    // 'popup'模式: 点击客服图标会跳转到单独的客服页面
-    // 'embed'模式: 客服窗口直接嵌入到每个页面中(仅支持Crisp)
-    embedMode: "embed",
-
-    // 是否在未登录状态下也显示客服图标
-    showWhenNotLoggedIn: true,
-
-    // 图标位置配置
-    iconPosition: {
-      // 桌面版图标距离左下角的距离
-      desktop: {
-        left: "20px",
-        bottom: "20px",
-      },
-      // 移动版图标距离右下角的距离
-      mobile: {
-        right: "20px",
-        bottom: "100px",
-      },
-    },
-  },
-
   // 导航配置（已迁移为固定四项：概览/区域/使用/我的）
   NAVIGATION_CONFIG: {
     // 废弃：thirdNavItem/fourthNavItem 不再参与侧边导航生成，仅保留兼容字段避免旧配置报错

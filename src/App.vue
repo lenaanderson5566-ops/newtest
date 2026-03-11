@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div>
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
     <div class="static-layout" v-if="$route.meta.requiresAuth">
@@ -71,12 +71,6 @@
     <!-- 自定义鼠标右键菜单 -->
     <CustomContextMenu />
     
-    <!-- 客服图标 -->
-    <CustomerServiceIcon v-if="$route.path !== '/customer-service'" />
-    
-    <!-- Crisp嵌入组件（第二种客服系统方案） -->
-    <CrispEmbed v-if="customerServiceConfig.embedMode === 'embed'" />
-    
     <!-- 资源预加载组件 -->
     <ResourcePreloader />
     
@@ -91,7 +85,8 @@ import { useStore } from 'vuex';
 import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { SITE_CONFIG, PROFILE_CONFIG, CUSTOMER_SERVICE_CONFIG } from '@/utils/baseConfig';
+
+import { SITE_CONFIG, PROFILE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
 import { getUnreadNoticeCount } from '@/api/notice';
@@ -104,8 +99,6 @@ import UserAvatar from '@/components/common/UserAvatar.vue';
 import ServiceNoticeButton from '@/components/common/ServiceNoticeButton.vue';
 import BackToTop from '@/components/common/BackToTop.vue';
 import CustomContextMenu from '@/components/common/CustomContextMenu.vue';
-import CustomerServiceIcon from '@/components/common/CustomerServiceIcon.vue';
-import CrispEmbed from '@/components/common/CrispEmbed.vue';
 import ResourcePreloader from '@/components/common/ResourcePreloader.vue';
 import { IconGift } from '@tabler/icons-vue';
 import NProgress from 'nprogress';
@@ -130,8 +123,6 @@ export default {
     ServiceNoticeButton,
     BackToTop,
     CustomContextMenu,
-    CustomerServiceIcon,
-    CrispEmbed,
     ResourcePreloader,
     IconGift
   },
@@ -143,8 +134,6 @@ export default {
     const { applyTheme } = useTheme();
     const siteConfig = ref(SITE_CONFIG);
     const cachedRoutes = computed(() => pageCache.getCachedRoutes());
-    
-    const customerServiceConfig = computed(() => CUSTOMER_SERVICE_CONFIG);
     
     router.beforeEach((to, from, next) => {
       if (to.meta.keepAlive && to.name) {
@@ -307,7 +296,6 @@ export default {
       siteConfig,
       PROFILE_CONFIG,
       cachedRoutes,
-      customerServiceConfig,
       hasUnreadNotice,
       pageHeaderTitle
     };
@@ -338,10 +326,10 @@ export default {
 
 
 .top-fixed-bar {
-  height: calc(var(--top-fixed-bar-height) + var(--safe-top));
+  height: calc(56px + env(safe-area-inset-top, 0px));
   position: fixed;
   top: 0;
-  padding-top: var(--safe-top);
+  padding-top: env(safe-area-inset-top, 0px);
   left: 0;
   right: 0;
   background: rgba(255, 255, 255, 0.88);
@@ -352,17 +340,17 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
+  padding: 0 12px;
   z-index: 120;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .page-header-layer {
   position: fixed;
-  top: calc(var(--top-fixed-bar-height) + var(--safe-top));
+  top: calc(56px + env(safe-area-inset-top, 0px));
   left: 0;
   right: 0;
-  height: var(--page-header-height);
+  height: 40px;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -376,7 +364,7 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
+  padding: 0 12px;
 }
 
 .page-header-title {
@@ -490,19 +478,19 @@ export default {
 
   &.with-top-bar {
     --page-content-top-gap: 8px;
-    padding-top: calc(var(--top-fixed-bar-height) + var(--safe-top) + var(--page-content-top-gap, 8px));
+    padding-top: calc(56px + env(safe-area-inset-top, 0px) + var(--page-content-top-gap, 8px));
   }
 
   &.with-top-bar.with-page-header {
-    padding-top: calc(var(--top-fixed-bar-height) + var(--page-header-height) + var(--safe-top) + var(--page-content-top-gap, 8px));
+    padding-top: calc(56px + 40px + env(safe-area-inset-top, 0px) + var(--page-content-top-gap, 8px));
   }
 }
 
 .content-layout-shell {
   width: 100%;
-  max-width: var(--layout-max-width);
+  max-width: 1180px;
   margin: 0 auto;
-  padding-inline: var(--layout-padding-x) var(--layout-padding-x-right);
+  padding-inline: 12px;
   box-sizing: border-box;
 }
 
@@ -526,7 +514,7 @@ export default {
     width: min(1120px, 100%);
     margin-left: 0;
     margin-right: auto;
-    padding: 0 30px 0 14px;
+    padding: 0 24px;
   }
 
 }
@@ -542,7 +530,7 @@ export default {
   }
 
   .page-header-content {
-    padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
+    padding: 0 12px;
   }
 
   .page-header-title {
@@ -689,7 +677,7 @@ html {
 
 .auth-toolbar {
   position: fixed;
-  top: var(--safe-top);
+  top: env(safe-area-inset-top, 0px);
   right: 0;
   z-index: 100;
   
