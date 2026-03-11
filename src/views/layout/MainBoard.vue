@@ -107,11 +107,11 @@ export default {
 
 .content-area {
 
-  width: min(var(--layout-max-width), 100%);
+  width: min(1180px, 100%);
 
   margin: 0 auto;
 
-  padding: var(--layout-gap-y) var(--layout-padding-x-right) calc(var(--layout-gap-y) + var(--safe-bottom)) var(--layout-padding-x);
+  padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px));
 
   padding-top: 0;
 

@@ -187,7 +187,7 @@ onMounted(async () => {
 .section-block {
   border: 1px solid var(--border-color-soft);
   border-radius: var(--radius-lg);
-  background: var(--card-level-2);
+  background: var(--card-background);
   box-shadow: var(--shadow-card-sm);
 }
 
@@ -321,7 +321,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   color: #b91c1c;
 }
 
-.bottom-safe-area { height: calc(var(--safe-bottom) + 10px); }
+.bottom-safe-area { height: calc(env(safe-area-inset-bottom, 0px) + 10px); }
 
 @media (max-width: 1100px) {
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

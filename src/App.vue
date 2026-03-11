@@ -338,10 +338,10 @@ export default {
 
 
 .top-fixed-bar {
-  height: calc(var(--top-fixed-bar-height) + var(--safe-top));
+  height: calc(56px + env(safe-area-inset-top, 0px));
   position: fixed;
   top: 0;
-  padding-top: var(--safe-top);
+  padding-top: env(safe-area-inset-top, 0px);
   left: 0;
   right: 0;
   background: rgba(255, 255, 255, 0.88);
@@ -352,17 +352,17 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
+  padding: 0 12px;
   z-index: 120;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .page-header-layer {
   position: fixed;
-  top: calc(var(--top-fixed-bar-height) + var(--safe-top));
+  top: calc(56px + env(safe-area-inset-top, 0px));
   left: 0;
   right: 0;
-  height: var(--page-header-height);
+  height: 40px;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -376,7 +376,7 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
+  padding: 0 12px;
 }
 
 .page-header-title {
@@ -490,19 +490,19 @@ export default {
 
   &.with-top-bar {
     --page-content-top-gap: 8px;
-    padding-top: calc(var(--top-fixed-bar-height) + var(--safe-top) + var(--page-content-top-gap, 8px));
+    padding-top: calc(56px + env(safe-area-inset-top, 0px) + var(--page-content-top-gap, 8px));
   }
 
   &.with-top-bar.with-page-header {
-    padding-top: calc(var(--top-fixed-bar-height) + var(--page-header-height) + var(--safe-top) + var(--page-content-top-gap, 8px));
+    padding-top: calc(56px + 40px + env(safe-area-inset-top, 0px) + var(--page-content-top-gap, 8px));
   }
 }
 
 .content-layout-shell {
   width: 100%;
-  max-width: var(--layout-max-width);
+  max-width: 1180px;
   margin: 0 auto;
-  padding-inline: var(--layout-padding-x) var(--layout-padding-x-right);
+  padding-inline: 12px;
   box-sizing: border-box;
 }
 
@@ -526,7 +526,7 @@ export default {
     width: min(1120px, 100%);
     margin-left: 0;
     margin-right: auto;
-    padding: 0 30px 0 14px;
+    padding: 0 24px;
   }
 
 }
@@ -542,7 +542,7 @@ export default {
   }
 
   .page-header-content {
-    padding: 0 var(--layout-padding-x-right) 0 var(--layout-padding-x);
+    padding: 0 12px;
   }
 
   .page-header-title {
@@ -689,7 +689,7 @@ html {
 
 .auth-toolbar {
   position: fixed;
-  top: var(--safe-top);
+  top: env(safe-area-inset-top, 0px);
   right: 0;
   z-index: 100;
   
