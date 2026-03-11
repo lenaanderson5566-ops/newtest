@@ -5,7 +5,7 @@ window.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ = false;
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import { pinia, useAppStore } from './store';
 import i18n from './i18n';
 import { MotionPlugin } from '@vueuse/motion';
 import { useToast } from './composables/useToast';
@@ -30,13 +30,14 @@ const initApp = async () => {
     app.provide('$toast', toast);
 
     app.use(router)
-       .use(store)
+       .use(pinia)
        .use(i18n)
        .use(MotionPlugin);
 
     app.mount('#app');
 
-    store.dispatch('initUserInfo');
+    const appStore = useAppStore();
+    appStore.initUserInfo();
   } catch (error) {
     console.error('应用初始化失败:', error);
   }

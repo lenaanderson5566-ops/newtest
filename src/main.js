@@ -1,27 +1,25 @@
-﻿import disableDevtool from "disable-devtool";
+import disableDevtool from 'disable-devtool';
 
-const isProd = process.env.NODE_ENV === "production";
-const enableConfigJS = process.env.VUE_APP_CONFIGJS == "true";
-const enableAntiDebugging = process.env.VUE_APP_DEBUGGING == "true";
+const env = import.meta.env;
+const isProd = env.PROD;
+const enableConfigJS = String(env.VITE_CONFIGJS ?? env.VUE_APP_CONFIGJS ?? 'false') === 'true';
+const enableAntiDebugging = String(env.VITE_DEBUGGING ?? env.VUE_APP_DEBUGGING ?? 'false') === 'true';
 
 (async () => {
   try {
-    if (!isProd || !enableConfigJS) {
+    if (!isProd || !enableConfigJS || typeof window.EZ_CONFIG === 'undefined') {
       const res = await import('./config/index.js');
       if (typeof window !== 'undefined') {
         window.EZ_CONFIG = res.config || res.default || res;
       }
     }
-    
-    // 反调试逻辑
+
     if (isProd && enableAntiDebugging) {
-      disableDevtool()
+      disableDevtool();
     }
-    
-    // ⚠️ 确保在 config 加载后再初始化应用
+
     await import('./appInit.js');
   } catch (error) {
     console.error(error);
   }
 })();
-

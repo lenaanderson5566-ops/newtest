@@ -1,59 +1,34 @@
-import { createStore } from 'vuex';
+import { createPinia, defineStore } from 'pinia';
 import { forceLogout } from '@/api/auth';
 
-export default createStore({
-  state: {
+export const pinia = createPinia();
+
+export const useAppStore = defineStore('app', {
+  state: () => ({
     user: null,
     token: localStorage.getItem('token') || '',
     theme: 'light',
     loading: false,
     error: null
-  },
+  }),
 
   getters: {
     isLoggedIn: state => !!state.token,
     userInfo: state => state.user,
     currentTheme: () => 'light',
-    isDarkTheme: () => false
-  },
-
-  mutations: {
-    SET_USER(state, user) {
-      state.user = user;
-    },
-
-    SET_TOKEN(state, token) {
-      state.token = token;
-      localStorage.setItem('token', token);
-    },
-
-    CLEAR_USER(state) {
-      state.user = null;
-      state.token = '';
-      localStorage.removeItem('token');
-      localStorage.removeItem('userInfo');
-    },
-
-    SET_THEME(state) {
-      state.theme = 'light';
-    },
-
-    SET_LOADING(state, status) {
-      state.loading = status;
-    },
-
-    SET_ERROR(state, error) {
-      state.error = error;
-    }
+    isDarkTheme: () => false,
+    username: state => state.user?.email || state.user?.username || state.user?.name || '',
+    avatarUrl: state => state.user?.avatar_url || state.user?.avatar || ''
   },
 
   actions: {
-    login({ commit }, token) {
-      commit('SET_TOKEN', token);
+    login(token) {
+      this.token = token;
+      localStorage.setItem('token', token);
     },
 
-    logout({ commit }) {
-      commit('CLEAR_USER');
+    logout() {
+      this.clearUser();
       try {
         if (typeof forceLogout === 'function') {
           forceLogout();
@@ -63,28 +38,32 @@ export default createStore({
       }
     },
 
-    setUser({ commit }, user) {
-      commit('SET_USER', user);
+    setUser(user) {
+      this.user = user;
       localStorage.setItem('userInfo', JSON.stringify(user));
     },
 
-    toggleTheme({ commit }) {
-      commit('SET_THEME');
+    clearUser() {
+      this.user = null;
+      this.token = '';
+      localStorage.removeItem('token');
+      localStorage.removeItem('userInfo');
     },
 
-    initUserInfo({ commit }) {
+    toggleTheme() {
+      this.theme = 'light';
+    },
+
+    initUserInfo() {
       const userInfo = localStorage.getItem('userInfo');
       if (userInfo) {
         try {
-          commit('SET_USER', JSON.parse(userInfo));
+          this.user = JSON.parse(userInfo);
         } catch (err) {
           console.error('解析用户信息失败:', err);
           localStorage.removeItem('userInfo');
         }
       }
     }
-  },
-
-  modules: {
   }
 });

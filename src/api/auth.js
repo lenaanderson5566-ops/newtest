@@ -1,6 +1,6 @@
 ﻿
 import request from './request';
-import store from '@/store';
+import { pinia, useAppStore } from '@/store';
 import { SITE_CONFIG } from '@/utils/baseConfig';
 
 
@@ -126,7 +126,7 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
     window.authCookieFailure = false;
     window.authDataInStorage = null;
     
-    store.dispatch('login', responseData.token);
+    useAppStore(pinia).login(responseData.token);
     
     localStorage.setItem('token', responseData.token);
     if (responseData.is_admin === 1) {
@@ -211,7 +211,7 @@ export function register(data) {
     let responseData = response.data || response;
     
     if (responseData.token) {
-      store.dispatch('login', responseData.token);
+      useAppStore(pinia).login(responseData.token);
       
       window.isUserLoggedIn = true;
     }
@@ -375,8 +375,8 @@ export const checkLoginStatus = () => {
   }
   
   try {
-    const vuexAuth = store.getters.isLoggedIn;
-    if (!vuexAuth) {
+    const storeAuth = useAppStore(pinia).isLoggedIn;
+    if (!storeAuth) {
     }
   } catch (e) {
   }
@@ -458,11 +458,9 @@ const _clearAllAuthData = () => {
   });
   
   try {
-    if (store && typeof store.commit === 'function') {
-      store.commit('CLEAR_USER');
-    }
+    useAppStore(pinia).clearUser();
   } catch (e) {
-    console.error('Vuex状态清除失败', e);
+    console.error('Pinia状态清除失败', e);
   }
 };
 
@@ -513,11 +511,9 @@ export const forceLogout = () => {
   });
   
   try {
-    if (store && typeof store.commit === 'function') {
-      store.commit('CLEAR_USER');
-    }
+    useAppStore(pinia).clearUser();
   } catch (e) {
-    console.error('Vuex状态清除失败', e);
+    console.error('Pinia状态清除失败', e);
   }
 };
 
