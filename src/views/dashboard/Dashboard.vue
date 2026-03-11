@@ -1966,8 +1966,6 @@ export default {
 
     const fetchIpLocationFromSources = async () => {
       const endpoints = [
-        'https://ipwho.is',
-        'https://api.myip.com',
         'https://ipapi.co/json',
         'https://ident.me/json',
         'http://ip-api.com/json',
