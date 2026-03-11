@@ -908,7 +908,7 @@ export default {
   }
 
   .welcome-card {
-    border: 1px solid var(--border-color-soft);
+    border: 1px solid var(--border-color);
     border-radius: var(--shop-card-radius);
     box-shadow: var(--shadow-card-sm);
 
@@ -1220,7 +1220,7 @@ export default {
 
     .plan-card {
       border-radius: var(--shop-card-radius);
-      border: 1px solid var(--border-color-soft);
+      border: 1px solid var(--border-color);
       box-shadow: var(--shadow-card-sm);
 
       background-color: var(--card-bg-color);
@@ -1623,7 +1623,7 @@ export default {
       gap: 0;
       padding: 3px;
       border-radius: 12px;
-      border: 1px solid var(--border-color-soft);
+      border: 1px solid var(--border-color);
       background: var(--surface-subtle);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
 
@@ -1776,7 +1776,7 @@ export default {
     width: 100%;
 
     .filter-toggle-wrapper {
-      border: 1px solid var(--border-color-soft);
+      border: 1px solid var(--border-color);
       border-radius: 12px;
       background: var(--surface-subtle);
 

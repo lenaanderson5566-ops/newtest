@@ -185,7 +185,7 @@ onMounted(async () => {
 .my-center-inner { max-width: 1024px; margin: 0 auto; display: grid; gap: var(--space-4); }
 
 .section-block {
-  border: 1px solid var(--border-color-soft);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   background: var(--card-background);
   box-shadow: var(--shadow-card-sm);
@@ -209,8 +209,8 @@ onMounted(async () => {
 }
 .summary-item {
   padding: 12px;
-  border: 1px solid var(--border-color-soft);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
   background: #fff;
 }
 .summary-item .label {
@@ -241,7 +241,7 @@ onMounted(async () => {
 
 .settings-list {
   overflow: hidden;
-  border-top: 1px solid var(--border-color-soft);
+  border-top: 1px solid var(--border-color);
 }
 
 .settings-row,
@@ -255,7 +255,7 @@ onMounted(async () => {
 }
 .settings-row + .settings-row,
 .nav-row + .nav-row {
-  border-top: 1px solid var(--border-color-soft);
+  border-top: 1px solid var(--border-color);
 }
 
 .row-main { min-width: 0; }

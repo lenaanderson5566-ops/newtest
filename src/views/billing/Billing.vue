@@ -99,7 +99,7 @@ watch(
   gap: 6px;
   padding: 5px;
   border-radius: 10px;
-  border: 1px solid var(--border-color-soft);
+  border: 1px solid var(--border-color);
   background: var(--surface-subtle);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.65);
   margin-bottom: 12px;

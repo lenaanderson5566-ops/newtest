@@ -10,6 +10,8 @@ import {
 } from '@/utils/language';
 
 import { checkLoginStatus } from '@/api/auth';
+import { getUserInfo } from '@/api/user';
+import { extractUserLanguage, resolvePostLoginLanguage } from '@/utils/userLanguage';
 
 
 
@@ -296,6 +298,49 @@ export const updatePageTitle = () => {
 
 };
 
+
+
+
+export const initializeLanguageFromUserSettings = async () => {
+
+  const isLoggedIn = checkLoginStatus();
+
+  if (!isLoggedIn) {
+    return {
+      success: false,
+      reason: 'not_logged_in'
+    };
+  }
+
+  let userLanguage = null;
+
+  try {
+    const response = await getUserInfo();
+    const userData = response?.data?.data && typeof response.data.data === 'object'
+      ? response.data.data
+      : response?.data;
+
+    userLanguage = extractUserLanguage(userData);
+  } catch (error) {
+  }
+
+  const targetLanguage = resolvePostLoginLanguage(userLanguage);
+  const currentLanguage = normalizeLanguage(i18n.global.locale.value);
+
+  if (currentLanguage === targetLanguage) {
+    return {
+      success: true,
+      language: targetLanguage,
+      skipped: true
+    };
+  }
+
+  const result = await setLanguage(targetLanguage);
+  return {
+    ...result,
+    language: targetLanguage
+  };
+};
 
 
 export const reloadMessages = async () => {

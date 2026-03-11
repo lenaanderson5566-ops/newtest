@@ -1,7 +1,9 @@
 ﻿
 import request from './request';
-import store from '@/store';
+import { pinia, useAppStore } from '@/store';
 import { SITE_CONFIG } from '@/utils/baseConfig';
+import { updateUserLanguage } from './user';
+import { getDefaultRegisterLanguage } from '@/utils/userLanguage';
 
 
 const setCookie = (name, value, days) => {
@@ -126,7 +128,7 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
     window.authCookieFailure = false;
     window.authDataInStorage = null;
     
-    store.dispatch('login', responseData.token);
+    useAppStore(pinia).login(responseData.token);
     
     localStorage.setItem('token', responseData.token);
     if (responseData.is_admin === 1) {
@@ -155,7 +157,12 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
       }
       
       Promise.resolve().then(function() { return import('@/i18n'); })
-        .then(({ reloadMessages }) => {
+        .then(async ({ reloadMessages, initializeLanguageFromUserSettings }) => {
+          try {
+            await initializeLanguageFromUserSettings();
+          } catch (e) {
+          }
+
           reloadMessages().catch(() => {
           });
         }).catch(() => {
@@ -203,15 +210,21 @@ export const login = async (loginData) => {
 
 
 export function register(data) {
+  const registerLanguage = data?.language || getDefaultRegisterLanguage();
+  const registerPayload = {
+    ...data,
+    language: registerLanguage
+  };
+
   return request({
     url: '/passport/auth/register',
     method: 'post',
-    data
+    data: registerPayload
   }).then(response => {
     let responseData = response.data || response;
     
     if (responseData.token) {
-      store.dispatch('login', responseData.token);
+      useAppStore(pinia).login(responseData.token);
       
       window.isUserLoggedIn = true;
     }
@@ -226,6 +239,14 @@ export function register(data) {
     
     if (typeof responseData.is_admin !== 'undefined') {
       localStorage.setItem('is_admin', responseData.is_admin);
+    }
+
+    localStorage.setItem('language', registerLanguage);
+
+    try {
+      updateUserLanguage(registerLanguage).catch(() => {
+      });
+    } catch (error) {
     }
     
     console.log('注册成功，准备重新加载语言文件');
@@ -375,8 +396,8 @@ export const checkLoginStatus = () => {
   }
   
   try {
-    const vuexAuth = store.getters.isLoggedIn;
-    if (!vuexAuth) {
+    const storeAuth = useAppStore(pinia).isLoggedIn;
+    if (!storeAuth) {
     }
   } catch (e) {
   }
@@ -458,11 +479,9 @@ const _clearAllAuthData = () => {
   });
   
   try {
-    if (store && typeof store.commit === 'function') {
-      store.commit('CLEAR_USER');
-    }
+    useAppStore(pinia).clearUser();
   } catch (e) {
-    console.error('Vuex状态清除失败', e);
+    console.error('Pinia状态清除失败', e);
   }
 };
 
@@ -513,11 +532,9 @@ export const forceLogout = () => {
   });
   
   try {
-    if (store && typeof store.commit === 'function') {
-      store.commit('CLEAR_USER');
-    }
+    useAppStore(pinia).clearUser();
   } catch (e) {
-    console.error('Vuex状态清除失败', e);
+    console.error('Pinia状态清除失败', e);
   }
 };
 

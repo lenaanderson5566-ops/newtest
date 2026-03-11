@@ -81,7 +81,7 @@
 
 <script>
 import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue';
-import { useStore } from 'vuex';
+import { useAppStore } from '@/store';
 import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -129,7 +129,7 @@ export default {
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const store = useStore();
+    const store = useAppStore();
     const { t } = useI18n();
     const { applyTheme } = useTheme();
     const siteConfig = ref(SITE_CONFIG);
@@ -178,8 +178,8 @@ export default {
       handleRedirectParam();
     });
 
-    const username = computed(() => store.getters.username);
-    const avatarUrl = computed(() => store.getters.avatarUrl || '');
+    const username = computed(() => store.username);
+    const avatarUrl = computed(() => store.avatarUrl || '');
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
 
@@ -258,7 +258,7 @@ export default {
     onMounted(() => {
       window.addEventListener('languageChanged', onLanguageChanged);
       
-      applyTheme(store.getters.currentTheme);
+      applyTheme(store.currentTheme);
       
       checkAuthAndReloadMessages();
       loadUnreadNoticeCount();

@@ -868,7 +868,7 @@ onMounted(() => {
 
     .secondary {
       color: var(--neutral-strong);
-      border-color: var(--border-color-soft);
+      border-color: var(--border-color);
       background: var(--surface-subtle);
     }
   }
