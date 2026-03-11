@@ -2548,7 +2548,7 @@ onMounted(() => {
     bottom: 0;
 
     background-color: var(--surface-subtle);
-    border: 1px solid var(--border-color-soft);
+    border: 1px solid var(--border-color);
 
     transition: .4s;
 

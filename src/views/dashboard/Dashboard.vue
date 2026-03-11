@@ -2932,7 +2932,7 @@ export default {
 
         &.total-main-card {
           background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-          border-color: var(--border-color-soft);
+          border-color: var(--border-color);
           box-shadow: var(--shadow-card-md);
 
           .usage-card-title {
@@ -3129,7 +3129,7 @@ export default {
 
               &.subtle {
                 color: var(--neutral-strong);
-                border-color: var(--border-color-soft);
+                border-color: var(--border-color);
                 background: var(--surface-subtle);
                 box-shadow: none;
               }
@@ -3171,7 +3171,7 @@ export default {
               cursor: pointer;
               inset: 0;
               background-color: var(--surface-subtle);
-              border: 1px solid var(--border-color-soft);
+              border: 1px solid var(--border-color);
               transition: 0.3s;
 
               &::before {
