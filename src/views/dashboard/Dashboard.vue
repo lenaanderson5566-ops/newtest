@@ -301,7 +301,7 @@
 
             <div class="member-tier-name-row">
               <span class="member-tier-badge" :class="tierBadgeClass">{{ tierBadgeText }}</span>
-              <div class="member-tier-name">{{ tierNameDisplay }}</div>
+              <div class="member-tier-name">{{ tierMemberDisplay }}</div>
             </div>
 
             <div class="member-tier-progress-meta">
@@ -1275,6 +1275,7 @@ export default {
 
     const tierNameDisplay = computed(() => normalizeTierName(userTier.key));
     const nextTierNameDisplay = computed(() => normalizeTierName(userTier.nextTierKey));
+    const tierMemberDisplay = computed(() => `${tierNameDisplay.value} Member`);
 
     const tierBadgeKey = computed(() => `${userTier.key || ''}`.toLowerCase());
     const tierBadgeClass = computed(() => {
@@ -1286,12 +1287,12 @@ export default {
       return 'is-default';
     });
     const tierBadgeText = computed(() => {
-      if (tierBadgeKey.value.includes('bronze')) return 'B';
-      if (tierBadgeKey.value.includes('silver')) return 'S';
-      if (tierBadgeKey.value.includes('gold')) return 'G';
-      if (tierBadgeKey.value.includes('platinum')) return 'P';
-      if (tierBadgeKey.value.includes('diamond')) return 'D';
-      return userTier.level ? `L${userTier.level}` : '★';
+      if (tierBadgeKey.value.includes('bronze')) return '★';
+      if (tierBadgeKey.value.includes('silver')) return '★';
+      if (tierBadgeKey.value.includes('gold')) return '★';
+      if (tierBadgeKey.value.includes('platinum')) return '★';
+      if (tierBadgeKey.value.includes('diamond')) return '★';
+      return '★';
     });
 
     const tierProgress = computed(() => {
@@ -2621,6 +2622,7 @@ export default {
       userTier,
       hasTierInfo,
       tierNameDisplay,
+      tierMemberDisplay,
       nextTierNameDisplay,
       tierBadgeClass,
       tierBadgeText,
@@ -3629,40 +3631,63 @@ export default {
     }
 
     .member-tier-badge {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      position: relative;
+      width: 54px;
+      height: 60px;
+      clip-path: polygon(50% 2%, 90% 20%, 90% 80%, 50% 98%, 10% 80%, 10% 20%);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 800;
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 10px rgba(8, 15, 36, 0.28);
+      color: rgba(255, 255, 255, 0.96);
+      border: 2px solid rgba(255, 236, 169, 0.9);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38), 0 6px 14px rgba(8, 15, 36, 0.32);
+      text-shadow: 0 1px 0 rgba(71, 38, 5, 0.3);
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 6px;
+        clip-path: inherit;
+        background: linear-gradient(165deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.04));
+        pointer-events: none;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 10px;
+        right: 10px;
+        height: 14px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+        pointer-events: none;
+      }
 
       &.is-bronze {
-        background: linear-gradient(135deg, #b67a2a, #8f5b1a);
+        background: linear-gradient(150deg, #d5943e, #a4621f 56%, #8a4c16);
       }
 
       &.is-silver {
-        background: linear-gradient(135deg, #a0adbf, #76849a);
+        background: linear-gradient(150deg, #dbe3ee, #9aa9be 55%, #78869f);
       }
 
       &.is-gold {
-        background: linear-gradient(135deg, #f5c14d, #d78b07);
+        background: linear-gradient(150deg, #ffd976, #eca321 56%, #cb7f00);
       }
 
       &.is-platinum {
-        background: linear-gradient(135deg, #57b3e8, #2f6fbf);
+        background: linear-gradient(150deg, #84d6ff, #4b94da 55%, #2d63b2);
       }
 
       &.is-diamond {
-        background: linear-gradient(135deg, #8c7bff, #5f4ce7);
+        background: linear-gradient(150deg, #c1b8ff, #8977ff 56%, #6049e3);
       }
 
       &.is-default {
-        background: linear-gradient(135deg, #6b7dbf, #4e63af);
+        background: linear-gradient(150deg, #96abef, #657fca 56%, #4d64af);
       }
     }
 
@@ -4526,10 +4551,9 @@ export default {
       grid-column: 1 / -1;
 
       .member-tier-badge {
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        font-size: 14px;
+        width: 44px;
+        height: 50px;
+        font-size: 15px;
       }
 
       .member-tier-name {
