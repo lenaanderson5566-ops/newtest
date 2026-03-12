@@ -289,6 +289,41 @@
 
         <template v-else>
           <div
+            v-if="hasTierInfo"
+            class="stats-card member-tier-card"
+            :class="{ 'card-animate': !loading.userStats }"
+            style="animation-delay: 0.45s"
+          >
+            <div class="member-tier-header">
+              <span class="member-tier-caption">{{ $t('dashboard.memberTier') }}</span>
+              <span class="member-tier-level">Lv.{{ userTier.level || '-' }}</span>
+            </div>
+
+            <div class="member-tier-name-row">
+              <span class="member-tier-badge" :class="tierBadgeClass">{{ tierBadgeText }}</span>
+              <div class="member-tier-name">{{ tierMemberDisplay }}</div>
+            </div>
+
+            <div class="member-tier-progress-meta">
+              <span>{{ $t('dashboard.tierPointsProgress', { points: formatTierNumber(userTier.points), total: formatTierNumber(userTier.nextPointsRequired) }) }}</span>
+            </div>
+
+            <div class="member-tier-progress-track">
+              <div class="member-tier-progress-fill" :style="{ width: `${tierProgress}%` }"></div>
+            </div>
+
+            <div class="member-tier-next" v-if="userTier.nextTierKey">
+              {{ $t('dashboard.nextTierHint', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}
+            </div>
+
+            <ul class="member-tier-facts">
+              <li>{{ $t('dashboard.tierCurrentPoints', { points: formatTierNumber(userTier.points) }) }}</li>
+              <li>{{ $t('dashboard.tierNextLevel', { tier: nextTierNameDisplay }) }}</li>
+              <li>{{ $t('dashboard.tierNeedPoints', { points: formatTierNumber(userTier.pointsToNextTier) }) }}</li>
+            </ul>
+          </div>
+
+          <div
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
@@ -319,6 +354,22 @@
                     <span>{{ planExpireMetaText }}</span>
                     <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
                   </div>
+                </div>
+              </div>
+
+              <div class="plan-summary-section plan-summary-section-traffic">
+                <div class="plan-summary-row monthly-traffic-row">
+                  <span class="plan-summary-label">{{ $t('dashboard.subscriptionMonthlyTraffic') }}</span>
+                  <strong class="plan-summary-value">{{ formatPackageRemaining(isPlanExpired ? 0 : subscriptionTrafficSummary.remaining) }}</strong>
+                </div>
+                <div class="section-progress-track in-plan-card">
+                  <div class="section-progress-fill" :style="{ width: `${isPlanExpired ? 0 : subscriptionTrafficSummary.remainingPercentage}%` }"></div>
+                </div>
+                <div class="usage-summary-line in-plan-card">
+                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(isPlanExpired ? 0 : subscriptionTrafficSummary.used) }} / {{ formatPackageRemaining(subscriptionTrafficSummary.total) }}
+                </div>
+                <div class="usage-reset-hint in-plan-card">
+                  {{ $t('dashboard.resetTimeLabel') }} {{ userPlan.resetDateTime || '-' }}
                 </div>
               </div>
 
@@ -851,6 +902,14 @@ export default {
       isRemainingDaysPermanent: false
     });
     const userBalance = ref('0.00');
+    const userTier = reactive({
+      key: '',
+      level: 0,
+      points: 0,
+      nextTierKey: '',
+      nextPointsRequired: 0,
+      pointsToNextTier: 0
+    });
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
     const currentNoticeIndex = ref(0);
@@ -1035,6 +1094,15 @@ export default {
             userBalance.value = info.balance;
             updateAccountBalanceDisplay();
           }
+
+          const tierInfo = info.tier || {};
+          userTier.key = tierInfo.key || '';
+          userTier.level = Number(tierInfo.level || 0);
+          userTier.points = Number(tierInfo.points || 0);
+          userTier.nextTierKey = tierInfo.next_tier_key || '';
+          userTier.nextPointsRequired = Number(tierInfo.next_points_required || 0);
+          userTier.pointsToNextTier = Number(tierInfo.points_to_next_tier || 0);
+
           remindExpireSetting.value = !!info.remind_expire;
           remindTrafficSetting.value = !!info.remind_traffic;
           autoRenewalEnabled.value = !!info.auto_renewal;
@@ -1193,6 +1261,64 @@ export default {
       if (subscriptionStatus.value === 'expiring') return t('dashboard.planAction.manageSubscription');
       return t('dashboard.planAction.renew');
     });
+
+    const hasTierInfo = computed(() => Boolean(userTier.key || userTier.level || userTier.nextTierKey));
+
+    const normalizeTierName = (name) => {
+      if (!name) return '-';
+      return `${name}`
+        .split(/[_-]/g)
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(' ');
+    };
+
+    const tierNameDisplay = computed(() => normalizeTierName(userTier.key));
+    const nextTierNameDisplay = computed(() => normalizeTierName(userTier.nextTierKey));
+    const tierMemberDisplay = computed(() => `${tierNameDisplay.value} Member`);
+
+    const tierBadgeKey = computed(() => `${userTier.key || ''}`.toLowerCase());
+    const tierBadgeClass = computed(() => {
+      if (tierBadgeKey.value.includes('bronze')) return 'is-bronze';
+      if (tierBadgeKey.value.includes('silver')) return 'is-silver';
+      if (tierBadgeKey.value.includes('gold')) return 'is-gold';
+      if (tierBadgeKey.value.includes('platinum')) return 'is-platinum';
+      if (tierBadgeKey.value.includes('diamond')) return 'is-diamond';
+      return 'is-default';
+    });
+    const tierBadgeText = computed(() => {
+      if (tierBadgeKey.value.includes('bronze')) return '★';
+      if (tierBadgeKey.value.includes('silver')) return '★';
+      if (tierBadgeKey.value.includes('gold')) return '★';
+      if (tierBadgeKey.value.includes('platinum')) return '★';
+      if (tierBadgeKey.value.includes('diamond')) return '★';
+      return '★';
+    });
+
+    const tierProgress = computed(() => {
+      const total = Number(userTier.nextPointsRequired);
+      if (!total) return 100;
+      return Math.min(Math.max(Math.round((Number(userTier.points) / total) * 100), 0), 100);
+    });
+
+    const subscriptionTrafficSummary = computed(() => {
+      const used = Number(trafficMetrics.subscriptionQuotaUsedBytes || 0);
+      const total = Number(trafficMetrics.subscriptionQuotaTotalBytes || 0);
+      const remaining = Number(trafficMetrics.subscriptionQuotaRemainingBytes || 0);
+      const usedPercentage = total > 0 ? Math.round((used / total) * 100) : 0;
+
+      return {
+        used,
+        total,
+        remaining,
+        remainingPercentage: Math.min(Math.max(100 - usedPercentage, 0), 100)
+      };
+    });
+
+    const formatTierNumber = (value) => {
+      const numericValue = Number(value || 0);
+      return Number.isFinite(numericValue) ? numericValue.toLocaleString() : '0';
+    };
 
     const primaryActionClass = computed(() => {
       if (subscriptionStatus.value === 'active') return 'theme';
@@ -2391,13 +2517,6 @@ export default {
           remaining: trafficMetrics.totalRemainingBytes
         },
         {
-          key: 'subscription',
-          title: t('dashboard.subscriptionMonthlyTraffic'),
-          used: trafficMetrics.subscriptionQuotaUsedBytes,
-          total: trafficMetrics.subscriptionQuotaTotalBytes,
-          remaining: trafficMetrics.subscriptionQuotaRemainingBytes
-        },
-        {
           key: 'package',
           title: t('dashboard.trafficPackageQuota'),
           used: packageUsedBytes,
@@ -2500,6 +2619,16 @@ export default {
       primaryPlanActionLabel,
       planExpireMetaText,
       secondaryPlanActionLabel,
+      userTier,
+      hasTierInfo,
+      tierNameDisplay,
+      tierMemberDisplay,
+      nextTierNameDisplay,
+      tierBadgeClass,
+      tierBadgeText,
+      tierProgress,
+      formatTierNumber,
+      subscriptionTrafficSummary,
       primaryActionClass,
       secondaryActionClass,
       handlePrimaryPlanAction,
@@ -2976,6 +3105,25 @@ export default {
             overflow: visible;
           }
 
+          .plan-summary-section-traffic {
+            display: grid;
+            gap: 8px;
+
+            .monthly-traffic-row {
+              align-items: center;
+              padding: 0;
+            }
+
+            .section-progress-track.in-plan-card {
+              height: 10px;
+            }
+
+            .usage-summary-line.in-plan-card,
+            .usage-reset-hint.in-plan-card {
+              margin: 0;
+            }
+          }
+
           .plan-summary-section-meta {
             padding: 12px 14px;
           }
@@ -3442,6 +3590,170 @@ export default {
           opacity: 1;
         }
       }
+    }
+  }
+
+  .stats-grid .stats-card.member-tier-card {
+    background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.35), transparent 35%),
+      linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%);
+    color: #e8edff;
+    border: 1px solid rgba(161, 181, 255, 0.26);
+    box-shadow: 0 10px 24px rgba(18, 32, 78, 0.28);
+    gap: 10px;
+    align-items: flex-start;
+    flex-direction: column;
+
+    .member-tier-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .member-tier-caption {
+      font-size: 12px;
+      color: rgba(232, 237, 255, 0.86);
+      letter-spacing: 0.08em;
+    }
+
+    .member-tier-level {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .member-tier-name-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .member-tier-badge {
+      position: relative;
+      width: 54px;
+      height: 60px;
+      clip-path: polygon(50% 2%, 90% 20%, 90% 80%, 50% 98%, 10% 80%, 10% 20%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.96);
+      border: 2px solid rgba(255, 236, 169, 0.9);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38), 0 6px 14px rgba(8, 15, 36, 0.32);
+      text-shadow: 0 1px 0 rgba(71, 38, 5, 0.3);
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 6px;
+        clip-path: inherit;
+        background: linear-gradient(165deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.04));
+        pointer-events: none;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 10px;
+        right: 10px;
+        height: 14px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+        pointer-events: none;
+      }
+
+      &.is-bronze {
+        background: linear-gradient(150deg, #d5943e, #a4621f 56%, #8a4c16);
+      }
+
+      &.is-silver {
+        background: linear-gradient(150deg, #dbe3ee, #9aa9be 55%, #78869f);
+      }
+
+      &.is-gold {
+        background: linear-gradient(150deg, #ffd976, #eca321 56%, #cb7f00);
+      }
+
+      &.is-platinum {
+        background: linear-gradient(150deg, #84d6ff, #4b94da 55%, #2d63b2);
+      }
+
+      &.is-diamond {
+        background: linear-gradient(150deg, #c1b8ff, #8977ff 56%, #6049e3);
+      }
+
+      &.is-default {
+        background: linear-gradient(150deg, #96abef, #657fca 56%, #4d64af);
+      }
+    }
+
+    .member-tier-name {
+      font-size: 30px;
+      line-height: 1.1;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .member-tier-progress-meta,
+    .member-tier-next {
+      font-size: 13px;
+      color: rgba(239, 243, 255, 0.9);
+    }
+
+    .member-tier-progress-track {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.24);
+      overflow: hidden;
+    }
+
+    .member-tier-progress-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #fbd15f, #f59e0b);
+      transition: width 0.25s ease;
+    }
+
+    .member-tier-facts {
+      margin: 4px 0 0;
+      width: 100%;
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+
+      li {
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(245, 248, 255, 0.95);
+
+        &::before {
+          content: '✓';
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          font-size: 11px;
+          font-weight: 700;
+          color: #195f4a;
+          background: rgba(140, 255, 204, 0.88);
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .stats-grid .stats-card.member-tier-card {
+      grid-column: 2;
     }
   }
 
@@ -4235,6 +4547,20 @@ export default {
       grid-column: 1 / -1;
     }
 
+    .stats-card.member-tier-card {
+      grid-column: 1 / -1;
+
+      .member-tier-badge {
+        width: 44px;
+        height: 50px;
+        font-size: 15px;
+      }
+
+      .member-tier-name {
+        font-size: 24px;
+      }
+    }
+
     .stats-card.traffic-board-subscription,
     .stats-card.traffic-board-package {
       grid-column: 1 / -1;
@@ -4266,6 +4592,7 @@ export default {
       .usage-package-note {
         margin-top: 2px;
       }
+
     }
   }
 
