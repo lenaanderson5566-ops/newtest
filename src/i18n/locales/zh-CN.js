@@ -697,6 +697,7 @@ export default {
         coupon_discount_amount: '优惠券折扣',
         user_discount_amount: '会员专享折扣',
         discount_sum_desc: '优惠券折扣 + 会员专享折扣',
+        total_discount_amount: '总优惠金额',
         balance_amount: '使用余额',
         refund_amount: '退款金额',
         use_credit: '使用余额',

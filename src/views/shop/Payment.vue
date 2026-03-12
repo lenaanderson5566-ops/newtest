@@ -142,10 +142,7 @@
                 v-if="discountBreakdownVisible"
               >
                 <div class="info-label">
-                  {{ $t("payment.discount_amount") }}
-                  <span class="discount-desc">
-                    （{{ $t("payment.discount_sum_desc") }}）
-                  </span>
+                  {{ $t("payment.total_discount_amount") }}
                 </div>
                 <div class="info-value discount">
                   -{{ formatAmount(discountAmount) }}

@@ -694,6 +694,7 @@ export default {
     coupon_discount_amount: 'Coupon Discount',
     user_discount_amount: 'Member Discount',
     discount_sum_desc: 'Coupon Discount + Member Discount',
+    total_discount_amount: 'Total Discount Amount',
     balance_amount: 'Использовать баланс',
     refund_amount: 'Сумма возврата',
     use_credit: 'Использовать баланс',

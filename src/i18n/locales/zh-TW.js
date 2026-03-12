@@ -693,6 +693,7 @@ export default {
     coupon_discount_amount: 'Coupon Discount',
     user_discount_amount: 'Member Discount',
     discount_sum_desc: 'Coupon Discount + Member Discount',
+    total_discount_amount: '總優惠金額',
     balance_amount: '使用餘額',
     refund_amount: '退款金額',
     use_credit: '使用餘額',

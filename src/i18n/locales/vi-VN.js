@@ -687,6 +687,7 @@ export default {
         coupon_discount_amount: 'Coupon Discount',
         user_discount_amount: 'Member Discount',
         discount_sum_desc: 'Coupon Discount + Member Discount',
+        total_discount_amount: 'Total Discount Amount',
         balance_amount: 'Sử dụng số dư',
         refund_amount: 'Số tiền hoàn lại',
         use_credit: 'Sử dụng số dư',
