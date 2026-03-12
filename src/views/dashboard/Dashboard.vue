@@ -1275,7 +1275,7 @@ export default {
 
     const tierNameDisplay = computed(() => normalizeTierName(userTier.key));
     const nextTierNameDisplay = computed(() => normalizeTierName(userTier.nextTierKey));
-    const tierMemberDisplay = computed(() => `${tierNameDisplay.value} Member`);
+    const tierMemberDisplay = computed(() => tierNameDisplay.value);
 
     const tierBadgeKey = computed(() => `${userTier.key || ''}`.toLowerCase());
     const tierBadgeClass = computed(() => {

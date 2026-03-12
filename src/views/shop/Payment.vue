@@ -857,9 +857,14 @@ export default {
       return date.toLocaleString();
     };
 
+    const displayCurrency = computed(() => {
+      const currency = orderDetail.value?.pricing_currency;
+      return currency ? `${currency}`.toUpperCase() : '¥';
+    });
+
     const formatAmount = (amount) => {
       if (amount === null || amount === undefined) return "-";
-      return `¥${(amount / 100).toFixed(2)}`;
+      return `${displayCurrency.value} ${(amount / 100).toFixed(2)}`;
     };
 
     const formatPeriod = (period) => {
@@ -895,8 +900,8 @@ export default {
       }
 
       if (method.handling_fee_fixed) {
-        const fixedFee = (method.handling_fee_fixed / 100).toFixed(2);
-        feeText += feeText ? ` + ¥${fixedFee}` : `¥${fixedFee}`;
+        const fixedFeeText = formatAmount(method.handling_fee_fixed);
+        feeText += feeText ? ` + ${fixedFeeText}` : fixedFeeText;
       }
 
       return feeText ? `${t("payment.fee")}: ${feeText}` : "";
