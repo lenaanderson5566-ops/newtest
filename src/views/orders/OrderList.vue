@@ -95,7 +95,7 @@
                 </div>
                 <div class="info-row">
                   <span class="label">{{ headerTexts.totalAmount }}:</span>
-                  <span class="value amount">{{ formatAmount(order.total_amount) }}</span>
+                  <span class="value amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</span>
                 </div>
               </div>
               
@@ -146,7 +146,7 @@
                   <td>{{ formatDate(order.created_at) }}</td>
                   <td>{{ formatCycle(order.period) }}</td>
                   <td>{{ formatPricingCurrency(order.pricing_currency) }}</td>
-                  <td class="amount">{{ formatAmount(order.total_amount) }}</td>
+                  <td class="amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</td>
                   <td>
                     <span class="status-badge" :class="getStatusClass(order.status)">
                       {{ getStatusText(order.status) }}
@@ -236,7 +236,6 @@ import {
   IconArrowRight
 } from '@tabler/icons-vue';
 import { fetchOrderList, cancelOrder } from '@/api/orderlist';
-import { getCommConfig } from '@/api/shop';
 
 const { t, locale } = useI18n();
 const router = useRouter();
@@ -250,7 +249,6 @@ const currentTradeNo = ref('');
 const canceling = ref(false);
 const isMobileView = ref(false);
 const slideDirection = ref('left'); 
-const currencySymbol = ref('¥'); 
 
 const checkMobileView = () => {
   isMobileView.value = window.innerWidth < 768;
@@ -369,9 +367,10 @@ const formatCycle = (cycle) => {
   return cycleMap[cycle] || cycle;
 };
 
-const formatAmount = (amount) => {
+const formatAmount = (amount, orderCurrency) => {
   if (amount === null || amount === undefined) return '--';
-  return currencySymbol.value + (amount / 100).toFixed(2);
+  const currency = orderCurrency ? `${orderCurrency}`.toUpperCase() : '--';
+  return `${currency} ${(amount / 100).toFixed(2)}`;
 };
 
 const formatPricingCurrency = (currency) => {
@@ -487,19 +486,8 @@ const headerTexts = computed(() => {
   };
 });
 
-const fetchCurrencySymbol = async () => {
-  try {
-    const response = await getCommConfig();
-    if (response && response.data && response.data.currency_symbol) {
-      currencySymbol.value = response.data.currency_symbol;
-    }
-  } catch (error) {
-    console.error('获取货币符号失败:', error);
-  }
-};
 
 onMounted(() => {
-  fetchCurrencySymbol();
   fetchOrders();
   checkMobileView();
 });
