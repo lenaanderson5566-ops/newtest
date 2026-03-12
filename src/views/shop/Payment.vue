@@ -117,13 +117,38 @@
 
               <div
                 class="info-row discount-row"
-                v-if="orderDetail.discount_amount > 0"
+                v-if="discountBreakdownVisible"
+              >
+                <div class="info-label">
+                  {{ $t("payment.coupon_discount_amount") }}
+                </div>
+                <div class="info-value discount">
+                  -{{ formatAmount(couponDiscountAmount) }}
+                </div>
+              </div>
+              <div
+                class="info-row discount-row"
+                v-if="discountBreakdownVisible"
+              >
+                <div class="info-label">
+                  {{ $t("payment.user_discount_amount") }}
+                </div>
+                <div class="info-value discount">
+                  -{{ formatAmount(userDiscountAmount) }}
+                </div>
+              </div>
+              <div
+                class="info-row discount-row"
+                v-if="discountBreakdownVisible"
               >
                 <div class="info-label">
                   {{ $t("payment.discount_amount") }}
+                  <span class="discount-desc">
+                    （{{ $t("payment.discount_sum_desc") }}）
+                  </span>
                 </div>
                 <div class="info-value discount">
-                  -{{ formatAmount(orderDetail.discount_amount) }}
+                  -{{ formatAmount(discountAmount) }}
                 </div>
               </div>
               <div
@@ -682,6 +707,17 @@ export default {
     const showPaymentModal = ref(false);
     const paymentQRCode = ref(null);
     const paymentLink = ref(null);
+
+    const couponDiscountAmount = computed(() => Number(orderDetail.value?.coupon_discount_amount || 0));
+    const userDiscountAmount = computed(() => Number(orderDetail.value?.user_discount_amount || 0));
+    const discountAmount = computed(() => Number(orderDetail.value?.discount_amount || 0));
+    const discountBreakdownVisible = computed(() => {
+      return (
+        couponDiscountAmount.value > 0 ||
+        userDiscountAmount.value > 0 ||
+        discountAmount.value > 0
+      );
+    });
 
     const handleFeeAmount = computed(() => {
       if (!selectedMethod.value || !orderDetail.value.total_amount) {
@@ -1415,6 +1451,10 @@ export default {
       handleFeeAmount,
       totalWithFee,
       periodDiscount,
+      couponDiscountAmount,
+      userDiscountAmount,
+      discountAmount,
+      discountBreakdownVisible,
       window: window,
       checkPaymentStatus,
       detectBrowser,
