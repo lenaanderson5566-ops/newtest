@@ -299,7 +299,10 @@
               <span class="member-tier-level">Lv.{{ userTier.level || '-' }}</span>
             </div>
 
-            <div class="member-tier-name">{{ tierNameDisplay }}</div>
+            <div class="member-tier-name-row">
+              <span class="member-tier-badge" :class="tierBadgeClass">{{ tierBadgeText }}</span>
+              <div class="member-tier-name">{{ tierNameDisplay }}</div>
+            </div>
 
             <div class="member-tier-progress-meta">
               <span>{{ $t('dashboard.tierPointsProgress', { points: formatTierNumber(userTier.points), total: formatTierNumber(userTier.nextPointsRequired) }) }}</span>
@@ -1272,6 +1275,24 @@ export default {
 
     const tierNameDisplay = computed(() => normalizeTierName(userTier.key));
     const nextTierNameDisplay = computed(() => normalizeTierName(userTier.nextTierKey));
+
+    const tierBadgeKey = computed(() => `${userTier.key || ''}`.toLowerCase());
+    const tierBadgeClass = computed(() => {
+      if (tierBadgeKey.value.includes('bronze')) return 'is-bronze';
+      if (tierBadgeKey.value.includes('silver')) return 'is-silver';
+      if (tierBadgeKey.value.includes('gold')) return 'is-gold';
+      if (tierBadgeKey.value.includes('platinum')) return 'is-platinum';
+      if (tierBadgeKey.value.includes('diamond')) return 'is-diamond';
+      return 'is-default';
+    });
+    const tierBadgeText = computed(() => {
+      if (tierBadgeKey.value.includes('bronze')) return 'B';
+      if (tierBadgeKey.value.includes('silver')) return 'S';
+      if (tierBadgeKey.value.includes('gold')) return 'G';
+      if (tierBadgeKey.value.includes('platinum')) return 'P';
+      if (tierBadgeKey.value.includes('diamond')) return 'D';
+      return userTier.level ? `L${userTier.level}` : '★';
+    });
 
     const tierProgress = computed(() => {
       const total = Number(userTier.nextPointsRequired);
@@ -2601,6 +2622,8 @@ export default {
       hasTierInfo,
       tierNameDisplay,
       nextTierNameDisplay,
+      tierBadgeClass,
+      tierBadgeText,
       tierProgress,
       formatTierNumber,
       subscriptionTrafficSummary,
@@ -3599,6 +3622,50 @@ export default {
       background: rgba(255, 255, 255, 0.18);
     }
 
+    .member-tier-name-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .member-tier-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 10px rgba(8, 15, 36, 0.28);
+
+      &.is-bronze {
+        background: linear-gradient(135deg, #b67a2a, #8f5b1a);
+      }
+
+      &.is-silver {
+        background: linear-gradient(135deg, #a0adbf, #76849a);
+      }
+
+      &.is-gold {
+        background: linear-gradient(135deg, #f5c14d, #d78b07);
+      }
+
+      &.is-platinum {
+        background: linear-gradient(135deg, #57b3e8, #2f6fbf);
+      }
+
+      &.is-diamond {
+        background: linear-gradient(135deg, #8c7bff, #5f4ce7);
+      }
+
+      &.is-default {
+        background: linear-gradient(135deg, #6b7dbf, #4e63af);
+      }
+    }
+
     .member-tier-name {
       font-size: 30px;
       line-height: 1.1;
@@ -4457,6 +4524,13 @@ export default {
 
     .stats-card.member-tier-card {
       grid-column: 1 / -1;
+
+      .member-tier-badge {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        font-size: 14px;
+      }
 
       .member-tier-name {
         font-size: 24px;
