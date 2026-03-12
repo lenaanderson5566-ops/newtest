@@ -419,10 +419,6 @@
               <template v-if="card.key === 'package'">
                 <span class="usage-percent compact">{{ formatPackageRemaining(card.remaining) }}</span>
                 <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
-                <div v-if="hasWalletInfo" class="wallet-badge" :title="$t('dashboard.walletBalance')">
-                  <span class="wallet-badge-label">{{ $t('dashboard.walletBalance') }}</span>
-                  <strong class="wallet-badge-value">{{ walletBalanceDisplay }}</strong>
-                </div>
                 <button class="package-add-btn" @click.stop="openTrafficPackageModal" :title="$t('dashboard.purchaseTrafficPackage')">
                   <IconPlus :size="14" />
                 </button>
@@ -911,10 +907,6 @@ export default {
       nextPointsRequired: 0,
       pointsToNextTier: 0
     });
-    const primaryWallet = reactive({
-      currency: '',
-      balance: 0
-    });
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
     const currentNoticeIndex = ref(0);
@@ -1108,10 +1100,6 @@ export default {
           userTier.nextPointsRequired = Number(tierInfo.next_points_required || 0);
           userTier.pointsToNextTier = Number(tierInfo.points_to_next_tier || 0);
 
-          const walletInfo = Array.isArray(info.wallets) && info.wallets.length > 0 ? info.wallets[0] : null;
-          primaryWallet.currency = walletInfo?.currency || '';
-          primaryWallet.balance = Number(walletInfo?.balance || 0);
-
           remindExpireSetting.value = !!info.remind_expire;
           remindTrafficSetting.value = !!info.remind_traffic;
           autoRenewalEnabled.value = !!info.auto_renewal;
@@ -1289,12 +1277,6 @@ export default {
       const total = Number(userTier.nextPointsRequired);
       if (!total) return 100;
       return Math.min(Math.max(Math.round((Number(userTier.points) / total) * 100), 0), 100);
-    });
-
-    const hasWalletInfo = computed(() => Boolean(primaryWallet.currency));
-    const walletBalanceDisplay = computed(() => {
-      if (!primaryWallet.currency) return '-';
-      return `${primaryWallet.currency} ${Number(primaryWallet.balance || 0).toLocaleString()}`;
     });
 
     const subscriptionTrafficSummary = computed(() => {
@@ -2621,8 +2603,6 @@ export default {
       nextTierNameDisplay,
       tierProgress,
       formatTierNumber,
-      hasWalletInfo,
-      walletBalanceDisplay,
       subscriptionTrafficSummary,
       primaryActionClass,
       secondaryActionClass,
@@ -3017,33 +2997,8 @@ export default {
             width: 100%;
           }
 
-          .wallet-badge {
-            margin-left: auto;
-            display: inline-flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 2px;
-            padding: 6px 10px;
-            border-radius: 10px;
-            background: rgba(var(--theme-color-rgb), 0.08);
-            border: 1px solid rgba(var(--theme-color-rgb), 0.18);
-
-            .wallet-badge-label {
-              font-size: 11px;
-              color: #6b7280;
-              line-height: 1;
-            }
-
-            .wallet-badge-value {
-              font-size: 12px;
-              color: #111827;
-              line-height: 1.2;
-              font-weight: 700;
-            }
-          }
-
           .package-add-btn {
-            margin-left: 8px;
+            margin-left: auto;
             width: 26px;
             height: 26px;
             border-radius: 999px;
@@ -4540,17 +4495,6 @@ export default {
         margin-top: 2px;
       }
 
-      .wallet-badge {
-        padding: 4px 8px;
-
-        .wallet-badge-label {
-          font-size: 10px;
-        }
-
-        .wallet-badge-value {
-          font-size: 11px;
-        }
-      }
     }
   }
 

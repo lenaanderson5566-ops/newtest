@@ -204,7 +204,6 @@ export default {
         tierCurrentPoints: 'Current points: {points}',
         tierNextLevel: 'Next tier: {tier}',
         tierNeedPoints: 'Points needed: {points}',
-        walletBalance: 'Wallet Balance',
         resetHint: 'Reset day: {day}',
         resetTimeLabel: 'Reset time',
         purchaseTrafficPackage: 'Buy one-time traffic package',
