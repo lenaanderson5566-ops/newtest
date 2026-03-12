@@ -90,6 +90,10 @@
                   <span class="value">{{ formatCycle(order.period) }}</span>
                 </div>
                 <div class="info-row">
+                  <span class="label">{{ headerTexts.pricingCurrency }}:</span>
+                  <span class="value">{{ formatPricingCurrency(order.pricing_currency) }}</span>
+                </div>
+                <div class="info-row">
                   <span class="label">{{ headerTexts.totalAmount }}:</span>
                   <span class="value amount">{{ formatAmount(order.total_amount) }}</span>
                 </div>
@@ -129,9 +133,10 @@
                 <th width="22%">{{ headerTexts.tradeNo }}</th>
                 <th width="16%">{{ headerTexts.createdAt }}</th>
                 <th width="10%">{{ headerTexts.cycle }}</th>
-                <th width="14%">{{ headerTexts.totalAmount }}</th>
-                <th width="14%">{{ headerTexts.statusLabel }}</th>
-                <th width="24%">{{ headerTexts.actions }}</th>
+                <th width="10%">{{ headerTexts.pricingCurrency }}</th>
+                <th width="12%">{{ headerTexts.totalAmount }}</th>
+                <th width="12%">{{ headerTexts.statusLabel }}</th>
+                <th width="30%">{{ headerTexts.actions }}</th>
               </tr>
             </thead>
             <tbody>
@@ -140,6 +145,7 @@
                   <td class="trade-no">{{ order.trade_no }}</td>
                   <td>{{ formatDate(order.created_at) }}</td>
                   <td>{{ formatCycle(order.period) }}</td>
+                  <td>{{ formatPricingCurrency(order.pricing_currency) }}</td>
                   <td class="amount">{{ formatAmount(order.total_amount) }}</td>
                   <td>
                     <span class="status-badge" :class="getStatusClass(order.status)">
@@ -368,6 +374,11 @@ const formatAmount = (amount) => {
   return currencySymbol.value + (amount / 100).toFixed(2);
 };
 
+const formatPricingCurrency = (currency) => {
+  if (!currency) return '--';
+  return `${currency}`.toUpperCase();
+};
+
 const statusTextMap = computed(() => {
   return {
     0: t('orders.status.pending', '待支付'),
@@ -462,6 +473,7 @@ const headerTexts = computed(() => {
     tradeNo: t('orders.tradeNo', '订单号'),
     createdAt: t('orders.createdAt', '创建时间'),
     cycle: t('orders.cycle', '周期'),
+    pricingCurrency: t('orders.pricingCurrency', '订单币种'),
     totalAmount: t('orders.totalAmount', '金额'),
     statusLabel: t('orders.statusLabel', '状态') || '状态',
     actions: t('orders.actions', '操作'),

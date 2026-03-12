@@ -381,6 +381,7 @@ export default {
         tradeNo: '订单号',
         createdAt: '创建时间',
         cycle: '周期',
+        pricingCurrency: '订单币种',
         totalAmount: '金额',
         statusLabel: '状态',
         actions: '操作',

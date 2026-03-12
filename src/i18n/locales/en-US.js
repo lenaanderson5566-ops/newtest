@@ -380,6 +380,7 @@ export default {
         tradeNo: 'Order Number',
         createdAt: 'Created At',
         cycle: 'Cycle',
+        pricingCurrency: 'Pricing Currency',
         totalAmount: 'Amount',
         statusLabel: 'Status',
         actions: 'Actions',
