@@ -205,6 +205,7 @@ export default {
         tierCurrentPoints: '当前成长值：{points}',
         tierNextLevel: '下一等级：{tier}',
         tierNeedPoints: '升级还需：{points}',
+        walletBalance: '钱包余额',
         resetHint: '重置日：{day}',
         resetTimeLabel: '重置时间',
         purchaseTrafficPackage: '购买一次性流量包',
