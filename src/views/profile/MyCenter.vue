@@ -1,7 +1,7 @@
 <template>
   <div class="my-center">
     <div class="my-center-inner">
-      <section class="summary-panel section-block">
+      <section class="summary-panel section-block dashboard-like-card">
         <div class="summary-top">
           <div>
             <h2>账户摘要</h2>
@@ -30,7 +30,7 @@
         </div>
       </section>
 
-      <section class="section-block">
+      <section class="section-block dashboard-like-card">
         <h3 class="section-title">财务中心</h3>
         <div class="settings-list">
           <button class="nav-row" @click="go('/billing?tab=wallet')">
@@ -59,7 +59,7 @@
         </div>
       </section>
 
-      <section class="section-block">
+      <section class="section-block dashboard-like-card">
         <h3 class="section-title">个人设置</h3>
         <div class="settings-list">
           <div class="settings-row">
@@ -94,7 +94,7 @@
         </div>
       </section>
 
-      <section class="session-panel section-block">
+      <section class="session-panel section-block dashboard-like-card">
         <div>
           <h3 class="section-title">会话操作</h3>
           <p class="session-tip">退出当前登录会话，稍后可重新登录。</p>
@@ -183,6 +183,7 @@ onMounted(async () => {
 <style scoped lang="scss">
 .my-center {
   padding: 1rem 0 1.25rem;
+  background: linear-gradient(180deg, rgba(var(--theme-color-rgb), 0.03), transparent 42%);
 }
 
 .my-center-inner {
@@ -193,38 +194,52 @@ onMounted(async () => {
 }
 
 .section-block {
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
   border-radius: 16px;
-  background: linear-gradient(180deg, rgba(var(--card-background-rgb), 0.98) 0%, rgba(var(--card-background-rgb), 0.94) 100%);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  background-color: var(--card-bg-color, var(--card-background));
+  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04), 0 10px 24px rgba(15, 23, 42, 0.05);
+  transition: box-shadow 0.22s ease, border-color 0.22s ease;
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
-    border-color: rgba(var(--theme-color-rgb), 0.2);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06), 0 16px 32px rgba(15, 23, 42, 0.08);
+    border-color: rgba(var(--theme-color-rgb), 0.22);
   }
 }
 
-.summary-panel {
-  padding: 1rem;
+.dashboard-like-card {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.92), rgba(var(--theme-color-rgb), 0.35));
+    pointer-events: none;
+  }
 }
+
+.summary-panel { padding: 1rem; }
 
 .summary-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.8rem;
 
   h2 {
     margin: 0;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
   }
 }
 
 .summary-desc {
-  margin: 2px 0 0;
+  margin: 3px 0 0;
   font-size: 13px;
   color: var(--secondary-text-color);
 }
@@ -239,7 +254,7 @@ onMounted(async () => {
   padding: 12px;
   border: 1px solid rgba(var(--text-color-rgb), 0.08);
   border-radius: 12px;
-  background: rgba(var(--card-background-rgb), 0.92);
+  background: linear-gradient(180deg, rgba(var(--card-background-rgb), 0.96), rgba(var(--card-background-rgb), 0.9));
 
   .label {
     display: block;
@@ -255,8 +270,9 @@ onMounted(async () => {
   }
 
   &.is-highlight {
-    border-color: rgba(var(--theme-color-rgb), 0.3);
-    background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.08), rgba(var(--theme-color-rgb), 0.03));
+    border-color: rgba(var(--theme-color-rgb), 0.32);
+    background: linear-gradient(130deg, rgba(var(--theme-color-rgb), 0.14), rgba(var(--theme-color-rgb), 0.05));
+    box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.08);
   }
 }
 
@@ -315,12 +331,12 @@ onMounted(async () => {
   transition: background-color 0.2s ease, color 0.2s ease;
 
   &:hover {
-    background: rgba(var(--theme-color-rgb), 0.06);
+    background: rgba(var(--theme-color-rgb), 0.07);
     color: var(--theme-color);
   }
 
   &:active {
-    background: rgba(var(--theme-color-rgb), 0.1);
+    background: rgba(var(--theme-color-rgb), 0.11);
   }
 }
 
