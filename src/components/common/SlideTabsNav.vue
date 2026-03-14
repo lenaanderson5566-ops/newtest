@@ -13,7 +13,7 @@
         :aria-pressed="isCollapsed"
         :title="isCollapsed ? '展开导航' : '折叠导航'"
       >
-        <IconMenu2 class="collapse-icon" />
+        <IconMenu class="collapse-icon" />
       </button>
 
       <div class="slide-tabs-nav" ref="tabsNav">
@@ -72,7 +72,7 @@ import IconFileText from '@/components/icons/IconFileText.vue';
 
 import IconUser from '@/components/icons/IconUser.vue';
 
-import { IconServer, IconMenu2 } from '@tabler/icons-vue';
+import { IconServer, IconMenu } from '@tabler/icons-vue';
 
 
 
@@ -813,7 +813,7 @@ export default {
       isCollapsed,
       isDesktop,
       toggleCollapse,
-      IconMenu2
+      IconMenu
 
     };
 
@@ -890,6 +890,7 @@ function debounce(fn, delay) {
       width: 16px;
       height: 16px;
       color: var(--secondary-text-color);
+      stroke-width: 2.2;
       transition: color 0.2s ease, transform 0.2s ease;
     }
   }
