@@ -1148,6 +1148,10 @@ function debounce(fn, delay) {
 
     bottom: 20px;  
 
+    left: 50%;
+
+    transform: translateX(-50%);
+
     width: 92%;
 
     max-width: 450px;
