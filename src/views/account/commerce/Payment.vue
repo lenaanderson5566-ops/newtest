@@ -70,115 +70,6 @@
                   {{ formatDate(orderDetail.created_at) }}
                 </div>
               </div>
-
-              <!-- 充值订单显示充值金额 -->
-              <div v-if="orderDetail.period === 'deposit'" class="info-row">
-                <div class="info-label">{{ $t("wallet.deposit.title") }}</div>
-                <div class="info-value amount">
-                  {{ formatAmount(orderDetail.total_amount) }}
-                </div>
-              </div>
-              <!-- 普通订单显示订阅金额 -->
-              <div v-else class="info-row">
-                <div class="info-label">{{ $t("payment.total_price") }}</div>
-                <div class="info-value amount">
-                  {{ formatAmount(getPlanPrice()) }}
-                </div>
-              </div>
-
-              <div
-                class="info-row"
-                v-if="
-                  periodDiscount.showDiscount &&
-                  orderDetail.period !== 'deposit'
-                "
-              >
-                <div class="info-label">
-                  {{ $t("shop.plan.discount.relative") }}
-                </div>
-                <div class="info-value">
-                  {{ periodDiscount.periodName }}
-                  {{ periodDiscount.discountPercentage }}% ，{{
-                    $t("shop.plan.discount.savings")
-                  }}
-                  {{ formatAmount(periodDiscount.savingsAmountInCents) }}
-                </div>
-              </div>
-
-              <div
-                class="info-row discount-row"
-                v-if="discountBreakdownVisible"
-              >
-                <div class="info-label">
-                  {{ $t("payment.coupon_discount_amount") }}
-                </div>
-                <div class="info-value discount">
-                  -{{ formatAmount(couponDiscountAmount) }}
-                </div>
-              </div>
-              <div
-                class="info-row discount-row"
-                v-if="discountBreakdownVisible"
-              >
-                <div class="info-label">
-                  {{ $t("payment.user_discount_amount") }}
-                </div>
-                <div class="info-value discount">
-                  -{{ formatAmount(userDiscountAmount) }}
-                </div>
-              </div>
-              <div
-                class="info-row discount-row"
-                v-if="discountBreakdownVisible"
-              >
-                <div class="info-label">
-                  {{ $t("payment.total_discount_amount") }}
-                </div>
-                <div class="info-value discount">
-                  -{{ formatAmount(discountAmount) }}
-                </div>
-              </div>
-              <div
-                class="info-row"
-                v-if="
-                  orderDetail.balance_amount !== null &&
-                  orderDetail.balance_amount !== undefined &&
-                  orderDetail.balance_amount > 0
-                "
-              >
-                <div class="info-label">{{ $t("payment.use_credit") }}</div>
-                <div class="info-value discount">
-                  -{{ formatAmount(orderDetail.balance_amount) }}
-                </div>
-              </div>
-              <div
-                class="info-row"
-                v-if="
-                  orderDetail.refund_amount !== null &&
-                  orderDetail.refund_amount !== undefined &&
-                  orderDetail.refund_amount > 0
-                "
-              >
-                <div class="info-label">{{ $t("payment.refund_amount") }}</div>
-                <div class="info-value">
-                  {{ formatAmount(orderDetail.refund_amount) }}
-                </div>
-              </div>
-              <div
-                class="info-row"
-                v-if="selectedMethod && handleFeeAmount > 0"
-              >
-                <div class="info-label">{{ $t("payment.handling_fee") }}</div>
-                <div class="info-value fee">
-                  {{ formatAmount(handleFeeAmount) }}
-                </div>
-              </div>
-              <div class="info-row final-row">
-                <div class="info-label">{{ $t("payment.total_with_fee") }}</div>
-                <div class="info-value final">
-                  {{ formatAmount(totalWithFee) }}
-                </div>
-              </div>
             </div>
 
             <!-- 订单信息骨架屏 -->
@@ -187,6 +78,59 @@
                 class="skeleton-text"
                 v-for="i in 5"
                 :key="'order-' + i"
+              ></div>
+            </div>
+          </div>
+
+          <!-- 支付方式 - 仅当订单状态为待支付(0)时显示 -->
+          <div
+            class="section-wrapper"
+            v-if="
+              !loading.order &&
+              orderDetail.status === 0 &&
+              orderDetail.total_amount > 0
+            "
+          >
+            <div class="section-title">
+              <span>{{ $t("payment.payment_method") }}</span>
+            </div>
+
+            <div class="payment-methods" v-if="!loading.methods">
+              <div
+                class="payment-method-item"
+                v-for="method in paymentMethods"
+                :key="method.id"
+                :class="{ active: selectedMethod === method.id }"
+                @click="selectMethod(method.id)"
+              >
+                <div class="method-icon">
+                  <IconCreditCard v-if="!method.icon" />
+                  <img v-else :src="method.icon" :alt="method.name" />
+                </div>
+                <div class="method-details">
+                  <div class="method-name">{{ method.name }}</div>
+                  <div
+                    class="method-fee"
+                    v-if="
+                      method.handling_fee_percent || method.handling_fee_fixed
+                    "
+                  >
+                    {{ formatFee(method) }}
+                  </div>
+                </div>
+                <div class="method-check">
+                  <IconCircleCheck v-if="selectedMethod === method.id" />
+                  <IconCircle v-else />
+                </div>
+              </div>
+            </div>
+
+            <!-- 支付方式骨架屏 -->
+            <div class="skeleton-card" v-else>
+              <div
+                class="skeleton-payment-method"
+                v-for="i in 2"
+                :key="'method-' + i"
               ></div>
             </div>
           </div>
@@ -269,6 +213,89 @@
             </div>
           </div>
 
+          <!-- 订单金额摘要 -->
+          <div class="section-wrapper">
+            <div class="section-title">
+              <span>{{ $t("payment.order_info") }}</span>
+            </div>
+
+            <div class="order-info" v-if="!loading.order">
+              <div v-if="orderDetail.period === 'deposit'" class="info-row">
+                <div class="info-label">{{ $t("wallet.deposit.title") }}</div>
+                <div class="info-value amount">
+                  {{ formatAmount(orderDetail.total_amount) }}
+                </div>
+              </div>
+              <div v-else class="info-row">
+                <div class="info-label">{{ $t("payment.total_price") }}</div>
+                <div class="info-value amount">
+                  {{ formatAmount(getPlanPrice()) }}
+                </div>
+              </div>
+
+              <div
+                class="info-row"
+                v-if="
+                  periodDiscount.showDiscount &&
+                  orderDetail.period !== 'deposit'
+                "
+              >
+                <div class="info-label">{{ $t("shop.plan.discount.relative") }}</div>
+                <div class="info-value">
+                  {{ periodDiscount.periodName }} {{ periodDiscount.discountPercentage }}% ，{{ $t("shop.plan.discount.savings") }}
+                  {{ formatAmount(periodDiscount.savingsAmountInCents) }}
+                </div>
+              </div>
+
+              <div class="info-row discount-row" v-if="discountBreakdownVisible">
+                <div class="info-label">{{ $t("payment.coupon_discount_amount") }}</div>
+                <div class="info-value discount">-{{ formatAmount(couponDiscountAmount) }}</div>
+              </div>
+              <div class="info-row discount-row" v-if="discountBreakdownVisible">
+                <div class="info-label">{{ $t("payment.user_discount_amount") }}</div>
+                <div class="info-value discount">-{{ formatAmount(userDiscountAmount) }}</div>
+              </div>
+              <div class="info-row discount-row" v-if="discountBreakdownVisible">
+                <div class="info-label">{{ $t("payment.total_discount_amount") }}</div>
+                <div class="info-value discount">-{{ formatAmount(discountAmount) }}</div>
+              </div>
+              <div
+                class="info-row"
+                v-if="
+                  orderDetail.balance_amount !== null &&
+                  orderDetail.balance_amount !== undefined &&
+                  orderDetail.balance_amount > 0
+                "
+              >
+                <div class="info-label">{{ $t("payment.use_credit") }}</div>
+                <div class="info-value discount">-{{ formatAmount(orderDetail.balance_amount) }}</div>
+              </div>
+              <div
+                class="info-row"
+                v-if="
+                  orderDetail.refund_amount !== null &&
+                  orderDetail.refund_amount !== undefined &&
+                  orderDetail.refund_amount > 0
+                "
+              >
+                <div class="info-label">{{ $t("payment.refund_amount") }}</div>
+                <div class="info-value">{{ formatAmount(orderDetail.refund_amount) }}</div>
+              </div>
+              <div class="info-row" v-if="selectedMethod && handleFeeAmount > 0">
+                <div class="info-label">{{ $t("payment.handling_fee") }}</div>
+                <div class="info-value fee">{{ formatAmount(handleFeeAmount) }}</div>
+              </div>
+              <div class="info-row final-row">
+                <div class="info-label">{{ $t("payment.total_with_fee") }}</div>
+                <div class="info-value final">{{ formatAmount(totalWithFee) }}</div>
+              </div>
+            </div>
+
+            <div class="skeleton-card" v-else>
+              <div class="skeleton-text" v-for="i in 5" :key="'summary-' + i"></div>
+            </div>
+          </div>
+
           <!-- 免费订单提示 -->
           <div
             class="section-wrapper free-order"
@@ -288,59 +315,6 @@
                 <h3>{{ $t("payment.free_order_title") }}</h3>
                 <p>{{ $t("payment.free_order_desc") }}</p>
               </div>
-            </div>
-          </div>
-
-          <!-- 支付方式 - 仅当订单状态为待支付(0)时显示 -->
-          <div
-            class="section-wrapper"
-            v-if="
-              !loading.order &&
-              orderDetail.status === 0 &&
-              orderDetail.total_amount > 0
-            "
-          >
-            <div class="section-title">
-              <span>{{ $t("payment.payment_method") }}</span>
-            </div>
-
-            <div class="payment-methods" v-if="!loading.methods">
-              <div
-                class="payment-method-item"
-                v-for="method in paymentMethods"
-                :key="method.id"
-                :class="{ active: selectedMethod === method.id }"
-                @click="selectMethod(method.id)"
-              >
-                <div class="method-icon">
-                  <IconCreditCard v-if="!method.icon" />
-                  <img v-else :src="method.icon" :alt="method.name" />
-                </div>
-                <div class="method-details">
-                  <div class="method-name">{{ method.name }}</div>
-                  <div
-                    class="method-fee"
-                    v-if="
-                      method.handling_fee_percent || method.handling_fee_fixed
-                    "
-                  >
-                    {{ formatFee(method) }}
-                  </div>
-                </div>
-                <div class="method-check">
-                  <IconCircleCheck v-if="selectedMethod === method.id" />
-                  <IconCircle v-else />
-                </div>
-              </div>
-            </div>
-
-            <!-- 支付方式骨架屏 -->
-            <div class="skeleton-card" v-else>
-              <div
-                class="skeleton-payment-method"
-                v-for="i in 2"
-                :key="'method-' + i"
-              ></div>
             </div>
           </div>
 
