@@ -31,7 +31,7 @@ import { useI18n } from 'vue-i18n';
 import { IconWorld } from '@tabler/icons-vue';
 import { setLanguage } from '@/i18n';
 import { checkLoginStatus } from '@/api/auth';
-import { getUserInfo, updateUserLanguage } from '@/api/user';
+import { getUserInfo, updateUserLanguage } from '@/api/account/user';
 import { extractUserLanguage, matchSupportedLanguage } from '@/utils/userLanguage';
 import { useToast } from '@/composables/useToast';
 

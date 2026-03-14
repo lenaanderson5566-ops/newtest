@@ -89,7 +89,7 @@ import { useI18n } from 'vue-i18n';
 import { SITE_CONFIG, PROFILE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
-import { getUnreadNoticeCount } from '@/api/notice';
+import { getUnreadNoticeCount } from '@/api/account/notice';
 import { handleRedirectPath } from '@/utils/redirectHandler';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';

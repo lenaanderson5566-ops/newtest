@@ -46,11 +46,11 @@ export default {
     });
     const componentsConfig = {
       base: [
-        { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/dashboard/Dashboard.vue') },
-        { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/shop/Shop.vue') },
-        { path: 'More', name: 'More', priority: 3, component: () => import('@/views/more/MoreOptions.vue') },
-        { path: 'Invite', name: 'Invite', priority: 4, component: () => import('@/views/invite/Invite.vue') },
-        { path: 'Profile', name: 'Profile', priority: 5, component: () => import('@/views/profile/UserProfile.vue') }
+        { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/overview/Dashboard.vue') },
+        { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/account/commerce/Shop.vue') },
+        { path: 'More', name: 'More', priority: 3, component: () => import('@/views/account/more/MoreOptions.vue') },
+        { path: 'Invite', name: 'Invite', priority: 4, component: () => import('@/views/account/invite/Invite.vue') },
+        { path: 'Profile', name: 'Profile', priority: 5, component: () => import('@/views/account/profile/UserProfile.vue') }
       ],
       
       route: {
@@ -123,7 +123,7 @@ export default {
               ? import('@/views/auth/split/ForgotPassword.vue')
               : import('@/views/auth/center/ForgotPassword.vue')
           },
-          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/dashboard/Dashboard.vue') }
+          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/overview/Dashboard.vue') }
         ],
         '/register': [
           {
@@ -142,7 +142,7 @@ export default {
               ? import('@/views/auth/split/ForgotPassword.vue')
               : import('@/views/auth/center/ForgotPassword.vue')
           },
-          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/dashboard/Dashboard.vue') }
+          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/overview/Dashboard.vue') }
         ],
         '/forgot-password': [
           {
@@ -161,93 +161,93 @@ export default {
               ? import('@/views/auth/split/Register.vue')
               : import('@/views/auth/center/Register.vue')
           },
-          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/dashboard/Dashboard.vue') }
+          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/overview/Dashboard.vue') }
         ],
         '/dashboard': [
-          { path: 'Shop', name: 'Shop', priority: 1, component: () => import('@/views/shop/Shop.vue') },
-          { path: 'More', name: 'More', priority: 2, component: () => import('@/views/more/MoreOptions.vue') },
-          { path: 'Invite', name: 'Invite', priority: 3, component: () => import('@/views/invite/Invite.vue') },
-          { path: 'Profile', name: 'Profile', priority: 4, component: () => import('@/views/profile/UserProfile.vue') },
-          { path: 'OrderList', name: 'OrderList', priority: 5, component: () => import('@/views/orders/OrderList.vue') },
-          { path: 'Payment', name: 'Payment', priority: 6, component: () => import('@/views/shop/Payment.vue') }
+          { path: 'Shop', name: 'Shop', priority: 1, component: () => import('@/views/account/commerce/Shop.vue') },
+          { path: 'More', name: 'More', priority: 2, component: () => import('@/views/account/more/MoreOptions.vue') },
+          { path: 'Invite', name: 'Invite', priority: 3, component: () => import('@/views/account/invite/Invite.vue') },
+          { path: 'Profile', name: 'Profile', priority: 4, component: () => import('@/views/account/profile/UserProfile.vue') },
+          { path: 'OrderList', name: 'OrderList', priority: 5, component: () => import('@/views/account/orders/OrderList.vue') },
+          { path: 'Payment', name: 'Payment', priority: 6, component: () => import('@/views/account/commerce/Payment.vue') }
         ],
         '/shop': [
-          { path: 'OrderConfirm', name: 'OrderConfirm', priority: 1, component: () => import('@/views/shop/OrderConfirm.vue') },
-          { path: 'Payment', name: 'Payment', priority: 2, component: () => import('@/views/shop/Payment.vue') },
-          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/dashboard/Dashboard.vue') },
-          { path: 'More', name: 'More', priority: 4, component: () => import('@/views/more/MoreOptions.vue') },
-          { path: 'OrderList', name: 'OrderList', priority: 5, component: () => import('@/views/orders/OrderList.vue') }
+          { path: 'OrderConfirm', name: 'OrderConfirm', priority: 1, component: () => import('@/views/account/commerce/OrderConfirm.vue') },
+          { path: 'Payment', name: 'Payment', priority: 2, component: () => import('@/views/account/commerce/Payment.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/overview/Dashboard.vue') },
+          { path: 'More', name: 'More', priority: 4, component: () => import('@/views/account/more/MoreOptions.vue') },
+          { path: 'OrderList', name: 'OrderList', priority: 5, component: () => import('@/views/account/orders/OrderList.vue') }
         ],
         '/more': [
-          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/profile/UserProfile.vue') },
-          { path: 'NodeList', name: 'NodeList', priority: 2, component: () => import('@/views/servers/NodeList.vue') },
-          { path: 'OrderList', name: 'OrderList', priority: 3, component: () => import('@/views/orders/OrderList.vue') },
-          { path: 'TicketList', name: 'TicketList', priority: 4, component: () => import('@/views/ticket/TicketList.vue') },
-          { path: 'Docs', name: 'Docs', priority: 5, component: () => import('@/views/docs/DocsPage.vue') },
-          { path: 'TrafficLog', name: 'TrafficLog', priority: 6, component: () => import('@/views/trafficLog/TrafficLog.vue') }
+          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/account/profile/UserProfile.vue') },
+          { path: 'NodeList', name: 'NodeList', priority: 2, component: () => import('@/views/region/NodeList.vue') },
+          { path: 'OrderList', name: 'OrderList', priority: 3, component: () => import('@/views/account/orders/OrderList.vue') },
+          { path: 'TicketList', name: 'TicketList', priority: 4, component: () => import('@/views/account/support/TicketList.vue') },
+          { path: 'Docs', name: 'Docs', priority: 5, component: () => import('@/views/start/DocsPage.vue') },
+          { path: 'TrafficLog', name: 'TrafficLog', priority: 6, component: () => import('@/views/account/traffic/TrafficLog.vue') }
         ],
         '/profile': [
-          { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/dashboard/Dashboard.vue') },
-          { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/shop/Shop.vue') },
-          { path: 'More', name: 'More', priority: 3, component: () => import('@/views/more/MoreOptions.vue') },
-          { path: 'TicketList', name: 'TicketList', priority: 4, component: () => import('@/views/ticket/TicketList.vue') },
-          { path: 'Profile', name: 'Profile', priority: 5, component: () => import('@/views/profile/UserProfile.vue') },
-          { path: 'SecuritySettings', name: 'SecuritySettings', priority: 6, component: () => import('@/views/security/SecuritySettings.vue') }
+          { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/overview/Dashboard.vue') },
+          { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/account/commerce/Shop.vue') },
+          { path: 'More', name: 'More', priority: 3, component: () => import('@/views/account/more/MoreOptions.vue') },
+          { path: 'TicketList', name: 'TicketList', priority: 4, component: () => import('@/views/account/support/TicketList.vue') },
+          { path: 'Profile', name: 'Profile', priority: 5, component: () => import('@/views/account/profile/UserProfile.vue') },
+          { path: 'SecuritySettings', name: 'SecuritySettings', priority: 6, component: () => import('@/views/account/security/SecuritySettings.vue') }
         ],
         '/tickets': [
-          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/profile/UserProfile.vue') },
-          { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/dashboard/Dashboard.vue') },
-          { path: 'MobileTickets', name: 'MobileTickets', priority: 3, component: () => import('@/views/ticket/MobileTicketList.vue') }
+          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/account/profile/UserProfile.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/overview/Dashboard.vue') },
+          { path: 'MobileTickets', name: 'MobileTickets', priority: 3, component: () => import('@/views/account/support/MobileTicketList.vue') }
         ],
         '/mobile/tickets': [
-          { path: 'TicketList', name: 'TicketList', priority: 1, component: () => import('@/views/ticket/TicketList.vue') },
-          { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/dashboard/Dashboard.vue') }
+          { path: 'TicketList', name: 'TicketList', priority: 1, component: () => import('@/views/account/support/TicketList.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/overview/Dashboard.vue') }
         ],
         '/billing': [
-          { path: 'OrderList', name: 'OrderList', priority: 1, component: () => import('@/views/orders/OrderList.vue') },
-          { path: 'Deposit', name: 'Deposit', priority: 2, component: () => import('@/views/wallet/WalletDeposit.vue') },
-          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/dashboard/Dashboard.vue') }
+          { path: 'OrderList', name: 'OrderList', priority: 1, component: () => import('@/views/account/orders/OrderList.vue') },
+          { path: 'Deposit', name: 'Deposit', priority: 2, component: () => import('@/views/account/wallet/WalletDeposit.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/overview/Dashboard.vue') }
         ],
         '/orders': [
-          { path: 'Shop', name: 'Shop', priority: 1, component: () => import('@/views/shop/Shop.vue') },
-          { path: 'Payment', name: 'Payment', priority: 2, component: () => import('@/views/shop/Payment.vue') },
-          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/dashboard/Dashboard.vue') }
+          { path: 'Shop', name: 'Shop', priority: 1, component: () => import('@/views/account/commerce/Shop.vue') },
+          { path: 'Payment', name: 'Payment', priority: 2, component: () => import('@/views/account/commerce/Payment.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/overview/Dashboard.vue') }
         ],
         '/nodes': [
-          { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/dashboard/Dashboard.vue') },
-          { path: 'More', name: 'More', priority: 2, component: () => import('@/views/more/MoreOptions.vue') }
+          { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/overview/Dashboard.vue') },
+          { path: 'More', name: 'More', priority: 2, component: () => import('@/views/account/more/MoreOptions.vue') }
         ],
         '/docs': [
-          { path: 'More', name: 'More', priority: 1, component: () => import('@/views/more/MoreOptions.vue') },
-          { path: 'DocDetail', name: 'DocDetail', priority: 2, component: () => import('@/views/docs/DocDetail.vue') },
-          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/dashboard/Dashboard.vue') }
+          { path: 'More', name: 'More', priority: 1, component: () => import('@/views/account/more/MoreOptions.vue') },
+          { path: 'DocDetail', name: 'DocDetail', priority: 2, component: () => import('@/views/start/DocDetail.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/overview/Dashboard.vue') }
         ],
         '/docs/:id': [
-          { path: 'Docs', name: 'Docs', priority: 1, component: () => import('@/views/docs/DocsPage.vue') },
-          { path: 'More', name: 'More', priority: 2, component: () => import('@/views/more/MoreOptions.vue') }
+          { path: 'Docs', name: 'Docs', priority: 1, component: () => import('@/views/start/DocsPage.vue') },
+          { path: 'More', name: 'More', priority: 2, component: () => import('@/views/account/more/MoreOptions.vue') }
         ],
         '/trafficlog': [
-          { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/dashboard/Dashboard.vue') },
-          { path: 'More', name: 'More', priority: 2, component: () => import('@/views/more/MoreOptions.vue') },
-          { path: 'Profile', name: 'Profile', priority: 3, component: () => import('@/views/profile/UserProfile.vue') }
+          { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/overview/Dashboard.vue') },
+          { path: 'More', name: 'More', priority: 2, component: () => import('@/views/account/more/MoreOptions.vue') },
+          { path: 'Profile', name: 'Profile', priority: 3, component: () => import('@/views/account/profile/UserProfile.vue') }
         ],
         '/wallet/deposit': [
-          { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/dashboard/Dashboard.vue') },
-          { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/shop/Shop.vue') },
-          { path: 'Profile', name: 'Profile', priority: 3, component: () => import('@/views/profile/UserProfile.vue') }
+          { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/overview/Dashboard.vue') },
+          { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/account/commerce/Shop.vue') },
+          { path: 'Profile', name: 'Profile', priority: 3, component: () => import('@/views/account/profile/UserProfile.vue') }
         ],
         '/security-settings': [
-          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/profile/UserProfile.vue') },
-          { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/dashboard/Dashboard.vue') }
+          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/account/profile/UserProfile.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/overview/Dashboard.vue') }
         ],
         '/payment': [
-          { path: 'OrderConfirm', name: 'OrderConfirm', priority: 1, component: () => import('@/views/shop/OrderConfirm.vue') },
-          { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/shop/Shop.vue') },
-          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/dashboard/Dashboard.vue') }
+          { path: 'OrderConfirm', name: 'OrderConfirm', priority: 1, component: () => import('@/views/account/commerce/OrderConfirm.vue') },
+          { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/account/commerce/Shop.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/overview/Dashboard.vue') }
         ],
         '/order-confirm': [
-          { path: 'Shop', name: 'Shop', priority: 1, component: () => import('@/views/shop/Shop.vue') },
-          { path: 'Payment', name: 'Payment', priority: 2, component: () => import('@/views/shop/Payment.vue') }
+          { path: 'Shop', name: 'Shop', priority: 1, component: () => import('@/views/account/commerce/Shop.vue') },
+          { path: 'Payment', name: 'Payment', priority: 2, component: () => import('@/views/account/commerce/Payment.vue') }
         ],      }
     };
 

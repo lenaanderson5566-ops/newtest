@@ -61,12 +61,12 @@ const Register = getAuthComponent('Register');
 
 const ForgotPassword = getAuthComponent('ForgotPassword');
 
-const Dashboard = () => import('@/views/dashboard/Dashboard.vue');
-const AnnouncementList = () => import('@/views/announcement/AnnouncementList.vue');
+const Dashboard = () => import('@/views/overview/Dashboard.vue');
+const AnnouncementList = () => import('@/views/account/announcements/AnnouncementList.vue');
 
 const MainBoard = () => import('@/views/layout/MainBoard.vue');
 
-const Profile = () => import('@/views/profile/MyCenter.vue');
+const Profile = () => import('@/views/account/profile/MyCenter.vue');
 
 const BrowserRestricted = () => import('@/views/errors/BrowserRestricted.vue');
 
@@ -268,7 +268,7 @@ const routes = [
 
         name: 'Shop',
 
-        component: () => import('@/views/shop/Shop.vue'),
+        component: () => import('@/views/account/commerce/Shop.vue'),
 
         meta: {
 
@@ -288,7 +288,7 @@ const routes = [
 
         name: 'OrderConfirm',
 
-        component: () => import('@/views/shop/OrderConfirm.vue'),
+        component: () => import('@/views/account/commerce/OrderConfirm.vue'),
 
         meta: {
 
@@ -307,7 +307,7 @@ const routes = [
 
         name: 'Payment',
 
-        component: () => import('@/views/shop/Payment.vue'),
+        component: () => import('@/views/account/commerce/Payment.vue'),
 
         meta: {
 
@@ -326,7 +326,7 @@ const routes = [
 
         name: 'More',
 
-        component: () => import('@/views/more/MoreOptions.vue'),
+        component: () => import('@/views/account/more/MoreOptions.vue'),
 
         meta: {
 
@@ -344,7 +344,7 @@ const routes = [
 
         name: 'Docs',
 
-        component: () => import('@/views/docs/DocsPage.vue'),
+        component: () => import('@/views/start/DocsPage.vue'),
 
         meta: {
 
@@ -363,7 +363,7 @@ const routes = [
 
         name: 'DocDetail',
 
-        component: () => import('@/views/docs/DocDetail.vue'),
+        component: () => import('@/views/start/DocDetail.vue'),
 
         meta: {
 
@@ -382,7 +382,7 @@ const routes = [
 
         name: 'NodeList',
 
-        component: () => import('@/views/servers/NodeList.vue'),
+        component: () => import('@/views/region/NodeList.vue'),
 
         meta: {
 
@@ -401,7 +401,7 @@ const routes = [
 
         name: 'Billing',
 
-        component: () => import('@/views/billing/Billing.vue'),
+        component: () => import('@/views/account/billing/Billing.vue'),
 
         meta: {
 
@@ -428,7 +428,7 @@ const routes = [
 
         name: 'TicketList',
 
-        component: () => import('@/views/ticket/TicketList.vue'),
+        component: () => import('@/views/account/support/TicketList.vue'),
 
         meta: {
 
@@ -447,7 +447,7 @@ const routes = [
 
         name: 'MobileTickets',
 
-        component: () => import('@/views/ticket/MobileTicketList.vue'),
+        component: () => import('@/views/account/support/MobileTicketList.vue'),
 
         meta: {
 
@@ -485,7 +485,7 @@ const routes = [
 
         name: 'SecuritySettings',
 
-        component: () => import('@/views/security/SecuritySettings.vue'),
+        component: () => import('@/views/account/security/SecuritySettings.vue'),
 
         alias: ['security-settings'],
 
@@ -506,7 +506,7 @@ const routes = [
 
         name: 'TrafficLog',
 
-        component: () => import('@/views/trafficLog/TrafficLog.vue'),
+        component: () => import('@/views/account/traffic/TrafficLog.vue'),
 
         meta: {
 

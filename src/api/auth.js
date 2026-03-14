@@ -2,7 +2,7 @@
 import request from './request';
 import { pinia, useAppStore } from '@/store';
 import { SITE_CONFIG } from '@/utils/baseConfig';
-import { updateUserLanguage } from './user';
+import { updateUserLanguage } from './account/user';
 import { getDefaultRegisterLanguage } from '@/utils/userLanguage';
 
 

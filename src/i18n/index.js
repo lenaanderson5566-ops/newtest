@@ -10,7 +10,7 @@ import {
 } from '@/utils/language';
 
 import { checkLoginStatus } from '@/api/auth';
-import { getUserInfo } from '@/api/user';
+import { getUserInfo } from '@/api/account/user';
 import { extractUserLanguage, resolvePostLoginLanguage } from '@/utils/userLanguage';
 
 
