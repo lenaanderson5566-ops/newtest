@@ -1,13 +1,10 @@
-﻿<template>
+<template>
   <div class="payment-container">
     <div class="payment-inner">
       <!-- 标题栏 -->
       <div class="dashboard-card title-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t("payment.title") }}</h2>
-        </div>
-        <div class="card-body">
-          <p>{{ $t("payment.description") }}</p>
         </div>
       </div>
 

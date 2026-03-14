@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="order-confirm-container">
     <div class="order-confirm-inner">
       <!-- 页面标题 -->
@@ -8,9 +8,6 @@
           <h2 class="card-title">{{ $t("order.title") }}</h2>
         </div>
 
-        <div class="card-body">
-          <p>{{ $t("order.description") }}</p>
-        </div>
       </div>
 
       <!-- 用户现有订阅提示 -->
