@@ -16,10 +16,21 @@
 @use "./layouts/auth.scss" as *;
 
 // 统一订单/支付等卡片文字行距（全局）
+:root {
+  --order-card-text-line-height: 1.3;
+  --order-card-row-spacing: 10px;
+}
+
 .dashboard-card p,
 .section-wrapper .info-label,
 .section-wrapper .info-value,
 .section-wrapper .summary-label,
 .section-wrapper .summary-value {
-  line-height: 1.35;
+  line-height: var(--order-card-text-line-height) !important;
+}
+
+/* 统一支付订单与确认订单的行间距 */
+.payment-container .section-wrapper .info-row,
+.order-confirm-container .order-summary .summary-row {
+  margin-bottom: var(--order-card-row-spacing);
 }
