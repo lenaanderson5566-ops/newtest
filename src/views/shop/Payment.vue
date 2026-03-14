@@ -117,13 +117,35 @@
 
               <div
                 class="info-row discount-row"
-                v-if="orderDetail.discount_amount > 0"
+                v-if="discountBreakdownVisible"
               >
                 <div class="info-label">
-                  {{ $t("payment.discount_amount") }}
+                  {{ $t("payment.coupon_discount_amount") }}
                 </div>
                 <div class="info-value discount">
-                  -{{ formatAmount(orderDetail.discount_amount) }}
+                  -{{ formatAmount(couponDiscountAmount) }}
+                </div>
+              </div>
+              <div
+                class="info-row discount-row"
+                v-if="discountBreakdownVisible"
+              >
+                <div class="info-label">
+                  {{ $t("payment.user_discount_amount") }}
+                </div>
+                <div class="info-value discount">
+                  -{{ formatAmount(userDiscountAmount) }}
+                </div>
+              </div>
+              <div
+                class="info-row discount-row"
+                v-if="discountBreakdownVisible"
+              >
+                <div class="info-label">
+                  {{ $t("payment.total_discount_amount") }}
+                </div>
+                <div class="info-value discount">
+                  -{{ formatAmount(discountAmount) }}
                 </div>
               </div>
               <div
@@ -683,6 +705,17 @@ export default {
     const paymentQRCode = ref(null);
     const paymentLink = ref(null);
 
+    const couponDiscountAmount = computed(() => Number(orderDetail.value?.coupon_discount_amount || 0));
+    const userDiscountAmount = computed(() => Number(orderDetail.value?.user_discount_amount || 0));
+    const discountAmount = computed(() => Number(orderDetail.value?.discount_amount || 0));
+    const discountBreakdownVisible = computed(() => {
+      return (
+        couponDiscountAmount.value > 0 ||
+        userDiscountAmount.value > 0 ||
+        discountAmount.value > 0
+      );
+    });
+
     const handleFeeAmount = computed(() => {
       if (!selectedMethod.value || !orderDetail.value.total_amount) {
         return 0;
@@ -857,9 +890,14 @@ export default {
       return date.toLocaleString();
     };
 
+    const displayCurrency = computed(() => {
+      const currency = orderDetail.value?.pricing_currency;
+      return currency ? `${currency}`.toUpperCase() : '¥';
+    });
+
     const formatAmount = (amount) => {
       if (amount === null || amount === undefined) return "-";
-      return `¥${(amount / 100).toFixed(2)}`;
+      return `${displayCurrency.value} ${(amount / 100).toFixed(2)}`;
     };
 
     const formatPeriod = (period) => {
@@ -895,8 +933,8 @@ export default {
       }
 
       if (method.handling_fee_fixed) {
-        const fixedFee = (method.handling_fee_fixed / 100).toFixed(2);
-        feeText += feeText ? ` + ¥${fixedFee}` : `¥${fixedFee}`;
+        const fixedFeeText = formatAmount(method.handling_fee_fixed);
+        feeText += feeText ? ` + ${fixedFeeText}` : fixedFeeText;
       }
 
       return feeText ? `${t("payment.fee")}: ${feeText}` : "";
@@ -1410,6 +1448,10 @@ export default {
       handleFeeAmount,
       totalWithFee,
       periodDiscount,
+      couponDiscountAmount,
+      userDiscountAmount,
+      discountAmount,
+      discountBreakdownVisible,
       window: window,
       checkPaymentStatus,
       detectBrowser,

@@ -1,13 +1,13 @@
 <template>
   <div class="my-center">
     <div class="my-center-inner">
-      <section class="summary-panel section-block">
+      <section class="summary-panel section-block dashboard-like-card">
         <div class="summary-top">
           <div>
             <h2>账户摘要</h2>
             <p class="summary-desc">核心账户信息一目了然</p>
           </div>
-          <button class="mini-action" @click="go('/billing?tab=wallet')">余额充值</button>
+          <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">余额充值</button>
         </div>
 
         <div class="summary-grid">
@@ -30,7 +30,7 @@
         </div>
       </section>
 
-      <section class="section-block">
+      <section class="section-block dashboard-like-card">
         <h3 class="section-title">财务中心</h3>
         <div class="settings-list">
           <button class="nav-row" @click="go('/billing?tab=wallet')">
@@ -59,7 +59,7 @@
         </div>
       </section>
 
-      <section class="section-block">
+      <section class="section-block dashboard-like-card">
         <h3 class="section-title">个人设置</h3>
         <div class="settings-list">
           <div class="settings-row">
@@ -94,12 +94,12 @@
         </div>
       </section>
 
-      <section class="session-panel section-block">
+      <section class="session-panel section-block dashboard-like-card">
         <div>
           <h3 class="section-title">会话操作</h3>
           <p class="session-tip">退出当前登录会话，稍后可重新登录。</p>
         </div>
-        <button class="logout-btn" @click="logout">退出登录</button>
+        <button class="btn btn-outline logout-btn" @click="logout">退出登录</button>
       </section>
 
       <div class="bottom-safe-area"></div>
@@ -181,52 +181,99 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-.my-center { padding: var(--space-4) 0; }
-.my-center-inner { max-width: 1024px; margin: 0 auto; display: grid; gap: var(--space-4); }
-
-.section-block {
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  background: var(--card-background);
-  box-shadow: var(--shadow-card-sm);
+.my-center {
+  padding: 1rem 0 1.25rem;
+  background: linear-gradient(180deg, rgba(var(--theme-color-rgb), 0.03), transparent 42%);
 }
 
-.summary-panel { padding: var(--space-4); }
+.my-center-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.section-block {
+  border-radius: 16px;
+  background-color: var(--card-bg-color, var(--card-background));
+  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04), 0 10px 24px rgba(15, 23, 42, 0.05);
+  transition: box-shadow 0.22s ease, border-color 0.22s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06), 0 16px 32px rgba(15, 23, 42, 0.08);
+    border-color: rgba(var(--theme-color-rgb), 0.22);
+  }
+}
+
+.dashboard-like-card {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.92), rgba(var(--theme-color-rgb), 0.35));
+    pointer-events: none;
+  }
+}
+
+.summary-panel { padding: 1rem; }
+
 .summary-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-3);
-  margin-bottom: var(--space-3);
+  gap: 0.75rem;
+  margin-bottom: 0.8rem;
+
+  h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
 }
-.summary-top h2 { margin: 0; font-size: 18px; }
-.summary-desc { margin: 2px 0 0; font-size: 13px; color: var(--secondary-text-color); }
+
+.summary-desc {
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: var(--secondary-text-color);
+}
 
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
+
 .summary-item {
   padding: 12px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background: #fff;
-}
-.summary-item .label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 12px;
-  color: var(--secondary-text-color);
-}
-.summary-item strong {
-  font-size: 14px;
-  color: var(--text-color);
-  word-break: break-word;
-}
-.summary-item.is-highlight {
-  border-color: rgba(var(--theme-color-rgb), 0.25);
-  background: rgba(var(--theme-color-rgb), 0.05);
+  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(var(--card-background-rgb), 0.96), rgba(var(--card-background-rgb), 0.9));
+
+  .label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: var(--secondary-text-color);
+  }
+
+  strong {
+    font-size: 14px;
+    color: var(--text-color);
+    word-break: break-word;
+  }
+
+  &.is-highlight {
+    border-color: rgba(var(--theme-color-rgb), 0.32);
+    background: linear-gradient(130deg, rgba(var(--theme-color-rgb), 0.14), rgba(var(--theme-color-rgb), 0.05));
+    box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.08);
+  }
 }
 
 .section-title {
@@ -235,13 +282,14 @@ onMounted(async () => {
   font-weight: 700;
   color: var(--text-color);
 }
+
 .section-block > .section-title {
   padding: 14px 16px 10px;
 }
 
 .settings-list {
   overflow: hidden;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
 }
 
 .settings-row,
@@ -253,17 +301,20 @@ onMounted(async () => {
   justify-content: space-between;
   gap: 12px;
 }
+
 .settings-row + .settings-row,
 .nav-row + .nav-row {
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
 }
 
 .row-main { min-width: 0; }
+
 .row-title {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-color);
 }
+
 .row-main p {
   margin: 3px 0 0;
   font-size: 12px;
@@ -277,18 +328,22 @@ onMounted(async () => {
   text-align: left;
   color: var(--text-color);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: rgba(var(--theme-color-rgb), 0.07);
+    color: var(--theme-color);
+  }
+
+  &:active {
+    background: rgba(var(--theme-color-rgb), 0.11);
+  }
 }
-.nav-row:hover { background: rgba(15, 23, 42, 0.03); }
-.nav-row:active { background: rgba(15, 23, 42, 0.06); }
 
 .mini-action {
-  height: 32px;
+  height: 34px;
   padding: 0 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  background: #fff;
-  color: var(--text-color);
+  border-radius: 10px;
 }
 
 .switch { position: relative; display: inline-block; width: 42px; height: 24px; }
@@ -305,20 +360,25 @@ input:checked + .slider:before { transform: translateX(18px); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-3);
+  gap: 0.75rem;
 }
+
 .session-tip {
   margin: 4px 0 0;
   color: var(--secondary-text-color);
   font-size: 12px;
 }
+
 .logout-btn {
-  height: 34px;
+  height: 36px;
   padding: 0 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(220, 38, 38, 0.35);
-  background: #fff;
+  border-radius: 10px;
+  border-color: rgba(220, 38, 38, 0.35);
   color: #b91c1c;
+
+  &:hover {
+    background: rgba(220, 38, 38, 0.08);
+  }
 }
 
 .bottom-safe-area { height: calc(env(safe-area-inset-bottom, 0px) + 10px); }
@@ -328,7 +388,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 }
 
 @media (max-width: 768px) {
-  .my-center-inner { max-width: 100%; gap: var(--space-3); }
+  .my-center-inner { max-width: 100%; gap: 0.75rem; }
   .summary-panel { padding: 12px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
