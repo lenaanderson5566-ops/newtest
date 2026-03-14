@@ -434,27 +434,23 @@ export default {
       return 0;
     });
 
+    const userDiscountPercent = computed(() => {
+      const discount = Number(userInfo.value?.discount || 0);
+      if (!Number.isFinite(discount)) {
+        return 0;
+      }
+      return Math.min(Math.max(discount, 0), 100);
+    });
+
     const userDiscountAmount = computed(() => {
-      if (couponInfo.value && typeof couponInfo.value.user_discount_amount === 'number') {
-        return Math.max(0, Number(couponInfo.value.user_discount_amount));
+      if (originalPrice.value <= 0 || userDiscountPercent.value <= 0) {
+        return 0;
       }
 
-      if (plan.value && typeof plan.value.user_discount_amount === 'number') {
-        return Math.max(0, Number(plan.value.user_discount_amount));
-      }
-
-      if (userInfo.value && typeof userInfo.value.user_discount_amount === 'number') {
-        return Math.max(0, Number(userInfo.value.user_discount_amount));
-      }
-
-      return 0;
+      return Math.round(originalPrice.value * (userDiscountPercent.value / 100));
     });
 
     const totalDiscountAmount = computed(() => {
-      if (couponInfo.value && typeof couponInfo.value.discount_amount === 'number') {
-        return Math.max(0, Number(couponInfo.value.discount_amount));
-      }
-
       return Math.max(0, couponDiscountAmount.value + userDiscountAmount.value);
     });
 
