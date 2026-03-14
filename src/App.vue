@@ -534,6 +534,10 @@ export default {
     padding: 0 12px;
   }
 
+  .content-layout-shell {
+    padding-inline: 0;
+  }
+
   .page-header-title {
     font-size: 16px;
   }

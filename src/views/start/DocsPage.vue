@@ -9,24 +9,6 @@
 
     <div class="docs-inner">
 
-      <!-- 欢迎卡片 -->
-
-      <div class="dashboard-card welcome-card">
-
-        <div class="card-header">
-
-          <h2 class="card-title">{{ $t('docs.welcome.title') || '文档中心' }}</h2>
-
-        </div>
-
-        <div class="card-body">
-
-          <p>{{ $t('docs.welcome.description') || '查找并阅读有关使用和配置的详细文档。' }}</p>
-
-        </div>
-
-      </div>
-
       <div class="dashboard-card start-using-status-card"> 
         <div class="card-header">
           <h2 class="card-title">{{ statusCardTitle }}</h2>

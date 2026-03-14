@@ -10,25 +10,6 @@
 
     <div class="nodes-inner">
 
-      <!-- 欢迎卡片 -->
-
-      <div v-if="hasActivePlan" class="dashboard-card welcome-card">
-
-        <div class="card-header">
-
-          <h2 class="card-title">{{ $t('lines.welcome.title') }}</h2>
-
-        </div>
-
-        <div class="card-body">
-
-          <p>{{ $t('lines.welcome.description') }}</p>
-
-        </div>
-
-      </div>
-
-      
 
       <!-- 线路列表状态 -->
 
