@@ -248,34 +248,44 @@
 
               <div v-else>
                 <div class="summary-row">
-                  <div class="summary-label">{{ $t("order.subtotal") }}</div>
+                  <div class="summary-label">{{ $t("payment.total_price") }}</div>
 
                   <div class="summary-value">
-                    {{ currencySymbol }}{{ (originalPrice / 100).toFixed(2) }}
+                    {{ formatCurrencyAmount(originalPrice) }}
                   </div>
                 </div>
 
-                <div class="summary-row" v-if="discountAmount > 0">
-                  <div class="summary-label">
-                    {{ $t("order.discount") }}
-
-                    <span v-if="couponInfo" class="coupon-name"
-                      >({{ couponInfo.name }})</span
-                    >
-                  </div>
+                <div class="summary-row" v-if="couponDiscountAmount > 0">
+                  <div class="summary-label">{{ $t("payment.coupon_discount_amount") }}</div>
 
                   <div class="summary-value discount">
-                    -{{ currencySymbol }}{{ (discountAmount / 100).toFixed(2) }}
+                    -{{ formatCurrencyAmount(couponDiscountAmount) }}
+                  </div>
+                </div>
+
+                <div class="summary-row" v-if="userDiscountAmount > 0">
+                  <div class="summary-label">{{ $t("payment.user_discount_amount") }}</div>
+
+                  <div class="summary-value discount">
+                    -{{ formatCurrencyAmount(userDiscountAmount) }}
+                  </div>
+                </div>
+
+                <div class="summary-row" v-if="totalDiscountAmount > 0">
+                  <div class="summary-label">{{ $t("payment.total_discount_amount") }}</div>
+
+                  <div class="summary-value discount">
+                    -{{ formatCurrencyAmount(totalDiscountAmount) }}
                   </div>
                 </div>
 
                 <div class="summary-divider"></div>
 
                 <div class="summary-row total">
-                  <div class="summary-label">{{ $t("order.total") }}</div>
+                  <div class="summary-label">{{ $t("payment.total_with_fee") }}</div>
 
                   <div class="summary-value">
-                    {{ currencySymbol }}{{ (finalPrice / 100).toFixed(2) }}
+                    {{ formatCurrencyAmount(totalWithFee) }}
                   </div>
                 </div>
               </div>
@@ -402,12 +412,18 @@ export default {
       return plan.value[selectedPriceType.value] || 0;
     });
 
-    const discountAmount = computed(() => {
+    const couponDiscountAmount = computed(() => {
       if (!couponApplied.value || !couponInfo.value) return 0;
 
+      if (typeof couponInfo.value.coupon_discount_amount === 'number') {
+        return Math.max(0, Number(couponInfo.value.coupon_discount_amount));
+      }
+
       if (couponInfo.value.type === 1) {
-        return couponInfo.value.value;
-      } else if (
+        return Math.max(0, Number(couponInfo.value.value || 0));
+      }
+
+      if (
         couponInfo.value.type === 2 &&
         discountPercent.value > 0 &&
         originalPrice.value > 0
@@ -418,9 +434,44 @@ export default {
       return 0;
     });
 
-    const finalPrice = computed(() => {
-      return Math.max(0, originalPrice.value - discountAmount.value);
+    const userDiscountAmount = computed(() => {
+      if (couponInfo.value && typeof couponInfo.value.user_discount_amount === 'number') {
+        return Math.max(0, Number(couponInfo.value.user_discount_amount));
+      }
+
+      if (plan.value && typeof plan.value.user_discount_amount === 'number') {
+        return Math.max(0, Number(plan.value.user_discount_amount));
+      }
+
+      if (userInfo.value && typeof userInfo.value.user_discount_amount === 'number') {
+        return Math.max(0, Number(userInfo.value.user_discount_amount));
+      }
+
+      return 0;
     });
+
+    const totalDiscountAmount = computed(() => {
+      if (couponInfo.value && typeof couponInfo.value.discount_amount === 'number') {
+        return Math.max(0, Number(couponInfo.value.discount_amount));
+      }
+
+      return Math.max(0, couponDiscountAmount.value + userDiscountAmount.value);
+    });
+
+    const finalPrice = computed(() => {
+      return Math.max(0, originalPrice.value - totalDiscountAmount.value);
+    });
+
+    const totalWithFee = computed(() => finalPrice.value);
+
+    const displayCurrency = computed(() => {
+      return `${currency.value || 'CNY'}`.toUpperCase();
+    });
+
+    const formatCurrencyAmount = (amount) => {
+      if (amount === null || amount === undefined) return '-';
+      return `${displayCurrency.value} ${(Number(amount) / 100).toFixed(2)}`;
+    };
 
     const userHasActivePlan = computed(() => {
       if (!userInfo.value) return false;
@@ -876,9 +927,17 @@ export default {
 
       originalPrice,
 
-      discountAmount,
+      couponDiscountAmount,
+
+      userDiscountAmount,
+
+      totalDiscountAmount,
 
       finalPrice,
+
+      totalWithFee,
+
+      formatCurrencyAmount,
 
       userHasActivePlan,
 
