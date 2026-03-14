@@ -159,10 +159,6 @@
           <!-- 优惠码 -->
 
           <div class="section-wrapper">
-            <div class="section-title">
-              <span>{{ $t("order.coupon") }}</span>
-            </div>
-
             <div class="coupon-input">
               <input
                 type="text"
