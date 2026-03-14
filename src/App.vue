@@ -512,7 +512,7 @@ export default {
     width: min(1120px, 100%);
     margin-left: 0;
     margin-right: auto;
-    padding-inline: clamp(28px, 3vw, 40px) 24px;
+    padding-inline: clamp(120px, 10vw, 180px) 24px;
   }
 
   .page-header-layer {

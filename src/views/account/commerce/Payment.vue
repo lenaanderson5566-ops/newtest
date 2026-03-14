@@ -234,7 +234,7 @@
                 <div class="info-value fee">{{ formatAmount(handleFeeAmount) }}</div>
               </div>
               <div class="info-row final-row">
-                <div class="info-label">{{ $t("payment.total_with_fee") }}</div>
+                <div class="info-label">合计</div>
                 <div class="info-value final">{{ formatAmount(totalWithFee) }}</div>
               </div>
             </div>
@@ -1407,10 +1407,15 @@ export default {
       flex-direction: column;
     }
 
-    .left-column,
-    .right-column {
-      flex: 1;
+    .left-column {
+      flex: 1.45;
       min-width: 0;
+    }
+
+    .right-column {
+      flex: 0.85;
+      min-width: 0;
+      max-width: 520px;
     }
   }
 
@@ -1492,8 +1497,9 @@ export default {
         padding-top: 15px;
 
         .final {
-          font-size: 20px;
-          font-weight: 700;
+          font-size: 32px;
+          font-weight: 800;
+          letter-spacing: 0.4px;
           color: var(--theme-color);
         }
       }
@@ -1997,6 +2003,7 @@ export default {
 
     .right-column {
       margin-bottom: 60px;
+      max-width: none;
     }
   }
 
