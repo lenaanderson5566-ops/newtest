@@ -89,7 +89,7 @@ import { useI18n } from 'vue-i18n';
 import { SITE_CONFIG, PROFILE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
-import { getUnreadNoticeCount } from '@/api/notice';
+import { getUnreadNoticeCount } from '@/api/account/notice';
 import { handleRedirectPath } from '@/utils/redirectHandler';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
@@ -494,20 +494,20 @@ export default {
   box-sizing: border-box;
 }
 
-@media (min-width: 906px) {
+@media (min-width: 992px) {
   .app-content-wrapper.with-left-nav {
-    padding-left: 194px;
+    padding-left: var(--left-nav-occupy, 176px);
   }
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
     width: min(1120px, 100%);
     margin-left: 0;
     margin-right: auto;
-    padding-inline: 14px 30px;
+    padding-inline: 16px 24px;
   }
 
   .page-header-layer {
-    padding-left: 194px;
+    padding-left: var(--left-nav-occupy, 176px);
   }
 
   .page-header-content {

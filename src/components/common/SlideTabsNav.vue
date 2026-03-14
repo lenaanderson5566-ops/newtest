@@ -1,8 +1,18 @@
 ﻿<template>
 
-  <div class="slide-tabs-container">
+  <div class="slide-tabs-container" :class="{ 'is-collapsed': isCollapsed && isDesktop }">
 
     <div class="slide-tabs-wrapper">
+
+
+      <button
+        v-if="isDesktop"
+        class="collapse-toggle"
+        @click="toggleCollapse"
+        :aria-label="isCollapsed ? '展开导航' : '折叠导航'"
+      >
+        <IconChevronLeft class="collapse-icon" :class="{ 'is-collapsed': isCollapsed }" />
+      </button>
 
       <div class="slide-tabs-nav" ref="tabsNav">
 
@@ -60,7 +70,7 @@ import IconFileText from '@/components/icons/IconFileText.vue';
 
 import IconUser from '@/components/icons/IconUser.vue';
 
-import { IconServer } from '@tabler/icons-vue';
+import { IconServer, IconChevronLeft } from '@tabler/icons-vue';
 
 
 
@@ -89,6 +99,34 @@ export default {
     const isComponentMounted = ref(false);
 
     const languageKey = ref(Date.now());
+
+    const SIDEBAR_EXPANDED_WIDTH = 176;
+    const SIDEBAR_COLLAPSED_WIDTH = 68;
+    const SIDEBAR_BREAKPOINT = 992;
+    const COLLAPSE_STORAGE_KEY = 'left_sidebar_collapsed';
+    const isCollapsed = ref(false);
+    const isDesktop = ref(false);
+    let mediaQueryList = null;
+
+    const applySidebarWidth = () => {
+      const width = isDesktop.value
+        ? (isCollapsed.value ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH)
+        : 0;
+      document.documentElement.style.setProperty('--left-nav-occupy', `${width}px`);
+    };
+
+    const updateDesktopMode = () => {
+      if (!mediaQueryList) return;
+      isDesktop.value = mediaQueryList.matches;
+      applySidebarWidth();
+    };
+
+    const toggleCollapse = () => {
+      isCollapsed.value = !isCollapsed.value;
+      localStorage.setItem(COLLAPSE_STORAGE_KEY, isCollapsed.value ? '1' : '0');
+      applySidebarWidth();
+      safeTimeout(() => updateSliderPosition(currentIndex.value, false), 50);
+    };
 
     
 
@@ -123,7 +161,7 @@ export default {
     const navItems = [
       { title: 'Dashboard', path: '/dashboard', name: 'Dashboard', icon: 'IconDashboard', i18nKey: 'overview' },
       { title: 'Nodes', path: '/nodes', name: 'Nodes', icon: 'IconServer', i18nKey: 'region' },
-      { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'usage' },
+      { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'start' },
       { title: 'Profile', path: '/profile', name: 'Profile', icon: 'IconUser', i18nKey: 'my' }
     ];
 
@@ -487,7 +525,12 @@ export default {
 
       isComponentMounted.value = true;
 
-      
+      isCollapsed.value = localStorage.getItem(COLLAPSE_STORAGE_KEY) === '1';
+      mediaQueryList = window.matchMedia(`(min-width: ${SIDEBAR_BREAKPOINT}px)`);
+      updateDesktopMode();
+      mediaQueryList.addEventListener?.('change', updateDesktopMode);
+      mediaQueryList.addListener?.(updateDesktopMode);
+
 
 
 
@@ -764,7 +807,11 @@ export default {
 
       languageKey,
 
-      route
+      route,
+      isCollapsed,
+      isDesktop,
+      toggleCollapse,
+      IconChevronLeft
 
     };
 
@@ -804,7 +851,8 @@ function debounce(fn, delay) {
   top: 108px;
   left: 10px;
   z-index: 10;
-  width: 170px;
+  width: var(--left-nav-occupy, 176px);
+  transition: width 0.25s ease;
 
   .slide-tabs-wrapper {
     background: rgba(var(--card-background-rgb), 0.98);
@@ -813,6 +861,30 @@ function debounce(fn, delay) {
     box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
     border: 1px solid var(--border-color);
     overflow: hidden;
+  }
+
+  .collapse-toggle {
+    width: calc(100% - 6px);
+    margin: 3px;
+    height: 28px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: rgba(var(--card-background-rgb), 0.98);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .collapse-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--secondary-text-color);
+      transition: transform 0.25s ease;
+
+      &.is-collapsed {
+        transform: rotate(180deg);
+      }
+    }
   }
 
   .slide-tabs-nav {
@@ -838,6 +910,7 @@ function debounce(fn, delay) {
       white-space: nowrap;
       display: flex;
       align-items: center;
+      justify-content: flex-start;
       gap: 8px;
       min-height: 38px;
 
@@ -865,6 +938,16 @@ function debounce(fn, delay) {
           height: 16px;
           transition: color 0.25s ease;
         }
+      }
+
+      .nav-text {
+        display: inline-block;
+        max-width: 96px;
+        opacity: 1;
+        transform: translateX(0);
+        overflow: hidden;
+        white-space: nowrap;
+        transition: max-width 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
       }
 
       &.active {
@@ -897,11 +980,27 @@ function debounce(fn, delay) {
       display: none;
     }
   }
+
+  &.is-collapsed {
+    .nav-item {
+      justify-content: center;
+
+      .nav-text {
+        max-width: 0;
+        opacity: 0;
+        transform: translateX(-4px);
+      }
+    }
+  }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
 
   .slide-tabs-container {
+
+    .collapse-toggle {
+      display: none;
+    }
 
     .slide-tabs-nav {
 
@@ -910,6 +1009,7 @@ function debounce(fn, delay) {
         flex: 1 1 0;
         min-width: 0;
         padding: 6px 8px;
+        justify-content: center;
 
         font-size: 13px;
 
@@ -980,6 +1080,9 @@ function debounce(fn, delay) {
           font-weight: 500;
 
           line-height: 1.2;
+          max-width: none;
+          opacity: 1;
+          transform: none;
 
         }
 
@@ -1011,7 +1114,7 @@ function debounce(fn, delay) {
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
 
   .slide-tabs-container {
 

@@ -154,7 +154,7 @@ export const config = {
     // 是否在商店导航上显示热销标记
     showHotSaleBadge: false,
 
-    // 是否显示套餐特性卡片 (true=显示, false=隐藏)
+    // 是否显示订阅特性卡片 (true=显示, false=隐藏)
     showPlanFeatureCards: true, // 默认显示
 
     // 是否自动选择周期最大的标签，设为false则不会自动选择

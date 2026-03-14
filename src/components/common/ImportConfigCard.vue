@@ -130,9 +130,9 @@ import {
   IconChevronDown,
   IconChevronUp
 } from '@tabler/icons-vue';
-import { getSubscribe } from '@/api/dashboard';
+import { getSubscribe } from '@/api/overview/dashboard';
 import { CLIENT_CONFIG } from '@/utils/baseConfig';
-import { resetSecurity as apiResetSecurity } from '@/api/user';
+import { resetSecurity as apiResetSecurity } from '@/api/account/user';
 import QRCode from 'qrcode';
 import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
 import quantumultxIconImg from '@/assets/images/client-img-ios/quantumultx.png';
