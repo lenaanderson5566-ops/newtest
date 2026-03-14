@@ -297,7 +297,7 @@ export default {
     overview: 'Обзор',
     region: 'Регион',
     usage: 'Использование',
-    start: 'Start',
+    start: 'Начало',
     my: 'Моё',
     shop: 'Магазин',
     subscription: 'Подписка',
