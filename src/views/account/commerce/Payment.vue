@@ -1,32 +1,29 @@
 <template>
   <div class="payment-container">
     <div class="payment-inner">
-      <div class="page-status-inline" v-if="!loading.order">
-        <div class="inline-status-badge" :class="getStatusClass(orderDetail.status)">
-          <IconClock
-            v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
-            :size="18"
-          />
-          <IconClock
-            v-else-if="orderDetail.status === 0 && orderDetail.total_amount === 0"
-            :size="18"
-          />
-          <IconLoader2 v-else-if="orderDetail.status === 1" :size="18" class="rotating-icon" />
-          <IconX v-else-if="orderDetail.status === 2" :size="18" />
-          <IconCheck v-else-if="orderDetail.status === 3" :size="18" />
-          <IconCheck v-else-if="orderDetail.status === 4" :size="18" />
-          <IconHelp v-else :size="18" />
-          <span>{{ getStatusText(orderDetail.status) }}</span>
-        </div>
-      </div>
-
       <div class="content-wrapper">
         <!-- 左侧内容：产品信息 -->
         <div class="left-column">
           <!-- 订单概览 -->
           <div class="section-wrapper">
-            <div class="section-title">
+            <div class="section-title with-status">
               <span>订单概览</span>
+              <div class="inline-status-badge" :class="getStatusClass(orderDetail.status)" v-if="!loading.order">
+                <IconClock
+                  v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
+                  :size="18"
+                />
+                <IconClock
+                  v-else-if="orderDetail.status === 0 && orderDetail.total_amount === 0"
+                  :size="18"
+                />
+                <IconLoader2 v-else-if="orderDetail.status === 1" :size="18" class="rotating-icon" />
+                <IconX v-else-if="orderDetail.status === 2" :size="18" />
+                <IconCheck v-else-if="orderDetail.status === 3" :size="18" />
+                <IconCheck v-else-if="orderDetail.status === 4" :size="18" />
+                <IconHelp v-else :size="18" />
+                <span>{{ getStatusText(orderDetail.status) }}</span>
+              </div>
             </div>
 
             <div class="product-info" v-if="!loading.order">
@@ -70,6 +67,31 @@
                 <div class="info-value">
                   {{ formatDate(orderDetail.created_at) }}
                 </div>
+              </div>
+
+              <div
+                class="overview-actions"
+                v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
+              >
+                <button
+                  class="btn-back secondary-action"
+                  @click="cancelCurrentOrder"
+                  :disabled="loading.cancelling"
+                >
+                  <IconX v-if="!loading.cancelling" :size="18" />
+                  <div v-else class="loader"></div>
+                  <span>{{ $t("payment.cancel_order") }}</span>
+                </button>
+
+                <button
+                  class="btn-check secondary-action"
+                  @click="checkPaymentStatus"
+                  :disabled="(orderDetail.total_amount > 0 && !selectedMethod) || loading.checking || loading.paying"
+                >
+                  <IconRefresh v-if="!loading.checking" :size="18" />
+                  <div v-else class="loader"></div>
+                  <span>{{ $t("payment.check_payment") }}</span>
+                </button>
               </div>
             </div>
 
@@ -332,35 +354,6 @@
                 </button>
               </div>
 
-              <!-- 检测状态和取消订单按钮一行，取消在左，检测在右 -->
-              <div
-                class="btn-group action-row"
-                v-if="orderDetail.total_amount > 0"
-              >
-                <button
-                  class="btn-back secondary-action"
-                  @click="cancelCurrentOrder"
-                  :disabled="loading.cancelling"
-                >
-                  <IconX v-if="!loading.cancelling" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.cancel_order") }}</span>
-                </button>
-
-                <button
-                  class="btn-check secondary-action"
-                  @click="checkPaymentStatus"
-                  :disabled="
-                    (orderDetail.total_amount > 0 && !selectedMethod) ||
-                    loading.checking ||
-                    loading.paying
-                  "
-                >
-                  <IconRefresh v-if="!loading.checking" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.check_payment") }}</span>
-                </button>
-              </div>
             </template>
           </div>
         </div>
@@ -1454,6 +1447,14 @@ export default {
         background-color: var(--border-color);
         margin-left: 12px;
       }
+
+      &.with-status {
+        justify-content: space-between;
+
+        &::after {
+          display: none;
+        }
+      }
     }
   }
 
@@ -2002,7 +2003,6 @@ export default {
   @media (max-width: 768px) {
     padding-bottom: 100px;
   }
-
   @media (max-width: 480px) {
     padding-bottom: 120px;
 
@@ -2438,192 +2438,121 @@ export default {
   }
 }
 
-.status-info {
-  display: flex;
-  justify-content: center;
-  padding: 0.45rem 0;
-  width: 100%;
-}
-
-.page-status-inline {
-  display: flex;
-  justify-content: flex-end;
-  margin: 6px 0 14px;
-
-  .inline-status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    border-radius: 999px;
-    padding: 6px 12px;
-    font-size: 13px;
-    font-weight: 600;
-    border: 1px solid transparent;
-    transition: all 0.3s ease;
-
-    &.status-pending,
-    &.status-free-confirm {
-      color: #f57c00;
-      background-color: rgba(255, 152, 0, 0.12);
-      border-color: rgba(255, 152, 0, 0.2);
-    }
-
-    &.status-processing {
-      color: #0d47a1;
-      background-color: rgba(33, 150, 243, 0.12);
-      border-color: rgba(33, 150, 243, 0.2);
-    }
-
-    &.status-cancelled {
-      color: #c62828;
-      background-color: rgba(244, 67, 54, 0.12);
-      border-color: rgba(244, 67, 54, 0.2);
-    }
-
-    &.status-completed,
-    &.status-discounted {
-      color: #2e7d32;
-      background-color: rgba(76, 175, 80, 0.12);
-      border-color: rgba(76, 175, 80, 0.2);
-    }
-
-    &.status-unknown {
-      color: #757575;
-      background-color: rgba(158, 158, 158, 0.12);
-      border-color: rgba(158, 158, 158, 0.2);
-    }
-  }
-}
-
-.order-status-notice {
-  display: flex;
+.inline-status-badge {
+  display: inline-flex;
   align-items: center;
-  padding: 0.95rem 1rem;
-  border-radius: 12px;
-  width: 100%;
-  transition: all 0.5s ease;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
 
   &.status-transition {
     animation: status-change 0.5s ease;
   }
 
-  .status-icon {
-    margin-right: 0.9rem;
-  }
-
-  .status-text {
-    flex: 1;
-
-    h3 {
-      margin: 0 0 0.25rem;
-      font-size: 1rem;
-      font-weight: 600;
-      transition: color 0.5s ease;
-    }
-
-    p {
-      margin: 0;
-      font-size: 0.88rem;
-      line-height: 1.4;
-      transition: all 0.5s ease;
-    }
-
-    h3.activate-status {
-      margin-bottom: 0;
-    }
-  }
-
+  &.status-pending,
   &.status-free-confirm {
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-
-    .status-icon {
-      margin-right: 0;
-      margin-bottom: 0.65rem;
-    }
-
-    .status-text h3 {
-      margin-bottom: 0;
-    }
-  }
-
-  &.status-pending {
+    color: #f57c00;
     background-color: rgba(255, 152, 0, 0.12);
-    border: 1px solid rgba(255, 152, 0, 0.2);
-
-    .status-icon {
-      color: #ff9800;
-    }
-
-    h3 {
-      color: #f57c00;
-    }
+    border-color: rgba(255, 152, 0, 0.2);
   }
 
   &.status-processing {
+    color: #0d47a1;
     background-color: rgba(33, 150, 243, 0.12);
-    border: 1px solid rgba(33, 150, 243, 0.2);
-
-    .status-icon {
-      color: #2196f3;
-    }
-
-    h3 {
-      color: #1976d2;
-    }
+    border-color: rgba(33, 150, 243, 0.2);
   }
 
   &.status-cancelled {
+    color: #c62828;
     background-color: rgba(244, 67, 54, 0.12);
-    border: 1px solid rgba(244, 67, 54, 0.2);
-
-    .status-icon {
-      color: #f44336;
-    }
-
-    h3 {
-      color: #d32f2f;
-    }
+    border-color: rgba(244, 67, 54, 0.2);
   }
 
-  &.status-completed {
-    background-color: rgba(76, 175, 80, 0.12);
-    border: 1px solid rgba(76, 175, 80, 0.2);
-
-    .status-icon {
-      color: #4caf50;
-    }
-
-    h3 {
-      color: #388e3c;
-    }
-  }
-
+  &.status-completed,
   &.status-discounted {
-    background-color: rgba(156, 39, 176, 0.12);
-    border: 1px solid rgba(156, 39, 176, 0.2);
-
-    .status-icon {
-      color: #9c27b0;
-    }
-
-    h3 {
-      color: #7b1fa2;
-    }
+    color: #2e7d32;
+    background-color: rgba(76, 175, 80, 0.12);
+    border-color: rgba(76, 175, 80, 0.2);
   }
 
   &.status-unknown {
+    color: #757575;
     background-color: rgba(158, 158, 158, 0.12);
-    border: 1px solid rgba(158, 158, 158, 0.2);
+    border-color: rgba(158, 158, 158, 0.2);
+  }
+}
 
-    .status-icon {
-      color: #9e9e9e;
-    }
+.overview-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 
-    h3 {
-      color: #757575;
+  .btn-back,
+  .btn-check {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    flex: 1;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
     }
+  }
+
+  .btn-back {
+    background-color: transparent;
+    color: var(--text-color);
+
+    &:hover:not(:disabled) {
+      background-color: var(--hover-color);
+      transform: translateY(-1px);
+    }
+  }
+
+  .btn-check {
+    background-color: var(--hover-color);
+    color: var(--text-color);
+
+    &:hover:not(:disabled) {
+      background-color: var(--card-bg-color);
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+
+    .btn-back,
+    .btn-check {
+      width: 100%;
+    }
+  }
+
+  .loader {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    border: 2px solid rgba(148, 163, 184, 0.35);
+    border-radius: 50%;
+    border-top-color: var(--text-color);
+    animation: spin 1s linear infinite;
   }
 }
 
