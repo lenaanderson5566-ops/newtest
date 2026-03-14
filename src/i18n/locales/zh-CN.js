@@ -55,7 +55,7 @@ export default {
         nextNotice: '下一条',
         noticeCount: '第 {current} 条，共 {total} 条',
         copied: '已复制到剪贴板',
-        userCenter: '我的',
+        userCenter: '我的账号',
         myWallet: '我的钱包',
         changePassword: '修改密码',
         logoutText: '退出登录',

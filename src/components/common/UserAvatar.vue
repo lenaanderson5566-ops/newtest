@@ -21,13 +21,9 @@
           <IconUser class="menu-icon" />
           <span>{{ $t('common.userCenter') }}</span>
         </div>
-        <div class="menu-item" @click="navigateTo('/billing?tab=orders')">
-          <IconWallet class="menu-icon" />
-          <span>{{ $t('menu.billing') }}</span>
-        </div>
-        <div class="menu-item" @click="navigateTo('/trafficlog')">
-          <IconDefinitions class="menu-icon" />
-          <span>{{ $t('trafficLog.title') }}</span>
+        <div class="menu-item" @click="navigateTo('/tickets')">
+          <IconMessageCircle class="menu-icon" />
+          <span>提交反馈</span>
         </div>
         <div class="menu-item" @click="navigateTo('/security-settings')">
           <IconLock class="menu-icon" />
@@ -48,22 +44,19 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
-import { IconUserCircle } from '@tabler/icons-vue';
+import { IconUserCircle, IconMessageCircle } from '@tabler/icons-vue';
 import IconUser from '@/components/icons/IconUser.vue';
 import IconLogout from '@/components/icons/IconLogout.vue';
-import IconWallet from '@/components/icons/IconWallet.vue';
 import IconLock from '@/components/icons/IconLock.vue';
-import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 
 export default {
   name: 'UserAvatar',
   components: {
     IconUserCircle,
+    IconMessageCircle,
     IconUser,
     IconLogout,
-    IconWallet,
-    IconLock,
-    IconDefinitions
+    IconLock
   },
   props: {
     username: {
