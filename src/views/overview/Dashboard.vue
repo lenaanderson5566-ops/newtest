@@ -4045,7 +4045,7 @@ export default {
         transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
         transition-delay: 0s;
         pointer-events: none;
-        z-index: 30;
+        z-index: 260;
       }
 
       .info-tooltip-content::after {
@@ -4098,7 +4098,7 @@ export default {
       transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
       transition-delay: 0s;
       pointer-events: none;
-      z-index: 30;
+      z-index: 260;
     }
 
     .info-tooltip-content::after {
