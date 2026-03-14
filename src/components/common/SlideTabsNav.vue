@@ -804,7 +804,23 @@ function debounce(fn, delay) {
   top: 108px;
   left: 10px;
   z-index: 10;
-  width: 170px;
+  width: 86px;
+  transition: width 0.25s ease;
+
+  &:hover,
+  &:focus-within {
+    width: 170px;
+
+    .slide-tabs-nav .nav-item {
+      justify-content: flex-start;
+
+      .nav-text {
+        max-width: 96px;
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  }
 
   .slide-tabs-wrapper {
     background: rgba(var(--card-background-rgb), 0.98);
@@ -838,6 +854,7 @@ function debounce(fn, delay) {
       white-space: nowrap;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
       min-height: 38px;
 
@@ -865,6 +882,16 @@ function debounce(fn, delay) {
           height: 16px;
           transition: color 0.25s ease;
         }
+      }
+
+      .nav-text {
+        display: inline-block;
+        max-width: 0;
+        opacity: 0;
+        transform: translateX(-4px);
+        overflow: hidden;
+        white-space: nowrap;
+        transition: max-width 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
       }
 
       &.active {
@@ -910,6 +937,7 @@ function debounce(fn, delay) {
         flex: 1 1 0;
         min-width: 0;
         padding: 6px 8px;
+        justify-content: center;
 
         font-size: 13px;
 
@@ -980,6 +1008,9 @@ function debounce(fn, delay) {
           font-weight: 500;
 
           line-height: 1.2;
+          max-width: none;
+          opacity: 1;
+          transform: none;
 
         }
 
