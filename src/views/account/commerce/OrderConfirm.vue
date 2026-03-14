@@ -341,6 +341,7 @@ import {
 } from "@/api/account/shop";
 
 import { getUserInfo } from "@/api/overview/dashboard";
+import { fetchOrderList } from "@/api/account/orderlist";
 
 import {
   IconCheck,
@@ -749,6 +750,18 @@ export default {
       );
     };
 
+    const fetchLatestPendingTradeNo = async () => {
+      try {
+        const resp = await fetchOrderList();
+        const orders = Array.isArray(resp?.data) ? resp.data : [];
+        const pending = orders.find((item) => Number(item?.status) === 0 || Number(item?.status) === 1);
+        return pending?.trade_no || "";
+      } catch (err) {
+        console.error("Failed to fetch pending orders:", err);
+        return "";
+      }
+    };
+
     const closePendingOrderModal = () => {
       if (loading.cancellingExisting) return;
       showPendingOrderModal.value = false;
@@ -760,16 +773,27 @@ export default {
     };
 
     const confirmCancelPreviousOrder = async () => {
-      if (!pendingOrderTradeNo.value || loading.cancellingExisting) {
-        goToMyOrders();
+      if (loading.cancellingExisting) {
         return;
       }
 
       loading.cancellingExisting = true;
       try {
-        const resp = await cancelExistingOrder(pendingOrderTradeNo.value);
+        let tradeNo = pendingOrderTradeNo.value;
+        if (!tradeNo) {
+          tradeNo = await fetchLatestPendingTradeNo();
+        }
+
+        if (!tradeNo) {
+          showToast('未找到可取消的未完成订单', 'warning');
+          goToMyOrders();
+          return;
+        }
+
+        const resp = await cancelExistingOrder(tradeNo);
         showToast(resp?.message || '订单已取消', 'success');
         showPendingOrderModal.value = false;
+        pendingOrderTradeNo.value = '';
         await executeOrderSubmission();
       } catch (error) {
         showToast(error?.response?.message || error?.message || '取消订单失败', 'error');
@@ -820,7 +844,7 @@ export default {
 
         const message = error.response?.message || error.message || t("order.order_failed");
         if (isPendingOrderConflict(message)) {
-          pendingOrderTradeNo.value = extractPendingTradeNo(error);
+          pendingOrderTradeNo.value = extractPendingTradeNo(error) || (await fetchLatestPendingTradeNo());
           showPendingOrderModal.value = true;
           return;
         }
@@ -2179,8 +2203,9 @@ export default {
 
     p {
       margin: 0;
-      color: var(--secondary-text-color);
-      line-height: 1.5;
+      color: var(--text-color);
+      opacity: 0.9;
+      line-height: 1.55;
     }
   }
 
