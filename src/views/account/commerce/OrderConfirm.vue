@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <!-- 用户现有套餐提示 -->
+      <!-- 用户现有订阅提示 -->
 
       <div class="alert-card" v-if="showExistingPlanWarning">
         <div class="alert-icon">
@@ -30,10 +30,10 @@
       <!-- 内容主体 -->
 
       <div class="content-wrapper">
-        <!-- 左侧内容：套餐信息和周期选择 -->
+        <!-- 左侧内容：订阅信息和周期选择 -->
 
         <div class="left-column">
-          <!-- 套餐信息卡片 - 骨架屏 -->
+          <!-- 订阅信息卡片 - 骨架屏 -->
 
           <div class="plan-card glassmorphism" v-if="loading.plan">
             <div class="skeleton-card">
@@ -53,7 +53,7 @@
             </div>
           </div>
 
-          <!-- 套餐信息卡片 - 实际内容 -->
+          <!-- 订阅信息卡片 - 实际内容 -->
 
           <div class="plan-card glassmorphism" v-else-if="plan">
             <div class="card-header">
@@ -67,7 +67,7 @@
             </div>
 
             <div class="card-body">
-              <!-- 套餐详细信息 -->
+              <!-- 订阅详细信息 -->
 
               <div class="plan-features">
                 <!-- JSON格式内容 -->

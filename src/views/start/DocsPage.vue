@@ -317,7 +317,7 @@ const USER_STATUS = Object.freeze({
 const statusCardContentMap = Object.freeze({
   [USER_STATUS.NEW]: {
     title: '欢迎使用，先购买订阅',
-    description: '当前尚未购买订阅，请先前往订阅页面购买套餐。',
+    description: '当前尚未购买订阅，请先前往订阅页面购买订阅。',
     actionText: '去购买订阅'
   },
   [USER_STATUS.ACTIVE]: {

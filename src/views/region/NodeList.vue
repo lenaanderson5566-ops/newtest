@@ -56,7 +56,7 @@
 
       
 
-      <!-- 无套餐解锁页 -->
+      <!-- 无订阅解锁页 -->
       <div v-else-if="!hasActivePlan" class="nodes-no-plan">
         <div class="no-plan-head">
           <h2>{{ $t('lines.noPlan.coverageTitle') }}</h2>

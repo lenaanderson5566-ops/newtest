@@ -88,7 +88,7 @@
                   {{ formatAmount(orderDetail.total_amount) }}
                 </div>
               </div>
-              <!-- 普通订单显示套餐金额 -->
+              <!-- 普通订单显示订阅金额 -->
               <div v-else class="info-row">
                 <div class="info-label">{{ $t("payment.total_price") }}</div>
                 <div class="info-value amount">

@@ -269,7 +269,7 @@
         </template>
 
         <template v-else-if="!hasPlan">
-          <!-- 没有套餐时显示的提示卡片 -->
+          <!-- 没有订阅时显示的提示卡片 -->
           <InfoCard class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
                style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: 1200px; width: 100%;">
             <template #icon>
@@ -1041,7 +1041,7 @@ export default {
       try {
         if (!userPlanId.value) {
           showToast(t('common.error_occurred'), 'error');
-          console.log('无套餐ID：重置 isCreatingResetOrder = false');
+          console.log('无订阅ID：重置 isCreatingResetOrder = false');
           isCreatingResetOrder.value = false;
           return;
         }
