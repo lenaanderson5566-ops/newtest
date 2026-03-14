@@ -303,6 +303,23 @@
       </div>
     </div>
 
+    <transition name="modal-fade">
+      <div v-if="showPendingOrderModal" class="pending-order-modal">
+        <div class="pending-order-overlay" @click="closePendingOrderModal"></div>
+        <div class="pending-order-dialog" role="dialog" aria-modal="true" aria-labelledby="pending-order-title">
+          <h3 id="pending-order-title">注意</h3>
+          <p>您还有未完成的订单，购买前需要先取消，确定要取消之前的订单吗？</p>
+          <div class="pending-order-actions">
+            <button class="btn-return-orders" @click="goToMyOrders">返回我的订单</button>
+            <button class="btn-confirm-cancel" @click="confirmCancelPreviousOrder" :disabled="loading.cancellingExisting">
+              <span v-if="!loading.cancellingExisting">确定取消</span>
+              <span v-else class="loader"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
   </div>
 </template>
 
@@ -320,6 +337,7 @@ import {
   fetchPlanById,
   verifyCoupon as checkCoupon,
   submitOrder as createOrder,
+  cancelOrder as cancelExistingOrder,
 } from "@/api/account/shop";
 
 import { getUserInfo } from "@/api/overview/dashboard";
@@ -368,6 +386,7 @@ export default {
       userInfo: true,
 
       submitting: false,
+      cancellingExisting: false,
     });
 
     const plan = ref(null);
@@ -387,6 +406,10 @@ export default {
     const verifying = ref(false);
 
     const couponInfo = ref(null);
+
+    const showPendingOrderModal = ref(false);
+
+    const pendingOrderTradeNo = ref("");
 
     const discountPercent = ref(0);
 
@@ -705,8 +728,58 @@ export default {
       }
     };
 
+    const isPendingOrderConflict = (message = "") => {
+      const normalized = String(message || "");
+      return (
+        normalized.includes("未付款") ||
+        normalized.includes("开通中") ||
+        normalized.includes("未完成") ||
+        normalized.includes("有未支付")
+      );
+    };
+
+    const extractPendingTradeNo = (error) => {
+      const payload = error?.response?.data;
+      return (
+        payload?.data?.trade_no ||
+        payload?.data ||
+        payload?.trade_no ||
+        error?.response?.trade_no ||
+        ""
+      );
+    };
+
+    const closePendingOrderModal = () => {
+      if (loading.cancellingExisting) return;
+      showPendingOrderModal.value = false;
+    };
+
+    const goToMyOrders = () => {
+      closePendingOrderModal();
+      router.push('/orders');
+    };
+
+    const confirmCancelPreviousOrder = async () => {
+      if (!pendingOrderTradeNo.value || loading.cancellingExisting) {
+        goToMyOrders();
+        return;
+      }
+
+      loading.cancellingExisting = true;
+      try {
+        const resp = await cancelExistingOrder(pendingOrderTradeNo.value);
+        showToast(resp?.message || '订单已取消', 'success');
+        showPendingOrderModal.value = false;
+        await executeOrderSubmission();
+      } catch (error) {
+        showToast(error?.response?.message || error?.message || '取消订单失败', 'error');
+      } finally {
+        loading.cancellingExisting = false;
+      }
+    };
+
     const submitOrder = async () => {
-      if (!selectedPriceType.value || loading.submitting) return;
+      if (!selectedPriceType.value || loading.submitting || loading.cancellingExisting) return;
 
       await executeOrderSubmission();
     };
@@ -745,10 +818,14 @@ export default {
       } catch (error) {
         console.error("Failed to submit order:", error);
 
-        showToast(
-          error.response?.message || error.message || t("order.order_failed"),
-          "error"
-        );
+        const message = error.response?.message || error.message || t("order.order_failed");
+        if (isPendingOrderConflict(message)) {
+          pendingOrderTradeNo.value = extractPendingTradeNo(error);
+          showPendingOrderModal.value = true;
+          return;
+        }
+
+        showToast(message, "error");
       } finally {
         loading.submitting = false;
       }
@@ -951,6 +1028,11 @@ export default {
       removeCoupon,
 
       showExistingPlanWarning,
+
+      showPendingOrderModal,
+      closePendingOrderModal,
+      goToMyOrders,
+      confirmCancelPreviousOrder,
 
     };
   },
@@ -2064,6 +2146,68 @@ export default {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+.pending-order-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;
+
+  .pending-order-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .pending-order-dialog {
+    position: relative;
+    width: min(92vw, 420px);
+    margin: 20vh auto 0;
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16);
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0;
+      color: var(--secondary-text-color);
+      line-height: 1.5;
+    }
+  }
+
+  .pending-order-actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+
+    button {
+      flex: 1;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-return-orders {
+      background: transparent;
+      color: var(--text-color);
+    }
+
+    .btn-confirm-cancel {
+      background: var(--theme-color);
+      color: #fff;
+      border-color: var(--theme-color);
+    }
   }
 }
 
