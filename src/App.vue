@@ -509,7 +509,7 @@ export default {
   }
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
-    width: min(1120px, 100%);
+    width: min(1360px, 100%);
     margin-left: 0;
     margin-right: auto;
     padding-inline: clamp(120px, 10vw, 180px) 4px;
@@ -520,7 +520,7 @@ export default {
   }
 
   .page-header-content {
-    width: min(1120px, 100%);
+    width: min(1360px, 100%);
     margin-left: 0;
     margin-right: auto;
     padding: 0 24px;
