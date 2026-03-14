@@ -1,4 +1,4 @@
-﻿<template>
+<template>
 
   <div class="slide-tabs-container" :class="{ 'is-collapsed': isCollapsed && isDesktop }">
 
@@ -10,8 +10,10 @@
         class="collapse-toggle"
         @click="toggleCollapse"
         :aria-label="isCollapsed ? '展开导航' : '折叠导航'"
+        :aria-pressed="isCollapsed"
+        :title="isCollapsed ? '展开导航' : '折叠导航'"
       >
-        <IconChevronLeft class="collapse-icon" :class="{ 'is-collapsed': isCollapsed }" />
+        <IconMenu2 class="collapse-icon" />
       </button>
 
       <div class="slide-tabs-nav" ref="tabsNav">
@@ -70,7 +72,7 @@ import IconFileText from '@/components/icons/IconFileText.vue';
 
 import IconUser from '@/components/icons/IconUser.vue';
 
-import { IconServer, IconChevronLeft } from '@tabler/icons-vue';
+import { IconServer, IconMenu2 } from '@tabler/icons-vue';
 
 
 
@@ -811,7 +813,7 @@ export default {
       isCollapsed,
       isDesktop,
       toggleCollapse,
-      IconChevronLeft
+      IconMenu2
 
     };
 
@@ -875,15 +877,20 @@ function debounce(fn, delay) {
     justify-content: center;
     cursor: pointer;
 
+    &:hover {
+      border-color: rgba(var(--theme-color-rgb), 0.45);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(var(--theme-color-rgb), 0.45);
+      outline-offset: 1px;
+    }
+
     .collapse-icon {
       width: 16px;
       height: 16px;
       color: var(--secondary-text-color);
-      transition: transform 0.25s ease;
-
-      &.is-collapsed {
-        transform: rotate(180deg);
-      }
+      transition: color 0.2s ease, transform 0.2s ease;
     }
   }
 
