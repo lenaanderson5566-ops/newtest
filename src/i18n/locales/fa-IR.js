@@ -663,6 +663,8 @@ export default {
     order_summary: 'خلاصه سفارش',
     subtotal: 'جمع جزئی',
     discount: 'تخفیف',
+    member_discount: 'تخفیف عضویت',
+    total_discount: 'مبلغ کل تخفیف',
     total: 'جمع کل',
     back_to_shop: 'به فروشگاه برگردید',
     place_order: 'ثبت سفارش',

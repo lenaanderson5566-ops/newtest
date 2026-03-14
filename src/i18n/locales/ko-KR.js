@@ -664,6 +664,8 @@ export default {
     order_summary: '주문 요약',
     subtotal: '소계',
     discount: '할인',
+    member_discount: '회원 할인',
+    total_discount: '총 할인 금액',
     total: '총액',
     back_to_shop: '상점으로 돌아가기',
     place_order: '주문 제출',

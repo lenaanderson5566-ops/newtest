@@ -663,6 +663,8 @@ export default {
     order_summary: 'Итог заказа',
     subtotal: 'Подитог',
     discount: 'Скидка',
+    member_discount: 'Скидка участника',
+    total_discount: 'Общая сумма скидки',
     total: 'Итого',
     back_to_shop: 'Вернуться в магазин',
     place_order: 'Оформить заказ',

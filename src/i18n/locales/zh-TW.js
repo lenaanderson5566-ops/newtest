@@ -662,6 +662,8 @@ export default {
     order_summary: '訂單摘要',
     subtotal: '小計',
     discount: '優惠',
+    member_discount: '會員折扣',
+    total_discount: '總優惠金額',
     total: '總計',
     back_to_shop: '返回商店',
     place_order: '提交訂單',

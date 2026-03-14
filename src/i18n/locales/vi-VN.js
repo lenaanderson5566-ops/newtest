@@ -656,6 +656,8 @@ export default {
         order_summary: 'Tóm tắt đơn hàng',
         subtotal: 'Tạm tính',
         discount: 'Giảm giá',
+        member_discount: 'Giảm giá thành viên',
+        total_discount: 'Tổng số tiền giảm giá',
         total: 'Tổng cộng',
         back_to_shop: 'Quay lại cửa hàng',
         place_order: 'Đặt hàng',

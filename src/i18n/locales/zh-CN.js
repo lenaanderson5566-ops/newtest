@@ -666,6 +666,8 @@ export default {
         order_summary: '订单摘要',
         subtotal: '小计',
         discount: '优惠',
+        member_discount: '会员折扣',
+        total_discount: '总优惠金额',
         total: '总计',
         back_to_shop: '返回商店',
         place_order: '提交订单',

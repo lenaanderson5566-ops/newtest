@@ -666,6 +666,8 @@ export default {
         order_summary: 'Order Summary',
         subtotal: 'Subtotal',
         discount: 'Discount',
+        member_discount: 'Member Discount',
+        total_discount: 'Total Discount Amount',
         total: 'Total',
         back_to_shop: 'Back to Shop',
         place_order: 'Place Order',

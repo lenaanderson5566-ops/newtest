@@ -663,6 +663,8 @@ export default {
     order_summary: '注文概要',
     subtotal: '小計',
     discount: '割引',
+    member_discount: '会員割引',
+    total_discount: '割引合計',
     total: '合計',
     back_to_shop: 'ストアに戻る',
     place_order: '注文送信',

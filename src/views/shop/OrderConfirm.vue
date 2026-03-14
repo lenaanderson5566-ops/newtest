@@ -255,7 +255,7 @@
                   </div>
                 </div>
 
-                <div class="summary-row" v-if="discountAmount > 0">
+                <div class="summary-row" v-if="couponDiscountAmount > 0">
                   <div class="summary-label">
                     {{ $t("order.discount") }}
 
@@ -265,7 +265,27 @@
                   </div>
 
                   <div class="summary-value discount">
-                    -{{ currencySymbol }}{{ (discountAmount / 100).toFixed(2) }}
+                    -{{ currencySymbol }}{{ (couponDiscountAmount / 100).toFixed(2) }}
+                  </div>
+                </div>
+
+                <div class="summary-row" v-if="userDiscountAmount > 0">
+                  <div class="summary-label">
+                    {{ $t("order.member_discount") }}
+                  </div>
+
+                  <div class="summary-value discount">
+                    -{{ currencySymbol }}{{ (userDiscountAmount / 100).toFixed(2) }}
+                  </div>
+                </div>
+
+                <div class="summary-row" v-if="totalDiscountAmount > 0">
+                  <div class="summary-label">
+                    {{ $t("order.total_discount") }}
+                  </div>
+
+                  <div class="summary-value discount">
+                    -{{ currencySymbol }}{{ (totalDiscountAmount / 100).toFixed(2) }}
                   </div>
                 </div>
 
@@ -396,13 +416,15 @@ export default {
 
     const discountPercent = ref(0);
 
+    const userDiscountPreviewAmount = ref(0);
+
     const originalPrice = computed(() => {
       if (!plan.value || !selectedPriceType.value) return 0;
 
       return plan.value[selectedPriceType.value] || 0;
     });
 
-    const discountAmount = computed(() => {
+    const couponDiscountAmount = computed(() => {
       if (!couponApplied.value || !couponInfo.value) return 0;
 
       if (couponInfo.value.type === 1) {
@@ -418,9 +440,32 @@ export default {
       return 0;
     });
 
-    const finalPrice = computed(() => {
-      return Math.max(0, originalPrice.value - discountAmount.value);
+    const userDiscountAmount = computed(() => {
+      return Math.max(0, Number(userDiscountPreviewAmount.value) || 0);
     });
+
+    const totalDiscountAmount = computed(() => {
+      return couponDiscountAmount.value + userDiscountAmount.value;
+    });
+
+    const finalPrice = computed(() => {
+      return Math.max(0, originalPrice.value - totalDiscountAmount.value);
+    });
+
+    const extractUserDiscountAmount = (payload) => {
+      if (!payload || typeof payload !== "object") {
+        return null;
+      }
+
+      const rawAmount = payload.user_discount_amount;
+      const parsedAmount = Number(rawAmount);
+
+      if (!Number.isFinite(parsedAmount) || parsedAmount < 0) {
+        return null;
+      }
+
+      return parsedAmount;
+    };
 
     const userHasActivePlan = computed(() => {
       if (!userInfo.value) return false;
@@ -612,6 +657,11 @@ export default {
 
           couponInfo.value = response.data;
 
+          const couponPreviewDiscount = extractUserDiscountAmount(response.data);
+          if (couponPreviewDiscount !== null) {
+            userDiscountPreviewAmount.value = couponPreviewDiscount;
+          }
+
           if (response.message) {
             showToast(response.message, "success");
           }
@@ -744,6 +794,10 @@ export default {
         if (response.data) {
           plan.value = response.data;
 
+          const planPreviewDiscount = extractUserDiscountAmount(response.data);
+          userDiscountPreviewAmount.value =
+            planPreviewDiscount !== null ? planPreviewDiscount : 0;
+
           if (route.query.period && plan.value[route.query.period] !== null) {
             selectedPriceType.value = route.query.period;
           } else {
@@ -825,6 +879,10 @@ export default {
 
       couponInfo.value = null;
 
+      const planPreviewDiscount = extractUserDiscountAmount(plan.value);
+      userDiscountPreviewAmount.value =
+        planPreviewDiscount !== null ? planPreviewDiscount : 0;
+
       showToast(t("order.coupon_removed"), "info");
     };
 
@@ -876,7 +934,11 @@ export default {
 
       originalPrice,
 
-      discountAmount,
+      couponDiscountAmount,
+
+      userDiscountAmount,
+
+      totalDiscountAmount,
 
       finalPrice,
 
