@@ -210,23 +210,23 @@
                     v-if="
                       orderDetail.status === 0 && orderDetail.total_amount > 0
                     "
-                    :size="48"
+                    :size="30"
                   />
                   <IconClock
                     v-else-if="
                       orderDetail.status === 0 && orderDetail.total_amount === 0
                     "
-                    :size="48"
+                    :size="30"
                   />
                   <IconLoader2
                     v-else-if="orderDetail.status === 1"
-                    :size="48"
+                    :size="30"
                     class="rotating-icon"
                   />
-                  <IconX v-else-if="orderDetail.status === 2" :size="48" />
-                  <IconCheck v-else-if="orderDetail.status === 3" :size="48" />
-                  <IconCheck v-else-if="orderDetail.status === 4" :size="48" />
-                  <IconHelp v-else :size="48" />
+                  <IconX v-else-if="orderDetail.status === 2" :size="30" />
+                  <IconCheck v-else-if="orderDetail.status === 3" :size="30" />
+                  <IconCheck v-else-if="orderDetail.status === 4" :size="30" />
+                  <IconHelp v-else :size="30" />
                 </div>
                 <div class="status-text">
                   <h3
@@ -2541,14 +2541,14 @@ export default {
 .status-info {
   display: flex;
   justify-content: center;
-  padding: 1rem 0;
+  padding: 0.45rem 0;
   width: 100%;
 }
 
 .order-status-notice {
   display: flex;
   align-items: center;
-  padding: 1.5rem;
+  padding: 0.95rem 1rem;
   border-radius: 12px;
   width: 100%;
   transition: all 0.5s ease;
@@ -2558,22 +2558,22 @@ export default {
   }
 
   .status-icon {
-    margin-right: 1.5rem;
+    margin-right: 0.9rem;
   }
 
   .status-text {
     flex: 1;
 
     h3 {
-      margin: 0 0 0.5rem;
-      font-size: 1.2rem;
+      margin: 0 0 0.25rem;
+      font-size: 1rem;
       font-weight: 600;
       transition: color 0.5s ease;
     }
 
     p {
       margin: 0;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       line-height: 1.4;
       transition: all 0.5s ease;
     }
@@ -2590,7 +2590,7 @@ export default {
 
     .status-icon {
       margin-right: 0;
-      margin-bottom: 1rem;
+      margin-bottom: 0.65rem;
     }
 
     .status-text h3 {
