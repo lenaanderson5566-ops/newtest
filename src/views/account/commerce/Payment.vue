@@ -1,13 +1,32 @@
 <template>
   <div class="payment-container">
     <div class="payment-inner">
+      <div class="page-status-inline" v-if="!loading.order">
+        <div class="inline-status-badge" :class="getStatusClass(orderDetail.status)">
+          <IconClock
+            v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
+            :size="18"
+          />
+          <IconClock
+            v-else-if="orderDetail.status === 0 && orderDetail.total_amount === 0"
+            :size="18"
+          />
+          <IconLoader2 v-else-if="orderDetail.status === 1" :size="18" class="rotating-icon" />
+          <IconX v-else-if="orderDetail.status === 2" :size="18" />
+          <IconCheck v-else-if="orderDetail.status === 3" :size="18" />
+          <IconCheck v-else-if="orderDetail.status === 4" :size="18" />
+          <IconHelp v-else :size="18" />
+          <span>{{ getStatusText(orderDetail.status) }}</span>
+        </div>
+      </div>
+
       <div class="content-wrapper">
         <!-- 左侧内容：产品信息 -->
         <div class="left-column">
-          <!-- 产品信息 -->
+          <!-- 订单概览 -->
           <div class="section-wrapper">
             <div class="section-title">
-              <span>{{ $t("payment.product_info") }}</span>
+              <span>订单概览</span>
             </div>
 
             <div class="product-info" v-if="!loading.order">
@@ -41,25 +60,7 @@
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!-- 产品信息骨架屏 -->
-            <div class="skeleton-card" v-else>
-              <div
-                class="skeleton-text"
-                v-for="i in 3"
-                :key="'product-' + i"
-              ></div>
-            </div>
-          </div>
-
-          <!-- 订单信息 -->
-          <div class="section-wrapper">
-            <div class="section-title">
-              <span>{{ $t("payment.order_info") }}</span>
-            </div>
-
-            <div class="order-info" v-if="!loading.order">
               <div class="info-row">
                 <div class="info-label">{{ $t("payment.trade_no") }}</div>
                 <div class="info-value">{{ orderDetail.trade_no || "-" }}</div>
@@ -72,12 +73,12 @@
               </div>
             </div>
 
-            <!-- 订单信息骨架屏 -->
+            <!-- 产品信息骨架屏 -->
             <div class="skeleton-card" v-else>
               <div
                 class="skeleton-text"
-                v-for="i in 5"
-                :key="'order-' + i"
+                v-for="i in 3"
+                :key="'product-' + i"
               ></div>
             </div>
           </div>
@@ -138,85 +139,10 @@
 
         <!-- 右侧内容：支付方式 -->
         <div class="right-column">
-          <!-- 新增：订单状态卡片 -->
-          <div class="section-wrapper order-status">
-            <div class="section-title">
-              <span>{{ $t("payment.order_status") }}</span>
-            </div>
-
-            <div class="status-info" v-if="!loading.order">
-              <div
-                class="order-status-notice"
-                :class="getStatusClass(orderDetail.status)"
-              >
-                <div class="status-icon">
-                  <IconClock
-                    v-if="
-                      orderDetail.status === 0 && orderDetail.total_amount > 0
-                    "
-                    :size="30"
-                  />
-                  <IconClock
-                    v-else-if="
-                      orderDetail.status === 0 && orderDetail.total_amount === 0
-                    "
-                    :size="30"
-                  />
-                  <IconLoader2
-                    v-else-if="orderDetail.status === 1"
-                    :size="30"
-                    class="rotating-icon"
-                  />
-                  <IconX v-else-if="orderDetail.status === 2" :size="30" />
-                  <IconCheck v-else-if="orderDetail.status === 3" :size="30" />
-                  <IconCheck v-else-if="orderDetail.status === 4" :size="30" />
-                  <IconHelp v-else :size="30" />
-                </div>
-                <div class="status-text">
-                  <h3
-                    v-if="
-                      orderDetail.status === 0 && orderDetail.total_amount === 0
-                    "
-                    class="activate-status"
-                  >
-                    {{ $t("payment.status.activate") }}
-                  </h3>
-                  <h3 v-else>{{ getStatusText(orderDetail.status) }}</h3>
-                  <p
-                    v-if="
-                      orderDetail.status === 0 && orderDetail.total_amount > 0
-                    "
-                  >
-                    {{ $t("payment.description") }}
-                  </p>
-                  <p v-else-if="orderDetail.status === 1">
-                    {{ $t("payment.payment_processing") }}
-                  </p>
-                  <p v-else-if="orderDetail.status === 2">
-                    {{ $t("payment.order_cancelled") }}
-                  </p>
-                  <p v-else-if="orderDetail.status === 3">
-                    {{ $t("payment.payment_successful_desc") }}
-                  </p>
-                  <p v-else-if="orderDetail.status === 4">
-                    {{ $t("payment.payment_successful_desc") }}
-                  </p>
-                  <p v-else-if="orderDetail.status !== 0">
-                    {{ $t("payment.unknown_status_desc") }}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="skeleton-card" v-else>
-              <div class="skeleton-text"></div>
-            </div>
-          </div>
-
           <!-- 订单金额摘要 -->
           <div class="section-wrapper">
             <div class="section-title">
-              <span>{{ $t("payment.order_info") }}</span>
+              <span>订单金额</span>
             </div>
 
             <div class="order-info" v-if="!loading.order">
@@ -1017,7 +943,7 @@ export default {
 
           setTimeout(() => {
             const statusElement = document.querySelector(
-              ".order-status-notice"
+              ".inline-status-badge"
             );
             if (statusElement) {
               statusElement.classList.add("status-transition");
@@ -2517,6 +2443,56 @@ export default {
   justify-content: center;
   padding: 0.45rem 0;
   width: 100%;
+}
+
+.page-status-inline {
+  display: flex;
+  justify-content: flex-end;
+  margin: 6px 0 14px;
+
+  .inline-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+
+    &.status-pending,
+    &.status-free-confirm {
+      color: #f57c00;
+      background-color: rgba(255, 152, 0, 0.12);
+      border-color: rgba(255, 152, 0, 0.2);
+    }
+
+    &.status-processing {
+      color: #0d47a1;
+      background-color: rgba(33, 150, 243, 0.12);
+      border-color: rgba(33, 150, 243, 0.2);
+    }
+
+    &.status-cancelled {
+      color: #c62828;
+      background-color: rgba(244, 67, 54, 0.12);
+      border-color: rgba(244, 67, 54, 0.2);
+    }
+
+    &.status-completed,
+    &.status-discounted {
+      color: #2e7d32;
+      background-color: rgba(76, 175, 80, 0.12);
+      border-color: rgba(76, 175, 80, 0.2);
+    }
+
+    &.status-unknown {
+      color: #757575;
+      background-color: rgba(158, 158, 158, 0.12);
+      border-color: rgba(158, 158, 158, 0.2);
+    }
+  }
 }
 
 .order-status-notice {
