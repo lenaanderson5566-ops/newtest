@@ -487,14 +487,6 @@ export default {
 }
 
 
-.dashboard-card p,
-.section-wrapper .info-label,
-.section-wrapper .info-value,
-.section-wrapper .summary-label,
-.section-wrapper .summary-value {
-  line-height: 1.35;
-}
-
 .content-layout-shell {
   width: 100%;
   max-width: 1280px;
