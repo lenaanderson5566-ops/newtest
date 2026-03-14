@@ -13,7 +13,11 @@
         :aria-pressed="isCollapsed"
         :title="isCollapsed ? '展开导航' : '折叠导航'"
       >
-        <IconMenu class="collapse-icon" />
+        <span class="collapse-hamburger" aria-hidden="true">
+          <span class="collapse-hamburger__line"></span>
+          <span class="collapse-hamburger__line"></span>
+          <span class="collapse-hamburger__line"></span>
+        </span>
       </button>
 
       <div class="slide-tabs-nav" ref="tabsNav">
@@ -72,7 +76,7 @@ import IconFileText from '@/components/icons/IconFileText.vue';
 
 import IconUser from '@/components/icons/IconUser.vue';
 
-import { IconServer, IconMenu } from '@tabler/icons-vue';
+import { IconServer } from '@tabler/icons-vue';
 
 
 
@@ -812,8 +816,7 @@ export default {
       route,
       isCollapsed,
       isDesktop,
-      toggleCollapse,
-      IconMenu
+      toggleCollapse
 
     };
 
@@ -879,6 +882,10 @@ function debounce(fn, delay) {
 
     &:hover {
       border-color: rgba(var(--theme-color-rgb), 0.45);
+
+      .collapse-hamburger__line {
+        background: var(--theme-color);
+      }
     }
 
     &:focus-visible {
@@ -886,12 +893,27 @@ function debounce(fn, delay) {
       outline-offset: 1px;
     }
 
-    .collapse-icon {
+    .collapse-hamburger {
       width: 16px;
-      height: 16px;
-      color: var(--secondary-text-color);
-      stroke-width: 2.2;
-      transition: color 0.2s ease, transform 0.2s ease;
+      height: 12px;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .collapse-hamburger__line {
+        width: 100%;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--text-color, #334155);
+        opacity: 0.9;
+        transition: background-color 0.2s ease, opacity 0.2s ease;
+      }
+    }
+  }
+
+  &.is-collapsed {
+    .collapse-toggle .collapse-hamburger__line {
+      opacity: 0.82;
     }
   }
 
