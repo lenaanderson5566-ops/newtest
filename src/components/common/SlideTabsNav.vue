@@ -13,11 +13,11 @@
         :aria-pressed="isCollapsed"
         :title="isCollapsed ? '展开导航' : '折叠导航'"
       >
-        <span class="collapse-hamburger" aria-hidden="true">
-          <span class="collapse-hamburger__line"></span>
-          <span class="collapse-hamburger__line"></span>
-          <span class="collapse-hamburger__line"></span>
-        </span>
+        <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 7H20" />
+          <path d="M4 12H20" />
+          <path d="M4 17H20" />
+        </svg>
       </button>
 
       <div class="slide-tabs-nav" ref="tabsNav">
@@ -883,8 +883,8 @@ function debounce(fn, delay) {
     &:hover {
       border-color: rgba(var(--theme-color-rgb), 0.45);
 
-      .collapse-hamburger__line {
-        background: var(--theme-color);
+      .collapse-icon {
+        color: var(--theme-color);
       }
     }
 
@@ -893,29 +893,25 @@ function debounce(fn, delay) {
       outline-offset: 1px;
     }
 
-    .collapse-hamburger {
+    .collapse-icon {
       width: 16px;
-      height: 12px;
-      display: inline-flex;
-      flex-direction: column;
-      justify-content: space-between;
-
-      .collapse-hamburger__line {
-        width: 100%;
-        height: 2px;
-        border-radius: 2px;
-        background: var(--text-color, #334155);
-        opacity: 0.9;
-        transition: background-color 0.2s ease, opacity 0.2s ease;
-      }
+      height: 16px;
+      color: var(--secondary-text-color);
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.92;
+      transition: color 0.2s ease, opacity 0.2s ease;
     }
   }
 
   &.is-collapsed {
-    .collapse-toggle .collapse-hamburger__line {
-      opacity: 0.82;
+    .collapse-toggle .collapse-icon {
+      opacity: 0.8;
     }
   }
+
 
   .slide-tabs-nav {
     display: flex;
