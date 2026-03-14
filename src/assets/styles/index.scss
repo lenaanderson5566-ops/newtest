@@ -32,5 +32,20 @@
 /* 统一支付订单与确认订单的行间距 */
 .payment-container .section-wrapper .info-row,
 .order-confirm-container .order-summary .summary-row {
-  margin-bottom: var(--order-card-row-spacing);
+  margin-bottom: var(--order-card-row-spacing) !important;
+}
+
+/* 支付页右侧订单金额卡片：对齐确认订单的紧凑节奏 */
+.payment-container .right-column .order-info .info-row {
+  padding: 4px 0 !important;
+  border-radius: 0 !important;
+}
+
+.payment-container .right-column .order-info .info-row:hover {
+  background-color: transparent !important;
+}
+
+.payment-container .right-column .order-info .info-row.final-row {
+  padding-top: 10px !important;
+  margin-top: 6px;
 }
