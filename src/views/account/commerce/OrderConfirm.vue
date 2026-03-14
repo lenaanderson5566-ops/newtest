@@ -1,15 +1,6 @@
 <template>
   <div class="order-confirm-container">
     <div class="order-confirm-inner">
-      <!-- 页面标题 -->
-
-      <div class="dashboard-card welcome-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t("order.title") }}</h2>
-        </div>
-
-      </div>
-
       <!-- 用户现有订阅提示 -->
 
       <div class="alert-card" v-if="showExistingPlanWarning">

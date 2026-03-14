@@ -1,13 +1,6 @@
 <template>
   <div class="payment-container">
     <div class="payment-inner">
-      <!-- 标题栏 -->
-      <div class="dashboard-card title-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t("payment.title") }}</h2>
-        </div>
-      </div>
-
       <div class="content-wrapper">
         <!-- 左侧内容：产品信息 -->
         <div class="left-column">
