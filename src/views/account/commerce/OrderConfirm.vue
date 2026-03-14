@@ -2174,67 +2174,6 @@ export default {
 }
 
 
-.pending-order-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 2100;
-
-  .pending-order-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-  }
-
-  .pending-order-dialog {
-    position: relative;
-    width: min(92vw, 420px);
-    margin: 20vh auto 0;
-    background: var(--card-bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    padding: 18px;
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16);
-
-    h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    p {
-      margin: 0;
-      color: var(--text-color);
-      opacity: 0.9;
-      line-height: 1.55;
-    }
-  }
-
-  .pending-order-actions {
-    margin-top: 14px;
-    display: flex;
-    gap: 10px;
-
-    button {
-      flex: 1;
-      height: 40px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .btn-return-orders {
-      background: transparent;
-      color: var(--text-color);
-    }
-
-    .btn-confirm-cancel {
-      background: var(--theme-color);
-      color: #fff;
-      border-color: var(--theme-color);
-    }
-  }
-}
 
 @media (max-width: 991px) {
   .order-confirm-container {

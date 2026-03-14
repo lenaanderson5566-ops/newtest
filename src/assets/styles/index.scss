@@ -115,3 +115,86 @@
   }
 }
 
+/* 全局：未完成订单确认弹窗样式（避免 scoped 样式被全局密度规则影响） */
+.pending-order-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  isolation: isolate;
+}
+
+.pending-order-modal .pending-order-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.48);
+}
+
+.pending-order-modal .pending-order-dialog {
+  position: relative;
+  width: min(92vw, 560px);
+  background: rgba(var(--card-background-rgb, 255, 255, 255), 0.98);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.pending-order-modal .pending-order-dialog h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.pending-order-modal .pending-order-dialog p {
+  margin: 0;
+  color: var(--text-color) !important;
+  opacity: 0.95;
+  line-height: 1.55;
+  font-size: 17px;
+}
+
+.pending-order-modal .pending-order-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+}
+
+.pending-order-modal .pending-order-actions button {
+  flex: 1;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.pending-order-modal .pending-order-actions .btn-return-orders {
+  background: rgba(var(--card-background-rgb, 255, 255, 255), 0.92);
+  color: var(--text-color);
+}
+
+.pending-order-modal .pending-order-actions .btn-confirm-cancel {
+  background: var(--theme-color);
+  color: #fff;
+  border-color: var(--theme-color);
+}
+
+@media (max-width: 768px) {
+  .pending-order-modal .pending-order-dialog {
+    width: min(94vw, 420px);
+    padding: 16px;
+  }
+
+  .pending-order-modal .pending-order-dialog p {
+    font-size: 15px;
+  }
+}
+
