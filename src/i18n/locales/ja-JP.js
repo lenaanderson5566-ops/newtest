@@ -297,6 +297,7 @@ export default {
     overview: '概要',
     region: 'エリア',
     usage: '利用',
+    start: 'Start',
     my: 'マイ',
     shop: 'ストア',
     subscription: 'サブスクリプション',

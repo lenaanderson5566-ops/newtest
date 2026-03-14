@@ -348,7 +348,7 @@ const routes = [
 
         meta: {
 
-          titleKey: 'menu.usage',
+          titleKey: 'menu.start',
 
           requiresAuth: true,
 

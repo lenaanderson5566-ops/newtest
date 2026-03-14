@@ -297,6 +297,7 @@ export default {
     overview: 'نمای کلی',
     region: 'منطقه',
     usage: 'استفاده',
+    start: 'Start',
     my: 'حساب من',
     shop: 'فروشگاه',
     subscription: 'اشتراک',

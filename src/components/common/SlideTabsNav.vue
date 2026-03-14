@@ -123,7 +123,7 @@ export default {
     const navItems = [
       { title: 'Dashboard', path: '/dashboard', name: 'Dashboard', icon: 'IconDashboard', i18nKey: 'overview' },
       { title: 'Nodes', path: '/nodes', name: 'Nodes', icon: 'IconServer', i18nKey: 'region' },
-      { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'usage' },
+      { title: 'Docs', path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'start' },
       { title: 'Profile', path: '/profile', name: 'Profile', icon: 'IconUser', i18nKey: 'my' }
     ];
 

@@ -303,6 +303,7 @@ export default {
         overview: 'Tổng quan',
         region: 'Khu vực',
         usage: 'Sử dụng',
+        start: 'Start',
         my: 'Của tôi',
         shop: 'Cửa hàng',
         subscription: 'Gói đăng ký',

@@ -297,6 +297,7 @@ export default {
     overview: '概覽',
     region: '區域',
     usage: '使用',
+        start: 'Start',
     my: '我的',
     shop: '商店',
     subscription: '訂閱',

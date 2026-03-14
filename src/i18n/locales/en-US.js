@@ -300,6 +300,7 @@ export default {
         overview: 'Overview',
         region: 'Region',
         usage: 'Usage',
+        start: 'Start',
         my: 'My',
         shop: 'Shop',
         subscription: 'Subscription',
