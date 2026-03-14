@@ -731,7 +731,7 @@ export default {
         order_expired: '订单已过期',
         create_new_order: '创建新订单',
         handling_fee: '手续费',
-        total_with_fee: '含手续费总额',
+        total_with_fee: '合计',
         pay_now: '立即支付',
         scan_qrcode: '请扫描二维码完成支付',
         pay_success: '支付成功',

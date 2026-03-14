@@ -266,7 +266,7 @@
                 <div class="summary-divider"></div>
 
                 <div class="summary-row total">
-                  <div class="summary-label">{{ $t("payment.total_with_fee") }}</div>
+                  <div class="summary-label">合计</div>
 
                   <div class="summary-value">
                     {{ formatCurrencyAmount(totalWithFee) }}
@@ -1125,15 +1125,17 @@ export default {
     gap: 30px;
 
     .left-column {
-      flex: 1;
+      flex: 1.45;
 
       min-width: 0;
     }
 
     .right-column {
-      flex: 1;
+      flex: 0.85;
 
       min-width: 0;
+
+      max-width: 520px;
     }
   }
 
@@ -1760,6 +1762,12 @@ export default {
 
         margin-bottom: 0;
 
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 6px;
+
         .summary-label {
           font-size: 16px;
 
@@ -1769,11 +1777,13 @@ export default {
         }
 
         .summary-value {
-          font-size: 22px;
+          font-size: 32px;
 
-          font-weight: 700;
+          font-weight: 800;
 
           color: var(--theme-color);
+
+          line-height: 1.15;
         }
       }
     }
@@ -2085,6 +2095,10 @@ export default {
       flex-direction: column;
 
       gap: 20px;
+
+      .right-column {
+        max-width: none;
+      }
     }
 
     .action-buttons {
