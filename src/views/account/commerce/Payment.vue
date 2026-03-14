@@ -1463,70 +1463,6 @@ export default {
     }
   }
 
-  .product-info,
-  .order-info {
-    .info-row {
-      display: flex;
-      margin-bottom: 12px;
-      padding: 10px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.05);
-      }
-
-      &.highlight-row {
-        background-color: rgba(var(--theme-color-rgb), 0.08);
-
-        .amount {
-          font-size: 18px;
-          font-weight: 600;
-          color: var(--theme-color);
-        }
-      }
-
-      &.discount-row {
-        .discount {
-          color: #f44336;
-        }
-      }
-
-      &.final-row {
-        border-top: 1px dashed var(--border-color);
-        padding-top: 15px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-
-        .info-label {
-          width: 100%;
-        }
-
-        .final {
-          font-size: 32px;
-          font-weight: 800;
-          letter-spacing: 0.4px;
-          color: var(--theme-color);
-          line-height: 1.15;
-        }
-      }
-
-      .info-label {
-        width: 120px;
-        color: var(--secondary-text-color);
-        font-size: 14px;
-      }
-
-      .info-value {
-        flex: 1;
-        color: var(--text-color);
-        font-weight: 500;
-        font-size: 14px;
-      }
-    }
-  }
-
   .payment-methods {
     .payment-method-item {
       display: flex;
@@ -2023,18 +1959,6 @@ export default {
 
     .right-column {
       margin-bottom: 90px;
-    }
-
-    .product-info,
-    .order-info {
-      .info-row {
-        flex-direction: column;
-        gap: 5px;
-
-        .info-label {
-          width: 100%;
-        }
-      }
     }
 
     .action-buttons {

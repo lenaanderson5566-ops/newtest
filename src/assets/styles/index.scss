@@ -49,3 +49,69 @@
   padding-top: 10px !important;
   margin-top: 6px;
 }
+
+/* Payment 行样式统一上收为全局（替代 Payment.vue scoped 行样式） */
+.payment-container .section-wrapper .info-row {
+  display: flex;
+  margin-bottom: var(--order-card-row-spacing) !important;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.payment-container .section-wrapper .info-label {
+  width: 120px;
+  color: var(--secondary-text-color);
+  font-size: 14px;
+}
+
+.payment-container .section-wrapper .info-value {
+  flex: 1;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.payment-container .section-wrapper .info-row.discount-row .discount {
+  color: #f44336;
+}
+
+.payment-container .section-wrapper .info-row.highlight-row .amount {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--theme-color);
+}
+
+.payment-container .section-wrapper .info-row.final-row {
+  border-top: 1px dashed var(--border-color);
+  padding-top: 10px !important;
+  margin-top: 6px;
+  margin-bottom: 0 !important;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.payment-container .section-wrapper .info-row.final-row .info-label {
+  width: 100%;
+}
+
+.payment-container .section-wrapper .info-row.final-row .final {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: var(--theme-color);
+  line-height: 1.15;
+}
+
+@media (max-width: 480px) {
+  .payment-container .section-wrapper .info-row {
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+  }
+
+  .payment-container .section-wrapper .info-row .info-label {
+    width: 100%;
+  }
+}
+
