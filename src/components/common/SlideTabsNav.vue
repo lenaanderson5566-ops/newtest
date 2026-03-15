@@ -854,7 +854,7 @@ function debounce(fn, delay) {
   margin-bottom: 14px;
   position: fixed;
   top: 108px;
-  left: 10px;
+  left: var(--left-nav-gap, 10px);
   z-index: 10;
   width: var(--left-nav-occupy, 176px);
   transition: width 0.25s ease;

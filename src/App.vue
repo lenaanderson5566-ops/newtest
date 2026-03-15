@@ -476,6 +476,7 @@ export default {
 .app-content-wrapper {
   width: 100%;
   --page-edge-gap: 2px;
+  --left-nav-gap: 10px;
 
   &.with-top-bar {
     --page-content-top-gap: 8px;
@@ -498,7 +499,7 @@ export default {
 
 @media (min-width: 992px) {
   .app-content-wrapper.with-left-nav {
-    padding-left: var(--left-nav-occupy, 176px);
+    padding-left: calc(var(--left-nav-occupy, 176px) + var(--left-nav-gap, 10px));
   }
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
@@ -509,7 +510,7 @@ export default {
   }
 
   .page-header-layer {
-    padding-left: var(--left-nav-occupy, 176px);
+    padding-left: calc(var(--left-nav-occupy, 176px) + var(--left-nav-gap, 10px));
   }
 
   .page-header-content {
