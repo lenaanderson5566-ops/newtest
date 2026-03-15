@@ -490,7 +490,7 @@ export default {
 
 .content-layout-shell {
   width: 100%;
-  max-width: var(--page-content-max-width, 1280px);
+  max-width: var(--page-content-max-width);
   margin: 0 auto;
   padding-inline: var(--page-edge-gap, 2px);
   box-sizing: border-box;
@@ -502,7 +502,7 @@ export default {
   }
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
-    width: min(var(--page-content-max-width, 1280px), 100%);
+    width: min(var(--page-content-max-width), 100%);
     margin-left: 0;
     margin-right: auto;
     padding-inline: var(--page-edge-gap, 2px);
@@ -513,7 +513,7 @@ export default {
   }
 
   .page-header-content {
-    width: min(var(--page-content-max-width, 1280px), 100%);
+    width: min(var(--page-content-max-width), 100%);
     margin-left: 0;
     margin-right: auto;
     padding-inline: var(--page-edge-gap, 2px);
