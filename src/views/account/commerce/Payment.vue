@@ -107,7 +107,7 @@
 
           <!-- 支付方式 - 仅当订单状态为待支付(0)时显示 -->
           <div
-            class="section-wrapper"
+            class="section-wrapper payment-methods-section"
             v-if="
               !loading.order &&
               orderDetail.status === 0 &&
@@ -131,25 +131,25 @@
                   <img v-else :src="method.icon" :alt="method.name" />
                 </div>
                 <div class="method-details">
-                  <div class="method-name">{{ method.name }}</div>
-                  <div
+                  <span class="method-name">{{ method.name }}</span>
+                  <span
                     class="method-fee"
                     v-if="
                       method.handling_fee_percent || method.handling_fee_fixed
                     "
                   >
                     {{ formatFee(method) }}
-                  </div>
+                  </span>
                 </div>
                 <div class="method-check">
-                  <IconCircleCheck v-if="selectedMethod === method.id" />
-                  <IconCircle v-else />
+                  <IconCircleCheck v-if="selectedMethod === method.id" :size="22" />
+                  <IconCircle v-else :size="22" />
                 </div>
               </div>
             </div>
 
             <!-- 支付方式骨架屏 -->
-            <div class="skeleton-card" v-else>
+            <div class="skeleton-card methods-skeleton" v-else>
               <div
                 class="skeleton-payment-method"
                 v-for="i in 2"
@@ -1441,37 +1441,48 @@ export default {
     }
   }
 
+  .section-wrapper.payment-methods-section {
+    padding: 14px;
+    margin-bottom: 14px;
+
+    .section-title {
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+  }
+
   .payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
     .payment-method-item {
       display: flex;
       align-items: center;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 12px;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 9px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
       border: 1px solid var(--border-color);
 
       &:hover {
-        border-color: rgba(var(--theme-color-rgb), 0.5);
-        background-color: rgba(var(--theme-color-rgb), 0.05);
-        transform: translateY(-2px);
+        border-color: rgba(var(--theme-color-rgb), 0.42);
+        background-color: rgba(var(--theme-color-rgb), 0.04);
       }
 
       &.active {
         border-color: var(--theme-color);
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(var(--theme-color-rgb), 0.15);
+        background-color: rgba(var(--theme-color-rgb), 0.08);
+        box-shadow: 0 2px 10px rgba(var(--theme-color-rgb), 0.12);
       }
 
       .method-icon {
-        width: 40px;
-        height: 40px;
+        width: 28px;
+        height: 28px;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-right: 15px;
         color: var(--theme-color);
 
         img {
@@ -1484,21 +1495,27 @@ export default {
       .method-details {
         flex: 1;
         min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
 
         .method-name {
           font-weight: 600;
-          margin-bottom: 4px;
           color: var(--text-color);
+          line-height: 1.2;
         }
 
         .method-fee {
-          font-size: 12px;
+          font-size: 11px;
           color: var(--secondary-text-color);
+          white-space: nowrap;
         }
       }
 
       .method-check {
         color: var(--theme-color);
+        display: inline-flex;
+        align-items: center;
       }
     }
   }
@@ -1746,8 +1763,14 @@ export default {
     }
 
     .skeleton-payment-method {
-      height: 70px;
-      margin-bottom: 20px;
+      height: 52px;
+      margin-bottom: 8px;
+    }
+  }
+
+  .methods-skeleton {
+    .skeleton-payment-method:last-child {
+      margin-bottom: 0;
     }
   }
 
