@@ -126,10 +126,6 @@
                 :class="{ active: selectedMethod === method.id }"
                 @click="selectMethod(method.id)"
               >
-                <div class="method-icon">
-                  <IconCreditCard v-if="!method.icon" />
-                  <img v-else :src="method.icon" :alt="method.name" />
-                </div>
                 <div class="method-details">
                   <span class="method-name">{{ method.name }}</span>
                   <span
@@ -141,9 +137,9 @@
                     {{ formatFee(method) }}
                   </span>
                 </div>
-                <div class="method-check">
-                  <IconCircleCheck v-if="selectedMethod === method.id" :size="22" />
-                  <IconCircle v-else :size="22" />
+                <div class="method-icon right-icon">
+                  <IconCreditCard v-if="!method.icon" />
+                  <img v-else :src="method.icon" :alt="method.name" />
                 </div>
               </div>
             </div>
@@ -502,8 +498,6 @@ import {
   IconCheck,
   IconX,
   IconCreditCard,
-  IconCircle,
-  IconCircleCheck,
   IconAlertCircle,
   IconArrowRight,
   IconAlertTriangle,
@@ -523,8 +517,6 @@ export default {
     IconCheck,
     IconX,
     IconCreditCard,
-    IconCircle,
-    IconCircleCheck,
     IconAlertCircle,
     IconArrowRight,
     IconAlertTriangle,
@@ -1442,11 +1434,11 @@ export default {
   }
 
   .section-wrapper.payment-methods-section {
-    padding: 14px;
-    margin-bottom: 14px;
+    padding: 10px;
+    margin-bottom: 10px;
 
     .section-title {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       font-size: 15px;
     }
   }
@@ -1459,9 +1451,10 @@ export default {
     .payment-method-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 9px;
+      gap: 8px;
+      padding: 8px 10px;
+      min-height: 44px;
+      border-radius: 8px;
       cursor: pointer;
       transition: border-color 0.2s ease, background-color 0.2s ease;
       border: 1px solid var(--border-color);
@@ -1478,12 +1471,16 @@ export default {
       }
 
       .method-icon {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: var(--theme-color);
+
+        &.right-icon {
+          margin-left: auto;
+        }
 
         img {
           max-width: 100%;
@@ -1497,7 +1494,7 @@ export default {
         min-width: 0;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
 
         .method-name {
           font-weight: 600;
@@ -1510,12 +1507,6 @@ export default {
           color: var(--secondary-text-color);
           white-space: nowrap;
         }
-      }
-
-      .method-check {
-        color: var(--theme-color);
-        display: inline-flex;
-        align-items: center;
       }
     }
   }
