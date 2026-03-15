@@ -567,7 +567,7 @@ onMounted(async () => {
 
 .docs-inner {
 
-  max-width: var(--page-content-max-width, 1280px);
+  max-width: var(--page-content-max-width);
 
   margin: 0 auto;
 
@@ -902,7 +902,7 @@ onMounted(async () => {
 
   gap: 2rem;
 
-  max-width: var(--page-content-max-width, 1280px);
+  max-width: var(--page-content-max-width);
 
   width: 100%;
 

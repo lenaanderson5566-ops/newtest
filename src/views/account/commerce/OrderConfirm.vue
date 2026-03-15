@@ -1078,7 +1078,7 @@ export default {
   .order-confirm-inner {
     width: 100%;
 
-    max-width: var(--page-content-max-width, 1280px);
+    max-width: var(--page-content-max-width);
 
     padding-bottom: 100px;
   }

@@ -271,7 +271,7 @@
         <template v-else-if="!hasPlan">
           <!-- 没有订阅时显示的提示卡片 -->
           <InfoCard class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
-               style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width, 1280px); width: 100%;">
+               style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;">
             <template #icon>
               <div class="no-plan-icon">
                 <IconShoppingCart :size="45" class="icon-cart"/>
@@ -2701,7 +2701,7 @@ export default {
 
   .dashboard-inner {
     width: 100%;
-    max-width: var(--page-content-max-width, 1280px);
+    max-width: var(--page-content-max-width);
     .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
