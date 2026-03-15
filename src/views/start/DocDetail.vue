@@ -1,8 +1,8 @@
 ﻿<template>
 
-  <div class="doc-detail-container">
+  <div class="doc-detail-container page-shell">
 
-    <div class="doc-detail-inner">
+    <div class="doc-detail-inner page-inner page-stack">
 
       <!-- 返回按钮 -->
 
@@ -1257,17 +1257,17 @@ onUnmounted(() => {
 
 .doc-detail-container {
 
-  padding: 1.25rem;
+  padding: 0;
 
-  padding-bottom: calc(1.25rem + 64px); 
+  padding-bottom: calc(2px + 64px); 
 
   
 
   @media (min-width: 768px) {
 
-    padding: 2rem;
+    padding: 0;
 
-    padding-bottom: 3rem; 
+    padding-bottom: 2px; 
 
   }
 

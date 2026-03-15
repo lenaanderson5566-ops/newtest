@@ -1,6 +1,6 @@
 <template>
-  <div class="security-container">
-    <div class="security-inner">
+  <div class="security-container page-shell">
+    <div class="security-inner page-inner page-stack">
       <div class="profile-card">
         <div class="card-header">
           <h3>{{ $t('profile.security') }}</h3>
@@ -251,7 +251,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .security-container {
-  padding: 20px;
+  padding: 0;
 }
 
 .security-inner {

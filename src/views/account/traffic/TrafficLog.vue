@@ -1,12 +1,12 @@
 ﻿<template>
 
-  <div class="trafficlog-container">
+  <div class="trafficlog-container page-shell">
 
 
     
 
 
-    <div class="trafficlog-inner">
+    <div class="trafficlog-inner page-inner page-stack">
 
       <!-- 欢迎卡片 -->
 
@@ -810,7 +810,7 @@ onUnmounted(() => {
 
 .trafficlog-container {
 
-  padding: 20px;
+  padding: 0;
 
   padding-bottom: 80px; 
 
