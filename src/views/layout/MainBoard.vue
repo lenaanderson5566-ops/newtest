@@ -107,13 +107,11 @@ export default {
 
 .content-area {
 
-  width: min(1180px, 100%);
+  width: 100%;
 
   margin: 0 auto;
 
-  padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px));
-
-  padding-top: 0;
+  padding: 0 0 calc(2px + env(safe-area-inset-bottom, 0px));
 
   box-sizing: border-box;
 

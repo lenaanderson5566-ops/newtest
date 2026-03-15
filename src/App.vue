@@ -475,6 +475,7 @@ export default {
 }
 .app-content-wrapper {
   width: 100%;
+  --page-edge-gap: 2px;
 
   &.with-top-bar {
     --page-content-top-gap: 8px;
@@ -491,7 +492,7 @@ export default {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding-inline: 4px;
+  padding-inline: var(--page-edge-gap, 2px);
   box-sizing: border-box;
 }
 
@@ -504,7 +505,7 @@ export default {
     width: min(1280px, 100%);
     margin-left: 0;
     margin-right: auto;
-    padding-inline: clamp(120px, 10vw, 180px) 4px;
+    padding-inline: var(--page-edge-gap, 2px);
   }
 
   .page-header-layer {
@@ -515,7 +516,7 @@ export default {
     width: min(1280px, 100%);
     margin-left: 0;
     margin-right: auto;
-    padding: 0 24px;
+    padding-inline: var(--page-edge-gap, 2px);
   }
 
 }
@@ -531,7 +532,7 @@ export default {
   }
 
   .page-header-content {
-    padding: 0 12px;
+    padding-inline: var(--page-edge-gap, 2px);
   }
 
   .page-header-title {
@@ -602,7 +603,7 @@ export default {
 /* 统一窄屏容器规则：仅最外层保留 2px，内层容器全部归零，最大化可用宽度 */
 @media (max-width: 1200px) {
   .content-layout-shell {
-    padding-inline: 2px !important;
+    padding-inline: var(--page-edge-gap, 2px) !important;
   }
 
   .content-layout-shell > * {

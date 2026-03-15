@@ -182,7 +182,7 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .my-center {
-  padding: 1rem 0 1.25rem;
+  padding: 0 0 2px;
   background: linear-gradient(180deg, rgba(var(--theme-color-rgb), 0.03), transparent 42%);
 }
 

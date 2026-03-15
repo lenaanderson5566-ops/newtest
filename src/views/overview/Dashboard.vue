@@ -2682,7 +2682,7 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-container {
-  padding: 8px;
+  padding: 0;
   display: flex;
   justify-content: center;
   --dashboard-card-padding: 20px;
@@ -4533,14 +4533,14 @@ export default {
 
 @media (max-width: 1200px) {
   .dashboard-container {
-    padding: 2px;
+    padding: 0;
     padding-bottom: 74px;
   }
 }
 
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 2px;
+    padding: 0;
     padding-bottom: 74px;
     --dashboard-card-padding: 12px;
     --dashboard-card-gap: 10px;
