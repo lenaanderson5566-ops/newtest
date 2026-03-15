@@ -491,7 +491,7 @@ export default {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding-inline: 12px;
+  padding-inline: 4px;
   box-sizing: border-box;
 }
 
@@ -561,7 +561,7 @@ export default {
   /* 全局移动端页面内容贴近边缘（覆盖各页面 container 的默认左右内边距） */
   .content-layout-shell > [class$="-container"],
   .content-layout-shell > [class*="-container "] {
-    padding-inline: 4px !important;
+    padding-inline: 2px !important;
   }
 
   /* Mobile density optimization: avoid oversized modules */
@@ -610,14 +610,14 @@ export default {
 }
 
 /* 平板/窄屏：同样收紧页面容器左右留白，避免仅手机断点生效 */
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
   .content-layout-shell {
     padding-inline: 0;
   }
 
   .content-layout-shell > [class$="-container"],
   .content-layout-shell > [class*="-container "] {
-    padding-inline: 4px !important;
+    padding-inline: 2px !important;
   }
 }
 
