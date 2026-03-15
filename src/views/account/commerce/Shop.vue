@@ -1,6 +1,6 @@
 ﻿<template>
-  <div class="shop-container">
-    <div class="shop-inner">
+  <div class="shop-container page-shell">
+    <div class="shop-inner page-inner page-stack">
       <!-- 欢迎卡片 -->
 
       <div class="dashboard-card welcome-card">
@@ -895,7 +895,7 @@ export default {
 .shop-container {
   --shop-card-radius: var(--radius-lg);
 
-  padding: 20px;
+  padding: 0;
 
   display: flex;
 
@@ -904,8 +904,7 @@ export default {
   .shop-inner {
     width: 100%;
 
-    max-width: 1200px;
-  }
+      }
 
   .welcome-card {
     border: 1px solid var(--border-color);

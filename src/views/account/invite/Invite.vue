@@ -1,5 +1,5 @@
-﻿<template>
-  <div class="account-container">
+<template>
+  <div class="account-container page-shell">
     <!-- 自定义确认弹窗 -->
     <transition name="modal">
       <div class="custom-modal" v-if="showConfirmModal">
@@ -26,18 +26,7 @@
       </div>
     </transition>
     
-    <div class="account-inner">
-      <!-- 欢迎卡片 -->
-      <div class="dashboard-card welcome-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('invite.title') }}</h2>
-        </div>
-        <div class="card-body">
-          <p>{{ $t('invite.description') }}</p>
-        </div>
-      </div>
-      
-
+    <div class="account-inner page-inner page-stack">
       <!-- 佣金余额卡片 -->
       <div class="dashboard-card balance-card">
         <div class="card-header">
@@ -1536,14 +1525,13 @@ export default {
 
 <style lang="scss" scoped>
 .account-container {
-  padding: 20px;
+  padding: 0;
   display: flex;
   justify-content: center;
   
   .account-inner {
     width: 100%;
-    max-width: 1200px;
-  }
+      }
   
   .welcome-card {
     margin-bottom: 24px;

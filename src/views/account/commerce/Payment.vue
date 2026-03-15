@@ -1,23 +1,29 @@
-﻿<template>
-  <div class="payment-container">
-    <div class="payment-inner">
-      <!-- 标题栏 -->
-      <div class="dashboard-card title-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t("payment.title") }}</h2>
-        </div>
-        <div class="card-body">
-          <p>{{ $t("payment.description") }}</p>
-        </div>
-      </div>
-
+<template>
+  <div class="payment-container page-shell">
+    <div class="payment-inner page-inner page-stack">
       <div class="content-wrapper">
         <!-- 左侧内容：产品信息 -->
         <div class="left-column">
-          <!-- 产品信息 -->
+          <!-- 订单概览 -->
           <div class="section-wrapper">
-            <div class="section-title">
-              <span>{{ $t("payment.product_info") }}</span>
+            <div class="section-title with-status">
+              <span>订单概览</span>
+              <div class="inline-status-badge" :class="getStatusClass(orderDetail.status)" v-if="!loading.order">
+                <IconClock
+                  v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
+                  :size="18"
+                />
+                <IconClock
+                  v-else-if="orderDetail.status === 0 && orderDetail.total_amount === 0"
+                  :size="18"
+                />
+                <IconLoader2 v-else-if="orderDetail.status === 1" :size="18" class="rotating-icon" />
+                <IconX v-else-if="orderDetail.status === 2" :size="18" />
+                <IconCheck v-else-if="orderDetail.status === 3" :size="18" />
+                <IconCheck v-else-if="orderDetail.status === 4" :size="18" />
+                <IconHelp v-else :size="18" />
+                <span>{{ getStatusText(orderDetail.status) }}</span>
+              </div>
             </div>
 
             <div class="product-info" v-if="!loading.order">
@@ -51,6 +57,42 @@
                   </div>
                 </div>
               </div>
+
+              <div class="info-row">
+                <div class="info-label">{{ $t("payment.trade_no") }}</div>
+                <div class="info-value">{{ orderDetail.trade_no || "-" }}</div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">{{ $t("payment.created_at") }}</div>
+                <div class="info-value">
+                  {{ formatDate(orderDetail.created_at) }}
+                </div>
+              </div>
+
+              <div
+                class="overview-actions"
+                v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
+              >
+                <button
+                  class="btn-back secondary-action"
+                  @click="cancelCurrentOrder"
+                  :disabled="loading.cancelling"
+                >
+                  <IconX v-if="!loading.cancelling" :size="18" />
+                  <div v-else class="loader"></div>
+                  <span>{{ $t("payment.cancel_order") }}</span>
+                </button>
+
+                <button
+                  class="btn-check secondary-action"
+                  @click="checkPaymentStatus"
+                  :disabled="(orderDetail.total_amount > 0 && !selectedMethod) || loading.checking || loading.paying"
+                >
+                  <IconRefresh v-if="!loading.checking" :size="18" />
+                  <div v-else class="loader"></div>
+                  <span>{{ $t("payment.check_payment") }}</span>
+                </button>
+              </div>
             </div>
 
             <!-- 产品信息骨架屏 -->
@@ -63,247 +105,9 @@
             </div>
           </div>
 
-          <!-- 订单信息 -->
-          <div class="section-wrapper">
-            <div class="section-title">
-              <span>{{ $t("payment.order_info") }}</span>
-            </div>
-
-            <div class="order-info" v-if="!loading.order">
-              <div class="info-row">
-                <div class="info-label">{{ $t("payment.trade_no") }}</div>
-                <div class="info-value">{{ orderDetail.trade_no || "-" }}</div>
-              </div>
-              <div class="info-row">
-                <div class="info-label">{{ $t("payment.created_at") }}</div>
-                <div class="info-value">
-                  {{ formatDate(orderDetail.created_at) }}
-                </div>
-              </div>
-
-              <!-- 充值订单显示充值金额 -->
-              <div v-if="orderDetail.period === 'deposit'" class="info-row">
-                <div class="info-label">{{ $t("wallet.deposit.title") }}</div>
-                <div class="info-value amount">
-                  {{ formatAmount(orderDetail.total_amount) }}
-                </div>
-              </div>
-              <!-- 普通订单显示订阅金额 -->
-              <div v-else class="info-row">
-                <div class="info-label">{{ $t("payment.total_price") }}</div>
-                <div class="info-value amount">
-                  {{ formatAmount(getPlanPrice()) }}
-                </div>
-              </div>
-
-              <div
-                class="info-row"
-                v-if="
-                  periodDiscount.showDiscount &&
-                  orderDetail.period !== 'deposit'
-                "
-              >
-                <div class="info-label">
-                  {{ $t("shop.plan.discount.relative") }}
-                </div>
-                <div class="info-value">
-                  {{ periodDiscount.periodName }}
-                  {{ periodDiscount.discountPercentage }}% ，{{
-                    $t("shop.plan.discount.savings")
-                  }}
-                  {{ formatAmount(periodDiscount.savingsAmountInCents) }}
-                </div>
-              </div>
-
-              <div
-                class="info-row discount-row"
-                v-if="discountBreakdownVisible"
-              >
-                <div class="info-label">
-                  {{ $t("payment.coupon_discount_amount") }}
-                </div>
-                <div class="info-value discount">
-                  -{{ formatAmount(couponDiscountAmount) }}
-                </div>
-              </div>
-              <div
-                class="info-row discount-row"
-                v-if="discountBreakdownVisible"
-              >
-                <div class="info-label">
-                  {{ $t("payment.user_discount_amount") }}
-                </div>
-                <div class="info-value discount">
-                  -{{ formatAmount(userDiscountAmount) }}
-                </div>
-              </div>
-              <div
-                class="info-row discount-row"
-                v-if="discountBreakdownVisible"
-              >
-                <div class="info-label">
-                  {{ $t("payment.total_discount_amount") }}
-                </div>
-                <div class="info-value discount">
-                  -{{ formatAmount(discountAmount) }}
-                </div>
-              </div>
-              <div
-                class="info-row"
-                v-if="
-                  orderDetail.balance_amount !== null &&
-                  orderDetail.balance_amount !== undefined &&
-                  orderDetail.balance_amount > 0
-                "
-              >
-                <div class="info-label">{{ $t("payment.use_credit") }}</div>
-                <div class="info-value discount">
-                  -{{ formatAmount(orderDetail.balance_amount) }}
-                </div>
-              </div>
-              <div
-                class="info-row"
-                v-if="
-                  orderDetail.refund_amount !== null &&
-                  orderDetail.refund_amount !== undefined &&
-                  orderDetail.refund_amount > 0
-                "
-              >
-                <div class="info-label">{{ $t("payment.refund_amount") }}</div>
-                <div class="info-value">
-                  {{ formatAmount(orderDetail.refund_amount) }}
-                </div>
-              </div>
-              <div
-                class="info-row"
-                v-if="selectedMethod && handleFeeAmount > 0"
-              >
-                <div class="info-label">{{ $t("payment.handling_fee") }}</div>
-                <div class="info-value fee">
-                  {{ formatAmount(handleFeeAmount) }}
-                </div>
-              </div>
-              <div class="info-row final-row">
-                <div class="info-label">{{ $t("payment.total_with_fee") }}</div>
-                <div class="info-value final">
-                  {{ formatAmount(totalWithFee) }}
-                </div>
-              </div>
-            </div>
-
-            <!-- 订单信息骨架屏 -->
-            <div class="skeleton-card" v-else>
-              <div
-                class="skeleton-text"
-                v-for="i in 5"
-                :key="'order-' + i"
-              ></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 右侧内容：支付方式 -->
-        <div class="right-column">
-          <!-- 新增：订单状态卡片 -->
-          <div class="section-wrapper order-status">
-            <div class="section-title">
-              <span>{{ $t("payment.order_status") }}</span>
-            </div>
-
-            <div class="status-info" v-if="!loading.order">
-              <div
-                class="order-status-notice"
-                :class="getStatusClass(orderDetail.status)"
-              >
-                <div class="status-icon">
-                  <IconClock
-                    v-if="
-                      orderDetail.status === 0 && orderDetail.total_amount > 0
-                    "
-                    :size="48"
-                  />
-                  <IconClock
-                    v-else-if="
-                      orderDetail.status === 0 && orderDetail.total_amount === 0
-                    "
-                    :size="48"
-                  />
-                  <IconLoader2
-                    v-else-if="orderDetail.status === 1"
-                    :size="48"
-                    class="rotating-icon"
-                  />
-                  <IconX v-else-if="orderDetail.status === 2" :size="48" />
-                  <IconCheck v-else-if="orderDetail.status === 3" :size="48" />
-                  <IconCheck v-else-if="orderDetail.status === 4" :size="48" />
-                  <IconHelp v-else :size="48" />
-                </div>
-                <div class="status-text">
-                  <h3
-                    v-if="
-                      orderDetail.status === 0 && orderDetail.total_amount === 0
-                    "
-                    class="activate-status"
-                  >
-                    {{ $t("payment.status.activate") }}
-                  </h3>
-                  <h3 v-else>{{ getStatusText(orderDetail.status) }}</h3>
-                  <p
-                    v-if="
-                      orderDetail.status === 0 && orderDetail.total_amount > 0
-                    "
-                  >
-                    {{ $t("payment.description") }}
-                  </p>
-                  <p v-else-if="orderDetail.status === 1">
-                    {{ $t("payment.payment_processing") }}
-                  </p>
-                  <p v-else-if="orderDetail.status === 2">
-                    {{ $t("payment.order_cancelled") }}
-                  </p>
-                  <p v-else-if="orderDetail.status === 3">
-                    {{ $t("payment.payment_successful_desc") }}
-                  </p>
-                  <p v-else-if="orderDetail.status === 4">
-                    {{ $t("payment.payment_successful_desc") }}
-                  </p>
-                  <p v-else-if="orderDetail.status !== 0">
-                    {{ $t("payment.unknown_status_desc") }}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="skeleton-card" v-else>
-              <div class="skeleton-text"></div>
-            </div>
-          </div>
-
-          <!-- 免费订单提示 -->
-          <div
-            class="section-wrapper free-order"
-            v-if="
-              !loading.order &&
-              orderDetail.total_amount === 0 &&
-              orderDetail.status === 0
-            "
-          >
-            <div class="section-title">
-              <span>{{ $t("payment.free_order") }}</span>
-            </div>
-
-            <div class="free-notice">
-              <IconAlertCircle :size="48" class="notice-icon success" />
-              <div class="notice-text">
-                <h3>{{ $t("payment.free_order_title") }}</h3>
-                <p>{{ $t("payment.free_order_desc") }}</p>
-              </div>
-            </div>
-          </div>
-
           <!-- 支付方式 - 仅当订单状态为待支付(0)时显示 -->
           <div
-            class="section-wrapper"
+            class="section-wrapper payment-methods-section"
             v-if="
               !loading.order &&
               orderDetail.status === 0 &&
@@ -322,35 +126,121 @@
                 :class="{ active: selectedMethod === method.id }"
                 @click="selectMethod(method.id)"
               >
-                <div class="method-icon">
-                  <IconCreditCard v-if="!method.icon" />
-                  <img v-else :src="method.icon" :alt="method.name" />
+                <div class="method-check left-check">
+                  <IconCircleCheck v-if="selectedMethod === method.id" :size="22" />
+                  <IconCircle v-else :size="20" />
                 </div>
                 <div class="method-details">
-                  <div class="method-name">{{ method.name }}</div>
-                  <div
+                  <span class="method-name">{{ method.name }}</span>
+                  <span
                     class="method-fee"
                     v-if="
                       method.handling_fee_percent || method.handling_fee_fixed
                     "
                   >
                     {{ formatFee(method) }}
-                  </div>
+                  </span>
                 </div>
-                <div class="method-check">
-                  <IconCircleCheck v-if="selectedMethod === method.id" />
-                  <IconCircle v-else />
+                <div class="method-icon right-icon">
+                  <IconCreditCard v-if="!method.icon" :size="26" />
+                  <img v-else :src="method.icon" :alt="method.name" />
                 </div>
               </div>
             </div>
 
             <!-- 支付方式骨架屏 -->
-            <div class="skeleton-card" v-else>
+            <div class="skeleton-card methods-skeleton" v-else>
               <div
                 class="skeleton-payment-method"
                 v-for="i in 2"
                 :key="'method-' + i"
               ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧内容：支付方式 -->
+        <div class="right-column">
+          <!-- 订单金额摘要 -->
+          <div class="section-wrapper">
+            <div class="section-title">
+              <span>订单金额</span>
+            </div>
+
+            <div class="order-info" v-if="!loading.order">
+              <div v-if="orderDetail.period === 'deposit'" class="info-row">
+                <div class="info-label">{{ $t("wallet.deposit.title") }}</div>
+                <div class="info-value amount">
+                  {{ formatAmount(orderDetail.total_amount) }}
+                </div>
+              </div>
+              <div v-else class="info-row">
+                <div class="info-label">{{ $t("payment.total_price") }}</div>
+                <div class="info-value amount">
+                  {{ formatAmount(getPlanPrice()) }}
+                </div>
+              </div>
+
+              <div
+                class="info-row"
+                v-if="
+                  periodDiscount.showDiscount &&
+                  orderDetail.period !== 'deposit'
+                "
+              >
+                <div class="info-label">{{ $t("shop.plan.discount.relative") }}</div>
+                <div class="info-value">
+                  {{ periodDiscount.periodName }} {{ periodDiscount.discountPercentage }}% ，{{ $t("shop.plan.discount.savings") }}
+                  {{ formatAmount(periodDiscount.savingsAmountInCents) }}
+                </div>
+              </div>
+
+              <div class="info-row discount-row" v-if="discountBreakdownVisible">
+                <div class="info-label">{{ $t("payment.coupon_discount_amount") }}</div>
+                <div class="info-value discount">-{{ formatAmount(couponDiscountAmount) }}</div>
+              </div>
+              <div class="info-row discount-row" v-if="discountBreakdownVisible">
+                <div class="info-label">{{ $t("payment.user_discount_amount") }}</div>
+                <div class="info-value discount">-{{ formatAmount(userDiscountAmount) }}</div>
+              </div>
+              <div class="info-row discount-row" v-if="discountBreakdownVisible">
+                <div class="info-label">{{ $t("payment.total_discount_amount") }}</div>
+                <div class="info-value discount">-{{ formatAmount(discountAmount) }}</div>
+              </div>
+              <div
+                class="info-row"
+                v-if="
+                  orderDetail.balance_amount !== null &&
+                  orderDetail.balance_amount !== undefined &&
+                  orderDetail.balance_amount > 0
+                "
+              >
+                <div class="info-label">{{ $t("payment.use_credit") }}</div>
+                <div class="info-value discount">-{{ formatAmount(orderDetail.balance_amount) }}</div>
+              </div>
+              <div
+                class="info-row"
+                v-if="
+                  orderDetail.refund_amount !== null &&
+                  orderDetail.refund_amount !== undefined &&
+                  orderDetail.refund_amount > 0
+                "
+              >
+                <div class="info-label">{{ $t("payment.refund_amount") }}</div>
+                <div class="info-value">{{ formatAmount(orderDetail.refund_amount) }}</div>
+              </div>
+              <div class="info-row" v-if="selectedMethod && handleFeeAmount > 0">
+                <div class="info-label">{{ $t("payment.handling_fee") }}</div>
+                <div class="info-value fee">{{ formatAmount(handleFeeAmount) }}</div>
+              </div>
+              <div class="info-row final-row">
+                <div class="info-label">合计</div>
+                <div class="info-value final">{{ formatAmount(totalWithFee) }}</div>
+              </div>
+            </div>
+
+            <div class="skeleton-card" v-else>
+              <div class="skeleton-text" v-for="i in 5" :key="'summary-' + i"></div>
             </div>
           </div>
 
@@ -438,39 +328,10 @@
                 >
                   <IconCreditCard v-if="!loading.checking" :size="18" />
                   <div v-else class="loader"></div>
-                  <span>{{ $t("payment.activate") }}</span>
+                  <span>{{ $t("payment.free_activate") }}</span>
                 </button>
               </div>
 
-              <!-- 检测状态和取消订单按钮一行，取消在左，检测在右 -->
-              <div
-                class="btn-group action-row"
-                v-if="orderDetail.total_amount > 0"
-              >
-                <button
-                  class="btn-back secondary-action"
-                  @click="cancelCurrentOrder"
-                  :disabled="loading.cancelling"
-                >
-                  <IconX v-if="!loading.cancelling" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.cancel_order") }}</span>
-                </button>
-
-                <button
-                  class="btn-check secondary-action"
-                  @click="checkPaymentStatus"
-                  :disabled="
-                    (orderDetail.total_amount > 0 && !selectedMethod) ||
-                    loading.checking ||
-                    loading.paying
-                  "
-                >
-                  <IconRefresh v-if="!loading.checking" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.check_payment") }}</span>
-                </button>
-              </div>
             </template>
           </div>
         </div>
@@ -1053,7 +914,7 @@ export default {
 
           setTimeout(() => {
             const statusElement = document.querySelector(
-              ".order-status-notice"
+              ".inline-status-badge"
             );
             if (statusElement) {
               statusElement.classList.add("status-transition");
@@ -1465,15 +1326,14 @@ export default {
 
 <style lang="scss" scoped>
 .payment-container {
-  padding: 20px;
+  padding: 0;
   display: flex;
   justify-content: center;
   position: relative;
 
   .payment-inner {
     width: 100%;
-    max-width: 1200px;
-  }
+      }
 
   .title-card {
     margin-top: 20px;
@@ -1524,10 +1384,15 @@ export default {
       flex-direction: column;
     }
 
-    .left-column,
-    .right-column {
-      flex: 1;
+    .left-column {
+      flex: 1.45;
       min-width: 0;
+    }
+
+    .right-column {
+      flex: 0.85;
+      min-width: 0;
+      max-width: 520px;
     }
   }
 
@@ -1564,96 +1429,79 @@ export default {
         background-color: var(--border-color);
         margin-left: 12px;
       }
+
+      &.with-status {
+        justify-content: space-between;
+
+        &::after {
+          display: none;
+        }
+      }
     }
   }
 
-  .product-info,
-  .order-info {
-    .info-row {
-      display: flex;
-      margin-bottom: 12px;
-      padding: 10px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
+  .section-wrapper.payment-methods-section {
+    padding: 8px !important;
+    margin-bottom: 8px !important;
 
-      &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.05);
-      }
-
-      &.highlight-row {
-        background-color: rgba(var(--theme-color-rgb), 0.08);
-
-        .amount {
-          font-size: 18px;
-          font-weight: 600;
-          color: var(--theme-color);
-        }
-      }
-
-      &.discount-row {
-        .discount {
-          color: #f44336;
-        }
-      }
-
-      &.final-row {
-        border-top: 1px dashed var(--border-color);
-        padding-top: 15px;
-
-        .final {
-          font-size: 20px;
-          font-weight: 700;
-          color: var(--theme-color);
-        }
-      }
-
-      .info-label {
-        width: 120px;
-        color: var(--secondary-text-color);
-        font-size: 14px;
-      }
-
-      .info-value {
-        flex: 1;
-        color: var(--text-color);
-        font-weight: 500;
-        font-size: 14px;
-      }
+    .section-title {
+      margin-bottom: 8px;
+      font-size: 15px;
     }
   }
 
   .payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
     .payment-method-item {
       display: flex;
       align-items: center;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 12px;
+      gap: 8px;
+      padding: 7px 10px;
+      min-height: 42px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
       border: 1px solid var(--border-color);
 
       &:hover {
-        border-color: rgba(var(--theme-color-rgb), 0.5);
-        background-color: rgba(var(--theme-color-rgb), 0.05);
-        transform: translateY(-2px);
+        border-color: rgba(var(--theme-color-rgb), 0.42);
+        background-color: rgba(var(--theme-color-rgb), 0.04);
       }
 
       &.active {
         border-color: var(--theme-color);
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(var(--theme-color-rgb), 0.15);
+        background-color: rgba(var(--theme-color-rgb), 0.08);
+        box-shadow: 0 2px 10px rgba(var(--theme-color-rgb), 0.12);
+      }
+
+      .method-check {
+        width: 22px;
+        height: 22px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--theme-color);
+        flex-shrink: 0;
+
+        &.left-check {
+          margin-right: 2px;
+        }
       }
 
       .method-icon {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-right: 15px;
         color: var(--theme-color);
+
+        &.right-icon {
+          margin-left: auto;
+        }
 
         img {
           max-width: 100%;
@@ -1665,21 +1513,21 @@ export default {
       .method-details {
         flex: 1;
         min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
 
         .method-name {
           font-weight: 600;
-          margin-bottom: 4px;
           color: var(--text-color);
+          line-height: 1.2;
         }
 
         .method-fee {
-          font-size: 12px;
+          font-size: 11px;
           color: var(--secondary-text-color);
+          white-space: nowrap;
         }
-      }
-
-      .method-check {
-        color: var(--theme-color);
       }
     }
   }
@@ -1927,8 +1775,14 @@ export default {
     }
 
     .skeleton-payment-method {
-      height: 70px;
-      margin-bottom: 20px;
+      height: 52px;
+      margin-bottom: 8px;
+    }
+  }
+
+  .methods-skeleton {
+    .skeleton-payment-method:last-child {
+      margin-bottom: 0;
     }
   }
 
@@ -2106,30 +1960,18 @@ export default {
 
     .right-column {
       margin-bottom: 60px;
+      max-width: none;
     }
   }
 
   @media (max-width: 768px) {
     padding-bottom: 100px;
   }
-
   @media (max-width: 480px) {
     padding-bottom: 120px;
 
     .right-column {
       margin-bottom: 90px;
-    }
-
-    .product-info,
-    .order-info {
-      .info-row {
-        flex-direction: column;
-        gap: 5px;
-
-        .info-label {
-          width: 100%;
-        }
-      }
     }
 
     .action-buttons {
@@ -2548,142 +2390,121 @@ export default {
   }
 }
 
-.status-info {
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
-  width: 100%;
-}
-
-.order-status-notice {
-  display: flex;
+.inline-status-badge {
+  display: inline-flex;
   align-items: center;
-  padding: 1.5rem;
-  border-radius: 12px;
-  width: 100%;
-  transition: all 0.5s ease;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
 
   &.status-transition {
     animation: status-change 0.5s ease;
   }
 
-  .status-icon {
-    margin-right: 1.5rem;
-  }
-
-  .status-text {
-    flex: 1;
-
-    h3 {
-      margin: 0 0 0.5rem;
-      font-size: 1.2rem;
-      font-weight: 600;
-      transition: color 0.5s ease;
-    }
-
-    p {
-      margin: 0;
-      font-size: 0.95rem;
-      line-height: 1.4;
-      transition: all 0.5s ease;
-    }
-
-    h3.activate-status {
-      margin-bottom: 0;
-    }
-  }
-
+  &.status-pending,
   &.status-free-confirm {
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-
-    .status-icon {
-      margin-right: 0;
-      margin-bottom: 1rem;
-    }
-
-    .status-text h3 {
-      margin-bottom: 0;
-    }
-  }
-
-  &.status-pending {
+    color: #f57c00;
     background-color: rgba(255, 152, 0, 0.12);
-    border: 1px solid rgba(255, 152, 0, 0.2);
-
-    .status-icon {
-      color: #ff9800;
-    }
-
-    h3 {
-      color: #f57c00;
-    }
+    border-color: rgba(255, 152, 0, 0.2);
   }
 
   &.status-processing {
+    color: #0d47a1;
     background-color: rgba(33, 150, 243, 0.12);
-    border: 1px solid rgba(33, 150, 243, 0.2);
-
-    .status-icon {
-      color: #2196f3;
-    }
-
-    h3 {
-      color: #1976d2;
-    }
+    border-color: rgba(33, 150, 243, 0.2);
   }
 
   &.status-cancelled {
+    color: #c62828;
     background-color: rgba(244, 67, 54, 0.12);
-    border: 1px solid rgba(244, 67, 54, 0.2);
-
-    .status-icon {
-      color: #f44336;
-    }
-
-    h3 {
-      color: #d32f2f;
-    }
+    border-color: rgba(244, 67, 54, 0.2);
   }
 
-  &.status-completed {
-    background-color: rgba(76, 175, 80, 0.12);
-    border: 1px solid rgba(76, 175, 80, 0.2);
-
-    .status-icon {
-      color: #4caf50;
-    }
-
-    h3 {
-      color: #388e3c;
-    }
-  }
-
+  &.status-completed,
   &.status-discounted {
-    background-color: rgba(156, 39, 176, 0.12);
-    border: 1px solid rgba(156, 39, 176, 0.2);
-
-    .status-icon {
-      color: #9c27b0;
-    }
-
-    h3 {
-      color: #7b1fa2;
-    }
+    color: #2e7d32;
+    background-color: rgba(76, 175, 80, 0.12);
+    border-color: rgba(76, 175, 80, 0.2);
   }
 
   &.status-unknown {
+    color: #757575;
     background-color: rgba(158, 158, 158, 0.12);
-    border: 1px solid rgba(158, 158, 158, 0.2);
+    border-color: rgba(158, 158, 158, 0.2);
+  }
+}
 
-    .status-icon {
-      color: #9e9e9e;
-    }
+.overview-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 
-    h3 {
-      color: #757575;
+  .btn-back,
+  .btn-check {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    flex: 1;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
     }
+  }
+
+  .btn-back {
+    background-color: transparent;
+    color: var(--text-color);
+
+    &:hover:not(:disabled) {
+      background-color: var(--hover-color);
+      transform: translateY(-1px);
+    }
+  }
+
+  .btn-check {
+    background-color: var(--hover-color);
+    color: var(--text-color);
+
+    &:hover:not(:disabled) {
+      background-color: var(--card-bg-color);
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+
+    .btn-back,
+    .btn-check {
+      width: 100%;
+    }
+  }
+
+  .loader {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    border: 2px solid rgba(148, 163, 184, 0.35);
+    border-radius: 50%;
+    border-top-color: var(--text-color);
+    animation: spin 1s linear infinite;
   }
 }
 

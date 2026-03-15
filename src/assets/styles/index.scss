@@ -13,4 +13,276 @@
 @use "./components/icons.scss" as *;
 
 // 导入布局样式
-@use "./layouts/auth.scss" as *; 
+@use "./layouts/auth.scss" as *;
+
+// 全局基础样式变量（布局 + 卡片 + 订单/支付节奏）
+:root {
+  --order-card-text-line-height: 1.3;
+  --order-card-row-spacing: 10px;
+  --global-card-gap: 14px;
+  --page-content-max-width: 1120px;
+  --page-stack-gap: var(--global-card-gap);
+}
+
+.app-content-wrapper .page-shell {
+  padding-inline: 0 !important;
+  padding-top: 0;
+}
+
+.app-content-wrapper .page-inner {
+  width: 100%;
+  max-width: var(--page-content-max-width);
+  margin: 0 auto;
+}
+
+.app-content-wrapper .page-stack {
+  display: grid;
+  gap: var(--page-stack-gap);
+}
+
+.dashboard-card p,
+.section-wrapper .info-label,
+.section-wrapper .info-value,
+.section-wrapper .summary-label,
+.section-wrapper .summary-value {
+  line-height: var(--order-card-text-line-height) !important;
+}
+
+
+/* 全局：统一页面卡片之间的垂直间距（收紧确认订单/支付订单，并同步其他页面） */
+.app-content-wrapper .dashboard-card,
+.app-content-wrapper .section-wrapper,
+.app-content-wrapper .section-block,
+.app-content-wrapper .profile-card,
+.app-content-wrapper .order-summary,
+.app-content-wrapper .nodes-no-plan {
+  margin-bottom: var(--global-card-gap) !important;
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --global-card-gap: 10px;
+  }
+}
+
+/* 统一支付订单与确认订单的行间距 */
+.payment-container .section-wrapper .info-row,
+.order-confirm-container .order-summary .summary-row {
+  margin-bottom: var(--order-card-row-spacing) !important;
+}
+
+/* 支付页右侧订单金额卡片：对齐确认订单的紧凑节奏 */
+.payment-container .right-column .order-info .info-row {
+  padding: 4px 0 !important;
+  border-radius: 0 !important;
+}
+
+.payment-container .right-column .order-info .info-row:hover {
+  background-color: transparent !important;
+}
+
+.payment-container .right-column .order-info .info-row.final-row {
+  padding-top: 10px !important;
+  margin-top: 6px;
+}
+
+
+/* 支付页金额列统一右对齐（订阅金额/各类折扣/总优惠等） */
+.payment-container .right-column .order-info .info-row .info-value {
+  text-align: right;
+  margin-left: auto;
+}
+
+/* Payment 行样式统一上收为全局（替代 Payment.vue scoped 行样式） */
+.payment-container .section-wrapper .info-row {
+  display: flex;
+  margin-bottom: var(--order-card-row-spacing) !important;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.payment-container .section-wrapper .info-label {
+  width: 120px;
+  color: var(--secondary-text-color);
+  font-size: 14px;
+}
+
+.payment-container .section-wrapper .info-value {
+  flex: 1;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.payment-container .section-wrapper .info-row.discount-row .discount {
+  color: #f44336;
+}
+
+.payment-container .section-wrapper .info-row.highlight-row .amount {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--theme-color);
+}
+
+.payment-container .section-wrapper .info-row.final-row {
+  border-top: 1px dashed var(--border-color);
+  padding-top: 10px !important;
+  margin-top: 6px;
+  margin-bottom: 0 !important;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.payment-container .section-wrapper .info-row.final-row .info-label {
+  width: 100%;
+}
+
+.payment-container .section-wrapper .info-row.final-row .info-value {
+  width: auto;
+  margin-left: 0;
+  text-align: left;
+}
+
+.payment-container .section-wrapper .info-row.final-row .final {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: var(--theme-color);
+  line-height: 1.15;
+}
+
+@media (max-width: 480px) {
+  .payment-container .section-wrapper .info-row {
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+  }
+
+  .payment-container .section-wrapper .info-row .info-label {
+    width: 100%;
+  }
+
+  .payment-container .right-column .order-info .info-row .info-value {
+    text-align: right;
+    width: 100%;
+  }
+
+  .payment-container .right-column .order-info .info-row.final-row .info-value {
+    text-align: left;
+    width: auto;
+  }
+}
+
+/* 全局：未完成订单确认弹窗样式（对齐账户页通用弹窗尺寸与节奏） */
+.pending-order-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  isolation: isolate;
+}
+
+.pending-order-modal .pending-order-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.pending-order-modal .pending-order-dialog {
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  background: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pending-order-modal .pending-order-dialog h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.pending-order-modal .pending-order-dialog p {
+  margin: 0;
+  color: var(--secondary-text-color);
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.pending-order-modal .pending-order-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.pending-order-modal .pending-order-actions button {
+  flex: 1;
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.pending-order-modal .pending-order-actions .btn-return-orders {
+  background: transparent;
+  color: var(--text-color);
+
+  &:hover {
+    background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
+  }
+}
+
+.pending-order-modal .pending-order-actions .btn-confirm-cancel {
+  background: var(--theme-color);
+  color: #fff;
+  border-color: var(--theme-color);
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.05);
+  }
+}
+
+.pending-order-modal .pending-order-actions button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.pending-order-modal .pending-order-actions .loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: block;
+  animation: spin 0.8s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .pending-order-modal .pending-order-dialog {
+    width: 100%;
+    max-width: 420px;
+    padding: 16px;
+  }
+
+  .pending-order-modal .pending-order-actions {
+    flex-direction: column;
+  }
+}
