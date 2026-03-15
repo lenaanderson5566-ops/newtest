@@ -109,8 +109,6 @@ export default {
 
   width: 100%;
 
-  margin: 0 auto;
-
   padding: 0 0 calc(2px + env(safe-area-inset-bottom, 0px));
 
   box-sizing: border-box;
