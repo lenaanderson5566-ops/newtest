@@ -244,28 +244,6 @@
             </div>
           </div>
 
-          <!-- 免费订单提示 -->
-          <div
-            class="section-wrapper free-order"
-            v-if="
-              !loading.order &&
-              orderDetail.total_amount === 0 &&
-              orderDetail.status === 0
-            "
-          >
-            <div class="section-title">
-              <span>{{ $t("payment.free_order") }}</span>
-            </div>
-
-            <div class="free-notice">
-              <IconAlertCircle :size="48" class="notice-icon success" />
-              <div class="notice-text">
-                <h3>{{ $t("payment.free_order_title") }}</h3>
-                <p>{{ $t("payment.free_order_desc") }}</p>
-              </div>
-            </div>
-          </div>
-
           <!-- 按钮区域 -->
           <div class="action-buttons">
             <!-- 从订单列表进入且订单已完成 - 显示返回上一页按钮 -->
@@ -350,7 +328,7 @@
                 >
                   <IconCreditCard v-if="!loading.checking" :size="18" />
                   <div v-else class="loader"></div>
-                  <span>{{ $t("payment.activate") }}</span>
+                  <span>{{ $t("payment.free_activate") }}</span>
                 </button>
               </div>
 
