@@ -1611,7 +1611,7 @@ onMounted(() => {
 
 .profile-inner {
 
-  max-width: 1200px;
+  max-width: var(--page-content-max-width, 1200px);
 
   margin: 0 auto;
 
