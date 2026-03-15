@@ -564,6 +564,11 @@ export default {
     padding-inline: 2px !important;
   }
 
+  .content-layout-shell > [class$="-container"] > [class$="-inner"],
+  .content-layout-shell > [class$="-container"] > [class*="-inner "] {
+    padding-inline: 0 !important;
+  }
+
   /* Mobile density optimization: avoid oversized modules */
   .app-content-wrapper {
     .dashboard-card,
@@ -618,6 +623,11 @@ export default {
   .content-layout-shell > [class$="-container"],
   .content-layout-shell > [class*="-container "] {
     padding-inline: 2px !important;
+  }
+
+  .content-layout-shell > [class$="-container"] > [class$="-inner"],
+  .content-layout-shell > [class$="-container"] > [class*="-inner "] {
+    padding-inline: 0 !important;
   }
 }
 
