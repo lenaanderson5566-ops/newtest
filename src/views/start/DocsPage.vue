@@ -567,9 +567,6 @@ onMounted(async () => {
 
 .docs-inner {
 
-  
-  margin: 0 auto;
-
 }
 
 

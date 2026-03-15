@@ -1277,9 +1277,6 @@ onUnmounted(() => {
 
 .doc-detail-inner {
 
-  
-  margin: 0 auto;
-
   width: 100%;
 
 }

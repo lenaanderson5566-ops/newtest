@@ -1611,9 +1611,6 @@ onMounted(() => {
 
 .profile-inner {
 
-  
-  margin: 0 auto;
-
 }
 
 

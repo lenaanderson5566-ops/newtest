@@ -396,9 +396,6 @@ onMounted(() => {
 
 .nodes-inner {
 
-  
-  margin: 0 auto;
-
 }
 
 

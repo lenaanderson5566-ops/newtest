@@ -90,7 +90,6 @@ watch(
 }
 
 .billing-inner {
-    margin: 0 auto;
 }
 
 .billing-tabs-card {

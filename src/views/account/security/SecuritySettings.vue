@@ -255,7 +255,6 @@ onMounted(() => {
 }
 
 .security-inner {
-    margin: 0 auto;
 }
 
 .profile-card {

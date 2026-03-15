@@ -493,7 +493,6 @@ watch(locale, () => {
 }
 
 .orders-inner {
-    margin: 0 auto;
 }
 
 
