@@ -558,6 +558,12 @@ export default {
     justify-content: flex-end;
   }
 
+  /* 全局移动端页面内容贴近边缘（覆盖各页面 container 的默认左右内边距） */
+  .content-layout-shell > [class$="-container"],
+  .content-layout-shell > [class*="-container "] {
+    padding-inline: 4px !important;
+  }
+
   /* Mobile density optimization: avoid oversized modules */
   .app-content-wrapper {
     .dashboard-card,
