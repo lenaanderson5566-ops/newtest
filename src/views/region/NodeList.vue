@@ -1,4 +1,4 @@
-﻿<template>
+<template>
 
   <div class="nodes-container">
 
@@ -81,9 +81,7 @@
 
       <!-- 线路列表内容 -->
 
-      <div v-else-if="lines.length > 0" class="nodes-content">
-
-        <div class="node-items">
+      <div v-else-if="lines.length > 0" class="node-items">
 
           <div v-for="line in lines" :key="line.id" class="node-item">
             <div class="node-country" :class="countryBadgeClass(getCountryTag(line.tags))">{{ formatCountryTag(getCountryTag(line.tags) || '--') }}</div>
@@ -110,11 +108,7 @@
 
           </div>
 
-        </div>
-
       </div>
-
-      
 
       <!-- 空状态 -->
 
@@ -859,30 +853,6 @@ onMounted(() => {
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.1); opacity: 0.85; }
 }
-
-.nodes-content {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 1.25rem;
-
-  max-width: 1200px;
-
-  width: 100%;
-
-  margin: 0 auto;
-
-  padding: 14px;
-  border-radius: 18px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  background: var(--card-bg);
-
-}
-
-
 
 .node-items {
 
