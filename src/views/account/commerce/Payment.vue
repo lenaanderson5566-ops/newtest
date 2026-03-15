@@ -126,6 +126,10 @@
                 :class="{ active: selectedMethod === method.id }"
                 @click="selectMethod(method.id)"
               >
+                <div class="method-check left-check">
+                  <IconCircleCheck v-if="selectedMethod === method.id" :size="22" />
+                  <IconCircle v-else :size="20" />
+                </div>
                 <div class="method-details">
                   <span class="method-name">{{ method.name }}</span>
                   <span
@@ -138,7 +142,7 @@
                   </span>
                 </div>
                 <div class="method-icon right-icon">
-                  <IconCreditCard v-if="!method.icon" />
+                  <IconCreditCard v-if="!method.icon" :size="26" />
                   <img v-else :src="method.icon" :alt="method.name" />
                 </div>
               </div>
@@ -498,6 +502,8 @@ import {
   IconCheck,
   IconX,
   IconCreditCard,
+  IconCircle,
+  IconCircleCheck,
   IconAlertCircle,
   IconArrowRight,
   IconAlertTriangle,
@@ -517,6 +523,8 @@ export default {
     IconCheck,
     IconX,
     IconCreditCard,
+    IconCircle,
+    IconCircleCheck,
     IconAlertCircle,
     IconArrowRight,
     IconAlertTriangle,
@@ -1434,8 +1442,8 @@ export default {
   }
 
   .section-wrapper.payment-methods-section {
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 8px !important;
+    margin-bottom: 8px !important;
 
     .section-title {
       margin-bottom: 8px;
@@ -1452,8 +1460,8 @@ export default {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 10px;
-      min-height: 44px;
+      padding: 7px 10px;
+      min-height: 42px;
       border-radius: 8px;
       cursor: pointer;
       transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -1470,9 +1478,23 @@ export default {
         box-shadow: 0 2px 10px rgba(var(--theme-color-rgb), 0.12);
       }
 
+      .method-check {
+        width: 22px;
+        height: 22px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--theme-color);
+        flex-shrink: 0;
+
+        &.left-check {
+          margin-right: 2px;
+        }
+      }
+
       .method-icon {
-        width: 24px;
-        height: 24px;
+        width: 30px;
+        height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
