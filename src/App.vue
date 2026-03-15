@@ -475,6 +475,8 @@ export default {
 }
 .app-content-wrapper {
   width: 100%;
+  --page-edge-gap: 2px;
+  --left-nav-gap: 10px;
 
   &.with-top-bar {
     --page-content-top-gap: 8px;
@@ -486,35 +488,36 @@ export default {
   }
 }
 
+
 .content-layout-shell {
   width: 100%;
-  max-width: 1180px;
+  max-width: var(--page-content-max-width);
   margin: 0 auto;
-  padding-inline: 12px;
+  padding-inline: var(--page-edge-gap, 2px);
   box-sizing: border-box;
 }
 
 @media (min-width: 992px) {
   .app-content-wrapper.with-left-nav {
-    padding-left: var(--left-nav-occupy, 176px);
+    padding-left: calc(var(--left-nav-occupy, 176px) + var(--left-nav-gap, 10px));
   }
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
-    width: min(1120px, 100%);
+    width: min(var(--page-content-max-width), 100%);
     margin-left: 0;
     margin-right: auto;
-    padding-inline: 16px 24px;
+    padding-inline: var(--page-edge-gap, 2px);
   }
 
   .page-header-layer {
-    padding-left: var(--left-nav-occupy, 176px);
+    padding-left: calc(var(--left-nav-occupy, 176px) + var(--left-nav-gap, 10px));
   }
 
   .page-header-content {
-    width: min(1120px, 100%);
+    width: min(var(--page-content-max-width), 100%);
     margin-left: 0;
     margin-right: auto;
-    padding: 0 24px;
+    padding-inline: var(--page-edge-gap, 2px);
   }
 
 }
@@ -530,7 +533,7 @@ export default {
   }
 
   .page-header-content {
-    padding: 0 12px;
+    padding-inline: var(--page-edge-gap, 2px);
   }
 
   .page-header-title {
@@ -595,6 +598,23 @@ export default {
   main, .main-content, .content-container {
     padding-bottom: 64px !important;
     margin-bottom: 6px !important;
+  }
+}
+
+/* 统一窄屏容器规则：仅最外层保留 2px，内层容器全部归零，最大化可用宽度 */
+@media (max-width: 1200px) {
+  .content-layout-shell {
+    padding-inline: var(--page-edge-gap, 2px) !important;
+  }
+
+  .content-layout-shell > * {
+    padding-inline: 0 !important;
+  }
+
+  .content-layout-shell > * > [class$="-inner"],
+  .content-layout-shell > * > [class*="-inner "],
+  .content-layout-shell > * > .my-center-inner {
+    padding-inline: 0 !important;
   }
 }
 

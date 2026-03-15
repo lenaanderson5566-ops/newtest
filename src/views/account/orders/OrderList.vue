@@ -1,16 +1,6 @@
-﻿<template>
-  <div class="orders-container">
-    <div class="orders-inner">
-      <!-- 欢迎卡片 -->
-      <div class="dashboard-card welcome-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('orders.welcome.title') || '订单列表' }}</h2>
-        </div>
-        <div class="card-body">
-          <p>{{ $t('orders.welcome.description') || '查看并管理您的订单' }}</p>
-        </div>
-      </div>
-      
+<template>
+  <div class="orders-container page-shell">
+    <div class="orders-inner page-inner page-stack">
       <!-- 加载状态 -->
       <div v-if="loading" class="orders-loading">
         <LoadingSpinner />
@@ -489,22 +479,20 @@ watch(locale, () => {
 
 <style lang="scss" scoped>
 .orders-container {
-  padding: 1.25rem;
-  padding-bottom: calc(1.25rem + 64px); 
+  padding: 0;
+  padding-bottom: calc(2px + 64px); 
   --order-tone-strong: rgba(var(--theme-color-rgb), 0.92);
   --order-tone-mid: rgba(var(--theme-color-rgb), 0.82);
   --order-tone-soft: rgba(var(--theme-color-rgb), 0.72);
   --order-tone-faint: rgba(var(--theme-color-rgb), 0.12);
   
   @media (min-width: 768px) {
-    padding: 2rem;
-    padding-bottom: 3rem; 
+    padding: 0;
+    padding-bottom: 2px; 
   }
 }
 
 .orders-inner {
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 
@@ -552,7 +540,6 @@ watch(locale, () => {
 
 .orders-content {
   width: 100%;
-  margin: 0 auto;
 }
 
 .order-table-container {
