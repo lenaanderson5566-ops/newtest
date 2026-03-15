@@ -558,14 +558,14 @@ export default {
     justify-content: flex-end;
   }
 
-  /* 全局移动端页面内容贴近边缘（覆盖各页面 container 的默认左右内边距） */
-  .content-layout-shell > [class$="-container"],
-  .content-layout-shell > [class*="-container "] {
+  /* 全局移动端贴边：统一页面根容器与内层包装，避免各页重复容器规则不一致 */
+  .app-content-wrapper.with-top-bar .content-layout-shell > * {
     padding-inline: 2px !important;
   }
 
-  .content-layout-shell > [class$="-container"] > [class$="-inner"],
-  .content-layout-shell > [class$="-container"] > [class*="-inner "] {
+  .app-content-wrapper.with-top-bar .content-layout-shell > * > [class$="-inner"],
+  .app-content-wrapper.with-top-bar .content-layout-shell > * > [class*="-inner "],
+  .app-content-wrapper.with-top-bar .content-layout-shell > * > .my-center-inner {
     padding-inline: 0 !important;
   }
 
@@ -614,19 +614,19 @@ export default {
   }
 }
 
-/* 平板/窄屏：同样收紧页面容器左右留白，避免仅手机断点生效 */
+/* 平板/窄屏：与移动端使用同一套容器收口规则，减少样式嵌套差异 */
 @media (max-width: 1200px) {
   .content-layout-shell {
     padding-inline: 0;
   }
 
-  .content-layout-shell > [class$="-container"],
-  .content-layout-shell > [class*="-container "] {
+  .app-content-wrapper.with-top-bar .content-layout-shell > * {
     padding-inline: 2px !important;
   }
 
-  .content-layout-shell > [class$="-container"] > [class$="-inner"],
-  .content-layout-shell > [class$="-container"] > [class*="-inner "] {
+  .app-content-wrapper.with-top-bar .content-layout-shell > * > [class$="-inner"],
+  .app-content-wrapper.with-top-bar .content-layout-shell > * > [class*="-inner "],
+  .app-content-wrapper.with-top-bar .content-layout-shell > * > .my-center-inner {
     padding-inline: 0 !important;
   }
 }
