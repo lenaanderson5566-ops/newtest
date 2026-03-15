@@ -1,6 +1,6 @@
 <template>
-  <div class="my-center">
-    <div class="my-center-inner">
+  <div class="my-center page-shell">
+    <div class="my-center-inner page-inner page-stack">
       <section class="summary-panel section-block dashboard-like-card">
         <div class="summary-top">
           <div>
@@ -182,13 +182,11 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .my-center {
-  padding: 1rem 0 1.25rem;
+  padding: 0 0 2px;
   background: linear-gradient(180deg, rgba(var(--theme-color-rgb), 0.03), transparent 42%);
 }
 
 .my-center-inner {
-  max-width: 1024px;
-  margin: 0 auto;
   display: grid;
   gap: 1rem;
 }

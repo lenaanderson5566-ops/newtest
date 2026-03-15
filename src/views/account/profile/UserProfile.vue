@@ -1,8 +1,8 @@
 ﻿<template>
 
-  <div class="profile-container">
+  <div class="profile-container page-shell">
 
-    <div class="profile-inner">
+    <div class="profile-inner page-inner page-stack">
 
       <!-- 欢迎卡片 -->
 
@@ -1591,17 +1591,17 @@ onMounted(() => {
 
 .profile-container {
 
-  padding: 1.25rem;
+  padding: 0;
 
-  padding-bottom: calc(1.25rem + 70px);
+  padding-bottom: calc(2px + 70px);
 
 
 
   @media (min-width: 768px) {
 
-    padding: 2rem;
+    padding: 0;
 
-    padding-bottom: 3rem;
+    padding-bottom: 2px;
 
   }
 
@@ -1610,10 +1610,6 @@ onMounted(() => {
 
 
 .profile-inner {
-
-  max-width: 1200px;
-
-  margin: 0 auto;
 
 }
 

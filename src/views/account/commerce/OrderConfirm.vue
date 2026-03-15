@@ -1,18 +1,6 @@
-﻿<template>
-  <div class="order-confirm-container">
-    <div class="order-confirm-inner">
-      <!-- 页面标题 -->
-
-      <div class="dashboard-card welcome-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t("order.title") }}</h2>
-        </div>
-
-        <div class="card-body">
-          <p>{{ $t("order.description") }}</p>
-        </div>
-      </div>
-
+<template>
+  <div class="order-confirm-container page-shell">
+    <div class="order-confirm-inner page-inner page-stack">
       <!-- 用户现有订阅提示 -->
 
       <div class="alert-card" v-if="showExistingPlanWarning">
@@ -171,10 +159,6 @@
           <!-- 优惠码 -->
 
           <div class="section-wrapper">
-            <div class="section-title">
-              <span>{{ $t("order.coupon") }}</span>
-            </div>
-
             <div class="coupon-input">
               <input
                 type="text"
@@ -282,7 +266,7 @@
                 <div class="summary-divider"></div>
 
                 <div class="summary-row total">
-                  <div class="summary-label">{{ $t("payment.total_with_fee") }}</div>
+                  <div class="summary-label">合计</div>
 
                   <div class="summary-value">
                     {{ formatCurrencyAmount(totalWithFee) }}
@@ -319,6 +303,23 @@
       </div>
     </div>
 
+    <transition name="modal-fade">
+      <div v-if="showPendingOrderModal" class="pending-order-modal">
+        <div class="pending-order-overlay" @click="closePendingOrderModal"></div>
+        <div class="pending-order-dialog" role="dialog" aria-modal="true" aria-labelledby="pending-order-title">
+          <h3 id="pending-order-title">注意</h3>
+          <p>您还有未完成的订单，购买前需要先取消，确定要取消之前的订单吗？</p>
+          <div class="pending-order-actions">
+            <button class="btn-return-orders" @click="goToMyOrders">返回我的订单</button>
+            <button class="btn-confirm-cancel" @click="confirmCancelPreviousOrder" :disabled="loading.cancellingExisting">
+              <span v-if="!loading.cancellingExisting">确定取消</span>
+              <span v-else class="loader"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
   </div>
 </template>
 
@@ -336,9 +337,11 @@ import {
   fetchPlanById,
   verifyCoupon as checkCoupon,
   submitOrder as createOrder,
+  cancelOrder as cancelExistingOrder,
 } from "@/api/account/shop";
 
 import { getUserInfo } from "@/api/overview/dashboard";
+import { fetchOrderList } from "@/api/account/orderlist";
 
 import {
   IconCheck,
@@ -384,6 +387,7 @@ export default {
       userInfo: true,
 
       submitting: false,
+      cancellingExisting: false,
     });
 
     const plan = ref(null);
@@ -403,6 +407,10 @@ export default {
     const verifying = ref(false);
 
     const couponInfo = ref(null);
+
+    const showPendingOrderModal = ref(false);
+
+    const pendingOrderTradeNo = ref("");
 
     const discountPercent = ref(0);
 
@@ -721,8 +729,81 @@ export default {
       }
     };
 
+    const isPendingOrderConflict = (message = "") => {
+      const normalized = String(message || "");
+      return (
+        normalized.includes("未付款") ||
+        normalized.includes("开通中") ||
+        normalized.includes("未完成") ||
+        normalized.includes("有未支付")
+      );
+    };
+
+    const extractPendingTradeNo = (error) => {
+      const payload = error?.response?.data;
+      return (
+        payload?.data?.trade_no ||
+        payload?.data ||
+        payload?.trade_no ||
+        error?.response?.trade_no ||
+        ""
+      );
+    };
+
+    const fetchLatestPendingTradeNo = async () => {
+      try {
+        const resp = await fetchOrderList();
+        const orders = Array.isArray(resp?.data) ? resp.data : [];
+        const pending = orders.find((item) => Number(item?.status) === 0 || Number(item?.status) === 1);
+        return pending?.trade_no || "";
+      } catch (err) {
+        console.error("Failed to fetch pending orders:", err);
+        return "";
+      }
+    };
+
+    const closePendingOrderModal = () => {
+      if (loading.cancellingExisting) return;
+      showPendingOrderModal.value = false;
+    };
+
+    const goToMyOrders = () => {
+      closePendingOrderModal();
+      router.push('/orders');
+    };
+
+    const confirmCancelPreviousOrder = async () => {
+      if (loading.cancellingExisting) {
+        return;
+      }
+
+      loading.cancellingExisting = true;
+      try {
+        let tradeNo = pendingOrderTradeNo.value;
+        if (!tradeNo) {
+          tradeNo = await fetchLatestPendingTradeNo();
+        }
+
+        if (!tradeNo) {
+          showToast('未找到可取消的未完成订单', 'warning');
+          goToMyOrders();
+          return;
+        }
+
+        const resp = await cancelExistingOrder(tradeNo);
+        showToast(resp?.message || '订单已取消', 'success');
+        showPendingOrderModal.value = false;
+        pendingOrderTradeNo.value = '';
+        await executeOrderSubmission();
+      } catch (error) {
+        showToast(error?.response?.message || error?.message || '取消订单失败', 'error');
+      } finally {
+        loading.cancellingExisting = false;
+      }
+    };
+
     const submitOrder = async () => {
-      if (!selectedPriceType.value || loading.submitting) return;
+      if (!selectedPriceType.value || loading.submitting || loading.cancellingExisting) return;
 
       await executeOrderSubmission();
     };
@@ -761,10 +842,14 @@ export default {
       } catch (error) {
         console.error("Failed to submit order:", error);
 
-        showToast(
-          error.response?.message || error.message || t("order.order_failed"),
-          "error"
-        );
+        const message = error.response?.message || error.message || t("order.order_failed");
+        if (isPendingOrderConflict(message)) {
+          pendingOrderTradeNo.value = extractPendingTradeNo(error) || (await fetchLatestPendingTradeNo());
+          showPendingOrderModal.value = true;
+          return;
+        }
+
+        showToast(message, "error");
       } finally {
         loading.submitting = false;
       }
@@ -968,6 +1053,11 @@ export default {
 
       showExistingPlanWarning,
 
+      showPendingOrderModal,
+      closePendingOrderModal,
+      goToMyOrders,
+      confirmCancelPreviousOrder,
+
     };
   },
 };
@@ -975,7 +1065,7 @@ export default {
 
 <style lang="scss" scoped>
 .order-confirm-container {
-  padding: 20px;
+  padding: 0;
 
   display: flex;
 
@@ -988,8 +1078,7 @@ export default {
   .order-confirm-inner {
     width: 100%;
 
-    max-width: 1200px;
-
+    
     padding-bottom: 100px;
   }
 
@@ -1141,15 +1230,17 @@ export default {
     gap: 30px;
 
     .left-column {
-      flex: 1;
+      flex: 1.45;
 
       min-width: 0;
     }
 
     .right-column {
-      flex: 1;
+      flex: 0.85;
 
       min-width: 0;
+
+      max-width: 520px;
     }
   }
 
@@ -1742,6 +1833,8 @@ export default {
       }
 
       .summary-label {
+        flex: 1;
+        min-width: 0;
         font-size: 14px;
 
         color: var(--secondary-text-color);
@@ -1758,6 +1851,8 @@ export default {
       }
 
       .summary-value {
+        min-width: 120px;
+        text-align: right;
         font-size: 14px;
 
         font-weight: 500;
@@ -1776,6 +1871,12 @@ export default {
 
         margin-bottom: 0;
 
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 6px;
+
         .summary-label {
           font-size: 16px;
 
@@ -1785,11 +1886,15 @@ export default {
         }
 
         .summary-value {
-          font-size: 22px;
+          min-width: 0;
+          text-align: left;
+          font-size: 32px;
 
-          font-weight: 700;
+          font-weight: 800;
 
           color: var(--theme-color);
+
+          line-height: 1.15;
         }
       }
     }
@@ -2073,6 +2178,8 @@ export default {
   }
 }
 
+
+
 @media (max-width: 991px) {
   .order-confirm-container {
     .content-wrapper {
@@ -2101,6 +2208,10 @@ export default {
       flex-direction: column;
 
       gap: 20px;
+
+      .right-column {
+        max-width: none;
+      }
     }
 
     .action-buttons {

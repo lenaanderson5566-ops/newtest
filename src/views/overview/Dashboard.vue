@@ -1,6 +1,6 @@
 ﻿<template>
-  <div class="dashboard-container">
-    <div class="dashboard-inner">
+  <div class="dashboard-container page-shell">
+    <div class="dashboard-inner page-inner page-stack">
       <div class="overview-grid">
       <!-- 通知区域 -->
       <!-- 待支付订单提醒条 -->
@@ -271,7 +271,7 @@
         <template v-else-if="!hasPlan">
           <!-- 没有订阅时显示的提示卡片 -->
           <InfoCard class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
-               style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: 1200px; width: 100%;">
+               style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;">
             <template #icon>
               <div class="no-plan-icon">
                 <IconShoppingCart :size="45" class="icon-cart"/>
@@ -2682,7 +2682,7 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-container {
-  padding: 20px;
+  padding: 0;
   display: flex;
   justify-content: center;
   --dashboard-card-padding: 20px;
@@ -2701,8 +2701,7 @@ export default {
 
   .dashboard-inner {
     width: 100%;
-    max-width: 1200px;
-    .overview-grid {
+        .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 16px;
@@ -4045,7 +4044,7 @@ export default {
         transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
         transition-delay: 0s;
         pointer-events: none;
-        z-index: 30;
+        z-index: 260;
       }
 
       .info-tooltip-content::after {
@@ -4098,7 +4097,7 @@ export default {
       transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
       transition-delay: 0s;
       pointer-events: none;
-      z-index: 30;
+      z-index: 260;
     }
 
     .info-tooltip-content::after {
@@ -4531,9 +4530,16 @@ export default {
 }
 
 
+@media (max-width: 1200px) {
+  .dashboard-container {
+    padding: 0;
+    padding-bottom: 74px;
+  }
+}
+
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 10px;
+    padding: 0;
     padding-bottom: 74px;
     --dashboard-card-padding: 12px;
     --dashboard-card-gap: 10px;
