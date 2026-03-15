@@ -609,6 +609,18 @@ export default {
   }
 }
 
+/* 平板/窄屏：同样收紧页面容器左右留白，避免仅手机断点生效 */
+@media (max-width: 992px) {
+  .content-layout-shell {
+    padding-inline: 0;
+  }
+
+  .content-layout-shell > [class$="-container"],
+  .content-layout-shell > [class*="-container "] {
+    padding-inline: 4px !important;
+  }
+}
+
 
 .page-transition-enter-active,
 .page-transition-leave-active {
