@@ -1277,8 +1277,7 @@ onUnmounted(() => {
 
 .doc-detail-inner {
 
-  max-width: var(--page-content-max-width); 
-
+  
   margin: 0 auto;
 
   width: 100%;

@@ -1531,8 +1531,7 @@ export default {
   
   .account-inner {
     width: 100%;
-    max-width: var(--page-content-max-width);
-  }
+      }
   
   .welcome-card {
     margin-bottom: 24px;

@@ -406,8 +406,7 @@ onUnmounted(() => {
 
     width: 100%;
 
-    max-width: var(--page-content-max-width);
-
+    
   }
 
   

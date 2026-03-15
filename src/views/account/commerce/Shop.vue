@@ -904,8 +904,7 @@ export default {
   .shop-inner {
     width: 100%;
 
-    max-width: var(--page-content-max-width);
-  }
+      }
 
   .welcome-card {
     border: 1px solid var(--border-color);

@@ -1333,8 +1333,7 @@ export default {
 
   .payment-inner {
     width: 100%;
-    max-width: var(--page-content-max-width);
-  }
+      }
 
   .title-card {
     margin-top: 20px;

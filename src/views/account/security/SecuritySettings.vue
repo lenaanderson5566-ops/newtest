@@ -255,8 +255,7 @@ onMounted(() => {
 }
 
 .security-inner {
-  max-width: var(--page-content-max-width);
-  margin: 0 auto;
+    margin: 0 auto;
 }
 
 .profile-card {

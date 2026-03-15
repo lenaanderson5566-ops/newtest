@@ -62,8 +62,7 @@ export default {
 
 <style lang="scss" scoped>
 .announcement-page {
-  max-width: var(--page-content-max-width);
-  margin: 0 auto;
+    margin: 0 auto;
   padding: 0 0 24px;
 }
 

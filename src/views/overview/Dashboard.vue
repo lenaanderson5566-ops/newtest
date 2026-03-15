@@ -2701,8 +2701,7 @@ export default {
 
   .dashboard-inner {
     width: 100%;
-    max-width: var(--page-content-max-width);
-    .overview-grid {
+        .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 16px;
