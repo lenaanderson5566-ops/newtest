@@ -534,10 +534,6 @@ export default {
     padding: 0 12px;
   }
 
-  .content-layout-shell {
-    padding-inline: 0;
-  }
-
   .page-header-title {
     font-size: 16px;
   }
@@ -556,17 +552,6 @@ export default {
     gap: 3px;
     flex-wrap: nowrap;
     justify-content: flex-end;
-  }
-
-  /* 全局移动端贴边：统一页面根容器与内层包装，避免各页重复容器规则不一致 */
-  .app-content-wrapper.with-top-bar .content-layout-shell > * {
-    padding-inline: 2px !important;
-  }
-
-  .app-content-wrapper.with-top-bar .content-layout-shell > * > [class$="-inner"],
-  .app-content-wrapper.with-top-bar .content-layout-shell > * > [class*="-inner "],
-  .app-content-wrapper.with-top-bar .content-layout-shell > * > .my-center-inner {
-    padding-inline: 0 !important;
   }
 
   /* Mobile density optimization: avoid oversized modules */
@@ -614,19 +599,19 @@ export default {
   }
 }
 
-/* 平板/窄屏：与移动端使用同一套容器收口规则，减少样式嵌套差异 */
+/* 统一窄屏容器规则：仅最外层保留 2px，内层容器全部归零，最大化可用宽度 */
 @media (max-width: 1200px) {
   .content-layout-shell {
-    padding-inline: 0;
-  }
-
-  .app-content-wrapper.with-top-bar .content-layout-shell > * {
     padding-inline: 2px !important;
   }
 
-  .app-content-wrapper.with-top-bar .content-layout-shell > * > [class$="-inner"],
-  .app-content-wrapper.with-top-bar .content-layout-shell > * > [class*="-inner "],
-  .app-content-wrapper.with-top-bar .content-layout-shell > * > .my-center-inner {
+  .content-layout-shell > * {
+    padding-inline: 0 !important;
+  }
+
+  .content-layout-shell > * > [class$="-inner"],
+  .content-layout-shell > * > [class*="-inner "],
+  .content-layout-shell > * > .my-center-inner {
     padding-inline: 0 !important;
   }
 }
