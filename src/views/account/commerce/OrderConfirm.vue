@@ -1887,6 +1887,8 @@ export default {
         }
 
         .summary-value {
+          min-width: 0;
+          text-align: left;
           font-size: 32px;
 
           font-weight: 800;

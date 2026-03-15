@@ -102,6 +102,12 @@
   width: 100%;
 }
 
+.payment-container .section-wrapper .info-row.final-row .info-value {
+  width: auto;
+  margin-left: 0;
+  text-align: left;
+}
+
 .payment-container .section-wrapper .info-row.final-row .final {
   font-size: 32px;
   font-weight: 800;
@@ -124,6 +130,11 @@
   .payment-container .right-column .order-info .info-row .info-value {
     text-align: right;
     width: 100%;
+  }
+
+  .payment-container .right-column .order-info .info-row.final-row .info-value {
+    text-align: left;
+    width: auto;
   }
 }
 
