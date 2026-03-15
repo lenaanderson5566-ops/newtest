@@ -1,7 +1,7 @@
 ﻿<!-- 移动端工单页面 -->
 
 <template>
-  <div class="mobile-ticket-container">
+  <div class="mobile-ticket-container page-shell page-inner page-stack">
     <!-- 大屏幕提示 -->
 
     <div v-if="isLargeScreen" class="screen-size-notice">
@@ -774,7 +774,7 @@ fetchTickets();
 
   flex-direction: column;
 
-  padding: 20px;
+  padding: 0;
 
   padding-bottom: 90px;
 
