@@ -62,7 +62,6 @@ export default {
 
 <style lang="scss" scoped>
 .announcement-page {
-    margin: 0 auto;
   padding: 0 0 24px;
 }
 

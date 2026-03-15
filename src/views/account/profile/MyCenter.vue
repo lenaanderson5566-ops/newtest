@@ -187,7 +187,6 @@ onMounted(async () => {
 }
 
 .my-center-inner {
-    margin: 0 auto;
   display: grid;
   gap: 1rem;
 }
