@@ -4533,7 +4533,7 @@ export default {
 
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 10px;
+    padding: 4px;
     padding-bottom: 74px;
     --dashboard-card-padding: 12px;
     --dashboard-card-gap: 10px;
