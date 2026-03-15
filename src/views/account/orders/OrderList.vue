@@ -493,7 +493,7 @@ watch(locale, () => {
 }
 
 .orders-inner {
-  max-width: var(--page-content-max-width, 1200px);
+  max-width: var(--page-content-max-width, 1280px);
   margin: 0 auto;
 }
 
