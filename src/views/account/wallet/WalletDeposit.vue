@@ -1,16 +1,6 @@
-﻿<template>
+<template>
   <div class="deposit-container">
     <div class="deposit-inner">
-      <!-- 欢迎卡片 -->
-      <div class="dashboard-card welcome-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('wallet.welcome.title') || '账户充值' }}</h2>
-        </div>
-        <div class="card-body">
-          <p>{{ $t('wallet.welcome.description') || '在这里您可以轻松地为您的账户充值，选择预设金额或输入自定义金额进行充值。充值后的余额将立即到账并可用于购买我们的服务。' }}</p>
-        </div>
-      </div>
-
       <!-- 余额信息卡片 -->
       <div class="dashboard-card balance-card">
         <div class="card-header">

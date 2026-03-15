@@ -1,16 +1,6 @@
-﻿<template>
+<template>
   <div class="orders-container">
     <div class="orders-inner">
-      <!-- 欢迎卡片 -->
-      <div class="dashboard-card welcome-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('orders.welcome.title') || '订单列表' }}</h2>
-        </div>
-        <div class="card-body">
-          <p>{{ $t('orders.welcome.description') || '查看并管理您的订单' }}</p>
-        </div>
-      </div>
-      
       <!-- 加载状态 -->
       <div v-if="loading" class="orders-loading">
         <LoadingSpinner />

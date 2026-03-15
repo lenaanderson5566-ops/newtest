@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="account-container">
     <!-- 自定义确认弹窗 -->
     <transition name="modal">
@@ -27,17 +27,6 @@
     </transition>
     
     <div class="account-inner">
-      <!-- 欢迎卡片 -->
-      <div class="dashboard-card welcome-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('invite.title') }}</h2>
-        </div>
-        <div class="card-body">
-          <p>{{ $t('invite.description') }}</p>
-        </div>
-      </div>
-      
-
       <!-- 佣金余额卡片 -->
       <div class="dashboard-card balance-card">
         <div class="card-header">
