@@ -1,6 +1,6 @@
 <template>
-  <div class="my-center">
-    <div class="my-center-inner">
+  <div class="my-center page-shell">
+    <div class="my-center-inner page-inner page-stack">
       <section class="summary-panel section-block dashboard-like-card">
         <div class="summary-top">
           <div>
@@ -187,7 +187,7 @@ onMounted(async () => {
 }
 
 .my-center-inner {
-  max-width: 1024px;
+  max-width: var(--page-content-max-width, 1200px);
   margin: 0 auto;
   display: grid;
   gap: 1rem;

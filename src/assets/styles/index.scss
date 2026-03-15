@@ -22,6 +22,28 @@
   --global-card-gap: 14px;
 }
 
+/* 统一布局原语：外层容器、内层宽度与卡片堆叠间距 */
+:root {
+  --page-content-max-width: 1200px;
+  --page-stack-gap: var(--global-card-gap);
+}
+
+.app-content-wrapper .page-shell {
+  padding-inline: 0 !important;
+  padding-top: 0;
+}
+
+.app-content-wrapper .page-inner {
+  width: 100%;
+  max-width: var(--page-content-max-width);
+  margin: 0 auto;
+}
+
+.app-content-wrapper .page-stack {
+  display: grid;
+  gap: var(--page-stack-gap);
+}
+
 .dashboard-card p,
 .section-wrapper .info-label,
 .section-wrapper .info-value,

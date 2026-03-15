@@ -1,6 +1,6 @@
 <template>
-  <div class="order-confirm-container">
-    <div class="order-confirm-inner">
+  <div class="order-confirm-container page-shell">
+    <div class="order-confirm-inner page-inner page-stack">
       <!-- 用户现有订阅提示 -->
 
       <div class="alert-card" v-if="showExistingPlanWarning">
@@ -1065,7 +1065,7 @@ export default {
 
 <style lang="scss" scoped>
 .order-confirm-container {
-  padding: 20px;
+  padding: 0;
 
   display: flex;
 
@@ -1078,7 +1078,7 @@ export default {
   .order-confirm-inner {
     width: 100%;
 
-    max-width: 1200px;
+    max-width: var(--page-content-max-width, 1200px);
 
     padding-bottom: 100px;
   }

@@ -1,6 +1,6 @@
 <template>
-  <div class="payment-container">
-    <div class="payment-inner">
+  <div class="payment-container page-shell">
+    <div class="payment-inner page-inner page-stack">
       <div class="content-wrapper">
         <!-- 左侧内容：产品信息 -->
         <div class="left-column">
@@ -1326,14 +1326,14 @@ export default {
 
 <style lang="scss" scoped>
 .payment-container {
-  padding: 20px;
+  padding: 0;
   display: flex;
   justify-content: center;
   position: relative;
 
   .payment-inner {
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--page-content-max-width, 1200px);
   }
 
   .title-card {

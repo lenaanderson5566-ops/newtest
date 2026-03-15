@@ -1,6 +1,6 @@
 <template>
-  <div class="deposit-container">
-    <div class="deposit-inner">
+  <div class="deposit-container page-shell">
+    <div class="deposit-inner page-inner page-stack">
       <!-- 余额信息卡片 -->
       <div class="dashboard-card balance-card">
         <div class="card-header">
@@ -243,14 +243,14 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .deposit-container {
-  padding: 20px;
+  padding: 0;
   display: flex;
   justify-content: center;
   padding-bottom: 80px;
   
   .deposit-inner {
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--page-content-max-width, 1200px);
   }
   
   .dashboard-card {

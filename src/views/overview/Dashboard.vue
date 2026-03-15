@@ -1,6 +1,6 @@
 ﻿<template>
-  <div class="dashboard-container">
-    <div class="dashboard-inner">
+  <div class="dashboard-container page-shell">
+    <div class="dashboard-inner page-inner page-stack">
       <div class="overview-grid">
       <!-- 通知区域 -->
       <!-- 待支付订单提醒条 -->
@@ -2701,7 +2701,7 @@ export default {
 
   .dashboard-inner {
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--page-content-max-width, 1200px);
     .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));

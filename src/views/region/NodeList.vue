@@ -1,6 +1,6 @@
 <template>
 
-  <div class="nodes-container">
+  <div class="nodes-container page-shell">
 
     <!-- 域名授权验证提示 - 如果不需要域名授权功能，移除此组件即可 -->
 
@@ -8,7 +8,7 @@
 
     
 
-    <div class="nodes-inner">
+    <div class="nodes-inner page-inner page-stack">
 
 
       <!-- 线路列表状态 -->
@@ -396,7 +396,7 @@ onMounted(() => {
 
 .nodes-inner {
 
-  max-width: 1200px;
+  max-width: var(--page-content-max-width, 1200px);
 
   margin: 0 auto;
 

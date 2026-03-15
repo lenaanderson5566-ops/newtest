@@ -1,6 +1,6 @@
 <template>
-  <div class="billing-container">
-    <div class="billing-inner">
+  <div class="billing-container page-shell">
+    <div class="billing-inner page-inner page-stack">
       <div class="billing-tabs-card">
         <button
           class="billing-tab"
@@ -85,12 +85,12 @@ watch(
 
 <style lang="scss" scoped>
 .billing-container {
-  padding: 16px 20px 12px;
+  padding: 0;
   background: transparent;
 }
 
 .billing-inner {
-  max-width: 1240px;
+  max-width: var(--page-content-max-width, 1200px);
   margin: 0 auto;
 }
 
@@ -134,7 +134,7 @@ watch(
 
 @media (max-width: 768px) {
   .billing-container {
-    padding: 14px;
+    padding: 0;
   }
 
   .billing-tabs-card {
