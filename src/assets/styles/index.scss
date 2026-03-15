@@ -115,7 +115,7 @@
   }
 }
 
-/* 全局：未完成订单确认弹窗样式（避免 scoped 样式被全局密度规则影响） */
+/* 全局：未完成订单确认弹窗样式（对齐账户页通用弹窗尺寸与节奏） */
 .pending-order-modal {
   position: fixed;
   inset: 0;
@@ -123,78 +123,107 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 20px;
   isolation: isolate;
 }
 
 .pending-order-modal .pending-order-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.48);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .pending-order-modal .pending-order-dialog {
   position: relative;
-  width: min(92vw, 560px);
-  background: rgba(var(--card-background-rgb, 255, 255, 255), 0.98);
+  width: 90%;
+  max-width: 480px;
+  background: var(--card-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
-  border-radius: 14px;
-  padding: 18px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .pending-order-modal .pending-order-dialog h3 {
-  margin: 0 0 8px;
-  font-size: 20px;
-  font-weight: 700;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
   color: var(--text-color);
 }
 
 .pending-order-modal .pending-order-dialog p {
   margin: 0;
-  color: var(--text-color) !important;
-  opacity: 0.95;
-  line-height: 1.55;
-  font-size: 17px;
+  color: var(--secondary-text-color);
+  line-height: 1.5;
+  font-size: 14px;
 }
 
 .pending-order-modal .pending-order-actions {
-  margin-top: 14px;
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .pending-order-modal .pending-order-actions button {
   flex: 1;
-  height: 42px;
-  border-radius: 10px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: 8px;
   border: 1px solid var(--border-color);
+  font-size: 14px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .pending-order-modal .pending-order-actions .btn-return-orders {
-  background: rgba(var(--card-background-rgb, 255, 255, 255), 0.92);
+  background: transparent;
   color: var(--text-color);
+
+  &:hover {
+    background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
+  }
 }
 
 .pending-order-modal .pending-order-actions .btn-confirm-cancel {
   background: var(--theme-color);
   color: #fff;
   border-color: var(--theme-color);
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.05);
+  }
+}
+
+.pending-order-modal .pending-order-actions button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.pending-order-modal .pending-order-actions .loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: block;
+  animation: spin 0.8s linear infinite;
 }
 
 @media (max-width: 768px) {
   .pending-order-modal .pending-order-dialog {
-    width: min(94vw, 420px);
+    width: 100%;
+    max-width: 420px;
     padding: 16px;
   }
 
-  .pending-order-modal .pending-order-dialog p {
-    font-size: 15px;
+  .pending-order-modal .pending-order-actions {
+    flex-direction: column;
   }
 }
-
