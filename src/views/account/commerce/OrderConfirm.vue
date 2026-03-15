@@ -1834,6 +1834,8 @@ export default {
       }
 
       .summary-label {
+        flex: 1;
+        min-width: 0;
         font-size: 14px;
 
         color: var(--secondary-text-color);
@@ -1850,6 +1852,8 @@ export default {
       }
 
       .summary-value {
+        min-width: 120px;
+        text-align: right;
         font-size: 14px;
 
         font-weight: 500;

@@ -50,6 +50,13 @@
   margin-top: 6px;
 }
 
+
+/* 支付页金额列统一右对齐（订阅金额/各类折扣/总优惠等） */
+.payment-container .right-column .order-info .info-row .info-value {
+  text-align: right;
+  margin-left: auto;
+}
+
 /* Payment 行样式统一上收为全局（替代 Payment.vue scoped 行样式） */
 .payment-container .section-wrapper .info-row {
   display: flex;
@@ -111,6 +118,11 @@
   }
 
   .payment-container .section-wrapper .info-row .info-label {
+    width: 100%;
+  }
+
+  .payment-container .right-column .order-info .info-row .info-value {
+    text-align: right;
     width: 100%;
   }
 }
