@@ -1,4 +1,4 @@
-﻿<template>
+<template>
 
   <div class="slide-tabs-container" :class="{ 'is-collapsed': isCollapsed && isDesktop }">
 
@@ -10,8 +10,14 @@
         class="collapse-toggle"
         @click="toggleCollapse"
         :aria-label="isCollapsed ? '展开导航' : '折叠导航'"
+        :aria-pressed="isCollapsed"
+        :title="isCollapsed ? '展开导航' : '折叠导航'"
       >
-        <IconChevronLeft class="collapse-icon" :class="{ 'is-collapsed': isCollapsed }" />
+        <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 7H20" />
+          <path d="M4 12H20" />
+          <path d="M4 17H20" />
+        </svg>
       </button>
 
       <div class="slide-tabs-nav" ref="tabsNav">
@@ -60,7 +66,7 @@
 
 <script>
 
-import { ref, onMounted, watch, nextTick, onBeforeUnmount, computed, reactive, onUnmounted } from 'vue';
+import { ref, onMounted, watch, nextTick, onBeforeUnmount, computed, reactive } from 'vue';
 
 import { useRoute, useRouter } from 'vue-router';
 
@@ -70,7 +76,7 @@ import IconFileText from '@/components/icons/IconFileText.vue';
 
 import IconUser from '@/components/icons/IconUser.vue';
 
-import { IconServer, IconChevronLeft } from '@tabler/icons-vue';
+import { IconServer } from '@tabler/icons-vue';
 
 
 
@@ -107,6 +113,19 @@ export default {
     const isCollapsed = ref(false);
     const isDesktop = ref(false);
     let mediaQueryList = null;
+    let debouncedResize = null;
+
+    const handlePopState = () => {
+      if (isComponentMounted.value && tabsNav.value) {
+        safeTimeout(() => {
+          const index = findIndexByRouteName(route.name);
+          updateSliderPosition(index, false);
+          safeTimeout(() => {
+            updateSliderPosition(index, true);
+          }, 50);
+        }, 0);
+      }
+    };
 
     const applySidebarWidth = () => {
       const width = isDesktop.value
@@ -678,7 +697,7 @@ export default {
 
       
 
-      const debouncedResize = debounce(handleResize, 100);
+      debouncedResize = debounce(handleResize, 100);
 
       window.addEventListener('resize', debouncedResize);
 
@@ -708,33 +727,24 @@ export default {
 
       
 
-      window.addEventListener('popstate', () => {
-
-        if (isComponentMounted.value && tabsNav.value) {
-
-          safeTimeout(() => {
-
-            const index = findIndexByRouteName(route.name);
-
-            updateSliderPosition(index, false);
-
-            safeTimeout(() => {
-
-              updateSliderPosition(index, true);
-
-            }, 50);
-
-          }, 0);
-
-        }
-
-      });
+      window.addEventListener('popstate', handlePopState);
 
     });
 
     
 
-    onUnmounted(() => {
+    onBeforeUnmount(() => {
+
+      isComponentMounted.value = false;
+
+
+      
+
+      positionTimers.forEach(timer => clearTimeout(timer));
+
+      positionTimers = [];
+
+      
 
       if (stopRouteWatch) {
 
@@ -756,22 +766,9 @@ export default {
 
       
 
-      window.removeEventListener('popstate', () => {});
+      mediaQueryList?.removeEventListener?.('change', updateDesktopMode);
 
-    });
-
-    
-
-    onBeforeUnmount(() => {
-
-      isComponentMounted.value = false;
-
-
-      
-
-      positionTimers.forEach(timer => clearTimeout(timer));
-
-      positionTimers = [];
+      mediaQueryList?.removeListener?.(updateDesktopMode);
 
       
 
@@ -779,13 +776,23 @@ export default {
 
       window.removeEventListener('languageChanged', onLanguageChanged);
 
-      window.removeEventListener('resize', handleResize);
+      if (debouncedResize) {
+
+        window.removeEventListener('resize', debouncedResize);
+
+      }
 
       window.removeEventListener('scroll', handleScroll);
+
+      window.removeEventListener('popstate', handlePopState);
 
       
 
       tabsNav.value = null;
+
+      mediaQueryList = null;
+
+      debouncedResize = null;
 
     });
 
@@ -810,8 +817,7 @@ export default {
       route,
       isCollapsed,
       isDesktop,
-      toggleCollapse,
-      IconChevronLeft
+      toggleCollapse
 
     };
 
@@ -849,7 +855,7 @@ function debounce(fn, delay) {
   margin-bottom: 14px;
   position: fixed;
   top: 108px;
-  left: 10px;
+  left: var(--left-nav-gap, 10px);
   z-index: 10;
   width: var(--left-nav-occupy, 176px);
   transition: width 0.25s ease;
@@ -875,17 +881,38 @@ function debounce(fn, delay) {
     justify-content: center;
     cursor: pointer;
 
+    &:hover {
+      border-color: rgba(var(--theme-color-rgb), 0.45);
+
+      .collapse-icon {
+        color: var(--theme-color);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(var(--theme-color-rgb), 0.45);
+      outline-offset: 1px;
+    }
+
     .collapse-icon {
       width: 16px;
       height: 16px;
       color: var(--secondary-text-color);
-      transition: transform 0.25s ease;
-
-      &.is-collapsed {
-        transform: rotate(180deg);
-      }
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.92;
+      transition: color 0.2s ease, opacity 0.2s ease;
     }
   }
+
+  &.is-collapsed {
+    .collapse-toggle .collapse-icon {
+      opacity: 0.8;
+    }
+  }
+
 
   .slide-tabs-nav {
     display: flex;
@@ -1121,6 +1148,10 @@ function debounce(fn, delay) {
     top: auto;
 
     bottom: 20px;  
+
+    left: 50%;
+
+    transform: translateX(-50%);
 
     width: 92%;
 

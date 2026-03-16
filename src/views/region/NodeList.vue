@@ -1,6 +1,6 @@
-﻿<template>
+<template>
 
-  <div class="nodes-container">
+  <div class="nodes-container page-shell">
 
     <!-- 域名授权验证提示 - 如果不需要域名授权功能，移除此组件即可 -->
 
@@ -8,27 +8,8 @@
 
     
 
-    <div class="nodes-inner">
+    <div class="nodes-inner page-inner page-stack">
 
-      <!-- 欢迎卡片 -->
-
-      <div v-if="hasActivePlan" class="dashboard-card welcome-card">
-
-        <div class="card-header">
-
-          <h2 class="card-title">{{ $t('lines.welcome.title') }}</h2>
-
-        </div>
-
-        <div class="card-body">
-
-          <p>{{ $t('lines.welcome.description') }}</p>
-
-        </div>
-
-      </div>
-
-      
 
       <!-- 线路列表状态 -->
 
@@ -100,9 +81,7 @@
 
       <!-- 线路列表内容 -->
 
-      <div v-else-if="lines.length > 0" class="nodes-content">
-
-        <div class="node-items">
+      <div v-else-if="lines.length > 0" class="node-items">
 
           <div v-for="line in lines" :key="line.id" class="node-item">
             <div class="node-country" :class="countryBadgeClass(getCountryTag(line.tags))">{{ formatCountryTag(getCountryTag(line.tags) || '--') }}</div>
@@ -129,11 +108,7 @@
 
           </div>
 
-        </div>
-
       </div>
-
-      
 
       <!-- 空状态 -->
 
@@ -401,17 +376,17 @@ onMounted(() => {
 
 .nodes-container {
 
-  padding: 1.25rem;
+  padding: 0;
 
-  padding-bottom: calc(1.25rem + 64px); 
+  padding-bottom: calc(2px + 64px); 
 
   
 
   @media (min-width: 768px) {
 
-    padding: 2rem;
+    padding: 0;
 
-    padding-bottom: 3rem; 
+    padding-bottom: 2px; 
 
   }
 
@@ -420,10 +395,6 @@ onMounted(() => {
 
 
 .nodes-inner {
-
-  max-width: 1200px;
-
-  margin: 0 auto;
 
 }
 
@@ -878,30 +849,6 @@ onMounted(() => {
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.1); opacity: 0.85; }
 }
-
-.nodes-content {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 1.25rem;
-
-  max-width: 1200px;
-
-  width: 100%;
-
-  margin: 0 auto;
-
-  padding: 14px;
-  border-radius: 18px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  background: var(--card-bg);
-
-}
-
-
 
 .node-items {
 

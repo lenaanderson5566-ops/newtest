@@ -1,31 +1,13 @@
 ﻿<template>
 
-  <div class="docs-container">
+  <div class="docs-container page-shell">
 
     <!-- 域名授权验证提示 - 如果不需要域名授权功能，移除此组件即可 -->
 
 
     
 
-    <div class="docs-inner">
-
-      <!-- 欢迎卡片 -->
-
-      <div class="dashboard-card welcome-card">
-
-        <div class="card-header">
-
-          <h2 class="card-title">{{ $t('docs.welcome.title') || '文档中心' }}</h2>
-
-        </div>
-
-        <div class="card-body">
-
-          <p>{{ $t('docs.welcome.description') || '查找并阅读有关使用和配置的详细文档。' }}</p>
-
-        </div>
-
-      </div>
+    <div class="docs-inner page-inner page-stack">
 
       <div class="dashboard-card start-using-status-card"> 
         <div class="card-header">
@@ -565,17 +547,17 @@ onMounted(async () => {
 
 .docs-container {
 
-  padding: 1.25rem;
+  padding: 0;
 
-  padding-bottom: calc(1.25rem + 64px); 
+  padding-bottom: calc(2px + 64px); 
 
   
 
   @media (min-width: 768px) {
 
-    padding: 2rem;
+    padding: 0;
 
-    padding-bottom: 3rem; 
+    padding-bottom: 2px; 
 
   }
 
@@ -584,10 +566,6 @@ onMounted(async () => {
 
 
 .docs-inner {
-
-  max-width: 1200px;
-
-  margin: 0 auto;
 
 }
 
@@ -920,11 +898,8 @@ onMounted(async () => {
 
   gap: 2rem;
 
-  max-width: 1200px;
-
+  
   width: 100%;
-
-  margin: 0 auto;
 
 }
 
