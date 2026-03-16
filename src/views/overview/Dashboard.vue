@@ -608,24 +608,6 @@ export default {
     const ipLocationCache = ref(null);
     const ipLocationDebounceTimer = ref(null);
 
-    function detectUserPlatform() {
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        return 'ios';
-      }
-
-      if (/android/i.test(userAgent)) {
-        return 'android';
-      }
-
-      if (/Mac/.test(userAgent)) {
-        return 'macos';
-      }
-
-      return 'windows';
-    }
-
     const loading = reactive({
       userInfo: true,
       userStats: true,
