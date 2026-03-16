@@ -81,37 +81,39 @@
       </div>
     </div>
 
-    <transition name="fade">
-      <div v-if="showQrCode" class="qrcode-modal-overlay" @click="showQrCode = false">
-        <div class="qrcode-modal" @click.stop>
-          <div class="qrcode-header">
-            <h3>{{ $t('dashboard.scanQRCode') }}</h3>
-            <button class="close-btn" @click="showQrCode = false"><IconX :size="20" /></button>
-          </div>
-          <div class="qrcode-content">
-            <img :src="qrCodeUrl" alt="QR Code" />
+    <Teleport to="body">
+      <transition name="fade">
+        <div v-if="showQrCode" class="qrcode-modal-overlay" @click="showQrCode = false">
+          <div class="qrcode-modal" @click.stop>
+            <div class="qrcode-header">
+              <h3>{{ $t('dashboard.scanQRCode') }}</h3>
+              <button class="close-btn" @click="showQrCode = false"><IconX :size="20" /></button>
+            </div>
+            <div class="qrcode-content">
+              <img :src="qrCodeUrl" alt="QR Code" />
+            </div>
           </div>
         </div>
-      </div>
-    </transition>
+      </transition>
 
-    <transition name="fade">
-      <div v-if="showResetModal" class="qrcode-modal-overlay" @click="showResetModal = false">
-        <div class="qrcode-modal reset-modal" @click.stop>
-          <div class="qrcode-header">
-            <h3>{{ $t('profile.resetSecurityTitle') }}</h3>
-            <button class="close-btn" @click="showResetModal = false"><IconX :size="20" /></button>
-          </div>
-          <p class="reset-modal-text">{{ $t('profile.resetSecurityConfirm') }}</p>
-          <div class="reset-modal-actions">
-            <button class="modal-btn" @click="showResetModal = false">{{ $t('common.cancel') }}</button>
-            <button class="modal-btn danger" :disabled="resetting" @click="resetSecurity">
-              {{ resetting ? $t('common.processing') : $t('profile.confirmReset') }}
-            </button>
+      <transition name="fade">
+        <div v-if="showResetModal" class="qrcode-modal-overlay" @click="showResetModal = false">
+          <div class="qrcode-modal reset-modal" @click.stop>
+            <div class="qrcode-header">
+              <h3>{{ $t('profile.resetSecurityTitle') }}</h3>
+              <button class="close-btn" @click="showResetModal = false"><IconX :size="20" /></button>
+            </div>
+            <p class="reset-modal-text">{{ $t('profile.resetSecurityConfirm') }}</p>
+            <div class="reset-modal-actions">
+              <button class="modal-btn" @click="showResetModal = false">{{ $t('common.cancel') }}</button>
+              <button class="modal-btn danger" :disabled="resetting" @click="resetSecurity">
+                {{ resetting ? $t('common.processing') : $t('profile.confirmReset') }}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </transition>
+      </transition>
+    </Teleport>
   </div>
 </template>
 
