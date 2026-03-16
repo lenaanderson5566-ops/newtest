@@ -549,6 +549,20 @@ export default {
     const clientConfig = reactive(CLIENT_CONFIG);
     const notices = ref([]);
     const autoRotateNotices = ref(true);
+    const currencySymbol = ref('$');
+    const hasPlan = ref(true);
+    const currentNoticeIndex = ref(0);
+    const showNoticeDetails = ref(false);
+    const userStats = reactive({
+      remainingTraffic: '',
+      remainingDays: '',
+      accountBalance: '0.00',
+      pendingOrders: 0,
+      pendingTickets: 0,
+      userEmail: '',
+      isRemainingDaysPermanent: false
+    });
+    const userBalance = ref('0.00');
     const userPlan = ref({
       deviceLimit: null,
       aliveIp: 0,
@@ -1906,7 +1920,6 @@ export default {
       clientConfig,
       notices,
       loading,
-      languageChangedSignal,
       goToShop,
       hasPendingItems,
       goToOrders,
@@ -1988,7 +2001,6 @@ export default {
       triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
-      showImportSubscription,
       showTrafficPackageModal,
       trafficPackageLoading,
       trafficPackagePlans,
