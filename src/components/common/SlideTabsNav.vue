@@ -4,7 +4,7 @@
       <div class="slide-tabs-nav">
         <router-link
           v-for="item in navItems"
-          :key="`${item.name}-${languageKey}`"
+          :key="item.name"
           :to="item.path"
           class="nav-item"
           :class="{ active: activeNavName === item.name }"
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRoute } from 'vue-router';
 import IconDashboard from '@/components/icons/IconDashboard.vue';
 import IconFileText from '@/components/icons/IconFileText.vue';
@@ -31,8 +31,6 @@ export default {
   name: 'SlideTabsNav',
   setup() {
     const route = useRoute();
-    const languageKey = ref(Date.now());
-
     const SIDEBAR_WIDTH = 176;
     const SIDEBAR_BREAKPOINT = 992;
     let mediaQueryList = null;
@@ -59,7 +57,36 @@ export default {
       }
     };
 
-    const activeNavName = computed(() => route.meta?.activeNav || route.name || 'Dashboard');
+    const getFallbackActiveNav = (routeName) => {
+      const regionRoutes = new Set(['NodeList']);
+      const docsRoutes = new Set(['Docs', 'DocDetail']);
+      const profileRoutes = new Set([
+        'Announcements',
+        'Profile',
+        'SecuritySettings',
+        'Billing',
+        'TicketList',
+        'MobileTickets',
+        'TrafficLog',
+        'More',
+        'Shop',
+        'OrderConfirm',
+        'Payment'
+      ]);
+
+      if (regionRoutes.has(routeName)) return 'Nodes';
+      if (docsRoutes.has(routeName)) return 'Docs';
+      if (profileRoutes.has(routeName)) return 'Profile';
+      return 'Dashboard';
+    };
+
+    const activeNavName = computed(() => {
+      if (route.meta?.activeNav) {
+        return route.meta.activeNav === 'Shop' ? 'Profile' : route.meta.activeNav;
+      }
+
+      return getFallbackActiveNav(route.name);
+    });
 
     const applySidebarWidth = () => {
       const width = mediaQueryList?.matches ? SIDEBAR_WIDTH : 0;
@@ -70,28 +97,22 @@ export default {
       applySidebarWidth();
     };
 
-    const onLanguageChanged = () => {
-      languageKey.value = Date.now();
-    };
-
     onMounted(() => {
       mediaQueryList = window.matchMedia(`(min-width: ${SIDEBAR_BREAKPOINT}px)`);
       updateDesktopMode();
       mediaQueryList.addEventListener?.('change', updateDesktopMode);
       mediaQueryList.addListener?.(updateDesktopMode);
-      window.addEventListener('languageChanged', onLanguageChanged);
     });
 
     onBeforeUnmount(() => {
       mediaQueryList?.removeEventListener?.('change', updateDesktopMode);
       mediaQueryList?.removeListener?.(updateDesktopMode);
-      window.removeEventListener('languageChanged', onLanguageChanged);
+      document.documentElement.style.setProperty('--left-nav-occupy', '0px');
       mediaQueryList = null;
     });
 
     return {
       navItems,
-      languageKey,
       activeNavName,
       getIcon
     };
