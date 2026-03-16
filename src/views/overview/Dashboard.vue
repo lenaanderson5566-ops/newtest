@@ -327,7 +327,7 @@
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'package-card-muted': card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
+            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired)) || (card.key === 'subscription' && isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">
@@ -3032,7 +3032,7 @@ export default {
             cursor: pointer;
           }
         }
-        &.package-card-muted {
+        &.quota-card-muted {
           background: #f3f4f6;
           border-color: #e5e7eb;
 
@@ -3041,10 +3041,8 @@ export default {
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
           }
         }
-        &.subscription-card-muted {
-          background: #f3f4f6;
-          border-color: #e5e7eb;
 
+        &.subscription-card-muted {
           .section-progress-track {
             background: #e5e7eb;
           }
