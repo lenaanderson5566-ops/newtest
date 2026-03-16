@@ -298,7 +298,7 @@ export default {
     region: 'Регион',
     usage: 'Использование',
     start: 'Начало',
-    my: 'Моё',
+    my: 'Аккаунт',
     shop: 'Магазин',
     subscription: 'Подписка',
     invite: 'Приглашение',
@@ -474,7 +474,7 @@ export default {
     uploadSuccess: 'Изображение успешно загружено',
   },
   profile: {
-    title: 'Центр пользователя',
+    title: 'Аккаунт',
     basicInfo: 'Основная информация',
     email: 'Электронная почта',
     userId: 'ID пользователя',

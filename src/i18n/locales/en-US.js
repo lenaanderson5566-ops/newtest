@@ -301,7 +301,7 @@ export default {
         region: 'Region',
         usage: 'Usage',
         start: 'Start',
-        my: 'My',
+        my: 'Account',
         shop: 'Shop',
         subscription: 'Subscription',
         announcement: 'Announcements',
@@ -477,7 +477,7 @@ export default {
         uploadSuccess: 'Image uploaded successfully',
     },
     profile: {
-        title: 'User Center',
+        title: 'Account',
         basicInfo: 'Basic Information',
         email: 'Email Account',
         userId: 'User ID',

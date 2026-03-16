@@ -304,7 +304,7 @@ export default {
         region: 'Khu vực',
         usage: 'Sử dụng',
         start: 'Bắt đầu',
-        my: 'Của tôi',
+        my: 'Tài khoản',
         shop: 'Cửa hàng',
         subscription: 'Gói đăng ký',
         invite: 'Mời bạn',
@@ -467,7 +467,7 @@ export default {
         uploadSuccess: 'Hình ảnh đã được tải lên thành công',
     },
     profile: {
-        title: 'Trung tâm Người dùng',
+        title: 'Tài khoản',
         basicInfo: 'Thông tin cơ bản',
         email: 'Tài khoản email',
         userId: 'ID người dùng',
@@ -971,7 +971,7 @@ export default {
         }
     },
     profile: {
-        title: 'Thông tin cá nhân',
+        title: 'Tài khoản',
         basicInfo: 'Thông tin cơ bản',
         email: 'Email',
         userId: 'ID người dùng',

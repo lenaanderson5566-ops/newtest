@@ -298,7 +298,7 @@ export default {
     region: '지역',
     usage: '사용',
     start: '시작',
-    my: '내 정보',
+    my: '계정',
     shop: '상점',
     subscription: '구독',
     invite: '초대',
@@ -475,7 +475,7 @@ export default {
     uploadSuccess: '이미지 업로드 성공',
   },
   profile: {
-    title: '사용자 센터',
+    title: '계정',
     basicInfo: '기본 정보',
     email: '이메일 계정',
     userId: '사용자 ID',

@@ -298,7 +298,7 @@ export default {
     region: '區域',
     usage: '使用',
         start: '開始',
-    my: '我的',
+    my: '帳號',
     shop: '商店',
     subscription: '訂閱',
     invite: '邀請',
@@ -473,7 +473,7 @@ export default {
     uploadSuccess: '圖片上傳成功'
   },
   profile: {
-    title: '用戶中心',
+    title: '帳號',
     basicInfo: '基本資訊',
     email: '電子郵件帳號',
     userId: '用戶ID',

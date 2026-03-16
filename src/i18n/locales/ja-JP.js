@@ -298,7 +298,7 @@ export default {
     region: 'エリア',
     usage: '利用',
     start: '開始',
-    my: 'マイ',
+    my: 'アカウント',
     shop: 'ストア',
     subscription: 'サブスクリプション',
     invite: '招待',
@@ -474,7 +474,7 @@ export default {
     uploadSuccess: '画像アップロード成功',
   },
   profile: {
-    title: 'ユーザーセンター',
+    title: 'アカウント',
     basicInfo: '基本情報',
     email: 'メールアカウント',
     userId: 'ユーザーID',

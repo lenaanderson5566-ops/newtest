@@ -302,7 +302,7 @@ export default {
         region: '区域',
         usage: '使用',
         start: '开始',
-        my: '我的',
+        my: '账号',
         shop: '商店',
         subscription: '订阅',
         announcement: '服务通知',
@@ -477,7 +477,7 @@ export default {
         uploadSuccess: '图片上传成功',
     },
     profile: {
-        title: '我的',
+        title: '账号',
         basicInfo: '基本信息',
         email: '邮箱账号',
         userId: '用户ID',

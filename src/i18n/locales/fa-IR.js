@@ -298,7 +298,7 @@ export default {
     region: 'منطقه',
     usage: 'استفاده',
     start: 'شروع',
-    my: 'حساب من',
+    my: 'حساب',
     shop: 'فروشگاه',
     subscription: 'اشتراک',
     invite: 'دعوت',
@@ -474,7 +474,7 @@ export default {
     uploadSuccess: 'تصویر با موفقیت آپلود شد',
   },
   profile: {
-    title: 'مرکز کاربر',
+    title: 'حساب',
     basicInfo: 'اطلاعات پایه',
     email: 'ایمیل حساب',
     userId: 'شناسه کاربر',
