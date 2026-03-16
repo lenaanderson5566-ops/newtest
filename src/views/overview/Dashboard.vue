@@ -306,11 +306,7 @@
         @confirm="handlePopupConfirm"
     />
 
-  </div>
-</div>
-
-
-  <transition name="modal-fade">
+      <transition name="modal-fade">
       <div class="modal-overlay traffic-package-overlay traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
         <div class="modal-container traffic-package-container traffic-package-modal-container" @click.stop>
           <div class="modal-card traffic-package-modal-card traffic-package-modal-card-global">
@@ -345,9 +341,9 @@
           </div>
         </div>
       </div>
-  </transition>
+      </transition>
   <!-- 重置流量确认弹窗 -->
-  <transition name="modal-fade">
+      <transition name="modal-fade">
     <div class="modal-overlay" v-if="showResetTrafficModal">
       <div class="modal-container">
         <div class="modal-card reset-traffic-modal">
@@ -389,7 +385,10 @@
 
 
     </div>
-  </transition>
+      </transition>
+
+    </div>
+  </div>
 
 </template>
 
