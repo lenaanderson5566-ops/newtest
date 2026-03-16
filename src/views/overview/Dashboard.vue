@@ -2089,6 +2089,19 @@ export default {
   --quota-value-color: #1f2937;
   --quota-progress-start: #60a5fa;
   --quota-progress-end: #3b82f6;
+  --quota-muted-fill: #cbd5e1;
+  --quota-total-bg-end: #f8fbff;
+  --quota-expired-border: #d1d5db;
+  --plan-meta-text: #64748b;
+  --plan-expired-strip-text: #b91c1c;
+  --plan-expired-strip-bg: rgba(248, 113, 113, 0.16);
+  --plan-expired-strip-border: rgba(239, 68, 68, 0.32);
+  --status-active-text: #15803d;
+  --status-active-bg: rgba(34, 197, 94, 0.15);
+  --status-expiring-text: #b45309;
+  --status-expiring-bg: rgba(245, 158, 11, 0.16);
+  --status-expired-text: #dc2626;
+  --status-expired-bg: rgba(220, 38, 38, 0.1);
 
   .dashboard-inner {
     .overview-grid {
@@ -2441,12 +2454,12 @@ export default {
           }
 
           .section-progress-fill {
-            background: #cbd5e1;
+            background: var(--quota-muted-fill);
           }
         }
 
         &.total-main-card {
-          background: linear-gradient(180deg, var(--theme-white) 0%, #f8fbff 100%);
+          background: linear-gradient(180deg, var(--theme-white) 0%, var(--quota-total-bg-end) 100%);
           border-color: var(--border-color);
           box-shadow: var(--shadow-card-md);
 
@@ -2458,7 +2471,7 @@ export default {
 
         &.expired-main-card {
           background: var(--theme-surface-muted);
-          border-color: #d1d5db;
+          border-color: var(--quota-expired-border);
 
           .usage-card-title {
             color: var(--theme-text-secondary);
@@ -2478,9 +2491,9 @@ export default {
             padding: 9px 12px;
             font-size: 13px;
             font-weight: 600;
-            color: #b91c1c;
-            background: rgba(248, 113, 113, 0.16);
-            border: 1px solid rgba(239, 68, 68, 0.32);
+            color: var(--plan-expired-strip-text);
+            background: var(--plan-expired-strip-bg);
+            border: 1px solid var(--plan-expired-strip-border);
           }
 
           .plan-summary-section {
@@ -2534,15 +2547,10 @@ export default {
             gap: 8px;
             flex-wrap: wrap;
             font-size: 13px;
-            color: #64748b;
-          }
-
-          .plan-summary-section-renew {
-            background: var(--theme-surface-soft);
+            color: var(--plan-meta-text);
           }
 
           .plan-summary-section-actions {
-            background: var(--theme-surface-soft);
             border: none;
             padding-top: 12px;
             padding-bottom: 12px;
@@ -2592,18 +2600,18 @@ export default {
             font-weight: 600;
 
             &.is-active {
-              color: #15803d;
-              background: rgba(34, 197, 94, 0.15);
+              color: var(--status-active-text);
+              background: var(--status-active-bg);
             }
 
             &.is-expiring {
-              color: #b45309;
-              background: rgba(245, 158, 11, 0.16);
+              color: var(--status-expiring-text);
+              background: var(--status-expiring-bg);
             }
 
             &.is-expired {
-              color: #dc2626;
-              background: rgba(220, 38, 38, 0.1);
+              color: var(--status-expired-text);
+              background: var(--status-expired-bg);
             }
           }
 
