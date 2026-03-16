@@ -884,6 +884,21 @@ export default {
       return !!userTier.key || Number(userTier.level || 0) > 0;
     });
 
+    const normalizeTierName = (key) => {
+      const raw = `${key || ''}`.trim();
+      if (!raw) return '-';
+
+      const readable = raw
+        .replace(/[_-]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      return readable
+        .split(' ')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    };
+
     const tierNameDisplay = computed(() => normalizeTierName(userTier.key));
     const nextTierNameDisplay = computed(() => normalizeTierName(userTier.nextTierKey));
     const tierMemberDisplay = computed(() => tierNameDisplay.value);
