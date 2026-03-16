@@ -2696,6 +2696,7 @@ export default {
   --theme-text-primary: #111827;
   --theme-text-secondary: #6b7280;
   --theme-text-subtle: #9ca3af;
+  --theme-text-emphasis: #374151;
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
   --theme-border-soft: #e5e7eb;
@@ -3981,7 +3982,7 @@ export default {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: #ffffff;
+        background: var(--theme-white);
         box-shadow: 0 0 0 1px rgba(190, 209, 247, 0.25);
       }
 
@@ -4012,57 +4013,6 @@ export default {
       }
     }
 
-    .info-tooltip {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      color: rgba(148, 163, 184, 0.95);
-      cursor: help;
-
-      .info-tooltip-content {
-        position: absolute;
-        right: 0;
-        bottom: calc(100% + 8px);
-        width: 200px;
-        padding: 8px 10px;
-        border-radius: 6px;
-        background: rgba(15, 23, 42, 0.96);
-        color: #e2e8f0;
-        font-size: 12px;
-        line-height: 1.4;
-        font-weight: 500;
-        box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(4px);
-        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
-        transition-delay: 0s;
-        pointer-events: none;
-        z-index: 260;
-      }
-
-      .info-tooltip-content::after {
-        content: '';
-        position: absolute;
-        right: 12px;
-        top: 100%;
-        border-width: 5px;
-        border-style: solid;
-        border-color: rgba(15, 23, 42, 0.96) transparent transparent transparent;
-      }
-
-      &:hover .info-tooltip-content,
-      &:focus-visible .info-tooltip-content {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        transition-delay: 0.2s;
-      }
-    }
   }
 
   .info-tooltip {
@@ -4429,7 +4379,7 @@ export default {
 }
 
 .btn-primary {
-  background-color: #355cc2;
+  background-color: var(--saas-brand);
   color: var(--theme-white);
   border: none;
 
@@ -4440,12 +4390,12 @@ export default {
 }
 
 .btn-outline {
-  background-color: #f3f4f6;
-  color: #374151;
+  background-color: var(--theme-surface-muted);
+  color: var(--theme-text-emphasis);
   border: none;
 
   &:hover {
-    background-color: #e5e7eb;
+    background-color: var(--theme-border-soft);
     color: var(--theme-text-primary);
     transform: none;
   }
@@ -4455,12 +4405,12 @@ export default {
     position: relative;
     overflow: hidden;
     background-color: var(--theme-color);
-    color: white;
+    color: var(--theme-white);
     border-color: var(--theme-color);
 
     &:hover {
       background-color: var(--primary-color-hover, var(--theme-color));
-      color: white;
+      color: var(--theme-white);
       transform: translateY(-1px);
       box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.25);
     }
@@ -6041,7 +5991,7 @@ export default {
   height: 16px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  border-top: 2px solid #fff;
+  border-top: 2px solid var(--theme-white);
   animation: spin 1s linear infinite;
   margin-right: 8px;
 }
