@@ -562,6 +562,14 @@ export default {
       isRemainingDaysPermanent: false
     });
     const userBalance = ref('0.00');
+    const userTier = reactive({
+      key: '',
+      level: 0,
+      points: 0,
+      nextTierKey: '',
+      nextPointsRequired: 0,
+      pointsToNextTier: 0
+    });
     const userPlan = ref({
       deviceLimit: null,
       aliveIp: 0,
@@ -869,6 +877,10 @@ export default {
     const secondaryPlanActionLabel = computed(() => {
       if (isPlanExpired.value) return t('dashboard.planAction.reselectPlan');
       return t('dashboard.planAction.renew');
+    });
+
+    const hasTierInfo = computed(() => {
+      return !!userTier.key || Number(userTier.level || 0) > 0;
     });
 
     const tierNameDisplay = computed(() => normalizeTierName(userTier.key));
