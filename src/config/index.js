@@ -183,9 +183,6 @@ export const config = {
 
   // 仪表盘页面配置
   DASHBOARD_CONFIG: {
-    // 是否显示导入订阅
-    showImportSubscription: true,
-
     // 当前出口 IP 卡片：地区徽记颜色映射（国家/地区代码 -> 徽记色）
     ipRegionBadgeByCountryCode: {
       US: 'is-blue',

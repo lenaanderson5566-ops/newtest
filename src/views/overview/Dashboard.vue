@@ -13,249 +13,10 @@
       >
         <div class="banner-main">
           <IconAlertTriangle :size="16" class="banner-icon" />
-          <span class="banner-text">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
+          <span class="banner-text text-ellipsis">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
         </div>
         <button class="banner-action" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
       </div>
-
-
-      <!-- 订阅导入卡片 -->
-      <transition name="slide-fade">
-        <div v-if="showImportCard && userPlan.subscribeUrl" class="dashboard-card import-card">
-          <div class="card-header">
-            <h2 class="card-title">{{ $t('dashboard.importSubscription') }}</h2>
-            <button class="close-btn" @click="showImportCard = false">
-              <span class="close-icon"></span>
-            </button>
-          </div>
-          <div class="card-body">
-            <div class="import-action copy-action" @click="copySubscription">
-              <div class="import-icon">
-                <IconCopy :size="24"/>
-              </div>
-              <div class="import-content">
-                <div class="import-title">{{ $t('dashboard.copySubscription') }}</div>
-                <div class="import-desc">{{ $t('dashboard.copySubscriptionDesc') }}</div>
-              </div>
-            </div>
-
-            <div class="import-action qrcode-action" @click="showQrCode = true">
-              <div class="import-icon">
-                <IconQrcode :size="24"/>
-              </div>
-              <div class="import-content">
-                <div class="import-title">{{ $t('dashboard.scanQRCode') }}</div>
-                <div class="import-desc">{{ $t('dashboard.scanQRCodeDesc') }}</div>
-              </div>
-            </div>
-
-            <!-- 平台选择器 -->
-            <div class="platform-selector">
-              <button
-                  v-for="platform in platforms"
-                  :key="platform.id"
-                  class="platform-button"
-                  :class="{ 'active': activePlatform === platform.id }"
-                  @click="activePlatform = platform.id"
-              >
-                <component :is="platform.icon" :size="16"/>
-                <span>{{ $t(`platforms.${platform.id}`) }}</span>
-              </button>
-            </div>
-
-            <!-- iOS平台选项 -->
-            <div v-if="activePlatform === 'ios'" class="platform-section">
-              <div class="platform-title">{{ $t('platforms.ios') }}</div>
-              <div v-if="hasIOSClients" class="platform-options">
-                <div v-if="clientConfig.showShadowrocket" class="platform-option"
-                     @click="importToClient('shadowrocket')">
-                  <img :src="shadowrocketIcon" class="client-icon" alt="Shadowrocket"/>
-                  <span>Shadowrocket</span>
-                </div>
-                <div v-if="clientConfig.showSurge" class="platform-option" @click="importToClient('surge')">
-                  <img :src="surgeIcon" class="client-icon" alt="Surge"/>
-                  <span>Surge</span>
-                </div>
-                <div v-if="clientConfig.showStash" class="platform-option" @click="importToClient('stash')">
-                  <img :src="stashIcon" class="client-icon" alt="Stash"/>
-                  <span>Stash</span>
-                </div>
-                <div v-if="clientConfig.showQuantumultX" class="platform-option" @click="importToClient('quantumultx')">
-                  <img :src="quantumultIcon" class="client-icon" alt="Quantumult X"/>
-                  <span>Quantumult X</span>
-                </div>
-                <div v-if="clientConfig.showHiddifyIOS" class="platform-option" @click="importToClient('hiddify-ios')">
-                  <img :src="hiddifyMacIcon" class="client-icon" alt="Hiddify"/>
-                  <span>Hiddify</span>
-                </div>
-                <div v-if="clientConfig.showSingboxIOS" class="platform-option" @click="importToClient('singbox-ios')">
-                  <img :src="singboxIcon" class="client-icon" alt="Singbox"/>
-                  <span>Singbox</span>
-                </div>
-                <div v-if="clientConfig.showLoon" class="platform-option" @click="importToClient('loon')">
-                  <img :src="loonIcon" class="client-icon" alt="Loon"/>
-                  <span>Loon</span>
-                </div>
-              </div>
-              <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
-              </div>
-            </div>
-
-            <!-- Android平台选项 -->
-            <div v-if="activePlatform === 'android'" class="platform-section">
-              <div class="platform-title">{{ $t('platforms.android') }}</div>
-              <div v-if="hasAndroidClients" class="platform-options">
-                <div v-if="clientConfig.showFlClashAndroid" class="platform-option" @click="importToClient('flclash')">
-                  <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
-                  <span>FlClash</span>
-                </div>
-                <div v-if="clientConfig.showV2rayNG" class="platform-option" @click="importToClient('v2rayng')">
-                  <img :src="v2rayNGIcon" class="client-icon" alt="V2rayNG"/>
-                  <span>V2rayNG</span>
-                </div>
-                <div v-if="clientConfig.showClashAndroid" class="platform-option"
-                     @click="importToClient('clash-android')">
-                  <img :src="clashAndroidIcon" class="client-icon" alt="Clash"/>
-                  <span>Clash</span>
-                </div>
-                <div v-if="clientConfig.showSurfboard" class="platform-option" @click="importToClient('surfboard')">
-                  <img :src="surfboardIcon" class="client-icon" alt="Surfboard"/>
-                  <span>Surfboard</span>
-                </div>
-                <div v-if="clientConfig.showClashMetaAndroid" class="platform-option"
-                     @click="importToClient('clash-meta-android')">
-                  <img :src="clashMetaAndroidIcon" class="client-icon" alt="Clash Meta"/>
-                  <span>Clash Meta</span>
-                </div>
-                <div v-if="clientConfig.showNekobox" class="platform-option" @click="importToClient('nekobox')">
-                  <img :src="nekoboxIcon" class="client-icon" alt="Nekobox"/>
-                  <span>Nekobox</span>
-                </div>
-                <div v-if="clientConfig.showSingboxAndroid" class="platform-option"
-                     @click="importToClient('singbox-android')">
-                  <img :src="singboxAndroidIcon" class="client-icon" alt="Singbox"/>
-                  <span>Singbox</span>
-                </div>
-                <div v-if="clientConfig.showHiddifyAndroid" class="platform-option"
-                     @click="importToClient('hiddify-android')">
-                  <img :src="hiddifyAndroidIcon" class="client-icon" alt="Hiddify"/>
-                  <span>Hiddify</span>
-                </div>
-              </div>
-              <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
-              </div>
-            </div>
-
-            <!-- Windows平台选项 -->
-            <div v-if="activePlatform === 'windows'" class="platform-section">
-              <div class="platform-title">{{ $t('platforms.windows') }}</div>
-              <div v-if="hasWindowsClients" class="platform-options">
-                <div v-if="clientConfig.showFlClashWindows" class="platform-option" @click="importToClient('flclash')">
-                  <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
-                  <span>FlClash</span>
-                </div>
-                <div v-if="clientConfig.showClashVergeWindows" class="platform-option" @click="importToClient('clashverge')">
-                  <img :src="clashvergeIcon" class="client-icon" alt="ClashVerge"/>
-                  <span>ClashVerge</span>
-                </div>
-                <div v-if="clientConfig.showClashWindows" class="platform-option" @click="importToClient('clash')">
-                  <img :src="clashWindowsIcon" class="client-icon" alt="Clash"/>
-                  <span>Clash</span>
-                </div>
-                <div v-if="clientConfig.showNekoray" class="platform-option" @click="importToClient('nekoray')">
-                  <img :src="nekorayIcon" class="client-icon" alt="Nekoray"/>
-                  <span>Nekoray</span>
-                </div>
-                <div v-if="clientConfig.showSingboxWindows" class="platform-option"
-                     @click="importToClient('singbox-windows')">
-                  <img :src="singboxWindowsIcon" class="client-icon" alt="Singbox"/>
-                  <span>Singbox</span>
-                </div>
-                <div v-if="clientConfig.showHiddifyWindows" class="platform-option"
-                     @click="importToClient('hiddify-windows')">
-                  <img :src="hiddifyWindowsIcon" class="client-icon" alt="Hiddify"/>
-                  <span>Hiddify</span>
-                </div>
-              </div>
-              <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
-              </div>
-            </div>
-
-            <!-- MacOS平台选项 -->
-            <div v-if="activePlatform === 'macos'" class="platform-section">
-              <div class="platform-title">{{ $t('platforms.macos') }}</div>
-              <div v-if="hasMacOSClients" class="platform-options">
-                <div v-if="clientConfig.showFlClashMac" class="platform-option" @click="importToClient('flclash')">
-                  <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
-                  <span>FlClash</span>
-                </div>
-                <div v-if="clientConfig.showClashVergeMac" class="platform-option" @click="importToClient('clashverge')">
-                  <img :src="clashvergeIcon" class="client-icon" alt="ClashVerge"/>
-                  <span>ClashVerge</span>
-                </div>
-                <div v-if="clientConfig.showClashX" class="platform-option" @click="importToClient('clashx')">
-                  <img :src="clashXIcon" class="client-icon" alt="ClashX"/>
-                  <span>ClashX</span>
-                </div>
-                <div v-if="clientConfig.showClashMetaX" class="platform-option" @click="importToClient('clashx-meta')">
-                  <img :src="clashMetaXIcon" class="client-icon" alt="ClashX Meta"/>
-                  <span>ClashX Meta</span>
-                </div>
-                <div v-if="clientConfig.showSurgeMac" class="platform-option" @click="importToClient('surge-mac')">
-                  <img :src="surgeMacIcon" class="client-icon" alt="Surge"/>
-                  <span>Surge</span>
-                </div>
-                <div v-if="clientConfig.showStashMac" class="platform-option" @click="importToClient('stash-mac')">
-                  <img :src="stashMacIcon" class="client-icon" alt="Stash"/>
-                  <span>Stash</span>
-                </div>
-                <div v-if="clientConfig.showQuantumultXMac" class="platform-option"
-                     @click="importToClient('quantumultx-mac')">
-                  <img :src="quantumultXMacIcon" class="client-icon" alt="Quantumult X"/>
-                  <span>Quantumult X</span>
-                </div>
-                <div v-if="clientConfig.showSingboxMac" class="platform-option"
-                     @click="importToClient('singbox-macos')">
-                  <img :src="singboxMacIcon" class="client-icon" alt="Singbox"/>
-                  <span>Singbox</span>
-                </div>
-                <div v-if="clientConfig.showHiddifyMac" class="platform-option"
-                     @click="importToClient('hiddify-macos')">
-                  <img :src="hiddifyMacIcon" class="client-icon" alt="Hiddify"/>
-                  <span>Hiddify</span>
-                </div>
-              </div>
-              <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </transition>
-
-      <!-- QR码模态窗口 -->
-      <transition name="fade">
-        <div v-if="showQrCode" class="qrcode-modal-overlay" @click="showQrCode = false">
-          <div class="qrcode-modal" @click.stop>
-            <div class="qrcode-header">
-              <h3>{{ $t('dashboard.scanQRCode') }}</h3>
-              <button class="close-btn" @click="showQrCode = false">
-                <span class="close-icon"></span>
-              </button>
-            </div>
-            <div class="qrcode-content">
-              <div v-if="qrCodeLoading" class="qrcode-loading">
-                <div class="loading-spinner"></div>
-                <p>{{ $t('common.loadingQRCode') }}</p>
-              </div>
-              <img v-else :src="qrCodeUrl" alt="QR Code" @load="qrCodeLoaded"/>
-            </div>
-          </div>
-        </div>
-      </transition>
 
       <div class="stats-grid">
         <template v-if="loading.userStats">
@@ -545,12 +306,7 @@
         @confirm="handlePopupConfirm"
     />
 
-  </div>
-</div>
-
-
-
-  <transition name="modal-fade">
+      <transition name="modal-fade">
       <div class="modal-overlay traffic-package-overlay traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
         <div class="modal-container traffic-package-container traffic-package-modal-container" @click.stop>
           <div class="modal-card traffic-package-modal-card traffic-package-modal-card-global">
@@ -585,9 +341,9 @@
           </div>
         </div>
       </div>
-  </transition>
+      </transition>
   <!-- 重置流量确认弹窗 -->
-  <transition name="modal-fade">
+      <transition name="modal-fade">
     <div class="modal-overlay" v-if="showResetTrafficModal">
       <div class="modal-container">
         <div class="modal-card reset-traffic-modal">
@@ -629,7 +385,10 @@
 
 
     </div>
-  </transition>
+      </transition>
+
+    </div>
+  </div>
 
 </template>
 
@@ -664,7 +423,6 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconCoins,
-  IconCopy,
   IconCrosshair,
   IconDeviceDesktop,
   IconEye,
@@ -673,7 +431,6 @@ import {
   IconHelpCircle,
   IconMoon,
   IconPackage,
-  IconQrcode,
   IconRocket,
   IconRouter,
   IconSend,
@@ -699,33 +456,6 @@ import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import {fetchPlans, submitOrder} from '@/api/account/shop';
 import MarkdownIt from 'markdown-it';
-import QRCode from 'qrcode';
-import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
-import surgeIconImg from '@/assets/images/client-img-ios/Surge.png';
-import stashIconImg from '@/assets/images/client-img-ios/stash.png';
-import quantumultIconImg from '@/assets/images/client-img-ios/quantumultx.png';
-import singboxIconImg from '@/assets/images/client-img-ios/singbox.png';
-import loonIconImg from '@/assets/images/client-img-ios/loon.png';
-import v2rayNGIconImg from '@/assets/images/client-img-android/v2rayng.png';
-import clashAndroidIconImg from '@/assets/images/client-img-android/clash.png';
-import surfboardIconImg from '@/assets/images/client-img-android/surfboard.png';
-import clashMetaAndroidIconImg from '@/assets/images/client-img-android/clashmeta.png';
-import nekoboxIconImg from '@/assets/images/client-img-android/nekobox.png';
-import singboxAndroidIconImg from '@/assets/images/client-img-android/singbox.png';
-import hiddifyAndroidIconImg from '@/assets/images/client-img-android/hiddify.png';
-import flclashIconImg from '@/assets/images/client-img-windows/flclash.png';
-import clashvergeIconImg from '@/assets/images/client-img-windows/clashverge.png';
-import clashWindowsIconImg from '@/assets/images/client-img-windows/clash.png';
-import nekorayIconImg from '@/assets/images/client-img-windows/nekoray.png';
-import singboxWindowsIconImg from '@/assets/images/client-img-windows/singbox.png';
-import hiddifyWindowsIconImg from '@/assets/images/client-img-windows/hiddify.png';
-import clashXIconImg from '@/assets/images/client-img-macos/clashx.png';
-import clashMetaXIconImg from '@/assets/images/client-img-macos/clashmetax.png';
-import surgeMacIconImg from '@/assets/images/client-img-macos/Surge.png';
-import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
-import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
-import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
-import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
 import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
 import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
 import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube.svg';
@@ -791,9 +521,7 @@ export default {
     IconShare,
     IconChevronLeft,
     IconChevronRight,
-    IconCopy,
-    IconQrcode,
-    IconRocket,
+        IconRocket,
     IconWaveSine,
     IconDeviceDesktop,
     IconCrosshair,
@@ -820,6 +548,28 @@ export default {
     const clientConfig = reactive(CLIENT_CONFIG);
     const notices = ref([]);
     const autoRotateNotices = ref(true);
+    const currencySymbol = ref('$');
+    const hasPlan = ref(true);
+    const currentNoticeIndex = ref(0);
+    const showNoticeDetails = ref(false);
+    const userStats = reactive({
+      remainingTraffic: '',
+      remainingDays: '',
+      accountBalance: '0.00',
+      pendingOrders: 0,
+      pendingTickets: 0,
+      userEmail: '',
+      isRemainingDaysPermanent: false
+    });
+    const userBalance = ref('0.00');
+    const userTier = reactive({
+      key: '',
+      level: 0,
+      points: 0,
+      nextTierKey: '',
+      nextPointsRequired: 0,
+      pointsToNextTier: 0
+    });
     const userPlan = ref({
       deviceLimit: null,
       aliveIp: 0,
@@ -834,6 +584,7 @@ export default {
     const remindTrafficSetting = ref(false);
     const autoRenewalEnabled = ref(false);
     const updatingAutoRenewalSetting = ref(false);
+    const allowNewPeriod = ref('');
 
         const trafficMetrics = reactive({
       totalTrafficBytes: 0,
@@ -856,98 +607,6 @@ export default {
     const ipLocationData = ref(null);
     const ipLocationCache = ref(null);
     const ipLocationDebounceTimer = ref(null);
-
-    const qrCodeLoading = ref(true);
-    const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription)
-
-    const languageChangedSignal = inject('languageChangedSignal', ref(0));
-
-    const shadowrocketIcon = shadowrocketIconImg;
-    const surgeIcon = surgeIconImg;
-    const stashIcon = stashIconImg;
-    const quantumultIcon = quantumultIconImg;
-    const singboxIcon = singboxIconImg;
-    const loonIcon = loonIconImg;
-
-    const v2rayNGIcon = v2rayNGIconImg;
-    const clashAndroidIcon = clashAndroidIconImg;
-    const surfboardIcon = surfboardIconImg;
-    const clashMetaAndroidIcon = clashMetaAndroidIconImg;
-    const nekoboxIcon = nekoboxIconImg;
-    const singboxAndroidIcon = singboxAndroidIconImg;
-    const hiddifyAndroidIcon = hiddifyAndroidIconImg;
-
-    const flclashIcon = flclashIconImg;
-    const clashvergeIcon = clashvergeIconImg;
-    const clashWindowsIcon = clashWindowsIconImg;
-    const nekorayIcon = nekorayIconImg;
-    const singboxWindowsIcon = singboxWindowsIconImg;
-    const hiddifyWindowsIcon = hiddifyWindowsIconImg;
-
-    const clashXIcon = clashXIconImg;
-    const clashMetaXIcon = clashMetaXIconImg;
-    const surgeMacIcon = surgeMacIconImg;
-    const stashMacIcon = stashMacIconImg;
-    const quantumultXMacIcon = quantumultXMacIconImg;
-    const singboxMacIcon = singboxMacIconImg;
-    const hiddifyMacIcon = hiddifyMacIconImg;
-
-    const userStats = reactive({
-      remainingTraffic: '',
-      remainingDays: '',
-      accountBalance: '0.00',
-      pendingOrders: 0,
-      pendingTickets: 0,
-      userEmail: '',
-      isRemainingDaysPermanent: false
-    });
-    const userBalance = ref('0.00');
-    const userTier = reactive({
-      key: '',
-      level: 0,
-      points: 0,
-      nextTierKey: '',
-      nextPointsRequired: 0,
-      pointsToNextTier: 0
-    });
-    const currencySymbol = ref('$');
-    const hasPlan = ref(true);
-    const currentNoticeIndex = ref(0);
-    const showNoticeDetails = ref(false);
-    const showImportCard = ref(false);
-    const showQrCode = ref(false);
-    const {showToast} = useToast();
-    const qrCodeUrl = ref('');
-
-    //提前开启下月
-    const allowNewPeriod = ref('')
-
-    const platforms = [
-      {id: 'ios', icon: 'IconBrandApple'},
-      {id: 'android', icon: 'IconBrandAndroid'},
-      {id: 'windows', icon: 'IconBrandWindows'},
-      {id: 'macos', icon: 'IconBrandFinder'}
-    ];
-
-    const activePlatform = ref(detectUserPlatform());
-
-    function detectUserPlatform() {
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        return 'ios';
-      }
-
-      if (/android/i.test(userAgent)) {
-        return 'android';
-      }
-
-      if (/Mac/.test(userAgent)) {
-        return 'macos';
-      }
-
-      return 'windows';
-    }
 
     const loading = reactive({
       userInfo: true,
@@ -1163,113 +822,62 @@ export default {
       return !isNaN(days) && days > 0 && days <= 7;
     });
 
-    const hasIOSClients = computed(() => {
-      return clientConfig.showShadowrocket ||
-          clientConfig.showSurge ||
-          clientConfig.showStash ||
-          clientConfig.showQuantumultX ||
-          clientConfig.showHiddifyIOS ||
-          clientConfig.showSingboxIOS ||
-          clientConfig.showLoon;
-    });
-
-    const hasAndroidClients = computed(() => {
-      return clientConfig.showV2rayNG ||
-          clientConfig.showClashAndroid ||
-          clientConfig.showSurfboard ||
-          clientConfig.showClashMetaAndroid ||
-          clientConfig.showNekobox ||
-          clientConfig.showSingboxAndroid ||
-          clientConfig.showHiddifyAndroid;
-    });
-
-    const hasWindowsClients = computed(() => {
-      return clientConfig.showClashWindows ||
-          clientConfig.showFlClashWindows ||
-          clientConfig.showClashVergeWindows ||
-          clientConfig.showNekoray ||
-          clientConfig.showSingboxWindows ||
-          clientConfig.showHiddifyWindows;
-    });
-
-    const hasMacOSClients = computed(() => {
-      return clientConfig.showClashX ||
-          clientConfig.showFlClashMac ||
-          clientConfig.showClashVergeMac ||
-          clientConfig.showClashMetaX ||
-          clientConfig.showSurgeMac ||
-          clientConfig.showStashMac ||
-          clientConfig.showQuantumultXMac ||
-          clientConfig.showSingboxMac ||
-          clientConfig.showHiddifyMac;
-    });
-
     const isExpired = computed(() => {
-      if (userStats.isRemainingDaysPermanent) return false;
-
-      const days = parseInt(userStats.remainingDays, 10);
-      return !isNaN(days) && days <= 0;
-    });
-
-    const isPlanExpired = computed(() => {
       if (userPlan.value.isExpireDatePermanent) return false;
+
       const expiredAt = Number(userPlan.value.expiredAt || 0);
       if (!expiredAt) return false;
+
       return expiredAt * 1000 <= Date.now();
     });
 
+    const isPlanExpired = computed(() => hasPlan.value && isExpired.value);
+
     const subscriptionStatus = computed(() => {
       if (isPlanExpired.value) return 'expired';
-      if (userPlan.value.isExpireDatePermanent) return 'active';
-
-      const expiredAt = Number(userPlan.value.expiredAt || 0);
-      if (!expiredAt) return 'active';
-
-      const diffMs = expiredAt * 1000 - Date.now();
-      return diffMs <= 7 * 24 * 60 * 60 * 1000 ? 'expiring' : 'active';
+      if (isExpiringSoon.value) return 'expiring';
+      return 'active';
     });
 
-    const subscriptionStatusLabel = computed(() => {
-      const currentLocale = locale.value;
-      void currentLocale;
-      if (subscriptionStatus.value === 'expired') return t('dashboard.subscriptionStatus.expired');
-      if (subscriptionStatus.value === 'expiring') return t('dashboard.subscriptionStatus.expiring');
-      return t('dashboard.subscriptionStatus.active');
+    const subscriptionStatusLabel = computed(() => t(`dashboard.subscriptionStatus.${subscriptionStatus.value}`));
+
+    const planExpireMetaText = computed(() => {
+      if (userPlan.value.isExpireDatePermanent) {
+        return t('dashboard.permanent');
+      }
+      if (isPlanExpired.value) {
+        return t('dashboard.expiredOnDate', {date: userPlan.value.expireDate || '-'});
+      }
+      return userPlan.value.expireDate || '-';
     });
 
     const primaryPlanActionLabel = computed(() => {
-      const currentLocale = locale.value;
-      void currentLocale;
-      if (subscriptionStatus.value === 'active') return t('dashboard.planAction.manageSubscription');
-      if (subscriptionStatus.value === 'expired') return t('dashboard.planAction.restoreNow');
-      return t('dashboard.planAction.renewNow');
-    });
-
-    const planExpireMetaText = computed(() => {
-      const currentLocale = locale.value;
-      void currentLocale;
-      if (subscriptionStatus.value === 'expired') {
-        return t('dashboard.expiredOnDate', { date: userPlan.value.expireDate || '-' });
-      }
-      return `${t('dashboard.expiryDate')} · ${userPlan.value.expireDate || t('dashboard.permanent')}`;
+      if (isPlanExpired.value) return t('dashboard.planAction.restoreNow');
+      if (isExpiringSoon.value) return t('dashboard.planAction.renewNow');
+      return t('dashboard.planAction.manageSubscription');
     });
 
     const secondaryPlanActionLabel = computed(() => {
-      const currentLocale = locale.value;
-      void currentLocale;
-      if (subscriptionStatus.value === 'expired') return t('dashboard.planAction.reselectPlan');
-      if (subscriptionStatus.value === 'expiring') return t('dashboard.planAction.manageSubscription');
+      if (isPlanExpired.value) return t('dashboard.planAction.reselectPlan');
       return t('dashboard.planAction.renew');
     });
 
-    const hasTierInfo = computed(() => Boolean(userTier.key || userTier.level || userTier.nextTierKey));
+    const hasTierInfo = computed(() => {
+      return !!userTier.key || Number(userTier.level || 0) > 0;
+    });
 
-    const normalizeTierName = (name) => {
-      if (!name) return '-';
-      return `${name}`
-        .split(/[_-]/g)
-        .filter(Boolean)
-        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    const normalizeTierName = (key) => {
+      const raw = `${key || ''}`.trim();
+      if (!raw) return '-';
+
+      const readable = raw
+        .replace(/[_-]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      return readable
+        .split(' ')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
     };
 
@@ -1855,186 +1463,6 @@ export default {
       return formatResetDateTime(candidate);
     };
 
-    const updateQRCodeUrl = () => {
-      if (userPlan.value.subscribeUrl) {
-        qrCodeLoading.value = true;
-        try {
-          QRCode.toDataURL(userPlan.value.subscribeUrl, {
-            width: 200,
-            margin: 2,
-            color: {
-              dark: '#000000',
-              light: '#ffffff'
-            }
-          })
-              .then(url => {
-                qrCodeUrl.value = url;
-                qrCodeLoading.value = false;
-              })
-              .catch(err => {
-                console.error('二维码生成失败:', err);
-                qrCodeLoading.value = false;
-                showToast(t('dashboard.qrCodeGenerationFailed'), 'error', 3000);
-              });
-        } catch (error) {
-          console.error('生成二维码失败:', error);
-          qrCodeLoading.value = false;
-          showToast(t('dashboard.qrCodeGenerationFailed'), 'error', 3000);
-        }
-      }
-    };
-
-    const qrCodeLoaded = () => {
-      qrCodeLoading.value = false;
-    };
-
-    const copySubscription = () => {
-      if (userPlan.value.subscribeUrl) {
-        const copyWithAPI = () => {
-          navigator.clipboard.writeText(userPlan.value.subscribeUrl)
-              .then(() => {
-                showToast(t('dashboard.subscriptionCopied'), 'success', 3000);
-              })
-              .catch(() => {
-                showToast(t('dashboard.copyFailed'), 'error', 3000);
-              });
-        };
-
-        const copyWithFallback = () => {
-          try {
-            const textarea = document.createElement('textarea');
-            textarea.value = userPlan.value.subscribeUrl;
-            textarea.style.position = 'fixed';
-            textarea.style.left = '0';
-            textarea.style.top = '0';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.focus();
-            textarea.select();
-
-            const successful = document.execCommand('copy');
-            document.body.removeChild(textarea);
-
-            if (successful) {
-              showToast(t('dashboard.subscriptionCopied'), 'success', 3000);
-            } else {
-              showToast(t('dashboard.copyFailed'), 'error', 3000);
-            }
-          } catch (err) {
-            console.error('使用后备方法复制失败:', err);
-            showToast(t('dashboard.copyFailed'), 'error', 3000);
-          }
-        };
-
-        if (navigator.clipboard) {
-          copyWithAPI();
-        } else {
-          copyWithFallback();
-        }
-      }
-    };
-
-    const importToClient = (clientType) => {
-      if (!userPlan.value.subscribeUrl) {
-        showToast(t('dashboard.noSubscription'), 'error', 3000);
-        return;
-      }
-
-      const subscribeUrl = userPlan.value.subscribeUrl;
-      const siteName = SITE_CONFIG.siteName || t('dashboard.defaultSubscriptionName');
-
-      let url = '';
-      let shouldUseCurrentWindow = true;
-
-      try {
-        switch (clientType) {
-          case 'shadowrocket':
-            url = `shadowrocket://add/sub://${window.btoa(subscribeUrl).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}?remark=${encodeURIComponent(siteName)}`;
-            break;
-          case 'surge':
-          case 'surge-mac':
-            url = `surge:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
-            break;
-          case 'stash':
-          case 'stash-mac':
-            url = `stash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
-            break;
-          case 'quantumultx':
-          case 'quantumultx-mac':
-            url = `quantumult-x:///update-configuration?remote-resource=${encodeURI(JSON.stringify({server_remote: [`${subscribeUrl}, tag=${encodeURIComponent(siteName)}`,],}))}`;
-            break;
-          case 'loon':
-            url = `loon://import?nodelist=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
-            break;
-          case 'v2rayng':
-            url = `v2rayng://install-sub?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
-            break;
-          case 'clash':
-          case 'clash-android':
-          case 'clash-meta-android':
-          case 'flclash':
-          case 'clashverge':
-          case 'nekobox':
-          case 'nekoray':
-          case 'clashx':
-          case 'clashx-meta':
-            url = `clash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
-            break;
-          case 'surfboard':
-            url = `surfboard:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
-            break;
-          case 'singbox-ios':
-          case 'singbox-android':
-          case 'singbox-windows':
-          case 'singbox-macos':
-            url = `sing-box://import-remote-profile?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
-            break;
-          case 'hiddify-android':
-          case 'hiddify-windows':
-          case 'hiddify-macos':
-          case 'hiddify-ios':
-            url = `hiddify://import/${subscribeUrl}#${encodeURIComponent(siteName)}`;
-            break;
-          default:
-            navigator.clipboard.writeText(subscribeUrl)
-              .then(() => {
-                showToast(t('dashboard.subscriptionCopied'), 'success', 3000);
-              })
-              .catch(() => {
-                showToast(t('dashboard.copyFailed'), 'error', 3000);
-              });
-            return;
-        }
-
-        if (url) {
-          if (shouldUseCurrentWindow) {
-            window.location.href = url;
-          } else {
-            window.open(url, '_blank');
-          }
-        }
-      } catch (error) {
-        console.error('导入客户端失败:', error);
-      }
-    };
-
-    const toggleImportCard = () => {
-      showImportCard.value = !showImportCard.value;
-      if (showImportCard.value) {
-        nextTick(() => {
-          setTimeout(() => {
-            const importCard = document.querySelector('.import-card');
-            if (importCard) {
-              importCard.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-              });
-            }
-          }, 100);
-        });
-      }
-    };
-
     const fetchUserConfig = async () => {
       try {
         const response = await getUserConfig();
@@ -2341,11 +1769,9 @@ export default {
       fetchTrafficTrend();
       scheduleIpLocationRefresh();
 
-      updateQRCodeUrl();
     });
 
     watch(() => userPlan.value.subscribeUrl, () => {
-      updateQRCodeUrl();
     });
 
     const processedNoticeContent = computed(() => {
@@ -2543,7 +1969,6 @@ export default {
       clientConfig,
       notices,
       loading,
-      languageChangedSignal,
       goToShop,
       hasPendingItems,
       goToOrders,
@@ -2553,19 +1978,9 @@ export default {
       nextNotice,
       goToNotice,
       noticeBackgroundStyle,
-      showImportCard,
-      showQrCode,
-      importToClient,
       formatDate,
       formatTraffic,
       formatPackageRemaining,
-      toggleImportCard,
-      copySubscription,
-      platforms,
-      activePlatform,
-      qrCodeUrl,
-      qrCodeLoading,
-      qrCodeLoaded,
       showNoticeModal,
       closeNoticeModal,
       showNoticeDetails,
@@ -2581,36 +1996,6 @@ export default {
       resetConfirmCooldown,
       showResetTrafficButton,
       isCreatingResetOrder,
-      hasIOSClients,
-      hasAndroidClients,
-      hasWindowsClients,
-      hasMacOSClients,
-      shadowrocketIcon,
-      surgeIcon,
-      stashIcon,
-      quantumultIcon,
-      singboxIcon,
-      loonIcon,
-      v2rayNGIcon,
-      clashAndroidIcon,
-      surfboardIcon,
-      clashMetaAndroidIcon,
-      nekoboxIcon,
-      singboxAndroidIcon,
-      hiddifyAndroidIcon,
-      flclashIcon,
-      clashvergeIcon,
-      clashWindowsIcon,
-      nekorayIcon,
-      singboxWindowsIcon,
-      hiddifyWindowsIcon,
-      clashXIcon,
-      clashMetaXIcon,
-      surgeMacIcon,
-      stashMacIcon,
-      quantumultXMacIcon,
-      singboxMacIcon,
-      hiddifyMacIcon,
       isExpiringSoon,
       isExpired,
       isPlanExpired,
@@ -2665,7 +2050,6 @@ export default {
       triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
-      showImportSubscription,
       showTrafficPackageModal,
       trafficPackageLoading,
       trafficPackagePlans,
@@ -2696,6 +2080,11 @@ export default {
   --theme-text-primary: #111827;
   --theme-text-secondary: #6b7280;
   --theme-text-subtle: #9ca3af;
+  --theme-text-emphasis: #374151;
+  --theme-surface-muted: #f3f4f6;
+  --theme-surface-soft: #f8fafc;
+  --theme-border-soft: #e5e7eb;
+  --theme-white: #ffffff;
 
   .dashboard-inner {
     .overview-grid {
@@ -2882,7 +2271,7 @@ export default {
         margin: 0;
         font-size: 18px;
         font-weight: 700;
-        color: #111827;
+        color: var(--theme-text-primary);
       }
 
       .traffic-package-status {
@@ -2890,8 +2279,8 @@ export default {
         font-weight: 600;
         border-radius: 999px;
         padding: 6px 10px;
-        background: #f3f4f6;
-        color: #6b7280;
+        background: var(--theme-surface-muted);
+        color: var(--theme-text-secondary);
 
         &.active {
           background: rgba(var(--theme-color-rgb), 0.14);
@@ -3026,25 +2415,25 @@ export default {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: var(--theme-white);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
             box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.2);
             cursor: pointer;
           }
         }
         &.quota-card-muted {
-          background: #f3f4f6;
-          border-color: #e5e7eb;
+          background: var(--theme-surface-muted);
+          border-color: var(--theme-border-soft);
 
           .package-add-btn {
-            color: #fff;
+            color: var(--theme-white);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
           }
         }
 
         &.subscription-card-muted {
           .section-progress-track {
-            background: #e5e7eb;
+            background: var(--theme-border-soft);
           }
 
           .section-progress-fill {
@@ -3053,7 +2442,7 @@ export default {
         }
 
         &.total-main-card {
-          background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+          background: linear-gradient(180deg, var(--theme-white) 0%, #f8fbff 100%);
           border-color: var(--border-color);
           box-shadow: var(--shadow-card-md);
 
@@ -3064,11 +2453,11 @@ export default {
         }
 
         &.expired-main-card {
-          background: #f3f4f6;
+          background: var(--theme-surface-muted);
           border-color: #d1d5db;
 
           .usage-card-title {
-            color: #6b7280;
+            color: var(--theme-text-secondary);
           }
         }
 
@@ -3093,7 +2482,7 @@ export default {
           .plan-summary-section {
             border: none;
             border-radius: 12px;
-            background: #f8fafc;
+            background: var(--theme-surface-soft);
             padding: 10px 12px;
             overflow: visible;
           }
@@ -3145,11 +2534,11 @@ export default {
           }
 
           .plan-summary-section-renew {
-            background: #f8fafc;
+            background: var(--theme-surface-soft);
           }
 
           .plan-summary-section-actions {
-            background: #f8fafc;
+            background: var(--theme-surface-soft);
             border: none;
             padding-top: 12px;
             padding-bottom: 12px;
@@ -3165,7 +2554,7 @@ export default {
 
           .plan-summary-label {
             font-size: 12px;
-            color: #6b7280;
+            color: var(--theme-text-secondary);
 
             &.with-tooltip {
               display: inline-flex;
@@ -3184,7 +2573,7 @@ export default {
 
           .plan-summary-value {
             font-size: 14px;
-            color: #111827;
+            color: var(--theme-text-primary);
             font-weight: 600;
             text-align: right;
             word-break: break-word;
@@ -3217,7 +2606,7 @@ export default {
           .plan-summary-desc {
             margin: 4px 0 0;
             font-size: 12px;
-            color: #6b7280;
+            color: var(--theme-text-secondary);
           }
 
           .auto-renewal-row {
@@ -3250,19 +2639,19 @@ export default {
               }
 
               &.primary {
-                color: #fff;
+                color: var(--theme-white);
                 background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
               }
 
               &.premium {
-                color: #fff;
+                color: var(--theme-white);
                 background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
               }
 
               &.theme {
-                color: #fff;
+                color: var(--theme-white);
                 border-color: transparent;
                 background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 1));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.28);
@@ -3322,7 +2711,7 @@ export default {
                 width: 18px;
                 left: 3px;
                 bottom: 3px;
-                background-color: #fff;
+                background-color: var(--theme-white);
                 transition: 0.3s;
               }
 
@@ -3352,7 +2741,7 @@ export default {
           font-size: 36px;
           line-height: 1;
           font-weight: 700;
-          color: #111827;
+          color: var(--theme-text-primary);
 
           &.compact {
             font-size: 32px;
@@ -3396,7 +2785,7 @@ export default {
           gap: 4px;
           padding: 8px;
           border-radius: 10px;
-          background: #f8fafc;
+          background: var(--theme-surface-soft);
         }
 
         .usage-kpi-label {
@@ -3428,13 +2817,13 @@ export default {
         .usage-reset-hint {
           width: 100%;
           font-size: 12px;
-          color: #6b7280;
+          color: var(--theme-text-secondary);
         }
 
         .section-progress-track {
           width: 100%;
           height: 14px;
-          background: #e5e7eb;
+          background: var(--theme-border-soft);
           border-radius: 999px;
           overflow: hidden;
         }
@@ -3903,7 +3292,7 @@ export default {
       padding: 0 8px;
       font-size: 11px;
       font-weight: 800;
-      color: #fff;
+      color: var(--theme-white);
       letter-spacing: 0.5px;
       background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
       box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
@@ -3977,7 +3366,7 @@ export default {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: #ffffff;
+        background: var(--theme-white);
         box-shadow: 0 0 0 1px rgba(190, 209, 247, 0.25);
       }
 
@@ -4008,57 +3397,6 @@ export default {
       }
     }
 
-    .info-tooltip {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      color: rgba(148, 163, 184, 0.95);
-      cursor: help;
-
-      .info-tooltip-content {
-        position: absolute;
-        right: 0;
-        bottom: calc(100% + 8px);
-        width: 200px;
-        padding: 8px 10px;
-        border-radius: 6px;
-        background: rgba(15, 23, 42, 0.96);
-        color: #e2e8f0;
-        font-size: 12px;
-        line-height: 1.4;
-        font-weight: 500;
-        box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(4px);
-        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
-        transition-delay: 0s;
-        pointer-events: none;
-        z-index: 260;
-      }
-
-      .info-tooltip-content::after {
-        content: '';
-        position: absolute;
-        right: 12px;
-        top: 100%;
-        border-width: 5px;
-        border-style: solid;
-        border-color: rgba(15, 23, 42, 0.96) transparent transparent transparent;
-      }
-
-      &:hover .info-tooltip-content,
-      &:focus-visible .info-tooltip-content {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        transition-delay: 0.2s;
-      }
-    }
   }
 
   .info-tooltip {
@@ -4180,7 +3518,7 @@ export default {
         font-size: 14px;
         font-weight: 600;
         margin-bottom: 6px;
-        color: #fff;
+        color: var(--theme-white);
         line-height: 1.35;
       }
 
@@ -4209,7 +3547,7 @@ export default {
             border-radius: 6px;
             font-size: 12px;
             background-color: rgba(var(--theme-color-rgb), 0.14);
-            color: #fff;
+            color: var(--theme-white);
             border: none;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -4306,8 +3644,8 @@ export default {
     max-height: 48px;
     padding: 6px 12px;
     border-radius: 10px;
-    border: 1px solid #FFE58F;
-    background: #FFFBE6;
+    border: 1px solid rgba(var(--warning-color-rgb), 0.4);
+    background: var(--warning-background);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -4316,8 +3654,8 @@ export default {
     transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 
     &:hover {
-      background: #FFF7D6;
-      border-color: #FFD666;
+      background: color-mix(in srgb, var(--warning-background) 88%, var(--theme-white) 12%);
+      border-color: rgba(var(--warning-color-rgb), 0.55);
       transform: none;
     }
 
@@ -4326,7 +3664,7 @@ export default {
       align-items: center;
       gap: 8px;
       min-width: 0;
-      color: #8C6D1F;
+      color: var(--warning-color);
       font-size: 13px;
       line-height: 1.35;
       font-weight: 500;
@@ -4334,13 +3672,7 @@ export default {
 
     .banner-icon {
       flex-shrink: 0;
-      color: #8C6D1F;
-    }
-
-    .banner-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      color: var(--warning-color);
     }
 
     .banner-action {
@@ -4348,7 +3680,7 @@ export default {
       border-radius: 8px;
       height: 30px;
       padding: 0 12px;
-      color: #fff;
+      color: var(--theme-white);
       background: var(--saas-brand);
       box-shadow: none;
       cursor: pointer;
@@ -4370,9 +3702,9 @@ export default {
     border: none;
   }
 
-  .status-badge.success, .status-tag.success { background: #ecfdf3; color: #166534; }
-  .status-badge.warning, .status-tag.warning { background: #fff7e6; color: #8c6d1f; }
-  .status-badge.error, .status-tag.error { background: #fef2f2; color: #991b1b; }
+  .status-badge.success, .status-tag.success { background: var(--success-background); color: var(--success-color); }
+  .status-badge.warning, .status-tag.warning { background: var(--warning-background); color: var(--warning-color); }
+  .status-badge.error, .status-tag.error { background: var(--error-background); color: var(--error-color); }
 }
 
 
@@ -4425,25 +3757,26 @@ export default {
 }
 
 .btn-primary {
-  background-color: #355cc2;
-  color: #fff;
-  border: none;
+  background-color: var(--theme-color);
+  color: var(--theme-white);
+  border: 1px solid var(--theme-color);
 
   &:hover {
-    background-color: #2f4fa8;
-    transform: none;
+    background-color: rgba(var(--theme-color-rgb), 0.85);
+    border-color: var(--theme-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
   }
 }
 
 .btn-outline {
-  background-color: #f3f4f6;
-  color: #374151;
-  border: none;
+  color: var(--theme-color);
+  background-color: transparent;
+  border: 1px solid var(--theme-color);
 
   &:hover {
-    background-color: #e5e7eb;
-    color: #111827;
-    transform: none;
+    background-color: rgba(var(--theme-color-rgb), 0.1);
+    color: var(--theme-color);
   }
 
 
@@ -4451,12 +3784,12 @@ export default {
     position: relative;
     overflow: hidden;
     background-color: var(--theme-color);
-    color: white;
+    color: var(--theme-white);
     border-color: var(--theme-color);
 
     &:hover {
       background-color: var(--primary-color-hover, var(--theme-color));
-      color: white;
+      color: var(--theme-white);
       transform: translateY(-1px);
       box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.25);
     }
@@ -4753,15 +4086,6 @@ export default {
 }
 
 
-.import-card {
-  display: none;
-  margin-bottom: 24px;
-  overflow: hidden;
-  will-change: transform, opacity;
-  transform-origin: top center;
-  contain: content;
-}
-
 .slide-fade-enter-active,
 .slide-fade-leave-active {
   transition: opacity 0.25s ease, transform 0.25s ease;
@@ -4832,48 +4156,6 @@ export default {
   }
 }
 
-.import-action {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  background-color: rgba(var(--theme-color-rgb), 0.05);
-  margin-bottom: 16px;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: rgba(var(--theme-color-rgb), 0.1);
-    transform: translateY(-2px);
-  }
-
-  .import-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
-    margin-right: 16px;
-    background-color: rgba(var(--theme-color-rgb), 0.1);
-    color: var(--theme-color);
-  }
-
-  .import-content {
-    flex: 1;
-
-    .import-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .import-desc {
-      font-size: 12px;
-      color: var(--theme-text-secondary);
-    }
-  }
-}
 
 .copy-action .import-icon {
   background-color: rgba(25, 113, 194, 0.1);
@@ -4885,77 +4167,6 @@ export default {
   color: rgba(var(--theme-color-rgb), 0.9);
 }
 
-.platform-section {
-  margin-bottom: 24px;
-
-  .platform-title {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(var(--theme-color-rgb), 0.1);
-  }
-
-  .platform-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 12px;
-
-    .platform-option {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      border-radius: 10px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-        transform: translateY(-3px);
-        border-color: var(--theme-color);
-      }
-
-      svg {
-        margin-bottom: 8px;
-        color: var(--theme-color);
-      }
-
-      span {
-        font-size: 13px;
-      }
-    }
-  }
-}
-
-
-.qrcode-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(4px);
-}
-
-.qrcode-modal {
-  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.15);
-  width: 90%;
-  max-width: 360px;
-  overflow: hidden;
-  animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-
-}
 
 @keyframes modal-in {
   from {
@@ -4968,69 +4179,6 @@ export default {
   }
 }
 
-.qrcode-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border-color);
-  background-color: rgba(var(--theme-color-rgb), 0.03);
-
-  h3 {
-    margin: 0;
-    font-size: 18px;
-    color: var(--theme-text-primary);
-    font-weight: 600;
-  }
-}
-
-.qrcode-content {
-  padding: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
-
-  img {
-    width: 220px;
-    height: 220px;
-    border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
-    background-color: white;
-    padding: 15px;
-    object-fit: cover;
-    transition: box-shadow 0.3s ease;
-
-    &:hover {
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    }
-  }
-
-  .qrcode-loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 25px;
-    min-height: 220px;
-
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 3px solid rgba(var(--theme-color-rgb), 0.2);
-      border-radius: 50%;
-      border-top-color: var(--theme-color);
-      animation: spin 1s ease-in-out infinite;
-      margin-bottom: 15px;
-    }
-
-    p {
-      font-size: 15px;
-      color: var(--theme-text-secondary);
-      font-weight: 500;
-    }
-  }
-}
 
 @keyframes spin {
   to {
@@ -5064,79 +4212,6 @@ export default {
 }
 
 
-.platform-selector {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  .platform-button {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background-color: rgba(var(--theme-color-rgb), 0.05);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: var(--theme-text-primary);
-
-    &:hover {
-      background-color: rgba(var(--theme-color-rgb), 0.1);
-      transform: translateY(-1px);
-      border-color: rgba(var(--theme-color-rgb), 0.2);
-    }
-
-    &.active {
-      background-color: rgba(var(--theme-color-rgb), 0.15);
-      color: var(--theme-color);
-      border-color: var(--theme-color);
-      font-weight: 600;
-      box-shadow: 0 2px 6px rgba(var(--theme-color-rgb), 0.2);
-    }
-
-    svg {
-      color: var(--theme-color);
-      opacity: 0.8;
-    }
-  }
-}
-
-
-.client-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 5px;
-  margin-bottom: 8px;
-  object-fit: cover;
-}
-
-.platform-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  border-radius: 10px;
-  background-color: rgba(var(--theme-color-rgb), 0.05);
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  svg {
-    margin-bottom: 8px;
-    color: var(--theme-color);
-  }
-
-  span {
-    font-size: 14px;
-  }
-}
-
-
 .stats-card.warning-card {
   border-color: rgba(var(--theme-color-rgb), 0.85);
   box-shadow: 0 4px 10px rgba(255, 152, 0, 0.15);
@@ -5164,8 +4239,6 @@ export default {
     color: rgba(var(--theme-color-rgb), 0.95);
   }
 }
-
-
 
 
 .skeleton-card {
@@ -5222,11 +4295,6 @@ export default {
   width: 75%;
   margin-bottom: 0;
 }
-
-
-
-
-
 
 
 .skeleton-icon {
@@ -5298,62 +4366,11 @@ export default {
   line-height: 1.4;
 }
 
-.no-clients-message {
-  padding: 20px;
-  text-align: center;
-  background-color: rgba(var(--theme-color-rgb), 0.05);
-  border-radius: 12px;
-  margin: 10px 0;
-  border: 1px dashed rgba(var(--theme-color-rgb), 0.3);
-}
 
 .no-clients-message p {
   color: var(--theme-text-primary);
   font-size: 14px;
   margin: 0;
-}
-
-
-.platform-selector {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  .platform-button {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background-color: rgba(var(--theme-color-rgb), 0.05);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: var(--theme-text-primary);
-
-    &:hover {
-      background-color: rgba(var(--theme-color-rgb), 0.1);
-      transform: translateY(-1px);
-      border-color: rgba(var(--theme-color-rgb), 0.2);
-    }
-
-    &.active {
-      background-color: rgba(var(--theme-color-rgb), 0.15);
-      color: var(--theme-color);
-      border-color: var(--theme-color);
-      font-weight: 600;
-      box-shadow: 0 2px 6px rgba(var(--theme-color-rgb), 0.2);
-    }
-
-    svg {
-      color: var(--theme-color);
-      opacity: 0.8;
-    }
-  }
 }
 
 
@@ -5718,7 +4735,6 @@ export default {
 }
 
 
-
 .traffic-package-overlay {
   position: fixed;
   top: 0;
@@ -5844,7 +4860,7 @@ export default {
       font-size: 14px;
       font-weight: 500;
       background-color: rgba(var(--theme-color-rgb), 0.92);
-      color: #fff;
+      color: var(--theme-white);
       cursor: pointer;
       transition: all 0.3s ease;
 
@@ -6037,7 +5053,7 @@ export default {
   height: 16px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  border-top: 2px solid #fff;
+  border-top: 2px solid var(--theme-white);
   animation: spin 1s linear infinite;
   margin-right: 8px;
 }
@@ -6061,31 +5077,270 @@ export default {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </style>
 
 <!-- 全局样式，不受scoped限制 -->
 <style lang="scss">
-@use '@/assets/styles/components/dashboard-overview-global' as *;
+@use '@/assets/styles/no-plan-card' as *;
+
+.stats-card {
+  &.warning-card,
+  &.danger-card {
+    border-color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
+    box-shadow: 0 4px 10px rgba(var(--stats-alert-rgb), 0.15) !important;
+
+    .stats-icon {
+      background-color: rgba(var(--stats-alert-rgb), 0.1) !important;
+      color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
+    }
+
+    .stats-value {
+      color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
+    }
+  }
+
+  &.warning-card {
+    --stats-alert-rgb: 255, 152, 0;
+    --stats-level-opacity: 0.85;
+  }
+
+  &.danger-card {
+    --stats-alert-rgb: 244, 67, 54;
+    --stats-level-opacity: 0.95;
+  }
+
+  &.balance-card {
+    .stats-value {
+      color: var(--theme-color);
+    }
+
+    &.clickable {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+
+      &:hover {
+        background-color: rgba(var(--theme-color-rgb), 0.08);
+        transform: translateY(-3px);
+      }
+    }
+  }
+}
+
+.eztheme-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  padding: 8px 16px !important;
+  margin: 8px 0 !important;
+  border: none !important;
+  border-radius: 6px !important;
+  border-color: transparent !important;
+  background-color: rgba(var(--theme-color-rgb), 0.1) !important;
+  color: var(--theme-color) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+
+  &:hover,
+  &:active,
+  &:focus,
+  &:visited {
+    background-color: rgba(var(--theme-color-rgb), 0.2) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.1) !important;
+    border-color: transparent !important;
+    color: var(--theme-color) !important;
+    text-decoration: none !important;
+  }
+
+  &:active {
+    transform: translateY(0) !important;
+    box-shadow: none !important;
+  }
+
+  &:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.3) !important;
+  }
+
+  &[href] {
+    background-image: none !important;
+    background-repeat: no-repeat !important;
+    background-position: initial !important;
+    background-size: initial !important;
+
+    &::before,
+    &::after {
+      display: none !important;
+      content: none !important;
+    }
+  }
+}
+
+.traffic-package-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1200 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.traffic-package-modal-container {
+  width: min(100%, 420px) !important;
+  max-height: calc(100vh - 32px) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.traffic-package-modal-card-global {
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: calc(100vh - 32px) !important;
+  overflow: hidden !important;
+  background-color: var(--card-background) !important;
+  border: 1px solid rgba(var(--theme-color-rgb), 0.15) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+
+  .modal-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 16px 20px !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    background-color: rgba(var(--theme-color-rgb), 0.03) !important;
+
+    h3 {
+      margin: 0 !important;
+      color: var(--text-color) !important;
+      font-size: 18px !important;
+      font-weight: 600 !important;
+    }
+
+    .close-button {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: none !important;
+      background: transparent !important;
+      color: var(--secondary-text-color) !important;
+      cursor: pointer !important;
+
+      &:hover {
+        color: var(--text-color) !important;
+      }
+    }
+  }
+
+  .modal-body {
+    display: block !important;
+    padding: 20px !important;
+    overflow-y: auto !important;
+  }
+
+  .traffic-package-desc {
+    margin: 0 0 14px !important;
+    color: var(--secondary-text-color) !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  .traffic-package-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .traffic-package-item {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 14px !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--theme-color-rgb), 0.06) 0%,
+      rgba(var(--theme-color-rgb), 0.02) 100%
+    ) !important;
+  }
+
+  .item-title-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+
+    strong {
+      color: var(--text-color) !important;
+      font-size: 15px !important;
+      font-weight: 600 !important;
+    }
+  }
+
+  .item-price {
+    color: var(--theme-color) !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+  }
+
+  .item-content {
+    min-height: 32px !important;
+    color: var(--secondary-text-color) !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+
+  .buy-btn {
+    width: 100% !important;
+    margin-top: auto !important;
+    padding: 8px 12px !important;
+    border: none !important;
+    border-radius: 8px !important;
+    background-color: rgba(var(--theme-color-rgb), 0.92) !important;
+    color: var(--card-background) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+
+    &:disabled {
+      opacity: 0.75 !important;
+      cursor: not-allowed !important;
+    }
+  }
+
+  .modal-footer {
+    display: flex !important;
+    justify-content: flex-end !important;
+    padding: 16px 20px !important;
+    border-top: 1px solid var(--border-color) !important;
+  }
+
+  .cancel-btn {
+    padding: 8px 16px !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+
+    &:hover {
+      background-color: rgba(var(--theme-color-rgb), 0.06) !important;
+    }
+  }
+}
+
 </style>
