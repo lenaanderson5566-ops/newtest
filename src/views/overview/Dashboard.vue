@@ -831,6 +831,46 @@ export default {
       return !isNaN(days) && days > 0 && days <= 7;
     });
 
+    const isExpired = computed(() => {
+      if (userPlan.value.isExpireDatePermanent) return false;
+
+      const expiredAt = Number(userPlan.value.expiredAt || 0);
+      if (!expiredAt) return false;
+
+      return expiredAt * 1000 <= Date.now();
+    });
+
+    const isPlanExpired = computed(() => hasPlan.value && isExpired.value);
+
+    const subscriptionStatus = computed(() => {
+      if (isPlanExpired.value) return 'expired';
+      if (isExpiringSoon.value) return 'expiring';
+      return 'active';
+    });
+
+    const subscriptionStatusLabel = computed(() => t(`dashboard.subscriptionStatus.${subscriptionStatus.value}`));
+
+    const planExpireMetaText = computed(() => {
+      if (userPlan.value.isExpireDatePermanent) {
+        return t('dashboard.permanent');
+      }
+      if (isPlanExpired.value) {
+        return t('dashboard.expiredOnDate', {date: userPlan.value.expireDate || '-'});
+      }
+      return userPlan.value.expireDate || '-';
+    });
+
+    const primaryPlanActionLabel = computed(() => {
+      if (isPlanExpired.value) return t('dashboard.planAction.restoreNow');
+      if (isExpiringSoon.value) return t('dashboard.planAction.renewNow');
+      return t('dashboard.planAction.manageSubscription');
+    });
+
+    const secondaryPlanActionLabel = computed(() => {
+      if (isPlanExpired.value) return t('dashboard.planAction.reselectPlan');
+      return t('dashboard.planAction.renew');
+    });
+
     const tierNameDisplay = computed(() => normalizeTierName(userTier.key));
     const nextTierNameDisplay = computed(() => normalizeTierName(userTier.nextTierKey));
     const tierMemberDisplay = computed(() => tierNameDisplay.value);
