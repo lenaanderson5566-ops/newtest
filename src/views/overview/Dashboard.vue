@@ -5094,7 +5094,7 @@ export default {
 <style lang="scss">
 @use '@/assets/styles/no-plan-card' as *;
 
-.stats-card {
+.dashboard-container .stats-card {
   &.warning-card,
   &.danger-card {
     border-color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
@@ -5139,7 +5139,7 @@ export default {
   }
 }
 
-.eztheme-btn {
+.dashboard-container .eztheme-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
