@@ -2682,11 +2682,9 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-container {
-  padding: 0;
   display: flex;
   justify-content: center;
   --dashboard-card-padding: 20px;
-  --dashboard-card-gap: 16px;
 
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
@@ -2700,8 +2698,7 @@ export default {
   --theme-text-subtle: #9ca3af;
 
   .dashboard-inner {
-    width: 100%;
-        .overview-grid {
+    .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 16px;
@@ -2738,7 +2735,6 @@ export default {
     border-radius: 14px;
     box-shadow: var(--saas-card-shadow);
     padding: var(--dashboard-card-padding);
-    margin-bottom: var(--dashboard-card-gap);
     border: none;
     transition: box-shadow 0.2s ease;
 
@@ -4539,10 +4535,8 @@ export default {
 
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 0;
     padding-bottom: 74px;
     --dashboard-card-padding: 12px;
-    --dashboard-card-gap: 10px;
   }
 
   .stats-grid {
