@@ -1,24 +1,9 @@
 <template>
 
-  <div class="slide-tabs-container" :class="{ 'is-collapsed': isCollapsed && isDesktop }">
+  <div class="slide-tabs-container">
 
     <div class="slide-tabs-wrapper">
 
-
-      <button
-        v-if="isDesktop"
-        class="collapse-toggle"
-        @click="toggleCollapse"
-        :aria-label="isCollapsed ? '展开导航' : '折叠导航'"
-        :aria-pressed="isCollapsed"
-        :title="isCollapsed ? '展开导航' : '折叠导航'"
-      >
-        <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 7H20" />
-          <path d="M4 12H20" />
-          <path d="M4 17H20" />
-        </svg>
-      </button>
 
       <div class="slide-tabs-nav" ref="tabsNav">
 
@@ -106,11 +91,8 @@ export default {
 
     const languageKey = ref(Date.now());
 
-    const SIDEBAR_EXPANDED_WIDTH = 176;
-    const SIDEBAR_COLLAPSED_WIDTH = 68;
+    const SIDEBAR_WIDTH = 176;
     const SIDEBAR_BREAKPOINT = 992;
-    const COLLAPSE_STORAGE_KEY = 'left_sidebar_collapsed';
-    const isCollapsed = ref(false);
     const isDesktop = ref(false);
     let mediaQueryList = null;
     let debouncedResize = null;
@@ -129,7 +111,7 @@ export default {
 
     const applySidebarWidth = () => {
       const width = isDesktop.value
-        ? (isCollapsed.value ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH)
+        ? SIDEBAR_WIDTH
         : 0;
       document.documentElement.style.setProperty('--left-nav-occupy', `${width}px`);
     };
@@ -139,15 +121,6 @@ export default {
       isDesktop.value = mediaQueryList.matches;
       applySidebarWidth();
     };
-
-    const toggleCollapse = () => {
-      isCollapsed.value = !isCollapsed.value;
-      localStorage.setItem(COLLAPSE_STORAGE_KEY, isCollapsed.value ? '1' : '0');
-      applySidebarWidth();
-      safeTimeout(() => updateSliderPosition(currentIndex.value, false), 50);
-    };
-
-    
 
     const sliderState = reactive({
 
@@ -544,7 +517,6 @@ export default {
 
       isComponentMounted.value = true;
 
-      isCollapsed.value = localStorage.getItem(COLLAPSE_STORAGE_KEY) === '1';
       mediaQueryList = window.matchMedia(`(min-width: ${SIDEBAR_BREAKPOINT}px)`);
       updateDesktopMode();
       mediaQueryList.addEventListener?.('change', updateDesktopMode);
@@ -814,10 +786,7 @@ export default {
 
       languageKey,
 
-      route,
-      isCollapsed,
-      isDesktop,
-      toggleCollapse
+      route
 
     };
 
@@ -867,50 +836,6 @@ function debounce(fn, delay) {
     box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
     border: 1px solid var(--border-color);
     overflow: hidden;
-  }
-
-  .collapse-toggle {
-    width: calc(100% - 6px);
-    margin: 3px;
-    height: 28px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background: rgba(var(--card-background-rgb), 0.98);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    &:hover {
-      border-color: rgba(var(--theme-color-rgb), 0.45);
-
-      .collapse-icon {
-        color: var(--theme-color);
-      }
-    }
-
-    &:focus-visible {
-      outline: 2px solid rgba(var(--theme-color-rgb), 0.45);
-      outline-offset: 1px;
-    }
-
-    .collapse-icon {
-      width: 16px;
-      height: 16px;
-      color: var(--secondary-text-color);
-      stroke: currentColor;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: 0.92;
-      transition: color 0.2s ease, opacity 0.2s ease;
-    }
-  }
-
-  &.is-collapsed {
-    .collapse-toggle .collapse-icon {
-      opacity: 0.8;
-    }
   }
 
 
@@ -1007,27 +932,11 @@ function debounce(fn, delay) {
       display: none;
     }
   }
-
-  &.is-collapsed {
-    .nav-item {
-      justify-content: center;
-
-      .nav-text {
-        max-width: 0;
-        opacity: 0;
-        transform: translateX(-4px);
-      }
-    }
-  }
 }
 
 @media (max-width: 991px) {
 
   .slide-tabs-container {
-
-    .collapse-toggle {
-      display: none;
-    }
 
     .slide-tabs-nav {
 
