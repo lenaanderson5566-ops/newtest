@@ -1,6 +1,6 @@
 ﻿<template>
 
-  <div class="more-container">
+  <div class="more-container page-shell">
 
     <!-- 域名授权验证提示 - 如果不需要域名授权功能，移除此组件即可 -->
 
@@ -8,7 +8,7 @@
 
     
 
-    <div class="more-inner">
+    <div class="more-inner page-inner page-stack">
 
       <!-- 欢迎卡片 -->
 
@@ -394,7 +394,7 @@ onUnmounted(() => {
 
 .more-container {
 
-  padding: 20px;
+  padding: 0;
 
   display: flex;
 
@@ -406,8 +406,7 @@ onUnmounted(() => {
 
     width: 100%;
 
-    max-width: 1200px;
-
+    
   }
 
   

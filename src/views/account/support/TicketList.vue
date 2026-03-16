@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="ticket-container">
+  <div class="ticket-container page-shell page-inner page-stack">
     <!-- 屏幕尺寸提示 -->
 
     <div v-if="isSmallScreen" class="screen-size-notice">
@@ -963,7 +963,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .ticket-container {
-  padding: 20px;
+  padding: 0;
 
   display: flex;
 
@@ -2493,7 +2493,7 @@ onUnmounted(() => {
 
 /* SaaS support workspace layout */
 .ticket-container {
-  padding: 16px;
+  padding: 0;
 }
 
 .ticket-list-container {
