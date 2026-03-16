@@ -118,7 +118,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, inject, reactive, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, inject, reactive, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
   IconCopy,
@@ -175,6 +175,13 @@ const showResetModal = ref(false);
 const resetting = ref(false);
 const showImportPanel = ref(true);
 const clientConfig = reactive(CLIENT_CONFIG);
+
+const modalVisible = computed(() => showQrCode.value || showResetModal.value);
+
+watch(modalVisible, (visible) => {
+  if (typeof document === 'undefined') return;
+  document.body.style.overflow = visible ? 'hidden' : '';
+});
 
 const platforms = [
   { id: 'ios', label: 'iOS', icon: IconBrandApple, showFlag: 'showIOS' },
@@ -383,12 +390,17 @@ const resetSecurity = async () => {
 onMounted(() => {
   fetchSubscription();
 });
+
+onUnmounted(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = '';
+  }
+});
 </script>
 
 <style lang="scss" scoped>
 .import-config-card {
   margin-top: 24px;
-
   .card-body {
     display: grid;
     gap: 14px;
@@ -397,7 +409,7 @@ onMounted(() => {
   .section-title {
     font-size: 13px;
     font-weight: 600;
-    color: var(--theme-text-secondary);
+    color: var(--theme-text-secondary, #6b7280);
     margin-top: 2px;
   }
 
@@ -408,7 +420,7 @@ onMounted(() => {
   }
 
   .quick-btn {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color, #e5e7eb);
     background: #fff;
     color: #1f2937;
     border-radius: 12px;
@@ -478,7 +490,7 @@ onMounted(() => {
 
   .import-desc {
     margin-top: 6px;
-    color: var(--theme-text-secondary);
+    color: var(--theme-text-secondary, #6b7280);
     font-size: 13px;
     line-height: 1.4;
   }
@@ -493,7 +505,7 @@ onMounted(() => {
       align-items: center;
       gap: 8px;
       font-size: 13px;
-      color: var(--theme-text-secondary);
+      color: var(--theme-text-secondary, #6b7280);
     }
 
     .step-badge {
@@ -518,7 +530,7 @@ onMounted(() => {
   }
 
   .platform-button {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color, #e5e7eb);
     background: #fff;
     border-radius: 999px;
     padding: 10px 18px;
@@ -550,7 +562,7 @@ onMounted(() => {
     }
 
     .platform-option {
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border-color, #e5e7eb);
       border-radius: 14px;
       padding: 12px 14px;
       background: #fff;
@@ -579,9 +591,9 @@ onMounted(() => {
 
     .no-clients-tip {
       padding: 12px;
-      border: 1px dashed var(--border-color);
+      border: 1px dashed var(--border-color, #e5e7eb);
       border-radius: 10px;
-      color: var(--theme-text-secondary);
+      color: var(--theme-text-secondary, #6b7280);
       font-size: 13px;
       text-align: center;
     }
@@ -600,15 +612,17 @@ onMounted(() => {
 
 .qrcode-modal {
   width: min(92vw, 420px);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
   border-radius: 14px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
+  background: var(--card-bg, var(--card-background, #fff));
+  border: 1px solid var(--border-color, #e5e7eb);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
 }
 
 .qrcode-header {
   padding: 14px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -634,7 +648,7 @@ onMounted(() => {
   border: none;
   background: transparent;
   cursor: pointer;
-  color: var(--theme-text-secondary);
+  color: var(--theme-text-secondary, #6b7280);
 }
 
 .reset-modal {
@@ -643,7 +657,7 @@ onMounted(() => {
 
 .reset-modal-text {
   padding: 16px;
-  color: var(--theme-text-secondary);
+  color: var(--theme-text-secondary, #6b7280);
 }
 
 .reset-modal-actions {
@@ -654,7 +668,7 @@ onMounted(() => {
 }
 
 .modal-btn {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-color, #e5e7eb);
   background: #fff;
   border-radius: 10px;
   padding: 10px 14px;
