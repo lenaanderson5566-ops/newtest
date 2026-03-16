@@ -2696,6 +2696,10 @@ export default {
   --theme-text-primary: #111827;
   --theme-text-secondary: #6b7280;
   --theme-text-subtle: #9ca3af;
+  --theme-surface-muted: #f3f4f6;
+  --theme-surface-soft: #f8fafc;
+  --theme-border-soft: #e5e7eb;
+  --theme-white: #ffffff;
 
   .dashboard-inner {
     .overview-grid {
@@ -2882,7 +2886,7 @@ export default {
         margin: 0;
         font-size: 18px;
         font-weight: 700;
-        color: #111827;
+        color: var(--theme-text-primary);
       }
 
       .traffic-package-status {
@@ -2890,8 +2894,8 @@ export default {
         font-weight: 600;
         border-radius: 999px;
         padding: 6px 10px;
-        background: #f3f4f6;
-        color: #6b7280;
+        background: var(--theme-surface-muted);
+        color: var(--theme-text-secondary);
 
         &.active {
           background: rgba(var(--theme-color-rgb), 0.14);
@@ -3026,25 +3030,25 @@ export default {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: var(--theme-white);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
             box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.2);
             cursor: pointer;
           }
         }
         &.quota-card-muted {
-          background: #f3f4f6;
-          border-color: #e5e7eb;
+          background: var(--theme-surface-muted);
+          border-color: var(--theme-border-soft);
 
           .package-add-btn {
-            color: #fff;
+            color: var(--theme-white);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
           }
         }
 
         &.subscription-card-muted {
           .section-progress-track {
-            background: #e5e7eb;
+            background: var(--theme-border-soft);
           }
 
           .section-progress-fill {
@@ -3053,7 +3057,7 @@ export default {
         }
 
         &.total-main-card {
-          background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+          background: linear-gradient(180deg, var(--theme-white) 0%, #f8fbff 100%);
           border-color: var(--border-color);
           box-shadow: var(--shadow-card-md);
 
@@ -3064,11 +3068,11 @@ export default {
         }
 
         &.expired-main-card {
-          background: #f3f4f6;
+          background: var(--theme-surface-muted);
           border-color: #d1d5db;
 
           .usage-card-title {
-            color: #6b7280;
+            color: var(--theme-text-secondary);
           }
         }
 
@@ -3093,7 +3097,7 @@ export default {
           .plan-summary-section {
             border: none;
             border-radius: 12px;
-            background: #f8fafc;
+            background: var(--theme-surface-soft);
             padding: 10px 12px;
             overflow: visible;
           }
@@ -3145,11 +3149,11 @@ export default {
           }
 
           .plan-summary-section-renew {
-            background: #f8fafc;
+            background: var(--theme-surface-soft);
           }
 
           .plan-summary-section-actions {
-            background: #f8fafc;
+            background: var(--theme-surface-soft);
             border: none;
             padding-top: 12px;
             padding-bottom: 12px;
@@ -3165,7 +3169,7 @@ export default {
 
           .plan-summary-label {
             font-size: 12px;
-            color: #6b7280;
+            color: var(--theme-text-secondary);
 
             &.with-tooltip {
               display: inline-flex;
@@ -3184,7 +3188,7 @@ export default {
 
           .plan-summary-value {
             font-size: 14px;
-            color: #111827;
+            color: var(--theme-text-primary);
             font-weight: 600;
             text-align: right;
             word-break: break-word;
@@ -3217,7 +3221,7 @@ export default {
           .plan-summary-desc {
             margin: 4px 0 0;
             font-size: 12px;
-            color: #6b7280;
+            color: var(--theme-text-secondary);
           }
 
           .auto-renewal-row {
@@ -3250,19 +3254,19 @@ export default {
               }
 
               &.primary {
-                color: #fff;
+                color: var(--theme-white);
                 background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
               }
 
               &.premium {
-                color: #fff;
+                color: var(--theme-white);
                 background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
               }
 
               &.theme {
-                color: #fff;
+                color: var(--theme-white);
                 border-color: transparent;
                 background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 1));
                 box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.28);
@@ -3322,7 +3326,7 @@ export default {
                 width: 18px;
                 left: 3px;
                 bottom: 3px;
-                background-color: #fff;
+                background-color: var(--theme-white);
                 transition: 0.3s;
               }
 
@@ -3352,7 +3356,7 @@ export default {
           font-size: 36px;
           line-height: 1;
           font-weight: 700;
-          color: #111827;
+          color: var(--theme-text-primary);
 
           &.compact {
             font-size: 32px;
@@ -3396,7 +3400,7 @@ export default {
           gap: 4px;
           padding: 8px;
           border-radius: 10px;
-          background: #f8fafc;
+          background: var(--theme-surface-soft);
         }
 
         .usage-kpi-label {
@@ -3428,13 +3432,13 @@ export default {
         .usage-reset-hint {
           width: 100%;
           font-size: 12px;
-          color: #6b7280;
+          color: var(--theme-text-secondary);
         }
 
         .section-progress-track {
           width: 100%;
           height: 14px;
-          background: #e5e7eb;
+          background: var(--theme-border-soft);
           border-radius: 999px;
           overflow: hidden;
         }
@@ -3903,7 +3907,7 @@ export default {
       padding: 0 8px;
       font-size: 11px;
       font-weight: 800;
-      color: #fff;
+      color: var(--theme-white);
       letter-spacing: 0.5px;
       background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
       box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
@@ -4180,7 +4184,7 @@ export default {
         font-size: 14px;
         font-weight: 600;
         margin-bottom: 6px;
-        color: #fff;
+        color: var(--theme-white);
         line-height: 1.35;
       }
 
@@ -4209,7 +4213,7 @@ export default {
             border-radius: 6px;
             font-size: 12px;
             background-color: rgba(var(--theme-color-rgb), 0.14);
-            color: #fff;
+            color: var(--theme-white);
             border: none;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -4348,7 +4352,7 @@ export default {
       border-radius: 8px;
       height: 30px;
       padding: 0 12px;
-      color: #fff;
+      color: var(--theme-white);
       background: var(--saas-brand);
       box-shadow: none;
       cursor: pointer;
@@ -4426,7 +4430,7 @@ export default {
 
 .btn-primary {
   background-color: #355cc2;
-  color: #fff;
+  color: var(--theme-white);
   border: none;
 
   &:hover {
@@ -4442,7 +4446,7 @@ export default {
 
   &:hover {
     background-color: #e5e7eb;
-    color: #111827;
+    color: var(--theme-text-primary);
     transform: none;
   }
 
@@ -5844,7 +5848,7 @@ export default {
       font-size: 14px;
       font-weight: 500;
       background-color: rgba(var(--theme-color-rgb), 0.92);
-      color: #fff;
+      color: var(--theme-white);
       cursor: pointer;
       transition: all 0.3s ease;
 
