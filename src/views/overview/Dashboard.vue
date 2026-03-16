@@ -13,7 +13,7 @@
       >
         <div class="banner-main">
           <IconAlertTriangle :size="16" class="banner-icon" />
-          <span class="banner-text">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
+          <span class="banner-text text-ellipsis">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
         </div>
         <button class="banner-action" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
       </div>
@@ -4291,12 +4291,6 @@ export default {
       color: var(--warning-color);
     }
 
-    .banner-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
     .banner-action {
       border: none;
       border-radius: 8px;
@@ -4379,25 +4373,26 @@ export default {
 }
 
 .btn-primary {
-  background-color: var(--saas-brand);
+  background-color: var(--theme-color);
   color: var(--theme-white);
-  border: none;
+  border: 1px solid var(--theme-color);
 
   &:hover {
-    background-color: #2f4fa8;
-    transform: none;
+    background-color: rgba(var(--theme-color-rgb), 0.85);
+    border-color: var(--theme-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
   }
 }
 
 .btn-outline {
-  background-color: var(--theme-surface-muted);
-  color: var(--theme-text-emphasis);
-  border: none;
+  color: var(--theme-color);
+  background-color: transparent;
+  border: 1px solid var(--theme-color);
 
   &:hover {
-    background-color: var(--theme-border-soft);
-    color: var(--theme-text-primary);
-    transform: none;
+    background-color: rgba(var(--theme-color-rgb), 0.1);
+    color: var(--theme-color);
   }
 
 
