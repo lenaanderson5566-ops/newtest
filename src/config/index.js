@@ -470,7 +470,7 @@ export const config = {
     allowViewNodeInfo: true,
   },
 
-  // 导航配置（已迁移为固定四项：概览/区域/使用/我的）
+  // 导航配置（已迁移为固定四项：概览/区域/使用/账号）
   NAVIGATION_CONFIG: {
     // 废弃：thirdNavItem/fourthNavItem 不再参与侧边导航生成，仅保留兼容字段避免旧配置报错
     // thirdNavItem: "invite",

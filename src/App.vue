@@ -101,16 +101,8 @@ import BackToTop from '@/components/common/BackToTop.vue';
 import CustomContextMenu from '@/components/common/CustomContextMenu.vue';
 import ResourcePreloader from '@/components/common/ResourcePreloader.vue';
 import { IconGift } from '@tabler/icons-vue';
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
+import { useToast } from '@/composables/useToast';
 import pageCache from '@/utils/pageCache';
-
-NProgress.configure({ 
-  showSpinner: true,   
-  easing: 'ease',      
-  speed: 400,          
-  minimum: 0.2         
-});
 
 export default {
   name: 'App',
@@ -132,25 +124,9 @@ export default {
     const store = useAppStore();
     const { t } = useI18n();
     const { applyTheme } = useTheme();
+    const { showToast } = useToast();
     const siteConfig = ref(SITE_CONFIG);
     const cachedRoutes = computed(() => pageCache.getCachedRoutes());
-    
-    router.beforeEach((to, from, next) => {
-      if (to.meta.keepAlive && to.name) {
-        pageCache.addRouteToCache(to.name);
-      }
-      
-      if (from.name && from.meta.keepAlive === false) {
-        pageCache.removeRouteFromCache(from.name);
-      }
-      
-      NProgress.start();
-      next();
-    });
-    
-    router.afterEach(() => {
-      NProgress.done();
-    });
     
     const handleRedirectParam = () => {
       let redirectParam = null;
@@ -231,7 +207,6 @@ export default {
 
         checkUserLoginStatus().then(result => {
           if (result.isLoggedIn === false && result.message) {
-            const { showToast } = require('@/composables/useToast').useToast();
             if (showToast) {
               showToast(result.message, 'warning');
             }
@@ -267,7 +242,6 @@ export default {
       
       checkUserLoginStatus().then(result => {
         if (result.isLoggedIn === false && result.message) {
-          const { showToast } = require('@/composables/useToast').useToast();
           if (showToast) {
             showToast(result.message, 'warning');
           }
@@ -477,6 +451,7 @@ export default {
   width: 100%;
   --page-edge-gap: 2px;
   --left-nav-gap: 10px;
+  --left-nav-occupy: 176px;
 
   &.with-top-bar {
     --page-content-top-gap: 8px;
@@ -504,7 +479,7 @@ export default {
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
     width: min(var(--page-content-max-width), 100%);
-    margin-left: 0;
+    margin-left: auto;
     margin-right: auto;
     padding-inline: var(--page-edge-gap, 2px);
   }
@@ -515,7 +490,7 @@ export default {
 
   .page-header-content {
     width: min(var(--page-content-max-width), 100%);
-    margin-left: 0;
+    margin-left: auto;
     margin-right: auto;
     padding-inline: var(--page-edge-gap, 2px);
   }

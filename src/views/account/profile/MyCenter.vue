@@ -4,55 +4,55 @@
       <section class="summary-panel section-block dashboard-like-card">
         <div class="summary-top">
           <div>
-            <h2>账户摘要</h2>
-            <p class="summary-desc">核心账户信息一目了然</p>
+            <h2>{{ $t('myCenter.summaryTitle') }}</h2>
+            <p class="summary-desc">{{ $t('myCenter.summaryDesc') }}</p>
           </div>
-          <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">余额充值</button>
+          <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">{{ $t('myCenter.topUp') }}</button>
         </div>
 
         <div class="summary-grid">
           <div class="summary-item">
-            <span class="label">邮箱</span>
+            <span class="label">{{ $t('myCenter.email') }}</span>
             <strong>{{ userInfo.email || '-' }}</strong>
           </div>
           <div class="summary-item">
-            <span class="label">当前计划</span>
+            <span class="label">{{ $t('myCenter.currentPlan') }}</span>
             <strong>{{ subscriptionText }}</strong>
           </div>
           <div class="summary-item">
-            <span class="label">到期时间</span>
+            <span class="label">{{ $t('myCenter.expireAt') }}</span>
             <strong>{{ subscriptionExpireText }}</strong>
           </div>
           <div class="summary-item is-highlight">
-            <span class="label">账户余额</span>
+            <span class="label">{{ $t('myCenter.accountBalance') }}</span>
             <strong>{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
           </div>
         </div>
       </section>
 
       <section class="section-block dashboard-like-card">
-        <h3 class="section-title">财务中心</h3>
+        <h3 class="section-title">{{ $t('myCenter.financeTitle') }}</h3>
         <div class="settings-list">
           <button class="nav-row" @click="go('/billing?tab=wallet')">
             <div class="row-main">
-              <div class="row-title">账户余额</div>
-              <p>查看余额明细与充值记录</p>
+              <div class="row-title">{{ $t('myCenter.accountBalance') }}</div>
+              <p>{{ $t('myCenter.balanceDesc') }}</p>
             </div>
             <IconChevronRight :size="18" />
           </button>
 
           <button class="nav-row" @click="go('/billing?tab=orders')">
             <div class="row-main">
-              <div class="row-title">订单记录</div>
-              <p>查看历史订单与支付状态</p>
+              <div class="row-title">{{ $t('myCenter.orderHistory') }}</div>
+              <p>{{ $t('myCenter.orderDesc') }}</p>
             </div>
             <IconChevronRight :size="18" />
           </button>
 
           <button class="nav-row" @click="go('/billing?tab=referral')">
             <div class="row-main">
-              <div class="row-title">邀请返利</div>
-              <p>查看邀请进度与佣金明细</p>
+              <div class="row-title">{{ $t('myCenter.referral') }}</div>
+              <p>{{ $t('myCenter.referralDesc') }}</p>
             </div>
             <IconChevronRight :size="18" />
           </button>
@@ -60,12 +60,12 @@
       </section>
 
       <section class="section-block dashboard-like-card">
-        <h3 class="section-title">个人设置</h3>
+        <h3 class="section-title">{{ $t('myCenter.settingsTitle') }}</h3>
         <div class="settings-list">
           <div class="settings-row">
             <div class="row-main">
-              <div class="row-title">到期提醒</div>
-              <p>订阅即将到期时发送邮件提醒</p>
+              <div class="row-title">{{ $t('myCenter.expireReminder') }}</div>
+              <p>{{ $t('myCenter.expireReminderDesc') }}</p>
             </div>
             <label class="switch" :class="{ disabled: updatingSettings }">
               <input type="checkbox" v-model="remindExpire" @change="updateRemindSettings" :disabled="updatingSettings" />
@@ -75,8 +75,8 @@
 
           <div class="settings-row">
             <div class="row-main">
-              <div class="row-title">流量提醒</div>
-              <p>流量不足时发送邮件提醒</p>
+              <div class="row-title">{{ $t('myCenter.trafficReminder') }}</div>
+              <p>{{ $t('myCenter.trafficReminderDesc') }}</p>
             </div>
             <label class="switch" :class="{ disabled: updatingSettings }">
               <input type="checkbox" v-model="remindTraffic" @change="updateRemindSettings" :disabled="updatingSettings" />
@@ -86,8 +86,8 @@
 
           <button class="nav-row" @click="go('/security')">
             <div class="row-main">
-              <div class="row-title">安全设置</div>
-              <p>修改密码与账户安全选项</p>
+              <div class="row-title">{{ $t('myCenter.securitySettings') }}</div>
+              <p>{{ $t('myCenter.securityDesc') }}</p>
             </div>
             <IconChevronRight :size="18" />
           </button>
@@ -96,10 +96,10 @@
 
       <section class="session-panel section-block dashboard-like-card">
         <div>
-          <h3 class="section-title">会话操作</h3>
-          <p class="session-tip">退出当前登录会话，稍后可重新登录。</p>
+          <h3 class="section-title">{{ $t('myCenter.sessionTitle') }}</h3>
+          <p class="session-tip">{{ $t('myCenter.sessionDesc') }}</p>
         </div>
-        <button class="btn btn-outline logout-btn" @click="logout">退出登录</button>
+        <button class="btn btn-outline logout-btn" @click="logout">{{ $t('myCenter.logout') }}</button>
       </section>
 
       <div class="bottom-safe-area"></div>
@@ -111,12 +111,14 @@
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { IconChevronRight } from '@tabler/icons-vue';
+import { useI18n } from 'vue-i18n';
 import { getUserInfo, getUserSubscribe, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
 import { formatDate } from '@/utils/formatters';
 import { useToast } from '@/composables/useToast';
 
 const router = useRouter();
+const { t } = useI18n();
 const { showToast } = useToast();
 const userInfo = ref({});
 const subscribeInfo = ref({});
@@ -127,11 +129,11 @@ const updatingSettings = ref(false);
 
 const subscriptionText = computed(() => {
   const name = subscribeInfo.value?.plan?.name;
-  return name ? `${name}` : '暂无有效订阅';
+  return name ? `${name}` : t('myCenter.noSubscription');
 });
 
 const subscriptionExpireText = computed(() => {
-  if (!subscribeInfo.value?.expired_at) return '未开通';
+  if (!subscribeInfo.value?.expired_at) return t('myCenter.notActivated');
   return formatDate(subscribeInfo.value.expired_at);
 });
 
@@ -146,11 +148,11 @@ const updateRemindSettings = async () => {
       remind_traffic: remindTraffic.value ? 1 : 0,
       auto_renewal: userInfo.value.auto_renewal ? 1 : 0
     });
-    showToast('通知设置已更新', 'success');
+    showToast(t('myCenter.settingsUpdated'), 'success');
   } catch (error) {
     remindExpire.value = !!userInfo.value.remind_expire;
     remindTraffic.value = !!userInfo.value.remind_traffic;
-    showToast('更新失败，请稍后重试', 'error');
+    showToast(t('myCenter.settingsUpdateFailed'), 'error');
   } finally {
     updatingSettings.value = false;
   }
