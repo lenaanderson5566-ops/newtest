@@ -584,6 +584,7 @@ export default {
     const remindTrafficSetting = ref(false);
     const autoRenewalEnabled = ref(false);
     const updatingAutoRenewalSetting = ref(false);
+    const allowNewPeriod = ref('');
 
         const trafficMetrics = reactive({
       totalTrafficBytes: 0,
