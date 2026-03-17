@@ -1,7 +1,37 @@
 <template>
   <div class="my-center page-shell">
     <div class="my-center-inner page-inner page-stack">
-      <section v-if="hasTierInfo" class="tier-panel section-block dashboard-like-card">
+      <div class="overview-panels" :class="{ 'no-tier': !hasTierInfo }">
+        <section class="summary-panel section-block dashboard-like-card">
+          <div class="summary-top">
+          <div>
+            <h2>{{ $t('myCenter.summaryTitle') }}</h2>
+            <p class="summary-desc">{{ $t('myCenter.summaryDesc') }}</p>
+          </div>
+          <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">{{ $t('myCenter.topUp') }}</button>
+          </div>
+
+          <div class="summary-grid">
+          <div class="summary-item">
+            <span class="label">{{ $t('myCenter.email') }}</span>
+            <strong>{{ userInfo.email || '-' }}</strong>
+          </div>
+          <div class="summary-item">
+            <span class="label">{{ $t('myCenter.currentPlan') }}</span>
+            <strong>{{ subscriptionText }}</strong>
+          </div>
+          <div class="summary-item">
+            <span class="label">{{ $t('myCenter.expireAt') }}</span>
+            <strong>{{ subscriptionExpireText }}</strong>
+          </div>
+          <div class="summary-item is-highlight">
+            <span class="label">{{ $t('myCenter.accountBalance') }}</span>
+            <strong>{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
+          </div>
+          </div>
+        </section>
+
+        <section v-if="hasTierInfo" class="tier-panel section-block dashboard-like-card">
         <div class="tier-header">
           <div>
             <h3>{{ $t('dashboard.memberTier') }}</h3>
@@ -20,36 +50,8 @@
         <div class="tier-next" v-if="userTier.nextTierKey">
           {{ $t('dashboard.nextTierHint', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}
         </div>
-      </section>
-
-      <section class="summary-panel section-block dashboard-like-card">
-        <div class="summary-top">
-          <div>
-            <h2>{{ $t('myCenter.summaryTitle') }}</h2>
-            <p class="summary-desc">{{ $t('myCenter.summaryDesc') }}</p>
-          </div>
-          <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">{{ $t('myCenter.topUp') }}</button>
-        </div>
-
-        <div class="summary-grid">
-          <div class="summary-item">
-            <span class="label">{{ $t('myCenter.email') }}</span>
-            <strong>{{ userInfo.email || '-' }}</strong>
-          </div>
-          <div class="summary-item">
-            <span class="label">{{ $t('myCenter.currentPlan') }}</span>
-            <strong>{{ subscriptionText }}</strong>
-          </div>
-          <div class="summary-item">
-            <span class="label">{{ $t('myCenter.expireAt') }}</span>
-            <strong>{{ subscriptionExpireText }}</strong>
-          </div>
-          <div class="summary-item is-highlight">
-            <span class="label">{{ $t('myCenter.accountBalance') }}</span>
-            <strong>{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <section class="section-block dashboard-like-card">
         <h3 class="section-title">{{ $t('myCenter.financeTitle') }}</h3>
@@ -275,6 +277,18 @@ onMounted(async () => {
 
 .summary-panel { padding: 1rem; }
 
+
+.overview-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 1fr);
+  gap: 1rem;
+
+  &.no-tier {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
 .tier-panel {
   padding: 1rem;
   background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.25), transparent 35%),
@@ -494,11 +508,16 @@ input:checked + .slider:before { transform: translateX(18px); }
 .bottom-safe-area { height: calc(env(safe-area-inset-bottom, 0px) + 10px); }
 
 @media (max-width: 1100px) {
+  .overview-panels {
+    grid-template-columns: 1fr;
+  }
+
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 768px) {
   .my-center-inner { max-width: 100%; gap: 0.75rem; }
+  .overview-panels { gap: 0.75rem; }
   .summary-panel { padding: 12px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
