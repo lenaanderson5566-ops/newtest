@@ -1995,39 +1995,6 @@ export default {
         }
       }
 
-      .reset-traffic-btn {
-        position: relative;
-        overflow: hidden;
-
-        &.reset-warning {
-          color: rgba(var(--theme-color-rgb), 0.85);
-          border-color: rgba(var(--theme-color-rgb), 0.85);
-          background-color: rgba(255, 152, 0, 0.1);
-        }
-
-        &.reset-danger {
-          color: rgba(var(--theme-color-rgb), 0.95);
-          border-color: rgba(var(--theme-color-rgb), 0.95);
-          background-color: rgba(244, 67, 54, 0.1);
-        }
-      }
-
-      .renew-plan-btn {
-        position: relative;
-        overflow: hidden;
-
-        &.renew-warning {
-          color: rgba(var(--theme-color-rgb), 0.85);
-          border-color: rgba(var(--theme-color-rgb), 0.85);
-          background-color: rgba(255, 152, 0, 0.1);
-        }
-
-        &.renew-danger {
-          color: rgba(var(--theme-color-rgb), 0.95);
-          border-color: rgba(var(--theme-color-rgb), 0.95);
-          background-color: rgba(244, 67, 54, 0.1);
-        }
-      }
     }
   }
 
@@ -3406,35 +3373,6 @@ export default {
   }
 }
 
-.stats-card.warning-card {
-  border-color: rgba(var(--theme-color-rgb), 0.85);
-  box-shadow: 0 4px 10px rgba(255, 152, 0, 0.15);
-
-  .stats-icon {
-    background-color: rgba(255, 152, 0, 0.1);
-    color: rgba(var(--theme-color-rgb), 0.85);
-  }
-
-  .stats-value {
-    color: rgba(var(--theme-color-rgb), 0.85);
-  }
-}
-
-.stats-card.danger-card {
-  border-color: rgba(var(--theme-color-rgb), 0.95);
-  box-shadow: 0 4px 10px rgba(244, 67, 54, 0.15);
-
-  .stats-icon {
-    background-color: rgba(244, 67, 54, 0.1);
-    color: rgba(var(--theme-color-rgb), 0.95);
-  }
-
-  .stats-value {
-    color: rgba(var(--theme-color-rgb), 0.95);
-  }
-}
-
-
 .skeleton-card {
   width: 100%;
   border-radius: 16px;
@@ -3724,27 +3662,27 @@ export default {
 .dashboard-container .stats-card {
   &.warning-card,
   &.danger-card {
-    border-color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
+    border-color: rgba(var(--stats-alert-rgb), 0.42) !important;
     box-shadow: 0 4px 10px rgba(var(--stats-alert-rgb), 0.15) !important;
 
     .stats-icon {
       background-color: rgba(var(--stats-alert-rgb), 0.1) !important;
-      color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
+      color: var(--stats-level-color) !important;
     }
 
     .stats-value {
-      color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
+      color: var(--stats-level-color) !important;
     }
   }
 
   &.warning-card {
-    --stats-alert-rgb: 255, 152, 0;
-    --stats-level-opacity: 0.85;
+    --stats-alert-rgb: var(--warning-color-rgb);
+    --stats-level-color: var(--warning-color);
   }
 
   &.danger-card {
-    --stats-alert-rgb: 244, 67, 54;
-    --stats-level-opacity: 0.95;
+    --stats-alert-rgb: var(--error-color-rgb);
+    --stats-level-color: var(--error-color);
   }
 
   &.balance-card {
