@@ -13,249 +13,10 @@
       >
         <div class="banner-main">
           <IconAlertTriangle :size="16" class="banner-icon" />
-          <span class="banner-text">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
+          <span class="banner-text text-ellipsis">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
         </div>
-        <button class="banner-action" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
+        <button class="banner-action btn btn-primary" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
       </div>
-
-
-      <!-- 订阅导入卡片 -->
-      <transition name="slide-fade">
-        <div v-if="showImportCard && userPlan.subscribeUrl" class="dashboard-card import-card">
-          <div class="card-header">
-            <h2 class="card-title">{{ $t('dashboard.importSubscription') }}</h2>
-            <button class="close-btn" @click="showImportCard = false">
-              <span class="close-icon"></span>
-            </button>
-          </div>
-          <div class="card-body">
-            <div class="import-action copy-action" @click="copySubscription">
-              <div class="import-icon">
-                <IconCopy :size="24"/>
-              </div>
-              <div class="import-content">
-                <div class="import-title">{{ $t('dashboard.copySubscription') }}</div>
-                <div class="import-desc">{{ $t('dashboard.copySubscriptionDesc') }}</div>
-              </div>
-            </div>
-
-            <div class="import-action qrcode-action" @click="showQrCode = true">
-              <div class="import-icon">
-                <IconQrcode :size="24"/>
-              </div>
-              <div class="import-content">
-                <div class="import-title">{{ $t('dashboard.scanQRCode') }}</div>
-                <div class="import-desc">{{ $t('dashboard.scanQRCodeDesc') }}</div>
-              </div>
-            </div>
-
-            <!-- 平台选择器 -->
-            <div class="platform-selector">
-              <button
-                  v-for="platform in platforms"
-                  :key="platform.id"
-                  class="platform-button"
-                  :class="{ 'active': activePlatform === platform.id }"
-                  @click="activePlatform = platform.id"
-              >
-                <component :is="platform.icon" :size="16"/>
-                <span>{{ $t(`platforms.${platform.id}`) }}</span>
-              </button>
-            </div>
-
-            <!-- iOS平台选项 -->
-            <div v-if="activePlatform === 'ios'" class="platform-section">
-              <div class="platform-title">{{ $t('platforms.ios') }}</div>
-              <div v-if="hasIOSClients" class="platform-options">
-                <div v-if="clientConfig.showShadowrocket" class="platform-option"
-                     @click="importToClient('shadowrocket')">
-                  <img :src="shadowrocketIcon" class="client-icon" alt="Shadowrocket"/>
-                  <span>Shadowrocket</span>
-                </div>
-                <div v-if="clientConfig.showSurge" class="platform-option" @click="importToClient('surge')">
-                  <img :src="surgeIcon" class="client-icon" alt="Surge"/>
-                  <span>Surge</span>
-                </div>
-                <div v-if="clientConfig.showStash" class="platform-option" @click="importToClient('stash')">
-                  <img :src="stashIcon" class="client-icon" alt="Stash"/>
-                  <span>Stash</span>
-                </div>
-                <div v-if="clientConfig.showQuantumultX" class="platform-option" @click="importToClient('quantumultx')">
-                  <img :src="quantumultIcon" class="client-icon" alt="Quantumult X"/>
-                  <span>Quantumult X</span>
-                </div>
-                <div v-if="clientConfig.showHiddifyIOS" class="platform-option" @click="importToClient('hiddify-ios')">
-                  <img :src="hiddifyMacIcon" class="client-icon" alt="Hiddify"/>
-                  <span>Hiddify</span>
-                </div>
-                <div v-if="clientConfig.showSingboxIOS" class="platform-option" @click="importToClient('singbox-ios')">
-                  <img :src="singboxIcon" class="client-icon" alt="Singbox"/>
-                  <span>Singbox</span>
-                </div>
-                <div v-if="clientConfig.showLoon" class="platform-option" @click="importToClient('loon')">
-                  <img :src="loonIcon" class="client-icon" alt="Loon"/>
-                  <span>Loon</span>
-                </div>
-              </div>
-              <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
-              </div>
-            </div>
-
-            <!-- Android平台选项 -->
-            <div v-if="activePlatform === 'android'" class="platform-section">
-              <div class="platform-title">{{ $t('platforms.android') }}</div>
-              <div v-if="hasAndroidClients" class="platform-options">
-                <div v-if="clientConfig.showFlClashAndroid" class="platform-option" @click="importToClient('flclash')">
-                  <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
-                  <span>FlClash</span>
-                </div>
-                <div v-if="clientConfig.showV2rayNG" class="platform-option" @click="importToClient('v2rayng')">
-                  <img :src="v2rayNGIcon" class="client-icon" alt="V2rayNG"/>
-                  <span>V2rayNG</span>
-                </div>
-                <div v-if="clientConfig.showClashAndroid" class="platform-option"
-                     @click="importToClient('clash-android')">
-                  <img :src="clashAndroidIcon" class="client-icon" alt="Clash"/>
-                  <span>Clash</span>
-                </div>
-                <div v-if="clientConfig.showSurfboard" class="platform-option" @click="importToClient('surfboard')">
-                  <img :src="surfboardIcon" class="client-icon" alt="Surfboard"/>
-                  <span>Surfboard</span>
-                </div>
-                <div v-if="clientConfig.showClashMetaAndroid" class="platform-option"
-                     @click="importToClient('clash-meta-android')">
-                  <img :src="clashMetaAndroidIcon" class="client-icon" alt="Clash Meta"/>
-                  <span>Clash Meta</span>
-                </div>
-                <div v-if="clientConfig.showNekobox" class="platform-option" @click="importToClient('nekobox')">
-                  <img :src="nekoboxIcon" class="client-icon" alt="Nekobox"/>
-                  <span>Nekobox</span>
-                </div>
-                <div v-if="clientConfig.showSingboxAndroid" class="platform-option"
-                     @click="importToClient('singbox-android')">
-                  <img :src="singboxAndroidIcon" class="client-icon" alt="Singbox"/>
-                  <span>Singbox</span>
-                </div>
-                <div v-if="clientConfig.showHiddifyAndroid" class="platform-option"
-                     @click="importToClient('hiddify-android')">
-                  <img :src="hiddifyAndroidIcon" class="client-icon" alt="Hiddify"/>
-                  <span>Hiddify</span>
-                </div>
-              </div>
-              <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
-              </div>
-            </div>
-
-            <!-- Windows平台选项 -->
-            <div v-if="activePlatform === 'windows'" class="platform-section">
-              <div class="platform-title">{{ $t('platforms.windows') }}</div>
-              <div v-if="hasWindowsClients" class="platform-options">
-                <div v-if="clientConfig.showFlClashWindows" class="platform-option" @click="importToClient('flclash')">
-                  <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
-                  <span>FlClash</span>
-                </div>
-                <div v-if="clientConfig.showClashVergeWindows" class="platform-option" @click="importToClient('clashverge')">
-                  <img :src="clashvergeIcon" class="client-icon" alt="ClashVerge"/>
-                  <span>ClashVerge</span>
-                </div>
-                <div v-if="clientConfig.showClashWindows" class="platform-option" @click="importToClient('clash')">
-                  <img :src="clashWindowsIcon" class="client-icon" alt="Clash"/>
-                  <span>Clash</span>
-                </div>
-                <div v-if="clientConfig.showNekoray" class="platform-option" @click="importToClient('nekoray')">
-                  <img :src="nekorayIcon" class="client-icon" alt="Nekoray"/>
-                  <span>Nekoray</span>
-                </div>
-                <div v-if="clientConfig.showSingboxWindows" class="platform-option"
-                     @click="importToClient('singbox-windows')">
-                  <img :src="singboxWindowsIcon" class="client-icon" alt="Singbox"/>
-                  <span>Singbox</span>
-                </div>
-                <div v-if="clientConfig.showHiddifyWindows" class="platform-option"
-                     @click="importToClient('hiddify-windows')">
-                  <img :src="hiddifyWindowsIcon" class="client-icon" alt="Hiddify"/>
-                  <span>Hiddify</span>
-                </div>
-              </div>
-              <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
-              </div>
-            </div>
-
-            <!-- MacOS平台选项 -->
-            <div v-if="activePlatform === 'macos'" class="platform-section">
-              <div class="platform-title">{{ $t('platforms.macos') }}</div>
-              <div v-if="hasMacOSClients" class="platform-options">
-                <div v-if="clientConfig.showFlClashMac" class="platform-option" @click="importToClient('flclash')">
-                  <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
-                  <span>FlClash</span>
-                </div>
-                <div v-if="clientConfig.showClashVergeMac" class="platform-option" @click="importToClient('clashverge')">
-                  <img :src="clashvergeIcon" class="client-icon" alt="ClashVerge"/>
-                  <span>ClashVerge</span>
-                </div>
-                <div v-if="clientConfig.showClashX" class="platform-option" @click="importToClient('clashx')">
-                  <img :src="clashXIcon" class="client-icon" alt="ClashX"/>
-                  <span>ClashX</span>
-                </div>
-                <div v-if="clientConfig.showClashMetaX" class="platform-option" @click="importToClient('clashx-meta')">
-                  <img :src="clashMetaXIcon" class="client-icon" alt="ClashX Meta"/>
-                  <span>ClashX Meta</span>
-                </div>
-                <div v-if="clientConfig.showSurgeMac" class="platform-option" @click="importToClient('surge-mac')">
-                  <img :src="surgeMacIcon" class="client-icon" alt="Surge"/>
-                  <span>Surge</span>
-                </div>
-                <div v-if="clientConfig.showStashMac" class="platform-option" @click="importToClient('stash-mac')">
-                  <img :src="stashMacIcon" class="client-icon" alt="Stash"/>
-                  <span>Stash</span>
-                </div>
-                <div v-if="clientConfig.showQuantumultXMac" class="platform-option"
-                     @click="importToClient('quantumultx-mac')">
-                  <img :src="quantumultXMacIcon" class="client-icon" alt="Quantumult X"/>
-                  <span>Quantumult X</span>
-                </div>
-                <div v-if="clientConfig.showSingboxMac" class="platform-option"
-                     @click="importToClient('singbox-macos')">
-                  <img :src="singboxMacIcon" class="client-icon" alt="Singbox"/>
-                  <span>Singbox</span>
-                </div>
-                <div v-if="clientConfig.showHiddifyMac" class="platform-option"
-                     @click="importToClient('hiddify-macos')">
-                  <img :src="hiddifyMacIcon" class="client-icon" alt="Hiddify"/>
-                  <span>Hiddify</span>
-                </div>
-              </div>
-              <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </transition>
-
-      <!-- QR码模态窗口 -->
-      <transition name="fade">
-        <div v-if="showQrCode" class="qrcode-modal-overlay" @click="showQrCode = false">
-          <div class="qrcode-modal" @click.stop>
-            <div class="qrcode-header">
-              <h3>{{ $t('dashboard.scanQRCode') }}</h3>
-              <button class="close-btn" @click="showQrCode = false">
-                <span class="close-icon"></span>
-              </button>
-            </div>
-            <div class="qrcode-content">
-              <div v-if="qrCodeLoading" class="qrcode-loading">
-                <div class="loading-spinner"></div>
-                <p>{{ $t('common.loadingQRCode') }}</p>
-              </div>
-              <img v-else :src="qrCodeUrl" alt="QR Code" @load="qrCodeLoaded"/>
-            </div>
-          </div>
-        </div>
-      </transition>
 
       <div class="stats-grid">
         <template v-if="loading.userStats">
@@ -279,7 +40,7 @@
             </template>
             <template #title>{{ $t('dashboard.noPlanPrompt') }}</template>
             <template #action>
-              <button class="action-button primary" @click="goToShop">
+              <button class="action-button primary btn btn-primary" @click="goToShop">
                 <IconShoppingBag :size="18" class="btn-icon"/>
                 <span>{{ $t('dashboard.purchasePlan') }}</span>
               </button>
@@ -327,7 +88,7 @@
             class="stats-card traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired)) || (card.key === 'subscription' && isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }, { 'expired-blur-target': isPlanExpired && (card.key === 'subscription' || card.key === 'package') }]"
+            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'quota-traffic-card': card.key === 'subscription' || card.key === 'package' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired)) || (card.key === 'subscription' && isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">
@@ -399,14 +160,14 @@
               <div class="plan-summary-section plan-summary-section-actions">
                 <div class="plan-summary-actions">
                   <button
-                    class="plan-action-btn"
+                    class="plan-action-btn btn"
                     :class="primaryActionClass"
                     @click="handlePrimaryPlanAction"
                   >
                     {{ primaryPlanActionLabel }}
                   </button>
                   <button
-                    class="plan-action-btn"
+                    class="plan-action-btn btn"
                     :class="secondaryActionClass"
                     @click="handleSecondaryPlanAction"
                   >
@@ -478,7 +239,7 @@
               </div>
               <div class="ip-sub-line">
                 <span class="ip-region">{{ ipLocationDisplayText }}</span>
-                <button class="ip-refresh-btn" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
+                <button class="ip-refresh-btn btn btn-secondary" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
                   <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
                   <span>{{ ipLocationLoading ? $t('dashboard.refreshing') : $t('common.refresh') }}</span>
                 </button>
@@ -545,15 +306,10 @@
         @confirm="handlePopupConfirm"
     />
 
-  </div>
-</div>
-
-
-
-  <transition name="modal-fade">
-      <div class="modal-overlay traffic-package-overlay traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
-        <div class="modal-container traffic-package-container traffic-package-modal-container" @click.stop>
-          <div class="modal-card traffic-package-modal-card traffic-package-modal-card-global">
+      <transition name="modal-fade">
+      <div class="modal-overlay traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
+        <div class="modal-container traffic-package-modal-container" @click.stop>
+          <div class="modal-card traffic-package-modal-card-global">
             <div class="modal-header">
               <h3>{{ $t('shop.traffic_package.title') }}</h3>
               <button class="close-button" :aria-label="$t('common.close')" @click="showTrafficPackageModal = false">
@@ -571,23 +327,23 @@
                     <span class="item-price">{{ currencySymbol }}{{ (normalizeTrafficPackagePrice(plan.onetime_price) / 100).toFixed(2) }}</span>
                   </div>
                   <div class="item-content" v-if="getTrafficPackageContent(plan)">{{ getTrafficPackageContent(plan) }}</div>
-                  <button class="confirm-btn buy-btn" :disabled="isTrafficPackageSoldOut(plan)" @click="purchaseTrafficPackage(plan)">
+                  <button class="confirm-btn btn btn-primary btn-block" :disabled="isTrafficPackageSoldOut(plan)" @click="purchaseTrafficPackage(plan)">
                     {{ isTrafficPackageSoldOut(plan) ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}
                   </button>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button class="cancel-btn" @click="showTrafficPackageModal = false">
+              <button class="btn btn-secondary" @click="showTrafficPackageModal = false">
                 {{ $t('common.cancel') }}
               </button>
             </div>
           </div>
         </div>
       </div>
-  </transition>
+      </transition>
   <!-- 重置流量确认弹窗 -->
-  <transition name="modal-fade">
+      <transition name="modal-fade">
     <div class="modal-overlay" v-if="showResetTrafficModal">
       <div class="modal-container">
         <div class="modal-card reset-traffic-modal">
@@ -603,11 +359,11 @@
             <p class="note-text">{{ $t('dashboard.resetTrafficWarning') }}</p>
           </div>
           <div class="modal-footer">
-            <button class="cancel-btn" @click="closeResetTrafficModal">
+            <button class="btn btn-secondary" @click="closeResetTrafficModal">
               {{ $t('common.cancel') }}
             </button>
             <button
-                class="confirm-btn"
+                class="confirm-btn btn btn-primary"
                 :disabled="resetConfirmCooldown > 0 || isCreatingResetOrder"
                 @click="createResetTrafficOrder"
             >
@@ -629,7 +385,10 @@
 
 
     </div>
-  </transition>
+      </transition>
+
+    </div>
+  </div>
 
 </template>
 
@@ -649,7 +408,7 @@ import {
 } from 'vue';
 import {useRouter} from 'vue-router';
 import {useI18n} from 'vue-i18n';
-import {CLIENT_CONFIG, DASHBOARD_CONFIG, isXiaoV2board, SITE_CONFIG} from '@/utils/baseConfig';
+import {DASHBOARD_CONFIG, isXiaoV2board} from '@/utils/baseConfig';
 import {
   IconAlertTriangle,
   IconBox,
@@ -664,7 +423,6 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconCoins,
-  IconCopy,
   IconCrosshair,
   IconDeviceDesktop,
   IconEye,
@@ -673,7 +431,6 @@ import {
   IconHelpCircle,
   IconMoon,
   IconPackage,
-  IconQrcode,
   IconRocket,
   IconRouter,
   IconSend,
@@ -692,40 +449,12 @@ import {
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import InfoCard from '@/components/common/InfoCard.vue';
-import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
+import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
 import { updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import {fetchPlans, submitOrder} from '@/api/account/shop';
-import MarkdownIt from 'markdown-it';
-import QRCode from 'qrcode';
-import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
-import surgeIconImg from '@/assets/images/client-img-ios/Surge.png';
-import stashIconImg from '@/assets/images/client-img-ios/stash.png';
-import quantumultIconImg from '@/assets/images/client-img-ios/quantumultx.png';
-import singboxIconImg from '@/assets/images/client-img-ios/singbox.png';
-import loonIconImg from '@/assets/images/client-img-ios/loon.png';
-import v2rayNGIconImg from '@/assets/images/client-img-android/v2rayng.png';
-import clashAndroidIconImg from '@/assets/images/client-img-android/clash.png';
-import surfboardIconImg from '@/assets/images/client-img-android/surfboard.png';
-import clashMetaAndroidIconImg from '@/assets/images/client-img-android/clashmeta.png';
-import nekoboxIconImg from '@/assets/images/client-img-android/nekobox.png';
-import singboxAndroidIconImg from '@/assets/images/client-img-android/singbox.png';
-import hiddifyAndroidIconImg from '@/assets/images/client-img-android/hiddify.png';
-import flclashIconImg from '@/assets/images/client-img-windows/flclash.png';
-import clashvergeIconImg from '@/assets/images/client-img-windows/clashverge.png';
-import clashWindowsIconImg from '@/assets/images/client-img-windows/clash.png';
-import nekorayIconImg from '@/assets/images/client-img-windows/nekoray.png';
-import singboxWindowsIconImg from '@/assets/images/client-img-windows/singbox.png';
-import hiddifyWindowsIconImg from '@/assets/images/client-img-windows/hiddify.png';
-import clashXIconImg from '@/assets/images/client-img-macos/clashx.png';
-import clashMetaXIconImg from '@/assets/images/client-img-macos/clashmetax.png';
-import surgeMacIconImg from '@/assets/images/client-img-macos/Surge.png';
-import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
-import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
-import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
-import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
 import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
 import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
 import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube.svg';
@@ -734,42 +463,6 @@ import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
 import serviceGoogleIcon from '@/assets/images/service-icons/google.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
-
-const md = new MarkdownIt({
-  html: true,
-  breaks: true,
-  linkify: true,
-  typographer: true,
-});
-
-md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
-  const token = tokens[idx];
-  const hrefIndex = token.attrIndex('href');
-  let href = '';
-
-  if (hrefIndex >= 0) {
-    href = token.attrs[hrefIndex][1];
-  }
-
-  if (href.includes('#eztheme-btn') || href.includes('class=eztheme-btn') || href.includes('?eztheme-btn')) {
-    token.attrs[hrefIndex][1] = href
-        .replace('#eztheme-btn', '')
-        .replace('class=eztheme-btn', '')
-        .replace('?eztheme-btn', '');
-
-    const classIndex = token.attrIndex('class');
-    if (classIndex < 0) {
-      token.attrPush(['class', 'eztheme-btn']);
-    } else {
-      const classes = token.attrs[classIndex][1];
-      if (!classes.includes('eztheme-btn')) {
-        token.attrs[classIndex][1] = classes + ' eztheme-btn';
-      }
-    }
-  }
-
-  return self.renderToken(tokens, idx, options);
-};
 
 export default {
   name: 'UserDashboard',
@@ -791,9 +484,7 @@ export default {
     IconShare,
     IconChevronLeft,
     IconChevronRight,
-    IconCopy,
-    IconQrcode,
-    IconRocket,
+        IconRocket,
     IconWaveSine,
     IconDeviceDesktop,
     IconCrosshair,
@@ -817,9 +508,26 @@ export default {
   setup() {
     const {t, locale} = useI18n();
     const router = useRouter();
-    const clientConfig = reactive(CLIENT_CONFIG);
-    const notices = ref([]);
-    const autoRotateNotices = ref(true);
+    const currencySymbol = ref('$');
+    const hasPlan = ref(true);
+    const userStats = reactive({
+      remainingTraffic: '',
+      remainingDays: '',
+      accountBalance: '0.00',
+      pendingOrders: 0,
+      pendingTickets: 0,
+      userEmail: '',
+      isRemainingDaysPermanent: false
+    });
+    const userBalance = ref('0.00');
+    const userTier = reactive({
+      key: '',
+      level: 0,
+      points: 0,
+      nextTierKey: '',
+      nextPointsRequired: 0,
+      pointsToNextTier: 0
+    });
     const userPlan = ref({
       deviceLimit: null,
       aliveIp: 0,
@@ -834,6 +542,7 @@ export default {
     const remindTrafficSetting = ref(false);
     const autoRenewalEnabled = ref(false);
     const updatingAutoRenewalSetting = ref(false);
+    const allowNewPeriod = ref('');
 
         const trafficMetrics = reactive({
       totalTrafficBytes: 0,
@@ -857,102 +566,9 @@ export default {
     const ipLocationCache = ref(null);
     const ipLocationDebounceTimer = ref(null);
 
-    const qrCodeLoading = ref(true);
-    const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription)
-
-    const languageChangedSignal = inject('languageChangedSignal', ref(0));
-
-    const shadowrocketIcon = shadowrocketIconImg;
-    const surgeIcon = surgeIconImg;
-    const stashIcon = stashIconImg;
-    const quantumultIcon = quantumultIconImg;
-    const singboxIcon = singboxIconImg;
-    const loonIcon = loonIconImg;
-
-    const v2rayNGIcon = v2rayNGIconImg;
-    const clashAndroidIcon = clashAndroidIconImg;
-    const surfboardIcon = surfboardIconImg;
-    const clashMetaAndroidIcon = clashMetaAndroidIconImg;
-    const nekoboxIcon = nekoboxIconImg;
-    const singboxAndroidIcon = singboxAndroidIconImg;
-    const hiddifyAndroidIcon = hiddifyAndroidIconImg;
-
-    const flclashIcon = flclashIconImg;
-    const clashvergeIcon = clashvergeIconImg;
-    const clashWindowsIcon = clashWindowsIconImg;
-    const nekorayIcon = nekorayIconImg;
-    const singboxWindowsIcon = singboxWindowsIconImg;
-    const hiddifyWindowsIcon = hiddifyWindowsIconImg;
-
-    const clashXIcon = clashXIconImg;
-    const clashMetaXIcon = clashMetaXIconImg;
-    const surgeMacIcon = surgeMacIconImg;
-    const stashMacIcon = stashMacIconImg;
-    const quantumultXMacIcon = quantumultXMacIconImg;
-    const singboxMacIcon = singboxMacIconImg;
-    const hiddifyMacIcon = hiddifyMacIconImg;
-
-    const userStats = reactive({
-      remainingTraffic: '',
-      remainingDays: '',
-      accountBalance: '0.00',
-      pendingOrders: 0,
-      pendingTickets: 0,
-      userEmail: '',
-      isRemainingDaysPermanent: false
-    });
-    const userBalance = ref('0.00');
-    const userTier = reactive({
-      key: '',
-      level: 0,
-      points: 0,
-      nextTierKey: '',
-      nextPointsRequired: 0,
-      pointsToNextTier: 0
-    });
-    const currencySymbol = ref('$');
-    const hasPlan = ref(true);
-    const currentNoticeIndex = ref(0);
-    const showNoticeDetails = ref(false);
-    const showImportCard = ref(false);
-    const showQrCode = ref(false);
-    const {showToast} = useToast();
-    const qrCodeUrl = ref('');
-
-    //提前开启下月
-    const allowNewPeriod = ref('')
-
-    const platforms = [
-      {id: 'ios', icon: 'IconBrandApple'},
-      {id: 'android', icon: 'IconBrandAndroid'},
-      {id: 'windows', icon: 'IconBrandWindows'},
-      {id: 'macos', icon: 'IconBrandFinder'}
-    ];
-
-    const activePlatform = ref(detectUserPlatform());
-
-    function detectUserPlatform() {
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        return 'ios';
-      }
-
-      if (/android/i.test(userAgent)) {
-        return 'android';
-      }
-
-      if (/Mac/.test(userAgent)) {
-        return 'macos';
-      }
-
-      return 'windows';
-    }
-
     const loading = reactive({
       userInfo: true,
       userStats: true,
-      notices: true,
       userPlan: true,
       subscribe: true
     });
@@ -968,7 +584,6 @@ export default {
 
       await Promise.allSettled([
         fetchSubscribe(true),
-        fetchNotices(true),
         fetchTrafficTrend()
       ]);
     });
@@ -1163,113 +778,62 @@ export default {
       return !isNaN(days) && days > 0 && days <= 7;
     });
 
-    const hasIOSClients = computed(() => {
-      return clientConfig.showShadowrocket ||
-          clientConfig.showSurge ||
-          clientConfig.showStash ||
-          clientConfig.showQuantumultX ||
-          clientConfig.showHiddifyIOS ||
-          clientConfig.showSingboxIOS ||
-          clientConfig.showLoon;
-    });
-
-    const hasAndroidClients = computed(() => {
-      return clientConfig.showV2rayNG ||
-          clientConfig.showClashAndroid ||
-          clientConfig.showSurfboard ||
-          clientConfig.showClashMetaAndroid ||
-          clientConfig.showNekobox ||
-          clientConfig.showSingboxAndroid ||
-          clientConfig.showHiddifyAndroid;
-    });
-
-    const hasWindowsClients = computed(() => {
-      return clientConfig.showClashWindows ||
-          clientConfig.showFlClashWindows ||
-          clientConfig.showClashVergeWindows ||
-          clientConfig.showNekoray ||
-          clientConfig.showSingboxWindows ||
-          clientConfig.showHiddifyWindows;
-    });
-
-    const hasMacOSClients = computed(() => {
-      return clientConfig.showClashX ||
-          clientConfig.showFlClashMac ||
-          clientConfig.showClashVergeMac ||
-          clientConfig.showClashMetaX ||
-          clientConfig.showSurgeMac ||
-          clientConfig.showStashMac ||
-          clientConfig.showQuantumultXMac ||
-          clientConfig.showSingboxMac ||
-          clientConfig.showHiddifyMac;
-    });
-
     const isExpired = computed(() => {
-      if (userStats.isRemainingDaysPermanent) return false;
-
-      const days = parseInt(userStats.remainingDays, 10);
-      return !isNaN(days) && days <= 0;
-    });
-
-    const isPlanExpired = computed(() => {
       if (userPlan.value.isExpireDatePermanent) return false;
+
       const expiredAt = Number(userPlan.value.expiredAt || 0);
       if (!expiredAt) return false;
+
       return expiredAt * 1000 <= Date.now();
     });
 
+    const isPlanExpired = computed(() => hasPlan.value && isExpired.value);
+
     const subscriptionStatus = computed(() => {
       if (isPlanExpired.value) return 'expired';
-      if (userPlan.value.isExpireDatePermanent) return 'active';
-
-      const expiredAt = Number(userPlan.value.expiredAt || 0);
-      if (!expiredAt) return 'active';
-
-      const diffMs = expiredAt * 1000 - Date.now();
-      return diffMs <= 7 * 24 * 60 * 60 * 1000 ? 'expiring' : 'active';
+      if (isExpiringSoon.value) return 'expiring';
+      return 'active';
     });
 
-    const subscriptionStatusLabel = computed(() => {
-      const currentLocale = locale.value;
-      void currentLocale;
-      if (subscriptionStatus.value === 'expired') return t('dashboard.subscriptionStatus.expired');
-      if (subscriptionStatus.value === 'expiring') return t('dashboard.subscriptionStatus.expiring');
-      return t('dashboard.subscriptionStatus.active');
+    const subscriptionStatusLabel = computed(() => t(`dashboard.subscriptionStatus.${subscriptionStatus.value}`));
+
+    const planExpireMetaText = computed(() => {
+      if (userPlan.value.isExpireDatePermanent) {
+        return t('dashboard.permanent');
+      }
+      if (isPlanExpired.value) {
+        return t('dashboard.expiredOnDate', {date: userPlan.value.expireDate || '-'});
+      }
+      return userPlan.value.expireDate || '-';
     });
 
     const primaryPlanActionLabel = computed(() => {
-      const currentLocale = locale.value;
-      void currentLocale;
-      if (subscriptionStatus.value === 'active') return t('dashboard.planAction.manageSubscription');
-      if (subscriptionStatus.value === 'expired') return t('dashboard.planAction.restoreNow');
-      return t('dashboard.planAction.renewNow');
-    });
-
-    const planExpireMetaText = computed(() => {
-      const currentLocale = locale.value;
-      void currentLocale;
-      if (subscriptionStatus.value === 'expired') {
-        return t('dashboard.expiredOnDate', { date: userPlan.value.expireDate || '-' });
-      }
-      return `${t('dashboard.expiryDate')} · ${userPlan.value.expireDate || t('dashboard.permanent')}`;
+      if (isPlanExpired.value) return t('dashboard.planAction.restoreNow');
+      if (isExpiringSoon.value) return t('dashboard.planAction.renewNow');
+      return t('dashboard.planAction.manageSubscription');
     });
 
     const secondaryPlanActionLabel = computed(() => {
-      const currentLocale = locale.value;
-      void currentLocale;
-      if (subscriptionStatus.value === 'expired') return t('dashboard.planAction.reselectPlan');
-      if (subscriptionStatus.value === 'expiring') return t('dashboard.planAction.manageSubscription');
+      if (isPlanExpired.value) return t('dashboard.planAction.reselectPlan');
       return t('dashboard.planAction.renew');
     });
 
-    const hasTierInfo = computed(() => Boolean(userTier.key || userTier.level || userTier.nextTierKey));
+    const hasTierInfo = computed(() => {
+      return !!userTier.key || Number(userTier.level || 0) > 0;
+    });
 
-    const normalizeTierName = (name) => {
-      if (!name) return '-';
-      return `${name}`
-        .split(/[_-]/g)
-        .filter(Boolean)
-        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    const normalizeTierName = (key) => {
+      const raw = `${key || ''}`.trim();
+      if (!raw) return '-';
+
+      const readable = raw
+        .replace(/[_-]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      return readable
+        .split(' ')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
     };
 
@@ -1321,13 +885,12 @@ export default {
     };
 
     const primaryActionClass = computed(() => {
-      if (subscriptionStatus.value === 'active') return 'theme';
-      return 'primary';
+      return 'btn-primary';
     });
 
     const secondaryActionClass = computed(() => {
-      if (secondaryPlanActionLabel.value === t('dashboard.planAction.manageSubscription')) return 'theme';
-      return 'subtle';
+      if (secondaryPlanActionLabel.value === t('dashboard.planAction.manageSubscription')) return 'btn-primary';
+      return 'btn-secondary';
     });
 
     const handlePrimaryPlanAction = () => {
@@ -1554,45 +1117,6 @@ export default {
       }
     };
 
-    const fetchNotices = async (force = false) => {
-      if (!force && loading.notices === false && notices.value.data && notices.value.data.length > 0) return;
-
-      loading.notices = true;
-      try {
-        const response = await getNotices();
-        if (response && response.data) {
-          notices.value = response;
-
-          checkForPopupNotices();
-        }
-      } catch (error) {
-      } finally {
-        loading.notices = false;
-      }
-    };
-
-    const checkForPopupNotices = () => {
-      if (!notices.value || !notices.value.data || notices.value.data.length === 0) return;
-
-      const popupNoticeIndex = notices.value.data.findIndex(notice =>
-          notice.tags && Array.isArray(notice.tags) && notice.tags.includes('\u5f39\u7a97')
-      );
-
-      if (popupNoticeIndex !== -1) {
-        const noticeId = notices.value.data[popupNoticeIndex].id;
-        const popupShownKey = `popup_notice_shown_${noticeId}`;
-
-        if (!sessionStorage.getItem(popupShownKey)) {
-          currentNoticeIndex.value = popupNoticeIndex;
-          showNoticeDetails.value = true;
-          sessionStorage.setItem(popupShownKey, 'true');
-          nextTick(() => {
-            updateModalHeight();
-          });
-        }
-      }
-    };
-
     const fetchUserStats = async () => {
       if (loading.userStats === false && userStats.remainingTraffic !== '0 GB') return;
 
@@ -1719,54 +1243,6 @@ export default {
       router.push('/billing?tab=orders');
     };
 
-    const prevNotice = () => {
-      if (!notices.value?.data?.length) return;
-      if (currentNoticeIndex.value > 0) {
-        currentNoticeIndex.value--;
-      } else {
-        currentNoticeIndex.value = notices.value.data.length - 1;
-      }
-    };
-
-    const nextNotice = () => {
-      if (!notices.value?.data?.length) return;
-      if (currentNoticeIndex.value < notices.value.data.length - 1) {
-        currentNoticeIndex.value++;
-      } else {
-        currentNoticeIndex.value = 0;
-      }
-    };
-
-    const goToNotice = (index) => {
-      if (!notices.value?.data?.length) return;
-      currentNoticeIndex.value = Math.max(0, Math.min(index, notices.value.data.length - 1));
-    };
-
-    const noticeBackgroundStyle = (notice) => {
-      if (!notice?.img_url) return {};
-      return {
-        backgroundImage: `url(${notice.img_url})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      };
-    };
-
-    const showNoticeModal = () => {
-      showNoticeDetails.value = true;
-      nextTick(() => {
-        updateModalHeight();
-      });
-    };
-
-    const closeNoticeModal = () => {
-      showNoticeDetails.value = false;
-    };
-
-    const formatDate = (dateString) => {
-      if (!dateString) return '';
-      const date = new Date(dateString * 1000);
-      return date.toLocaleDateString();
-    };
 
     const formatResetDateTime = (date) => {
       if (!(date instanceof Date) || Number.isNaN(date.getTime())) return null;
@@ -1853,186 +1329,6 @@ export default {
         candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, effectiveResetDay, resetHour, resetMinute);
       }
       return formatResetDateTime(candidate);
-    };
-
-    const updateQRCodeUrl = () => {
-      if (userPlan.value.subscribeUrl) {
-        qrCodeLoading.value = true;
-        try {
-          QRCode.toDataURL(userPlan.value.subscribeUrl, {
-            width: 200,
-            margin: 2,
-            color: {
-              dark: '#000000',
-              light: '#ffffff'
-            }
-          })
-              .then(url => {
-                qrCodeUrl.value = url;
-                qrCodeLoading.value = false;
-              })
-              .catch(err => {
-                console.error('二维码生成失败:', err);
-                qrCodeLoading.value = false;
-                showToast(t('dashboard.qrCodeGenerationFailed'), 'error', 3000);
-              });
-        } catch (error) {
-          console.error('生成二维码失败:', error);
-          qrCodeLoading.value = false;
-          showToast(t('dashboard.qrCodeGenerationFailed'), 'error', 3000);
-        }
-      }
-    };
-
-    const qrCodeLoaded = () => {
-      qrCodeLoading.value = false;
-    };
-
-    const copySubscription = () => {
-      if (userPlan.value.subscribeUrl) {
-        const copyWithAPI = () => {
-          navigator.clipboard.writeText(userPlan.value.subscribeUrl)
-              .then(() => {
-                showToast(t('dashboard.subscriptionCopied'), 'success', 3000);
-              })
-              .catch(() => {
-                showToast(t('dashboard.copyFailed'), 'error', 3000);
-              });
-        };
-
-        const copyWithFallback = () => {
-          try {
-            const textarea = document.createElement('textarea');
-            textarea.value = userPlan.value.subscribeUrl;
-            textarea.style.position = 'fixed';
-            textarea.style.left = '0';
-            textarea.style.top = '0';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.focus();
-            textarea.select();
-
-            const successful = document.execCommand('copy');
-            document.body.removeChild(textarea);
-
-            if (successful) {
-              showToast(t('dashboard.subscriptionCopied'), 'success', 3000);
-            } else {
-              showToast(t('dashboard.copyFailed'), 'error', 3000);
-            }
-          } catch (err) {
-            console.error('使用后备方法复制失败:', err);
-            showToast(t('dashboard.copyFailed'), 'error', 3000);
-          }
-        };
-
-        if (navigator.clipboard) {
-          copyWithAPI();
-        } else {
-          copyWithFallback();
-        }
-      }
-    };
-
-    const importToClient = (clientType) => {
-      if (!userPlan.value.subscribeUrl) {
-        showToast(t('dashboard.noSubscription'), 'error', 3000);
-        return;
-      }
-
-      const subscribeUrl = userPlan.value.subscribeUrl;
-      const siteName = SITE_CONFIG.siteName || t('dashboard.defaultSubscriptionName');
-
-      let url = '';
-      let shouldUseCurrentWindow = true;
-
-      try {
-        switch (clientType) {
-          case 'shadowrocket':
-            url = `shadowrocket://add/sub://${window.btoa(subscribeUrl).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}?remark=${encodeURIComponent(siteName)}`;
-            break;
-          case 'surge':
-          case 'surge-mac':
-            url = `surge:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
-            break;
-          case 'stash':
-          case 'stash-mac':
-            url = `stash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
-            break;
-          case 'quantumultx':
-          case 'quantumultx-mac':
-            url = `quantumult-x:///update-configuration?remote-resource=${encodeURI(JSON.stringify({server_remote: [`${subscribeUrl}, tag=${encodeURIComponent(siteName)}`,],}))}`;
-            break;
-          case 'loon':
-            url = `loon://import?nodelist=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
-            break;
-          case 'v2rayng':
-            url = `v2rayng://install-sub?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
-            break;
-          case 'clash':
-          case 'clash-android':
-          case 'clash-meta-android':
-          case 'flclash':
-          case 'clashverge':
-          case 'nekobox':
-          case 'nekoray':
-          case 'clashx':
-          case 'clashx-meta':
-            url = `clash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
-            break;
-          case 'surfboard':
-            url = `surfboard:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
-            break;
-          case 'singbox-ios':
-          case 'singbox-android':
-          case 'singbox-windows':
-          case 'singbox-macos':
-            url = `sing-box://import-remote-profile?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
-            break;
-          case 'hiddify-android':
-          case 'hiddify-windows':
-          case 'hiddify-macos':
-          case 'hiddify-ios':
-            url = `hiddify://import/${subscribeUrl}#${encodeURIComponent(siteName)}`;
-            break;
-          default:
-            navigator.clipboard.writeText(subscribeUrl)
-              .then(() => {
-                showToast(t('dashboard.subscriptionCopied'), 'success', 3000);
-              })
-              .catch(() => {
-                showToast(t('dashboard.copyFailed'), 'error', 3000);
-              });
-            return;
-        }
-
-        if (url) {
-          if (shouldUseCurrentWindow) {
-            window.location.href = url;
-          } else {
-            window.open(url, '_blank');
-          }
-        }
-      } catch (error) {
-        console.error('导入客户端失败:', error);
-      }
-    };
-
-    const toggleImportCard = () => {
-      showImportCard.value = !showImportCard.value;
-      if (showImportCard.value) {
-        nextTick(() => {
-          setTimeout(() => {
-            const importCard = document.querySelector('.import-card');
-            if (importCard) {
-              importCard.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-              });
-            }
-          }, 100);
-        });
-      }
     };
 
     const fetchUserConfig = async () => {
@@ -2335,83 +1631,17 @@ export default {
 
       fetchSubscribe();
 
-      fetchNotices();
 
       fetchUserStats();
       fetchTrafficTrend();
       scheduleIpLocationRefresh();
 
-      updateQRCodeUrl();
     });
 
     watch(() => userPlan.value.subscribeUrl, () => {
-      updateQRCodeUrl();
     });
-
-    const processedNoticeContent = computed(() => {
-      if (!notices.value?.data?.[currentNoticeIndex.value]?.content) {
-        return '';
-      }
-
-      const content = notices.value.data[currentNoticeIndex.value].content;
-
-      const hasHtml = /<[a-z][\s\S]*>/i.test(content);
-
-      if (hasHtml) {
-        let processedContent = content.replace(/\n/g, '<br>');
-
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = processedContent;
-
-        const buttons = tempDiv.querySelectorAll('button, a');
-        buttons.forEach(button => {
-          if (button.className && button.className.includes('eztheme-btn')) {
-            button.classList.remove('markdown-link');
-            button.style.textDecoration = 'none';
-            button.style.borderBottom = 'none';
-            button.setAttribute('data-no-markdown-style', 'true');
-          }
-
-          if (button.tagName.toLowerCase() === 'a') {
-            const href = button.getAttribute('href');
-            if (href && (href.includes('#eztheme-btn') || href.includes('?eztheme-btn') || href.includes('class=eztheme-btn'))) {
-              button.href = href
-                  .replace('#eztheme-btn', '')
-                  .replace('?eztheme-btn', '')
-                  .replace('class=eztheme-btn', '');
-              button.classList.add('eztheme-btn');
-              button.style.textDecoration = 'none';
-              button.style.borderBottom = 'none';
-              button.setAttribute('data-no-markdown-style', 'true');
-            }
-          }
-        });
-
-        return tempDiv.innerHTML;
-      } else {
-        return md.render(content);
-      }
-    });
-
-    const windowWidth = ref(window.innerWidth);
-    const windowHeight = ref(window.innerHeight);
-    const noticeModalStyle = ref({});
-
-    const updateModalHeight = () => {
-      const isMobile = windowWidth.value <= 768;
-      const availableHeight = windowHeight.value * (isMobile ? 0.75 : 0.8);
-
-      noticeModalStyle.value = {
-        maxHeight: `${availableHeight}px`
-      };
-    };
 
     const handleResize = () => {
-      windowWidth.value = window.innerWidth;
-      windowHeight.value = window.innerHeight;
-      if (showNoticeDetails.value) {
-        updateModalHeight();
-      }
       if (trafficTrendChart) {
         trafficTrendChart.resize();
       }
@@ -2455,27 +1685,15 @@ export default {
     const timers = {};
     const listeners = {};
 
-    const startAutoRotateNotices = () => {
-      if (!autoRotateNotices.value) return;
-
-      createTimer(timers, 'noticeRotation', () => {
-        if (notices.value && notices.value.data && notices.value.data.length > 1) {
-          nextNotice();
-        }
-      }, 8000, true);
-    };
-
     onActivated(() => {
       console.log('Dashboard组件被激活');
       if (needRefreshData.value) {
         fetchUserInfo();
         fetchUserStats();
-        fetchNotices();
         scheduleIpLocationRefresh();
         needRefreshData.value = false;
       }
 
-      startAutoRotateNotices();
     });
 
     onDeactivated(() => {
@@ -2540,37 +1758,13 @@ export default {
       userBalance,
       currencySymbol,
       userPlan,
-      clientConfig,
-      notices,
       loading,
-      languageChangedSignal,
       goToShop,
       hasPendingItems,
       goToOrders,
       router,
-      currentNoticeIndex,
-      prevNotice,
-      nextNotice,
-      goToNotice,
-      noticeBackgroundStyle,
-      showImportCard,
-      showQrCode,
-      importToClient,
-      formatDate,
       formatTraffic,
       formatPackageRemaining,
-      toggleImportCard,
-      copySubscription,
-      platforms,
-      activePlatform,
-      qrCodeUrl,
-      qrCodeLoading,
-      qrCodeLoaded,
-      showNoticeModal,
-      closeNoticeModal,
-      showNoticeDetails,
-      checkForPopupNotices,
-      noticeModalStyle,
       openResetTrafficModal,
       handlePopupClose,
       handlePopupConfirm,
@@ -2581,36 +1775,6 @@ export default {
       resetConfirmCooldown,
       showResetTrafficButton,
       isCreatingResetOrder,
-      hasIOSClients,
-      hasAndroidClients,
-      hasWindowsClients,
-      hasMacOSClients,
-      shadowrocketIcon,
-      surgeIcon,
-      stashIcon,
-      quantumultIcon,
-      singboxIcon,
-      loonIcon,
-      v2rayNGIcon,
-      clashAndroidIcon,
-      surfboardIcon,
-      clashMetaAndroidIcon,
-      nekoboxIcon,
-      singboxAndroidIcon,
-      hiddifyAndroidIcon,
-      flclashIcon,
-      clashvergeIcon,
-      clashWindowsIcon,
-      nekorayIcon,
-      singboxWindowsIcon,
-      hiddifyWindowsIcon,
-      clashXIcon,
-      clashMetaXIcon,
-      surgeMacIcon,
-      stashMacIcon,
-      quantumultXMacIcon,
-      singboxMacIcon,
-      hiddifyMacIcon,
       isExpiringSoon,
       isExpired,
       isPlanExpired,
@@ -2636,7 +1800,6 @@ export default {
       isLowTraffic,
       isTrafficDepleted,
       hasPlan,
-      processedNoticeContent,
       showRenewPlanButton,
       renewPlan,
       isXiaoPanel,
@@ -2665,7 +1828,6 @@ export default {
       triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
-      showImportSubscription,
       showTrafficPackageModal,
       trafficPackageLoading,
       trafficPackagePlans,
@@ -2696,6 +1858,28 @@ export default {
   --theme-text-primary: #111827;
   --theme-text-secondary: #6b7280;
   --theme-text-subtle: #9ca3af;
+  --theme-text-emphasis: #374151;
+  --theme-surface-muted: #f3f4f6;
+  --theme-surface-soft: #f8fafc;
+  --theme-border-soft: #e5e7eb;
+  --theme-white: #ffffff;
+  --quota-label-color: #4b5563;
+  --quota-value-color: #1f2937;
+  --quota-progress-start: #60a5fa;
+  --quota-progress-end: #3b82f6;
+  --quota-muted-fill: #cbd5e1;
+  --quota-total-bg-end: #f8fbff;
+  --quota-expired-border: #d1d5db;
+  --plan-meta-text: #64748b;
+  --plan-expired-strip-text: #b91c1c;
+  --plan-expired-strip-bg: rgba(248, 113, 113, 0.16);
+  --plan-expired-strip-border: rgba(239, 68, 68, 0.32);
+  --status-active-text: #15803d;
+  --status-active-bg: rgba(34, 197, 94, 0.15);
+  --status-expiring-text: #b45309;
+  --status-expiring-bg: rgba(245, 158, 11, 0.16);
+  --status-expired-text: #dc2626;
+  --status-expired-bg: rgba(220, 38, 38, 0.1);
 
   .dashboard-inner {
     .overview-grid {
@@ -2708,23 +1892,19 @@ export default {
       margin-bottom: 0;
     }
 
-    > .notice-card,
     > .subscription-card,
     > .stats-grid,
     > .ip-location-summary-card,
-    > .usage-trend-card,
-    > .import-card {
+    > .usage-trend-card {
       grid-column: 1 / -1;
     }
 
     @media (max-width: 992px) {
       > .pending-order-banner,
-      > .notice-card,
-      > .subscription-card,
+        > .subscription-card,
       > .stats-grid,
       > .ip-location-summary-card,
-      > .usage-trend-card,
-      > .import-card {
+      > .usage-trend-card {
         grid-column: 1 / -1;
       }
     }
@@ -2882,7 +2062,7 @@ export default {
         margin: 0;
         font-size: 18px;
         font-weight: 700;
-        color: #111827;
+        color: var(--theme-text-primary);
       }
 
       .traffic-package-status {
@@ -2890,8 +2070,8 @@ export default {
         font-weight: 600;
         border-radius: 999px;
         padding: 6px 10px;
-        background: #f3f4f6;
-        color: #6b7280;
+        background: var(--theme-surface-muted);
+        color: var(--theme-text-secondary);
 
         &.active {
           background: rgba(var(--theme-color-rgb), 0.14);
@@ -2899,15 +2079,6 @@ export default {
         }
       }
     }
-
-    .expired-blur-target {
-      filter: blur(2.5px) saturate(0.65);
-      opacity: 0.65;
-      pointer-events: none;
-      user-select: none;
-      transition: filter 0.2s ease, opacity 0.2s ease;
-    }
-
     .stats-card {
       position: relative;
       background-color: var(--card-bg-color);
@@ -3026,49 +2197,44 @@ export default {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: var(--theme-white);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
             box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.2);
             cursor: pointer;
           }
         }
         &.quota-card-muted {
-          background: #f3f4f6;
-          border-color: #e5e7eb;
-
-          .package-add-btn {
-            color: #fff;
-            background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-          }
+          background: var(--theme-surface-muted);
+          border-color: var(--theme-border-soft);
         }
 
         &.subscription-card-muted {
           .section-progress-track {
-            background: #e5e7eb;
+            background: var(--theme-border-soft);
           }
 
           .section-progress-fill {
-            background: #cbd5e1;
+            background: var(--quota-muted-fill);
           }
         }
 
         &.total-main-card {
-          background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+          background: linear-gradient(180deg, var(--theme-white) 0%, var(--quota-total-bg-end) 100%);
           border-color: var(--border-color);
           box-shadow: var(--shadow-card-md);
 
           .usage-card-title {
-            color: #4b5563;
+            color: var(--quota-label-color);
             font-weight: 650;
           }
         }
 
         &.expired-main-card {
-          background: #f3f4f6;
-          border-color: #d1d5db;
+          background: var(--theme-surface-muted);
+          border-color: var(--quota-expired-border);
 
           .usage-card-title {
-            color: #6b7280;
+            color: var(--theme-text-secondary);
           }
         }
 
@@ -3085,15 +2251,15 @@ export default {
             padding: 9px 12px;
             font-size: 13px;
             font-weight: 600;
-            color: #b91c1c;
-            background: rgba(248, 113, 113, 0.16);
-            border: 1px solid rgba(239, 68, 68, 0.32);
+            color: var(--plan-expired-strip-text);
+            background: var(--plan-expired-strip-bg);
+            border: 1px solid var(--plan-expired-strip-border);
           }
 
           .plan-summary-section {
             border: none;
             border-radius: 12px;
-            background: #f8fafc;
+            background: var(--theme-surface-soft);
             padding: 10px 12px;
             overflow: visible;
           }
@@ -3141,15 +2307,10 @@ export default {
             gap: 8px;
             flex-wrap: wrap;
             font-size: 13px;
-            color: #64748b;
-          }
-
-          .plan-summary-section-renew {
-            background: #f8fafc;
+            color: var(--plan-meta-text);
           }
 
           .plan-summary-section-actions {
-            background: #f8fafc;
             border: none;
             padding-top: 12px;
             padding-bottom: 12px;
@@ -3165,7 +2326,7 @@ export default {
 
           .plan-summary-label {
             font-size: 12px;
-            color: #6b7280;
+            color: var(--theme-text-secondary);
 
             &.with-tooltip {
               display: inline-flex;
@@ -3184,7 +2345,7 @@ export default {
 
           .plan-summary-value {
             font-size: 14px;
-            color: #111827;
+            color: var(--theme-text-primary);
             font-weight: 600;
             text-align: right;
             word-break: break-word;
@@ -3199,25 +2360,25 @@ export default {
             font-weight: 600;
 
             &.is-active {
-              color: #15803d;
-              background: rgba(34, 197, 94, 0.15);
+              color: var(--status-active-text);
+              background: var(--status-active-bg);
             }
 
             &.is-expiring {
-              color: #b45309;
-              background: rgba(245, 158, 11, 0.16);
+              color: var(--status-expiring-text);
+              background: var(--status-expiring-bg);
             }
 
             &.is-expired {
-              color: #dc2626;
-              background: rgba(220, 38, 38, 0.1);
+              color: var(--status-expired-text);
+              background: var(--status-expired-bg);
             }
           }
 
           .plan-summary-desc {
             margin: 4px 0 0;
             font-size: 12px;
-            color: #6b7280;
+            color: var(--theme-text-secondary);
           }
 
           .auto-renewal-row {
@@ -3233,47 +2394,10 @@ export default {
             .plan-action-btn {
               flex: 1;
               border-radius: 12px;
-              border: 1px solid transparent;
               padding: 10px 14px;
               font-size: 14px;
               font-weight: 600;
               letter-spacing: 0.2px;
-              cursor: pointer;
-              transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-
-              &:hover {
-                transform: translateY(-1px);
-              }
-
-              &:active {
-                transform: translateY(0);
-              }
-
-              &.primary {
-                color: #fff;
-                background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
-                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
-              }
-
-              &.premium {
-                color: #fff;
-                background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
-              }
-
-              &.theme {
-                color: #fff;
-                border-color: transparent;
-                background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 1));
-                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.28);
-              }
-
-              &.subtle {
-                color: var(--neutral-strong);
-                border-color: var(--border-color);
-                background: var(--surface-subtle);
-                box-shadow: none;
-              }
 
               @media (max-width: 576px) {
                 padding: 9px 10px;
@@ -3322,7 +2446,7 @@ export default {
                 width: 18px;
                 left: 3px;
                 bottom: 3px;
-                background-color: #fff;
+                background-color: var(--theme-white);
                 transition: 0.3s;
               }
 
@@ -3352,7 +2476,7 @@ export default {
           font-size: 36px;
           line-height: 1;
           font-weight: 700;
-          color: #111827;
+          color: var(--theme-text-primary);
 
           &.compact {
             font-size: 32px;
@@ -3361,12 +2485,11 @@ export default {
 
         .usage-percent-label {
           font-size: 13px;
-          color: #4b5563;
+          color: var(--quota-label-color);
           font-weight: 500;
         }
 
-      &.traffic-board-subscription,
-      &.traffic-board-package {
+      &.quota-traffic-card {
         .usage-percent {
           font-size: 30px;
 
@@ -3396,7 +2519,7 @@ export default {
           gap: 4px;
           padding: 8px;
           border-radius: 10px;
-          background: #f8fafc;
+          background: var(--theme-surface-soft);
         }
 
         .usage-kpi-label {
@@ -3411,7 +2534,7 @@ export default {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           font-size: 15px;
-          color: #1f2937;
+          color: var(--quota-value-color);
           font-weight: 600;
           line-height: 1.2;
         }
@@ -3428,20 +2551,20 @@ export default {
         .usage-reset-hint {
           width: 100%;
           font-size: 12px;
-          color: #6b7280;
+          color: var(--theme-text-secondary);
         }
 
         .section-progress-track {
           width: 100%;
           height: 14px;
-          background: #e5e7eb;
+          background: var(--theme-border-soft);
           border-radius: 999px;
           overflow: hidden;
         }
 
         .section-progress-fill {
           height: 100%;
-          background: linear-gradient(90deg, #60a5fa, #3b82f6);
+          background: linear-gradient(90deg, var(--quota-progress-start), var(--quota-progress-end));
           border-radius: inherit;
           transition: width 0.35s ease;
         }
@@ -3842,9 +2965,6 @@ export default {
     }
 
     .ip-refresh-btn {
-      border: 1px solid rgba(165, 194, 246, 0.35);
-      background: rgba(255, 255, 255, 0.08);
-      color: #e7f1ff;
       border-radius: 999px;
       padding: 4px 10px;
       font-size: 12px;
@@ -3852,17 +2972,9 @@ export default {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      &:hover:not(:disabled) {
-        background: rgba(255, 255, 255, 0.14);
-        border-color: rgba(188, 211, 248, 0.48);
-      }
 
       &:disabled {
         opacity: 0.7;
-        cursor: not-allowed;
       }
 
       .spinning {
@@ -3903,7 +3015,7 @@ export default {
       padding: 0 8px;
       font-size: 11px;
       font-weight: 800;
-      color: #fff;
+      color: var(--theme-white);
       letter-spacing: 0.5px;
       background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
       box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
@@ -3977,7 +3089,7 @@ export default {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: #ffffff;
+        background: var(--theme-white);
         box-shadow: 0 0 0 1px rgba(190, 209, 247, 0.25);
       }
 
@@ -4008,57 +3120,6 @@ export default {
       }
     }
 
-    .info-tooltip {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      color: rgba(148, 163, 184, 0.95);
-      cursor: help;
-
-      .info-tooltip-content {
-        position: absolute;
-        right: 0;
-        bottom: calc(100% + 8px);
-        width: 200px;
-        padding: 8px 10px;
-        border-radius: 6px;
-        background: rgba(15, 23, 42, 0.96);
-        color: #e2e8f0;
-        font-size: 12px;
-        line-height: 1.4;
-        font-weight: 500;
-        box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(4px);
-        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
-        transition-delay: 0s;
-        pointer-events: none;
-        z-index: 260;
-      }
-
-      .info-tooltip-content::after {
-        content: '';
-        position: absolute;
-        right: 12px;
-        top: 100%;
-        border-width: 5px;
-        border-style: solid;
-        border-color: rgba(15, 23, 42, 0.96) transparent transparent transparent;
-      }
-
-      &:hover .info-tooltip-content,
-      &:focus-visible .info-tooltip-content {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        transition-delay: 0.2s;
-      }
-    }
   }
 
   .info-tooltip {
@@ -4074,9 +3135,9 @@ export default {
 
     .info-tooltip-content {
       position: absolute;
-      right: 0;
+      left: 50%;
       bottom: calc(100% + 8px);
-      width: 200px;
+      width: min(220px, calc(100vw - 32px));
       padding: 8px 10px;
       border-radius: 6px;
       background: rgba(15, 23, 42, 0.96);
@@ -4087,7 +3148,7 @@ export default {
       box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
       opacity: 0;
       visibility: hidden;
-      transform: translateY(4px);
+      transform: translate(-50%, 4px);
       transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
       transition-delay: 0s;
       pointer-events: none;
@@ -4097,8 +3158,9 @@ export default {
     .info-tooltip-content::after {
       content: '';
       position: absolute;
-      right: 12px;
+      left: 50%;
       top: 100%;
+      transform: translateX(-50%);
       border-width: 5px;
       border-style: solid;
       border-color: rgba(15, 23, 42, 0.96) transparent transparent transparent;
@@ -4108,7 +3170,7 @@ export default {
     &:focus-visible .info-tooltip-content {
       opacity: 1;
       visibility: visible;
-      transform: translateY(0);
+      transform: translate(-50%, 0);
       transition-delay: 0.2s;
     }
   }
@@ -4132,182 +3194,14 @@ export default {
       height: 280px;
     }
   }
-
-  .notice-card {
-    margin-bottom: 12px;
-    padding: 12px;
-    border-color: rgba(148, 163, 184, 0.14);
-    background: color-mix(in srgb, var(--card-bg-color) 98%, rgba(var(--theme-color-rgb), 0.02));
-    box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
-
-    &:hover {
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-      border-color: rgba(148, 163, 184, 0.2);
-      transform: none;
-    }
-
-    .card-body {
-      padding: 0;
-    }
-
-    .notice-slider {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .notice-item {
-      position: relative;
-      padding: 12px 14px;
-      border-radius: 8px;
-      background-color: rgba(var(--theme-color-rgb), 0.045);
-      overflow: hidden;
-      min-height: 84px;
-
-      .notice-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.64), rgba(15, 23, 42, 0.2));
-        pointer-events: none;
-      }
-
-      .notice-content {
-        position: relative;
-        z-index: 1;
-      }
-
-      .notice-title {
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 6px;
-        color: #fff;
-        line-height: 1.35;
-      }
-
-      .notice-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 8px;
-
-        .notice-date {
-          font-size: 11px;
-          color: rgba(255, 255, 255, 0.85);
-        }
-
-        .notice-nav {
-          display: flex;
-          gap: 8px;
-
-          .btn-notice {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3px;
-            padding: 5px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            background-color: rgba(var(--theme-color-rgb), 0.14);
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-
-            &:hover:not(:disabled) {
-              background-color: rgba(var(--theme-color-rgb), 0.35);
-              transform: translateY(-1px);
-            }
-
-            &:disabled {
-              opacity: 0.5;
-              cursor: not-allowed;
-            }
-          }
-        }
-
-        @media (max-width: 576px) {
-          flex-direction: column;
-          align-items: flex-start;
-
-          .notice-nav {
-            width: 100%;
-
-            .btn-notice {
-              flex: 1;
-              justify-content: center;
-              padding: 6px;
-            }
-          }
-        }
-
-        @media (max-width: 470px) {
-          .notice-nav {
-            display: grid;
-            grid-template-rows: auto auto;
-            gap: 8px;
-            width: 100%;
-
-            .btn-notice:nth-child(2) {
-              grid-row: 1;
-              grid-column: 1 / span 2;
-            }
-
-            .btn-notice:nth-child(1),
-            .btn-notice:nth-child(3) {
-              grid-row: 2;
-            }
-
-            .btn-notice:nth-child(1) {
-              grid-column: 1;
-            }
-
-            .btn-notice:nth-child(3) {
-              grid-column: 2;
-            }
-
-            .btn-notice {
-              margin: 0;
-              width: 100%;
-            }
-          }
-        }
-      }
-    }
-
-    .notice-dots {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 2px;
-
-      .notice-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 999px;
-        border: none;
-        padding: 0;
-        background: rgba(var(--theme-color-rgb), 0.25);
-        cursor: pointer;
-        transition: all 0.2s ease;
-
-        &.active {
-          width: 14px;
-          background: rgba(var(--theme-color-rgb), 0.95);
-        }
-      }
-    }
-  }
-
-
   .pending-order-banner {
     margin-bottom: 8px;
     min-height: 44px;
     max-height: 48px;
     padding: 6px 12px;
     border-radius: 10px;
-    border: 1px solid #FFE58F;
-    background: #FFFBE6;
+    border: 1px solid rgba(var(--warning-color-rgb), 0.4);
+    background: var(--warning-background);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -4316,8 +3210,8 @@ export default {
     transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 
     &:hover {
-      background: #FFF7D6;
-      border-color: #FFD666;
+      background: color-mix(in srgb, var(--warning-background) 88%, var(--theme-white) 12%);
+      border-color: rgba(var(--warning-color-rgb), 0.55);
       transform: none;
     }
 
@@ -4326,7 +3220,7 @@ export default {
       align-items: center;
       gap: 8px;
       min-width: 0;
-      color: #8C6D1F;
+      color: var(--warning-color);
       font-size: 13px;
       line-height: 1.35;
       font-weight: 500;
@@ -4334,24 +3228,13 @@ export default {
 
     .banner-icon {
       flex-shrink: 0;
-      color: #8C6D1F;
-    }
-
-    .banner-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      color: var(--warning-color);
     }
 
     .banner-action {
-      border: none;
       border-radius: 8px;
       height: 30px;
       padding: 0 12px;
-      color: #fff;
-      background: var(--saas-brand);
-      box-shadow: none;
-      cursor: pointer;
       font-size: 13px;
       font-weight: 600;
       flex-shrink: 0;
@@ -4370,9 +3253,9 @@ export default {
     border: none;
   }
 
-  .status-badge.success, .status-tag.success { background: #ecfdf3; color: #166534; }
-  .status-badge.warning, .status-tag.warning { background: #fff7e6; color: #8c6d1f; }
-  .status-badge.error, .status-tag.error { background: #fef2f2; color: #991b1b; }
+  .status-badge.success, .status-tag.success { background: var(--success-background); color: var(--success-color); }
+  .status-badge.warning, .status-tag.warning { background: var(--warning-background); color: var(--warning-color); }
+  .status-badge.error, .status-tag.error { background: var(--error-background); color: var(--error-color); }
 }
 
 
@@ -4407,121 +3290,6 @@ export default {
 }
 
 
-.btn-primary, .btn-outline, .btn-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  .btn-icon {
-    margin-right: 4px;
-  }
-}
-
-.btn-primary {
-  background-color: #355cc2;
-  color: #fff;
-  border: none;
-
-  &:hover {
-    background-color: #2f4fa8;
-    transform: none;
-  }
-}
-
-.btn-outline {
-  background-color: #f3f4f6;
-  color: #374151;
-  border: none;
-
-  &:hover {
-    background-color: #e5e7eb;
-    color: #111827;
-    transform: none;
-  }
-
-
-  &.btn-highlight-btnbgcolor {
-    position: relative;
-    overflow: hidden;
-    background-color: var(--theme-color);
-    color: white;
-    border-color: var(--theme-color);
-
-    &:hover {
-      background-color: var(--primary-color-hover, var(--theme-color));
-      color: white;
-      transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.25);
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 50%;
-      height: 100%;
-      background: linear-gradient(
-              to right,
-              rgba(255, 255, 255, 0) 0%,
-              rgba(255, 255, 255, 0.2) 50%,
-              rgba(255, 255, 255, 0) 100%
-      );
-      animation: card-shimmer 3s infinite;
-      transform: skewX(-25deg);
-    }
-  }
-}
-
-@keyframes card-shimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 200%;
-  }
-}
-
-.btn-action {
-  background-color: transparent;
-  color: var(--theme-text-secondary);
-  border: none;
-  padding: 5px 10px;
-  font-size: 13px;
-
-  &:hover {
-    color: var(--theme-color);
-    background-color: rgba(var(--theme-color-rgb), 0.05);
-  }
-
-  .action-icon {
-    width: 16px;
-    height: 16px;
-  }
-}
-
-
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-  transition: all 0.3s ease;
-}
-
-.fade-slide-enter-from {
-  opacity: 0;
-  transform: translateX(20px);
-}
-
-.fade-slide-leave-to {
-  opacity: 0;
-  transform: translateX(-20px);
-}
 
 
 @media (max-width: 1200px) {
@@ -4559,8 +3327,7 @@ export default {
       }
     }
 
-    .stats-card.traffic-board-subscription,
-    .stats-card.traffic-board-package {
+    .stats-card.quota-traffic-card {
       grid-column: 1 / -1;
       min-height: auto;
       height: auto;
@@ -4616,71 +3383,6 @@ export default {
     margin-top: 12px;
   }
 
-  .platform-selector {
-    flex-wrap: wrap;
-  }
-
-  .no-plan-content {
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    gap: 16px;
-    width: 100%;
-  }
-
-  .no-plan-icon {
-    width: 65px;
-    height: 65px;
-    margin: 0 auto;
-    transform: rotate(0deg);
-  }
-
-  .no-plan-icon .icon-cart {
-    width: 36px;
-    height: 36px;
-  }
-
-  .no-plan-message {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    text-align: center;
-  }
-
-  .no-plan-title {
-    font-size: 1.1rem;
-    margin-bottom: 12px;
-    text-align: center;
-  }
-
-  .no-plan-actions {
-    justify-content: center;
-    width: 100%;
-    gap: 10px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .no-plan-actions .action-button {
-    padding: 8px 15px;
-    min-width: 120px;
-    justify-content: center;
-  }
-
-  .no-plan-actions .action-button span {
-    font-size: 14px;
-  }
-
-  .no-plan-actions .action-button .btn-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .stats-card.no-plan-card {
-    padding: 15px 12px;
-  }
 }
 
 @media (min-width: 769px) {
@@ -4698,444 +3400,11 @@ export default {
 }
 
 
-.stats-card.doc-card {
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.stats-card.doc-card:hover {
-  background-color: rgba(var(--theme-color-rgb), 0.08);
-  transform: translateY(-3px);
-}
-
-.stats-card.doc-card .stats-icon {
-  background-color: rgba(92, 124, 250, 0.15);
-  color: rgba(var(--theme-color-rgb), 0.88);
-}
-
-.stats-card.doc-card .stats-value {
-  color: var(--theme-color);
-}
-
-.stats-card.doc-card::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0) 0%,
-          rgba(255, 255, 255, 0.2) 50%,
-          rgba(255, 255, 255, 0) 100%
-  );
-  animation: card-shimmer 3s infinite;
-  transform: skewX(-25deg);
-}
-
-@keyframes card-shimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 200%;
-  }
-}
-
-
-.btn-active {
-  background-color: rgba(var(--theme-color-rgb), 0.1);
-  color: var(--theme-color);
-  border-color: var(--theme-color);
-}
-
-
-.import-card {
-  display: none;
-  margin-bottom: 24px;
-  overflow: hidden;
-  will-change: transform, opacity;
-  transform-origin: top center;
-  contain: content;
-}
-
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  will-change: opacity, transform;
-  backface-visibility: hidden;
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-.close-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background-color: transparent;
-  border: none;
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:hover {
-    background-color: rgba(var(--theme-color-rgb), 0.1);
-    transform: rotate(90deg);
-
-    .close-icon::before,
-    .close-icon::after {
-      background-color: var(--theme-color);
-    }
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
-  }
-
-  .close-icon {
-    position: relative;
-    width: 20px;
-    height: 20px;
-
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      background-color: var(--theme-text-secondary);
-      border-radius: 2px;
-      top: 50%;
-      left: 0;
-      transition: background-color 0.2s ease;
-    }
-
-    &::before {
-      transform: translateY(-50%) rotate(45deg);
-    }
-
-    &::after {
-      transform: translateY(-50%) rotate(-45deg);
-    }
-  }
-}
-
-.import-action {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  background-color: rgba(var(--theme-color-rgb), 0.05);
-  margin-bottom: 16px;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: rgba(var(--theme-color-rgb), 0.1);
-    transform: translateY(-2px);
-  }
-
-  .import-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
-    margin-right: 16px;
-    background-color: rgba(var(--theme-color-rgb), 0.1);
-    color: var(--theme-color);
-  }
-
-  .import-content {
-    flex: 1;
-
-    .import-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .import-desc {
-      font-size: 12px;
-      color: var(--theme-text-secondary);
-    }
-  }
-}
-
-.copy-action .import-icon {
-  background-color: rgba(25, 113, 194, 0.1);
-  color: rgba(var(--theme-color-rgb), 0.88);
-}
-
-.qrcode-action .import-icon {
-  background-color: rgba(64, 192, 87, 0.1);
-  color: rgba(var(--theme-color-rgb), 0.9);
-}
-
-.platform-section {
-  margin-bottom: 24px;
-
-  .platform-title {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(var(--theme-color-rgb), 0.1);
-  }
-
-  .platform-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 12px;
-
-    .platform-option {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      border-radius: 10px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-        transform: translateY(-3px);
-        border-color: var(--theme-color);
-      }
-
-      svg {
-        margin-bottom: 8px;
-        color: var(--theme-color);
-      }
-
-      span {
-        font-size: 13px;
-      }
-    }
-  }
-}
-
-
-.qrcode-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(4px);
-}
-
-.qrcode-modal {
-  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.15);
-  width: 90%;
-  max-width: 360px;
-  overflow: hidden;
-  animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-
-}
-
-@keyframes modal-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.qrcode-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border-color);
-  background-color: rgba(var(--theme-color-rgb), 0.03);
-
-  h3 {
-    margin: 0;
-    font-size: 18px;
-    color: var(--theme-text-primary);
-    font-weight: 600;
-  }
-}
-
-.qrcode-content {
-  padding: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
-
-  img {
-    width: 220px;
-    height: 220px;
-    border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
-    background-color: white;
-    padding: 15px;
-    object-fit: cover;
-    transition: box-shadow 0.3s ease;
-
-    &:hover {
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    }
-  }
-
-  .qrcode-loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 25px;
-    min-height: 220px;
-
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 3px solid rgba(var(--theme-color-rgb), 0.2);
-      border-radius: 50%;
-      border-top-color: var(--theme-color);
-      animation: spin 1s ease-in-out infinite;
-      margin-bottom: 15px;
-    }
-
-    p {
-      font-size: 15px;
-      color: var(--theme-text-secondary);
-      font-weight: 500;
-    }
-  }
-}
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-@media (max-width: 768px) {
-  .platform-options {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  }
-
-  .import-action {
-    padding: 12px;
-
-    .import-icon {
-      width: 40px;
-      height: 40px;
-    }
-  }
-}
-
-
-.platform-selector {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  .platform-button {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background-color: rgba(var(--theme-color-rgb), 0.05);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: var(--theme-text-primary);
-
-    &:hover {
-      background-color: rgba(var(--theme-color-rgb), 0.1);
-      transform: translateY(-1px);
-      border-color: rgba(var(--theme-color-rgb), 0.2);
-    }
-
-    &.active {
-      background-color: rgba(var(--theme-color-rgb), 0.15);
-      color: var(--theme-color);
-      border-color: var(--theme-color);
-      font-weight: 600;
-      box-shadow: 0 2px 6px rgba(var(--theme-color-rgb), 0.2);
-    }
-
-    svg {
-      color: var(--theme-color);
-      opacity: 0.8;
-    }
-  }
-}
-
-
-.client-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 5px;
-  margin-bottom: 8px;
-  object-fit: cover;
-}
-
-.platform-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  border-radius: 10px;
-  background-color: rgba(var(--theme-color-rgb), 0.05);
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  svg {
-    margin-bottom: 8px;
-    color: var(--theme-color);
-  }
-
-  span {
-    font-size: 14px;
-  }
-}
-
 
 .stats-card.warning-card {
   border-color: rgba(var(--theme-color-rgb), 0.85);
@@ -5164,8 +3433,6 @@ export default {
     color: rgba(var(--theme-color-rgb), 0.95);
   }
 }
-
-
 
 
 .skeleton-card {
@@ -5222,11 +3489,6 @@ export default {
   width: 75%;
   margin-bottom: 0;
 }
-
-
-
-
-
 
 
 .skeleton-icon {
@@ -5290,598 +3552,6 @@ export default {
   );
   animation: shimmer 2s infinite;
   z-index: 1;
-}
-
-.import-action .import-content .import-desc {
-  color: var(--theme-text-secondary);
-  font-size: 12px;
-  line-height: 1.4;
-}
-
-.no-clients-message {
-  padding: 20px;
-  text-align: center;
-  background-color: rgba(var(--theme-color-rgb), 0.05);
-  border-radius: 12px;
-  margin: 10px 0;
-  border: 1px dashed rgba(var(--theme-color-rgb), 0.3);
-}
-
-.no-clients-message p {
-  color: var(--theme-text-primary);
-  font-size: 14px;
-  margin: 0;
-}
-
-
-.platform-selector {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  .platform-button {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background-color: rgba(var(--theme-color-rgb), 0.05);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: var(--theme-text-primary);
-
-    &:hover {
-      background-color: rgba(var(--theme-color-rgb), 0.1);
-      transform: translateY(-1px);
-      border-color: rgba(var(--theme-color-rgb), 0.2);
-    }
-
-    &.active {
-      background-color: rgba(var(--theme-color-rgb), 0.15);
-      color: var(--theme-color);
-      border-color: var(--theme-color);
-      font-weight: 600;
-      box-shadow: 0 2px 6px rgba(var(--theme-color-rgb), 0.2);
-    }
-
-    svg {
-      color: var(--theme-color);
-      opacity: 0.8;
-    }
-  }
-}
-
-
-@media (min-width: 1200px) {
-  .stats-card.no-plan-card {
-    padding: 25px 30px;
-  }
-
-  .no-plan-content {
-    gap: 30px;
-  }
-
-  .no-plan-title {
-    font-size: 1.3rem;
-  }
-
-  .no-plan-actions .action-button {
-    padding: 12px 22px;
-    font-size: 16px;
-  }
-}
-
-
-.no-plan-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.no-plan-actions .action-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-
-@media screen and (min-width: 769px) {
-  .no-plan-content {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    position: relative;
-    z-index: 1;
-    flex-direction: row;
-  }
-
-  .no-plan-message {
-    flex: 1;
-    text-align: left;
-    align-items: flex-start;
-    width: auto;
-  }
-
-  .no-plan-title {
-    text-align: left;
-    width: auto;
-  }
-
-  .no-plan-actions {
-    justify-content: flex-start;
-    width: auto;
-    flex-direction: row;
-  }
-
-  .no-plan-actions .action-button {
-    width: auto;
-    max-width: none;
-  }
-}
-
-
-.notice-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
-  backdrop-filter: blur(4px);
-}
-
-.notice-modal {
-  width: 100%;
-  max-width: 500px;
-  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.15);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  max-height: 80vh;
-  animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-
-}
-
-.notice-modal-header {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-  background-color: rgba(var(--theme-color-rgb), 0.03);
-
-  .popup-title {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--theme-text-primary);
-  }
-
-  .popup-close-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--theme-text-secondary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-    margin: -8px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-      color: var(--theme-text-primary);
-      transform: rotate(90deg);
-    }
-  }
-}
-
-.notice-modal-content {
-  padding: 20px;
-  overflow-y: auto;
-  flex: 1;
-  background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
-
-  .notice-content {
-    font-size: 14px;
-    line-height: 1.6;
-
-    :deep(p) {
-      margin: 12px 0;
-      line-height: 1.6;
-      color: var(--theme-text-primary);
-    }
-
-    :deep(strong) {
-      color: var(--theme-color);
-      font-weight: 600;
-    }
-
-    :deep(a) {
-      color: var(--theme-color);
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    :deep(img) {
-      max-width: 100%;
-      height: auto;
-      margin: 10px 0;
-      border-radius: 8px;
-    }
-
-    :deep(ul), :deep(ol) {
-      padding-left: 20px;
-      margin-bottom: 16px;
-
-      li {
-        margin-bottom: 8px;
-        list-style-position: outside;
-      }
-    }
-
-    :deep(ul) li {
-      list-style-type: disc;
-    }
-
-    :deep(ol) li {
-      list-style-type: decimal;
-    }
-
-    :deep(h1), :deep(h2), :deep(h3), :deep(h4), :deep(h5), :deep(h6) {
-      margin-top: 24px;
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-
-    :deep(blockquote) {
-      border-left: 4px solid var(--theme-color);
-      padding: 10px 15px;
-      margin: 16px 0;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-      border-radius: 0 6px 6px 0;
-
-      p {
-        margin: 8px 0;
-      }
-    }
-
-    :deep(code) {
-      font-family: monospace;
-      background-color: rgba(var(--theme-color-rgb), 0.1);
-      padding: 2px 4px;
-      border-radius: 4px;
-      font-size: 0.9em;
-    }
-
-    :deep(pre) {
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-      padding: 12px;
-      border-radius: 6px;
-      overflow-x: auto;
-      margin: 16px 0;
-
-      code {
-        background-color: transparent;
-        padding: 0;
-      }
-    }
-
-    :deep(table) {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 16px 0;
-
-      th, td {
-        border: 1px solid var(--border-color);
-        padding: 8px 12px;
-        text-align: left;
-      }
-
-      th {
-        background-color: rgba(var(--theme-color-rgb), 0.05);
-        font-weight: 600;
-      }
-
-      tr:nth-child(even) {
-        background-color: rgba(var(--theme-color-rgb), 0.02);
-      }
-    }
-
-    :deep(a.eztheme-btn) {
-      display: inline-block;
-      padding: 8px 16px;
-      background-color: var(--theme-color);
-      color: white;
-      border-radius: 8px;
-      margin: 10px 0;
-      text-decoration: none;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background-color: var(--primary-color-hover);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(var(--theme-color-rgb), 0.3);
-      }
-    }
-  }
-}
-
-.notice-modal-footer {
-  padding: 15px 20px;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: flex-end;
-
-  .popup-action-btn {
-    padding: 8px 20px;
-    background-color: var(--theme-color);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 120px;
-
-    &.adaptive-btn {
-      min-width: auto;
-      padding: 8px 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
-    }
-
-    &:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      background-color: var(--theme-text-secondary);
-    }
-  }
-}
-
-.popup-slide-enter-active {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.popup-slide-leave-active {
-  transition: all 0.2s ease-out;
-}
-
-.popup-slide-enter-from {
-  opacity: 0;
-  transform: translateY(20px) scale(0.98);
-}
-
-.popup-slide-leave-to {
-  opacity: 0;
-  transform: scale(0.95);
-}
-
-
-@media (max-width: 768px) {
-  .notice-modal-overlay {
-    padding: 15px;
-
-    .notice-modal {
-      max-width: 100%;
-      max-height: 85vh;
-
-      .notice-modal-header {
-        padding: 15px;
-
-        .popup-title {
-          font-size: 16px;
-        }
-      }
-
-      .notice-modal-content {
-        padding: 15px;
-      }
-
-      .notice-modal-footer {
-        padding: 12px 15px;
-      }
-    }
-  }
-}
-
-
-
-.traffic-package-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1200;
-  padding: 16px;
-}
-
-.traffic-package-container {
-  width: min(100%, 420px);
-  max-height: calc(100vh - 32px);
-}
-
-.traffic-package-modal-card {
-  max-height: calc(100vh - 32px);
-
-  .modal-header {
-    padding: 16px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color);
-
-    h3 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--theme-text-primary);
-    }
-
-    .close-button {
-      background: none;
-      border: none;
-      font-size: 24px;
-      color: var(--theme-text-secondary);
-      cursor: pointer;
-      padding: 0;
-
-      &:hover {
-        color: var(--theme-text-primary);
-      }
-    }
-  }
-
-  .modal-body {
-    display: block;
-    padding: 20px;
-    overflow-y: auto;
-  }
-
-  .traffic-package-desc {
-    margin: 0 0 14px;
-    color: var(--theme-text-secondary);
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .traffic-package-loading,
-  .traffic-package-empty {
-    text-align: center;
-    color: var(--theme-text-secondary);
-    padding: 28px 0;
-  }
-
-  .traffic-package-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .traffic-package-item {
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background: linear-gradient(
-        180deg,
-        rgba(var(--theme-color-rgb), 0.06) 0%,
-        rgba(var(--theme-color-rgb), 0.02) 100%
-    );
-
-    .item-title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-
-      strong {
-        font-size: 15px;
-        font-weight: 600;
-        color: var(--theme-text-primary);
-      }
-    }
-
-    .item-price {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--theme-color);
-    }
-
-    .item-content {
-      color: var(--theme-text-secondary);
-      font-size: 13px;
-      line-height: 1.45;
-      min-height: 32px;
-    }
-
-    .buy-btn {
-      width: 100%;
-      justify-content: center;
-      margin-top: auto;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      background-color: rgba(var(--theme-color-rgb), 0.92);
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
-      }
-
-      &:disabled {
-        opacity: 0.75;
-        cursor: not-allowed;
-      }
-    }
-  }
-
-  .modal-footer {
-    padding: 16px 20px;
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    justify-content: flex-end;
-
-    .cancel-btn {
-      padding: 8px 16px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background-color: transparent;
-      color: var(--theme-text-primary);
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.06);
-      }
-    }
-  }
 }
 
 .modal-overlay {
@@ -5995,28 +3665,14 @@ export default {
       }
     }
 
-    .cancel-btn {
-      background-color: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--theme-text-primary);
-
-      &:hover:not(:disabled) {
-        background-color: rgba(0, 0, 0, 0.05);
-      }
-    }
-
     .confirm-btn {
-      background-color: rgba(var(--theme-color-rgb), 0.92);
-      color: white;
-      border: none;
-
       &:hover:not(:disabled) {
-        background-color: rgba(var(--theme-color-rgb), 0.92);
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
       }
     }
   }
+}
+
 }
 
 
@@ -6037,7 +3693,7 @@ export default {
   height: 16px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  border-top: 2px solid #fff;
+  border-top: 2px solid var(--theme-white);
   animation: spin 1s linear infinite;
   margin-right: 8px;
 }
@@ -6058,34 +3714,176 @@ export default {
   }
 }
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </style>
 
 <!-- 全局样式，不受scoped限制 -->
 <style lang="scss">
-@use '@/assets/styles/components/dashboard-overview-global' as *;
+@use '@/assets/styles/no-plan-card' as *;
+
+.dashboard-container .stats-card {
+  &.warning-card,
+  &.danger-card {
+    border-color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
+    box-shadow: 0 4px 10px rgba(var(--stats-alert-rgb), 0.15) !important;
+
+    .stats-icon {
+      background-color: rgba(var(--stats-alert-rgb), 0.1) !important;
+      color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
+    }
+
+    .stats-value {
+      color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
+    }
+  }
+
+  &.warning-card {
+    --stats-alert-rgb: 255, 152, 0;
+    --stats-level-opacity: 0.85;
+  }
+
+  &.danger-card {
+    --stats-alert-rgb: 244, 67, 54;
+    --stats-level-opacity: 0.95;
+  }
+
+  &.balance-card {
+    .stats-value {
+      color: var(--theme-color);
+    }
+
+    &.clickable {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+
+      &:hover {
+        background-color: rgba(var(--theme-color-rgb), 0.08);
+        transform: translateY(-3px);
+      }
+    }
+  }
+}
+
+.traffic-package-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1200 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.traffic-package-modal-container {
+  width: min(100%, 420px) !important;
+  max-height: calc(100vh - 32px) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.traffic-package-modal-card-global {
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: calc(100vh - 32px) !important;
+  overflow: hidden !important;
+  background-color: var(--card-background) !important;
+  border: 1px solid rgba(var(--theme-color-rgb), 0.15) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+
+  .modal-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 16px 20px !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    background-color: rgba(var(--theme-color-rgb), 0.03) !important;
+
+    h3 {
+      margin: 0 !important;
+      color: var(--text-color) !important;
+      font-size: 18px !important;
+      font-weight: 600 !important;
+    }
+
+    .close-button {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: none !important;
+      background: transparent !important;
+      color: var(--secondary-text-color) !important;
+      cursor: pointer !important;
+
+      &:hover {
+        color: var(--text-color) !important;
+      }
+    }
+  }
+
+  .modal-body {
+    display: block !important;
+    padding: 20px !important;
+    overflow-y: auto !important;
+  }
+
+  .traffic-package-desc {
+    margin: 0 0 14px !important;
+    color: var(--secondary-text-color) !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  .traffic-package-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .traffic-package-item {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 14px !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--theme-color-rgb), 0.06) 0%,
+      rgba(var(--theme-color-rgb), 0.02) 100%
+    ) !important;
+  }
+
+  .item-title-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+
+    strong {
+      color: var(--text-color) !important;
+      font-size: 15px !important;
+      font-weight: 600 !important;
+    }
+  }
+
+  .item-price {
+    color: var(--theme-color) !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+  }
+
+  .item-content {
+    min-height: 32px !important;
+    color: var(--secondary-text-color) !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+
+}
+
 </style>
