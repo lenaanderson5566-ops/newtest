@@ -3697,7 +3697,7 @@ export default {
 }
 
 
-.btn-primary, .btn-outline, .btn-action {
+.btn-outline, .btn-action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3714,18 +3714,6 @@ export default {
   }
 }
 
-.btn-primary {
-  background-color: var(--theme-color);
-  color: var(--theme-white);
-  border: 1px solid var(--theme-color);
-
-  &:hover {
-    background-color: rgba(var(--theme-color-rgb), 0.85);
-    border-color: var(--theme-color);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
-  }
-}
 
 .btn-outline {
   color: var(--theme-color);
