@@ -50,38 +50,16 @@
 
         <template v-else>
           <div
-            v-if="hasTierInfo"
-            class="stats-card member-tier-card"
+            class="stats-card today-traffic-card"
             :class="{ 'card-animate': !loading.userStats }"
             style="animation-delay: 0.45s"
           >
-            <div class="member-tier-header">
-              <span class="member-tier-caption">{{ $t('dashboard.memberTier') }}</span>
-              <span class="member-tier-level">Lv.{{ userTier.level || '-' }}</span>
+            <div class="today-traffic-title">[ 今日流量 ]</div>
+            <div class="today-traffic-values">
+              <span class="traffic-up">↑ {{ todayTrafficStats.uploadGb }} GB</span>
+              <span class="traffic-down">↓ {{ todayTrafficStats.downloadGb }} GB</span>
             </div>
-
-            <div class="member-tier-name-row">
-              <span class="member-tier-badge" :class="tierBadgeClass">{{ tierBadgeText }}</span>
-              <div class="member-tier-name">{{ tierMemberDisplay }}</div>
-            </div>
-
-            <div class="member-tier-progress-meta">
-              <span>{{ $t('dashboard.tierPointsProgress', { points: formatTierNumber(userTier.points), total: formatTierNumber(userTier.nextPointsRequired) }) }}</span>
-            </div>
-
-            <div class="member-tier-progress-track">
-              <div class="member-tier-progress-fill" :style="{ width: `${tierProgress}%` }"></div>
-            </div>
-
-            <div class="member-tier-next" v-if="userTier.nextTierKey">
-              {{ $t('dashboard.nextTierHint', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}
-            </div>
-
-            <ul class="member-tier-facts">
-              <li>{{ $t('dashboard.tierCurrentPoints', { points: formatTierNumber(userTier.points) }) }}</li>
-              <li>{{ $t('dashboard.tierNextLevel', { tier: nextTierNameDisplay }) }}</li>
-              <li>{{ $t('dashboard.tierNeedPoints', { points: formatTierNumber(userTier.pointsToNextTier) }) }}</li>
-            </ul>
+            <div class="today-traffic-total">总计 {{ todayTrafficStats.totalGb }} GB</div>
           </div>
 
           <div
@@ -231,7 +209,7 @@
           <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
           <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
           <div v-else-if="ipLocationData" class="ip-location-content">
-            <div class="ip-location-main-info">
+            <div class="ip-banner-main">
               <div class="ip-meta-title">{{ $t('dashboard.currentExitRegion') }}</div>
               <div class="ip-main-line">
                 <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
@@ -239,44 +217,13 @@
               </div>
               <div class="ip-sub-line">
                 <span class="ip-region">{{ ipLocationDisplayText }}</span>
-                <button class="ip-refresh-btn btn btn-secondary" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
-                  <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
-                  <span>{{ ipLocationLoading ? $t('dashboard.refreshing') : $t('common.refresh') }}</span>
-                </button>
-              </div>
-              <div class="ip-status-row">
-                <span class="status-dot" aria-hidden="true"></span>
-                <span>{{ $t('dashboard.smoothStatusNormal') }}</span>
+                <span class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</span>
               </div>
             </div>
-
-
-            <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
-              <div class="service-reference-title">
-                <span>{{ $t('dashboard.serviceReference') }}</span>
-                <span class="info-tooltip" tabindex="0" role="button" :aria-label="$t('dashboard.serviceReferenceHint')">
-                  <IconHelpCircle :size="14" />
-                  <span class="info-tooltip-content">{{ $t('dashboard.serviceReferenceHint') }}</span>
-                </span>
-              </div>
-              <div class="service-reference-tags" role="list" :aria-label="$t('dashboard.serviceReferenceAria')">
-                <div
-                  v-for="service in ipLocationServiceCatalog"
-                  :key="`ip-service-${service.key}`"
-                  class="service-reference-item"
-                  :class="{ active: isIpServiceReferenced(service.key) }"
-                  role="listitem"
-                  :title="`${service.label} · ${isIpServiceReferenced(service.key) ? $t('dashboard.serviceAvailableInRegion') : $t('dashboard.serviceNotInRegion')}`"
-                >
-                  <span class="service-reference-tile">
-                    <img class="service-reference-icon" :src="service.icon" :alt="service.label" loading="lazy" />
-                  </span>
-                  <span class="service-reference-label">{{ service.label }}</span>
-                </div>
-              </div>
-            </div>
-
-            <IconChevronRight class="ip-card-arrow" :size="20" />
+            <button class="ip-refresh-btn btn btn-secondary" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
+              <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
+              <span>{{ ipLocationLoading ? $t('dashboard.refreshing') : $t('common.refresh') }}</span>
+            </button>
           </div>
           <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
         </div>
@@ -334,7 +281,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-secondary" @click="showTrafficPackageModal = false">
+              <button class="btn btn-outline" @click="showTrafficPackageModal = false">
                 {{ $t('common.cancel') }}
               </button>
             </div>
@@ -410,14 +357,9 @@ import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import {fetchPlans} from '@/api/account/shop';
-import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
-import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
-import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube.svg';
-import serviceChatgptIcon from '@/assets/images/service-icons/chatgpt.svg';
-import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
-import serviceGoogleIcon from '@/assets/images/service-icons/google.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
+import { formatDate } from '@/utils/formatters';
 
 export default {
   name: 'UserDashboard',
@@ -463,6 +405,7 @@ export default {
   setup() {
     const {t, locale} = useI18n();
     const router = useRouter();
+    const { showToast } = useToast();
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
     const userStats = reactive({
@@ -475,14 +418,6 @@ export default {
       isRemainingDaysPermanent: false
     });
     const userBalance = ref('0.00');
-    const userTier = reactive({
-      key: '',
-      level: 0,
-      points: 0,
-      nextTierKey: '',
-      nextPointsRequired: 0,
-      pointsToNextTier: 0
-    });
     const userPlan = ref({
       deviceLimit: null,
       aliveIp: 0,
@@ -513,6 +448,11 @@ export default {
     const trafficTrendData = ref([]);
     const trafficTrendLoading = ref(false);
     const trafficTrendError = ref(false);
+    const todayTrafficStats = reactive({
+      uploadGb: '0.00',
+      downloadGb: '0.00',
+      totalGb: '0.00'
+    });
     let trafficTrendChart = null;
 
     const ipLocationLoading = ref(false);
@@ -557,14 +497,11 @@ export default {
     const handlePopupClose = () => {
 
       showPopup.value = false;
-      // console.log(showPopup.value,'111111111')
-      // nextPeriod()
 
     };
     const handlePopupConfirm = async () => {
       try {
         const response = await setNextPeriod()
-        console.log(response)
         if (response.data) {
           await fetchSubscribe()
           showToast(t('dashboard.nextPeriodSuccess'), 'success');
@@ -598,14 +535,6 @@ export default {
             userBalance.value = info.balance;
             updateAccountBalanceDisplay();
           }
-
-          const tierInfo = info.tier || {};
-          userTier.key = tierInfo.key || '';
-          userTier.level = Number(tierInfo.level || 0);
-          userTier.points = Number(tierInfo.points || 0);
-          userTier.nextTierKey = tierInfo.next_tier_key || '';
-          userTier.nextPointsRequired = Number(tierInfo.next_points_required || 0);
-          userTier.pointsToNextTier = Number(tierInfo.points_to_next_tier || 0);
 
           remindExpireSetting.value = !!info.remind_expire;
           remindTrafficSetting.value = !!info.remind_traffic;
@@ -707,52 +636,6 @@ export default {
       return t('dashboard.planAction.renew');
     });
 
-    const hasTierInfo = computed(() => {
-      return !!userTier.key || Number(userTier.level || 0) > 0;
-    });
-
-    const normalizeTierName = (key) => {
-      const raw = `${key || ''}`.trim();
-      if (!raw) return '-';
-
-      const readable = raw
-        .replace(/[_-]+/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim();
-
-      return readable
-        .split(' ')
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-    };
-
-    const tierNameDisplay = computed(() => normalizeTierName(userTier.key));
-    const nextTierNameDisplay = computed(() => normalizeTierName(userTier.nextTierKey));
-    const tierMemberDisplay = computed(() => tierNameDisplay.value);
-
-    const tierBadgeKey = computed(() => `${userTier.key || ''}`.toLowerCase());
-    const tierBadgeClass = computed(() => {
-      if (tierBadgeKey.value.includes('bronze')) return 'is-bronze';
-      if (tierBadgeKey.value.includes('silver')) return 'is-silver';
-      if (tierBadgeKey.value.includes('gold')) return 'is-gold';
-      if (tierBadgeKey.value.includes('platinum')) return 'is-platinum';
-      if (tierBadgeKey.value.includes('diamond')) return 'is-diamond';
-      return 'is-default';
-    });
-    const tierBadgeText = computed(() => {
-      if (tierBadgeKey.value.includes('bronze')) return '★';
-      if (tierBadgeKey.value.includes('silver')) return '★';
-      if (tierBadgeKey.value.includes('gold')) return '★';
-      if (tierBadgeKey.value.includes('platinum')) return '★';
-      if (tierBadgeKey.value.includes('diamond')) return '★';
-      return '★';
-    });
-
-    const tierProgress = computed(() => {
-      const total = Number(userTier.nextPointsRequired);
-      if (!total) return 100;
-      return Math.min(Math.max(Math.round((Number(userTier.points) / total) * 100), 0), 100);
-    });
 
     const subscriptionTrafficSummary = computed(() => {
       const used = Number(trafficMetrics.subscriptionQuotaUsedBytes || 0);
@@ -768,17 +651,13 @@ export default {
       };
     });
 
-    const formatTierNumber = (value) => {
-      const numericValue = Number(value || 0);
-      return Number.isFinite(numericValue) ? numericValue.toLocaleString() : '0';
-    };
-
     const primaryActionClass = computed(() => {
+      if (primaryPlanActionLabel.value === t('dashboard.planAction.manageSubscription')) return 'btn-outline';
       return 'btn-primary';
     });
 
     const secondaryActionClass = computed(() => {
-      if (secondaryPlanActionLabel.value === t('dashboard.planAction.manageSubscription')) return 'btn-primary';
+      if (secondaryPlanActionLabel.value === t('dashboard.planAction.renew')) return 'btn-primary';
       return 'btn-secondary';
     });
 
@@ -1126,33 +1005,23 @@ export default {
         return new Date(year, month, Math.min(day, maxDay), hour, minute, 0);
       };
 
-      if (expiredAtDate) {
-        const resetHour = expiredAtDate.getHours();
-        const resetMinute = expiredAtDate.getMinutes();
-
-        let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), effectiveResetDay, resetHour, resetMinute);
-        while (candidate <= now) {
-          candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, effectiveResetDay, resetHour, resetMinute);
-        }
-
-        if (candidate > expiredAtDate) {
-          candidate = buildMonthlyDate(expiredAtDate.getFullYear(), expiredAtDate.getMonth(), effectiveResetDay, resetHour, resetMinute);
-          if (candidate > expiredAtDate) {
-            candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() - 1, effectiveResetDay, resetHour, resetMinute);
-          }
-        }
-
-        return formatResetDateTime(candidate);
-      }
-
       const resetHourRaw = subscribe?.reset_hour ?? subscribe?.plan?.reset_hour;
       const resetMinuteRaw = subscribe?.reset_minute ?? subscribe?.plan?.reset_minute;
-      const resetHour = Number.isFinite(Number(resetHourRaw)) ? Number(resetHourRaw) : 0;
-      const resetMinute = Number.isFinite(Number(resetMinuteRaw)) ? Number(resetMinuteRaw) : 0;
+      const resetHour = Number.isFinite(Number(resetHourRaw))
+        ? Number(resetHourRaw)
+        : (expiredAtDate ? expiredAtDate.getHours() : 0);
+      const resetMinute = Number.isFinite(Number(resetMinuteRaw))
+        ? Number(resetMinuteRaw)
+        : (expiredAtDate ? expiredAtDate.getMinutes() : 0);
       let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), effectiveResetDay, resetHour, resetMinute);
       if (candidate <= now) {
         candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, effectiveResetDay, resetHour, resetMinute);
       }
+
+      if (expiredAtDate && candidate > expiredAtDate) {
+        return formatResetDateTime(expiredAtDate);
+      }
+
       return formatResetDateTime(candidate);
     };
 
@@ -1299,41 +1168,35 @@ export default {
       return badgeMap[code] || 'is-red';
     });
 
-    const ipLocationServiceReferences = computed(() => {
-      const code = ipLocationCode.value;
-      const serviceMap = DASHBOARD_CONFIG.ipRegionServiceReferenceByCountryCode || {};
-      const defaultServices = DASHBOARD_CONFIG.ipRegionServiceReferenceDefault || [];
-      const services = serviceMap[code] || defaultServices;
-      return Array.isArray(services) ? services : [];
-    });
-
-    const ipLocationServiceIconMap = {
-      'Netflix': serviceNetflixIcon,
-      'Disney+': serviceDisneyPlusIcon,
-      'YouTube Premium': serviceYoutubePremiumIcon,
-      'ChatGPT': serviceChatgptIcon,
-      Claude: serviceClaudeIcon,
-      Google: serviceGoogleIcon,
-    };
-
-    const ipLocationServiceCatalog = computed(() => {
-      const serviceCatalog = DASHBOARD_CONFIG.ipRegionServiceCatalog || [];
-      return serviceCatalog.map((item) => ({
-        ...item,
-        icon: ipLocationServiceIconMap[item.key] || serviceChatgptIcon,
-      }));
-    });
-
-    const isIpServiceReferenced = (serviceKey) => {
-      return ipLocationServiceReferences.value.includes(serviceKey);
-    };
-
     const fetchTrafficTrend = async () => {
       trafficTrendLoading.value = true;
       trafficTrendError.value = false;
       try {
         const response = await getTrafficLog();
         const rows = getTrafficLogRows(response);
+
+        const now = new Date();
+        const dayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+        const dayEnd = dayStart + 24 * 60 * 60 * 1000;
+        let todayUploadBytes = 0;
+        let todayDownloadBytes = 0;
+
+        rows.forEach((item) => {
+          const recordAt = Number(item?.record_at);
+          if (!Number.isFinite(recordAt) || recordAt <= 0) return;
+
+          const timestampMs = recordAt > 1e12 ? recordAt : recordAt * 1000;
+          if (timestampMs >= dayStart && timestampMs < dayEnd) {
+            todayUploadBytes += Number(item?.u) || 0;
+            todayDownloadBytes += Number(item?.d) || 0;
+          }
+        });
+
+        const toGbText = (bytes) => ((Number(bytes) || 0) / (1024 ** 3)).toFixed(2);
+        todayTrafficStats.uploadGb = toGbText(todayUploadBytes);
+        todayTrafficStats.downloadGb = toGbText(todayDownloadBytes);
+        todayTrafficStats.totalGb = toGbText(todayUploadBytes + todayDownloadBytes);
+
         const sorted = [...rows]
           .filter((item) => item && item.record_at)
           .sort((a, b) => Number(a.record_at) - Number(b.record_at))
@@ -1354,6 +1217,9 @@ export default {
         console.error('Failed to fetch traffic trend data:', e);
         trafficTrendError.value = true;
         trafficTrendData.value = [];
+        todayTrafficStats.uploadGb = '0.00';
+        todayTrafficStats.downloadGb = '0.00';
+        todayTrafficStats.totalGb = '0.00';
       } finally {
         trafficTrendLoading.value = false;
         await nextTick();
@@ -1511,7 +1377,6 @@ export default {
     const listeners = {};
 
     onActivated(() => {
-      console.log('Dashboard组件被激活');
       if (needRefreshData.value) {
         fetchUserInfo();
         fetchUserStats();
@@ -1522,7 +1387,6 @@ export default {
     });
 
     onDeactivated(() => {
-      console.log('Dashboard组件被停用');
       needRefreshData.value = true;
 
       cleanupResources(timers, listeners);
@@ -1601,15 +1465,6 @@ export default {
       primaryPlanActionLabel,
       planExpireMetaText,
       secondaryPlanActionLabel,
-      userTier,
-      hasTierInfo,
-      tierNameDisplay,
-      tierMemberDisplay,
-      nextTierNameDisplay,
-      tierBadgeClass,
-      tierBadgeText,
-      tierProgress,
-      formatTierNumber,
       subscriptionTrafficSummary,
       primaryActionClass,
       secondaryActionClass,
@@ -1630,6 +1485,7 @@ export default {
       trafficTrendData,
       trafficTrendLoading,
       trafficTrendError,
+      todayTrafficStats,
       ipLocationLoading,
       ipLocationError,
       ipLocationData,
@@ -1637,9 +1493,6 @@ export default {
       ipLocationCode,
       ipLocationPrimaryRegionText,
       ipLocationCodeBadgeClass,
-      ipLocationServiceReferences,
-      ipLocationServiceCatalog,
-      isIpServiceReferenced,
       triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
@@ -1661,14 +1514,18 @@ export default {
 .dashboard-container {
   display: flex;
   justify-content: center;
-  --dashboard-card-padding: 20px;
+  --dashboard-card-padding: 14px;
+  --dashboard-radius: 12px;
+  --dashboard-shadow-compact: 0 1px 3px rgba(15, 23, 42, 0.05), 0 6px 14px rgba(15, 23, 42, 0.04);
+  --dashboard-gap-compact: 12px;
+  --dashboard-section-margin: 12px;
 
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
   --saas-text-secondary: #6b7280;
   --saas-border-soft: #eef1f5;
   --saas-card-bg: #ffffff;
-  --saas-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 18px rgba(15, 23, 42, 0.04);
+  --saas-card-shadow: var(--dashboard-shadow-compact);
 
   --theme-text-primary: #111827;
   --theme-text-secondary: #6b7280;
@@ -1700,7 +1557,7 @@ export default {
     .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 16px;
+    gap: var(--dashboard-gap-compact);
 
     > .pending-order-banner {
       grid-column: 1 / -1;
@@ -1725,14 +1582,14 @@ export default {
 
   .dashboard-card {
     background-color: var(--saas-card-bg);
-    border-radius: 14px;
+    border-radius: var(--dashboard-radius);
     box-shadow: var(--saas-card-shadow);
     padding: var(--dashboard-card-padding);
     border: none;
     transition: box-shadow 0.2s ease;
 
     &:hover {
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 10px 24px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 8px 16px rgba(15, 23, 42, 0.05);
       transform: none;
     }
 
@@ -1740,7 +1597,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
 
       .card-title {
         font-size: 16px;
@@ -1761,8 +1618,8 @@ export default {
     position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: var(--dashboard-gap-compact);
+    margin-bottom: var(--dashboard-section-margin);
 
     @media (min-width: 768px) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1776,8 +1633,8 @@ export default {
     .stats-card {
       position: relative;
       background-color: var(--card-bg-color);
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      border-radius: var(--dashboard-radius);
+      box-shadow: var(--dashboard-shadow-compact);
       display: flex;
       align-items: center;
       gap: 16px;
@@ -1897,7 +1754,7 @@ export default {
           overflow: visible;
 
           .expired-status-strip {
-            border-radius: 10px;
+            border-radius: var(--dashboard-radius);
             padding: 9px 12px;
             font-size: 13px;
             font-weight: 600;
@@ -1908,7 +1765,7 @@ export default {
 
           .plan-summary-section {
             border: none;
-            border-radius: 12px;
+            border-radius: var(--dashboard-radius);
             background: var(--theme-surface-soft);
             padding: 10px 12px;
             overflow: visible;
@@ -2043,7 +1900,7 @@ export default {
 
             .plan-action-btn {
               flex: 1;
-              border-radius: 12px;
+              border-radius: var(--dashboard-radius);
               padding: 10px 14px;
               font-size: 14px;
               font-weight: 600;
@@ -2066,12 +1923,12 @@ export default {
           .switch {
             position: relative;
             display: inline-block;
-            width: 44px;
+            width: 46px;
             height: 24px;
             flex-shrink: 0;
 
             &.disabled {
-              opacity: 0.6;
+              opacity: 0.7;
               cursor: not-allowed;
             }
 
@@ -2079,6 +1936,10 @@ export default {
               opacity: 0;
               width: 0;
               height: 0;
+
+              &:disabled + .slider {
+                cursor: not-allowed;
+              }
             }
 
             .slider {
@@ -2087,7 +1948,24 @@ export default {
               inset: 0;
               background-color: var(--surface-subtle);
               border: 1px solid var(--border-color);
-              transition: 0.3s;
+              transition: 0.4s;
+
+              &.loading {
+                overflow: hidden;
+
+                &::before {
+                  animation: pulse 1.5s infinite;
+                }
+
+                &::after {
+                  content: '';
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+                  animation: sweep 1.5s infinite;
+                }
+              }
 
               &::before {
                 position: absolute;
@@ -2096,12 +1974,13 @@ export default {
                 width: 18px;
                 left: 3px;
                 bottom: 3px;
-                background-color: var(--theme-white);
-                transition: 0.3s;
+                background-color: white;
+                transition: 0.4s;
+                z-index: 1;
               }
 
               &.round {
-                border-radius: 24px;
+                border-radius: 34px;
 
                 &::before {
                   border-radius: 50%;
@@ -2115,7 +1994,7 @@ export default {
             }
 
             input:checked + .slider::before {
-              transform: translateX(20px);
+              transform: translateX(22px);
             }
           }
         }
@@ -2139,6 +2018,21 @@ export default {
           font-weight: 500;
         }
 
+        .section-progress-track {
+          width: 100%;
+          height: 14px;
+          background: var(--theme-border-soft);
+          border-radius: 999px;
+          overflow: hidden;
+        }
+
+        .section-progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, var(--quota-progress-start), var(--quota-progress-end));
+          border-radius: inherit;
+          transition: width 0.35s ease;
+        }
+
       &.quota-traffic-card {
         .usage-percent {
           font-size: 30px;
@@ -2151,6 +2045,9 @@ export default {
 
         /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
         &.traffic-board-subscription {
+          background: linear-gradient(165deg, rgba(var(--theme-color-rgb), 0.08) 0%, rgba(var(--theme-color-rgb), 0.03) 48%, var(--card-bg-color) 100%);
+          border-color: rgba(var(--theme-color-rgb), 0.22);
+
           .usage-kpis {
             width: 100%;
             display: grid;
@@ -2170,7 +2067,7 @@ export default {
             flex-direction: column;
             gap: 4px;
             padding: 8px;
-            border-radius: 10px;
+            border-radius: var(--dashboard-radius);
             background: var(--theme-surface-soft);
           }
 
@@ -2195,21 +2092,6 @@ export default {
             width: 100%;
             font-size: 12px;
             color: var(--theme-text-secondary);
-          }
-
-          .section-progress-track {
-            width: 100%;
-            height: 14px;
-            background: var(--theme-border-soft);
-            border-radius: 999px;
-            overflow: hidden;
-          }
-
-          .section-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--quota-progress-start), var(--quota-progress-end));
-            border-radius: inherit;
-            transition: width 0.35s ease;
           }
 
           @media (max-width: 576px) {
@@ -2290,258 +2172,118 @@ export default {
 
       &:hover {
         border-color: rgba(148, 163, 184, 0.24);
-        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.07);
       }
     }
   }
 
-  /* 会员等级卡片 */
-  .stats-grid .stats-card.member-tier-card {
-    background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.35), transparent 35%),
-      linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%);
-    color: #e8edff;
-    border: 1px solid rgba(161, 181, 255, 0.26);
-    box-shadow: 0 10px 24px rgba(18, 32, 78, 0.28);
-    gap: 10px;
+  .stats-grid .stats-card.today-traffic-card {
+    background: linear-gradient(180deg, var(--card-bg-color) 0%, rgba(var(--theme-color-rgb), 0.05) 100%);
+    color: var(--theme-text-primary);
+    border: 1px solid rgba(var(--theme-color-rgb), 0.22);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
     align-items: flex-start;
     flex-direction: column;
+    gap: 12px;
 
-    .member-tier-header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .today-traffic-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--theme-text-secondary);
     }
 
-    .member-tier-caption {
-      font-size: 12px;
-      color: rgba(232, 237, 255, 0.86);
-      letter-spacing: 0.08em;
-    }
-
-    .member-tier-level {
-      font-size: 13px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.18);
-    }
-
-    .member-tier-name-row {
+    .today-traffic-values {
       display: flex;
       align-items: center;
-      gap: 10px;
-    }
-
-    .member-tier-badge {
-      position: relative;
-      width: 54px;
-      height: 60px;
-      clip-path: polygon(50% 2%, 90% 20%, 90% 80%, 50% 98%, 10% 80%, 10% 20%);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      font-weight: 800;
-      color: rgba(255, 255, 255, 0.96);
-      border: 2px solid rgba(255, 236, 169, 0.9);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38), 0 6px 14px rgba(8, 15, 36, 0.32);
-      text-shadow: 0 1px 0 rgba(71, 38, 5, 0.3);
-
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 6px;
-        clip-path: inherit;
-        background: linear-gradient(165deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.04));
-        pointer-events: none;
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: 8px;
-        left: 10px;
-        right: 10px;
-        height: 14px;
-        border-radius: 999px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
-        pointer-events: none;
-      }
-
-      &.is-bronze {
-        background: linear-gradient(150deg, #d5943e, #a4621f 56%, #8a4c16);
-      }
-
-      &.is-silver {
-        background: linear-gradient(150deg, #dbe3ee, #9aa9be 55%, #78869f);
-      }
-
-      &.is-gold {
-        background: linear-gradient(150deg, #ffd976, #eca321 56%, #cb7f00);
-      }
-
-      &.is-platinum {
-        background: linear-gradient(150deg, #84d6ff, #4b94da 55%, #2d63b2);
-      }
-
-      &.is-diamond {
-        background: linear-gradient(150deg, #c1b8ff, #8977ff 56%, #6049e3);
-      }
-
-      &.is-default {
-        background: linear-gradient(150deg, #96abef, #657fca 56%, #4d64af);
-      }
-    }
-
-    .member-tier-name {
-      font-size: 30px;
-      line-height: 1.1;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 24px;
       font-weight: 700;
-      color: #ffffff;
+      line-height: 1.2;
+
+      .traffic-up { color: #059669; }
+      .traffic-down { color: #dc2626; }
     }
 
-    .member-tier-progress-meta,
-    .member-tier-next {
-      font-size: 13px;
-      color: rgba(239, 243, 255, 0.9);
-    }
-
-    .member-tier-progress-track {
-      width: 100%;
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.24);
-      overflow: hidden;
-    }
-
-    .member-tier-progress-fill {
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, #fbd15f, #f59e0b);
-      transition: width 0.25s ease;
-    }
-
-    .member-tier-facts {
-      margin: 4px 0 0;
-      width: 100%;
-      list-style: none;
-      padding: 0;
-      display: grid;
-      gap: 8px;
-
-      li {
-        font-size: 13px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: rgba(245, 248, 255, 0.95);
-
-        &::before {
-          content: '✓';
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 18px;
-          height: 18px;
-          border-radius: 50%;
-          font-size: 11px;
-          font-weight: 700;
-          color: #195f4a;
-          background: rgba(140, 255, 204, 0.88);
-        }
-      }
+    .today-traffic-total {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--theme-text-primary);
     }
   }
 
   @media (min-width: 1200px) {
-    .stats-grid .stats-card.member-tier-card {
+    .stats-grid .stats-card.today-traffic-card {
       grid-column: 2;
     }
   }
 
 
-  /* IP 位置卡片 */
+  /* IP 位置卡片（横幅） */
   .ip-location-summary-card {
-    border-radius: 20px;
-    border: 1px solid rgba(131, 159, 213, 0.22);
-    background: radial-gradient(circle at 76% 50%, rgba(58, 103, 208, 0.26), transparent 40%),
-      radial-gradient(circle at 15% 105%, rgba(26, 65, 154, 0.3), transparent 35%),
-      linear-gradient(120deg, #0f172a 0%, #17233f 45%, #1c2747 100%);
-    box-shadow: 0 10px 24px rgba(10, 20, 42, 0.28);
+    border-radius: var(--dashboard-radius);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background: linear-gradient(90deg, rgba(248, 250, 252, 0.96) 0%, rgba(241, 245, 249, 0.92) 100%);
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
 
     .ip-location-summary-body {
-      padding-top: 0;
+      padding: 12px 14px;
     }
 
     .ip-location-state {
-      color: #bddfff;
+      color: var(--theme-text-secondary);
       font-size: 13px;
 
       &.error {
-        color: #ff9ba8;
+        color: #dc2626;
       }
     }
 
     .ip-location-content {
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.35fr);
-      gap: 14px 18px;
-      color: #d9ecff;
-      align-items: start;
-      position: relative;
-
-      @media (max-width: 1220px) {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--theme-text-primary);
 
       @media (max-width: 920px) {
-        grid-template-columns: 1fr;
+        align-items: flex-start;
+        flex-direction: column;
       }
     }
 
-    .ip-card-arrow {
-      position: absolute;
-      top: 4px;
-      right: 0;
-      color: rgba(229, 236, 250, 0.86);
-    }
-
-    .ip-location-main-info {
+    .ip-banner-main {
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      min-width: 0;
+      gap: 6px;
     }
 
     .ip-meta-title {
-      color: rgba(233, 240, 255, 0.95);
-      font-size: 18px;
+      color: var(--theme-text-secondary);
+      font-size: 13px;
       line-height: 1.2;
-      font-weight: 700;
+      font-weight: 600;
+      margin: 0;
     }
 
     .ip-main-line {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .ip-region-primary {
-      font-size: 44px;
+      font-size: 24px;
       line-height: 1.15;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #ecf6ff;
-
-      @media (max-width: 1220px) {
-        font-size: 38px;
-      }
+      letter-spacing: -0.01em;
+      color: var(--theme-text-primary);
 
       @media (max-width: 680px) {
-        font-size: 30px;
+        font-size: 20px;
       }
     }
 
@@ -2560,6 +2302,7 @@ export default {
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      flex-shrink: 0;
 
       &:disabled {
         opacity: 0.7;
@@ -2572,41 +2315,24 @@ export default {
 
     .ip-address-secondary {
       font-size: 11px;
-      color: rgba(189, 223, 255, 0.58);
+      color: rgba(100, 116, 139, 0.75);
       letter-spacing: 0.2px;
     }
 
-    .ip-status-row {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #e9f3ff;
-      font-size: 16px;
-      font-weight: 600;
-
-      .status-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: #35c26b;
-        box-shadow: 0 0 0 4px rgba(53, 194, 107, 0.2);
-      }
-    }
-
     .region-code-badge {
-      min-width: 44px;
-      height: 24px;
+      min-width: 40px;
+      height: 22px;
       border-radius: 999px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       padding: 0 8px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
       color: var(--theme-white);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
-      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.22);
 
       &.is-red { background: linear-gradient(135deg, #e11d48, #9f1239); }
       &.is-pink { background: linear-gradient(135deg, #be185d, #831843); }
@@ -2614,101 +2340,11 @@ export default {
     }
 
     .ip-region {
-      color: #bddfff;
+      color: var(--theme-text-secondary);
       font-size: 13px;
     }
-
-    .ip-service-reference {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(164, 191, 242, 0.24);
-      min-height: 100%;
-    }
-
-    .service-reference-title {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #f3f7ff;
-      letter-spacing: 0.2px;
-    }
-
-    .service-reference-tags {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      overflow: visible;
-      padding-bottom: 2px;
-    }
-
-    @media (max-width: 680px) {
-      .service-reference-tags {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .service-reference-item {
-      width: 100%;
-      min-height: 38px;
-      border-radius: 999px;
-      display: inline-flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 8px;
-      white-space: nowrap;
-      padding: 6px 12px;
-      border: none;
-      background: rgba(255, 255, 255, 0.08);
-      color: rgba(233, 243, 255, 0.92);
-      opacity: 0.84;
-      transition: all 0.2s ease;
-
-      .service-reference-tile {
-        width: 24px;
-        height: 24px;
-        border-radius: 6px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--theme-white);
-        box-shadow: 0 0 0 1px rgba(190, 209, 247, 0.25);
-      }
-
-      .service-reference-label {
-        font-size: 13px;
-        line-height: 1;
-        color: #ebf2ff;
-        font-weight: 600;
-      }
-
-      .service-reference-icon {
-        width: 18px;
-        height: 18px;
-        display: block;
-        object-fit: contain;
-        filter: none;
-      }
-
-      &.active {
-        opacity: 1;
-        color: #eef6ff;
-        background: rgba(255, 255, 255, 0.16);
-      }
-
-      &:hover {
-        opacity: 1;
-        transform: translateY(-1px);
-      }
-    }
-
   }
+
 
   .info-tooltip {
     position: relative;
@@ -2785,11 +2421,11 @@ export default {
   }
   /* 待支付横幅卡片 */
   .pending-order-banner {
-    margin-bottom: 8px;
+    margin-bottom: var(--dashboard-section-margin);
     min-height: 44px;
     max-height: 48px;
     padding: 6px 12px;
-    border-radius: 10px;
+    border-radius: var(--dashboard-radius);
     border: 1px solid rgba(var(--warning-color-rgb), 0.4);
     background: var(--warning-background);
     display: flex;
@@ -2864,17 +2500,11 @@ export default {
       grid-column: 1 / -1;
     }
 
-    .stats-card.member-tier-card {
+    .stats-card.today-traffic-card {
       grid-column: 1 / -1;
 
-      .member-tier-badge {
-        width: 44px;
-        height: 50px;
-        font-size: 15px;
-      }
-
-      .member-tier-name {
-        font-size: 24px;
+      .today-traffic-values {
+        font-size: 20px;
       }
     }
 
@@ -2953,7 +2583,7 @@ export default {
 .skeleton-icon {
   width: 48px;
   height: 48px;
-  border-radius: 12px;
+  border-radius: var(--dashboard-radius);
   background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
   margin-right: 16px;
   flex-shrink: 0;
@@ -3095,7 +2725,7 @@ export default {
 .traffic-package-modal-container {
   width: min(100%, 420px);
   max-height: calc(100vh - 32px);
-  border-radius: 12px;
+  border-radius: var(--dashboard-radius);
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
@@ -3146,6 +2776,18 @@ export default {
     overflow-y: auto;
   }
 
+  .modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    .btn {
+      min-width: 88px;
+    }
+  }
+
   .traffic-package-desc {
     margin: 0 0 14px;
     color: var(--secondary-text-color);
@@ -3165,7 +2807,7 @@ export default {
     gap: 10px;
     padding: 14px;
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: var(--dashboard-radius);
     background: linear-gradient(
       180deg,
       rgba(var(--theme-color-rgb), 0.06) 0%,
@@ -3199,6 +2841,30 @@ export default {
     line-height: 1.45;
   }
 
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(0.92);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 </style>

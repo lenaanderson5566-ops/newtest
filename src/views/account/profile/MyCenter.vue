@@ -1,34 +1,60 @@
 <template>
   <div class="my-center page-shell">
     <div class="my-center-inner page-inner page-stack">
-      <section class="summary-panel section-block dashboard-like-card">
-        <div class="summary-top">
-          <div>
-            <h2>{{ $t('myCenter.summaryTitle') }}</h2>
-            <p class="summary-desc">{{ $t('myCenter.summaryDesc') }}</p>
+      <div class="overview-panels" :class="{ 'no-tier': !hasTierInfo }">
+        <section class="summary-panel section-block dashboard-like-card">
+          <div class="summary-top">
+            <div>
+              <h2>{{ $t('myCenter.summaryTitle') }}</h2>
+              <p class="summary-desc">{{ $t('myCenter.summaryDesc') }}</p>
+            </div>
+            <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">{{ $t('myCenter.topUp') }}</button>
           </div>
-          <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">{{ $t('myCenter.topUp') }}</button>
-        </div>
 
-        <div class="summary-grid">
-          <div class="summary-item">
-            <span class="label">{{ $t('myCenter.email') }}</span>
-            <strong>{{ userInfo.email || '-' }}</strong>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span class="label">{{ $t('myCenter.email') }}</span>
+              <strong>{{ userInfo.email || '-' }}</strong>
+            </div>
+            <div class="summary-item">
+              <span class="label">{{ $t('myCenter.currentPlan') }}</span>
+              <strong>{{ subscriptionText }}</strong>
+            </div>
+            <div class="summary-item">
+              <span class="label">{{ $t('myCenter.expireAt') }}</span>
+              <strong>{{ subscriptionExpireText }}</strong>
+            </div>
+            <div class="summary-item is-highlight">
+              <span class="label">{{ $t('myCenter.accountBalance') }}</span>
+              <strong>{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
+            </div>
           </div>
-          <div class="summary-item">
-            <span class="label">{{ $t('myCenter.currentPlan') }}</span>
-            <strong>{{ subscriptionText }}</strong>
+        </section>
+
+        <section v-if="hasTierInfo" class="tier-panel section-block dashboard-like-card">
+          <div class="tier-header">
+            <div>
+              <h3>{{ $t('dashboard.memberTier') }}</h3>
+              <div class="tier-member-row">
+                <span class="tier-badge" :class="tierBadgeClass">{{ tierBadgeText }}</span>
+                <p>{{ tierMemberDisplay }}</p>
+              </div>
+            </div>
+            <span class="tier-level">Lv.{{ userTier.level || '-' }}</span>
           </div>
-          <div class="summary-item">
-            <span class="label">{{ $t('myCenter.expireAt') }}</span>
-            <strong>{{ subscriptionExpireText }}</strong>
+
+          <div class="tier-progress-meta">
+            {{ $t('dashboard.tierPointsProgress', { points: formatTierNumber(userTier.points), total: formatTierNumber(userTier.nextPointsRequired) }) }}
           </div>
-          <div class="summary-item is-highlight">
-            <span class="label">{{ $t('myCenter.accountBalance') }}</span>
-            <strong>{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
+          <div class="tier-progress-track">
+            <div class="tier-progress-fill" :style="{ width: `${tierProgress}%` }"></div>
           </div>
-        </div>
-      </section>
+
+          <div class="tier-next" v-if="userTier.nextTierKey">
+            {{ $t('dashboard.nextTierHint', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}
+          </div>
+        </section>
+      </div>
 
       <section class="section-block dashboard-like-card">
         <h3 class="section-title">{{ $t('myCenter.financeTitle') }}</h3>
@@ -127,6 +153,47 @@ const remindExpire = ref(false);
 const remindTraffic = ref(false);
 const updatingSettings = ref(false);
 
+const userTier = computed(() => {
+  const tier = userInfo.value?.tier || {};
+  return {
+    key: tier.key || '',
+    level: Number(tier.level || 0),
+    points: Number(tier.points || 0),
+    nextTierKey: tier.next_tier_key || '',
+    nextPointsRequired: Number(tier.next_points_required || 0),
+    pointsToNextTier: Number(tier.points_to_next_tier || 0)
+  };
+});
+
+const hasTierInfo = computed(() => !!userTier.value.key || Number(userTier.value.level || 0) > 0);
+
+const normalizeTierName = (key) => {
+  const raw = `${key || ''}`.trim();
+  if (!raw) return '-';
+  return raw.replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+};
+
+const tierMemberDisplay = computed(() => normalizeTierName(userTier.value.key));
+const nextTierNameDisplay = computed(() => normalizeTierName(userTier.value.nextTierKey));
+const tierBadgeKey = computed(() => `${userTier.value.key || ''}`.toLowerCase());
+const tierBadgeClass = computed(() => {
+  if (tierBadgeKey.value.includes('bronze')) return 'is-bronze';
+  if (tierBadgeKey.value.includes('silver')) return 'is-silver';
+  if (tierBadgeKey.value.includes('gold')) return 'is-gold';
+  if (tierBadgeKey.value.includes('platinum')) return 'is-platinum';
+  if (tierBadgeKey.value.includes('diamond')) return 'is-diamond';
+  return 'is-default';
+});
+const tierBadgeText = computed(() => '★');
+
+const tierProgress = computed(() => {
+  const total = Number(userTier.value.nextPointsRequired || 0);
+  if (!total) return 0;
+  return Math.min(Math.max(Math.round((Number(userTier.value.points || 0) / total) * 100), 0), 100);
+});
+
+const formatTierNumber = (value) => Number(value || 0).toLocaleString();
+
 const subscriptionText = computed(() => {
   const name = subscribeInfo.value?.plan?.name;
   return name ? `${name}` : t('myCenter.noSubscription');
@@ -222,6 +289,102 @@ onMounted(async () => {
 }
 
 .summary-panel { padding: 1rem; }
+
+
+.overview-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 1fr);
+  gap: 1rem;
+
+  &.no-tier {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
+.tier-panel {
+  padding: 1rem;
+  background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.25), transparent 35%),
+    linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%);
+  color: #e8edff;
+  border-color: rgba(161, 181, 255, 0.3);
+
+  .tier-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #f8fbff;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: rgba(232, 237, 255, 0.9);
+    }
+  }
+
+  .tier-member-row {
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tier-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+
+    &.is-bronze { background: linear-gradient(135deg, #b27241, #d39d63); }
+    &.is-silver { background: linear-gradient(135deg, #8ea0bf, #d4deef); color: #23324d; }
+    &.is-gold { background: linear-gradient(135deg, #f59e0b, #fcd34d); color: #5b3a00; }
+    &.is-platinum { background: linear-gradient(135deg, #5ba7c6, #a8e4ff); color: #07364a; }
+    &.is-diamond { background: linear-gradient(135deg, #6a7bff, #9dc7ff); }
+    &.is-default { background: linear-gradient(135deg, #6379d6, #91a4ff); }
+  }
+
+  .tier-level {
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .tier-progress-meta,
+  .tier-next {
+    font-size: 13px;
+    color: rgba(239, 243, 255, 0.92);
+  }
+
+  .tier-progress-track {
+    width: 100%;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.24);
+    overflow: hidden;
+    margin: 8px 0;
+  }
+
+  .tier-progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #fbd15f, #f59e0b);
+  }
+}
 
 .summary-top {
   display: flex;
@@ -384,11 +547,16 @@ input:checked + .slider:before { transform: translateX(18px); }
 .bottom-safe-area { height: calc(env(safe-area-inset-bottom, 0px) + 10px); }
 
 @media (max-width: 1100px) {
+  .overview-panels {
+    grid-template-columns: 1fr;
+  }
+
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 768px) {
   .my-center-inner { max-width: 100%; gap: 0.75rem; }
+  .overview-panels { gap: 0.75rem; }
   .summary-panel { padding: 12px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }

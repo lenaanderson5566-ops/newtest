@@ -1445,10 +1445,6 @@ onUnmounted(() => {
 
       border-radius: 18px 18px 4px 18px;
 
-      // @media (prefers-color-scheme: dark) {
-      //   background-color: rgba(var(--theme-color-rgb), 0.15);
-      //   border: 1px solid rgba(var(--theme-color-rgb), 0.2);
-      // }
 
       .message-sender {
         color: rgba(var(--theme-color-rgb), 0.9);
@@ -1474,10 +1470,6 @@ onUnmounted(() => {
 
       border-radius: 18px 18px 18px 4px;
 
-      // @media (prefers-color-scheme: dark) {
-      //   background-color: rgba(var(--theme-color-rgb), 0.15);
-      //   border: 1px solid rgba(var(--theme-color-rgb), 0.2);
-      // }
 
       .message-sender {
         color: rgba(var(--theme-color-rgb), 0.9);
@@ -1541,10 +1533,6 @@ onUnmounted(() => {
 
       margin-left: 8px;
 
-      // @media (prefers-color-scheme: dark) {
-      //   background-color: rgba(74, 122, 226, 0.85);
-      //   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-      // }
     }
 
     &.admin-avatar {
@@ -1552,10 +1540,6 @@ onUnmounted(() => {
 
       margin-right: 8px;
 
-      // @media (prefers-color-scheme: dark) {
-      //   background-color: rgba(216, 73, 73, 0.85);
-      //   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-      // }
     }
   }
 
@@ -1570,9 +1554,6 @@ onUnmounted(() => {
 
     position: relative;
 
-    // @media (prefers-color-scheme: dark) {
-    //   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    // }
 
     .message-header {
       display: flex;
@@ -1624,8 +1605,6 @@ onUnmounted(() => {
   }
 }
 
-// 按应用主题启用深色
-
 .reply-container {
   padding: 1.25rem;
 
@@ -1639,9 +1618,6 @@ onUnmounted(() => {
 
   background-color: var(--card-bg);
 
-  // @media (prefers-color-scheme: dark) {
-  //   background-color: rgba(25, 30, 35, 0.8);
-  // }
 
   textarea {
     flex: 1;
@@ -1684,10 +1660,6 @@ onUnmounted(() => {
       opacity: 0.7;
     }
 
-    // @media (prefers-color-scheme: dark) {
-    //   background-color: rgba(30, 35, 40, 0.7);
-    //   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    // }
   }
 
   .send-reply-btn {
@@ -1761,13 +1733,8 @@ onUnmounted(() => {
       animation: spin 1s linear infinite;
     }
 
-    // @media (prefers-color-scheme: dark) {
-    //   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    // }
   }
 }
-
-// 按应用主题启用深色
 
 .no-selection,
 .message-loading,
@@ -1796,9 +1763,6 @@ onUnmounted(() => {
 
     color: var(--text-muted);
 
-    // @media (prefers-color-scheme: dark) {
-    //   opacity: 0.4;
-    // }
   }
 
   p {
@@ -1913,9 +1877,6 @@ onUnmounted(() => {
 
   transform-origin: center center;
 
-  // @media (prefers-color-scheme: dark) {
-  //   background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
-  // }
 }
 
 .modal-close-animation {
