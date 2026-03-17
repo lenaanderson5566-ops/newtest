@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="dashboard-container page-shell">
     <div class="dashboard-inner page-inner page-stack">
       <div class="overview-grid">
@@ -1943,6 +1943,7 @@ export default {
     }
   }
 
+  /* 订阅信息卡片 */
   .subscription-card {
     margin-bottom: 24px;
 
@@ -1998,6 +1999,7 @@ export default {
     }
   }
 
+  /* 数据统计卡片区域（会员等级 + 流量卡片） */
   .stats-grid {
     position: relative;
     display: grid;
@@ -2841,6 +2843,7 @@ export default {
   }
 
 
+  /* 出口 IP 地区卡片 */
   .ip-location-summary-card {
     border-radius: 20px;
     border: 1px solid rgba(131, 159, 213, 0.22);
@@ -3142,6 +3145,7 @@ export default {
     }
   }
 
+  /* 用量趋势图卡片 */
   .usage-trend-card {
     .card-body {
       padding-top: 6px;
@@ -3161,6 +3165,7 @@ export default {
       height: 280px;
     }
   }
+  /* 待支付横幅卡片 */
   .pending-order-banner {
     margin-bottom: 8px;
     min-height: 44px;
@@ -3599,7 +3604,7 @@ export default {
       &:disabled {
         opacity: 0.7;
         cursor: not-allowed;
-        transform: none !important;
+        transform: none;
       }
     }
 
@@ -3659,19 +3664,20 @@ export default {
 <style lang="scss">
 @use '@/assets/styles/no-plan-card' as *;
 
+/* 统计卡片状态样式（全局） */
 .dashboard-container .stats-card {
   &.warning-card,
   &.danger-card {
-    border-color: rgba(var(--stats-alert-rgb), 0.42) !important;
-    box-shadow: 0 4px 10px rgba(var(--stats-alert-rgb), 0.15) !important;
+    border-color: rgba(var(--stats-alert-rgb), 0.42);
+    box-shadow: 0 4px 10px rgba(var(--stats-alert-rgb), 0.15);
 
     .stats-icon {
-      background-color: rgba(var(--stats-alert-rgb), 0.1) !important;
-      color: var(--stats-level-color) !important;
+      background-color: rgba(var(--stats-alert-rgb), 0.1);
+      color: var(--stats-level-color);
     }
 
     .stats-value {
-      color: var(--stats-level-color) !important;
+      color: var(--stats-level-color);
     }
   }
 
@@ -3704,122 +3710,123 @@ export default {
   }
 }
 
+/* 流量包卡片弹窗（全局） */
 .traffic-package-modal-overlay {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 1200 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 16px !important;
-  background-color: rgba(0, 0, 0, 0.7) !important;
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .traffic-package-modal-container {
-  width: min(100%, 420px) !important;
-  max-height: calc(100vh - 32px) !important;
-  border-radius: 12px !important;
-  overflow: hidden !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  width: min(100%, 420px);
+  max-height: calc(100vh - 32px);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .traffic-package-modal-card-global {
-  display: flex !important;
-  flex-direction: column !important;
-  max-height: calc(100vh - 32px) !important;
-  overflow: hidden !important;
-  background-color: var(--card-background) !important;
-  border: 1px solid rgba(var(--theme-color-rgb), 0.15) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 32px);
+  overflow: hidden;
+  background-color: var(--card-background);
+  border: 1px solid rgba(var(--theme-color-rgb), 0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 
   .modal-header {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 16px 20px !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    background-color: rgba(var(--theme-color-rgb), 0.03) !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: rgba(var(--theme-color-rgb), 0.03);
 
     h3 {
-      margin: 0 !important;
-      color: var(--text-color) !important;
-      font-size: 18px !important;
-      font-weight: 600 !important;
+      margin: 0;
+      color: var(--text-color);
+      font-size: 18px;
+      font-weight: 600;
     }
 
     .close-button {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      border: none !important;
-      background: transparent !important;
-      color: var(--secondary-text-color) !important;
-      cursor: pointer !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: var(--secondary-text-color);
+      cursor: pointer;
 
       &:hover {
-        color: var(--text-color) !important;
+        color: var(--text-color);
       }
     }
   }
 
   .modal-body {
-    display: block !important;
-    padding: 20px !important;
-    overflow-y: auto !important;
+    display: block;
+    padding: 20px;
+    overflow-y: auto;
   }
 
   .traffic-package-desc {
-    margin: 0 0 14px !important;
-    color: var(--secondary-text-color) !important;
-    font-size: 14px !important;
-    line-height: 1.5 !important;
+    margin: 0 0 14px;
+    color: var(--secondary-text-color);
+    font-size: 14px;
+    line-height: 1.5;
   }
 
   .traffic-package-list {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 10px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .traffic-package-item {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 10px !important;
-    padding: 14px !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: 12px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     background: linear-gradient(
       180deg,
       rgba(var(--theme-color-rgb), 0.06) 0%,
       rgba(var(--theme-color-rgb), 0.02) 100%
-    ) !important;
+    );
   }
 
   .item-title-row {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 10px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
 
     strong {
-      color: var(--text-color) !important;
-      font-size: 15px !important;
-      font-weight: 600 !important;
+      color: var(--text-color);
+      font-size: 15px;
+      font-weight: 600;
     }
   }
 
   .item-price {
-    color: var(--theme-color) !important;
-    font-size: 24px !important;
-    font-weight: 700 !important;
+    color: var(--theme-color);
+    font-size: 24px;
+    font-weight: 700;
   }
 
   .item-content {
-    min-height: 32px !important;
-    color: var(--secondary-text-color) !important;
-    font-size: 13px !important;
-    line-height: 1.45 !important;
+    min-height: 32px;
+    color: var(--secondary-text-color);
+    font-size: 13px;
+    line-height: 1.45;
   }
 
 }
