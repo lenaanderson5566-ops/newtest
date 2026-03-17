@@ -1707,7 +1707,6 @@ export default {
       margin-bottom: 0;
     }
 
-    > .subscription-card,
     > .stats-grid,
     > .ip-location-summary-card,
     > .usage-trend-card {
@@ -1716,7 +1715,6 @@ export default {
 
     @media (max-width: 992px) {
       > .pending-order-banner,
-        > .subscription-card,
       > .stats-grid,
       > .ip-location-summary-card,
       > .usage-trend-card {
@@ -1758,62 +1756,6 @@ export default {
     }
   }
 
-  /* 订阅信息卡片 */
-  .subscription-card {
-    margin-bottom: 24px;
-
-    .subscription-info {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 15px;
-
-      .info-item {
-        display: flex;
-        flex-direction: column;
-
-        .info-label {
-          font-size: 13px;
-          color: var(--theme-text-secondary);
-          margin-bottom: 5px;
-        }
-
-        .info-value {
-          font-size: 16px;
-          font-weight: 600;
-          color: var(--theme-text-primary);
-        }
-      }
-    }
-
-    .subscription-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 15px;
-
-      @media (min-width: 769px) {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-
-        button {
-          flex: 0 0 auto;
-          min-width: 120px;
-        }
-      }
-
-      @media (max-width: 768px) {
-        flex-direction: column;
-        gap: 10px;
-
-        button {
-          width: 100%;
-        }
-      }
-
-    }
-  }
-
   /* 数据统计卡片区域（会员等级 + 流量卡片） */
   .stats-grid {
     position: relative;
@@ -1831,38 +1773,6 @@ export default {
       grid-auto-rows: minmax(124px, auto);
     }
 
-    .usage-panel-title-row {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 2px;
-
-      @media (min-width: 1200px) {
-        grid-row: 1;
-      }
-
-      h3 {
-        margin: 0;
-        font-size: 18px;
-        font-weight: 700;
-        color: var(--theme-text-primary);
-      }
-
-      .traffic-package-status {
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 999px;
-        padding: 6px 10px;
-        background: var(--theme-surface-muted);
-        color: var(--theme-text-secondary);
-
-        &.active {
-          background: rgba(var(--theme-color-rgb), 0.14);
-          color: var(--theme-color);
-        }
-      }
-    }
     .stats-card {
       position: relative;
       background-color: var(--card-bg-color);
@@ -1875,45 +1785,6 @@ export default {
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
       border: 1px solid var(--border-color);
-
-      .water-container {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        border-radius: inherit;
-        pointer-events: none;
-      }
-
-      .water-progress {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: rgba(var(--theme-color-rgb), 0.12);
-        transition: none;
-        border-radius: 0 0 16px 16px;
-        height: 0;
-
-        &.animate-water {
-          transition: height 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        &:after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-        }
-      }
-
-      .stats-icon, .stats-info {
-        position: relative;
-        z-index: 1;
-      }
 
       /* 流量额度包卡片（订阅流量 / 叠加包 / 总览）样式 */
       &.traffic-board-card {
@@ -2417,67 +2288,9 @@ export default {
         }
       }
 
-      &.warning-card .water-progress {
-        background-color: rgba(255, 152, 0, 0.15);
-      }
-
-      &.danger-card .water-progress {
-        background-color: rgba(244, 67, 54, 0.15);
-      }
-
-      @keyframes wave {
-        0% {
-          transform: translateX(0) translateZ(0);
-        }
-        100% {
-          transform: translateX(-50%) translateZ(0);
-        }
-      }
-
       &:hover {
         border-color: rgba(148, 163, 184, 0.24);
         box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
-      }
-
-      .stats-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-        border-radius: 12px;
-        margin-right: 15px;
-        color: var(--theme-color);
-      }
-
-      .stats-info {
-        flex: 1;
-
-        .stats-value {
-          font-size: 18px;
-          font-weight: 600;
-          color: var(--theme-text-primary);
-          margin-bottom: 5px;
-        }
-
-        .stats-label {
-          font-size: 14px;
-          color: var(--theme-text-secondary);
-        }
-      }
-
-      .chevron-icon {
-        color: var(--theme-color);
-        opacity: 0.5;
-        transition: all 0.3s ease;
-      }
-
-      &:hover {
-        .chevron-icon {
-          transform: translateX(3px);
-          opacity: 1;
-        }
       }
     }
   }
@@ -3018,47 +2831,8 @@ export default {
     }
   }
 
-  .status-badge,
-  .status-tag {
-    display: inline-flex;
-    align-items: center;
-    height: 22px;
-    padding: 0 8px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    border: none;
-  }
-
-  .status-badge.success, .status-tag.success { background: var(--success-background); color: var(--success-color); }
-  .status-badge.warning, .status-tag.warning { background: var(--warning-background); color: var(--warning-color); }
-  .status-badge.error, .status-tag.error { background: var(--error-background); color: var(--error-color); }
 }
 
-
-.skeleton-loading {
-  overflow: hidden;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    transform: translateX(-100%);
-    background-image: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0) 0,
-            rgba(255, 255, 255, 0.2) 20%,
-            rgba(255, 255, 255, 0.5) 60%,
-            rgba(255, 255, 255, 0) 100%
-    );
-    animation: shimmer 2s infinite;
-    z-index: 1;
-  }
-}
 
 @keyframes shimmer {
   100% {
@@ -3134,36 +2908,6 @@ export default {
     }
   }
 
-  .subscription-card .subscription-info {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .subscription-card .info-item {
-    width: 100%;
-    padding: 0;
-    border-right: none;
-    border-bottom: 1px solid var(--border-light-color);
-    padding-bottom: 12px;
-  }
-
-  .subscription-card .info-item:last-child {
-    border-bottom: none;
-  }
-
-  .subscription-actions {
-    flex-direction: column;
-    margin-top: 12px;
-  }
-
-}
-
-@media (min-width: 769px) {
-  .subscription-actions {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-  }
 }
 
 @media (min-width: 769px) and (max-width: 1199px) {
@@ -3203,35 +2947,6 @@ export default {
     animation: shimmer 2s infinite;
     z-index: 1;
   }
-}
-
-
-.skeleton-header {
-  height: 24px;
-  margin-bottom: 20px;
-  background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
-  border-radius: 6px;
-  width: 30%;
-  margin: 16px 20px;
-  position: relative;
-}
-
-.skeleton-body {
-  padding: 0 20px 20px;
-}
-
-.skeleton-row {
-  height: 16px;
-  margin-bottom: 16px;
-  background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
-  border-radius: 4px;
-  width: 100%;
-  position: relative;
-}
-
-.skeleton-row:last-child {
-  width: 75%;
-  margin-bottom: 0;
 }
 
 
@@ -3310,16 +3025,6 @@ export default {
 .modal-fade-enter-from,
 .modal-fade-leave-to {
   opacity: 0;
-}
-
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 
