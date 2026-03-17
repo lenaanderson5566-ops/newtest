@@ -4765,6 +4765,33 @@ export default {
   max-height: calc(100vh - 32px);
 }
 
+
+.traffic-package-modal-card,
+.reset-traffic-modal {
+  .modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .modal-footer .cancel-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+    color: var(--theme-text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(var(--theme-color-rgb), 0.06);
+    }
+  }
+}
+
 .traffic-package-modal-card {
   max-height: calc(100vh - 32px);
 
@@ -4887,28 +4914,6 @@ export default {
     }
   }
 
-  .modal-footer {
-    padding: 16px 20px;
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    justify-content: flex-end;
-
-    .cancel-btn {
-      padding: 8px 16px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background-color: transparent;
-      color: var(--theme-text-primary);
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.06);
-      }
-    }
-  }
 }
 
 .modal-overlay {
@@ -5019,16 +5024,6 @@ export default {
         opacity: 0.7;
         cursor: not-allowed;
         transform: none !important;
-      }
-    }
-
-    .cancel-btn {
-      background-color: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--theme-text-primary);
-
-      &:hover:not(:disabled) {
-        background-color: rgba(0, 0, 0, 0.05);
       }
     }
 
