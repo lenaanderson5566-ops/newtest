@@ -1915,11 +1915,17 @@ export default {
         z-index: 1;
       }
 
-      /* 流量额度包卡片（订阅流量 / 叠加包 / 总览）基础样式 */
+      /* 流量额度包卡片（订阅流量 / 叠加包 / 总览）样式 */
       &.traffic-board-card {
+        width: 100%;
         min-width: 0;
+        min-height: clamp(172px, 18vw, 232px);
+        overflow: visible;
+        writing-mode: horizontal-tb;
+        text-orientation: mixed;
         flex-direction: column;
         align-items: flex-start;
+        justify-content: flex-start;
         gap: 10px;
 
         .stats-info {
@@ -1934,20 +1940,6 @@ export default {
         .stats-label {
           font-size: 12px;
         }
-      }
-
-      /* 流量额度包卡片：标题、剩余值、进度和状态态样式 */
-      &.traffic-board-card {
-        width: 100%;
-        min-width: 0;
-        min-height: clamp(172px, 18vw, 232px);
-        overflow: visible;
-        writing-mode: horizontal-tb;
-        text-orientation: mixed;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 10px;
 
         .usage-card-title {
           position: relative;
