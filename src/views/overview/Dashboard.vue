@@ -449,13 +449,12 @@ import {
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import InfoCard from '@/components/common/InfoCard.vue';
-import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
+import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
 import { updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import {fetchPlans, submitOrder} from '@/api/account/shop';
-import MarkdownIt from 'markdown-it';
 import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
 import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
 import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube.svg';
@@ -464,42 +463,6 @@ import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
 import serviceGoogleIcon from '@/assets/images/service-icons/google.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
-
-const md = new MarkdownIt({
-  html: true,
-  breaks: true,
-  linkify: true,
-  typographer: true,
-});
-
-md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
-  const token = tokens[idx];
-  const hrefIndex = token.attrIndex('href');
-  let href = '';
-
-  if (hrefIndex >= 0) {
-    href = token.attrs[hrefIndex][1];
-  }
-
-  if (href.includes('#eztheme-btn') || href.includes('class=eztheme-btn') || href.includes('?eztheme-btn')) {
-    token.attrs[hrefIndex][1] = href
-        .replace('#eztheme-btn', '')
-        .replace('class=eztheme-btn', '')
-        .replace('?eztheme-btn', '');
-
-    const classIndex = token.attrIndex('class');
-    if (classIndex < 0) {
-      token.attrPush(['class', 'eztheme-btn']);
-    } else {
-      const classes = token.attrs[classIndex][1];
-      if (!classes.includes('eztheme-btn')) {
-        token.attrs[classIndex][1] = classes + ' eztheme-btn';
-      }
-    }
-  }
-
-  return self.renderToken(tokens, idx, options);
-};
 
 export default {
   name: 'UserDashboard',
@@ -546,12 +509,8 @@ export default {
     const {t, locale} = useI18n();
     const router = useRouter();
     const clientConfig = reactive(CLIENT_CONFIG);
-    const notices = ref([]);
-    const autoRotateNotices = ref(true);
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
-    const currentNoticeIndex = ref(0);
-    const showNoticeDetails = ref(false);
     const userStats = reactive({
       remainingTraffic: '',
       remainingDays: '',
@@ -611,7 +570,6 @@ export default {
     const loading = reactive({
       userInfo: true,
       userStats: true,
-      notices: true,
       userPlan: true,
       subscribe: true
     });
@@ -627,7 +585,6 @@ export default {
 
       await Promise.allSettled([
         fetchSubscribe(true),
-        fetchNotices(true),
         fetchTrafficTrend()
       ]);
     });
@@ -1161,45 +1118,6 @@ export default {
       }
     };
 
-    const fetchNotices = async (force = false) => {
-      if (!force && loading.notices === false && notices.value.data && notices.value.data.length > 0) return;
-
-      loading.notices = true;
-      try {
-        const response = await getNotices();
-        if (response && response.data) {
-          notices.value = response;
-
-          checkForPopupNotices();
-        }
-      } catch (error) {
-      } finally {
-        loading.notices = false;
-      }
-    };
-
-    const checkForPopupNotices = () => {
-      if (!notices.value || !notices.value.data || notices.value.data.length === 0) return;
-
-      const popupNoticeIndex = notices.value.data.findIndex(notice =>
-          notice.tags && Array.isArray(notice.tags) && notice.tags.includes('\u5f39\u7a97')
-      );
-
-      if (popupNoticeIndex !== -1) {
-        const noticeId = notices.value.data[popupNoticeIndex].id;
-        const popupShownKey = `popup_notice_shown_${noticeId}`;
-
-        if (!sessionStorage.getItem(popupShownKey)) {
-          currentNoticeIndex.value = popupNoticeIndex;
-          showNoticeDetails.value = true;
-          sessionStorage.setItem(popupShownKey, 'true');
-          nextTick(() => {
-            updateModalHeight();
-          });
-        }
-      }
-    };
-
     const fetchUserStats = async () => {
       if (loading.userStats === false && userStats.remainingTraffic !== '0 GB') return;
 
@@ -1326,54 +1244,6 @@ export default {
       router.push('/billing?tab=orders');
     };
 
-    const prevNotice = () => {
-      if (!notices.value?.data?.length) return;
-      if (currentNoticeIndex.value > 0) {
-        currentNoticeIndex.value--;
-      } else {
-        currentNoticeIndex.value = notices.value.data.length - 1;
-      }
-    };
-
-    const nextNotice = () => {
-      if (!notices.value?.data?.length) return;
-      if (currentNoticeIndex.value < notices.value.data.length - 1) {
-        currentNoticeIndex.value++;
-      } else {
-        currentNoticeIndex.value = 0;
-      }
-    };
-
-    const goToNotice = (index) => {
-      if (!notices.value?.data?.length) return;
-      currentNoticeIndex.value = Math.max(0, Math.min(index, notices.value.data.length - 1));
-    };
-
-    const noticeBackgroundStyle = (notice) => {
-      if (!notice?.img_url) return {};
-      return {
-        backgroundImage: `url(${notice.img_url})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      };
-    };
-
-    const showNoticeModal = () => {
-      showNoticeDetails.value = true;
-      nextTick(() => {
-        updateModalHeight();
-      });
-    };
-
-    const closeNoticeModal = () => {
-      showNoticeDetails.value = false;
-    };
-
-    const formatDate = (dateString) => {
-      if (!dateString) return '';
-      const date = new Date(dateString * 1000);
-      return date.toLocaleDateString();
-    };
 
     const formatResetDateTime = (date) => {
       if (!(date instanceof Date) || Number.isNaN(date.getTime())) return null;
@@ -1762,7 +1632,6 @@ export default {
 
       fetchSubscribe();
 
-      fetchNotices();
 
       fetchUserStats();
       fetchTrafficTrend();
@@ -1773,70 +1642,7 @@ export default {
     watch(() => userPlan.value.subscribeUrl, () => {
     });
 
-    const processedNoticeContent = computed(() => {
-      if (!notices.value?.data?.[currentNoticeIndex.value]?.content) {
-        return '';
-      }
-
-      const content = notices.value.data[currentNoticeIndex.value].content;
-
-      const hasHtml = /<[a-z][\s\S]*>/i.test(content);
-
-      if (hasHtml) {
-        let processedContent = content.replace(/\n/g, '<br>');
-
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = processedContent;
-
-        const buttons = tempDiv.querySelectorAll('button, a');
-        buttons.forEach(button => {
-          if (button.className && button.className.includes('eztheme-btn')) {
-            button.classList.remove('markdown-link');
-            button.style.textDecoration = 'none';
-            button.style.borderBottom = 'none';
-            button.setAttribute('data-no-markdown-style', 'true');
-          }
-
-          if (button.tagName.toLowerCase() === 'a') {
-            const href = button.getAttribute('href');
-            if (href && (href.includes('#eztheme-btn') || href.includes('?eztheme-btn') || href.includes('class=eztheme-btn'))) {
-              button.href = href
-                  .replace('#eztheme-btn', '')
-                  .replace('?eztheme-btn', '')
-                  .replace('class=eztheme-btn', '');
-              button.classList.add('eztheme-btn');
-              button.style.textDecoration = 'none';
-              button.style.borderBottom = 'none';
-              button.setAttribute('data-no-markdown-style', 'true');
-            }
-          }
-        });
-
-        return tempDiv.innerHTML;
-      } else {
-        return md.render(content);
-      }
-    });
-
-    const windowWidth = ref(window.innerWidth);
-    const windowHeight = ref(window.innerHeight);
-    const noticeModalStyle = ref({});
-
-    const updateModalHeight = () => {
-      const isMobile = windowWidth.value <= 768;
-      const availableHeight = windowHeight.value * (isMobile ? 0.75 : 0.8);
-
-      noticeModalStyle.value = {
-        maxHeight: `${availableHeight}px`
-      };
-    };
-
     const handleResize = () => {
-      windowWidth.value = window.innerWidth;
-      windowHeight.value = window.innerHeight;
-      if (showNoticeDetails.value) {
-        updateModalHeight();
-      }
       if (trafficTrendChart) {
         trafficTrendChart.resize();
       }
@@ -1880,27 +1686,15 @@ export default {
     const timers = {};
     const listeners = {};
 
-    const startAutoRotateNotices = () => {
-      if (!autoRotateNotices.value) return;
-
-      createTimer(timers, 'noticeRotation', () => {
-        if (notices.value && notices.value.data && notices.value.data.length > 1) {
-          nextNotice();
-        }
-      }, 8000, true);
-    };
-
     onActivated(() => {
       console.log('Dashboard组件被激活');
       if (needRefreshData.value) {
         fetchUserInfo();
         fetchUserStats();
-        fetchNotices();
         scheduleIpLocationRefresh();
         needRefreshData.value = false;
       }
 
-      startAutoRotateNotices();
     });
 
     onDeactivated(() => {
@@ -1966,25 +1760,13 @@ export default {
       currencySymbol,
       userPlan,
       clientConfig,
-      notices,
       loading,
       goToShop,
       hasPendingItems,
       goToOrders,
       router,
-      currentNoticeIndex,
-      prevNotice,
-      nextNotice,
-      goToNotice,
-      noticeBackgroundStyle,
-      formatDate,
       formatTraffic,
       formatPackageRemaining,
-      showNoticeModal,
-      closeNoticeModal,
-      showNoticeDetails,
-      checkForPopupNotices,
-      noticeModalStyle,
       openResetTrafficModal,
       handlePopupClose,
       handlePopupConfirm,
@@ -2020,7 +1802,6 @@ export default {
       isLowTraffic,
       isTrafficDepleted,
       hasPlan,
-      processedNoticeContent,
       showRenewPlanButton,
       renewPlan,
       isXiaoPanel,
@@ -2113,7 +1894,6 @@ export default {
       margin-bottom: 0;
     }
 
-    > .notice-card,
     > .subscription-card,
     > .stats-grid,
     > .ip-location-summary-card,
@@ -2124,8 +1904,7 @@ export default {
 
     @media (max-width: 992px) {
       > .pending-order-banner,
-      > .notice-card,
-      > .subscription-card,
+        > .subscription-card,
       > .stats-grid,
       > .ip-location-summary-card,
       > .usage-trend-card,
@@ -3433,174 +3212,6 @@ export default {
       height: 280px;
     }
   }
-
-  .notice-card {
-    margin-bottom: 12px;
-    padding: 12px;
-    border-color: rgba(148, 163, 184, 0.14);
-    background: color-mix(in srgb, var(--card-bg-color) 98%, rgba(var(--theme-color-rgb), 0.02));
-    box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
-
-    &:hover {
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-      border-color: rgba(148, 163, 184, 0.2);
-      transform: none;
-    }
-
-    .card-body {
-      padding: 0;
-    }
-
-    .notice-slider {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .notice-item {
-      position: relative;
-      padding: 12px 14px;
-      border-radius: 8px;
-      background-color: rgba(var(--theme-color-rgb), 0.045);
-      overflow: hidden;
-      min-height: 84px;
-
-      .notice-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.64), rgba(15, 23, 42, 0.2));
-        pointer-events: none;
-      }
-
-      .notice-content {
-        position: relative;
-        z-index: 1;
-      }
-
-      .notice-title {
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 6px;
-        color: var(--theme-white);
-        line-height: 1.35;
-      }
-
-      .notice-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 8px;
-
-        .notice-date {
-          font-size: 11px;
-          color: rgba(255, 255, 255, 0.85);
-        }
-
-        .notice-nav {
-          display: flex;
-          gap: 8px;
-
-          .btn-notice {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3px;
-            padding: 5px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            background-color: rgba(var(--theme-color-rgb), 0.14);
-            color: var(--theme-white);
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-
-            &:hover:not(:disabled) {
-              background-color: rgba(var(--theme-color-rgb), 0.35);
-              transform: translateY(-1px);
-            }
-
-            &:disabled {
-              opacity: 0.5;
-              cursor: not-allowed;
-            }
-          }
-        }
-
-        @media (max-width: 576px) {
-          flex-direction: column;
-          align-items: flex-start;
-
-          .notice-nav {
-            width: 100%;
-
-            .btn-notice {
-              flex: 1;
-              justify-content: center;
-              padding: 6px;
-            }
-          }
-        }
-
-        @media (max-width: 470px) {
-          .notice-nav {
-            display: grid;
-            grid-template-rows: auto auto;
-            gap: 8px;
-            width: 100%;
-
-            .btn-notice:nth-child(2) {
-              grid-row: 1;
-              grid-column: 1 / span 2;
-            }
-
-            .btn-notice:nth-child(1),
-            .btn-notice:nth-child(3) {
-              grid-row: 2;
-            }
-
-            .btn-notice:nth-child(1) {
-              grid-column: 1;
-            }
-
-            .btn-notice:nth-child(3) {
-              grid-column: 2;
-            }
-
-            .btn-notice {
-              margin: 0;
-              width: 100%;
-            }
-          }
-        }
-      }
-    }
-
-    .notice-dots {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 2px;
-
-      .notice-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 999px;
-        border: none;
-        padding: 0;
-        background: rgba(var(--theme-color-rgb), 0.25);
-        cursor: pointer;
-        transition: all 0.2s ease;
-
-        &.active {
-          width: 14px;
-          background: rgba(var(--theme-color-rgb), 0.95);
-        }
-      }
-    }
-  }
-
-
   .pending-order-banner {
     margin-bottom: 8px;
     min-height: 44px;
@@ -4304,246 +3915,6 @@ export default {
 }
 
 
-.notice-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
-  backdrop-filter: blur(4px);
-}
-
-.notice-modal {
-  width: 100%;
-  max-width: 500px;
-  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.15);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  max-height: 80vh;
-  animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-
-}
-
-.notice-modal-header {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-  background-color: rgba(var(--theme-color-rgb), 0.03);
-
-  .popup-title {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--theme-text-primary);
-  }
-
-  .popup-close-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--theme-text-secondary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-    margin: -8px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-      color: var(--theme-text-primary);
-      transform: rotate(90deg);
-    }
-  }
-}
-
-.notice-modal-content {
-  padding: 20px;
-  overflow-y: auto;
-  flex: 1;
-  background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
-
-  .notice-content {
-    font-size: 14px;
-    line-height: 1.6;
-
-    :deep(p) {
-      margin: 12px 0;
-      line-height: 1.6;
-      color: var(--theme-text-primary);
-    }
-
-    :deep(strong) {
-      color: var(--theme-color);
-      font-weight: 600;
-    }
-
-    :deep(a) {
-      color: var(--theme-color);
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    :deep(img) {
-      max-width: 100%;
-      height: auto;
-      margin: 10px 0;
-      border-radius: 8px;
-    }
-
-    :deep(ul), :deep(ol) {
-      padding-left: 20px;
-      margin-bottom: 16px;
-
-      li {
-        margin-bottom: 8px;
-        list-style-position: outside;
-      }
-    }
-
-    :deep(ul) li {
-      list-style-type: disc;
-    }
-
-    :deep(ol) li {
-      list-style-type: decimal;
-    }
-
-    :deep(h1), :deep(h2), :deep(h3), :deep(h4), :deep(h5), :deep(h6) {
-      margin-top: 24px;
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-
-    :deep(blockquote) {
-      border-left: 4px solid var(--theme-color);
-      padding: 10px 15px;
-      margin: 16px 0;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-      border-radius: 0 6px 6px 0;
-
-      p {
-        margin: 8px 0;
-      }
-    }
-
-    :deep(code) {
-      font-family: monospace;
-      background-color: rgba(var(--theme-color-rgb), 0.1);
-      padding: 2px 4px;
-      border-radius: 4px;
-      font-size: 0.9em;
-    }
-
-    :deep(pre) {
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-      padding: 12px;
-      border-radius: 6px;
-      overflow-x: auto;
-      margin: 16px 0;
-
-      code {
-        background-color: transparent;
-        padding: 0;
-      }
-    }
-
-    :deep(table) {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 16px 0;
-
-      th, td {
-        border: 1px solid var(--border-color);
-        padding: 8px 12px;
-        text-align: left;
-      }
-
-      th {
-        background-color: rgba(var(--theme-color-rgb), 0.05);
-        font-weight: 600;
-      }
-
-      tr:nth-child(even) {
-        background-color: rgba(var(--theme-color-rgb), 0.02);
-      }
-    }
-
-    :deep(a.eztheme-btn) {
-      display: inline-block;
-      padding: 8px 16px;
-      background-color: var(--theme-color);
-      color: white;
-      border-radius: 8px;
-      margin: 10px 0;
-      text-decoration: none;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background-color: var(--primary-color-hover);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(var(--theme-color-rgb), 0.3);
-      }
-    }
-  }
-}
-
-.notice-modal-footer {
-  padding: 15px 20px;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: flex-end;
-
-  .popup-action-btn {
-    padding: 8px 20px;
-    background-color: var(--theme-color);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 120px;
-
-    &.adaptive-btn {
-      min-width: auto;
-      padding: 8px 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
-    }
-
-    &:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      background-color: var(--theme-text-secondary);
-    }
-  }
-}
-
 .popup-slide-enter-active {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -4564,29 +3935,6 @@ export default {
 
 
 @media (max-width: 768px) {
-  .notice-modal-overlay {
-    padding: 15px;
-
-    .notice-modal {
-      max-width: 100%;
-      max-height: 85vh;
-
-      .notice-modal-header {
-        padding: 15px;
-
-        .popup-title {
-          font-size: 16px;
-        }
-      }
-
-      .notice-modal-content {
-        padding: 15px;
-      }
-
-      .notice-modal-footer {
-        padding: 12px 15px;
-      }
-    }
   }
 }
 
@@ -4899,8 +4247,6 @@ export default {
   }
 }
 
-}
-
 
 </style>
 
@@ -4949,62 +4295,6 @@ export default {
         background-color: rgba(var(--theme-color-rgb), 0.08);
         transform: translateY(-3px);
       }
-    }
-  }
-}
-
-.dashboard-container .eztheme-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: auto !important;
-  padding: 8px 16px !important;
-  margin: 8px 0 !important;
-  border: none !important;
-  border-radius: 6px !important;
-  border-color: transparent !important;
-  background-color: rgba(var(--theme-color-rgb), 0.1) !important;
-  color: var(--theme-color) !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  text-align: center !important;
-  text-decoration: none !important;
-  box-shadow: none !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
-
-  &:hover,
-  &:active,
-  &:focus,
-  &:visited {
-    background-color: rgba(var(--theme-color-rgb), 0.2) !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.1) !important;
-    border-color: transparent !important;
-    color: var(--theme-color) !important;
-    text-decoration: none !important;
-  }
-
-  &:active {
-    transform: translateY(0) !important;
-    box-shadow: none !important;
-  }
-
-  &:focus {
-    outline: none !important;
-    box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.3) !important;
-  }
-
-  &[href] {
-    background-image: none !important;
-    background-repeat: no-repeat !important;
-    background-position: initial !important;
-    background-size: initial !important;
-
-    &::before,
-    &::after {
-      display: none !important;
-      content: none !important;
     }
   }
 }
