@@ -241,13 +241,12 @@ import { useRouter } from 'vue-router';
 
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 
-import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
 import InfoCard from '@/components/common/InfoCard.vue';
 import DOMPurify from 'dompurify';
 
 
 
-import { isXiaoV2board, MORE_PAGE_CONFIG, NAVIGATION_CONFIG } from '@/utils/baseConfig';
+import { MORE_PAGE_CONFIG, NAVIGATION_CONFIG } from '@/utils/baseConfig';
 
 
 
@@ -262,10 +261,6 @@ const isSmallScreen = ref(false);
 
 
 
-
-
-
-const isXiaoPanel = isXiaoV2board();
 
 
 
@@ -343,6 +338,7 @@ const getSafeNavigationUrl = (url) => {
   if (!rawUrl) return null;
 
   if (rawUrl.startsWith('/')) return rawUrl;
+  if (rawUrl.startsWith('#/')) return rawUrl;
 
   try {
     const parsed = new URL(rawUrl, window.location.origin);
@@ -390,15 +386,7 @@ const getIconComponent = (iconName) => {
 
 
 
-const getLocaleTitle = (key) => {
-
-  return t(`more.${key}`, key);
-
-};
-
-
-
-onMounted(async () => {
+onMounted(() => {
 
 
   
