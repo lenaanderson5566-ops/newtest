@@ -209,7 +209,7 @@
           <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
           <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
           <div v-else-if="ipLocationData" class="ip-location-content">
-            <div class="ip-location-main-info">
+            <div class="ip-banner-main">
               <div class="ip-meta-title">{{ $t('dashboard.currentExitRegion') }}</div>
               <div class="ip-main-line">
                 <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
@@ -217,44 +217,13 @@
               </div>
               <div class="ip-sub-line">
                 <span class="ip-region">{{ ipLocationDisplayText }}</span>
-                <button class="ip-refresh-btn btn btn-secondary" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
-                  <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
-                  <span>{{ ipLocationLoading ? $t('dashboard.refreshing') : $t('common.refresh') }}</span>
-                </button>
-              </div>
-              <div class="ip-status-row">
-                <span class="status-dot" aria-hidden="true"></span>
-                <span>{{ $t('dashboard.smoothStatusNormal') }}</span>
+                <span class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</span>
               </div>
             </div>
-
-
-            <div class="ip-service-reference" v-if="ipLocationServiceCatalog.length">
-              <div class="service-reference-title">
-                <span>{{ $t('dashboard.serviceReference') }}</span>
-                <span class="info-tooltip" tabindex="0" role="button" :aria-label="$t('dashboard.serviceReferenceHint')">
-                  <IconHelpCircle :size="14" />
-                  <span class="info-tooltip-content">{{ $t('dashboard.serviceReferenceHint') }}</span>
-                </span>
-              </div>
-              <div class="service-reference-tags" role="list" :aria-label="$t('dashboard.serviceReferenceAria')">
-                <div
-                  v-for="service in ipLocationServiceCatalog"
-                  :key="`ip-service-${service.key}`"
-                  class="service-reference-item"
-                  :class="{ active: isIpServiceReferenced(service.key) }"
-                  role="listitem"
-                  :title="`${service.label} · ${isIpServiceReferenced(service.key) ? $t('dashboard.serviceAvailableInRegion') : $t('dashboard.serviceNotInRegion')}`"
-                >
-                  <span class="service-reference-tile">
-                    <img class="service-reference-icon" :src="service.icon" :alt="service.label" loading="lazy" />
-                  </span>
-                  <span class="service-reference-label">{{ service.label }}</span>
-                </div>
-              </div>
-            </div>
-
-            <IconChevronRight class="ip-card-arrow" :size="20" />
+            <button class="ip-refresh-btn btn btn-secondary" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
+              <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
+              <span>{{ ipLocationLoading ? $t('dashboard.refreshing') : $t('common.refresh') }}</span>
+            </button>
           </div>
           <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
         </div>
@@ -388,12 +357,6 @@ import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import {fetchPlans} from '@/api/account/shop';
-import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
-import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
-import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube.svg';
-import serviceChatgptIcon from '@/assets/images/service-icons/chatgpt.svg';
-import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
-import serviceGoogleIcon from '@/assets/images/service-icons/google.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
@@ -1204,35 +1167,6 @@ export default {
       return badgeMap[code] || 'is-red';
     });
 
-    const ipLocationServiceReferences = computed(() => {
-      const code = ipLocationCode.value;
-      const serviceMap = DASHBOARD_CONFIG.ipRegionServiceReferenceByCountryCode || {};
-      const defaultServices = DASHBOARD_CONFIG.ipRegionServiceReferenceDefault || [];
-      const services = serviceMap[code] || defaultServices;
-      return Array.isArray(services) ? services : [];
-    });
-
-    const ipLocationServiceIconMap = {
-      'Netflix': serviceNetflixIcon,
-      'Disney+': serviceDisneyPlusIcon,
-      'YouTube Premium': serviceYoutubePremiumIcon,
-      'ChatGPT': serviceChatgptIcon,
-      Claude: serviceClaudeIcon,
-      Google: serviceGoogleIcon,
-    };
-
-    const ipLocationServiceCatalog = computed(() => {
-      const serviceCatalog = DASHBOARD_CONFIG.ipRegionServiceCatalog || [];
-      return serviceCatalog.map((item) => ({
-        ...item,
-        icon: ipLocationServiceIconMap[item.key] || serviceChatgptIcon,
-      }));
-    });
-
-    const isIpServiceReferenced = (serviceKey) => {
-      return ipLocationServiceReferences.value.includes(serviceKey);
-    };
-
     const fetchTrafficTrend = async () => {
       trafficTrendLoading.value = true;
       trafficTrendError.value = false;
@@ -1558,9 +1492,6 @@ export default {
       ipLocationCode,
       ipLocationPrimaryRegionText,
       ipLocationCodeBadgeClass,
-      ipLocationServiceReferences,
-      ipLocationServiceCatalog,
-      isIpServiceReferenced,
       triggerIpLocationRefresh,
       DASHBOARD_CONFIG,
       allowNewPeriod,
@@ -2284,15 +2215,15 @@ export default {
   }
 
 
-  /* IP 位置卡片 */
+  /* IP 位置卡片（横幅） */
   .ip-location-summary-card {
-    border-radius: 20px;
-    border: 1px solid rgba(148, 163, 184, 0.24);
-    background: linear-gradient(180deg, rgba(248, 250, 252, 0.94) 0%, rgba(241, 245, 249, 0.88) 100%);
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background: linear-gradient(90deg, rgba(248, 250, 252, 0.96) 0%, rgba(241, 245, 249, 0.92) 100%);
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
 
     .ip-location-summary-body {
-      padding-top: 0;
+      padding: 12px 14px;
     }
 
     .ip-location-state {
@@ -2305,64 +2236,49 @@ export default {
     }
 
     .ip-location-content {
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.35fr);
-      gap: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       color: var(--theme-text-primary);
-      align-items: start;
-      position: relative;
-
-      @media (max-width: 1220px) {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
 
       @media (max-width: 920px) {
-        grid-template-columns: 1fr;
+        align-items: flex-start;
+        flex-direction: column;
       }
     }
 
-    .ip-card-arrow {
-      position: absolute;
-      top: 4px;
-      right: 0;
-      color: rgba(71, 85, 105, 0.78);
-    }
-
-    .ip-location-main-info {
+    .ip-banner-main {
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      min-width: 0;
+      gap: 6px;
     }
 
     .ip-meta-title {
       color: var(--theme-text-secondary);
-      font-size: 18px;
+      font-size: 13px;
       line-height: 1.2;
-      font-weight: 700;
+      font-weight: 600;
+      margin: 0;
     }
 
     .ip-main-line {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .ip-region-primary {
-      font-size: 44px;
+      font-size: 24px;
       line-height: 1.15;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       color: var(--theme-text-primary);
 
-      @media (max-width: 1220px) {
-        font-size: 38px;
-      }
-
       @media (max-width: 680px) {
-        font-size: 30px;
+        font-size: 20px;
       }
     }
 
@@ -2381,6 +2297,7 @@ export default {
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      flex-shrink: 0;
 
       &:disabled {
         opacity: 0.7;
@@ -2397,37 +2314,20 @@ export default {
       letter-spacing: 0.2px;
     }
 
-    .ip-status-row {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--theme-text-primary);
-      font-size: 16px;
-      font-weight: 600;
-
-      .status-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: #35c26b;
-        box-shadow: 0 0 0 4px rgba(53, 194, 107, 0.2);
-      }
-    }
-
     .region-code-badge {
-      min-width: 44px;
-      height: 24px;
+      min-width: 40px;
+      height: 22px;
       border-radius: 999px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       padding: 0 8px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
       color: var(--theme-white);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
-      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.22);
 
       &.is-red { background: linear-gradient(135deg, #e11d48, #9f1239); }
       &.is-pink { background: linear-gradient(135deg, #be185d, #831843); }
@@ -2438,98 +2338,8 @@ export default {
       color: var(--theme-text-secondary);
       font-size: 13px;
     }
-
-    .ip-service-reference {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(164, 191, 242, 0.24);
-      min-height: 100%;
-    }
-
-    .service-reference-title {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #f3f7ff;
-      letter-spacing: 0.2px;
-    }
-
-    .service-reference-tags {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      overflow: visible;
-      padding-bottom: 2px;
-    }
-
-    @media (max-width: 680px) {
-      .service-reference-tags {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .service-reference-item {
-      width: 100%;
-      min-height: 38px;
-      border-radius: 999px;
-      display: inline-flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 8px;
-      white-space: nowrap;
-      padding: 6px 12px;
-      border: none;
-      background: rgba(255, 255, 255, 0.08);
-      color: rgba(233, 243, 255, 0.92);
-      opacity: 0.84;
-      transition: all 0.2s ease;
-
-      .service-reference-tile {
-        width: 24px;
-        height: 24px;
-        border-radius: 6px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--theme-white);
-        box-shadow: 0 0 0 1px rgba(190, 209, 247, 0.25);
-      }
-
-      .service-reference-label {
-        font-size: 13px;
-        line-height: 1;
-        color: #ebf2ff;
-        font-weight: 600;
-      }
-
-      .service-reference-icon {
-        width: 18px;
-        height: 18px;
-        display: block;
-        object-fit: contain;
-        filter: none;
-      }
-
-      &.active {
-        opacity: 1;
-        color: #eef6ff;
-        background: rgba(255, 255, 255, 0.16);
-      }
-
-      &:hover {
-        opacity: 1;
-        transform: translateY(-1px);
-      }
-    }
-
   }
+
 
   .info-tooltip {
     position: relative;
