@@ -4,52 +4,55 @@
       <div class="overview-panels" :class="{ 'no-tier': !hasTierInfo }">
         <section class="summary-panel section-block dashboard-like-card">
           <div class="summary-top">
-          <div>
-            <h2>{{ $t('myCenter.summaryTitle') }}</h2>
-            <p class="summary-desc">{{ $t('myCenter.summaryDesc') }}</p>
-          </div>
-          <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">{{ $t('myCenter.topUp') }}</button>
+            <div>
+              <h2>{{ $t('myCenter.summaryTitle') }}</h2>
+              <p class="summary-desc">{{ $t('myCenter.summaryDesc') }}</p>
+            </div>
+            <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">{{ $t('myCenter.topUp') }}</button>
           </div>
 
           <div class="summary-grid">
-          <div class="summary-item">
-            <span class="label">{{ $t('myCenter.email') }}</span>
-            <strong>{{ userInfo.email || '-' }}</strong>
-          </div>
-          <div class="summary-item">
-            <span class="label">{{ $t('myCenter.currentPlan') }}</span>
-            <strong>{{ subscriptionText }}</strong>
-          </div>
-          <div class="summary-item">
-            <span class="label">{{ $t('myCenter.expireAt') }}</span>
-            <strong>{{ subscriptionExpireText }}</strong>
-          </div>
-          <div class="summary-item is-highlight">
-            <span class="label">{{ $t('myCenter.accountBalance') }}</span>
-            <strong>{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
-          </div>
+            <div class="summary-item">
+              <span class="label">{{ $t('myCenter.email') }}</span>
+              <strong>{{ userInfo.email || '-' }}</strong>
+            </div>
+            <div class="summary-item">
+              <span class="label">{{ $t('myCenter.currentPlan') }}</span>
+              <strong>{{ subscriptionText }}</strong>
+            </div>
+            <div class="summary-item">
+              <span class="label">{{ $t('myCenter.expireAt') }}</span>
+              <strong>{{ subscriptionExpireText }}</strong>
+            </div>
+            <div class="summary-item is-highlight">
+              <span class="label">{{ $t('myCenter.accountBalance') }}</span>
+              <strong>{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
+            </div>
           </div>
         </section>
 
         <section v-if="hasTierInfo" class="tier-panel section-block dashboard-like-card">
-        <div class="tier-header">
-          <div>
-            <h3>{{ $t('dashboard.memberTier') }}</h3>
-            <p>{{ tierMemberDisplay }}</p>
+          <div class="tier-header">
+            <div>
+              <h3>{{ $t('dashboard.memberTier') }}</h3>
+              <div class="tier-member-row">
+                <span class="tier-badge" :class="tierBadgeClass">{{ tierBadgeText }}</span>
+                <p>{{ tierMemberDisplay }}</p>
+              </div>
+            </div>
+            <span class="tier-level">Lv.{{ userTier.level || '-' }}</span>
           </div>
-          <span class="tier-level">Lv.{{ userTier.level || '-' }}</span>
-        </div>
 
-        <div class="tier-progress-meta">
-          {{ $t('dashboard.tierPointsProgress', { points: formatTierNumber(userTier.points), total: formatTierNumber(userTier.nextPointsRequired) }) }}
-        </div>
-        <div class="tier-progress-track">
-          <div class="tier-progress-fill" :style="{ width: `${tierProgress}%` }"></div>
-        </div>
+          <div class="tier-progress-meta">
+            {{ $t('dashboard.tierPointsProgress', { points: formatTierNumber(userTier.points), total: formatTierNumber(userTier.nextPointsRequired) }) }}
+          </div>
+          <div class="tier-progress-track">
+            <div class="tier-progress-fill" :style="{ width: `${tierProgress}%` }"></div>
+          </div>
 
-        <div class="tier-next" v-if="userTier.nextTierKey">
-          {{ $t('dashboard.nextTierHint', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}
-        </div>
+          <div class="tier-next" v-if="userTier.nextTierKey">
+            {{ $t('dashboard.nextTierHint', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}
+          </div>
         </section>
       </div>
 
@@ -172,6 +175,16 @@ const normalizeTierName = (key) => {
 
 const tierMemberDisplay = computed(() => normalizeTierName(userTier.value.key));
 const nextTierNameDisplay = computed(() => normalizeTierName(userTier.value.nextTierKey));
+const tierBadgeKey = computed(() => `${userTier.value.key || ''}`.toLowerCase());
+const tierBadgeClass = computed(() => {
+  if (tierBadgeKey.value.includes('bronze')) return 'is-bronze';
+  if (tierBadgeKey.value.includes('silver')) return 'is-silver';
+  if (tierBadgeKey.value.includes('gold')) return 'is-gold';
+  if (tierBadgeKey.value.includes('platinum')) return 'is-platinum';
+  if (tierBadgeKey.value.includes('diamond')) return 'is-diamond';
+  return 'is-default';
+});
+const tierBadgeText = computed(() => '★');
 
 const tierProgress = computed(() => {
   const total = Number(userTier.value.nextPointsRequired || 0);
@@ -311,10 +324,36 @@ onMounted(async () => {
     }
 
     p {
-      margin: 4px 0 0;
+      margin: 0;
       font-size: 14px;
       color: rgba(232, 237, 255, 0.9);
     }
+  }
+
+  .tier-member-row {
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tier-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+
+    &.is-bronze { background: linear-gradient(135deg, #b27241, #d39d63); }
+    &.is-silver { background: linear-gradient(135deg, #8ea0bf, #d4deef); color: #23324d; }
+    &.is-gold { background: linear-gradient(135deg, #f59e0b, #fcd34d); color: #5b3a00; }
+    &.is-platinum { background: linear-gradient(135deg, #5ba7c6, #a8e4ff); color: #07364a; }
+    &.is-diamond { background: linear-gradient(135deg, #6a7bff, #9dc7ff); }
+    &.is-default { background: linear-gradient(135deg, #6379d6, #91a4ff); }
   }
 
   .tier-level {
