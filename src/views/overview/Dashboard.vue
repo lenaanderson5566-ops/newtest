@@ -307,9 +307,9 @@
     />
 
       <transition name="modal-fade">
-      <div class="modal-overlay traffic-package-overlay traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
-        <div class="modal-container traffic-package-container traffic-package-modal-container" @click.stop>
-          <div class="modal-card traffic-package-modal-card traffic-package-modal-card-global">
+      <div class="modal-overlay traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
+        <div class="modal-container traffic-package-modal-container" @click.stop>
+          <div class="modal-card traffic-package-modal-card-global">
             <div class="modal-header">
               <h3>{{ $t('shop.traffic_package.title') }}</h3>
               <button class="close-button" :aria-label="$t('common.close')" @click="showTrafficPackageModal = false">
