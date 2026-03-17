@@ -3893,13 +3893,6 @@ export default {
     line-height: 1.45 !important;
   }
 
-  .modal-footer {
-    display: flex !important;
-    justify-content: flex-end !important;
-    padding: 16px 20px !important;
-    border-top: 1px solid var(--border-color) !important;
-  }
-
 }
 
 </style>
