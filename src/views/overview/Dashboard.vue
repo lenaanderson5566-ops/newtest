@@ -307,9 +307,9 @@
     />
 
       <transition name="modal-fade">
-      <div class="modal-overlay traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
-        <div class="modal-container traffic-package-modal-container" @click.stop>
-          <div class="modal-card traffic-package-modal-card-global">
+      <div class="traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
+        <div class="traffic-package-modal-container" @click.stop>
+          <div class="traffic-package-modal-card-global">
             <div class="modal-header">
               <h3>{{ $t('shop.traffic_package.title') }}</h3>
               <button class="close-button" :aria-label="$t('common.close')" @click="showTrafficPackageModal = false">
@@ -342,51 +342,6 @@
         </div>
       </div>
       </transition>
-  <!-- 重置流量确认弹窗 -->
-      <transition name="modal-fade">
-    <div class="modal-overlay" v-if="showResetTrafficModal">
-      <div class="modal-container">
-        <div class="modal-card reset-traffic-modal">
-          <div class="modal-header">
-            <h3>{{ $t('dashboard.resetTrafficConfirm') }}</h3>
-            <button class="close-button" @click="closeResetTrafficModal">×</button>
-          </div>
-          <div class="modal-body">
-            <div class="warning-icon">
-              <IconAlertTriangle :size="48"/>
-            </div>
-            <p class="warning-text">{{ $t('dashboard.resetTrafficDesc') }}</p>
-            <p class="note-text">{{ $t('dashboard.resetTrafficWarning') }}</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" @click="closeResetTrafficModal">
-              {{ $t('common.cancel') }}
-            </button>
-            <button
-                class="confirm-btn btn btn-primary"
-                :disabled="resetConfirmCooldown > 0 || isCreatingResetOrder"
-                @click="createResetTrafficOrder"
-            >
-              <template v-if="isCreatingResetOrder">
-                <span class="loading-container">
-                  <div class="loader-small"></div>
-                  <span>{{ $t('common.loading') }}</span>
-                </span>
-              </template>
-              <template v-else>
-                {{
-                  resetConfirmCooldown > 0 ? `${$t('common.confirm')} (${resetConfirmCooldown})` : $t('common.confirm')
-                }}
-              </template>
-            </button>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-      </transition>
-
     </div>
   </div>
 
@@ -454,7 +409,7 @@ import { updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
-import {fetchPlans, submitOrder} from '@/api/account/shop';
+import {fetchPlans} from '@/api/account/shop';
 import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
 import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
 import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube.svg';
@@ -595,25 +550,9 @@ export default {
 
     const userPlanId = ref(null);
 
-    const showResetTrafficModal = ref(false);
     const showTrafficPackageModal = ref(false);
     const trafficPackageLoading = ref(false);
     const trafficPackagePlans = ref([]);
-    const resetConfirmCooldown = ref(0);
-    const resetConfirmTimer = ref(null);
-    const isCreatingResetOrder = ref(false);
-
-    const openResetTrafficModal = () => {
-      showResetTrafficModal.value = true;
-      resetConfirmCooldown.value = 3;
-      resetConfirmTimer.value = setInterval(() => {
-        if (resetConfirmCooldown.value > 0) {
-          resetConfirmCooldown.value--;
-        } else {
-          clearInterval(resetConfirmTimer.value);
-        }
-      }, 1000);
-    };
     const showPopup = ref(false);
     const handlePopupClose = () => {
 
@@ -638,56 +577,6 @@ export default {
 
     }
 
-    const closeResetTrafficModal = () => {
-      showResetTrafficModal.value = false;
-      if (resetConfirmTimer.value) {
-        clearInterval(resetConfirmTimer.value);
-      }
-    };
-
-    const createResetTrafficOrder = async () => {
-      if (resetConfirmCooldown.value > 0) {
-        return;
-      }
-
-      console.log('开始请求：设置 isCreatingResetOrder = true');
-      isCreatingResetOrder.value = true;
-
-      try {
-        if (!userPlanId.value) {
-          showToast(t('common.error_occurred'), 'error');
-          console.log('无订阅ID：重置 isCreatingResetOrder = false');
-          isCreatingResetOrder.value = false;
-          return;
-        }
-
-        console.log('正在调用API，当前状态：', isCreatingResetOrder.value);
-        const response = await submitOrder({
-          plan_id: userPlanId.value,
-          period: 'reset_price'
-        });
-
-        if (response && response.data) {
-          console.log('API请求成功');
-          showToast(t('dashboard.resetTrafficSuccess'), 'success');
-
-          closeResetTrafficModal();
-
-          router.push({
-            path: '/payment',
-            query: {
-              trade_no: response.data
-            }
-          });
-        }
-      } catch (error) {
-        console.error('创建重置流量订单失败:', error);
-        showToast(error.message || t('common.error_occurred'), 'error');
-      } finally {
-        console.log('请求结束：重置 isCreatingResetOrder = false');
-        isCreatingResetOrder.value = false;
-      }
-    };
 
     const fetchUserInfo = async () => {
       if (loading.userInfo === false && Object.keys(userPlan.value).length > 0) return;
@@ -909,64 +798,6 @@ export default {
       goToShop();
     };
 
-    const isLowTraffic = computed(() => {
-      const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
-
-      if (!userPlan.value || !userPlan.value.totalTraffic || !remainingMatch) return false;
-
-      const totalMatch = userPlan.value.totalTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
-      if (!totalMatch) return false;
-
-      const remainingValue = parseFloat(remainingMatch[1]);
-      const remainingUnit = remainingMatch[3].toUpperCase();
-
-      const totalValue = parseFloat(totalMatch[1]);
-      const totalUnit = totalMatch[3].toUpperCase();
-
-      const unitToBytes = {
-        'B': 1,
-        'KB': 1024,
-        'MB': 1024 * 1024,
-        'GB': 1024 * 1024 * 1024,
-        'TB': 1024 * 1024 * 1024 * 1024
-      };
-
-      const remainingBytes = remainingValue * unitToBytes[remainingUnit];
-      const totalBytes = totalValue * unitToBytes[totalUnit];
-
-      if (totalBytes === 0) return false;
-
-      if (remainingBytes === 0) return false;
-
-      const percentage = (remainingBytes / totalBytes) * 100;
-
-      return percentage > 0 && percentage <= 10;
-    });
-
-    const isTrafficDepleted = computed(() => {
-      const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
-
-      if (!remainingMatch) return false;
-
-      const remainingValue = parseFloat(remainingMatch[1]);
-      const remainingUnit = remainingMatch[3].toUpperCase();
-
-      if (remainingValue === 0) return true;
-      if (remainingUnit === 'B' && remainingValue < 10) return true;
-      if (remainingUnit === 'KB' && remainingValue < 0.01) return true;
-
-      return false;
-    });
-
-    const showResetTrafficButton = computed(() => {
-      return isLowTraffic.value || isTrafficDepleted.value;
-    });
-
-    const showRenewPlanButton = computed(() => {
-      return true;
-    });
-
-
     const toNumberOrNull = (value) => {
       if (value === null || value === undefined || value === '') return null;
       const num = Number(value);
@@ -999,14 +830,8 @@ export default {
     };
 
     const fetchSubscribe = async (force = false) => {
-      // 如果showResetTrafficButton为true，强制执行（跳过缓存逻辑）
-      // if (showResetTrafficButton.value) {
-      //   // 强制执行，但仍要防止并发
-      //   if (loading.subscribe === true) return;
-      // } else {
       // 正常的缓存逻辑
       if (!force && loading.subscribe === false && userPlan.value.subscribeUrl) return;
-      // }
 
       loading.subscribe = true;
       try {
@@ -1765,16 +1590,9 @@ export default {
       router,
       formatTraffic,
       formatPackageRemaining,
-      openResetTrafficModal,
       handlePopupClose,
       handlePopupConfirm,
       showPopup,
-      closeResetTrafficModal,
-      createResetTrafficOrder,
-      showResetTrafficModal,
-      resetConfirmCooldown,
-      showResetTrafficButton,
-      isCreatingResetOrder,
       isExpiringSoon,
       isExpired,
       isPlanExpired,
@@ -1797,10 +1615,7 @@ export default {
       secondaryActionClass,
       handlePrimaryPlanAction,
       handleSecondaryPlanAction,
-      isLowTraffic,
-      isTrafficDepleted,
       hasPlan,
-      showRenewPlanButton,
       renewPlan,
       isXiaoPanel,
       navigateToDeposit,
@@ -3491,124 +3306,6 @@ export default {
   z-index: 1;
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-container {
-  width: 90%;
-  max-width: 400px;
-  max-height: 90vh;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.modal-card {
-  background-color: var(--card-background);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.reset-traffic-modal {
-  .modal-header {
-    padding: 16px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color);
-
-    h3 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--theme-text-primary);
-    }
-
-    .close-button {
-      background: none;
-      border: none;
-      font-size: 24px;
-      color: var(--theme-text-secondary);
-      cursor: pointer;
-      padding: 0;
-
-      &:hover {
-        color: var(--theme-text-primary);
-      }
-    }
-  }
-
-  .modal-body {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .warning-icon {
-      margin-bottom: 16px;
-      color: rgba(var(--theme-color-rgb), 0.85);
-    }
-
-    .warning-text {
-      font-size: 16px;
-      line-height: 1.5;
-      margin-bottom: 12px;
-      text-align: center;
-      color: var(--theme-text-primary);
-    }
-
-    .note-text {
-      font-size: 14px;
-      color: var(--theme-text-secondary);
-      text-align: center;
-      margin-bottom: 0;
-      padding: 8px 12px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-      border-radius: 6px;
-      width: 100%;
-    }
-  }
-
-  .modal-footer {
-    padding: 16px 20px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    border-top: 1px solid var(--border-color);
-
-    button {
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-        transform: none;
-      }
-    }
-
-    .confirm-btn {
-      &:hover:not(:disabled) {
-        transform: translateY(-2px);
-      }
-    }
-  }
-}
 
 }
 
@@ -3623,24 +3320,6 @@ export default {
   opacity: 0;
 }
 
-
-.loader-small {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top: 2px solid var(--theme-white);
-  animation: spin 1s linear infinite;
-  margin-right: 8px;
-}
-
-
-.loading-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 @keyframes spin {
   0% {
