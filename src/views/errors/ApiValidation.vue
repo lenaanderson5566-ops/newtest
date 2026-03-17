@@ -124,7 +124,6 @@ export default {
       const storedUrl = sessionStorage.getItem("ez_api_available_url");
 
       if (storedUrl) {
-        console.log("使用已验证的API URL");
 
         availableApiUrl.value = storedUrl;
 
@@ -135,20 +134,15 @@ export default {
 
       totalApis.value = staticBaseUrls.length;
 
-      console.log("开始检测API可用性...");
 
       for (const url of staticBaseUrls) {
         try {
-          console.log(
-            `检测API节点 ${checkedCount.value + 1}/${totalApis.value}`
-          );
 
           const isAvailable = await testApiEndpoint(url);
 
           checkedCount.value++;
 
           if (isAvailable) {
-            console.log("找到可用的API节点");
 
             sessionStorage.setItem("ez_api_available_url", url);
 
@@ -167,9 +161,6 @@ export default {
             return;
           }
         } catch (error) {
-          console.log(
-            `API节点 ${checkedCount.value + 1}/${totalApis.value} 不可用`
-          );
 
           checkedCount.value++;
         }
@@ -179,7 +170,6 @@ export default {
 
       const defaultUrl = window.EZ_CONFIG.API_CONFIG.staticBaseUrl[0];
 
-      console.log("使用默认API节点");
 
       sessionStorage.setItem("ez_api_available_url", defaultUrl);
 
@@ -222,7 +212,6 @@ export default {
 
         return data && (data.data !== undefined || data.message !== undefined);
       } catch (error) {
-        console.log(`测试API节点失败`);
 
         return false;
       }

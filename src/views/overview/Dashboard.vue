@@ -557,14 +557,11 @@ export default {
     const handlePopupClose = () => {
 
       showPopup.value = false;
-      // console.log(showPopup.value,'111111111')
-      // nextPeriod()
 
     };
     const handlePopupConfirm = async () => {
       try {
         const response = await setNextPeriod()
-        console.log(response)
         if (response.data) {
           await fetchSubscribe()
           showToast(t('dashboard.nextPeriodSuccess'), 'success');
@@ -1511,7 +1508,6 @@ export default {
     const listeners = {};
 
     onActivated(() => {
-      console.log('Dashboard组件被激活');
       if (needRefreshData.value) {
         fetchUserInfo();
         fetchUserStats();
@@ -1522,7 +1518,6 @@ export default {
     });
 
     onDeactivated(() => {
-      console.log('Dashboard组件被停用');
       needRefreshData.value = true;
 
       cleanupResources(timers, listeners);

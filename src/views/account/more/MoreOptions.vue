@@ -313,7 +313,6 @@ const handleCustomCardClick = (card) => {
 
     const cardTitle = card.title || getLocaleTitle(card.id);
 
-    console.log(`Clicked on card: ${cardTitle}`);
 
     
 
