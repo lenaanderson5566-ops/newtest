@@ -1,6 +1,27 @@
 <template>
   <div class="my-center page-shell">
     <div class="my-center-inner page-inner page-stack">
+      <section v-if="hasTierInfo" class="tier-panel section-block dashboard-like-card">
+        <div class="tier-header">
+          <div>
+            <h3>{{ $t('dashboard.memberTier') }}</h3>
+            <p>{{ tierMemberDisplay }}</p>
+          </div>
+          <span class="tier-level">Lv.{{ userTier.level || '-' }}</span>
+        </div>
+
+        <div class="tier-progress-meta">
+          {{ $t('dashboard.tierPointsProgress', { points: formatTierNumber(userTier.points), total: formatTierNumber(userTier.nextPointsRequired) }) }}
+        </div>
+        <div class="tier-progress-track">
+          <div class="tier-progress-fill" :style="{ width: `${tierProgress}%` }"></div>
+        </div>
+
+        <div class="tier-next" v-if="userTier.nextTierKey">
+          {{ $t('dashboard.nextTierHint', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}
+        </div>
+      </section>
+
       <section class="summary-panel section-block dashboard-like-card">
         <div class="summary-top">
           <div>
@@ -127,6 +148,37 @@ const remindExpire = ref(false);
 const remindTraffic = ref(false);
 const updatingSettings = ref(false);
 
+const userTier = computed(() => {
+  const tier = userInfo.value?.tier || {};
+  return {
+    key: tier.key || '',
+    level: Number(tier.level || 0),
+    points: Number(tier.points || 0),
+    nextTierKey: tier.next_tier_key || '',
+    nextPointsRequired: Number(tier.next_points_required || 0),
+    pointsToNextTier: Number(tier.points_to_next_tier || 0)
+  };
+});
+
+const hasTierInfo = computed(() => !!userTier.value.key || Number(userTier.value.level || 0) > 0);
+
+const normalizeTierName = (key) => {
+  const raw = `${key || ''}`.trim();
+  if (!raw) return '-';
+  return raw.replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+};
+
+const tierMemberDisplay = computed(() => normalizeTierName(userTier.value.key));
+const nextTierNameDisplay = computed(() => normalizeTierName(userTier.value.nextTierKey));
+
+const tierProgress = computed(() => {
+  const total = Number(userTier.value.nextPointsRequired || 0);
+  if (!total) return 0;
+  return Math.min(Math.max(Math.round((Number(userTier.value.points || 0) / total) * 100), 0), 100);
+});
+
+const formatTierNumber = (value) => Number(value || 0).toLocaleString();
+
 const subscriptionText = computed(() => {
   const name = subscribeInfo.value?.plan?.name;
   return name ? `${name}` : t('myCenter.noSubscription');
@@ -222,6 +274,64 @@ onMounted(async () => {
 }
 
 .summary-panel { padding: 1rem; }
+
+.tier-panel {
+  padding: 1rem;
+  background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.25), transparent 35%),
+    linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%);
+  color: #e8edff;
+  border-color: rgba(161, 181, 255, 0.3);
+
+  .tier-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #f8fbff;
+    }
+
+    p {
+      margin: 4px 0 0;
+      font-size: 14px;
+      color: rgba(232, 237, 255, 0.9);
+    }
+  }
+
+  .tier-level {
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .tier-progress-meta,
+  .tier-next {
+    font-size: 13px;
+    color: rgba(239, 243, 255, 0.92);
+  }
+
+  .tier-progress-track {
+    width: 100%;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.24);
+    overflow: hidden;
+    margin: 8px 0;
+  }
+
+  .tier-progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #fbd15f, #f59e0b);
+  }
+}
 
 .summary-top {
   display: flex;
