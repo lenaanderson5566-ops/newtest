@@ -2471,79 +2471,73 @@ export default {
         }
       }
 
-        .usage-kpis {
-          width: 100%;
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 8px;
-        }
-
-        .usage-summary-line {
-          grid-column: 1 / -1;
-          font-size: 13px;
-          font-weight: 600;
-          color: var(--neutral-strong);
-        }
-
-        .usage-kpi {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          padding: 8px;
-          border-radius: 10px;
-          background: var(--theme-surface-soft);
-        }
-
-        .usage-kpi-label {
-          writing-mode: horizontal-tb;
-          text-orientation: mixed;
-          font-size: 12px;
-          color: var(--muted-text-color);
-          line-height: 1;
-        }
-
-        .usage-kpi-value {
-          writing-mode: horizontal-tb;
-          text-orientation: mixed;
-          font-size: 15px;
-          color: var(--quota-value-color);
-          font-weight: 600;
-          line-height: 1.2;
-        }
-
-        .usage-package-note {
-          width: 100%;
-          margin-top: 6px;
-          font-size: 12px;
-          color: var(--muted-text-color);
-          line-height: 1.35;
-        }
-
-
-        .usage-reset-hint {
-          width: 100%;
-          font-size: 12px;
-          color: var(--theme-text-secondary);
-        }
-
-        .section-progress-track {
-          width: 100%;
-          height: 14px;
-          background: var(--theme-border-soft);
-          border-radius: 999px;
-          overflow: hidden;
-        }
-
-        .section-progress-fill {
-          height: 100%;
-          background: linear-gradient(90deg, var(--quota-progress-start), var(--quota-progress-end));
-          border-radius: inherit;
-          transition: width 0.35s ease;
-        }
-
-        @media (max-width: 576px) {
+        /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
+        &.traffic-board-subscription {
           .usage-kpis {
-            grid-template-columns: 1fr;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+          }
+
+          .usage-summary-line {
+            grid-column: 1 / -1;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--neutral-strong);
+          }
+
+          .usage-kpi {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px;
+            border-radius: 10px;
+            background: var(--theme-surface-soft);
+          }
+
+          .usage-kpi-label {
+            writing-mode: horizontal-tb;
+            text-orientation: mixed;
+            font-size: 12px;
+            color: var(--muted-text-color);
+            line-height: 1;
+          }
+
+          .usage-kpi-value {
+            writing-mode: horizontal-tb;
+            text-orientation: mixed;
+            font-size: 15px;
+            color: var(--quota-value-color);
+            font-weight: 600;
+            line-height: 1.2;
+          }
+
+          .usage-reset-hint {
+            width: 100%;
+            font-size: 12px;
+            color: var(--theme-text-secondary);
+          }
+
+          .section-progress-track {
+            width: 100%;
+            height: 14px;
+            background: var(--theme-border-soft);
+            border-radius: 999px;
+            overflow: hidden;
+          }
+
+          .section-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--quota-progress-start), var(--quota-progress-end));
+            border-radius: inherit;
+            transition: width 0.35s ease;
+          }
+
+          @media (max-width: 576px) {
+            .usage-kpis {
+              grid-template-columns: 1fr;
+            }
           }
         }
       }
@@ -2579,38 +2573,38 @@ export default {
             font-size: 12px;
           }
 
-          .section-progress-track {
-            height: 8px;
-          }
+          &.traffic-board-subscription {
+            .section-progress-track {
+              height: 8px;
+            }
 
-          .usage-kpis {
-            display: flex;
-            gap: 16px;
-          }
+            .usage-kpis {
+              display: flex;
+              gap: 16px;
+            }
 
-          .usage-kpi {
-            flex: 1;
-            background: rgba(241, 245, 249, 0.9);
-          }
+            .usage-kpi {
+              flex: 1;
+              background: rgba(241, 245, 249, 0.9);
+            }
 
-          .usage-kpi-label {
-            font-size: 12px;
-          }
+            .usage-kpi-label {
+              font-size: 12px;
+            }
 
-          .usage-kpi-value {
-            font-size: 14px;
-          }
+            .usage-kpi-value {
+              font-size: 14px;
+            }
 
-          .usage-package-note,
-          .usage-reset-hint {
-            display: none;
-          }
+            .usage-reset-hint {
+              display: none;
+            }
 
-          .usage-summary-line,
-          .usage-package-note,
-          .usage-reset-hint {
-            &.persist-visible {
-              display: block;
+            .usage-summary-line,
+            .usage-reset-hint {
+              &.persist-visible {
+                display: block;
+              }
             }
           }
         }
@@ -3328,10 +3322,6 @@ export default {
 
       .usage-kpi {
         padding: 6px;
-      }
-
-      .usage-package-note {
-        margin-top: 2px;
       }
 
     }
