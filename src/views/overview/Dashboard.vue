@@ -2215,11 +2215,6 @@ export default {
         &.quota-card-muted {
           background: var(--theme-surface-muted);
           border-color: var(--theme-border-soft);
-
-          .package-add-btn {
-            color: var(--theme-white);
-            background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-          }
         }
 
         &.subscription-card-muted {
