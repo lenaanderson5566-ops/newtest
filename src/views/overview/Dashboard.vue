@@ -2100,6 +2100,7 @@ export default {
         z-index: 1;
       }
 
+      /* 流量额度包卡片（订阅流量 / 叠加包 / 总览）基础样式 */
       &.traffic-board-card {
         min-width: 0;
         flex-direction: column;
@@ -2120,6 +2121,7 @@ export default {
         }
       }
 
+      /* 流量额度包卡片：标题、剩余值、进度和状态态样式 */
       &.traffic-board-card {
         width: 100%;
         min-width: 0;
@@ -2207,6 +2209,7 @@ export default {
           }
         }
 
+        /* 订阅信息卡片（总览卡中的 plan-summary） */
         .plan-summary-card {
           width: 100%;
           display: flex;
@@ -2678,6 +2681,7 @@ export default {
     }
   }
 
+  /* 会员等级卡片 */
   .stats-grid .stats-card.member-tier-card {
     background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.35), transparent 35%),
       linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%);
@@ -2843,7 +2847,7 @@ export default {
   }
 
 
-  /* 出口 IP 地区卡片 */
+  /* IP 位置卡片 */
   .ip-location-summary-card {
     border-radius: 20px;
     border: 1px solid rgba(131, 159, 213, 0.22);
@@ -3145,7 +3149,7 @@ export default {
     }
   }
 
-  /* 用量趋势图卡片 */
+  /* 流量趋势图卡片 */
   .usage-trend-card {
     .card-body {
       padding-top: 6px;
