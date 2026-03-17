@@ -334,7 +334,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-secondary" @click="showTrafficPackageModal = false">
+              <button class="btn btn-outline" @click="showTrafficPackageModal = false">
                 {{ $t('common.cancel') }}
               </button>
             </div>
@@ -1123,33 +1123,23 @@ export default {
         return new Date(year, month, Math.min(day, maxDay), hour, minute, 0);
       };
 
-      if (expiredAtDate) {
-        const resetHour = expiredAtDate.getHours();
-        const resetMinute = expiredAtDate.getMinutes();
-
-        let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), effectiveResetDay, resetHour, resetMinute);
-        while (candidate <= now) {
-          candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, effectiveResetDay, resetHour, resetMinute);
-        }
-
-        if (candidate > expiredAtDate) {
-          candidate = buildMonthlyDate(expiredAtDate.getFullYear(), expiredAtDate.getMonth(), effectiveResetDay, resetHour, resetMinute);
-          if (candidate > expiredAtDate) {
-            candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() - 1, effectiveResetDay, resetHour, resetMinute);
-          }
-        }
-
-        return formatResetDateTime(candidate);
-      }
-
       const resetHourRaw = subscribe?.reset_hour ?? subscribe?.plan?.reset_hour;
       const resetMinuteRaw = subscribe?.reset_minute ?? subscribe?.plan?.reset_minute;
-      const resetHour = Number.isFinite(Number(resetHourRaw)) ? Number(resetHourRaw) : 0;
-      const resetMinute = Number.isFinite(Number(resetMinuteRaw)) ? Number(resetMinuteRaw) : 0;
+      const resetHour = Number.isFinite(Number(resetHourRaw))
+        ? Number(resetHourRaw)
+        : (expiredAtDate ? expiredAtDate.getHours() : 0);
+      const resetMinute = Number.isFinite(Number(resetMinuteRaw))
+        ? Number(resetMinuteRaw)
+        : (expiredAtDate ? expiredAtDate.getMinutes() : 0);
       let candidate = buildMonthlyDate(now.getFullYear(), now.getMonth(), effectiveResetDay, resetHour, resetMinute);
       if (candidate <= now) {
         candidate = buildMonthlyDate(candidate.getFullYear(), candidate.getMonth() + 1, effectiveResetDay, resetHour, resetMinute);
       }
+
+      if (expiredAtDate && candidate > expiredAtDate) {
+        return formatResetDateTime(expiredAtDate);
+      }
+
       return formatResetDateTime(candidate);
     };
 
@@ -2061,7 +2051,7 @@ export default {
           .switch {
             position: relative;
             display: inline-block;
-            width: 44px;
+            width: 46px;
             height: 24px;
             flex-shrink: 0;
 
@@ -2074,6 +2064,10 @@ export default {
               opacity: 0;
               width: 0;
               height: 0;
+
+              &:disabled + .slider {
+                cursor: not-allowed;
+              }
             }
 
             .slider {
@@ -2082,7 +2076,24 @@ export default {
               inset: 0;
               background-color: var(--surface-subtle);
               border: 1px solid var(--border-color);
-              transition: 0.3s;
+              transition: 0.4s;
+
+              &.loading {
+                overflow: hidden;
+
+                &::before {
+                  animation: pulse 1.5s infinite;
+                }
+
+                &::after {
+                  content: '';
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+                  animation: sweep 1.5s infinite;
+                }
+              }
 
               &::before {
                 position: absolute;
@@ -2092,7 +2103,8 @@ export default {
                 left: 3px;
                 bottom: 3px;
                 background-color: var(--theme-white);
-                transition: 0.3s;
+                transition: 0.4s;
+                z-index: 1;
               }
 
               &.round {
@@ -2110,7 +2122,7 @@ export default {
             }
 
             input:checked + .slider::before {
-              transform: translateX(20px);
+              transform: translateX(22px);
             }
           }
         }
@@ -3141,6 +3153,18 @@ export default {
     overflow-y: auto;
   }
 
+  .modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    .btn {
+      min-width: 88px;
+    }
+  }
+
   .traffic-package-desc {
     margin: 0 0 14px;
     color: var(--secondary-text-color);
@@ -3194,6 +3218,30 @@ export default {
     line-height: 1.45;
   }
 
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(0.92);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 </style>
