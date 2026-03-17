@@ -2147,6 +2147,21 @@ export default {
           font-weight: 500;
         }
 
+        .section-progress-track {
+          width: 100%;
+          height: 14px;
+          background: var(--theme-border-soft);
+          border-radius: 999px;
+          overflow: hidden;
+        }
+
+        .section-progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, var(--quota-progress-start), var(--quota-progress-end));
+          border-radius: inherit;
+          transition: width 0.35s ease;
+        }
+
       &.quota-traffic-card {
         .usage-percent {
           font-size: 30px;
@@ -2203,21 +2218,6 @@ export default {
             width: 100%;
             font-size: 12px;
             color: var(--theme-text-secondary);
-          }
-
-          .section-progress-track {
-            width: 100%;
-            height: 14px;
-            background: var(--theme-border-soft);
-            border-radius: 999px;
-            overflow: hidden;
-          }
-
-          .section-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--quota-progress-start), var(--quota-progress-end));
-            border-radius: inherit;
-            transition: width 0.35s ease;
           }
 
           @media (max-width: 576px) {
