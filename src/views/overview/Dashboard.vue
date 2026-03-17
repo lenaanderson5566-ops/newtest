@@ -408,7 +408,7 @@ import {
 } from 'vue';
 import {useRouter} from 'vue-router';
 import {useI18n} from 'vue-i18n';
-import {CLIENT_CONFIG, DASHBOARD_CONFIG, isXiaoV2board, SITE_CONFIG} from '@/utils/baseConfig';
+import {DASHBOARD_CONFIG, isXiaoV2board} from '@/utils/baseConfig';
 import {
   IconAlertTriangle,
   IconBox,
@@ -508,7 +508,6 @@ export default {
   setup() {
     const {t, locale} = useI18n();
     const router = useRouter();
-    const clientConfig = reactive(CLIENT_CONFIG);
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
     const userStats = reactive({
@@ -1759,7 +1758,6 @@ export default {
       userBalance,
       currencySymbol,
       userPlan,
-      clientConfig,
       loading,
       goToShop,
       hasPendingItems,
@@ -1897,8 +1895,7 @@ export default {
     > .subscription-card,
     > .stats-grid,
     > .ip-location-summary-card,
-    > .usage-trend-card,
-    > .import-card {
+    > .usage-trend-card {
       grid-column: 1 / -1;
     }
 
@@ -1907,8 +1904,7 @@ export default {
         > .subscription-card,
       > .stats-grid,
       > .ip-location-summary-card,
-      > .usage-trend-card,
-      > .import-card {
+      > .usage-trend-card {
         grid-column: 1 / -1;
       }
     }
@@ -3563,17 +3559,6 @@ export default {
 }
 
 
-.copy-action .import-icon {
-  background-color: rgba(25, 113, 194, 0.1);
-  color: rgba(var(--theme-color-rgb), 0.88);
-}
-
-.qrcode-action .import-icon {
-  background-color: rgba(64, 192, 87, 0.1);
-  color: rgba(var(--theme-color-rgb), 0.9);
-}
-
-
 @keyframes modal-in {
   from {
     opacity: 0;
@@ -3601,22 +3586,6 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
-
-@media (max-width: 768px) {
-  .platform-options {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  }
-
-  .import-action {
-    padding: 12px;
-
-    .import-icon {
-      width: 40px;
-      height: 40px;
-    }
-  }
-}
-
 
 .stats-card.warning-card {
   border-color: rgba(var(--theme-color-rgb), 0.85);
@@ -3765,20 +3734,6 @@ export default {
   animation: shimmer 2s infinite;
   z-index: 1;
 }
-
-.import-action .import-content .import-desc {
-  color: var(--theme-text-secondary);
-  font-size: 12px;
-  line-height: 1.4;
-}
-
-
-.no-clients-message p {
-  color: var(--theme-text-primary);
-  font-size: 14px;
-  margin: 0;
-}
-
 
 .popup-slide-enter-active {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
