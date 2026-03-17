@@ -15,7 +15,7 @@
           <IconAlertTriangle :size="16" class="banner-icon" />
           <span class="banner-text text-ellipsis">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
         </div>
-        <button class="banner-action" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
+        <button class="banner-action btn btn-primary" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
       </div>
 
       <div class="stats-grid">
@@ -40,7 +40,7 @@
             </template>
             <template #title>{{ $t('dashboard.noPlanPrompt') }}</template>
             <template #action>
-              <button class="action-button primary" @click="goToShop">
+              <button class="action-button primary btn btn-primary" @click="goToShop">
                 <IconShoppingBag :size="18" class="btn-icon"/>
                 <span>{{ $t('dashboard.purchasePlan') }}</span>
               </button>
@@ -160,14 +160,14 @@
               <div class="plan-summary-section plan-summary-section-actions">
                 <div class="plan-summary-actions">
                   <button
-                    class="plan-action-btn"
+                    class="plan-action-btn btn"
                     :class="primaryActionClass"
                     @click="handlePrimaryPlanAction"
                   >
                     {{ primaryPlanActionLabel }}
                   </button>
                   <button
-                    class="plan-action-btn"
+                    class="plan-action-btn btn"
                     :class="secondaryActionClass"
                     @click="handleSecondaryPlanAction"
                   >
@@ -239,7 +239,7 @@
               </div>
               <div class="ip-sub-line">
                 <span class="ip-region">{{ ipLocationDisplayText }}</span>
-                <button class="ip-refresh-btn" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
+                <button class="ip-refresh-btn btn btn-secondary" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
                   <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
                   <span>{{ ipLocationLoading ? $t('dashboard.refreshing') : $t('common.refresh') }}</span>
                 </button>
@@ -327,14 +327,14 @@
                     <span class="item-price">{{ currencySymbol }}{{ (normalizeTrafficPackagePrice(plan.onetime_price) / 100).toFixed(2) }}</span>
                   </div>
                   <div class="item-content" v-if="getTrafficPackageContent(plan)">{{ getTrafficPackageContent(plan) }}</div>
-                  <button class="confirm-btn buy-btn" :disabled="isTrafficPackageSoldOut(plan)" @click="purchaseTrafficPackage(plan)">
+                  <button class="confirm-btn buy-btn btn btn-primary" :disabled="isTrafficPackageSoldOut(plan)" @click="purchaseTrafficPackage(plan)">
                     {{ isTrafficPackageSoldOut(plan) ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}
                   </button>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button class="cancel-btn" @click="showTrafficPackageModal = false">
+              <button class="cancel-btn btn btn-secondary" @click="showTrafficPackageModal = false">
                 {{ $t('common.cancel') }}
               </button>
             </div>
@@ -359,11 +359,11 @@
             <p class="note-text">{{ $t('dashboard.resetTrafficWarning') }}</p>
           </div>
           <div class="modal-footer">
-            <button class="cancel-btn" @click="closeResetTrafficModal">
+            <button class="cancel-btn btn btn-secondary" @click="closeResetTrafficModal">
               {{ $t('common.cancel') }}
             </button>
             <button
-                class="confirm-btn"
+                class="confirm-btn btn btn-primary"
                 :disabled="resetConfirmCooldown > 0 || isCreatingResetOrder"
                 @click="createResetTrafficOrder"
             >
@@ -929,13 +929,12 @@ export default {
     };
 
     const primaryActionClass = computed(() => {
-      if (subscriptionStatus.value === 'active') return 'theme';
-      return 'primary';
+      return 'btn-primary';
     });
 
     const secondaryActionClass = computed(() => {
-      if (secondaryPlanActionLabel.value === t('dashboard.planAction.manageSubscription')) return 'theme';
-      return 'subtle';
+      if (secondaryPlanActionLabel.value === t('dashboard.planAction.manageSubscription')) return 'btn-primary';
+      return 'btn-secondary';
     });
 
     const handlePrimaryPlanAction = () => {
@@ -2634,47 +2633,10 @@ export default {
             .plan-action-btn {
               flex: 1;
               border-radius: 12px;
-              border: 1px solid transparent;
               padding: 10px 14px;
               font-size: 14px;
               font-weight: 600;
               letter-spacing: 0.2px;
-              cursor: pointer;
-              transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-
-              &:hover {
-                transform: translateY(-1px);
-              }
-
-              &:active {
-                transform: translateY(0);
-              }
-
-              &.primary {
-                color: var(--theme-white);
-                background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
-                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
-              }
-
-              &.premium {
-                color: var(--theme-white);
-                background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
-              }
-
-              &.theme {
-                color: var(--theme-white);
-                border-color: transparent;
-                background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.9), rgba(var(--theme-color-rgb), 1));
-                box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.28);
-              }
-
-              &.subtle {
-                color: var(--neutral-strong);
-                border-color: var(--border-color);
-                background: var(--surface-subtle);
-                box-shadow: none;
-              }
 
               @media (max-width: 576px) {
                 padding: 9px 10px;
@@ -3242,9 +3204,6 @@ export default {
     }
 
     .ip-refresh-btn {
-      border: 1px solid rgba(165, 194, 246, 0.35);
-      background: rgba(255, 255, 255, 0.08);
-      color: #e7f1ff;
       border-radius: 999px;
       padding: 4px 10px;
       font-size: 12px;
@@ -3252,17 +3211,9 @@ export default {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      &:hover:not(:disabled) {
-        background: rgba(255, 255, 255, 0.14);
-        border-color: rgba(188, 211, 248, 0.48);
-      }
 
       &:disabled {
         opacity: 0.7;
-        cursor: not-allowed;
       }
 
       .spinning {
@@ -3688,14 +3639,9 @@ export default {
     }
 
     .banner-action {
-      border: none;
       border-radius: 8px;
       height: 30px;
       padding: 0 12px;
-      color: var(--theme-white);
-      background: var(--saas-brand);
-      box-shadow: none;
-      cursor: pointer;
       font-size: 13px;
       font-weight: 600;
       flex-shrink: 0;
@@ -4778,17 +4724,8 @@ export default {
   .modal-footer .cancel-btn {
     padding: 8px 16px;
     border-radius: 6px;
-    border: 1px solid var(--border-color);
-    background-color: transparent;
-    color: var(--theme-text-primary);
     font-size: 14px;
     font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover:not(:disabled) {
-      background-color: rgba(var(--theme-color-rgb), 0.06);
-    }
   }
 }
 
@@ -4893,23 +4830,12 @@ export default {
       justify-content: center;
       margin-top: auto;
       padding: 8px 12px;
-      border: none;
       border-radius: 8px;
       font-size: 14px;
       font-weight: 500;
-      background-color: rgba(var(--theme-color-rgb), 0.92);
-      color: var(--theme-white);
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
-      }
 
       &:disabled {
         opacity: 0.75;
-        cursor: not-allowed;
       }
     }
   }
@@ -5028,14 +4954,8 @@ export default {
     }
 
     .confirm-btn {
-      background-color: rgba(var(--theme-color-rgb), 0.92);
-      color: white;
-      border: none;
-
       &:hover:not(:disabled) {
-        background-color: rgba(var(--theme-color-rgb), 0.92);
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
       }
     }
   }
@@ -5312,17 +5232,12 @@ export default {
     width: 100% !important;
     margin-top: auto !important;
     padding: 8px 12px !important;
-    border: none !important;
     border-radius: 8px !important;
-    background-color: rgba(var(--theme-color-rgb), 0.92) !important;
-    color: var(--card-background) !important;
     font-size: 14px !important;
     font-weight: 500 !important;
-    cursor: pointer !important;
 
     &:disabled {
       opacity: 0.75 !important;
-      cursor: not-allowed !important;
     }
   }
 
@@ -5335,17 +5250,9 @@ export default {
 
   .cancel-btn {
     padding: 8px 16px !important;
-    border: 1px solid var(--border-color) !important;
     border-radius: 8px !important;
-    background-color: transparent !important;
-    color: var(--text-color) !important;
     font-size: 14px !important;
     font-weight: 500 !important;
-    cursor: pointer !important;
-
-    &:hover {
-      background-color: rgba(var(--theme-color-rgb), 0.06) !important;
-    }
   }
 }
 
