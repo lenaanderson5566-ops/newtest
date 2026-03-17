@@ -418,6 +418,7 @@ import serviceClaudeIcon from '@/assets/images/service-icons/claude.svg';
 import serviceGoogleIcon from '@/assets/images/service-icons/google.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
+import { formatDate } from '@/utils/formatters';
 
 export default {
   name: 'UserDashboard',
