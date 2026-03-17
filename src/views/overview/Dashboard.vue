@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="dashboard-container page-shell">
     <div class="dashboard-inner page-inner page-stack">
       <div class="overview-grid">
@@ -307,9 +307,9 @@
     />
 
       <transition name="modal-fade">
-      <div class="modal-overlay traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
-        <div class="modal-container traffic-package-modal-container" @click.stop>
-          <div class="modal-card traffic-package-modal-card-global">
+      <div class="traffic-package-modal-overlay" v-if="showTrafficPackageModal" @click="showTrafficPackageModal = false">
+        <div class="traffic-package-modal-container" @click.stop>
+          <div class="traffic-package-modal-card-global">
             <div class="modal-header">
               <h3>{{ $t('shop.traffic_package.title') }}</h3>
               <button class="close-button" :aria-label="$t('common.close')" @click="showTrafficPackageModal = false">
@@ -342,51 +342,6 @@
         </div>
       </div>
       </transition>
-  <!-- 重置流量确认弹窗 -->
-      <transition name="modal-fade">
-    <div class="modal-overlay" v-if="showResetTrafficModal">
-      <div class="modal-container">
-        <div class="modal-card reset-traffic-modal">
-          <div class="modal-header">
-            <h3>{{ $t('dashboard.resetTrafficConfirm') }}</h3>
-            <button class="close-button" @click="closeResetTrafficModal">×</button>
-          </div>
-          <div class="modal-body">
-            <div class="warning-icon">
-              <IconAlertTriangle :size="48"/>
-            </div>
-            <p class="warning-text">{{ $t('dashboard.resetTrafficDesc') }}</p>
-            <p class="note-text">{{ $t('dashboard.resetTrafficWarning') }}</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" @click="closeResetTrafficModal">
-              {{ $t('common.cancel') }}
-            </button>
-            <button
-                class="confirm-btn btn btn-primary"
-                :disabled="resetConfirmCooldown > 0 || isCreatingResetOrder"
-                @click="createResetTrafficOrder"
-            >
-              <template v-if="isCreatingResetOrder">
-                <span class="loading-container">
-                  <div class="loader-small"></div>
-                  <span>{{ $t('common.loading') }}</span>
-                </span>
-              </template>
-              <template v-else>
-                {{
-                  resetConfirmCooldown > 0 ? `${$t('common.confirm')} (${resetConfirmCooldown})` : $t('common.confirm')
-                }}
-              </template>
-            </button>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-      </transition>
-
     </div>
   </div>
 
@@ -454,7 +409,7 @@ import { updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
-import {fetchPlans, submitOrder} from '@/api/account/shop';
+import {fetchPlans} from '@/api/account/shop';
 import serviceNetflixIcon from '@/assets/images/service-icons/netflix.svg';
 import serviceDisneyPlusIcon from '@/assets/images/service-icons/disney-plus.svg';
 import serviceYoutubePremiumIcon from '@/assets/images/service-icons/youtube.svg';
@@ -595,25 +550,9 @@ export default {
 
     const userPlanId = ref(null);
 
-    const showResetTrafficModal = ref(false);
     const showTrafficPackageModal = ref(false);
     const trafficPackageLoading = ref(false);
     const trafficPackagePlans = ref([]);
-    const resetConfirmCooldown = ref(0);
-    const resetConfirmTimer = ref(null);
-    const isCreatingResetOrder = ref(false);
-
-    const openResetTrafficModal = () => {
-      showResetTrafficModal.value = true;
-      resetConfirmCooldown.value = 3;
-      resetConfirmTimer.value = setInterval(() => {
-        if (resetConfirmCooldown.value > 0) {
-          resetConfirmCooldown.value--;
-        } else {
-          clearInterval(resetConfirmTimer.value);
-        }
-      }, 1000);
-    };
     const showPopup = ref(false);
     const handlePopupClose = () => {
 
@@ -638,56 +577,6 @@ export default {
 
     }
 
-    const closeResetTrafficModal = () => {
-      showResetTrafficModal.value = false;
-      if (resetConfirmTimer.value) {
-        clearInterval(resetConfirmTimer.value);
-      }
-    };
-
-    const createResetTrafficOrder = async () => {
-      if (resetConfirmCooldown.value > 0) {
-        return;
-      }
-
-      console.log('开始请求：设置 isCreatingResetOrder = true');
-      isCreatingResetOrder.value = true;
-
-      try {
-        if (!userPlanId.value) {
-          showToast(t('common.error_occurred'), 'error');
-          console.log('无订阅ID：重置 isCreatingResetOrder = false');
-          isCreatingResetOrder.value = false;
-          return;
-        }
-
-        console.log('正在调用API，当前状态：', isCreatingResetOrder.value);
-        const response = await submitOrder({
-          plan_id: userPlanId.value,
-          period: 'reset_price'
-        });
-
-        if (response && response.data) {
-          console.log('API请求成功');
-          showToast(t('dashboard.resetTrafficSuccess'), 'success');
-
-          closeResetTrafficModal();
-
-          router.push({
-            path: '/payment',
-            query: {
-              trade_no: response.data
-            }
-          });
-        }
-      } catch (error) {
-        console.error('创建重置流量订单失败:', error);
-        showToast(error.message || t('common.error_occurred'), 'error');
-      } finally {
-        console.log('请求结束：重置 isCreatingResetOrder = false');
-        isCreatingResetOrder.value = false;
-      }
-    };
 
     const fetchUserInfo = async () => {
       if (loading.userInfo === false && Object.keys(userPlan.value).length > 0) return;
@@ -909,64 +798,6 @@ export default {
       goToShop();
     };
 
-    const isLowTraffic = computed(() => {
-      const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
-
-      if (!userPlan.value || !userPlan.value.totalTraffic || !remainingMatch) return false;
-
-      const totalMatch = userPlan.value.totalTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
-      if (!totalMatch) return false;
-
-      const remainingValue = parseFloat(remainingMatch[1]);
-      const remainingUnit = remainingMatch[3].toUpperCase();
-
-      const totalValue = parseFloat(totalMatch[1]);
-      const totalUnit = totalMatch[3].toUpperCase();
-
-      const unitToBytes = {
-        'B': 1,
-        'KB': 1024,
-        'MB': 1024 * 1024,
-        'GB': 1024 * 1024 * 1024,
-        'TB': 1024 * 1024 * 1024 * 1024
-      };
-
-      const remainingBytes = remainingValue * unitToBytes[remainingUnit];
-      const totalBytes = totalValue * unitToBytes[totalUnit];
-
-      if (totalBytes === 0) return false;
-
-      if (remainingBytes === 0) return false;
-
-      const percentage = (remainingBytes / totalBytes) * 100;
-
-      return percentage > 0 && percentage <= 10;
-    });
-
-    const isTrafficDepleted = computed(() => {
-      const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
-
-      if (!remainingMatch) return false;
-
-      const remainingValue = parseFloat(remainingMatch[1]);
-      const remainingUnit = remainingMatch[3].toUpperCase();
-
-      if (remainingValue === 0) return true;
-      if (remainingUnit === 'B' && remainingValue < 10) return true;
-      if (remainingUnit === 'KB' && remainingValue < 0.01) return true;
-
-      return false;
-    });
-
-    const showResetTrafficButton = computed(() => {
-      return isLowTraffic.value || isTrafficDepleted.value;
-    });
-
-    const showRenewPlanButton = computed(() => {
-      return true;
-    });
-
-
     const toNumberOrNull = (value) => {
       if (value === null || value === undefined || value === '') return null;
       const num = Number(value);
@@ -999,14 +830,8 @@ export default {
     };
 
     const fetchSubscribe = async (force = false) => {
-      // 如果showResetTrafficButton为true，强制执行（跳过缓存逻辑）
-      // if (showResetTrafficButton.value) {
-      //   // 强制执行，但仍要防止并发
-      //   if (loading.subscribe === true) return;
-      // } else {
       // 正常的缓存逻辑
       if (!force && loading.subscribe === false && userPlan.value.subscribeUrl) return;
-      // }
 
       loading.subscribe = true;
       try {
@@ -1765,16 +1590,9 @@ export default {
       router,
       formatTraffic,
       formatPackageRemaining,
-      openResetTrafficModal,
       handlePopupClose,
       handlePopupConfirm,
       showPopup,
-      closeResetTrafficModal,
-      createResetTrafficOrder,
-      showResetTrafficModal,
-      resetConfirmCooldown,
-      showResetTrafficButton,
-      isCreatingResetOrder,
       isExpiringSoon,
       isExpired,
       isPlanExpired,
@@ -1797,10 +1615,7 @@ export default {
       secondaryActionClass,
       handlePrimaryPlanAction,
       handleSecondaryPlanAction,
-      isLowTraffic,
-      isTrafficDepleted,
       hasPlan,
-      showRenewPlanButton,
       renewPlan,
       isXiaoPanel,
       navigateToDeposit,
@@ -1892,7 +1707,6 @@ export default {
       margin-bottom: 0;
     }
 
-    > .subscription-card,
     > .stats-grid,
     > .ip-location-summary-card,
     > .usage-trend-card {
@@ -1901,7 +1715,6 @@ export default {
 
     @media (max-width: 992px) {
       > .pending-order-banner,
-        > .subscription-card,
       > .stats-grid,
       > .ip-location-summary-card,
       > .usage-trend-card {
@@ -1943,94 +1756,7 @@ export default {
     }
   }
 
-  .subscription-card {
-    margin-bottom: 24px;
-
-    .subscription-info {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 15px;
-
-      .info-item {
-        display: flex;
-        flex-direction: column;
-
-        .info-label {
-          font-size: 13px;
-          color: var(--theme-text-secondary);
-          margin-bottom: 5px;
-        }
-
-        .info-value {
-          font-size: 16px;
-          font-weight: 600;
-          color: var(--theme-text-primary);
-        }
-      }
-    }
-
-    .subscription-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 15px;
-
-      @media (min-width: 769px) {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-
-        button {
-          flex: 0 0 auto;
-          min-width: 120px;
-        }
-      }
-
-      @media (max-width: 768px) {
-        flex-direction: column;
-        gap: 10px;
-
-        button {
-          width: 100%;
-        }
-      }
-
-      .reset-traffic-btn {
-        position: relative;
-        overflow: hidden;
-
-        &.reset-warning {
-          color: rgba(var(--theme-color-rgb), 0.85);
-          border-color: rgba(var(--theme-color-rgb), 0.85);
-          background-color: rgba(255, 152, 0, 0.1);
-        }
-
-        &.reset-danger {
-          color: rgba(var(--theme-color-rgb), 0.95);
-          border-color: rgba(var(--theme-color-rgb), 0.95);
-          background-color: rgba(244, 67, 54, 0.1);
-        }
-      }
-
-      .renew-plan-btn {
-        position: relative;
-        overflow: hidden;
-
-        &.renew-warning {
-          color: rgba(var(--theme-color-rgb), 0.85);
-          border-color: rgba(var(--theme-color-rgb), 0.85);
-          background-color: rgba(255, 152, 0, 0.1);
-        }
-
-        &.renew-danger {
-          color: rgba(var(--theme-color-rgb), 0.95);
-          border-color: rgba(var(--theme-color-rgb), 0.95);
-          background-color: rgba(244, 67, 54, 0.1);
-        }
-      }
-    }
-  }
-
+  /* 数据统计卡片区域（会员等级 + 流量卡片） */
   .stats-grid {
     position: relative;
     display: grid;
@@ -2047,38 +1773,6 @@ export default {
       grid-auto-rows: minmax(124px, auto);
     }
 
-    .usage-panel-title-row {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 2px;
-
-      @media (min-width: 1200px) {
-        grid-row: 1;
-      }
-
-      h3 {
-        margin: 0;
-        font-size: 18px;
-        font-weight: 700;
-        color: var(--theme-text-primary);
-      }
-
-      .traffic-package-status {
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 999px;
-        padding: 6px 10px;
-        background: var(--theme-surface-muted);
-        color: var(--theme-text-secondary);
-
-        &.active {
-          background: rgba(var(--theme-color-rgb), 0.14);
-          color: var(--theme-color);
-        }
-      }
-    }
     .stats-card {
       position: relative;
       background-color: var(--card-bg-color);
@@ -2092,49 +1786,17 @@ export default {
       overflow: hidden;
       border: 1px solid var(--border-color);
 
-      .water-container {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        border-radius: inherit;
-        pointer-events: none;
-      }
-
-      .water-progress {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: rgba(var(--theme-color-rgb), 0.12);
-        transition: none;
-        border-radius: 0 0 16px 16px;
-        height: 0;
-
-        &.animate-water {
-          transition: height 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        &:after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-        }
-      }
-
-      .stats-icon, .stats-info {
-        position: relative;
-        z-index: 1;
-      }
-
+      /* 流量额度包卡片（订阅流量 / 叠加包 / 总览）样式 */
       &.traffic-board-card {
+        width: 100%;
         min-width: 0;
+        min-height: clamp(172px, 18vw, 232px);
+        overflow: visible;
+        writing-mode: horizontal-tb;
+        text-orientation: mixed;
         flex-direction: column;
         align-items: flex-start;
+        justify-content: flex-start;
         gap: 10px;
 
         .stats-info {
@@ -2149,19 +1811,6 @@ export default {
         .stats-label {
           font-size: 12px;
         }
-      }
-
-      &.traffic-board-card {
-        width: 100%;
-        min-width: 0;
-        min-height: clamp(172px, 18vw, 232px);
-        overflow: visible;
-        writing-mode: horizontal-tb;
-        text-orientation: mixed;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 10px;
 
         .usage-card-title {
           position: relative;
@@ -2238,6 +1887,7 @@ export default {
           }
         }
 
+        /* 订阅信息卡片（总览卡中的 plan-summary） */
         .plan-summary-card {
           width: 100%;
           display: flex;
@@ -2499,79 +2149,73 @@ export default {
         }
       }
 
-        .usage-kpis {
-          width: 100%;
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 8px;
-        }
-
-        .usage-summary-line {
-          grid-column: 1 / -1;
-          font-size: 13px;
-          font-weight: 600;
-          color: var(--neutral-strong);
-        }
-
-        .usage-kpi {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          padding: 8px;
-          border-radius: 10px;
-          background: var(--theme-surface-soft);
-        }
-
-        .usage-kpi-label {
-          writing-mode: horizontal-tb;
-          text-orientation: mixed;
-          font-size: 12px;
-          color: var(--muted-text-color);
-          line-height: 1;
-        }
-
-        .usage-kpi-value {
-          writing-mode: horizontal-tb;
-          text-orientation: mixed;
-          font-size: 15px;
-          color: var(--quota-value-color);
-          font-weight: 600;
-          line-height: 1.2;
-        }
-
-        .usage-package-note {
-          width: 100%;
-          margin-top: 6px;
-          font-size: 12px;
-          color: var(--muted-text-color);
-          line-height: 1.35;
-        }
-
-
-        .usage-reset-hint {
-          width: 100%;
-          font-size: 12px;
-          color: var(--theme-text-secondary);
-        }
-
-        .section-progress-track {
-          width: 100%;
-          height: 14px;
-          background: var(--theme-border-soft);
-          border-radius: 999px;
-          overflow: hidden;
-        }
-
-        .section-progress-fill {
-          height: 100%;
-          background: linear-gradient(90deg, var(--quota-progress-start), var(--quota-progress-end));
-          border-radius: inherit;
-          transition: width 0.35s ease;
-        }
-
-        @media (max-width: 576px) {
+        /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
+        &.traffic-board-subscription {
           .usage-kpis {
-            grid-template-columns: 1fr;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+          }
+
+          .usage-summary-line {
+            grid-column: 1 / -1;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--neutral-strong);
+          }
+
+          .usage-kpi {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px;
+            border-radius: 10px;
+            background: var(--theme-surface-soft);
+          }
+
+          .usage-kpi-label {
+            writing-mode: horizontal-tb;
+            text-orientation: mixed;
+            font-size: 12px;
+            color: var(--muted-text-color);
+            line-height: 1;
+          }
+
+          .usage-kpi-value {
+            writing-mode: horizontal-tb;
+            text-orientation: mixed;
+            font-size: 15px;
+            color: var(--quota-value-color);
+            font-weight: 600;
+            line-height: 1.2;
+          }
+
+          .usage-reset-hint {
+            width: 100%;
+            font-size: 12px;
+            color: var(--theme-text-secondary);
+          }
+
+          .section-progress-track {
+            width: 100%;
+            height: 14px;
+            background: var(--theme-border-soft);
+            border-radius: 999px;
+            overflow: hidden;
+          }
+
+          .section-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--quota-progress-start), var(--quota-progress-end));
+            border-radius: inherit;
+            transition: width 0.35s ease;
+          }
+
+          @media (max-width: 576px) {
+            .usage-kpis {
+              grid-template-columns: 1fr;
+            }
           }
         }
       }
@@ -2607,57 +2251,40 @@ export default {
             font-size: 12px;
           }
 
-          .section-progress-track {
-            height: 8px;
-          }
+          &.traffic-board-subscription {
+            .section-progress-track {
+              height: 8px;
+            }
 
-          .usage-kpis {
-            display: flex;
-            gap: 16px;
-          }
+            .usage-kpis {
+              display: flex;
+              gap: 16px;
+            }
 
-          .usage-kpi {
-            flex: 1;
-            background: rgba(241, 245, 249, 0.9);
-          }
+            .usage-kpi {
+              flex: 1;
+              background: rgba(241, 245, 249, 0.9);
+            }
 
-          .usage-kpi-label {
-            font-size: 12px;
-          }
+            .usage-kpi-label {
+              font-size: 12px;
+            }
 
-          .usage-kpi-value {
-            font-size: 14px;
-          }
+            .usage-kpi-value {
+              font-size: 14px;
+            }
 
-          .usage-package-note,
-          .usage-reset-hint {
-            display: none;
-          }
+            .usage-reset-hint {
+              display: none;
+            }
 
-          .usage-summary-line,
-          .usage-package-note,
-          .usage-reset-hint {
-            &.persist-visible {
-              display: block;
+            .usage-summary-line,
+            .usage-reset-hint {
+              &.persist-visible {
+                display: block;
+              }
             }
           }
-        }
-      }
-
-      &.warning-card .water-progress {
-        background-color: rgba(255, 152, 0, 0.15);
-      }
-
-      &.danger-card .water-progress {
-        background-color: rgba(244, 67, 54, 0.15);
-      }
-
-      @keyframes wave {
-        0% {
-          transform: translateX(0) translateZ(0);
-        }
-        100% {
-          transform: translateX(-50%) translateZ(0);
         }
       }
 
@@ -2665,50 +2292,10 @@ export default {
         border-color: rgba(148, 163, 184, 0.24);
         box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
       }
-
-      .stats-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-        border-radius: 12px;
-        margin-right: 15px;
-        color: var(--theme-color);
-      }
-
-      .stats-info {
-        flex: 1;
-
-        .stats-value {
-          font-size: 18px;
-          font-weight: 600;
-          color: var(--theme-text-primary);
-          margin-bottom: 5px;
-        }
-
-        .stats-label {
-          font-size: 14px;
-          color: var(--theme-text-secondary);
-        }
-      }
-
-      .chevron-icon {
-        color: var(--theme-color);
-        opacity: 0.5;
-        transition: all 0.3s ease;
-      }
-
-      &:hover {
-        .chevron-icon {
-          transform: translateX(3px);
-          opacity: 1;
-        }
-      }
     }
   }
 
+  /* 会员等级卡片 */
   .stats-grid .stats-card.member-tier-card {
     background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.35), transparent 35%),
       linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%);
@@ -2874,6 +2461,7 @@ export default {
   }
 
 
+  /* IP 位置卡片 */
   .ip-location-summary-card {
     border-radius: 20px;
     border: 1px solid rgba(131, 159, 213, 0.22);
@@ -3175,6 +2763,7 @@ export default {
     }
   }
 
+  /* 流量趋势图卡片 */
   .usage-trend-card {
     .card-body {
       padding-top: 6px;
@@ -3194,6 +2783,7 @@ export default {
       height: 280px;
     }
   }
+  /* 待支付横幅卡片 */
   .pending-order-banner {
     margin-bottom: 8px;
     min-height: 44px;
@@ -3241,47 +2831,8 @@ export default {
     }
   }
 
-  .status-badge,
-  .status-tag {
-    display: inline-flex;
-    align-items: center;
-    height: 22px;
-    padding: 0 8px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    border: none;
-  }
-
-  .status-badge.success, .status-tag.success { background: var(--success-background); color: var(--success-color); }
-  .status-badge.warning, .status-tag.warning { background: var(--warning-background); color: var(--warning-color); }
-  .status-badge.error, .status-tag.error { background: var(--error-background); color: var(--error-color); }
 }
 
-
-.skeleton-loading {
-  overflow: hidden;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    transform: translateX(-100%);
-    background-image: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0) 0,
-            rgba(255, 255, 255, 0.2) 20%,
-            rgba(255, 255, 255, 0.5) 60%,
-            rgba(255, 255, 255, 0) 100%
-    );
-    animation: shimmer 2s infinite;
-    z-index: 1;
-  }
-}
 
 @keyframes shimmer {
   100% {
@@ -3354,43 +2905,9 @@ export default {
         padding: 6px;
       }
 
-      .usage-package-note {
-        margin-top: 2px;
-      }
-
     }
   }
 
-  .subscription-card .subscription-info {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .subscription-card .info-item {
-    width: 100%;
-    padding: 0;
-    border-right: none;
-    border-bottom: 1px solid var(--border-light-color);
-    padding-bottom: 12px;
-  }
-
-  .subscription-card .info-item:last-child {
-    border-bottom: none;
-  }
-
-  .subscription-actions {
-    flex-direction: column;
-    margin-top: 12px;
-  }
-
-}
-
-@media (min-width: 769px) {
-  .subscription-actions {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-  }
 }
 
 @media (min-width: 769px) and (max-width: 1199px) {
@@ -3405,35 +2922,6 @@ export default {
     transform: rotate(360deg);
   }
 }
-
-.stats-card.warning-card {
-  border-color: rgba(var(--theme-color-rgb), 0.85);
-  box-shadow: 0 4px 10px rgba(255, 152, 0, 0.15);
-
-  .stats-icon {
-    background-color: rgba(255, 152, 0, 0.1);
-    color: rgba(var(--theme-color-rgb), 0.85);
-  }
-
-  .stats-value {
-    color: rgba(var(--theme-color-rgb), 0.85);
-  }
-}
-
-.stats-card.danger-card {
-  border-color: rgba(var(--theme-color-rgb), 0.95);
-  box-shadow: 0 4px 10px rgba(244, 67, 54, 0.15);
-
-  .stats-icon {
-    background-color: rgba(244, 67, 54, 0.1);
-    color: rgba(var(--theme-color-rgb), 0.95);
-  }
-
-  .stats-value {
-    color: rgba(var(--theme-color-rgb), 0.95);
-  }
-}
-
 
 .skeleton-card {
   width: 100%;
@@ -3459,35 +2947,6 @@ export default {
     animation: shimmer 2s infinite;
     z-index: 1;
   }
-}
-
-
-.skeleton-header {
-  height: 24px;
-  margin-bottom: 20px;
-  background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
-  border-radius: 6px;
-  width: 30%;
-  margin: 16px 20px;
-  position: relative;
-}
-
-.skeleton-body {
-  padding: 0 20px 20px;
-}
-
-.skeleton-row {
-  height: 16px;
-  margin-bottom: 16px;
-  background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
-  border-radius: 4px;
-  width: 100%;
-  position: relative;
-}
-
-.skeleton-row:last-child {
-  width: 75%;
-  margin-bottom: 0;
 }
 
 
@@ -3554,124 +3013,6 @@ export default {
   z-index: 1;
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-container {
-  width: 90%;
-  max-width: 400px;
-  max-height: 90vh;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.modal-card {
-  background-color: var(--card-background);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.reset-traffic-modal {
-  .modal-header {
-    padding: 16px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color);
-
-    h3 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--theme-text-primary);
-    }
-
-    .close-button {
-      background: none;
-      border: none;
-      font-size: 24px;
-      color: var(--theme-text-secondary);
-      cursor: pointer;
-      padding: 0;
-
-      &:hover {
-        color: var(--theme-text-primary);
-      }
-    }
-  }
-
-  .modal-body {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .warning-icon {
-      margin-bottom: 16px;
-      color: rgba(var(--theme-color-rgb), 0.85);
-    }
-
-    .warning-text {
-      font-size: 16px;
-      line-height: 1.5;
-      margin-bottom: 12px;
-      text-align: center;
-      color: var(--theme-text-primary);
-    }
-
-    .note-text {
-      font-size: 14px;
-      color: var(--theme-text-secondary);
-      text-align: center;
-      margin-bottom: 0;
-      padding: 8px 12px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-      border-radius: 6px;
-      width: 100%;
-    }
-  }
-
-  .modal-footer {
-    padding: 16px 20px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    border-top: 1px solid var(--border-color);
-
-    button {
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-        transform: none !important;
-      }
-    }
-
-    .confirm-btn {
-      &:hover:not(:disabled) {
-        transform: translateY(-2px);
-      }
-    }
-  }
-}
 
 }
 
@@ -3687,64 +3028,37 @@ export default {
 }
 
 
-.loader-small {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top: 2px solid var(--theme-white);
-  animation: spin 1s linear infinite;
-  margin-right: 8px;
-}
-
-
-.loading-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-
 </style>
 
 <!-- 全局样式，不受scoped限制 -->
 <style lang="scss">
 @use '@/assets/styles/no-plan-card' as *;
 
+/* 统计卡片状态样式（全局） */
 .dashboard-container .stats-card {
   &.warning-card,
   &.danger-card {
-    border-color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
-    box-shadow: 0 4px 10px rgba(var(--stats-alert-rgb), 0.15) !important;
+    border-color: rgba(var(--stats-alert-rgb), 0.42);
+    box-shadow: 0 4px 10px rgba(var(--stats-alert-rgb), 0.15);
 
     .stats-icon {
-      background-color: rgba(var(--stats-alert-rgb), 0.1) !important;
-      color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
+      background-color: rgba(var(--stats-alert-rgb), 0.1);
+      color: var(--stats-level-color);
     }
 
     .stats-value {
-      color: rgba(var(--theme-color-rgb), var(--stats-level-opacity)) !important;
+      color: var(--stats-level-color);
     }
   }
 
   &.warning-card {
-    --stats-alert-rgb: 255, 152, 0;
-    --stats-level-opacity: 0.85;
+    --stats-alert-rgb: var(--warning-color-rgb);
+    --stats-level-color: var(--warning-color);
   }
 
   &.danger-card {
-    --stats-alert-rgb: 244, 67, 54;
-    --stats-level-opacity: 0.95;
+    --stats-alert-rgb: var(--error-color-rgb);
+    --stats-level-color: var(--error-color);
   }
 
   &.balance-card {
@@ -3766,122 +3080,123 @@ export default {
   }
 }
 
+/* 流量包卡片弹窗（全局） */
 .traffic-package-modal-overlay {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 1200 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 16px !important;
-  background-color: rgba(0, 0, 0, 0.7) !important;
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .traffic-package-modal-container {
-  width: min(100%, 420px) !important;
-  max-height: calc(100vh - 32px) !important;
-  border-radius: 12px !important;
-  overflow: hidden !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  width: min(100%, 420px);
+  max-height: calc(100vh - 32px);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .traffic-package-modal-card-global {
-  display: flex !important;
-  flex-direction: column !important;
-  max-height: calc(100vh - 32px) !important;
-  overflow: hidden !important;
-  background-color: var(--card-background) !important;
-  border: 1px solid rgba(var(--theme-color-rgb), 0.15) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 32px);
+  overflow: hidden;
+  background-color: var(--card-background);
+  border: 1px solid rgba(var(--theme-color-rgb), 0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 
   .modal-header {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 16px 20px !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    background-color: rgba(var(--theme-color-rgb), 0.03) !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: rgba(var(--theme-color-rgb), 0.03);
 
     h3 {
-      margin: 0 !important;
-      color: var(--text-color) !important;
-      font-size: 18px !important;
-      font-weight: 600 !important;
+      margin: 0;
+      color: var(--text-color);
+      font-size: 18px;
+      font-weight: 600;
     }
 
     .close-button {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      border: none !important;
-      background: transparent !important;
-      color: var(--secondary-text-color) !important;
-      cursor: pointer !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: var(--secondary-text-color);
+      cursor: pointer;
 
       &:hover {
-        color: var(--text-color) !important;
+        color: var(--text-color);
       }
     }
   }
 
   .modal-body {
-    display: block !important;
-    padding: 20px !important;
-    overflow-y: auto !important;
+    display: block;
+    padding: 20px;
+    overflow-y: auto;
   }
 
   .traffic-package-desc {
-    margin: 0 0 14px !important;
-    color: var(--secondary-text-color) !important;
-    font-size: 14px !important;
-    line-height: 1.5 !important;
+    margin: 0 0 14px;
+    color: var(--secondary-text-color);
+    font-size: 14px;
+    line-height: 1.5;
   }
 
   .traffic-package-list {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 10px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .traffic-package-item {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 10px !important;
-    padding: 14px !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: 12px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     background: linear-gradient(
       180deg,
       rgba(var(--theme-color-rgb), 0.06) 0%,
       rgba(var(--theme-color-rgb), 0.02) 100%
-    ) !important;
+    );
   }
 
   .item-title-row {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 10px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
 
     strong {
-      color: var(--text-color) !important;
-      font-size: 15px !important;
-      font-weight: 600 !important;
+      color: var(--text-color);
+      font-size: 15px;
+      font-weight: 600;
     }
   }
 
   .item-price {
-    color: var(--theme-color) !important;
-    font-size: 24px !important;
-    font-weight: 700 !important;
+    color: var(--theme-color);
+    font-size: 24px;
+    font-weight: 700;
   }
 
   .item-content {
-    min-height: 32px !important;
-    color: var(--secondary-text-color) !important;
-    font-size: 13px !important;
-    line-height: 1.45 !important;
+    min-height: 32px;
+    color: var(--secondary-text-color);
+    font-size: 13px;
+    line-height: 1.45;
   }
 
 }
