@@ -154,7 +154,7 @@
 
               <!-- 使用v-html渲染自定义SVG图标 -->
 
-              <div v-if="card.svgIcon" class="custom-svg-icon" v-html="card.svgIcon"></div>
+              <div v-if="card.svgIcon" class="custom-svg-icon" v-html="sanitizeSvgIcon(card.svgIcon)"></div>
 
               <!-- 保留对旧版配置的兼容，如果有icon属性就使用动态组件 -->
 
@@ -202,6 +202,8 @@ import {
 
   IconShoppingCart,
 
+  IconUser,
+
 
   IconDevices,
 
@@ -227,6 +229,8 @@ import {
 
   IconMessages,
 
+  IconChartBar,
+
   IconBell
 
 } from '@tabler/icons-vue';
@@ -239,6 +243,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 
 import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
 import InfoCard from '@/components/common/InfoCard.vue';
+import DOMPurify from 'dompurify';
 
 
 
@@ -311,23 +316,53 @@ const handleCustomCardClick = (card) => {
 
   if (card.url) {
 
-    const cardTitle = card.title || getLocaleTitle(card.id);
+    const safeUrl = getSafeNavigationUrl(card.url);
 
-
-    
+    if (!safeUrl) {
+      return;
+    }
 
     if (card.openInNewTab) {
 
-      window.open(card.url, '_blank');
+      window.open(safeUrl, '_blank', 'noopener,noreferrer');
 
     } else {
 
-      window.location.href = card.url;
+      window.location.href = safeUrl;
 
     }
 
   }
 
+};
+
+const getSafeNavigationUrl = (url) => {
+  if (typeof url !== 'string') return null;
+
+  const rawUrl = url.trim();
+  if (!rawUrl) return null;
+
+  if (rawUrl.startsWith('/')) return rawUrl;
+
+  try {
+    const parsed = new URL(rawUrl, window.location.origin);
+    if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+      return parsed.toString();
+    }
+  } catch (e) {
+    return null;
+  }
+
+  return null;
+};
+
+const sanitizeSvgIcon = (svgContent) => {
+  if (typeof svgContent !== 'string') return '';
+
+  return DOMPurify.sanitize(svgContent, {
+    USE_PROFILES: { svg: true, svgFilters: true },
+    FORBID_TAGS: ['script', 'foreignObject']
+  });
 };
 
 
