@@ -652,6 +652,7 @@ export default {
     });
 
     const primaryActionClass = computed(() => {
+      if (primaryPlanActionLabel.value === t('dashboard.planAction.manageSubscription')) return 'btn-outline';
       return 'btn-primary';
     });
 
@@ -1513,14 +1514,18 @@ export default {
 .dashboard-container {
   display: flex;
   justify-content: center;
-  --dashboard-card-padding: 20px;
+  --dashboard-card-padding: 14px;
+  --dashboard-radius: 12px;
+  --dashboard-shadow-compact: 0 1px 3px rgba(15, 23, 42, 0.05), 0 6px 14px rgba(15, 23, 42, 0.04);
+  --dashboard-gap-compact: 12px;
+  --dashboard-section-margin: 12px;
 
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
   --saas-text-secondary: #6b7280;
   --saas-border-soft: #eef1f5;
   --saas-card-bg: #ffffff;
-  --saas-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 18px rgba(15, 23, 42, 0.04);
+  --saas-card-shadow: var(--dashboard-shadow-compact);
 
   --theme-text-primary: #111827;
   --theme-text-secondary: #6b7280;
@@ -1552,7 +1557,7 @@ export default {
     .overview-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 16px;
+    gap: var(--dashboard-gap-compact);
 
     > .pending-order-banner {
       grid-column: 1 / -1;
@@ -1577,14 +1582,14 @@ export default {
 
   .dashboard-card {
     background-color: var(--saas-card-bg);
-    border-radius: 14px;
+    border-radius: var(--dashboard-radius);
     box-shadow: var(--saas-card-shadow);
     padding: var(--dashboard-card-padding);
     border: none;
     transition: box-shadow 0.2s ease;
 
     &:hover {
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 10px 24px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 8px 16px rgba(15, 23, 42, 0.05);
       transform: none;
     }
 
@@ -1592,7 +1597,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
 
       .card-title {
         font-size: 16px;
@@ -1613,8 +1618,8 @@ export default {
     position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: var(--dashboard-gap-compact);
+    margin-bottom: var(--dashboard-section-margin);
 
     @media (min-width: 768px) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1628,8 +1633,8 @@ export default {
     .stats-card {
       position: relative;
       background-color: var(--card-bg-color);
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      border-radius: var(--dashboard-radius);
+      box-shadow: var(--dashboard-shadow-compact);
       display: flex;
       align-items: center;
       gap: 16px;
@@ -1749,7 +1754,7 @@ export default {
           overflow: visible;
 
           .expired-status-strip {
-            border-radius: 10px;
+            border-radius: var(--dashboard-radius);
             padding: 9px 12px;
             font-size: 13px;
             font-weight: 600;
@@ -1760,7 +1765,7 @@ export default {
 
           .plan-summary-section {
             border: none;
-            border-radius: 12px;
+            border-radius: var(--dashboard-radius);
             background: var(--theme-surface-soft);
             padding: 10px 12px;
             overflow: visible;
@@ -1895,7 +1900,7 @@ export default {
 
             .plan-action-btn {
               flex: 1;
-              border-radius: 12px;
+              border-radius: var(--dashboard-radius);
               padding: 10px 14px;
               font-size: 14px;
               font-weight: 600;
@@ -2062,7 +2067,7 @@ export default {
             flex-direction: column;
             gap: 4px;
             padding: 8px;
-            border-radius: 10px;
+            border-radius: var(--dashboard-radius);
             background: var(--theme-surface-soft);
           }
 
@@ -2167,7 +2172,7 @@ export default {
 
       &:hover {
         border-color: rgba(148, 163, 184, 0.24);
-        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.07);
       }
     }
   }
@@ -2217,7 +2222,7 @@ export default {
 
   /* IP 位置卡片（横幅） */
   .ip-location-summary-card {
-    border-radius: 14px;
+    border-radius: var(--dashboard-radius);
     border: 1px solid rgba(148, 163, 184, 0.22);
     background: linear-gradient(90deg, rgba(248, 250, 252, 0.96) 0%, rgba(241, 245, 249, 0.92) 100%);
     box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
@@ -2416,11 +2421,11 @@ export default {
   }
   /* 待支付横幅卡片 */
   .pending-order-banner {
-    margin-bottom: 8px;
+    margin-bottom: var(--dashboard-section-margin);
     min-height: 44px;
     max-height: 48px;
     padding: 6px 12px;
-    border-radius: 10px;
+    border-radius: var(--dashboard-radius);
     border: 1px solid rgba(var(--warning-color-rgb), 0.4);
     background: var(--warning-background);
     display: flex;
@@ -2578,7 +2583,7 @@ export default {
 .skeleton-icon {
   width: 48px;
   height: 48px;
-  border-radius: 12px;
+  border-radius: var(--dashboard-radius);
   background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
   margin-right: 16px;
   flex-shrink: 0;
@@ -2720,7 +2725,7 @@ export default {
 .traffic-package-modal-container {
   width: min(100%, 420px);
   max-height: calc(100vh - 32px);
-  border-radius: 12px;
+  border-radius: var(--dashboard-radius);
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
@@ -2802,7 +2807,7 @@ export default {
     gap: 10px;
     padding: 14px;
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: var(--dashboard-radius);
     background: linear-gradient(
       180deg,
       rgba(var(--theme-color-rgb), 0.06) 0%,
