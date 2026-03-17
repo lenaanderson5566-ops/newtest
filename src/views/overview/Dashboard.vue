@@ -327,14 +327,14 @@
                     <span class="item-price">{{ currencySymbol }}{{ (normalizeTrafficPackagePrice(plan.onetime_price) / 100).toFixed(2) }}</span>
                   </div>
                   <div class="item-content" v-if="getTrafficPackageContent(plan)">{{ getTrafficPackageContent(plan) }}</div>
-                  <button class="confirm-btn buy-btn btn btn-primary" :disabled="isTrafficPackageSoldOut(plan)" @click="purchaseTrafficPackage(plan)">
+                  <button class="confirm-btn btn btn-primary btn-block" :disabled="isTrafficPackageSoldOut(plan)" @click="purchaseTrafficPackage(plan)">
                     {{ isTrafficPackageSoldOut(plan) ? $t('shop.plan.sold_out_btn') : $t('shop.plan.add_quota') }}
                   </button>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button class="cancel-btn btn btn-secondary" @click="showTrafficPackageModal = false">
+              <button class="btn btn-secondary" @click="showTrafficPackageModal = false">
                 {{ $t('common.cancel') }}
               </button>
             </div>
@@ -359,7 +359,7 @@
             <p class="note-text">{{ $t('dashboard.resetTrafficWarning') }}</p>
           </div>
           <div class="modal-footer">
-            <button class="cancel-btn btn btn-secondary" @click="closeResetTrafficModal">
+            <button class="btn btn-secondary" @click="closeResetTrafficModal">
               {{ $t('common.cancel') }}
             </button>
             <button
@@ -3893,19 +3893,6 @@ export default {
     line-height: 1.45 !important;
   }
 
-  .buy-btn {
-    width: 100% !important;
-    margin-top: auto !important;
-    padding: 8px 12px !important;
-    border-radius: 8px !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-
-    &:disabled {
-      opacity: 0.75 !important;
-    }
-  }
-
   .modal-footer {
     display: flex !important;
     justify-content: flex-end !important;
@@ -3913,12 +3900,6 @@ export default {
     border-top: 1px solid var(--border-color) !important;
   }
 
-  .cancel-btn {
-    padding: 8px 16px !important;
-    border-radius: 8px !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-  }
 }
 
 </style>
