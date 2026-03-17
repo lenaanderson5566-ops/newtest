@@ -693,7 +693,7 @@ export default {
     });
 
     const secondaryActionClass = computed(() => {
-      if (secondaryPlanActionLabel.value === t('dashboard.planAction.manageSubscription')) return 'btn-primary';
+      if (secondaryPlanActionLabel.value === t('dashboard.planAction.renew')) return 'btn-primary';
       return 'btn-secondary';
     });
 
@@ -2109,6 +2109,9 @@ export default {
 
         /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
         &.traffic-board-subscription {
+          background: linear-gradient(165deg, rgba(var(--theme-color-rgb), 0.08) 0%, rgba(var(--theme-color-rgb), 0.03) 48%, var(--card-bg-color) 100%);
+          border-color: rgba(var(--theme-color-rgb), 0.22);
+
           .usage-kpis {
             width: 100%;
             display: grid;
@@ -2239,10 +2242,10 @@ export default {
   }
 
   .stats-grid .stats-card.today-traffic-card {
-    background: linear-gradient(145deg, #0f172a 0%, #1d4ed8 100%);
-    color: #e2e8f0;
-    border: 1px solid rgba(147, 197, 253, 0.35);
-    box-shadow: 0 10px 24px rgba(30, 64, 175, 0.28);
+    background: linear-gradient(180deg, var(--card-bg-color) 0%, rgba(var(--theme-color-rgb), 0.05) 100%);
+    color: var(--theme-text-primary);
+    border: 1px solid rgba(var(--theme-color-rgb), 0.22);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
     align-items: flex-start;
     flex-direction: column;
     gap: 12px;
@@ -2251,7 +2254,7 @@ export default {
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.04em;
-      color: rgba(226, 232, 240, 0.92);
+      color: var(--theme-text-secondary);
     }
 
     .today-traffic-values {
@@ -2263,14 +2266,14 @@ export default {
       font-weight: 700;
       line-height: 1.2;
 
-      .traffic-up { color: #86efac; }
-      .traffic-down { color: #fca5a5; }
+      .traffic-up { color: #059669; }
+      .traffic-down { color: #dc2626; }
     }
 
     .today-traffic-total {
       font-size: 16px;
       font-weight: 600;
-      color: #f8fafc;
+      color: var(--theme-text-primary);
     }
   }
 
@@ -2284,22 +2287,20 @@ export default {
   /* IP 位置卡片 */
   .ip-location-summary-card {
     border-radius: 20px;
-    border: 1px solid rgba(131, 159, 213, 0.22);
-    background: radial-gradient(circle at 76% 50%, rgba(58, 103, 208, 0.26), transparent 40%),
-      radial-gradient(circle at 15% 105%, rgba(26, 65, 154, 0.3), transparent 35%),
-      linear-gradient(120deg, #0f172a 0%, #17233f 45%, #1c2747 100%);
-    box-shadow: 0 10px 24px rgba(10, 20, 42, 0.28);
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background: linear-gradient(180deg, rgba(248, 250, 252, 0.94) 0%, rgba(241, 245, 249, 0.88) 100%);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
 
     .ip-location-summary-body {
       padding-top: 0;
     }
 
     .ip-location-state {
-      color: #bddfff;
+      color: var(--theme-text-secondary);
       font-size: 13px;
 
       &.error {
-        color: #ff9ba8;
+        color: #dc2626;
       }
     }
 
@@ -2307,7 +2308,7 @@ export default {
       display: grid;
       grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.35fr);
       gap: 14px 18px;
-      color: #d9ecff;
+      color: var(--theme-text-primary);
       align-items: start;
       position: relative;
 
@@ -2325,7 +2326,7 @@ export default {
       position: absolute;
       top: 4px;
       right: 0;
-      color: rgba(229, 236, 250, 0.86);
+      color: rgba(71, 85, 105, 0.78);
     }
 
     .ip-location-main-info {
@@ -2336,7 +2337,7 @@ export default {
     }
 
     .ip-meta-title {
-      color: rgba(233, 240, 255, 0.95);
+      color: var(--theme-text-secondary);
       font-size: 18px;
       line-height: 1.2;
       font-weight: 700;
@@ -2354,7 +2355,7 @@ export default {
       line-height: 1.15;
       font-weight: 700;
       letter-spacing: -0.02em;
-      color: #ecf6ff;
+      color: var(--theme-text-primary);
 
       @media (max-width: 1220px) {
         font-size: 38px;
@@ -2392,7 +2393,7 @@ export default {
 
     .ip-address-secondary {
       font-size: 11px;
-      color: rgba(189, 223, 255, 0.58);
+      color: rgba(100, 116, 139, 0.75);
       letter-spacing: 0.2px;
     }
 
@@ -2400,7 +2401,7 @@ export default {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: #e9f3ff;
+      color: var(--theme-text-primary);
       font-size: 16px;
       font-weight: 600;
 
@@ -2434,7 +2435,7 @@ export default {
     }
 
     .ip-region {
-      color: #bddfff;
+      color: var(--theme-text-secondary);
       font-size: 13px;
     }
 
