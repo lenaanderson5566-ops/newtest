@@ -464,6 +464,7 @@ export default {
   setup() {
     const {t, locale} = useI18n();
     const router = useRouter();
+    const { showToast } = useToast();
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
     const userStats = reactive({
