@@ -2057,7 +2057,7 @@ export default {
             flex-shrink: 0;
 
             &.disabled {
-              opacity: 0.6;
+              opacity: 0.7;
               cursor: not-allowed;
             }
 
@@ -2103,13 +2103,13 @@ export default {
                 width: 18px;
                 left: 3px;
                 bottom: 3px;
-                background-color: var(--theme-white);
+                background-color: white;
                 transition: 0.4s;
                 z-index: 1;
               }
 
               &.round {
-                border-radius: 24px;
+                border-radius: 34px;
 
                 &::before {
                   border-radius: 50%;
