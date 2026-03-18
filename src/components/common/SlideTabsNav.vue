@@ -68,7 +68,6 @@ export default {
         'TicketList',
         'MobileTickets',
         'TrafficLog',
-        'More',
         'Shop',
         'OrderConfirm',
         'Payment'
