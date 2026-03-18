@@ -50,19 +50,6 @@
 
         <template v-else>
           <div
-            class="stats-card overview-card overview-card--today-traffic today-traffic-card"
-            :class="{ 'card-animate': !loading.userStats }"
-            style="animation-delay: 0.45s"
-          >
-            <div class="today-traffic-title">今日流量</div>
-            <div class="today-traffic-values">
-              <span class="traffic-up">↑ {{ todayTrafficStats.uploadGb }} GB</span>
-              <span class="traffic-down">↓ {{ todayTrafficStats.downloadGb }} GB</span>
-            </div>
-            <div class="today-traffic-total">总计 {{ todayTrafficStats.totalGb }} GB</div>
-          </div>
-
-          <div
             class="stats-card overview-card overview-card--traffic-quota traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
@@ -201,43 +188,54 @@
             </div>
           </div>
 
+          <div class="stats-card overview-card overview-card--exit-region ip-location-summary-card">
+            <div class="card-body ip-location-summary-body">
+              <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
+              <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
+              <div v-else-if="ipLocationData" class="ip-location-content">
+                <div class="ip-banner-main">
+                  <div class="ip-meta-title">{{ $t('dashboard.currentExitRegion') }}</div>
+                  <div class="ip-main-line">
+                    <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
+                    <span class="ip-region-primary">{{ ipLocationPrimaryRegionText }}</span>
+                  </div>
+                  <div class="ip-sub-line">
+                    <span class="ip-region">{{ ipLocationDisplayText }}</span>
+                    <span class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</span>
+                  </div>
+                </div>
+                <button class="ip-refresh-btn btn btn-secondary" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
+                  <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
+                  <span>{{ ipLocationLoading ? $t('dashboard.refreshing') : $t('common.refresh') }}</span>
+                </button>
+              </div>
+              <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
+            </div>
+          </div>
+
         </template>
       </div>
 
-      <div class="dashboard-card overview-card overview-card--exit-region ip-location-summary-card" v-if="hasPlan">
-        <div class="card-body ip-location-summary-body">
-          <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
-          <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
-          <div v-else-if="ipLocationData" class="ip-location-content">
-            <div class="ip-banner-main">
-              <div class="ip-meta-title">{{ $t('dashboard.currentExitRegion') }}</div>
-              <div class="ip-main-line">
-                <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
-                <span class="ip-region-primary">{{ ipLocationPrimaryRegionText }}</span>
-              </div>
-              <div class="ip-sub-line">
-                <span class="ip-region">{{ ipLocationDisplayText }}</span>
-                <span class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</span>
-              </div>
-            </div>
-            <button class="ip-refresh-btn btn btn-secondary" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
-              <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
-              <span>{{ ipLocationLoading ? $t('dashboard.refreshing') : $t('common.refresh') }}</span>
-            </button>
+      <div class="usage-trend-row" v-if="hasPlan">
+        <div class="dashboard-card usage-trend-card">
+          <div class="card-header">
+            <h2 class="card-title">{{ $t('trafficLog.title') }}</h2>
           </div>
-          <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
+          <div class="card-body">
+            <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
+            <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
+            <div v-else-if="!trafficTrendData.length" class="trend-state">{{ $t('trafficLog.noTrafficData') }}</div>
+            <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
+          </div>
         </div>
-      </div>
 
-      <div class="dashboard-card usage-trend-card" v-if="hasPlan">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t('trafficLog.title') }}</h2>
-        </div>
-        <div class="card-body">
-          <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
-          <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
-          <div v-else-if="!trafficTrendData.length" class="trend-state">{{ $t('trafficLog.noTrafficData') }}</div>
-          <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
+        <div class="stats-card overview-card overview-card--today-traffic today-traffic-card">
+          <div class="today-traffic-title">今日流量</div>
+          <div class="today-traffic-values">
+            <span class="traffic-up">↑ {{ todayTrafficStats.uploadGb }} GB</span>
+            <span class="traffic-down">↓ {{ todayTrafficStats.downloadGb }} GB</span>
+          </div>
+          <div class="today-traffic-total">总计 {{ todayTrafficStats.totalGb }} GB</div>
         </div>
       </div>
 
@@ -1565,16 +1563,14 @@ export default {
     }
 
     > .stats-grid,
-    > .ip-location-summary-card,
-    > .usage-trend-card {
+    > .usage-trend-row {
       grid-column: 1 / -1;
     }
 
     @media (max-width: 992px) {
       > .pending-order-banner,
       > .stats-grid,
-      > .ip-location-summary-card,
-      > .usage-trend-card {
+      > .usage-trend-row {
         grid-column: 1 / -1;
       }
     }
@@ -2101,9 +2097,15 @@ export default {
       }
 
       @media (min-width: 1200px) {
+        &.ip-location-summary-card {
+          grid-column: 2;
+          grid-row: 1;
+          min-height: 100%;
+        }
+
         &.traffic-board-card.total-main-card {
           grid-column: 1;
-          grid-row: 1 / span 2;
+          grid-row: 1 / span 3;
           min-height: 100%;
         }
 
@@ -2204,7 +2206,8 @@ export default {
   }
 
 
-  .stats-grid .stats-card.today-traffic-card {
+  .stats-grid .stats-card.today-traffic-card,
+  .usage-trend-row .today-traffic-card {
     color: var(--theme-text-primary);
     background: #fff;
     align-items: flex-start;
@@ -2231,9 +2234,19 @@ export default {
     }
   }
 
-  @media (min-width: 1200px) {
-    .stats-grid .stats-card.today-traffic-card {
-      grid-column: 2;
+  .usage-trend-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: var(--dashboard-gap-compact);
+    margin-bottom: var(--dashboard-section-margin);
+
+    .usage-trend-card {
+      margin-bottom: 0;
+    }
+
+    .today-traffic-card {
+      margin-bottom: 0;
+      min-height: 100%;
     }
   }
 
@@ -2507,15 +2520,6 @@ export default {
       grid-column: 1 / -1;
     }
 
-    .stats-card.today-traffic-card {
-      order: 2;
-      grid-column: 1 / -1;
-
-      .today-traffic-values {
-        font-size: 20px;
-      }
-    }
-
     .stats-card.traffic-board-package {
       order: 3;
     }
@@ -2551,6 +2555,18 @@ export default {
         padding: 6px;
       }
 
+    }
+  }
+
+  .usage-trend-row {
+    grid-template-columns: 1fr;
+
+    .today-traffic-card {
+      order: 2;
+
+      .today-traffic-values {
+        font-size: 20px;
+      }
     }
   }
 
