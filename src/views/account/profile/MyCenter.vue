@@ -59,6 +59,18 @@
       <section class="section-block dashboard-like-card">
         <h3 class="section-title">{{ $t('myCenter.financeTitle') }}</h3>
         <div class="settings-list">
+
+          <div class="settings-row">
+            <div class="row-main">
+              <div class="row-title">{{ $t('profile.autoRenewal') }}</div>
+              <p>{{ $t('profile.autoRenewalDesc') }}</p>
+            </div>
+            <label class="switch" :class="{ disabled: updatingAutoRenewal }">
+              <input type="checkbox" v-model="autoRenewal" @change="updateAutoRenewalSetting" :disabled="updatingAutoRenewal" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
           <button class="nav-row" @click="go('/billing?tab=wallet')">
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.accountBalance') }}</div>
@@ -151,7 +163,9 @@ const subscribeInfo = ref({});
 const currencySymbol = ref('$');
 const remindExpire = ref(false);
 const remindTraffic = ref(false);
+const autoRenewal = ref(false);
 const updatingSettings = ref(false);
+const updatingAutoRenewal = ref(false);
 
 const userTier = computed(() => {
   const tier = userInfo.value?.tier || {};
@@ -213,17 +227,37 @@ const updateRemindSettings = async () => {
     await apiUpdateRemind({
       remind_expire: remindExpire.value ? 1 : 0,
       remind_traffic: remindTraffic.value ? 1 : 0,
-      auto_renewal: userInfo.value.auto_renewal ? 1 : 0
+      auto_renewal: autoRenewal.value ? 1 : 0
     });
     showToast(t('myCenter.settingsUpdated'), 'success');
   } catch (error) {
     remindExpire.value = !!userInfo.value.remind_expire;
     remindTraffic.value = !!userInfo.value.remind_traffic;
+    autoRenewal.value = !!userInfo.value.auto_renewal;
     showToast(t('myCenter.settingsUpdateFailed'), 'error');
   } finally {
     updatingSettings.value = false;
   }
 };
+
+const updateAutoRenewalSetting = async () => {
+  try {
+    updatingAutoRenewal.value = true;
+    await apiUpdateRemind({
+      remind_expire: remindExpire.value ? 1 : 0,
+      remind_traffic: remindTraffic.value ? 1 : 0,
+      auto_renewal: autoRenewal.value ? 1 : 0
+    });
+    userInfo.value.auto_renewal = autoRenewal.value ? 1 : 0;
+    showToast(t('profile.updateSuccess'), 'success');
+  } catch (error) {
+    autoRenewal.value = !!userInfo.value.auto_renewal;
+    showToast(t('profile.updateError'), 'error');
+  } finally {
+    updatingAutoRenewal.value = false;
+  }
+};
+
 
 const logout = async () => {
   localStorage.removeItem('token');
@@ -241,6 +275,7 @@ onMounted(async () => {
     userInfo.value = userResp.value?.data || {};
     remindExpire.value = !!userInfo.value.remind_expire;
     remindTraffic.value = !!userInfo.value.remind_traffic;
+    autoRenewal.value = !!userInfo.value.auto_renewal;
   }
   if (subscribeResp.status === 'fulfilled') subscribeInfo.value = subscribeResp.value?.data || {};
   if (configResp.status === 'fulfilled' && configResp.value?.data?.currency_symbol) {

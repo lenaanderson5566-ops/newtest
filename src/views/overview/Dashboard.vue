@@ -117,29 +117,6 @@
                 </div>
               </div>
 
-              <div class="plan-summary-section plan-summary-section-renew">
-                <div class="plan-summary-row auto-renewal-row">
-                  <div>
-                    <span class="plan-summary-label with-tooltip">
-                      <span>{{ $t('profile.autoRenewal') }}</span>
-                      <span class="info-tooltip" tabindex="0" role="button" :aria-label="$t('profile.autoRenewalDesc')">
-                        <IconHelpCircle :size="14" />
-                        <span class="info-tooltip-content">{{ $t('profile.autoRenewalDesc') }}</span>
-                      </span>
-                    </span>
-                  </div>
-                  <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
-                    <input
-                      type="checkbox"
-                      v-model="autoRenewalEnabled"
-                      :disabled="updatingAutoRenewalSetting"
-                      @change="updateAutoRenewalSetting"
-                    />
-                    <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
-                  </label>
-                </div>
-              </div>
-
               <div class="plan-summary-section plan-summary-section-actions">
                 <div class="plan-summary-actions">
                   <button
@@ -341,7 +318,6 @@ import {
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import InfoCard from '@/components/common/InfoCard.vue';
 import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
-import { updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
@@ -417,10 +393,6 @@ export default {
       packageQuotaRemaining: null,
       expiredAt: null
     });
-    const remindExpireSetting = ref(false);
-    const remindTrafficSetting = ref(false);
-    const autoRenewalEnabled = ref(false);
-    const updatingAutoRenewalSetting = ref(false);
     const allowNewPeriod = ref('');
 
         const trafficMetrics = reactive({
@@ -525,9 +497,6 @@ export default {
             updateAccountBalanceDisplay();
           }
 
-          remindExpireSetting.value = !!info.remind_expire;
-          remindTrafficSetting.value = !!info.remind_traffic;
-          autoRenewalEnabled.value = !!info.auto_renewal;
           if (info.expired_at) {
             userPlan.value.expireDate = formatDate(info.expired_at);
             userPlan.value.expiredAt = Number(info.expired_at);
@@ -559,25 +528,6 @@ export default {
         loading.userInfo = false;
       }
     };
-
-    const updateAutoRenewalSetting = async () => {
-      const originalValue = !autoRenewalEnabled.value;
-      updatingAutoRenewalSetting.value = true;
-      try {
-        await apiUpdateRemind({
-          remind_expire: remindExpireSetting.value ? 1 : 0,
-          remind_traffic: remindTrafficSetting.value ? 1 : 0,
-          auto_renewal: autoRenewalEnabled.value ? 1 : 0,
-        });
-        showToast(t('profile.updateSuccess'), 'success');
-      } catch (error) {
-        autoRenewalEnabled.value = originalValue;
-        showToast(t('profile.updateError'), 'error');
-      } finally {
-        updatingAutoRenewalSetting.value = false;
-      }
-    };
-
     const isExpiringSoon = computed(() => {
       if (userStats.isRemainingDaysPermanent) return false;
 
@@ -1466,9 +1416,6 @@ export default {
       showDeviceLimit,
       needRefreshData,
       trafficBoardSections,
-      autoRenewalEnabled,
-      updatingAutoRenewalSetting,
-      updateAutoRenewalSetting,
       hasPurchasedTrafficPackage,
       trafficTrendChartRef,
       trafficTrendData,
@@ -1899,9 +1846,6 @@ export default {
             color: var(--theme-text-secondary);
           }
 
-          .auto-renewal-row {
-            align-items: flex-start;
-          }
 
           .plan-summary-actions {
             display: flex;
