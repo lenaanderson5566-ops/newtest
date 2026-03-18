@@ -60,7 +60,6 @@ export default {
     confirmPasswordPlaceholder: '請再次輸入新密碼',
     passwordPlaceholder: '請輸入密碼',
     requiresAuth: '需要登錄',
-    domainNotAuthorized: '域名未授權',
     contactAdmin: '請聯繫管理員獲取授權',
     captcha: '人機驗證',
     captchaRequired: '請完成人機驗證',

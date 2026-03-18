@@ -49,7 +49,6 @@ export default {
     enterVerificationCode: 'کد تایید را وارد کنید',
     enterPassword: 'پسورد خود را وارد کنید',
     selectEmailDomain: 'دامنه ایمیل را انتخاب کنید',
-    domainNotAuthorized: 'دامنه مجاز نیست',
     contactAdmin: 'با مدیر تماس بگیرید',
     prevNotice: 'قبلی',
     nextNotice: 'بعدی',

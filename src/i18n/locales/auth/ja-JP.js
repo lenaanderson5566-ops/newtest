@@ -60,7 +60,6 @@ export default {
     confirmPasswordPlaceholder: '新しいパスワードを再度入力してください',
     passwordPlaceholder: 'パスワードを入力してください',
     requiresAuth: 'ログインが必要です',
-    domainNotAuthorized: 'ドメインが認証されていません',
     contactAdmin: '管理者にお問い合わせして認証を取得してください',
     captcha: 'CAPTCHA認証',
     captchaRequired: 'CAPTCHA認証を完了してください',

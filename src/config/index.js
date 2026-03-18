@@ -274,15 +274,6 @@ export const config = {
 
   // =======================================================
 
-  // 安全配置 (仅包含前端域名授权开关，有利于保护您的主题不被别人窃取)
-  SECURITY_CONFIG: {
-    // 是否启用前端域名验证（前端域名检查，防止未授权域名访问）
-    enableFrontendDomainCheck: false,
-  },
-
-  // 授权的前端域名列表 (新增)
-  AUTHORIZED_DOMAINS: ["test.eztheme.test", "test1.eztheme.test"],
-
   // 验证码配置
   CAPTCHA_CONFIG: {
     // 验证方式: 'google' 或 'cloudflare'

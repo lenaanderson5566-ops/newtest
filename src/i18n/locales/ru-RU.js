@@ -49,7 +49,6 @@ export default {
     enterVerificationCode: 'Введите код подтверждения',
     enterPassword: 'Введите пароль',
     selectEmailDomain: 'Выберите домен почты',
-    domainNotAuthorized: 'Домен не авторизован',
     contactAdmin: 'Свяжитесь с администратором для получения авторизации',
     prevNotice: 'Предыдущее',
     nextNotice: 'Следующее',

@@ -60,7 +60,6 @@ export default {
     confirmPasswordPlaceholder: '새 비밀번호를 다시 입력하세요',
     passwordPlaceholder: '비밀번호를 입력하세요',
     requiresAuth: '로그인이 필요합니다',
-    domainNotAuthorized: '도메인이 인증되지 않았습니다',
     contactAdmin: '관리자에게 연락하여 인증을 받으세요',
     captcha: 'CAPTCHA 인증',
     captchaRequired: 'CAPTCHA 인증을 완료하세요',

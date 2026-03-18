@@ -60,7 +60,6 @@ export default {
     confirmPasswordPlaceholder: 'پسورد جدید را دوباره وارد کنید',
     passwordPlaceholder: 'پسورد خود را وارد کنید',
     requiresAuth: 'نیاز به ورود دارد',
-    domainNotAuthorized: 'دامنه مجاز نیست',
     contactAdmin: 'با مدیر تماس بگیرید',
     captcha: 'تایید انسان',
     captchaRequired: 'تایید انسان را انجام دهید',

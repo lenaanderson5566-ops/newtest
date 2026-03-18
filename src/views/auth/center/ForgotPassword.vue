@@ -381,7 +381,6 @@ import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 import { resetPassword, sendEmailVerify, checkLoginStatus, getWebsiteConfig } from '@/api/auth';
 
 
-import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
 
 import { CAPTCHA_CONFIG, AUTH_CONFIG } from '@/utils/baseConfig';
 
@@ -443,7 +442,6 @@ export default {
 
     IconEyeOff,
 
-    DomainAuthAlert,
 
     AuthPopup
 

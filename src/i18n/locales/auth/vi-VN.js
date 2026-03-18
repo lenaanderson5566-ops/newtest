@@ -58,7 +58,6 @@ export default {
     confirmPasswordPlaceholder: 'Vui lòng nhập lại mật khẩu mới',
     passwordPlaceholder: 'Vui lòng nhập mật khẩu',
     requiresAuth: 'Yêu cầu đăng nhập',
-    domainNotAuthorized: 'Tên miền chưa được ủy quyền',
     contactAdmin: 'Vui lòng liên hệ quản trị viên để được cấp quyền',
     captcha: 'Xác thực con người',
     captchaRequired: 'Vui lòng hoàn thành xác thực con người',

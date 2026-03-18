@@ -92,7 +92,6 @@ import LanguageSelector from '@/components/common/LanguageSelector.vue';
 
 import { IconChevronDown } from '@tabler/icons-vue';
 
-import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
 
 
 
@@ -107,7 +106,6 @@ export default {
 
     IconChevronDown,
 
-    DomainAuthAlert
 
   },
 

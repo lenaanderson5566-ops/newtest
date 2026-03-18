@@ -60,7 +60,6 @@ export default {
     confirmPasswordPlaceholder: 'Повторите новый пароль',
     passwordPlaceholder: 'Введите пароль',
     requiresAuth: 'Требуется вход',
-    domainNotAuthorized: 'Домен не авторизован',
     contactAdmin: 'Свяжитесь с администратором для получения авторизации',
     captcha: 'CAPTCHA-проверка',
     captchaRequired: 'Пройдите CAPTCHA-проверку',

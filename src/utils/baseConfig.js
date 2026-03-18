@@ -132,27 +132,6 @@ export const getApiBaseUrl = () => {
 export const API_BASE_URL = getApiBaseUrl();
 
 /**
- * 安全配置选项
- * 可以通过这些选项轻松启用或禁用各种安全功能
- */
-const DEFAULT_SECURITY_CONFIG = {
-  // 配置以 src/config/index.js 为主，避免重复维护
-};
-
-export const SECURITY_CONFIG = mergeDeep(
-  DEFAULT_SECURITY_CONFIG,
-  getConfig("SECURITY_CONFIG")
-);
-
-// 授权的前端域名列表
-const DEFAULT_AUTHORIZED_DOMAINS = [];
-
-export const AUTHORIZED_DOMAINS = getConfig(
-  "AUTHORIZED_DOMAINS",
-  DEFAULT_AUTHORIZED_DOMAINS
-);
-
-/**
  * 验证码配置
  * 控制注册和登录页面的验证方式
  */

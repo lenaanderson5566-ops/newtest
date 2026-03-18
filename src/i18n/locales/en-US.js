@@ -48,7 +48,6 @@ export default {
         enterVerificationCode: 'Please enter the verification code',
         enterPassword: 'Please enter your password',
         selectEmailDomain: 'Select Email Domain',
-        domainNotAuthorized: 'Domain Not Authorized',
         contactAdmin: 'Please contact the administrator for authorization',
         prevNotice: 'Previous',
         nextNotice: 'Next',

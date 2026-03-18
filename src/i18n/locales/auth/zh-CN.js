@@ -60,7 +60,6 @@ export default {
     confirmPasswordPlaceholder: '请再次输入新密码',
     passwordPlaceholder: '请输入密码',
     requiresAuth: '需要登录',
-    domainNotAuthorized: '域名未授权',
     contactAdmin: '请联系管理员获取授权',
     captcha: '人机验证',
     captchaRequired: '请完成人机验证',

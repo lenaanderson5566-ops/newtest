@@ -10,13 +10,6 @@ import i18n, { initializeLanguageFromUserSettings } from './i18n';
 import { MotionPlugin } from '@vueuse/motion';
 import { useToast } from './composables/useToast';
 import initPageTitle from './utils/exposeConfig';
-import { handleUnauthorizedDomain } from './utils/domainChecker';
-
-
-if (!handleUnauthorizedDomain()) {
-  throw new Error('Unauthorized domain');
-}
-
 const initApp = async () => {
   try {
     initPageTitle();

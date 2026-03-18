@@ -49,7 +49,6 @@ export default {
     enterVerificationCode: '認証コードを入力',
     enterPassword: 'パスワードを入力',
     selectEmailDomain: 'メールドメイン選択',
-    domainNotAuthorized: 'ドメイン未認証',
     contactAdmin: '管理者に連絡して認証を取得',
     prevNotice: '前の通知',
     nextNotice: '次の通知',

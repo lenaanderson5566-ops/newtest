@@ -60,7 +60,6 @@ export default {
     confirmPasswordPlaceholder: 'Re-enter new password',
     passwordPlaceholder: 'Enter password',
     requiresAuth: 'Sign-in required',
-    domainNotAuthorized: 'Domain not authorized',
     contactAdmin: 'Please contact the administrator for authorization',
     captcha: 'CAPTCHA Verification',
     captchaRequired: 'Please complete the CAPTCHA verification',
