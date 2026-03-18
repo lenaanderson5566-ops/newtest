@@ -299,9 +299,9 @@ export default {
     menu: {
         dashboard: '仪表盘',
         overview: '概览',
-        region: '区域',
+        region: '节点',
         usage: '使用',
-        start: '开始',
+        start: '快速开始',
         my: '账号',
         shop: '商店',
         subscription: '订阅',

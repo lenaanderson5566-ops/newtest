@@ -562,7 +562,6 @@ export default {
       line-height: 1.45 !important;
     }
 
-    .stats-grid,
     .cards-grid,
     .quick-grid,
     .dashboard-grid {
