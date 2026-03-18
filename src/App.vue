@@ -24,12 +24,6 @@
         </div>
       </div>
 
-      <div class="page-header-layer" v-if="pageHeaderTitle">
-        <div class="page-header-content">
-          <div class="page-header-title">{{ pageHeaderTitle }}</div>
-        </div>
-      </div>
-
       <!-- 顶部导航栏 - 保持不变 -->
       <SlideTabsNav />
     </div>
@@ -42,7 +36,7 @@
     </div>
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
-    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth, 'with-page-header': $route.meta.requiresAuth && !!pageHeaderTitle }]">
+    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]">
       <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
         <router-view v-slot="{ Component, route }">
           <transition 
@@ -84,8 +78,6 @@ import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue';
 import { useAppStore } from '@/store';
 import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
-import { useI18n } from 'vue-i18n';
-
 import { SITE_CONFIG, PROFILE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
@@ -122,7 +114,6 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const store = useAppStore();
-    const { t } = useI18n();
     const { applyTheme } = useTheme();
     const { showToast } = useToast();
     const siteConfig = ref(SITE_CONFIG);
@@ -258,20 +249,13 @@ export default {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     });
     
-
-    const pageHeaderTitle = computed(() => {
-      const titleKey = route.meta?.titleKey;
-      if (titleKey) return t(titleKey);
-      return route.meta?.title || route.name || siteConfig.value.siteName || t('common.page');
-    });
     return {
       username,
       avatarUrl,
       siteConfig,
       PROFILE_CONFIG,
       cachedRoutes,
-      hasUnreadNotice,
-      pageHeaderTitle
+      hasUnreadNotice
     };
   }
 };
@@ -317,35 +301,6 @@ export default {
   padding: 0 12px;
   z-index: 120;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.page-header-layer {
-  position: fixed;
-  top: calc(56px + env(safe-area-inset-top, 0px));
-  left: 0;
-  right: 0;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.8);
-  z-index: 115;
-}
-
-.page-header-content {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 0 12px;
-}
-
-.page-header-title {
-  font-size: 18px;
-  line-height: 1;
-  font-weight: 700;
-  color: #0f172a;
 }
 
 
@@ -458,9 +413,6 @@ export default {
     padding-top: calc(56px + env(safe-area-inset-top, 0px) + var(--page-content-top-gap, 8px));
   }
 
-  &.with-top-bar.with-page-header {
-    padding-top: calc(56px + 40px + env(safe-area-inset-top, 0px) + var(--page-content-top-gap, 8px));
-  }
 }
 
 
@@ -484,35 +436,12 @@ export default {
     padding-inline: var(--page-edge-gap, 2px);
   }
 
-  .page-header-layer {
-    padding-left: calc(var(--left-nav-occupy, 176px) + var(--left-nav-gap, 10px));
-  }
-
-  .page-header-content {
-    width: min(var(--page-content-max-width), 100%);
-    margin-left: auto;
-    margin-right: auto;
-    padding-inline: var(--page-edge-gap, 2px);
-  }
-
 }
 
 
 @media (max-width: 768px) {
   .app-content-wrapper.with-top-bar {
     --page-content-top-gap: 6px;
-  }
-
-  .page-header-layer {
-    padding: 0;
-  }
-
-  .page-header-content {
-    padding-inline: var(--page-edge-gap, 2px);
-  }
-
-  .page-header-title {
-    font-size: 16px;
   }
 
   .site-logo {
