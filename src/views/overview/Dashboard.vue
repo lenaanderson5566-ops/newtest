@@ -54,7 +54,7 @@
             :class="{ 'card-animate': !loading.userStats }"
             style="animation-delay: 0.45s"
           >
-            <div class="today-traffic-title">[ 今日流量 ]</div>
+            <div class="today-traffic-title">今日流量</div>
             <div class="today-traffic-values">
               <span class="traffic-up">↑ {{ todayTrafficStats.uploadGb }} GB</span>
               <span class="traffic-down">↓ {{ todayTrafficStats.downloadGb }} GB</span>
@@ -2185,7 +2185,7 @@ export default {
     line-height: 1.3;
     font-weight: 600;
     letter-spacing: 0.02em;
-    color: var(--theme-text-secondary);
+    color: var(--theme-text-primary);
   }
 
 
