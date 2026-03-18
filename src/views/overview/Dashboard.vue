@@ -213,29 +213,27 @@
             </div>
           </div>
 
+          <div class="stats-card overview-card overview-card--today-traffic today-traffic-card">
+            <div class="today-traffic-title">今日流量</div>
+            <div class="today-traffic-values">
+              <span class="traffic-up">↑ {{ todayTrafficStats.uploadGb }} GB</span>
+              <span class="traffic-down">↓ {{ todayTrafficStats.downloadGb }} GB</span>
+            </div>
+            <div class="today-traffic-total">总计 {{ todayTrafficStats.totalGb }} GB</div>
+          </div>
+
         </template>
       </div>
 
-      <div class="usage-trend-row" v-if="hasPlan">
-        <div class="dashboard-card usage-trend-card">
-          <div class="card-header">
-            <h2 class="card-title">{{ $t('trafficLog.title') }}</h2>
-          </div>
-          <div class="card-body">
-            <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
-            <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
-            <div v-else-if="!trafficTrendData.length" class="trend-state">{{ $t('trafficLog.noTrafficData') }}</div>
-            <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
-          </div>
+      <div class="dashboard-card usage-trend-card" v-if="hasPlan">
+        <div class="card-header">
+          <h2 class="card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
-
-        <div class="stats-card overview-card overview-card--today-traffic today-traffic-card">
-          <div class="today-traffic-title">今日流量</div>
-          <div class="today-traffic-values">
-            <span class="traffic-up">↑ {{ todayTrafficStats.uploadGb }} GB</span>
-            <span class="traffic-down">↓ {{ todayTrafficStats.downloadGb }} GB</span>
-          </div>
-          <div class="today-traffic-total">总计 {{ todayTrafficStats.totalGb }} GB</div>
+        <div class="card-body">
+          <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
+          <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
+          <div v-else-if="!trafficTrendData.length" class="trend-state">{{ $t('trafficLog.noTrafficData') }}</div>
+          <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
         </div>
       </div>
 
@@ -1563,14 +1561,14 @@ export default {
     }
 
     > .stats-grid,
-    > .usage-trend-row {
+    > .usage-trend-card {
       grid-column: 1 / -1;
     }
 
     @media (max-width: 992px) {
       > .pending-order-banner,
       > .stats-grid,
-      > .usage-trend-row {
+      > .usage-trend-card {
         grid-column: 1 / -1;
       }
     }
@@ -2103,9 +2101,14 @@ export default {
           min-height: 100%;
         }
 
+        &.today-traffic-card {
+          grid-column: 2;
+          grid-row: 2;
+        }
+
         &.traffic-board-card.total-main-card {
           grid-column: 1;
-          grid-row: 1 / span 3;
+          grid-row: 1 / span 4;
           min-height: 100%;
         }
 
@@ -2116,8 +2119,13 @@ export default {
           gap: 8px;
 
           &.traffic-board-package {
+            grid-row: 3;
             min-height: auto;
             height: auto;
+          }
+
+          &.traffic-board-subscription {
+            grid-row: 4;
           }
 
           .usage-percent {
@@ -2206,8 +2214,7 @@ export default {
   }
 
 
-  .stats-grid .stats-card.today-traffic-card,
-  .usage-trend-row .today-traffic-card {
+  .stats-grid .stats-card.today-traffic-card {
     color: var(--theme-text-primary);
     background: #fff;
     align-items: flex-start;
@@ -2233,23 +2240,6 @@ export default {
       color: var(--theme-text-primary);
     }
   }
-
-  .usage-trend-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-    gap: var(--dashboard-gap-compact);
-    margin-bottom: var(--dashboard-section-margin);
-
-    .usage-trend-card {
-      margin-bottom: 0;
-    }
-
-    .today-traffic-card {
-      margin-bottom: 0;
-      min-height: 100%;
-    }
-  }
-
 
   /* IP 位置卡片（横幅） */
   .ip-location-summary-card {
@@ -2520,6 +2510,15 @@ export default {
       grid-column: 1 / -1;
     }
 
+    .stats-card.today-traffic-card {
+      order: 2;
+      grid-column: 1 / -1;
+
+      .today-traffic-values {
+        font-size: 20px;
+      }
+    }
+
     .stats-card.traffic-board-package {
       order: 3;
     }
@@ -2555,18 +2554,6 @@ export default {
         padding: 6px;
       }
 
-    }
-  }
-
-  .usage-trend-row {
-    grid-template-columns: 1fr;
-
-    .today-traffic-card {
-      order: 2;
-
-      .today-traffic-values {
-        font-size: 20px;
-      }
     }
   }
 
