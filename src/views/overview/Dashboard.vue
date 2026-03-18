@@ -2503,15 +2503,25 @@ export default {
     gap: 10px;
 
     .stats-card.traffic-board-total {
+      order: 1;
       grid-column: 1 / -1;
     }
 
     .stats-card.today-traffic-card {
+      order: 2;
       grid-column: 1 / -1;
 
       .today-traffic-values {
         font-size: 20px;
       }
+    }
+
+    .stats-card.traffic-board-package {
+      order: 3;
+    }
+
+    .stats-card.traffic-board-subscription {
+      order: 4;
     }
 
     .stats-card.quota-traffic-card {
