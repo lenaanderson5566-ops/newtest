@@ -2512,7 +2512,7 @@ export default {
     }
 
     .stats-card.today-traffic-card {
-      order: 2;
+      order: 3;
       grid-column: 1 / -1;
 
       .today-traffic-values {
@@ -2521,15 +2521,15 @@ export default {
     }
 
     .stats-card.traffic-board-package {
-      order: 3;
-    }
-
-    .stats-card.traffic-board-subscription {
       order: 4;
     }
 
-    .stats-card.ip-location-summary-card {
+    .stats-card.traffic-board-subscription {
       order: 5;
+    }
+
+    .stats-card.ip-location-summary-card {
+      order: 2;
     }
 
     .stats-card.quota-traffic-card {
