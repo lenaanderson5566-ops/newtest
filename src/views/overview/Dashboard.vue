@@ -183,7 +183,11 @@
             </div>
           </div>
 
-          <div class="stats-card overview-card overview-card--today-traffic today-traffic-card">
+          <div
+            class="stats-card overview-card overview-card--today-traffic today-traffic-card"
+            :class="{ 'card-animate': !loading.userStats }"
+            style="animation-delay: 0.8s"
+          >
             <div class="today-traffic-title">今日流量</div>
             <div class="today-traffic-values">
               <span class="traffic-up">↑ {{ todayTrafficStats.uploadGb }} GB</span>
