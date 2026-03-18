@@ -439,45 +439,7 @@ export const config = {
     // fourthNavItem: "docs",
   },
 
-  // More页面自定义卡片配置
-  MORE_PAGE_CONFIG: {
-    // 是否启用自定义卡片功能
-    enableCustomCards: false,
 
-    // 自定义卡片列表
-    // 说明:
-    // 1. 每个卡片必须有唯一的id、标题、描述和URL
-    // 2. 图标支持两种方式:
-    //    - svgIcon: 直接插入SVG代码，推荐使用，可以自定义任何图标
-    //    - icon: 使用预定义的@tabler/icons-vue图标名称（仅适用于已导入的图标）
-    //    - 已导入的图标名称: IconFileText, IconShoppingCart, IconUser, IconDevices, IconSettings, IconTicket, IconLogout, IconBrandTelegram, IconBrandGithub, IconBrandDiscord, IconBrandTwitter, IconMailForward, IconChevronRight, IconServer, IconMessages, IconChartBar, IconWallet
-    // 3. SVG图标应该使用 currentColor 作为颜色，以支持主题色 stroke="currentColor"
-    // 4. 您可以从https://tabler.io/icons 获取图标的SVG代码
-    customCards: [
-      // 自定义卡片示例
-      {
-        id: "github", // 卡片唯一ID
-        title: "GitHub", // 卡片标题
-        description: "访问我们的GitHub", // 卡片描述
-        svgIcon:
-          '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg>',
-        url: "https://github.com", // 点击卡片跳转的URL
-        openInNewTab: true, // 是否在新标签页打开
-      },
-      {
-        id: "telegram",
-        title: "Telegram",
-        description: "加入我们的Telegram频道",
-        svgIcon:
-          '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-telegram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg>',
-        url: "https://t.me/your_group",
-        openInNewTab: true,
-      },
-      // 可以继续添加更多卡片...
-      // 主题格式，最后一个逗号要去掉
-      // 使用svgIcon属性插入自定义SVG代码，确保SVG代码中使用currentColor以适应主题色
-    ],
-  },
 };
 
 window.EZ_CONFIG = config;

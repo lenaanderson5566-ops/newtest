@@ -134,56 +134,6 @@
         
 
 
-        <!-- 自定义卡片 -->
-
-        <template v-if="morePageConfig.enableCustomCards">
-
-          <div 
-
-            v-for="card in morePageConfig.customCards" 
-
-            :key="card.id" 
-
-            class="stats-card"
-
-            @click="handleCustomCardClick(card)"
-
-          >
-
-            <div class="stats-icon">
-
-              <!-- 使用v-html渲染自定义SVG图标 -->
-
-              <div v-if="card.svgIcon" class="custom-svg-icon" v-html="sanitizeSvgIcon(card.svgIcon)"></div>
-
-              <!-- 保留对旧版配置的兼容，如果有icon属性就使用动态组件 -->
-
-              <component v-else-if="card.icon" :is="getIconComponent(card.icon)" :size="32" />
-
-              <!-- 默认图标 -->
-
-              <IconChevronRight v-else :size="32" />
-
-            </div>
-
-            <div class="stats-info">
-
-              <div class="stats-value">{{ card.title }}</div>
-
-              <div class="stats-label">{{ card.description }}</div>
-
-            </div>
-
-            <div class="chevron-icon">
-
-              <IconChevronRight :size="20" />
-
-            </div>
-
-          </div>
-
-        </template>
-
       </div>
 
     </div>
@@ -200,36 +150,11 @@ import {
 
   IconFileText,
 
-  IconShoppingCart,
-
-  IconUser,
-
-
-  IconDevices,
-
-  IconSettings,
-
-  IconTicket,
-
-  IconLogout,
-
-  IconBrandTelegram,
-
-  IconBrandGithub,
-
-  IconBrandDiscord,
-
-  IconBrandTwitter,
-
-  IconMailForward,
-
   IconChevronRight,
 
   IconServer,
 
   IconMessages,
-
-  IconChartBar,
 
   IconBell
 
@@ -242,11 +167,10 @@ import { useRouter } from 'vue-router';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 
 import InfoCard from '@/components/common/InfoCard.vue';
-import DOMPurify from 'dompurify';
 
 
 
-import { MORE_PAGE_CONFIG, NAVIGATION_CONFIG } from '@/utils/baseConfig';
+import { NAVIGATION_CONFIG } from '@/utils/baseConfig';
 
 
 
@@ -259,12 +183,6 @@ const router = useRouter();
 const isSmallScreen = ref(false);
 
 
-
-
-
-
-
-const morePageConfig = MORE_PAGE_CONFIG;
 
 const thirdNavItem = NAVIGATION_CONFIG?.thirdNavItem || 'invite';
 
@@ -303,85 +221,6 @@ const navigateToTickets = () => {
 
   }
 
-};
-
-
-
-const handleCustomCardClick = (card) => {
-
-  if (card.url) {
-
-    const safeUrl = getSafeNavigationUrl(card.url);
-
-    if (!safeUrl) {
-      return;
-    }
-
-    if (card.openInNewTab) {
-
-      window.open(safeUrl, '_blank', 'noopener,noreferrer');
-
-    } else {
-
-      window.location.href = safeUrl;
-
-    }
-
-  }
-
-};
-
-const getSafeNavigationUrl = (url) => {
-  if (typeof url !== 'string') return null;
-
-  const rawUrl = url.trim();
-  if (!rawUrl) return null;
-
-  if (rawUrl.startsWith('/')) return rawUrl;
-  if (rawUrl.startsWith('#/')) return rawUrl;
-
-  try {
-    const parsed = new URL(rawUrl, window.location.origin);
-    if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
-      return parsed.toString();
-    }
-  } catch (e) {
-    return null;
-  }
-
-  return null;
-};
-
-const sanitizeSvgIcon = (svgContent) => {
-  if (typeof svgContent !== 'string') return '';
-
-  return DOMPurify.sanitize(svgContent, {
-    USE_PROFILES: { svg: true, svgFilters: true },
-    FORBID_TAGS: ['script', 'foreignObject']
-  });
-};
-
-
-
-const getIconComponent = (iconName) => {
-
-  const iconMap = {
-
-    IconFileText, IconShoppingCart, IconUser, IconDevices, 
-
-    IconSettings, IconTicket, IconLogout, IconBrandTelegram, 
-
-    IconBrandGithub, IconBrandDiscord, IconBrandTwitter, 
-
-    IconMailForward, IconChevronRight, IconServer, 
-
-    IconMessages, IconChartBar
-
-  };
-
-  
-
-  return iconMap[iconName] || IconChevronRight; 
 };
 
 
@@ -678,31 +517,5 @@ onUnmounted(() => {
 
 
 
-
-.custom-svg-icon {
-
-  width: 32px;
-
-  height: 32px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  
-
-  :deep(svg) {
-
-    width: 32px;
-
-    height: 32px;
-
-    color: currentColor; 
-
-  }
-
-}
 
 </style>

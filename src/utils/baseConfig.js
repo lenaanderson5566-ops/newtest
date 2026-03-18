@@ -547,18 +547,6 @@ export const NODES_CONFIG = mergeDeep(
 );
 
 /**
- * More页面自定义卡片配置
- */
-const DEFAULT_MORE_PAGE_CONFIG = {
-  // 配置以 src/config/index.js 为主，避免重复维护
-};
-
-export const MORE_PAGE_CONFIG = mergeDeep(
-  DEFAULT_MORE_PAGE_CONFIG,
-  getConfig("MORE_PAGE_CONFIG")
-);
-
-/**
  * 认证页面布局配置
  */
 const DEFAULT_AUTH_LAYOUT_CONFIG = {
