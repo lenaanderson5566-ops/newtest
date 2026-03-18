@@ -26,7 +26,7 @@
           :disabled="ipLocationLoading"
         >
           <span class="exit-banner-text">
-            <template v-if="ipLocationLoading">{{ $t('common.loading') }}...</template>
+            <template v-if="ipLocationLoading || (!ipLocationData && !ipLocationError)">{{ $t('common.loading') }}...</template>
             <template v-else-if="ipLocationError">{{ ipLocationError }}</template>
             <template v-else>
               当前出口：{{ ipLocationCode }} · {{ ipLocationPrimaryRegionText }} · IP {{ ipLocationData?.ip || '-' }}
