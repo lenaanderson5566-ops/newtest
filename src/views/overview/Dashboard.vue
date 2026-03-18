@@ -280,7 +280,7 @@ import {
 } from 'vue';
 import {useRouter} from 'vue-router';
 import {useI18n} from 'vue-i18n';
-import {DASHBOARD_CONFIG, isXiaoV2board} from '@/utils/baseConfig';
+import { isXiaoV2board } from '@/utils/baseConfig';
 import {
   IconAlertTriangle,
   IconBox,
@@ -1092,13 +1092,6 @@ export default {
       return ipLocationLoading.value || (!ipLocationData.value && !ipLocationError.value);
     });
 
-    const ipLocationDisplayText = computed(() => {
-      if (!ipLocationData.value) return '';
-      return [ipLocationData.value.city, ipLocationData.value.region, ipLocationData.value.country]
-        .filter(Boolean)
-        .join(', ');
-    });
-
     const ipLocationCode = computed(() => {
       const code = (ipLocationData.value?.countryCode || '').trim().toUpperCase();
       return /^[A-Z]{2}$/.test(code) ? code : '--';
@@ -1107,12 +1100,6 @@ export default {
     const ipLocationPrimaryRegionText = computed(() => {
       if (!ipLocationData.value) return '-';
       return ipLocationData.value.city || ipLocationData.value.region || ipLocationData.value.country || '-';
-    });
-
-    const ipLocationCodeBadgeClass = computed(() => {
-      const code = ipLocationCode.value;
-      const badgeMap = DASHBOARD_CONFIG.ipRegionBadgeByCountryCode || {};
-      return badgeMap[code] || 'is-red';
     });
 
     const fetchTrafficTrend = async () => {
@@ -1441,12 +1428,9 @@ export default {
       isIpLocationPending,
       ipLocationError,
       ipLocationData,
-      ipLocationDisplayText,
       ipLocationCode,
       ipLocationPrimaryRegionText,
-      ipLocationCodeBadgeClass,
       triggerIpLocationRefresh,
-      DASHBOARD_CONFIG,
       allowNewPeriod,
       showTrafficPackageModal,
       trafficPackageLoading,
