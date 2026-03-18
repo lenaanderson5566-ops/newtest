@@ -2128,7 +2128,7 @@ export default {
 
         &.traffic-board-card.total-main-card {
           grid-column: 1;
-          grid-row: 1 / span 3;
+          grid-row: 1 / span 2;
           min-height: 100%;
         }
 
@@ -2145,8 +2145,8 @@ export default {
           }
 
           &.traffic-board-subscription {
-            grid-column: 1;
-            grid-row: 4;
+            grid-column: 1 / -1;
+            grid-row: 3;
           }
 
           .usage-percent {
