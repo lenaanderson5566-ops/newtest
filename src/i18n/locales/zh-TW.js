@@ -49,7 +49,6 @@ export default {
     enterVerificationCode: '請輸入驗證碼',
     enterPassword: '請輸入密碼',
     selectEmailDomain: '選擇電子郵件域名',
-    domainNotAuthorized: '域名未授權',
     contactAdmin: '請聯繫管理員取得授權',
     prevNotice: '上一則',
     nextNotice: '下一則',

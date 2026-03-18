@@ -48,7 +48,6 @@ export default {
         enterVerificationCode: 'Vui lòng nhập mã xác thực',
         enterPassword: 'Vui lòng nhập mật khẩu',
         selectEmailDomain: 'Chọn tên miền email',
-        domainNotAuthorized: 'Tên miền chưa được ủy quyền',
         contactAdmin: 'Vui lòng liên hệ quản trị viên để được cấp quyền',
         prevNotice: 'Thông báo trước',
         nextNotice: 'Thông báo tiếp theo',

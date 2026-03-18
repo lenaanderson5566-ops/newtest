@@ -49,7 +49,6 @@ export default {
         enterVerificationCode: '请输入验证码',
         enterPassword: '请输入密码',
         selectEmailDomain: '选择邮箱域名',
-        domainNotAuthorized: '域名未授权',
         contactAdmin: '请联系管理员获取授权',
         prevNotice: '上一条',
         nextNotice: '下一条',

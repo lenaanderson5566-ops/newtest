@@ -169,7 +169,6 @@ import { useI18n } from 'vue-i18n';
 
 
 
-import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
 
 import { 
 
@@ -219,7 +218,6 @@ export default {
 
     IconCopy,
 
-    DomainAuthAlert
 
   },
 

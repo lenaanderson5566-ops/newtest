@@ -18,6 +18,24 @@
         <button class="banner-action btn btn-primary" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
       </div>
 
+      <div v-if="hasPlan" class="overview-header-bar">
+        <button
+          class="exit-banner-light btn"
+          type="button"
+          @click="triggerIpLocationRefresh"
+          :disabled="ipLocationLoading"
+        >
+          <span class="exit-banner-text">
+            <template v-if="ipLocationLoading">{{ $t('common.loading') }}...</template>
+            <template v-else-if="ipLocationError">{{ ipLocationError }}</template>
+            <template v-else>
+              当前出口：{{ ipLocationCode }} · {{ ipLocationPrimaryRegionText }} · IP {{ ipLocationData?.ip || '-' }}
+            </template>
+          </span>
+          <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
+        </button>
+      </div>
+
       <div class="stats-grid">
         <template v-if="loading.userStats">
           <div v-for="i in 4" :key="i" class="stats-card skeleton-card">
@@ -49,19 +67,6 @@
         </template>
 
         <template v-else>
-          <div
-            class="stats-card overview-card overview-card--today-traffic today-traffic-card"
-            :class="{ 'card-animate': !loading.userStats }"
-            style="animation-delay: 0.45s"
-          >
-            <div class="today-traffic-title">今日流量</div>
-            <div class="today-traffic-values">
-              <span class="traffic-up">↑ {{ todayTrafficStats.uploadGb }} GB</span>
-              <span class="traffic-down">↓ {{ todayTrafficStats.downloadGb }} GB</span>
-            </div>
-            <div class="today-traffic-total">总计 {{ todayTrafficStats.totalGb }} GB</div>
-          </div>
-
           <div
             class="stats-card overview-card overview-card--traffic-quota traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
@@ -201,32 +206,16 @@
             </div>
           </div>
 
-        </template>
-      </div>
-
-      <div class="dashboard-card overview-card overview-card--exit-region ip-location-summary-card" v-if="hasPlan">
-        <div class="card-body ip-location-summary-body">
-          <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
-          <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
-          <div v-else-if="ipLocationData" class="ip-location-content">
-            <div class="ip-banner-main">
-              <div class="ip-meta-title">{{ $t('dashboard.currentExitRegion') }}</div>
-              <div class="ip-main-line">
-                <span class="region-code-badge" :class="ipLocationCodeBadgeClass">{{ ipLocationCode }}</span>
-                <span class="ip-region-primary">{{ ipLocationPrimaryRegionText }}</span>
-              </div>
-              <div class="ip-sub-line">
-                <span class="ip-region">{{ ipLocationDisplayText }}</span>
-                <span class="ip-address-secondary">IP: {{ ipLocationData.ip || '-' }}</span>
-              </div>
+          <div class="stats-card overview-card overview-card--today-traffic today-traffic-card">
+            <div class="today-traffic-title">今日流量</div>
+            <div class="today-traffic-values">
+              <span class="traffic-up">↑ {{ todayTrafficStats.uploadGb }} GB</span>
+              <span class="traffic-down">↓ {{ todayTrafficStats.downloadGb }} GB</span>
             </div>
-            <button class="ip-refresh-btn btn btn-secondary" type="button" @click="triggerIpLocationRefresh" :disabled="ipLocationLoading">
-              <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
-              <span>{{ ipLocationLoading ? $t('dashboard.refreshing') : $t('common.refresh') }}</span>
-            </button>
+            <div class="today-traffic-total">总计 {{ todayTrafficStats.totalGb }} GB</div>
           </div>
-          <div v-else class="ip-location-state">{{ $t('trafficLog.noTrafficData') }}</div>
-        </div>
+
+        </template>
       </div>
 
       <div class="dashboard-card usage-trend-card" v-if="hasPlan">
@@ -1564,18 +1553,49 @@ export default {
       margin-bottom: 0;
     }
 
+    > .overview-header-bar,
     > .stats-grid,
-    > .ip-location-summary-card,
     > .usage-trend-card {
       grid-column: 1 / -1;
     }
 
     @media (max-width: 992px) {
       > .pending-order-banner,
+      > .overview-header-bar,
       > .stats-grid,
-      > .ip-location-summary-card,
       > .usage-trend-card {
         grid-column: 1 / -1;
+      }
+    }
+  }
+
+  .overview-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+
+    .exit-banner-light {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 100%;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--theme-text-primary);
+      font-size: 13px;
+      font-weight: 500;
+
+      .exit-banner-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .spinning {
+        animation: spin 1s linear infinite;
       }
     }
   }
@@ -2034,6 +2054,16 @@ export default {
         }
       }
 
+      &.traffic-board-subscription,
+      &.traffic-board-package {
+        background: #fff;
+      }
+
+      &.traffic-board-package {
+        min-height: auto;
+        height: auto;
+      }
+
         /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
         &.traffic-board-subscription {
           .usage-kpis {
@@ -2091,9 +2121,14 @@ export default {
       }
 
       @media (min-width: 1200px) {
+        &.today-traffic-card {
+          grid-column: 2;
+          grid-row: 1;
+        }
+
         &.traffic-board-card.total-main-card {
           grid-column: 1;
-          grid-row: 1 / span 2;
+          grid-row: 1 / span 3;
           min-height: 100%;
         }
 
@@ -2102,6 +2137,17 @@ export default {
           min-height: 152px;
           padding: var(--dashboard-card-padding);
           gap: 8px;
+
+          &.traffic-board-package {
+            grid-row: 2;
+            min-height: auto;
+            height: auto;
+          }
+
+          &.traffic-board-subscription {
+            grid-column: 1;
+            grid-row: 4;
+          }
 
           .usage-percent {
             font-size: 36px;
@@ -2191,6 +2237,7 @@ export default {
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--theme-text-primary);
+    background: #fff;
     align-items: flex-start;
     flex-direction: column;
     gap: 8px;
@@ -2214,13 +2261,6 @@ export default {
       color: var(--theme-text-primary);
     }
   }
-
-  @media (min-width: 1200px) {
-    .stats-grid .stats-card.today-traffic-card {
-      grid-column: 2;
-    }
-  }
-
 
   /* IP 位置卡片（横幅） */
   .ip-location-summary-card {
@@ -2482,20 +2522,40 @@ export default {
     --dashboard-card-padding: 12px;
   }
 
+  .overview-header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .exit-banner-light {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
 
     .stats-card.traffic-board-total {
+      order: 1;
       grid-column: 1 / -1;
     }
 
     .stats-card.today-traffic-card {
+      order: 2;
       grid-column: 1 / -1;
 
       .today-traffic-values {
         font-size: 20px;
       }
+    }
+
+    .stats-card.traffic-board-package {
+      order: 3;
+    }
+
+    .stats-card.traffic-board-subscription {
+      order: 4;
     }
 
     .stats-card.quota-traffic-card {

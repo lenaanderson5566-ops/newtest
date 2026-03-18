@@ -40,7 +40,6 @@ const getActiveNavForRoute = (routeName) => {
     'TicketList',
     'MobileTickets',
     'TrafficLog',
-    'More',
     'Shop',
     'OrderConfirm',
     'Payment',
@@ -316,24 +315,6 @@ const routes = [
           requiresAuth: true,
 
           activeNav: 'Shop' 
-        }
-
-      },
-
-      {
-
-        path: 'more',
-
-        name: 'More',
-
-        component: () => import('@/views/account/more/MoreOptions.vue'),
-
-        meta: {
-
-          titleKey: 'menu.more',
-
-          requiresAuth: true
-
         }
 
       },

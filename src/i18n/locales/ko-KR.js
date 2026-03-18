@@ -49,7 +49,6 @@ export default {
     enterVerificationCode: '인증 코드를 입력하세요',
     enterPassword: '비밀번호를 입력하세요',
     selectEmailDomain: '이메일 도메인 선택',
-    domainNotAuthorized: '도메인이 승인되지 않음',
     contactAdmin: '관리자에게 문의하여 승인을 받으세요',
     prevNotice: '이전 공지',
     nextNotice: '다음 공지',

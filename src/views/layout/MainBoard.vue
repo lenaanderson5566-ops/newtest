@@ -53,7 +53,6 @@ import { onMounted } from 'vue';
 
 
 
-import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
 
 
 
@@ -63,7 +62,6 @@ export default {
 
   components: {
 
-    DomainAuthAlert
 
   },
 
