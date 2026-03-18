@@ -19,7 +19,6 @@
       </div>
 
       <div v-if="hasPlan" class="overview-header-bar">
-        <h2 class="overview-header-title">概览</h2>
         <button
           class="exit-banner-light btn"
           type="button"
@@ -1573,15 +1572,8 @@ export default {
   .overview-header-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 12px;
-
-    .overview-header-title {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--theme-text-primary);
-    }
 
     .exit-banner-light {
       display: inline-flex;
