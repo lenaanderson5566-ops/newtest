@@ -50,7 +50,7 @@
 
         <template v-else>
           <div
-            class="stats-card today-traffic-card"
+            class="stats-card overview-card overview-card--today-traffic today-traffic-card"
             :class="{ 'card-animate': !loading.userStats }"
             style="animation-delay: 0.45s"
           >
@@ -63,7 +63,7 @@
           </div>
 
           <div
-            class="stats-card traffic-board-card"
+            class="stats-card overview-card overview-card--traffic-quota traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
             :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'quota-traffic-card': card.key === 'subscription' || card.key === 'package' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired)) || (card.key === 'subscription' && isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }]"
@@ -204,7 +204,7 @@
         </template>
       </div>
 
-      <div class="dashboard-card ip-location-summary-card" v-if="hasPlan">
+      <div class="dashboard-card overview-card overview-card--exit-region ip-location-summary-card" v-if="hasPlan">
         <div class="card-body ip-location-summary-body">
           <div v-if="ipLocationLoading" class="ip-location-state">{{ $t('common.loading') }}...</div>
           <div v-else-if="ipLocationError" class="ip-location-state error">{{ ipLocationError }}</div>
@@ -1514,11 +1514,11 @@ export default {
 .dashboard-container {
   display: flex;
   justify-content: center;
-  --dashboard-card-padding: 14px;
-  --dashboard-radius: 12px;
+  --dashboard-card-padding: 12px;
+  --dashboard-radius: 10px;
   --dashboard-shadow-compact: 0 1px 3px rgba(15, 23, 42, 0.05), 0 6px 14px rgba(15, 23, 42, 0.04);
-  --dashboard-gap-compact: 12px;
-  --dashboard-section-margin: 12px;
+  --dashboard-gap-compact: var(--global-card-gap);
+  --dashboard-section-margin: var(--global-card-gap);
 
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
@@ -1582,7 +1582,6 @@ export default {
 
   .dashboard-card {
     background-color: var(--saas-card-bg);
-    border-radius: var(--dashboard-radius);
     box-shadow: var(--saas-card-shadow);
     padding: var(--dashboard-card-padding);
     border: none;
@@ -1637,8 +1636,8 @@ export default {
       box-shadow: var(--dashboard-shadow-compact);
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 16px;
+      gap: 12px;
+      padding: var(--dashboard-card-padding);
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
       border: 1px solid var(--border-color);
@@ -1647,7 +1646,7 @@ export default {
       &.traffic-board-card {
         width: 100%;
         min-width: 0;
-        min-height: clamp(172px, 18vw, 232px);
+        min-height: clamp(156px, 16vw, 208px);
         overflow: visible;
         writing-mode: horizontal-tb;
         text-orientation: mixed;
@@ -1791,7 +1790,7 @@ export default {
           }
 
           .plan-summary-section-meta {
-            padding: 12px 14px;
+            padding: 10px 12px;
           }
 
           .plan-status-hero {
@@ -2112,7 +2111,7 @@ export default {
         &.traffic-board-card:not(.total-main-card) {
           grid-column: 2;
           min-height: 152px;
-          padding: 16px;
+          padding: var(--dashboard-card-padding);
           gap: 8px;
 
           .usage-card-title {
@@ -2177,14 +2176,25 @@ export default {
     }
   }
 
+  /* 概览核心卡片统一外观：今日流量 / 流量额度包 / 出口地区 */
+  .overview-card {
+    border-radius: var(--dashboard-radius);
+    background: var(--saas-card-bg);
+    box-shadow: var(--saas-card-shadow);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .stats-grid .stats-card.overview-card {
+    padding: var(--dashboard-card-padding);
+  }
+
+
+
   .stats-grid .stats-card.today-traffic-card {
-    background: linear-gradient(180deg, var(--card-bg-color) 0%, rgba(var(--theme-color-rgb), 0.05) 100%);
     color: var(--theme-text-primary);
-    border: 1px solid rgba(var(--theme-color-rgb), 0.22);
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
     align-items: flex-start;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 
     .today-traffic-title {
       font-size: 14px;
@@ -2222,13 +2232,8 @@ export default {
 
   /* IP 位置卡片（横幅） */
   .ip-location-summary-card {
-    border-radius: var(--dashboard-radius);
-    border: 1px solid rgba(148, 163, 184, 0.22);
-    background: linear-gradient(90deg, rgba(248, 250, 252, 0.96) 0%, rgba(241, 245, 249, 0.92) 100%);
-    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
-
     .ip-location-summary-body {
-      padding: 12px 14px;
+      padding: 10px 12px;
     }
 
     .ip-location-state {
@@ -2468,6 +2473,7 @@ export default {
   }
 
 }
+
 
 
 @keyframes shimmer {
