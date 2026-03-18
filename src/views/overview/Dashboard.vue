@@ -2034,6 +2034,16 @@ export default {
         }
       }
 
+      &.traffic-board-subscription,
+      &.traffic-board-package {
+        background: #fff;
+      }
+
+      &.traffic-board-package {
+        min-height: auto;
+        height: auto;
+      }
+
         /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
         &.traffic-board-subscription {
           .usage-kpis {
@@ -2102,6 +2112,11 @@ export default {
           min-height: 152px;
           padding: var(--dashboard-card-padding);
           gap: 8px;
+
+          &.traffic-board-package {
+            min-height: auto;
+            height: auto;
+          }
 
           .usage-percent {
             font-size: 36px;
@@ -2191,6 +2206,7 @@ export default {
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--theme-text-primary);
+    background: #fff;
     align-items: flex-start;
     flex-direction: column;
     gap: 8px;
