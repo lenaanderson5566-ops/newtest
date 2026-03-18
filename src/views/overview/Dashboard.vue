@@ -1724,10 +1724,6 @@ export default {
         }
 
         &.total-main-card {
-          background: linear-gradient(180deg, var(--theme-white) 0%, var(--quota-total-bg-end) 100%);
-          border-color: var(--border-color);
-          box-shadow: var(--shadow-card-md);
-
           .usage-card-title {
             color: var(--quota-label-color);
             font-weight: 650;
@@ -2044,9 +2040,6 @@ export default {
 
         /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
         &.traffic-board-subscription {
-          background: linear-gradient(165deg, rgba(var(--theme-color-rgb), 0.08) 0%, rgba(var(--theme-color-rgb), 0.03) 48%, var(--card-bg-color) 100%);
-          border-color: rgba(var(--theme-color-rgb), 0.22);
-
           .usage-kpis {
             width: 100%;
             display: grid;
@@ -2177,14 +2170,19 @@ export default {
   }
 
   /* 概览核心卡片统一外观：今日流量 / 流量额度包 / 出口地区 */
-  .overview-card {
+  .overview-card,
+  .overview-card--today-traffic,
+  .overview-card--traffic-quota,
+  .overview-card--exit-region {
     border-radius: var(--dashboard-radius);
     background: var(--saas-card-bg);
     box-shadow: var(--saas-card-shadow);
     border: 1px solid rgba(148, 163, 184, 0.2);
   }
 
-  .stats-grid .stats-card.overview-card {
+  .stats-grid .stats-card.overview-card,
+  .stats-grid .stats-card.overview-card--today-traffic,
+  .stats-grid .stats-card.overview-card--traffic-quota {
     padding: var(--dashboard-card-padding);
   }
 
