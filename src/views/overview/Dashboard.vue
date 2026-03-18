@@ -1677,10 +1677,6 @@ export default {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
-          font-size: 16px;
-          font-weight: 600;
-          color: var(--neutral-strong);
-          line-height: 1.35;
         }
 
         .usage-card-main {
@@ -2107,12 +2103,6 @@ export default {
           padding: var(--dashboard-card-padding);
           gap: 8px;
 
-          .usage-card-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--neutral-strong);
-          }
-
           .usage-percent {
             font-size: 36px;
 
@@ -2186,6 +2176,17 @@ export default {
     padding: var(--dashboard-card-padding);
   }
 
+  /* 概览卡片左上角标题统一样式 */
+  .overview-card--today-traffic .today-traffic-title,
+  .overview-card--traffic-quota .usage-card-title,
+  .overview-card--exit-region .ip-meta-title {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--theme-text-secondary);
+  }
 
 
   .stats-grid .stats-card.today-traffic-card {
@@ -2193,13 +2194,6 @@ export default {
     align-items: flex-start;
     flex-direction: column;
     gap: 8px;
-
-    .today-traffic-title {
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      color: var(--theme-text-secondary);
-    }
 
     .today-traffic-values {
       display: flex;
@@ -2261,14 +2255,6 @@ export default {
       display: flex;
       flex-direction: column;
       gap: 6px;
-    }
-
-    .ip-meta-title {
-      color: var(--theme-text-secondary);
-      font-size: 13px;
-      line-height: 1.2;
-      font-weight: 600;
-      margin: 0;
     }
 
     .ip-main-line {
