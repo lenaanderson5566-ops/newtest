@@ -2108,7 +2108,7 @@ export default {
 
         &.traffic-board-card.total-main-card {
           grid-column: 1;
-          grid-row: 1 / span 4;
+          grid-row: 1 / span 3;
           min-height: 100%;
         }
 
@@ -2125,6 +2125,7 @@ export default {
           }
 
           &.traffic-board-subscription {
+            grid-column: 1;
             grid-row: 4;
           }
 
@@ -2525,6 +2526,10 @@ export default {
 
     .stats-card.traffic-board-subscription {
       order: 4;
+    }
+
+    .stats-card.ip-location-summary-card {
+      order: 5;
     }
 
     .stats-card.quota-traffic-card {
