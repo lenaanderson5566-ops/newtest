@@ -245,14 +245,19 @@
           </div>
 
           <!-- 按钮区域 -->
-          <div class="action-buttons">
-            <!-- 从订单列表进入且订单已完成 - 显示返回上一页按钮 -->
-            <div
-              class="btn-group pay-row"
-              v-if="
-                fromOrderList && (paymentSuccessful || orderDetail.status !== 0)
-              "
-            >
+          <div class="section-wrapper action-card" v-if="showActionCard">
+            <div class="section-title">
+              <span>{{ $t("common.actions") }}</span>
+            </div>
+
+            <div class="action-buttons">
+              <!-- 从订单列表进入且订单已完成 - 显示返回上一页按钮 -->
+              <div
+                class="btn-group pay-row"
+                v-if="
+                  fromOrderList && (paymentSuccessful || orderDetail.status !== 0)
+                "
+              >
               <button class="btn-back main-action full-width" @click="goBack">
                 <IconArrowLeft :size="18" />
                 <span>{{ $t("payment.return_to_previous") }}</span>
@@ -333,6 +338,7 @@
               </div>
 
             </template>
+            </div>
           </div>
         </div>
       </div>
@@ -608,6 +614,18 @@ export default {
         return 0;
       }
       return orderDetail.value.total_amount + handleFeeAmount.value;
+    });
+
+    const showActionCard = computed(() => {
+      if (fromOrderList.value && (paymentSuccessful.value || orderDetail.value.status !== 0)) {
+        return true;
+      }
+
+      if (!fromOrderList.value && (paymentSuccessful.value || orderDetail.value.status > 0)) {
+        return true;
+      }
+
+      return !loading.order && orderDetail.value.status === 0 && !paymentSuccessful.value;
     });
 
     const periodDiscount = computed(() => {
@@ -1309,6 +1327,7 @@ export default {
       handleFeeAmount,
       totalWithFee,
       periodDiscount,
+      showActionCard,
       couponDiscountAmount,
       userDiscountAmount,
       discountAmount,
@@ -1569,8 +1588,8 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-top: 30px;
-    margin-bottom: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
 
     .btn-group {
       display: flex;
@@ -1605,7 +1624,7 @@ export default {
       }
 
       &.pay-row {
-        margin-bottom: 10px;
+        margin-bottom: 0;
       }
 
       &.action-row {
@@ -1722,6 +1741,12 @@ export default {
       border-radius: 50%;
       border-top-color: white;
       animation: spin 1s linear infinite;
+    }
+  }
+
+  .action-card {
+    .section-title {
+      margin-bottom: 18px;
     }
   }
 
