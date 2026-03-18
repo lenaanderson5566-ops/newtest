@@ -26,7 +26,7 @@
           :disabled="ipLocationLoading"
         >
           <span class="exit-banner-text">
-            <template v-if="ipLocationLoading || (!ipLocationData && !ipLocationError)">{{ $t('common.loading') }}...</template>
+            <template v-if="isIpLocationPending">{{ $t('common.loading') }}...</template>
             <template v-else-if="ipLocationError">{{ ipLocationError }}</template>
             <template v-else>
               当前出口：{{ ipLocationCode }} · {{ ipLocationPrimaryRegionText }} · IP {{ ipLocationData?.ip || '-' }}
@@ -186,7 +186,7 @@
           <div
             class="stats-card overview-card overview-card--today-traffic today-traffic-card"
             :class="{ 'card-animate': !loading.userStats }"
-            style="animation-delay: 0.8s"
+            :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
             <div class="today-traffic-title">今日流量</div>
             <div class="today-traffic-values">
@@ -1088,6 +1088,10 @@ export default {
       scheduleIpLocationRefresh(true);
     };
 
+    const isIpLocationPending = computed(() => {
+      return ipLocationLoading.value || (!ipLocationData.value && !ipLocationError.value);
+    });
+
     const ipLocationDisplayText = computed(() => {
       if (!ipLocationData.value) return '';
       return [ipLocationData.value.city, ipLocationData.value.region, ipLocationData.value.country]
@@ -1385,6 +1389,12 @@ export default {
       });
     });
 
+    const todayTrafficAnimationDelay = computed(() => {
+      const baseDelay = 0.5;
+      const step = 0.1;
+      return `${baseDelay + trafficBoardSections.value.length * step}s`;
+    });
+
     return {
       userStats,
       userBalance,
@@ -1426,7 +1436,9 @@ export default {
       trafficTrendLoading,
       trafficTrendError,
       todayTrafficStats,
+      todayTrafficAnimationDelay,
       ipLocationLoading,
+      isIpLocationPending,
       ipLocationError,
       ipLocationData,
       ipLocationDisplayText,

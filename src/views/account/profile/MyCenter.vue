@@ -221,19 +221,28 @@ const subscriptionExpireText = computed(() => {
 const formatBalance = (balance) => ((Number(balance || 0) / 100).toFixed(2));
 const go = (path) => router.push(path);
 
+const buildRemindPayload = () => ({
+  remind_expire: remindExpire.value ? 1 : 0,
+  remind_traffic: remindTraffic.value ? 1 : 0,
+  auto_renewal: autoRenewal.value ? 1 : 0
+});
+
+const resetLocalReminderStateFromUserInfo = () => {
+  remindExpire.value = !!userInfo.value.remind_expire;
+  remindTraffic.value = !!userInfo.value.remind_traffic;
+  autoRenewal.value = !!userInfo.value.auto_renewal;
+};
+
 const updateRemindSettings = async () => {
   try {
     updatingSettings.value = true;
-    await apiUpdateRemind({
-      remind_expire: remindExpire.value ? 1 : 0,
-      remind_traffic: remindTraffic.value ? 1 : 0,
-      auto_renewal: autoRenewal.value ? 1 : 0
-    });
+    await apiUpdateRemind(buildRemindPayload());
+    userInfo.value.remind_expire = remindExpire.value ? 1 : 0;
+    userInfo.value.remind_traffic = remindTraffic.value ? 1 : 0;
+    userInfo.value.auto_renewal = autoRenewal.value ? 1 : 0;
     showToast(t('myCenter.settingsUpdated'), 'success');
   } catch (error) {
-    remindExpire.value = !!userInfo.value.remind_expire;
-    remindTraffic.value = !!userInfo.value.remind_traffic;
-    autoRenewal.value = !!userInfo.value.auto_renewal;
+    resetLocalReminderStateFromUserInfo();
     showToast(t('myCenter.settingsUpdateFailed'), 'error');
   } finally {
     updatingSettings.value = false;
@@ -243,15 +252,11 @@ const updateRemindSettings = async () => {
 const updateAutoRenewalSetting = async () => {
   try {
     updatingAutoRenewal.value = true;
-    await apiUpdateRemind({
-      remind_expire: remindExpire.value ? 1 : 0,
-      remind_traffic: remindTraffic.value ? 1 : 0,
-      auto_renewal: autoRenewal.value ? 1 : 0
-    });
+    await apiUpdateRemind(buildRemindPayload());
     userInfo.value.auto_renewal = autoRenewal.value ? 1 : 0;
     showToast(t('profile.updateSuccess'), 'success');
   } catch (error) {
-    autoRenewal.value = !!userInfo.value.auto_renewal;
+    resetLocalReminderStateFromUserInfo();
     showToast(t('profile.updateError'), 'error');
   } finally {
     updatingAutoRenewal.value = false;
@@ -273,9 +278,7 @@ onMounted(async () => {
 
   if (userResp.status === 'fulfilled') {
     userInfo.value = userResp.value?.data || {};
-    remindExpire.value = !!userInfo.value.remind_expire;
-    remindTraffic.value = !!userInfo.value.remind_traffic;
-    autoRenewal.value = !!userInfo.value.auto_renewal;
+    resetLocalReminderStateFromUserInfo();
   }
   if (subscribeResp.status === 'fulfilled') subscribeInfo.value = subscribeResp.value?.data || {};
   if (configResp.status === 'fulfilled' && configResp.value?.data?.currency_symbol) {
