@@ -1341,7 +1341,7 @@ export default {
 
   .dashboard-card {
     background-color: var(--card-bg-color);
-    border-radius: 12px;
+    border-radius: var(--radius-sm);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 20px;
     margin-bottom: 24px;
@@ -1397,7 +1397,7 @@ export default {
 
   .section-wrapper {
     background-color: var(--card-bg-color);
-    border-radius: 12px;
+    border-radius: var(--radius-sm);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 20px;
     margin-bottom: 24px;
@@ -1522,7 +1522,7 @@ export default {
       gap: 8px;
       padding: 7px 10px;
       min-height: 42px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
       transition: border-color 0.2s ease, background-color 0.2s ease;
       border: 1px solid var(--border-color);
@@ -1598,7 +1598,7 @@ export default {
     align-items: center;
     padding: 20px;
     background-color: rgba(76, 175, 80, 0.1);
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     border: 1px solid rgba(76, 175, 80, 0.2);
 
     .notice-icon {
@@ -1692,7 +1692,7 @@ export default {
       align-items: center;
       justify-content: center;
       gap: 8px;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       font-size: 14px;
       font-weight: 500;
       padding: 0 24px;
@@ -2079,7 +2079,7 @@ export default {
     .modal-card {
       position: relative;
       background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-      border-radius: 20px;
+      border-radius: var(--radius-sm);
       box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
       border: 1px solid rgba(var(--theme-color-rgb), 0.1);
       overflow: hidden;
@@ -2093,7 +2093,7 @@ export default {
         height: 44px;
         width: 44px;
         padding: 0;
-        border-radius: 10px;
+        border-radius: var(--radius-sm);
         background-color: transparent;
         color: var(--text-color);
         font-size: 22px;
@@ -2172,7 +2172,7 @@ export default {
 
           canvas,
           svg {
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
           }
         }
@@ -2184,7 +2184,7 @@ export default {
             padding: 10px 16px;
             background-color: transparent;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -2209,7 +2209,7 @@ export default {
         button {
           flex: 1;
           height: 46px;
-          border-radius: 14px;
+          border-radius: var(--radius-sm);
           border: none;
           font-size: 15px;
           font-weight: 600;
@@ -2340,7 +2340,7 @@ export default {
 
   .cancel-modal-content {
     background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-    border-radius: 12px;
+    border-radius: var(--radius-sm);
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     transform: translateZ(0);
@@ -2389,7 +2389,7 @@ export default {
     button {
       flex: 1;
       padding: 10px 0;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
@@ -2511,7 +2511,7 @@ export default {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     font-size: 13px;
     font-weight: 500;
     padding: 0 16px;

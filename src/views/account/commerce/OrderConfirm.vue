@@ -1083,7 +1083,7 @@ export default {
 
     background-color: var(--card-bg-color);
 
-    border-radius: 12px;
+    border-radius: var(--radius-sm);
 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
@@ -1135,7 +1135,7 @@ export default {
 
     border: 1px solid rgba(255, 152, 0, 0.2);
 
-    border-radius: 16px;
+    border-radius: var(--radius-sm);
 
     padding: 16px;
 
@@ -1174,7 +1174,7 @@ export default {
 
       height: 44px;
 
-      border-radius: 14px;
+      border-radius: var(--radius-sm);
 
       display: flex;
 
@@ -1281,7 +1281,7 @@ export default {
   .plan-card {
     background-color: var(--card-bg-color);
 
-    border-radius: 16px;
+    border-radius: var(--radius-sm);
 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 
@@ -1331,7 +1331,7 @@ export default {
 
         padding: 4px 12px;
 
-        border-radius: 20px;
+        border-radius: var(--radius-sm);
 
         font-size: 12px;
 
@@ -1454,7 +1454,7 @@ export default {
 
         background-color: rgba(0, 0, 0, 0.05);
 
-        border-radius: 12px;
+        border-radius: var(--radius-sm);
 
         position: relative;
 
@@ -1505,7 +1505,7 @@ export default {
       .period-card {
         cursor: pointer;
 
-        border-radius: 12px;
+        border-radius: var(--radius-sm);
 
         overflow: hidden;
 
@@ -1638,7 +1638,7 @@ export default {
 
       padding: 0 18px;
 
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
 
       border: 1px solid var(--border-color);
 
@@ -1682,7 +1682,7 @@ export default {
 
       padding: 0 24px;
 
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
 
       background-color: var(--theme-color);
 
@@ -1756,7 +1756,7 @@ export default {
 
       padding: 0 16px;
 
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
 
       background-color: #f44336;
 
@@ -1797,7 +1797,7 @@ export default {
   .order-summary {
     background-color: var(--card-bg-color);
 
-    border-radius: 16px;
+    border-radius: var(--radius-sm);
 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
@@ -2014,7 +2014,7 @@ export default {
 
       padding: 0 20px;
 
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
 
       background-color: transparent;
 
@@ -2052,7 +2052,7 @@ export default {
 
       padding: 0 24px;
 
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
 
       background-color: var(--theme-color);
 
@@ -2128,7 +2128,7 @@ export default {
 
   overflow: hidden;
 
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
 
   .skeleton-header {
     height: 24px;
@@ -2137,7 +2137,7 @@ export default {
 
     background-color: rgba(0, 0, 0, 0.05);
 
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
 
     margin-bottom: 20px;
 
@@ -2154,7 +2154,7 @@ export default {
 
       background-color: rgba(0, 0, 0, 0.05);
 
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
 
       margin-bottom: 24px;
 
@@ -2171,7 +2171,7 @@ export default {
 
         background-color: rgba(0, 0, 0, 0.05);
 
-        border-radius: 6px;
+        border-radius: var(--radius-sm);
 
         margin-bottom: 12px;
 
@@ -2237,7 +2237,7 @@ export default {
 
   background-color: rgba(0, 0, 0, 0.05);
 
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 
   position: relative;
 
