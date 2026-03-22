@@ -2022,6 +2022,29 @@ export default {
         background: var(--saas-card-bg);
       }
 
+      &.traffic-board-subscription {
+        background: #2f343d;
+        border: 1px solid rgba(148, 163, 184, 0.32);
+        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
+
+        .usage-card-title,
+        .usage-percent,
+        .usage-summary-line,
+        .usage-reset-hint,
+        .usage-kpi-value,
+        .usage-kpi-label {
+          color: #f8fafc;
+        }
+
+        .usage-kpi {
+          background: rgba(255, 255, 255, 0.08);
+        }
+
+        .section-progress-track {
+          background: rgba(255, 255, 255, 0.18);
+        }
+      }
+
       &.traffic-board-package {
         min-height: auto;
         height: auto;

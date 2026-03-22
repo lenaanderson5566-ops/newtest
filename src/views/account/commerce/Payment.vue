@@ -1539,16 +1539,16 @@ export default {
       transition: border-color 0.2s ease, background-color 0.2s ease;
       border: none;
       border-top: 1px solid rgba(148, 163, 184, 0.32);
-      background-color: #2f343d;
+      background-color: rgba(255, 255, 255, 0.95);
 
       &:hover {
         border-color: rgba(var(--theme-color-rgb), 0.42);
-        background-color: rgba(var(--theme-color-rgb), 0.12);
+        background-color: rgba(var(--theme-color-rgb), 0.08);
       }
 
       &.active {
         border-color: var(--theme-color);
-        background-color: rgba(var(--theme-color-rgb), 0.18);
+        background-color: rgba(var(--theme-color-rgb), 0.14);
         box-shadow: 0 2px 10px rgba(var(--theme-color-rgb), 0.22);
       }
 
@@ -1599,13 +1599,13 @@ export default {
 
         .method-name {
           font-weight: 600;
-          color: #f8fafc;
+          color: var(--text-color);
           line-height: 1.2;
         }
 
         .method-fee {
           font-size: 11px;
-          color: rgba(248, 250, 252, 0.82);
+          color: var(--secondary-text-color);
           white-space: nowrap;
         }
       }
@@ -1621,16 +1621,8 @@ export default {
     }
   }
 
-  .right-column .payment-methods .payment-method-item,
   .right-column .payment-methods .payment-security-note {
     background: #2f343d !important;
-    color: #f8fafc !important;
-  }
-
-  .right-column .payment-methods .payment-method-item .method-name,
-  .right-column .payment-methods .payment-method-item .method-fee,
-  .right-column .payment-methods .payment-method-item .method-check,
-  .right-column .payment-methods .payment-method-item .method-icon {
     color: #f8fafc !important;
   }
 
