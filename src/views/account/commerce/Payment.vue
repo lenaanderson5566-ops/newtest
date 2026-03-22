@@ -1423,44 +1423,44 @@ export default {
   }
 
   .order-amount-section {
-    background: #2f343d;
-    border: 1px solid rgba(148, 163, 184, 0.32);
-    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
 
     .section-title {
-      color: #f8fafc;
+      color: var(--text-color);
 
       &::after {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: var(--border-color);
       }
     }
 
     .order-info {
       .info-label,
       .info-value {
-        color: #f8fafc;
+        color: var(--text-color);
       }
 
       .info-value.discount {
-        color: #fda4af;
+        color: #f44336;
       }
 
       .info-value.fee {
-        color: #bfdbfe;
+        color: var(--secondary-text-color);
       }
 
       .info-row.final-row {
-        border-top: 1px solid rgba(255, 255, 255, 0.18);
+        border-top: 1px solid var(--border-color);
         padding-top: 10px;
         margin-top: 8px;
 
         .info-label {
-          color: #ffffff;
+          color: var(--text-color);
           font-weight: 600;
         }
 
         .info-value.final {
-          color: #ffffff;
+          color: var(--theme-color);
           font-weight: 700;
         }
       }
@@ -1502,24 +1502,6 @@ export default {
         }
       }
     }
-  }
-
-  .section-wrapper,
-  .section-wrapper.payment-methods-section,
-  .payment-method-item,
-  .payment-security-note {
-    background: #2f343d !important;
-    border-color: rgba(148, 163, 184, 0.32) !important;
-    color: #f8fafc;
-  }
-
-  .section-wrapper .section-title,
-  .section-wrapper .info-label,
-  .section-wrapper .info-value,
-  .payment-method-item .method-name,
-  .payment-method-item .method-fee,
-  .payment-security-note {
-    color: #f8fafc;
   }
 
   .payment-methods {

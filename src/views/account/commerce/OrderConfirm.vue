@@ -2023,23 +2023,6 @@ export default {
     color: #f8fafc;
   }
 
-  .section-wrapper,
-  .plan-card,
-  .order-summary {
-    background: #2f343d;
-    border: 1px solid rgba(148, 163, 184, 0.32);
-    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
-    color: #f8fafc;
-  }
-
-  .section-wrapper .section-title,
-  .plan-card .card-title,
-  .order-summary .summary-label,
-  .order-summary .summary-value,
-  .coupon-input .coupon-label {
-    color: #f8fafc;
-  }
-
   .coupon-verify-section .coupon-input {
     padding: 14px;
     margin-bottom: 0;
