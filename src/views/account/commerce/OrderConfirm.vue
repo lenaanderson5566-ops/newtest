@@ -161,32 +161,25 @@
           <div class="section-wrapper order-summary-section">
             <div class="order-summary glassmorphism">
               <div class="coupon-merge-block">
-                <div class="coupon-input" v-if="!couponApplied">
+                <div class="coupon-input">
                   <span class="coupon-input-prefix">优惠码</span>
                   <input
                     type="text"
                     v-model="couponCode"
-                    :disabled="loading.plan"
+                    :disabled="loading.plan || couponApplied"
                     :placeholder="$t('order.enter_coupon')"
                     class="coupon-field"
+                    :class="{ applied: couponApplied }"
                   />
-                  <button
-                    class="btn-verify"
-                    @click="verifyCoupon"
-                    :disabled="
-                      !couponCode || verifying || loading.plan
-                    "
-                  >
+                  <button v-if="!couponApplied" class="btn-verify" @click="verifyCoupon"
+                    :disabled="!couponCode || verifying || loading.plan">
                     <IconDiscount2 v-if="!verifying" />
                     <span v-else class="loader"></span>
                     <span>{{ $t("order.verify_coupon") }}</span>
                   </button>
-                </div>
-                <div v-else class="coupon-light-row">
-                  <span class="coupon-code-label">优惠码 {{ couponCode || couponInfo?.code || "-" }}</span>
-                  <span class="coupon-applied-tag">✓ 已应用</span>
-                  <span v-if="totalDiscountAmount > 0" class="coupon-discount-value">-{{ formatCurrencyAmount(totalDiscountAmount) }}</span>
-                  <button class="btn-remove-text" @click="removeCoupon">移除</button>
+                  <span v-if="couponApplied" class="coupon-applied-tag">✓ 已应用</span>
+                  <span v-if="couponApplied && totalDiscountAmount > 0" class="coupon-discount-value">-{{ formatCurrencyAmount(totalDiscountAmount) }}</span>
+                  <button v-if="couponApplied" class="btn-remove-text" @click="removeCoupon">移除</button>
                 </div>
                 <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
               </div>
