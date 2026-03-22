@@ -32,10 +32,6 @@
                 <div class="info-label">周期</div>
                 <div class="info-value">{{ formatPeriod(orderDetail.period) }}</div>
               </div>
-              <div class="info-row" v-if="orderDetail.period !== 'deposit'">
-                <div class="info-label">流量</div>
-                <div class="info-value">{{ formatTraffic(orderDetail.plan?.transfer_enable) }}</div>
-              </div>
 
               <div class="info-row">
                 <div class="info-label">{{ $t("payment.trade_no") }}</div>
@@ -46,10 +42,6 @@
                 <div class="info-value">
                   {{ formatDate(orderDetail.created_at) }}
                 </div>
-              </div>
-              <div class="info-row">
-                <div class="info-label">优惠金额</div>
-                <div class="info-value discount">-{{ formatAmount(discountAmount || 0) }}</div>
               </div>
               <div class="info-row">
                 <div class="info-label">状态</div>
@@ -188,7 +180,7 @@
                   orderDetail.balance_amount > 0
                 "
               >
-                <div class="info-label">{{ $t("payment.use_credit") }}</div>
+                <div class="info-label">余额抵扣</div>
                 <div class="info-value discount">-{{ formatAmount(orderDetail.balance_amount) }}</div>
               </div>
               <div
@@ -750,14 +742,6 @@ export default {
       return periodMap[period] || period;
     };
 
-    const formatTraffic = (gb) => {
-      if (!gb) return "-";
-      if (gb >= 1024) {
-        return `${(gb / 1024).toFixed(1)} TB`;
-      }
-      return `${gb} GB`;
-    };
-
     const formatFee = (method) => {
       let feeText = "";
 
@@ -1207,7 +1191,6 @@ export default {
       formatDate,
       formatAmount,
       formatPeriod,
-      formatTraffic,
       formatFee,
       selectMethod,
       checkPayment,
@@ -1360,11 +1343,11 @@ export default {
     }
 
     .overview-cancel-btn {
-      height: 30px;
-      padding: 0 10px;
+      height: 26px;
+      padding: 0 8px;
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
-      background: rgba(148, 163, 184, 0.08);
+      background: transparent;
       color: var(--secondary-text-color);
       display: inline-flex;
       align-items: center;
@@ -1374,7 +1357,7 @@ export default {
       transition: all 0.2s ease;
 
       &:hover:not(:disabled) {
-        background-color: rgba(148, 163, 184, 0.14);
+        background-color: rgba(148, 163, 184, 0.08);
       }
 
       &:disabled {
@@ -1404,7 +1387,11 @@ export default {
     .overview-divider {
       height: 1px;
       background-color: var(--border-color);
-      margin: 14px 0 12px;
+      margin: 10px 0 8px;
+    }
+
+    .product-info .info-row {
+      margin-bottom: 6px;
     }
 
     .inline-status-badge {
@@ -1425,13 +1412,13 @@ export default {
 
   .section-wrapper.payment-methods-section {
     padding: 0 !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 6px !important;
     background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
 
     .section-title {
       margin-bottom: 0;
       font-size: 15px;
-      padding: 12px 14px 10px;
+      padding: 10px 12px 8px;
     }
   }
 
@@ -1527,7 +1514,7 @@ export default {
       align-items: center;
       gap: 8px;
       padding: 10px 12px;
-      min-height: 42px;
+      min-height: 38px;
       border-radius: 0;
       cursor: pointer;
       transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -1606,7 +1593,7 @@ export default {
     }
 
     .payment-security-note {
-      padding: 8px 12px 10px;
+      padding: 6px 12px 8px;
       border-top: 1px solid var(--border-color);
       font-size: 12px;
       color: var(--secondary-text-color);
