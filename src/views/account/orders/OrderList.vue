@@ -49,13 +49,6 @@
              @touchstart="handleTouchStart" 
              @touchmove="handleTouchMove" 
              @touchend="handleTouchEnd">
-          <!-- 滑动提示 -->
-          <div class="swipe-hint" v-if="orders.length > pageSize">
-            <IconArrowLeft :size="16" class="swipe-icon" />
-            <span>{{ $t('common.swipeHint') || '左右滑动切换' }}</span>
-            <IconArrowRight :size="16" class="swipe-icon" />
-          </div>
-          
           <transition-group :name="slideDirection === 'right' ? 'page-switch-right' : 'page-switch'">
             <div v-for="order in paginatedOrders" :key="order.trade_no" class="order-card">
               <div class="order-card-header">
@@ -215,9 +208,7 @@ import {
   IconEye,
   IconX,
   IconChevronLeft,
-  IconChevronRight,
-  IconArrowLeft,
-  IconArrowRight
+  IconChevronRight
 } from '@tabler/icons-vue';
 import { fetchOrderList, cancelOrder } from '@/api/account/orderlist';
 
@@ -1047,11 +1038,6 @@ watch(locale, () => {
     }
   }
 
-  .swipe-hint {
-    padding: 0.4rem 0.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 0.78rem;
-  }
 }
 
 
@@ -1180,30 +1166,4 @@ watch(locale, () => {
 }
 
 
-.swipe-hint {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  margin-bottom: 0.75rem;
-  background-color: rgba(var(--theme-color-rgb), 0.05);
-  border-radius: 8px;
-  font-size: 0.85rem;
-  color: rgba(var(--theme-color-rgb), 0.68);
-  
-  .swipe-icon {
-    color: var(--theme-color);
-    animation: swipe-animation 1.5s infinite alternate;
-  }
-  
-  @keyframes swipe-animation {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(3px);
-    }
-  }
-}
 </style> 
