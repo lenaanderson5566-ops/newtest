@@ -732,16 +732,60 @@ export default {
       );
     };
 
-    const fetchLatestPendingTradeNo = async () => {
+    const toComparablePlanId = (value) => {
+      const numeric = Number(value);
+      return Number.isFinite(numeric) ? numeric : null;
+    };
+
+    const isUnpaidCreatedOrder = (order) => {
+      if (!order) return false;
+      return order.total_amount !== null && order.payment_amount == null;
+    };
+
+    const isSameOrderSpecAsCurrentSelection = (order) => {
+      if (!order || !plan.value?.id || !selectedPriceType.value) {
+        return false;
+      }
+
+      const orderPlanId =
+        toComparablePlanId(order.plan_id) ??
+        toComparablePlanId(order.plan?.id) ??
+        toComparablePlanId(order.planId);
+      const currentPlanId = toComparablePlanId(plan.value.id);
+
+      const orderPeriod = String(order.period || "");
+      const currentPeriod = String(selectedPriceType.value || "");
+
+      return (
+        currentPlanId !== null &&
+        orderPlanId === currentPlanId &&
+        orderPeriod === currentPeriod
+      );
+    };
+
+    const fetchLatestPendingOrder = async (tradeNo = "") => {
       try {
         const resp = await fetchOrderList();
         const orders = Array.isArray(resp?.data) ? resp.data : [];
-        const pending = orders.find((item) => Number(item?.status) === 0 || Number(item?.status) === 1);
-        return pending?.trade_no || "";
+        const pendingOrders = orders.filter(
+          (item) => Number(item?.status) === 0 || Number(item?.status) === 1
+        );
+        if (tradeNo) {
+          const matched = pendingOrders.find((item) => item?.trade_no === tradeNo);
+          if (matched) {
+            return matched;
+          }
+        }
+        return pendingOrders[0] || null;
       } catch (err) {
         console.error("Failed to fetch pending orders:", err);
-        return "";
+        return null;
       }
+    };
+
+    const fetchLatestPendingTradeNo = async () => {
+      const pending = await fetchLatestPendingOrder();
+      return pending?.trade_no || "";
     };
 
     const closePendingOrderModal = () => {
@@ -792,7 +836,8 @@ export default {
 
     // 实际的订单提交逻辑
 
-    const executeOrderSubmission = async () => {
+    const executeOrderSubmission = async (options = {}) => {
+      const { conflictResolved = false } = options;
       loading.submitting = true;
 
       try {
@@ -826,7 +871,43 @@ export default {
 
         const message = error.response?.message || error.message || t("order.order_failed");
         if (isPendingOrderConflict(message)) {
-          pendingOrderTradeNo.value = extractPendingTradeNo(error) || (await fetchLatestPendingTradeNo());
+          const fallbackTradeNo = extractPendingTradeNo(error) || (await fetchLatestPendingTradeNo());
+          const matchedOrder = await fetchLatestPendingOrder(fallbackTradeNo);
+
+          if (matchedOrder && isUnpaidCreatedOrder(matchedOrder)) {
+            pendingOrderTradeNo.value = matchedOrder.trade_no || fallbackTradeNo || "";
+
+            if (isSameOrderSpecAsCurrentSelection(matchedOrder)) {
+              router.push({
+                path: "/payment",
+                query: {
+                  trade_no: pendingOrderTradeNo.value,
+                },
+              });
+              return;
+            }
+
+            if (!conflictResolved && pendingOrderTradeNo.value) {
+              loading.cancellingExisting = true;
+              try {
+                await cancelExistingOrder(pendingOrderTradeNo.value);
+                pendingOrderTradeNo.value = "";
+                await executeOrderSubmission({ conflictResolved: true });
+              } catch (cancelError) {
+                showToast(
+                  cancelError?.response?.message ||
+                    cancelError?.message ||
+                    "取消订单失败",
+                  "error"
+                );
+              } finally {
+                loading.cancellingExisting = false;
+              }
+              return;
+            }
+          }
+
+          pendingOrderTradeNo.value = fallbackTradeNo;
           showPendingOrderModal.value = true;
           return;
         }
