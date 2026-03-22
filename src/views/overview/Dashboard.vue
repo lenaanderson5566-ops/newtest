@@ -188,6 +188,7 @@
             :class="{ 'card-animate': !loading.userStats }"
             :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
+            <div class="usage-card-title today-card-title">今日流量</div>
             <div class="today-traffic-total-main">今日总流量 {{ todayTrafficStats.totalGb }} GB</div>
             <div class="today-traffic-breakdown">
               <span class="traffic-up">上行 {{ todayTrafficStats.uploadGb }} GB</span>
@@ -200,7 +201,7 @@
 
       <div class="dashboard-card usage-trend-card" v-if="hasPlan">
         <div class="card-header">
-          <h2 class="card-title">{{ $t('trafficLog.title') }}</h2>
+          <h2 class="card-title usage-card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
         <div class="card-body">
           <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
@@ -2183,10 +2184,20 @@ export default {
     padding: var(--dashboard-card-padding);
   }
 
+  .stats-grid .stats-card.traffic-board-card,
+  .stats-grid .stats-card.today-traffic-card,
+  .dashboard-card.usage-trend-card {
+    background: var(--saas-card-bg);
+    border: 1px solid var(--dashboard-border-color);
+    border-radius: var(--dashboard-radius);
+    box-shadow: var(--dashboard-shadow-compact);
+  }
+
   /* 概览卡片左上角标题统一样式 */
-  .overview-card--today-traffic .today-traffic-total-main,
+  .overview-card--today-traffic .usage-card-title,
   .overview-card--traffic-quota .usage-card-title,
-  .overview-card--exit-region .ip-meta-title {
+  .overview-card--exit-region .ip-meta-title,
+  .usage-trend-card .card-title.usage-card-title {
     margin: 0;
     font-size: var(--dashboard-title-size);
     line-height: 1.3;
@@ -2202,8 +2213,12 @@ export default {
     z-index: 2;
     align-items: flex-start;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 10px;
+
+    .today-card-title {
+      margin-bottom: 2px;
+    }
 
     .today-traffic-total-main {
       font-size: clamp(20px, 2.1vw, 24px);
