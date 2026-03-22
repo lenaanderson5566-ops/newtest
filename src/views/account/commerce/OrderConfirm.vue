@@ -178,7 +178,6 @@
                     <span>{{ $t("order.verify_coupon") }}</span>
                   </button>
                   <span v-if="couponApplied" class="coupon-applied-tag">✓ 已应用</span>
-                  <span v-if="couponApplied && totalDiscountAmount > 0" class="coupon-discount-value">-{{ formatCurrencyAmount(totalDiscountAmount) }}</span>
                   <button v-if="couponApplied" class="btn-remove-text" @click="removeCoupon">移除</button>
                 </div>
                 <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
