@@ -239,6 +239,22 @@
                   </div>
                 </div>
 
+                <div class="summary-row" v-if="couponDiscountAmount > 0">
+                  <div class="summary-label">优惠券优惠</div>
+
+                  <div class="summary-value discount">
+                    -{{ formatCurrencyAmount(couponDiscountAmount) }}
+                  </div>
+                </div>
+
+                <div class="summary-row" v-if="userDiscountAmount > 0">
+                  <div class="summary-label">会员等级优惠</div>
+
+                  <div class="summary-value discount">
+                    -{{ formatCurrencyAmount(userDiscountAmount) }}
+                  </div>
+                </div>
+
                 <div class="summary-row" v-if="totalDiscountAmount > 0">
                   <div class="summary-label">优惠金额</div>
 
