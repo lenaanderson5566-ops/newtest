@@ -183,7 +183,7 @@
               </button>
             </div>
             <div v-else class="coupon-applied-row">
-              <span class="coupon-code-label">优惠码 {{ couponCode }}</span>
+              <span class="coupon-code-label">优惠码 {{ couponCode || couponInfo?.code || '-' }}</span>
               <span class="coupon-applied-tag">✓ 已应用</span>
               <button class="btn-remove-text" @click="removeCoupon">移除</button>
             </div>
@@ -1770,7 +1770,8 @@ export default {
       min-height: 40px;
       border: 1px solid var(--border-color);
       border-radius: $border-radius-sm;
-      background: rgba(var(--theme-color-rgb), 0.03);
+      background: rgba(34, 197, 94, 0.06);
+      border-left: 3px solid #22c55e;
       padding: 0 12px;
       display: flex;
       align-items: center;
@@ -1781,7 +1782,7 @@ export default {
     .coupon-code-label {
       font-size: 13px;
       color: var(--text-color);
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .btn-remove-text {
