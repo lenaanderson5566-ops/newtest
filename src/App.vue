@@ -406,7 +406,7 @@ export default {
   width: 100%;
   --page-edge-gap: 2px;
   --left-nav-gap: 10px;
-  --left-nav-occupy: 176px;
+  --left-nav-occupy: 192px;
 
   &.with-top-bar {
     --page-content-top-gap: 8px;
@@ -426,7 +426,7 @@ export default {
 
 @media (min-width: 992px) {
   .app-content-wrapper.with-left-nav {
-    padding-left: calc(var(--left-nav-occupy, 176px) + var(--left-nav-gap, 10px));
+    padding-left: calc(var(--left-nav-occupy, 192px) + var(--left-nav-gap, 10px));
   }
 
   .app-content-wrapper.with-left-nav .content-layout-shell.fixed-content-width {
