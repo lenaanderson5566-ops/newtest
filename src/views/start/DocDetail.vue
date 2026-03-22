@@ -750,20 +750,6 @@ const renderedContent = computed(() => {
 
 
 
-      const styleTagRegex = /<style[\s\S]*?<\/style>/gi;
-
-      const styleMatches = [];
-
-      let match;
-
-      while ((match = styleTagRegex.exec(content)) !== null) {
-
-        styleMatches.push(match[0]);
-
-      }
-
-      
-
       nextTick(() => {
 
         const scriptElement = document.createElement('script');
@@ -988,7 +974,7 @@ const renderedContent = computed(() => {
 
       processedContent = DOMPurify.sanitize(processedContent, {
 
-        ADD_TAGS: ['script', 'style', 'link', 'button', 'a', 'img', 'iframe', 'div', 'span'],
+        ADD_TAGS: ['button', 'a', 'img', 'iframe', 'div', 'span'],
 
         ADD_ATTR: [
 
@@ -1006,7 +992,7 @@ const renderedContent = computed(() => {
 
         FORCE_BODY: false,
 
-        FORBID_TAGS: [],
+        FORBID_TAGS: ['script', 'style', 'link'],
 
         FORBID_ATTR: [],
 
@@ -1015,24 +1001,6 @@ const renderedContent = computed(() => {
         ALLOW_ARIA_ATTR: true
 
       });
-
-      
-
-      if (styleMatches.length > 0) {
-
-        const tempDiv = document.createElement('div');
-
-        tempDiv.innerHTML = processedContent;
-
-        styleMatches.forEach(styleTag => {
-
-          tempDiv.insertAdjacentHTML('beforeend', styleTag);
-
-        });
-
-        processedContent = tempDiv.innerHTML;
-
-      }
 
       
 
@@ -1391,7 +1359,7 @@ onUnmounted(() => {
 
     max-width: 400px;
 
-    background: var(--card-bg);
+    background: #fff;
 
     border-radius: 16px;
 
@@ -1575,7 +1543,7 @@ onUnmounted(() => {
 
 .doc-content {
 
-  background-color: var(--card-bg);
+  background-color: #fff;
 
   border-radius: 16px;
 
@@ -2320,7 +2288,7 @@ onUnmounted(() => {
 
 
 
-.eztheme-btn {
+.doc-detail-container .eztheme-btn {
 
   display: inline-flex !important;
 
@@ -2430,7 +2398,7 @@ onUnmounted(() => {
 
 
 
-a.eztheme-btn {
+.doc-detail-container a.eztheme-btn {
 
   background-image: none !important;
 
