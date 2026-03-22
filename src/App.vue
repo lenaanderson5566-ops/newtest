@@ -277,8 +277,6 @@ export default {
 .section-wrapper,
 .plan-card,
 .auth-card,
-.order-summary,
-.payment-method-item,
 .dialog-content,
 .pending-order-dialog,
 .modal-content {

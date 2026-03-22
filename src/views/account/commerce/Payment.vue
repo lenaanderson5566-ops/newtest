@@ -1627,6 +1627,13 @@ export default {
     color: #f8fafc !important;
   }
 
+  .right-column .payment-methods .payment-method-item .method-name,
+  .right-column .payment-methods .payment-method-item .method-fee,
+  .right-column .payment-methods .payment-method-item .method-check,
+  .right-column .payment-methods .payment-method-item .method-icon {
+    color: #f8fafc !important;
+  }
+
   .free-notice {
     display: flex;
     align-items: center;
