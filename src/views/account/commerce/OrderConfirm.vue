@@ -1737,6 +1737,21 @@ export default {
       }
     }
 
+    .coupon-applied-tag {
+      height: 32px;
+      padding: 0 12px;
+      border-radius: $border-radius-sm;
+      border: 1px solid var(--border-color);
+      background: rgba(148, 163, 184, 0.08);
+      color: var(--secondary-text-color);
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: default;
+    }
+
     .btn-remove-text {
       height: 32px;
       padding: 0 12px;
@@ -1957,6 +1972,12 @@ export default {
   }
 
   .order-summary-section .btn-remove-text {
+    color: #cbd5e1;
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .order-summary-section .coupon-applied-tag {
     color: #cbd5e1;
     border-color: rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.06);
