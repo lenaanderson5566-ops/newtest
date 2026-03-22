@@ -22,13 +22,6 @@
   --global-card-gap: 14px;
   --page-content-max-width: 1120px;
   --page-stack-gap: var(--global-card-gap);
-  --global-page-bg: #f5f7fa;
-}
-
-.app-content-wrapper,
-.app-content-wrapper .page-shell,
-body {
-  background-color: var(--global-page-bg);
 }
 
 .app-content-wrapper .page-shell {
