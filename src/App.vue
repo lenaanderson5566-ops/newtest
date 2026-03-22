@@ -268,6 +268,27 @@ export default {
 @use "@/assets/styles/base/animations.scss" as *;
 @use "@/assets/styles/base/scrollbar.scss" as *;
 
+:root {
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+}
+
+.card,
+.dashboard-card,
+.info-card,
+.section-wrapper,
+.plan-card,
+.order-summary,
+.payment-method-item,
+.slide-tabs-wrapper,
+.slide-tabs-nav .nav-item,
+.pending-order-dialog,
+.modal-content {
+  border-radius: var(--radius-lg) !important;
+}
 
 .page-transitioning {
   overflow: hidden;

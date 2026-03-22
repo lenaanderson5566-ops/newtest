@@ -1496,7 +1496,16 @@ export default {
         width: 100%;
         height: 46px;
         border: 1px solid rgba(255, 255, 255, 0.16);
-        box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.24);
+        background-color: var(--theme-color);
+        color: #fff;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.2);
+
+        &:hover:not(:disabled) {
+          background-color: color-mix(in srgb, var(--theme-color) 85%, black) !important;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(var(--theme-color-rgb), 0.3);
+        }
       }
     }
   }
