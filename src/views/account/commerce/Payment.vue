@@ -1,7 +1,6 @@
 <template>
   <div class="payment-container page-shell">
     <div class="payment-inner page-inner page-stack">
-      <p class="payment-page-tip">订单已创建，请选择支付方式完成支付</p>
       <div class="content-wrapper">
         <!-- 左侧内容：产品信息 -->
         <div class="left-column">
@@ -26,7 +25,7 @@
               <div class="overview-divider"></div>
 
               <div class="info-row">
-                <div class="info-label">套餐</div>
+                <div class="info-label">订阅</div>
                 <div class="info-value">{{ orderDetail.plan?.name || (orderDetail.period === 'deposit' ? $t("wallet.deposit.title") : "-") }}</div>
               </div>
               <div class="info-row" v-if="orderDetail.period !== 'deposit'">
@@ -157,7 +156,7 @@
                 </div>
               </div>
               <div v-else class="info-row">
-                <div class="info-label">应付金额</div>
+                <div class="info-label">订阅价格</div>
                 <div class="info-value amount">
                   {{ formatAmount(getPlanPrice()) }}
                 </div>
@@ -1255,12 +1254,6 @@ export default {
   .payment-inner {
     width: 100%;
       }
-
-  .payment-page-tip {
-    margin: 0 0 8px;
-    font-size: 13px;
-    color: var(--secondary-text-color);
-  }
 
   .title-card {
     margin-top: 20px;
