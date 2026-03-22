@@ -60,7 +60,19 @@
 
               <div class="info-row">
                 <div class="info-label">{{ $t("payment.trade_no") }}</div>
-                <div class="info-value">{{ orderDetail.trade_no || "-" }}</div>
+                <div class="info-value trade-no-value">
+                  <span>{{ orderDetail.trade_no || "-" }}</span>
+                  <button
+                    v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
+                    class="trade-no-cancel-btn"
+                    @click="cancelCurrentOrder"
+                    :disabled="loading.cancelling"
+                  >
+                    <IconX v-if="!loading.cancelling" :size="14" />
+                    <div v-else class="loader"></div>
+                    <span>{{ $t("payment.cancel_order") }}</span>
+                  </button>
+                </div>
               </div>
               <div class="info-row">
                 <div class="info-label">{{ $t("payment.created_at") }}</div>
@@ -69,30 +81,6 @@
                 </div>
               </div>
 
-              <div
-                class="overview-actions"
-                v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
-              >
-                <button
-                  class="btn-back secondary-action"
-                  @click="cancelCurrentOrder"
-                  :disabled="loading.cancelling"
-                >
-                  <IconX v-if="!loading.cancelling" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.cancel_order") }}</span>
-                </button>
-
-                <button
-                  class="btn-check secondary-action"
-                  @click="checkPaymentStatus"
-                  :disabled="(orderDetail.total_amount > 0 && !selectedMethod) || loading.checking || loading.paying"
-                >
-                  <IconRefresh v-if="!loading.checking" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.check_payment") }}</span>
-                </button>
-              </div>
             </div>
 
             <!-- 产品信息骨架屏 -->
@@ -1148,59 +1136,6 @@ export default {
       }
     };
 
-    const checkPaymentStatus = async () => {
-      loading.checking = true;
-      try {
-        const response = await checkOrderStatus(orderDetail.value.trade_no);
-
-        if (response.data === 0) {
-          showToast(t("payment.payment_pending"), "info");
-        } else if (response.data === 2) {
-          showToast(t("payment.order_cancelled"), "warning");
-
-          if (paymentCheckTimer.value) {
-            clearInterval(paymentCheckTimer.value);
-            paymentCheckTimer.value = null;
-          }
-
-          orderDetail.value.status = response.data;
-        } else {
-          showToast(t("payment.payment_successful"), "success");
-
-          orderDetail.value.status = response.data;
-
-          paymentSuccessful.value = true;
-
-          if (paymentCheckTimer.value) {
-            clearInterval(paymentCheckTimer.value);
-            paymentCheckTimer.value = null;
-          }
-
-          closePaymentModal();
-
-          showSuccessAnimation.value = true;
-
-          setTimeout(() => {
-            showConfettiAnimation.value = true;
-          }, 300);
-
-          setTimeout(() => {
-            showConfettiAnimation.value = false;
-
-            setTimeout(() => {
-              showSuccessAnimation.value = false;
-            }, 500);
-          }, 4500);
-        }
-      } catch (error) {
-        console.error("Failed to check payment status:", error);
-        showToast(t("payment.check_failed"), "error");
-      } finally {
-        loading.checking = false;
-        loading.paying = false;
-      }
-    };
-
     const getStatusText = (status) => {
       const statusMap = {
         0: t("payment.status.pending"),
@@ -1313,7 +1248,6 @@ export default {
       discountAmount,
       discountBreakdownVisible,
       window: window,
-      checkPaymentStatus,
       detectBrowser,
       getStatusText,
       getStatusClass,
@@ -1437,6 +1371,46 @@ export default {
         &::after {
           display: none;
         }
+      }
+    }
+
+    .trade-no-value {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .trade-no-cancel-btn {
+      height: 28px;
+      padding: 0 10px;
+      border-radius: $border-radius-sm;
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-color);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover:not(:disabled) {
+        background-color: var(--hover-color);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .loader {
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        border-top-color: var(--text-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
       }
     }
   }
@@ -2513,76 +2487,6 @@ export default {
     color: #757575;
     background-color: rgba(158, 158, 158, 0.12);
     border-color: rgba(158, 158, 158, 0.2);
-  }
-}
-
-.overview-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-
-  .btn-back,
-  .btn-check {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border-radius: $border-radius-sm;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 0 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid var(--border-color);
-    flex: 1;
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none !important;
-      box-shadow: none !important;
-    }
-  }
-
-  .btn-back {
-    background-color: transparent;
-    color: var(--text-color);
-
-    &:hover:not(:disabled) {
-      background-color: var(--hover-color);
-      transform: translateY(-1px);
-    }
-  }
-
-  .btn-check {
-    background-color: var(--hover-color);
-    color: var(--text-color);
-
-    &:hover:not(:disabled) {
-      background-color: var(--card-bg-color);
-      transform: translateY(-1px);
-    }
-  }
-
-  @media (max-width: 480px) {
-    flex-direction: column;
-
-    .btn-back,
-    .btn-check {
-      width: 100%;
-    }
-  }
-
-  .loader {
-    width: 16px;
-    height: 16px;
-    min-width: 16px;
-    min-height: 16px;
-    border: 2px solid rgba(148, 163, 184, 0.35);
-    border-radius: 50%;
-    border-top-color: var(--text-color);
-    animation: spin 1s linear infinite;
   }
 }
 
