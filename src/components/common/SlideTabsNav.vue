@@ -31,7 +31,7 @@ export default {
   name: 'SlideTabsNav',
   setup() {
     const route = useRoute();
-    const SIDEBAR_WIDTH = 192;
+    const SIDEBAR_WIDTH = 220;
     const SIDEBAR_BREAKPOINT = 992;
     let mediaQueryList = null;
 
@@ -126,7 +126,7 @@ export default {
   top: 108px;
   left: var(--left-nav-gap, 10px);
   z-index: 10;
-  width: var(--left-nav-occupy, 192px);
+  width: var(--left-nav-occupy, 220px);
   transition: width 0.25s ease;
 
   .slide-tabs-wrapper {

@@ -292,7 +292,7 @@ onMounted(async () => {
 
 .my-center {
   padding: 0 0 2px;
-  background: linear-gradient(180deg, rgba(var(--theme-color-rgb), 0.03), transparent 42%);
+  background: var(--background-color);
 }
 
 .my-center-inner {
