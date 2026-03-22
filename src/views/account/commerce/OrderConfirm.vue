@@ -107,7 +107,7 @@
                   <div class="period-card-inner">
                     <div class="period-type">
                       {{
-                        $t(`shop.plan.price_options.${getPriceTypeKey(type)}`)
+                        formatPeriodOption(type)
                       }}
                       <span
                         v-if="showPeriodDiscountTag(type, price)"
@@ -118,7 +118,7 @@
                     </div>
 
                     <div class="period-price">
-                      <span class="currency">{{ currencySymbol }}</span>
+                      <span class="currency">{{ displayCurrency }}</span>
 
                       <span class="amount">{{ (price / 100).toFixed(2) }}</span>
                       <span
@@ -200,6 +200,10 @@
                 <span>{{ $t("order.remove_coupon") }}</span>
               </button>
             </div>
+            <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
+            <div v-else-if="couponApplied && totalDiscountAmount > 0" class="coupon-feedback success">
+              已优惠 -{{ formatCurrencyAmount(totalDiscountAmount) }}
+            </div>
           </div>
 
           <!-- 订单摘要 -->
@@ -228,31 +232,15 @@
 
               <div v-else>
                 <div class="summary-row">
-                  <div class="summary-label">{{ $t("payment.total_price") }}</div>
+                  <div class="summary-label">套餐金额</div>
 
                   <div class="summary-value">
                     {{ formatCurrencyAmount(originalPrice) }}
                   </div>
                 </div>
 
-                <div class="summary-row" v-if="couponDiscountAmount > 0">
-                  <div class="summary-label">{{ $t("payment.coupon_discount_amount") }}</div>
-
-                  <div class="summary-value discount">
-                    -{{ formatCurrencyAmount(couponDiscountAmount) }}
-                  </div>
-                </div>
-
-                <div class="summary-row" v-if="userDiscountAmount > 0">
-                  <div class="summary-label">{{ $t("payment.user_discount_amount") }}</div>
-
-                  <div class="summary-value discount">
-                    -{{ formatCurrencyAmount(userDiscountAmount) }}
-                  </div>
-                </div>
-
                 <div class="summary-row" v-if="totalDiscountAmount > 0">
-                  <div class="summary-label">{{ $t("payment.total_discount_amount") }}</div>
+                  <div class="summary-label">优惠金额</div>
 
                   <div class="summary-value discount">
                     -{{ formatCurrencyAmount(totalDiscountAmount) }}
@@ -262,7 +250,7 @@
                 <div class="summary-divider"></div>
 
                 <div class="summary-row total">
-                  <div class="summary-label">合计</div>
+                  <div class="summary-label">应付金额</div>
 
                   <div class="summary-value">
                     {{ formatCurrencyAmount(totalWithFee) }}
@@ -405,6 +393,8 @@ export default {
 
     const couponApplied = ref(false);
 
+    const couponErrorMessage = ref("");
+
     const verifying = ref(false);
 
     const couponInfo = ref(null);
@@ -470,12 +460,18 @@ export default {
     const totalWithFee = computed(() => finalPrice.value);
 
     const displayCurrency = computed(() => {
-      return `${currency.value || 'CNY'}`.toUpperCase();
+      return `${currency.value || 'USD'}`.toUpperCase();
     });
 
     const formatCurrencyAmount = (amount) => {
       if (amount === null || amount === undefined) return '-';
       return `${displayCurrency.value} ${(Number(amount) / 100).toFixed(2)}`;
+    };
+
+    const formatPeriodOption = (type) => {
+      if (type === "month_price") return "月付";
+      if (type === "year_price") return "年付";
+      return t(`shop.plan.price_options.${getPriceTypeKey(type)}`);
     };
 
     const userHasActivePlan = computed(() => {
@@ -659,6 +655,7 @@ export default {
       if (!couponCode.value || verifying.value) return;
 
       verifying.value = true;
+      couponErrorMessage.value = "";
 
       try {
         const response = await checkCoupon(couponCode.value, plan.value.id);
@@ -710,6 +707,7 @@ export default {
 
           couponInfo.value = null;
 
+          couponErrorMessage.value = response.message || t("order.coupon_invalid");
           showToast(response.message || t("order.coupon_invalid"), "error");
         }
       } catch (error) {
@@ -720,6 +718,9 @@ export default {
         discountPercent.value = 0;
 
         couponInfo.value = null;
+
+        couponErrorMessage.value =
+          error.response?.message || error.message || t("order.coupon_invalid");
 
         showToast(
           error.response?.message || error.message || t("order.coupon_invalid"),
@@ -957,6 +958,7 @@ export default {
       discountPercent.value = 0;
 
       couponInfo.value = null;
+      couponErrorMessage.value = "";
 
       showToast(t("order.coupon_removed"), "info");
     };
@@ -997,11 +999,15 @@ export default {
 
       currencySymbol,
 
+      displayCurrency,
+
       selectedPriceType,
 
       couponCode,
 
       couponApplied,
+
+      couponErrorMessage,
 
       verifying,
 
@@ -1028,6 +1034,8 @@ export default {
       bestValuePeriod,
 
       getPriceTypeKey,
+
+      formatPeriodOption,
 
       isJsonContent,
 
@@ -1798,6 +1806,20 @@ export default {
 
         box-shadow: 0 6px 16px rgba(244, 67, 54, 0.3);
       }
+    }
+  }
+
+  .coupon-feedback {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+
+    &.error {
+      color: #ef4444;
+    }
+
+    &.success {
+      color: #22c55e;
     }
   }
 

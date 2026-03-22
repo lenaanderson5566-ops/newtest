@@ -1,13 +1,14 @@
 <template>
   <div class="payment-container page-shell">
     <div class="payment-inner page-inner page-stack">
+      <p class="payment-page-tip">订单已创建，请选择支付方式完成支付</p>
       <div class="content-wrapper">
         <!-- 左侧内容：产品信息 -->
         <div class="left-column">
           <!-- 订单概览 -->
           <div class="section-wrapper overview-section">
             <div class="section-title with-status">
-              <span>订单概览</span>
+              <span>订单摘要</span>
               <button
                 v-if="!loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
                 class="overview-cancel-btn"
@@ -22,19 +23,20 @@
 
             <div class="product-info" v-if="!loading.order">
               <!-- 充值订单时显示简化信息 -->
-              <div v-if="orderDetail.period === 'deposit'" class="overview-plan-block">
-                <div class="overview-plan-name">{{ $t("wallet.deposit.title") }}</div>
-                <div class="overview-plan-meta">{{ formatAmount(orderDetail.total_amount) }}</div>
-              </div>
-              <!-- 普通订单显示完整信息 -->
-              <div v-else class="overview-plan-block">
-                <div class="overview-plan-name">{{ orderDetail.plan?.name || "-" }}</div>
-                <div class="overview-plan-meta">
-                  {{ formatTraffic(orderDetail.plan?.transfer_enable) }} · {{ formatPeriod(orderDetail.period) }}
-                </div>
-              </div>
-
               <div class="overview-divider"></div>
+
+              <div class="info-row">
+                <div class="info-label">套餐</div>
+                <div class="info-value">{{ orderDetail.plan?.name || (orderDetail.period === 'deposit' ? $t("wallet.deposit.title") : "-") }}</div>
+              </div>
+              <div class="info-row" v-if="orderDetail.period !== 'deposit'">
+                <div class="info-label">周期</div>
+                <div class="info-value">{{ formatPeriod(orderDetail.period) }}</div>
+              </div>
+              <div class="info-row" v-if="orderDetail.period !== 'deposit'">
+                <div class="info-label">流量</div>
+                <div class="info-value">{{ formatTraffic(orderDetail.plan?.transfer_enable) }}</div>
+              </div>
 
               <div class="info-row">
                 <div class="info-label">{{ $t("payment.trade_no") }}</div>
@@ -47,7 +49,7 @@
                 </div>
               </div>
               <div class="info-row">
-                <div class="info-label">优惠</div>
+                <div class="info-label">优惠金额</div>
                 <div class="info-value discount">-{{ formatAmount(discountAmount || 0) }}</div>
               </div>
               <div class="info-row">
@@ -144,7 +146,7 @@
           <!-- 订单金额摘要 -->
           <div class="section-wrapper order-amount-section">
             <div class="section-title">
-              <span>订单金额</span>
+              <span>支付信息</span>
             </div>
 
             <div class="order-info" v-if="!loading.order">
@@ -155,7 +157,7 @@
                 </div>
               </div>
               <div v-else class="info-row">
-                <div class="info-label">{{ $t("payment.total_price") }}</div>
+                <div class="info-label">应付金额</div>
                 <div class="info-value amount">
                   {{ formatAmount(getPlanPrice()) }}
                 </div>
@@ -176,15 +178,7 @@
               </div>
 
               <div class="info-row discount-row" v-if="discountBreakdownVisible">
-                <div class="info-label">{{ $t("payment.coupon_discount_amount") }}</div>
-                <div class="info-value discount">-{{ formatAmount(couponDiscountAmount) }}</div>
-              </div>
-              <div class="info-row discount-row" v-if="discountBreakdownVisible">
-                <div class="info-label">{{ $t("payment.user_discount_amount") }}</div>
-                <div class="info-value discount">-{{ formatAmount(userDiscountAmount) }}</div>
-              </div>
-              <div class="info-row discount-row" v-if="discountBreakdownVisible">
-                <div class="info-label">{{ $t("payment.total_discount_amount") }}</div>
+                <div class="info-label">优惠金额</div>
                 <div class="info-value discount">-{{ formatAmount(discountAmount) }}</div>
               </div>
               <div
@@ -214,7 +208,7 @@
                 <div class="info-value fee">{{ formatAmount(handleFeeAmount) }}</div>
               </div>
               <div class="info-row final-row">
-                <div class="info-label">合计</div>
+                <div class="info-label">应付金额</div>
                 <div class="info-value final">{{ formatAmount(totalWithFee) }}</div>
               </div>
             </div>
@@ -732,7 +726,7 @@ export default {
 
     const displayCurrency = computed(() => {
       const currency = orderDetail.value?.pricing_currency;
-      return currency ? `${currency}`.toUpperCase() : '¥';
+      return currency ? `${currency}`.toUpperCase() : "USD";
     });
 
     const formatAmount = (amount) => {
@@ -746,10 +740,10 @@ export default {
       }
 
       const periodMap = {
-        month_price: t("shop.plan.price_options.month"),
+        month_price: "月付",
         quarter_price: t("shop.plan.price_options.quarter"),
         half_year_price: t("shop.plan.price_options.half_year"),
-        year_price: t("shop.plan.price_options.year"),
+        year_price: "年付",
         two_year_price: t("shop.plan.price_options.two_year"),
         three_year_price: t("shop.plan.price_options.three_year"),
         onetime_price: t("shop.plan.price_options.onetime"),
@@ -1261,6 +1255,12 @@ export default {
   .payment-inner {
     width: 100%;
       }
+
+  .payment-page-tip {
+    margin: 0 0 8px;
+    font-size: 13px;
+    color: var(--secondary-text-color);
+  }
 
   .title-card {
     margin-top: 20px;
