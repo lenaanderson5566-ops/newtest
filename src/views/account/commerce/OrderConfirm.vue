@@ -170,25 +170,21 @@
               />
 
               <button
+                v-if="!couponApplied"
                 class="btn-verify"
                 @click="verifyCoupon"
                 :disabled="
-                  !couponCode || verifying || loading.plan || couponApplied
+                  !couponCode || verifying || loading.plan
                 "
-                :class="{ applied: couponApplied }"
               >
-                <IconDiscount2 v-if="!verifying && !couponApplied" />
-
-                <IconCheck v-else-if="couponApplied" />
+                <IconDiscount2 v-if="!verifying" />
 
                 <span v-else-if="verifying" class="loader"></span>
 
-                <span>{{
-                  couponApplied
-                    ? $t("order.coupon_applied")
-                    : $t("order.verify_coupon")
-                }}</span>
+                <span>{{ $t("order.verify_coupon") }}</span>
               </button>
+
+              <span v-else class="coupon-applied-tag">✓ 已应用</span>
 
               <button
                 v-if="couponApplied"
@@ -1738,15 +1734,7 @@ export default {
 
       flex-shrink: 0;
 
-      &.applied {
-        background-color: #4caf50;
-
-        box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
-
-        cursor: default;
-      }
-
-      &:hover:not(:disabled):not(.applied) {
+      &:hover:not(:disabled) {
         background-color: color-mix(
           in srgb,
           var(--theme-color) 85%,
@@ -1779,18 +1767,32 @@ export default {
       }
     }
 
-    .btn-remove-coupon {
-      height: 48px;
+    .coupon-applied-tag {
+      height: 32px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background-color: rgba(34, 197, 94, 0.1);
+      color: #16a34a;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
 
-      padding: 0 16px;
+    .btn-remove-coupon {
+      height: 32px;
+
+      padding: 0 12px;
 
       border-radius: $border-radius-sm;
 
-      background-color: #f44336;
+      background-color: transparent;
 
-      color: white;
+      color: var(--secondary-text-color);
 
-      font-size: 14px;
+      font-size: 12px;
 
       font-weight: 500;
 
@@ -1800,24 +1802,22 @@ export default {
 
       gap: 6px;
 
-      border: none;
+      border: 1px solid var(--border-color);
 
       cursor: pointer;
 
       transition: all 0.3s ease;
 
-      box-shadow: 0 4px 10px rgba(244, 67, 54, 0.2);
+      box-shadow: none;
 
       white-space: nowrap;
 
       flex-shrink: 0;
 
       &:hover {
-        background-color: #d32f2f;
-
-        transform: translateY(-2px);
-
-        box-shadow: 0 6px 16px rgba(244, 67, 54, 0.3);
+        background-color: var(--hover-color, rgba(0, 0, 0, 0.04));
+        transform: none;
+        box-shadow: none;
       }
     }
   }
