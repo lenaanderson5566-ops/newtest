@@ -188,12 +188,11 @@
             :class="{ 'card-animate': !loading.userStats }"
             :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
-            <div class="today-traffic-title">今日流量</div>
-            <div class="today-traffic-values">
-              <span class="traffic-up">↑ {{ todayTrafficStats.uploadGb }} GB</span>
-              <span class="traffic-down">↓ {{ todayTrafficStats.downloadGb }} GB</span>
+            <div class="today-traffic-total-main">今日总流量 {{ todayTrafficStats.totalGb }} GB</div>
+            <div class="today-traffic-breakdown">
+              <span class="traffic-up">上行 {{ todayTrafficStats.uploadGb }} GB</span>
+              <span class="traffic-down">下行 {{ todayTrafficStats.downloadGb }} GB</span>
             </div>
-            <div class="today-traffic-total">总计 {{ todayTrafficStats.totalGb }} GB</div>
           </div>
 
         </template>
@@ -1451,8 +1450,14 @@ export default {
   display: flex;
   justify-content: center;
   --dashboard-card-padding: 12px;
-  --dashboard-radius: 10px;
-  --dashboard-shadow-compact: 0 1px 3px rgba(15, 23, 42, 0.05), 0 6px 14px rgba(15, 23, 42, 0.04);
+  --dashboard-radius: 12px;
+  --dashboard-pill-radius: 999px;
+  --dashboard-button-radius: 12px;
+  --dashboard-shadow-compact: 0 2px 8px rgba(15, 23, 42, 0.06), 0 10px 22px rgba(15, 23, 42, 0.05);
+  --dashboard-border-color: rgba(148, 163, 184, 0.22);
+  --dashboard-title-size: 14px;
+  --dashboard-value-size: 30px;
+  --dashboard-kpi-size: 13px;
   --dashboard-gap-compact: var(--global-card-gap);
   --dashboard-section-margin: var(--global-card-gap);
 
@@ -1528,12 +1533,13 @@ export default {
       gap: 8px;
       max-width: 100%;
       padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: var(--dashboard-pill-radius);
+      border: 1px solid var(--dashboard-border-color);
       background: rgba(255, 255, 255, 0.8);
       color: var(--theme-text-primary);
       font-size: 13px;
       font-weight: 500;
+      box-shadow: var(--dashboard-shadow-compact);
 
       .exit-banner-text {
         white-space: nowrap;
@@ -1551,7 +1557,8 @@ export default {
     background-color: var(--saas-card-bg);
     box-shadow: var(--saas-card-shadow);
     padding: var(--dashboard-card-padding);
-    border: none;
+    border: 1px solid var(--dashboard-border-color);
+    border-radius: var(--dashboard-radius);
     transition: box-shadow 0.2s ease;
 
     &:hover {
@@ -1577,6 +1584,10 @@ export default {
         gap: 10px;
       }
     }
+  }
+
+  .btn {
+    border-radius: var(--dashboard-button-radius);
   }
 
   /* 数据统计卡片区域（会员等级 + 流量卡片） */
@@ -1607,7 +1618,7 @@ export default {
       padding: var(--dashboard-card-padding);
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--dashboard-border-color);
 
       /* 流量额度包卡片（订阅流量 / 叠加包 / 总览）样式 */
       &.traffic-board-card {
@@ -1644,12 +1655,16 @@ export default {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
+          font-size: var(--dashboard-title-size);
+          line-height: 1.35;
+          min-height: 20px;
         }
 
         .usage-card-main {
           display: flex;
           align-items: baseline;
           gap: 8px;
+          min-height: 42px;
 
           &.package-main {
             align-items: baseline;
@@ -1660,7 +1675,7 @@ export default {
             margin-left: auto;
             width: 26px;
             height: 26px;
-            border-radius: 999px;
+            border-radius: var(--dashboard-button-radius);
             border: none;
             display: inline-flex;
             align-items: center;
@@ -1855,7 +1870,7 @@ export default {
 
             .plan-action-btn {
               flex: 1;
-              border-radius: var(--dashboard-radius);
+              border-radius: var(--dashboard-button-radius);
               padding: 10px 14px;
               font-size: 14px;
               font-weight: 600;
@@ -1957,7 +1972,7 @@ export default {
         .usage-percent {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
-          font-size: 36px;
+          font-size: var(--dashboard-value-size);
           line-height: 1;
           font-weight: 700;
           color: var(--theme-text-primary);
@@ -1968,7 +1983,7 @@ export default {
         }
 
         .usage-percent-label {
-          font-size: 13px;
+          font-size: var(--dashboard-kpi-size);
           color: var(--quota-label-color);
           font-weight: 500;
         }
@@ -2143,7 +2158,7 @@ export default {
       }
 
       &:hover {
-        border-color: rgba(148, 163, 184, 0.24);
+        border-color: rgba(148, 163, 184, 0.3);
         box-shadow: 0 3px 10px rgba(15, 23, 42, 0.07);
       }
     }
@@ -2167,11 +2182,11 @@ export default {
   }
 
   /* 概览卡片左上角标题统一样式 */
-  .overview-card--today-traffic .today-traffic-title,
+  .overview-card--today-traffic .today-traffic-total-main,
   .overview-card--traffic-quota .usage-card-title,
   .overview-card--exit-region .ip-meta-title {
     margin: 0;
-    font-size: 14px;
+    font-size: var(--dashboard-title-size);
     line-height: 1.3;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -2184,25 +2199,28 @@ export default {
     background: #fff;
     align-items: flex-start;
     flex-direction: column;
-    gap: 8px;
+    justify-content: center;
+    gap: 10px;
 
-    .today-traffic-values {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 24px;
-      font-weight: 700;
+    .today-traffic-total-main {
+      font-size: clamp(20px, 2.1vw, 24px);
       line-height: 1.2;
-
-      .traffic-up { color: #059669; }
-      .traffic-down { color: #dc2626; }
+      font-weight: 700;
+      color: var(--theme-text-primary);
+      letter-spacing: 0.01em;
     }
 
-    .today-traffic-total {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--theme-text-primary);
+    .today-traffic-breakdown {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--theme-text-secondary);
+
+      .traffic-up { color: #059669; font-weight: 600; }
+      .traffic-down { color: #dc2626; font-weight: 600; }
     }
   }
 
@@ -2379,7 +2397,7 @@ export default {
     }
 
     .trend-state {
-      min-height: 140px;
+      min-height: 116px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2389,7 +2407,7 @@ export default {
 
     .usage-trend-chart {
       width: 100%;
-      height: 280px;
+      height: 230px;
     }
   }
   /* 待支付横幅卡片 */
@@ -2489,7 +2507,7 @@ export default {
       order: 2;
       grid-column: 1 / -1;
 
-      .today-traffic-values {
+      .today-traffic-total-main {
         font-size: 20px;
       }
     }
