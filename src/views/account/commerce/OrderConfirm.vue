@@ -159,18 +159,16 @@
           <!-- 优惠码 -->
 
           <div class="section-wrapper coupon-verify-section">
-            <div class="coupon-input">
+            <div class="coupon-input" v-if="!couponApplied">
               <input
                 type="text"
                 v-model="couponCode"
-                :disabled="loading.plan || couponApplied"
+                :disabled="loading.plan"
                 :placeholder="$t('order.enter_coupon')"
                 class="coupon-field"
-                :class="{ applied: couponApplied }"
               />
 
               <button
-                v-if="!couponApplied"
                 class="btn-verify"
                 @click="verifyCoupon"
                 :disabled="
@@ -183,18 +181,11 @@
 
                 <span>{{ $t("order.verify_coupon") }}</span>
               </button>
-
-              <span v-else class="coupon-applied-tag">✓ 已应用</span>
-
-              <button
-                v-if="couponApplied"
-                class="btn-remove-coupon"
-                @click="removeCoupon"
-              >
-                <IconX :size="16" />
-
-                <span>{{ $t("order.remove_coupon") }}</span>
-              </button>
+            </div>
+            <div v-else class="coupon-applied-row">
+              <span class="coupon-code-label">优惠码 {{ couponCode }}</span>
+              <span class="coupon-applied-tag">✓ 已应用</span>
+              <button class="btn-remove-text" @click="removeCoupon">移除</button>
             </div>
             <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
           </div>
@@ -1680,13 +1671,7 @@ export default {
 
       min-width: 0;
 
-      &.applied {
-        border-color: #4caf50;
-
-        background-color: rgba(76, 175, 80, 0.05);
-      }
-
-      &:focus:not(.applied) {
+      &:focus {
         border-color: rgba(var(--theme-color-rgb), 0.5);
 
         box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.2);
@@ -1781,43 +1766,37 @@ export default {
       flex-shrink: 0;
     }
 
-    .btn-remove-coupon {
-      height: 32px;
-
-      padding: 0 12px;
-
-      border-radius: $border-radius-sm;
-
-      background-color: transparent;
-
-      color: var(--secondary-text-color);
-
-      font-size: 12px;
-
-      font-weight: 500;
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 6px;
-
+    .coupon-applied-row {
+      min-height: 40px;
       border: 1px solid var(--border-color);
+      border-radius: $border-radius-sm;
+      background: rgba(var(--theme-color-rgb), 0.03);
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
+    .coupon-code-label {
+      font-size: 13px;
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    .btn-remove-text {
+      margin-left: auto;
+      border: none;
+      background: transparent;
+      color: var(--secondary-text-color);
+      font-size: 12px;
       cursor: pointer;
-
-      transition: all 0.3s ease;
-
-      box-shadow: none;
-
-      white-space: nowrap;
-
-      flex-shrink: 0;
+      padding: 0;
+      line-height: 1.2;
 
       &:hover {
-        background-color: var(--hover-color, rgba(0, 0, 0, 0.04));
-        transform: none;
-        box-shadow: none;
+        color: var(--text-color);
+        text-decoration: underline;
       }
     }
   }
@@ -2441,31 +2420,13 @@ export default {
         white-space: nowrap;
       }
 
-      .btn-remove-coupon {
-        padding: 0 12px;
+    }
 
-        span {
-          font-size: 13px;
-        }
-      }
+    .coupon-applied-row {
+      gap: 8px;
 
-      &:has(.coupon-field.applied) {
-        .coupon-field {
-          width: 100%;
-
-          flex: none;
-
-          margin-bottom: 8px;
-        }
-
-        .btn-verify,
-        .btn-remove-coupon {
-          flex: 1;
-
-          min-width: 0;
-
-          justify-content: center;
-        }
+      .btn-remove-text {
+        margin-left: 0;
       }
     }
 
