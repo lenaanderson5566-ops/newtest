@@ -201,9 +201,6 @@
               </button>
             </div>
             <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
-            <div v-else-if="couponApplied && totalDiscountAmount > 0" class="coupon-feedback success">
-              已优惠 -{{ formatCurrencyAmount(totalDiscountAmount) }}
-            </div>
           </div>
 
           <!-- 订单摘要 -->
@@ -232,7 +229,7 @@
 
               <div v-else>
                 <div class="summary-row">
-                  <div class="summary-label">套餐金额</div>
+                  <div class="summary-label">订阅价格</div>
 
                   <div class="summary-value">
                     {{ formatCurrencyAmount(originalPrice) }}
@@ -240,7 +237,7 @@
                 </div>
 
                 <div class="summary-row" v-if="couponDiscountAmount > 0">
-                  <div class="summary-label">优惠券优惠</div>
+                  <div class="summary-label">优惠券 · {{ couponCode }}</div>
 
                   <div class="summary-value discount">
                     -{{ formatCurrencyAmount(couponDiscountAmount) }}
@@ -248,7 +245,7 @@
                 </div>
 
                 <div class="summary-row" v-if="userDiscountAmount > 0">
-                  <div class="summary-label">会员等级优惠</div>
+                  <div class="summary-label">会员折扣</div>
 
                   <div class="summary-value discount">
                     -{{ formatCurrencyAmount(userDiscountAmount) }}
@@ -256,7 +253,7 @@
                 </div>
 
                 <div class="summary-row" v-if="totalDiscountAmount > 0">
-                  <div class="summary-label">优惠金额</div>
+                  <div class="summary-label">总优惠</div>
 
                   <div class="summary-value discount">
                     -{{ formatCurrencyAmount(totalDiscountAmount) }}
@@ -1832,10 +1829,6 @@ export default {
 
     &.error {
       color: #ef4444;
-    }
-
-    &.success {
-      color: #22c55e;
     }
   }
 
