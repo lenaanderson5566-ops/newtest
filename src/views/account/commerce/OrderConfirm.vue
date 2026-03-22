@@ -1915,7 +1915,7 @@ export default {
   .order-summary-section .order-summary {
     background: #2f343d;
     border: 1px solid rgba(148, 163, 184, 0.32);
-    border-radius: 14px;
+    border-radius: var(--radius-sm);
     box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
     color: #f8fafc;
   }
@@ -1966,7 +1966,7 @@ export default {
     margin-top: 14px;
     height: 44px;
     padding: 0 24px;
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     background-color: var(--theme-color);
     color: white;
     font-size: 14px;

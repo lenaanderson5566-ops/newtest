@@ -1451,7 +1451,7 @@ export default {
   display: flex;
   justify-content: center;
   --dashboard-card-padding: 12px;
-  --dashboard-radius: var(--radius-lg, 10px);
+  --dashboard-radius: var(--radius-sm, 4px);
   --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
   --dashboard-shadow-compact: 0 2px 8px rgba(15, 23, 42, 0.06), 0 10px 22px rgba(15, 23, 42, 0.05);

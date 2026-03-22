@@ -1495,6 +1495,7 @@ export default {
       .btn-pay {
         width: 100%;
         height: 46px;
+        border-radius: var(--radius-sm);
         border: 1px solid rgba(255, 255, 255, 0.16);
         background-color: var(--theme-color);
         color: #fff;
