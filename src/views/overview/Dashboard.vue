@@ -1743,7 +1743,7 @@ export default {
           .plan-summary-section {
             border: none;
             border-radius: var(--dashboard-radius);
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--theme-surface-soft);
             padding: 10px 12px;
             overflow: visible;
           }
@@ -1781,7 +1781,7 @@ export default {
             font-size: 24px;
             line-height: 1.2;
             font-weight: 700;
-            color: #f8fafc;
+            color: var(--heading-color);
           }
 
           .plan-expire-meta {
@@ -1791,7 +1791,7 @@ export default {
             gap: 8px;
             flex-wrap: wrap;
             font-size: 13px;
-            color: rgba(248, 250, 252, 0.86);
+            color: var(--plan-meta-text);
           }
 
           .plan-summary-section-actions {
@@ -1810,7 +1810,7 @@ export default {
 
           .plan-summary-label {
             font-size: 12px;
-            color: rgba(248, 250, 252, 0.78);
+            color: var(--theme-text-secondary);
 
             &.with-tooltip {
               display: inline-flex;
@@ -1829,7 +1829,7 @@ export default {
 
           .plan-summary-value {
             font-size: 14px;
-            color: #f8fafc;
+            color: var(--theme-text-primary);
             font-weight: 600;
             text-align: right;
             word-break: break-word;
@@ -2023,9 +2023,9 @@ export default {
       }
 
       &.traffic-board-subscription {
-        background: #2f343d !important;
-        border: 1px solid rgba(148, 163, 184, 0.32) !important;
-        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
+        background: var(--saas-card-bg);
+        border: 1px solid var(--dashboard-border-color);
+        box-shadow: var(--saas-card-shadow);
 
         .usage-card-title,
         .usage-percent,
@@ -2033,15 +2033,15 @@ export default {
         .usage-reset-hint,
         .usage-kpi-value,
         .usage-kpi-label {
-          color: #f8fafc;
+          color: var(--theme-text-primary);
         }
 
         .usage-kpi {
-          background: rgba(255, 255, 255, 0.08);
+          background: var(--theme-surface-soft);
         }
 
         .section-progress-track {
-          background: rgba(255, 255, 255, 0.18);
+          background: var(--theme-border-soft);
         }
       }
 
@@ -2052,12 +2052,12 @@ export default {
       }
 
       &.traffic-board-total {
-        background: #2f343d !important;
-        border: 1px solid rgba(148, 163, 184, 0.32) !important;
-        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
+        background: var(--saas-card-bg);
+        border: 1px solid var(--dashboard-border-color);
+        box-shadow: var(--saas-card-shadow);
 
         .usage-card-title {
-          color: #f8fafc;
+          color: var(--theme-text-primary);
         }
       }
 

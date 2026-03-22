@@ -2010,24 +2010,24 @@ export default {
   .coupon-verify-section,
   .order-summary-section {
     .section-title {
-      color: #f8fafc;
+      color: var(--text-color);
     }
   }
 
   .coupon-verify-section .coupon-input,
   .order-summary-section .order-summary {
-    background: #2f343d;
-    border: 1px solid rgba(148, 163, 184, 0.32);
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
     border-radius: $border-radius-sm;
-    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
-    color: #f8fafc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    color: var(--text-color);
   }
 
   .right-column .order-summary-section .order-summary {
-    background: #2f343d !important;
-    border: 1px solid rgba(148, 163, 184, 0.32) !important;
-    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
-    color: #f8fafc !important;
+    background: var(--card-bg-color) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+    color: var(--text-color) !important;
   }
 
   .coupon-verify-section .coupon-input {
@@ -2041,43 +2041,43 @@ export default {
   }
 
   .order-summary-section .coupon-field {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #f8fafc;
+    background: var(--input-bg-color);
+    border-color: var(--border-color);
+    color: var(--text-color);
 
     &::placeholder {
-      color: rgba(248, 250, 252, 0.66);
+      color: var(--secondary-text-color);
     }
   }
 
   .order-summary-section .coupon-light-row {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(var(--theme-color-rgb), 0.04);
+    border-color: var(--border-color);
   }
 
   .order-summary-section .coupon-code-label {
-    color: #f8fafc;
+    color: var(--text-color);
   }
 
   .order-summary-section .btn-remove-text {
-    color: #cbd5e1;
-    border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.06);
+    color: var(--secondary-text-color);
+    border-color: var(--border-color);
+    background: rgba(var(--theme-color-rgb), 0.04);
   }
 
   .order-summary-section .coupon-applied-tag {
-    color: #cbd5e1;
-    border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.06);
+    color: var(--secondary-text-color);
+    border-color: var(--border-color);
+    background: rgba(var(--theme-color-rgb), 0.04);
   }
 
   .coupon-verify-section .coupon-field {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.18);
-    color: #f8fafc;
+    background: var(--input-bg-color);
+    border-color: var(--border-color);
+    color: var(--text-color);
 
     &::placeholder {
-      color: rgba(241, 245, 249, 0.62);
+      color: var(--secondary-text-color);
     }
   }
 
@@ -2088,20 +2088,20 @@ export default {
 
   .order-summary-section .summary-row .summary-label,
   .order-summary-section .summary-row .summary-value {
-    color: #f8fafc;
+    color: var(--text-color);
   }
 
   .order-summary-section .summary-row .summary-value.discount {
-    color: #fda4af;
+    color: #f44336;
   }
 
   .order-summary-section .summary-row.total .summary-label,
   .order-summary-section .summary-row.total .summary-value {
-    color: #ffffff;
+    color: var(--text-color);
   }
 
   .order-summary-section .summary-divider {
-    background: rgba(255, 255, 255, 0.18);
+    background: var(--border-color);
   }
 
   .order-summary-section {
