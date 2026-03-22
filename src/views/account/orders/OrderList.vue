@@ -1015,6 +1015,28 @@ watch(locale, () => {
 
 
 @media (max-width: 768px) {
+  .orders-container {
+    padding-bottom: calc(2px + 56px);
+  }
+
+  .pagination-container {
+    margin-bottom: 0.65rem;
+  }
+
+  .pagination {
+    padding: 0.35rem 0.5rem;
+
+    .page-button {
+      width: 28px;
+      height: 28px;
+    }
+
+    .page-info {
+      margin: 0 0.65rem;
+      font-size: 0.82rem;
+    }
+  }
+
   .order-table-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch; 
@@ -1024,13 +1046,19 @@ watch(locale, () => {
       cursor: grabbing;
     }
   }
+
+  .swipe-hint {
+    padding: 0.4rem 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.78rem;
+  }
 }
 
 
 .order-cards {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.7rem;
 }
 
 .order-card {
@@ -1048,7 +1076,7 @@ watch(locale, () => {
 }
 
 .order-card-header {
-  padding: 1rem;
+  padding: 0.75rem 0.85rem;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
@@ -1074,12 +1102,12 @@ watch(locale, () => {
 }
 
 .order-card-body {
-  padding: 0.75rem 1rem;
+  padding: 0.55rem 0.85rem;
   
   .info-row {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem 0;
+    padding: 0.35rem 0;
     border-bottom: 1px solid rgba(var(--border-color-rgb), 0.5);
     
     &:last-child {
@@ -1104,18 +1132,18 @@ watch(locale, () => {
 }
 
 .order-card-footer {
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 0.85rem;
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
+  gap: 0.5rem;
   background-color: rgba(var(--theme-color-rgb), 0.02);
   
   .action-button {
     display: flex;
     align-items: center;
     gap: 0.25rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.4rem 0.65rem;
     border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 500;

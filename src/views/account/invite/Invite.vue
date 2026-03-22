@@ -4224,25 +4224,73 @@ export default {
 
 @media (max-width: 768px) {
   .account-container {
+    padding: 10px;
+
+    .account-inner {
+      gap: 10px;
+    }
+
     .dashboard-card {
-      padding: 20px;
-      margin-bottom: 16px;
+      padding: 14px;
+      margin-bottom: 10px;
+
+      .card-header {
+        margin-bottom: 8px;
+      }
     }
 
     .stats-grid,
     .compact-stepper {
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 8px;
     }
 
     .balance-container {
+      gap: 10px;
+
+      .balance-info {
+        .balance-description {
+          margin-top: 2px;
+        }
+      }
+
       .balance-actions {
         flex-direction: column;
+        gap: 6px;
 
         .btn-primary {
           width: 100%;
+          height: 38px;
+          font-size: 13px;
         }
       }
+    }
+
+    .referral-kpi-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .kpi-item {
+      padding: 8px;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+    }
+
+    .kpi-value {
+      font-size: 17px;
+    }
+
+    .records-table-wrapper {
+      margin: 0 -2px;
+    }
+
+    .records-table th,
+    .records-table td {
+      padding-top: 8px;
+      padding-bottom: 8px;
     }
   }
 }

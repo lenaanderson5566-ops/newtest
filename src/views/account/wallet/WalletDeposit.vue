@@ -613,21 +613,60 @@ onMounted(() => {
 }
 @media (max-width: 768px) {
   .deposit-container {
-    padding: 15px;
-    padding-bottom: 100px;
+    padding: 10px;
+    padding-bottom: 84px;
+
+    .dashboard-card {
+      padding: 14px;
+      margin-bottom: 14px;
+    }
     
     .balance-card {
+      .card-body {
+        padding: 14px;
+        gap: 10px;
+      }
+
       .balance-display {
         .balance-value {
-          font-size: 2.5rem;
+          font-size: 2.2rem;
+          margin-bottom: 6px;
         }
       }
     }
     
     .deposit-card {
+      .deposit-notice {
+        padding: 8px 10px;
+        gap: 8px;
+      }
+
       .amount-selection {
+        margin-bottom: 6px;
+
         .period-cards {
           grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+
+          .period-card .period-card-inner {
+            padding: 12px 8px;
+          }
+        }
+      }
+
+      .custom-amount {
+        margin-top: 10px;
+      }
+
+      .deposit-actions {
+        margin-top: 14px;
+
+        .btn-order {
+          min-width: 0;
+          width: 100%;
+          height: 44px;
+          font-size: 1rem;
+          padding: 0 18px;
         }
       }
     }
