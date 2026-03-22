@@ -242,6 +242,8 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .deposit-container {
   padding: 0;
   display: flex;
@@ -254,7 +256,7 @@ onMounted(() => {
   
   .dashboard-card {
     background-color: var(--card-bg-color);
-    border-radius: 12px;
+    border-radius: $border-radius-sm;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 20px;
     margin-bottom: 24px;
@@ -380,7 +382,7 @@ onMounted(() => {
       gap: 10px;
       padding: 12px;
       background-color: rgba(var(--theme-color-rgb), 0.1);
-      border-radius: 8px;
+      border-radius: $border-radius-sm;
       
       .notice-icon {
         color: var(--primary-color);
@@ -404,7 +406,7 @@ onMounted(() => {
         
         .period-card {
           cursor: pointer;
-          border-radius: 12px;
+          border-radius: $border-radius-sm;
           overflow: hidden;
           border: 2px solid var(--border-color);
           transition: all 0.3s ease;
@@ -494,7 +496,7 @@ onMounted(() => {
           width: 100%;
           height: 100%;
           border: 2px solid var(--border-color);
-          border-radius: 12px;
+          border-radius: $border-radius-sm;
           background-color: var(--input-bg, rgba(0, 0, 0, 0.02));
           padding: 0 15px 0 35px;
           font-size: 1.2rem;
@@ -539,7 +541,7 @@ onMounted(() => {
         background-color: var(--theme-color);
         color: white;
         border: none;
-        border-radius: 12px;
+        border-radius: $border-radius-sm;
         padding: 0 30px;
         height: 50px;
         font-size: 1.1rem;

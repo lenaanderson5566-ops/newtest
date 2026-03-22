@@ -1524,6 +1524,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .account-container {
   padding: 0;
   display: flex;
@@ -1539,7 +1541,7 @@ export default {
   
   .dashboard-card {
     background-color: var(--card-bg-color);
-    border-radius: 12px;
+    border-radius: $border-radius-sm;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 20px;
     margin-bottom: 24px;
@@ -1588,7 +1590,7 @@ export default {
     
     .stats-card {
       background-color: var(--card-bg-color);
-      border-radius: 12px;
+      border-radius: $border-radius-sm;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
       padding: 20px;
       display: flex;
@@ -2064,7 +2066,7 @@ export default {
     width: 100%;
     overflow-x: auto;
     margin-bottom: 20px;
-    border-radius: 12px;
+    border-radius: $border-radius-sm;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     background-color: var(--card-bg-color);
     
@@ -4273,6 +4275,7 @@ export default {
 
     .kpi-item {
       padding: 8px;
+      border-radius: $border-radius-sm;
     }
 
     .kpi-label {

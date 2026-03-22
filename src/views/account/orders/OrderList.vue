@@ -469,6 +469,8 @@ watch(locale, () => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .orders-container {
   padding: 0;
   padding-bottom: calc(2px + 64px); 
@@ -489,7 +491,7 @@ watch(locale, () => {
 
 .dashboard-card {
   background-color: var(--card-bg);
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   padding: 20px;
   margin-bottom: 24px;
@@ -536,7 +538,7 @@ watch(locale, () => {
 .order-table-container {
   overflow-x: auto; 
   background-color: var(--card-bg);
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
@@ -779,7 +781,7 @@ watch(locale, () => {
 
 .modal-content {
   background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   width: 90%;
   max-width: 480px;
@@ -937,7 +939,7 @@ watch(locale, () => {
   display: flex;
   align-items: center;
   background-color: var(--card-bg);
-  border-radius: 8px;
+  border-radius: $border-radius-sm;
   padding: 0.5rem 0.75rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--border-color);
@@ -1049,7 +1051,7 @@ watch(locale, () => {
 
 .order-card {
   background-color: var(--card-bg);
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;

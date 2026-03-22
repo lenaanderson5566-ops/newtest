@@ -544,6 +544,7 @@ onMounted(async () => {
 
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 
 .docs-container {
 
@@ -577,7 +578,7 @@ onMounted(async () => {
 
   background-color: var(--card-bg);
 
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
 
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
@@ -665,7 +666,7 @@ onMounted(async () => {
   .status-action-btn {
     align-self: flex-start;
     border: none;
-    border-radius: 8px;
+    border-radius: $border-radius-sm;
     padding: 8px 14px;
     background: rgba(var(--theme-color-rgb), 0.92);
     color: #fff;
@@ -697,7 +698,7 @@ onMounted(async () => {
     align-items: center;
     cursor: pointer;
     padding: 12px;
-    border-radius: 10px;
+    border-radius: $border-radius-sm;
     transition: all 0.3s ease;
     border: 1px solid var(--border-color);
 
@@ -804,7 +805,7 @@ onMounted(async () => {
 
     padding: 0.85rem 2.5rem;
 
-    border-radius: 12px;
+    border-radius: $border-radius-sm;
 
     border: 1px solid var(--border-color);
 
@@ -947,7 +948,7 @@ onMounted(async () => {
 
   padding: 1rem 1.25rem;
 
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
 
   background-color: var(--card-bg);
 
