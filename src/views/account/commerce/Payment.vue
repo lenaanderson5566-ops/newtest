@@ -1504,6 +1504,24 @@ export default {
     }
   }
 
+  .section-wrapper,
+  .section-wrapper.payment-methods-section,
+  .payment-method-item,
+  .payment-security-note {
+    background: #2f343d !important;
+    border-color: rgba(148, 163, 184, 0.32) !important;
+    color: #f8fafc;
+  }
+
+  .section-wrapper .section-title,
+  .section-wrapper .info-label,
+  .section-wrapper .info-value,
+  .payment-method-item .method-name,
+  .payment-method-item .method-fee,
+  .payment-security-note {
+    color: #f8fafc;
+  }
+
   .payment-methods {
     display: flex;
     flex-direction: column;
