@@ -205,10 +205,6 @@
           <!-- 订单摘要 -->
 
           <div class="section-wrapper order-summary-section">
-            <div class="section-title">
-              <span>{{ $t("order.order_summary") }}</span>
-            </div>
-
             <div class="order-summary glassmorphism">
               <!-- 骨架屏 -->
 
