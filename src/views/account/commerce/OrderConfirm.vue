@@ -156,43 +156,39 @@
         <!-- 右侧内容：订单信息 -->
 
         <div class="right-column">
-          <!-- 优惠码 -->
-
-          <div class="section-wrapper coupon-verify-section">
-            <div class="coupon-input">
-              <input
-                type="text"
-                v-model="couponCode"
-                :disabled="loading.plan || couponApplied"
-                :placeholder="$t('order.enter_coupon')"
-                class="coupon-field"
-                :class="{ applied: couponApplied }"
-              />
-
-              <button
-                class="btn-verify"
-                @click="verifyCoupon"
-                :disabled="
-                  !couponCode || verifying || loading.plan || couponApplied
-                "
-                :class="{ applied: couponApplied }"
-              >
-                <IconDiscount2 v-if="!verifying && !couponApplied" />
-
-                <span v-else-if="verifying" class="loader"></span>
-                <span v-else-if="couponApplied">✓ 已应用</span>
-                <span v-else>{{ $t("order.verify_coupon") }}</span>
-              </button>
-
-              <button v-if="couponApplied" class="btn-remove-text" @click="removeCoupon">移除</button>
-            </div>
-            <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
-          </div>
-
           <!-- 订单摘要 -->
 
           <div class="section-wrapper order-summary-section">
             <div class="order-summary glassmorphism">
+              <div class="coupon-merge-block">
+                <div class="coupon-input" v-if="!couponApplied">
+                  <input
+                    type="text"
+                    v-model="couponCode"
+                    :disabled="loading.plan"
+                    :placeholder="$t('order.enter_coupon')"
+                    class="coupon-field"
+                  />
+                  <button
+                    class="btn-verify"
+                    @click="verifyCoupon"
+                    :disabled="
+                      !couponCode || verifying || loading.plan
+                    "
+                  >
+                    <IconDiscount2 v-if="!verifying" />
+                    <span v-else class="loader"></span>
+                    <span>{{ $t("order.verify_coupon") }}</span>
+                  </button>
+                </div>
+                <div v-else class="coupon-light-row">
+                  <span class="coupon-code-label">优惠码 {{ couponCode || couponInfo?.code || "-" }}</span>
+                  <span class="coupon-applied-tag">✓ 已应用</span>
+                  <button class="btn-remove-text" @click="removeCoupon">移除</button>
+                </div>
+                <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
+              </div>
+
               <!-- 骨架屏 -->
 
               <div v-if="loading.plan">
@@ -235,14 +231,6 @@
 
                   <div class="summary-value discount">
                     -{{ formatCurrencyAmount(userDiscountAmount) }}
-                  </div>
-                </div>
-
-                <div class="summary-row" v-if="totalDiscountAmount > 0">
-                  <div class="summary-label">总优惠</div>
-
-                  <div class="summary-value discount">
-                    -{{ formatCurrencyAmount(totalDiscountAmount) }}
                   </div>
                 </div>
 
@@ -1756,12 +1744,6 @@ export default {
       }
     }
 
-    .btn-verify.applied {
-      background-color: #64748b;
-      box-shadow: none;
-      cursor: default;
-    }
-
     .btn-remove-text {
       height: 32px;
       padding: 0 12px;
@@ -1779,6 +1761,21 @@ export default {
         color: var(--text-color);
       }
     }
+  }
+
+  .coupon-merge-block {
+    margin-bottom: 14px;
+  }
+
+  .coupon-light-row {
+    min-height: 38px;
+    padding: 0 10px;
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-sm;
+    background: rgba(var(--theme-color-rgb), 0.03);
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .coupon-feedback {
