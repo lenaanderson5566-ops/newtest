@@ -1413,54 +1413,61 @@ export default {
   .section-wrapper.payment-methods-section {
     padding: 0 !important;
     margin-bottom: 6px !important;
-    background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+    background: #2f343d;
+    border: 1px solid rgba(148, 163, 184, 0.32);
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
 
     .section-title {
       margin-bottom: 0;
       font-size: 15px;
       padding: 10px 12px 8px;
+      color: #f8fafc;
+
+      &::after {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
     }
   }
 
   .order-amount-section {
-    background: var(--card-bg-color);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+    background: #2f343d;
+    border: 1px solid rgba(148, 163, 184, 0.32);
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
 
     .section-title {
-      color: var(--text-color);
+      color: #f8fafc;
 
       &::after {
-        background-color: var(--border-color);
+        background-color: rgba(255, 255, 255, 0.2);
       }
     }
 
     .order-info {
       .info-label,
       .info-value {
-        color: var(--text-color);
+        color: #f8fafc;
       }
 
       .info-value.discount {
-        color: #f44336;
+        color: #fda4af;
       }
 
       .info-value.fee {
-        color: var(--secondary-text-color);
+        color: #bfdbfe;
       }
 
       .info-row.final-row {
-        border-top: 1px solid var(--border-color);
+        border-top: 1px solid rgba(255, 255, 255, 0.18);
         padding-top: 10px;
         margin-top: 8px;
 
         .info-label {
-          color: var(--text-color);
+          color: #ffffff;
           font-weight: 600;
         }
 
         .info-value.final {
-          color: var(--theme-color);
+          color: #ffffff;
           font-weight: 700;
         }
       }
@@ -1519,18 +1526,18 @@ export default {
       cursor: pointer;
       transition: border-color 0.2s ease, background-color 0.2s ease;
       border: none;
-      border-top: 1px solid var(--border-color);
-      background-color: #fff;
+      border-top: 1px solid rgba(148, 163, 184, 0.32);
+      background-color: #2f343d;
 
       &:hover {
         border-color: rgba(var(--theme-color-rgb), 0.42);
-        background-color: rgba(var(--theme-color-rgb), 0.04);
+        background-color: rgba(var(--theme-color-rgb), 0.12);
       }
 
       &.active {
         border-color: var(--theme-color);
-        background-color: rgba(var(--theme-color-rgb), 0.08);
-        box-shadow: 0 2px 10px rgba(var(--theme-color-rgb), 0.12);
+        background-color: rgba(var(--theme-color-rgb), 0.18);
+        box-shadow: 0 2px 10px rgba(var(--theme-color-rgb), 0.22);
       }
 
       .method-check {
@@ -1580,13 +1587,13 @@ export default {
 
         .method-name {
           font-weight: 600;
-          color: var(--text-color);
+          color: #f8fafc;
           line-height: 1.2;
         }
 
         .method-fee {
           font-size: 11px;
-          color: var(--secondary-text-color);
+          color: rgba(248, 250, 252, 0.82);
           white-space: nowrap;
         }
       }
@@ -1596,9 +1603,9 @@ export default {
       padding: 6px 12px 8px;
       border-top: 1px solid var(--border-color);
       font-size: 12px;
-      color: var(--secondary-text-color);
+      color: #f8fafc;
       line-height: 1.4;
-      background: #fff;
+      background: #2f343d;
     }
   }
 

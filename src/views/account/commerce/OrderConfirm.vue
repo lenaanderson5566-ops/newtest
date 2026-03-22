@@ -1621,7 +1621,7 @@ export default {
         }
 
         .period-card-inner {
-          background-color: var(--card-bg-color);
+          background-color: var(--background-color);
 
           padding: 16px 12px !important;
 
