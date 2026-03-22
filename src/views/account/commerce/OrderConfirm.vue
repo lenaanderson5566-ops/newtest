@@ -162,7 +162,6 @@
             <div class="order-summary glassmorphism">
               <div class="coupon-merge-block">
                 <div class="coupon-input">
-                  <span class="coupon-input-prefix">优惠码</span>
                   <input
                     type="text"
                     v-model="couponCode"
@@ -1627,20 +1626,6 @@ export default {
 
     flex-wrap: wrap;
 
-    .coupon-input-prefix {
-      height: 48px;
-      padding: 0 12px;
-      border-radius: $border-radius-sm;
-      border: 1px solid var(--border-color);
-      background: rgba(148, 163, 184, 0.08);
-      color: var(--secondary-text-color);
-      font-size: 12px;
-      display: inline-flex;
-      align-items: center;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
     .coupon-field {
       flex: 1;
 
@@ -1960,12 +1945,6 @@ export default {
     &::placeholder {
       color: rgba(248, 250, 252, 0.66);
     }
-  }
-
-  .order-summary-section .coupon-input-prefix {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #cbd5e1;
   }
 
   .order-summary-section .coupon-light-row {
