@@ -1765,6 +1765,10 @@ export default {
 
   .coupon-merge-block {
     margin-bottom: 14px;
+
+    .coupon-input {
+      margin-bottom: 0;
+    }
   }
 
   .coupon-light-row {
@@ -1776,6 +1780,15 @@ export default {
     display: flex;
     align-items: center;
     gap: 10px;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+
+    .coupon-code-label {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   .coupon-feedback {
@@ -1917,6 +1930,36 @@ export default {
   .coupon-verify-section .coupon-input {
     padding: 14px;
     margin-bottom: 0;
+  }
+
+  .order-summary-section .coupon-input {
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  .order-summary-section .coupon-field {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #f8fafc;
+
+    &::placeholder {
+      color: rgba(248, 250, 252, 0.66);
+    }
+  }
+
+  .order-summary-section .coupon-light-row {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .order-summary-section .coupon-code-label {
+    color: #f8fafc;
+  }
+
+  .order-summary-section .btn-remove-text {
+    color: #cbd5e1;
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.06);
   }
 
   .coupon-verify-section .coupon-field {
