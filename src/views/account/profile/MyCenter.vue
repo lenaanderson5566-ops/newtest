@@ -288,6 +288,8 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
+
 .my-center {
   padding: 0 0 2px;
   background: linear-gradient(180deg, rgba(var(--theme-color-rgb), 0.03), transparent 42%);
@@ -299,7 +301,7 @@ onMounted(async () => {
 }
 
 .section-block {
-  border-radius: 16px;
+  border-radius: $border-radius-sm;
   background-color: var(--card-bg-color, var(--card-background));
   border: 1px solid rgba(var(--text-color-rgb), 0.08);
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04), 0 10px 24px rgba(15, 23, 42, 0.05);
@@ -454,7 +456,7 @@ onMounted(async () => {
 .summary-item {
   padding: 12px;
   border: 1px solid rgba(var(--text-color-rgb), 0.08);
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
   background: linear-gradient(180deg, rgba(var(--card-background-rgb), 0.96), rgba(var(--card-background-rgb), 0.9));
 
   .label {
@@ -544,7 +546,7 @@ onMounted(async () => {
 .mini-action {
   height: 34px;
   padding: 0 12px;
-  border-radius: 10px;
+  border-radius: $border-radius-sm;
 }
 
 .switch { position: relative; display: inline-block; width: 42px; height: 24px; }
@@ -573,7 +575,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .logout-btn {
   height: 36px;
   padding: 0 14px;
-  border-radius: 10px;
+  border-radius: $border-radius-sm;
   border-color: rgba(220, 38, 38, 0.35);
   color: #b91c1c;
 
