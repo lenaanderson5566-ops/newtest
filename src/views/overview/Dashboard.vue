@@ -1743,7 +1743,7 @@ export default {
           .plan-summary-section {
             border: none;
             border-radius: var(--dashboard-radius);
-            background: var(--theme-surface-soft);
+            background: rgba(255, 255, 255, 0.08);
             padding: 10px 12px;
             overflow: visible;
           }
@@ -1781,7 +1781,7 @@ export default {
             font-size: 24px;
             line-height: 1.2;
             font-weight: 700;
-            color: var(--heading-color);
+            color: #f8fafc;
           }
 
           .plan-expire-meta {
@@ -1791,7 +1791,7 @@ export default {
             gap: 8px;
             flex-wrap: wrap;
             font-size: 13px;
-            color: var(--plan-meta-text);
+            color: rgba(248, 250, 252, 0.86);
           }
 
           .plan-summary-section-actions {
@@ -1810,7 +1810,7 @@ export default {
 
           .plan-summary-label {
             font-size: 12px;
-            color: var(--theme-text-secondary);
+            color: rgba(248, 250, 252, 0.78);
 
             &.with-tooltip {
               display: inline-flex;
@@ -1829,7 +1829,7 @@ export default {
 
           .plan-summary-value {
             font-size: 14px;
-            color: var(--theme-text-primary);
+            color: #f8fafc;
             font-weight: 600;
             text-align: right;
             word-break: break-word;
@@ -1862,7 +1862,7 @@ export default {
           .plan-summary-desc {
             margin: 4px 0 0;
             font-size: 12px;
-            color: var(--theme-text-secondary);
+            color: rgba(248, 250, 252, 0.72);
           }
 
 
@@ -2049,6 +2049,16 @@ export default {
         min-height: auto;
         height: auto;
         z-index: 8;
+      }
+
+      &.traffic-board-total {
+        background: #2f343d !important;
+        border: 1px solid rgba(148, 163, 184, 0.32) !important;
+        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
+
+        .usage-card-title {
+          color: #f8fafc;
+        }
       }
 
         /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
