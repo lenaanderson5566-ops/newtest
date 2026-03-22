@@ -242,6 +242,25 @@
             <div class="skeleton-card" v-else>
               <div class="skeleton-text" v-for="i in 5" :key="'summary-' + i"></div>
             </div>
+
+            <div
+              class="order-amount-actions"
+              v-if="!loading.order && orderDetail.status === 0 && !paymentSuccessful && orderDetail.total_amount > 0"
+            >
+              <button
+                class="btn-pay main-action full-width"
+                @click="processPayment"
+                :disabled="
+                  (orderDetail.total_amount > 0 && !selectedMethod) ||
+                  loading.paying ||
+                  loading.checking
+                "
+              >
+                <IconCreditCard v-if="!loading.paying" :size="18" />
+                <div v-else class="loader"></div>
+                <span>{{ $t("payment.pay_now") }}</span>
+              </button>
+            </div>
           </div>
 
           <!-- 按钮区域 -->
@@ -284,26 +303,6 @@
                 !loading.order && orderDetail.status === 0 && !paymentSuccessful
               "
             >
-              <!-- 支付/激活按钮单独占一行 -->
-              <div
-                class="btn-group pay-row"
-                v-if="orderDetail.total_amount > 0"
-              >
-                <button
-                  class="btn-pay main-action full-width"
-                  @click="processPayment"
-                  :disabled="
-                    (orderDetail.total_amount > 0 && !selectedMethod) ||
-                    loading.paying ||
-                    loading.checking
-                  "
-                >
-                  <IconCreditCard v-if="!loading.paying" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.pay_now") }}</span>
-                </button>
-              </div>
-
               <!-- 免费订单场景 - 修改为取消和激活按钮在同一行 -->
               <div
                 class="btn-group action-row"
@@ -1487,6 +1486,17 @@ export default {
           color: #ffffff;
           font-weight: 700;
         }
+      }
+    }
+
+    .order-amount-actions {
+      margin-top: 14px;
+
+      .btn-pay {
+        width: 100%;
+        height: 46px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.24);
       }
     }
   }

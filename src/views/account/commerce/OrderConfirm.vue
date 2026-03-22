@@ -268,6 +268,20 @@
                     {{ formatCurrencyAmount(totalWithFee) }}
                   </div>
                 </div>
+
+                <button
+                  class="btn-order summary-submit-action"
+                  @click="submitOrder"
+                  :disabled="
+                    !selectedPriceType || loading.submitting || loading.plan
+                  "
+                >
+                  <IconShoppingCart v-if="!loading.submitting" :size="18" />
+
+                  <span v-else class="loader"></span>
+
+                  <span>{{ $t("order.place_order") }}</span>
+                </button>
               </div>
             </div>
           </div>
@@ -279,20 +293,6 @@
               <IconArrowLeft :size="18" />
 
               <span>{{ $t("order.back_to_shop") }}</span>
-            </button>
-
-            <button
-              class="btn-order"
-              @click="submitOrder"
-              :disabled="
-                !selectedPriceType || loading.submitting || loading.plan
-              "
-            >
-              <IconShoppingCart v-if="!loading.submitting" :size="18" />
-
-              <span v-else class="loader"></span>
-
-              <span>{{ $t("order.place_order") }}</span>
             </button>
           </div>
         </div>
@@ -1961,10 +1961,49 @@ export default {
     margin-top: 0;
   }
 
+  .order-summary .summary-submit-action {
+    width: 100%;
+    margin-top: 14px;
+    height: 44px;
+    padding: 0 24px;
+    border-radius: 10px;
+    background-color: var(--theme-color);
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.2);
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--theme-color) 85%, black) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(var(--theme-color-rgb), 0.3);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .loader {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s linear infinite;
+    }
+  }
+
   .action-buttons {
     display: flex;
-
-    justify-content: space-between;
+    justify-content: flex-start;
 
     margin: 30px 0 40px 0;
 
