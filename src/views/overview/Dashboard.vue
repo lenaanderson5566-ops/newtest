@@ -1536,13 +1536,13 @@ export default {
       gap: 8px;
       max-width: 100%;
       padding: 8px 12px;
-      border-radius: var(--dashboard-pill-radius);
-      border: 1px solid var(--dashboard-border-color);
-      background: rgba(255, 255, 255, 0.8);
+      border-radius: $border-radius-sm;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      background: #fff;
       color: var(--theme-text-primary);
       font-size: 13px;
       font-weight: 500;
-      box-shadow: var(--dashboard-shadow-compact);
+      box-shadow: none;
 
       .exit-banner-text {
         white-space: nowrap;

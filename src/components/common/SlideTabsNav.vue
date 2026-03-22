@@ -120,6 +120,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .slide-tabs-container {
   margin-bottom: 14px;
   position: fixed;
@@ -130,11 +132,11 @@ export default {
   transition: width 0.25s ease;
 
   .slide-tabs-wrapper {
-    background: rgba(var(--card-background-rgb), 0.98);
-    border-radius: 12px;
+    background: #fff;
+    border-radius: $border-radius-sm;
     padding: 2px;
-    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.07), 0 10px 22px rgba(15, 23, 42, 0.06);
-    border: 1px solid var(--border-color);
+    box-shadow: none;
+    border: 1px solid rgba(15, 23, 42, 0.08);
     overflow: hidden;
   }
 
@@ -145,7 +147,7 @@ export default {
 
     .nav-item {
       padding: 8px 10px;
-      border-radius: 10px;
+      border-radius: $border-radius-sm;
       font-weight: 500;
       font-size: 13px;
       color: var(--secondary-text-color);
@@ -213,7 +215,7 @@ export default {
     .slide-tabs-wrapper {
       width: 100%;
       display: block;
-      border-radius: 16px;
+      border-radius: $border-radius-sm;
       padding: 3px;
     }
 

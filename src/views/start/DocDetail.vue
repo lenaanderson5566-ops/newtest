@@ -1226,6 +1226,7 @@ onUnmounted(() => {
 .doc-detail-container {
 
   padding: 0;
+  background-color: #fff;
 
   padding-bottom: calc(2px + 64px); 
 
@@ -1359,7 +1360,7 @@ onUnmounted(() => {
 
     max-width: 400px;
 
-    background: var(--card-bg);
+    background: #fff;
 
     border-radius: 16px;
 
@@ -1543,7 +1544,7 @@ onUnmounted(() => {
 
 .doc-content {
 
-  background-color: var(--card-bg);
+  background-color: #fff;
 
   border-radius: 16px;
 
