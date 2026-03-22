@@ -125,6 +125,7 @@
                   <img v-else :src="method.icon" :alt="method.name" />
                 </div>
               </div>
+              <div class="payment-security-note">安全支付 · 实时到账</div>
             </div>
 
             <!-- 支付方式骨架屏 -->
@@ -1269,7 +1270,7 @@ export default {
   .dashboard-card {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
     padding: 20px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
@@ -1277,8 +1278,8 @@ export default {
     position: relative;
 
     &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      border-color: rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: 0 1px 5px rgba(15, 23, 42, 0.08);
+      border-color: var(--border-color);
     }
 
     .card-header {
@@ -1325,7 +1326,7 @@ export default {
   .section-wrapper {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
     padding: 20px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
@@ -1336,8 +1337,8 @@ export default {
     }
 
     &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      border-color: rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: 0 1px 5px rgba(15, 23, 42, 0.08);
+      border-color: var(--border-color);
     }
 
     .section-title {
@@ -1370,8 +1371,8 @@ export default {
       padding: 0 10px;
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
-      background: transparent;
-      color: var(--text-color);
+      background: rgba(148, 163, 184, 0.08);
+      color: var(--secondary-text-color);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1380,7 +1381,7 @@ export default {
       transition: all 0.2s ease;
 
       &:hover:not(:disabled) {
-        background-color: var(--hover-color);
+        background-color: rgba(148, 163, 184, 0.14);
       }
 
       &:disabled {
@@ -1495,13 +1496,20 @@ export default {
         background-color: var(--theme-color);
         color: #fff;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.2);
+        box-shadow: 0 1px 4px rgba(var(--theme-color-rgb), 0.2);
         border: none;
 
         &:hover:not(:disabled) {
-          background-color: color-mix(in srgb, var(--theme-color) 85%, black) !important;
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(var(--theme-color-rgb), 0.3);
+          background-color: color-mix(in srgb, var(--theme-color) 88%, black) !important;
+          box-shadow: 0 1px 5px rgba(var(--theme-color-rgb), 0.24);
+          transform: none;
+        }
+
+        svg,
+        span {
+          display: inline-flex;
+          align-items: center;
+          line-height: 1;
         }
       }
     }
@@ -1566,8 +1574,8 @@ export default {
 
         img {
           width: auto;
-          max-width: 100%;
-          max-height: 100%;
+          max-width: none;
+          max-height: 24px;
           object-fit: contain;
         }
       }
@@ -1591,6 +1599,15 @@ export default {
           white-space: nowrap;
         }
       }
+    }
+
+    .payment-security-note {
+      padding: 8px 12px 10px;
+      border-top: 1px solid var(--border-color);
+      font-size: 12px;
+      color: var(--secondary-text-color);
+      line-height: 1.4;
+      background: #fff;
     }
   }
 
@@ -1731,8 +1748,8 @@ export default {
 
       &:hover:not(:disabled) {
         background-color: var(--hover-color);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: none;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
       }
 
       &:active:not(:disabled) {
@@ -1752,12 +1769,12 @@ export default {
       background-color: var(--theme-color);
       color: white;
       flex: 2;
-      box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.25);
+      box-shadow: 0 1px 4px rgba(var(--theme-color-rgb), 0.2);
 
       &:hover:not(:disabled) {
         background-color: var(--primary-color-hover);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(var(--theme-color-rgb), 0.35);
+        transform: none;
+        box-shadow: 0 1px 5px rgba(var(--theme-color-rgb), 0.24);
       }
     }
 
@@ -1770,8 +1787,8 @@ export default {
 
       &:hover:not(:disabled) {
         background-color: var(--card-bg-color);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: none;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
       }
     }
 
@@ -2110,8 +2127,8 @@ export default {
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
-          transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          transform: none;
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
         }
       }
 
@@ -2252,8 +2269,8 @@ export default {
 
           &:hover {
             background-color: var(--hover-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: none;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
           }
 
           &:active {
@@ -2266,13 +2283,13 @@ export default {
         .btn-primary {
           background-color: var(--theme-color);
           color: white;
-          box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.25);
+          box-shadow: 0 1px 4px rgba(var(--theme-color-rgb), 0.2);
           transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
           &:hover {
             background-color: var(--primary-color-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(var(--theme-color-rgb), 0.35);
+            transform: none;
+            box-shadow: 0 1px 5px rgba(var(--theme-color-rgb), 0.24);
           }
 
           &:active {
