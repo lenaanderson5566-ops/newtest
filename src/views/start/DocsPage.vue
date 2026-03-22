@@ -576,7 +576,7 @@ onMounted(async () => {
 
 .dashboard-card {
 
-  background-color: var(--card-bg);
+  background-color: #fff;
 
   border-radius: $border-radius-sm;
 
@@ -701,6 +701,7 @@ onMounted(async () => {
     border-radius: $border-radius-sm;
     transition: all 0.3s ease;
     border: 1px solid var(--border-color);
+    background-color: #fff;
 
     &:hover {
       background-color: rgba(var(--theme-color-rgb), 0.05);
@@ -950,7 +951,7 @@ onMounted(async () => {
 
   border-radius: $border-radius-sm;
 
-  background-color: var(--card-bg);
+  background-color: #fff;
 
   cursor: pointer;
 
