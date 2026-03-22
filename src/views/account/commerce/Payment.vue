@@ -8,76 +8,67 @@
           <div class="section-wrapper overview-section">
             <div class="section-title with-status">
               <span>订单概览</span>
-              <div class="inline-status-badge" :class="getStatusClass(orderDetail.status)" v-if="!loading.order">
-                <IconClock
-                  v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
-                  :size="18"
-                />
-                <IconClock
-                  v-else-if="orderDetail.status === 0 && orderDetail.total_amount === 0"
-                  :size="18"
-                />
-                <IconLoader2 v-else-if="orderDetail.status === 1" :size="18" class="rotating-icon" />
-                <IconX v-else-if="orderDetail.status === 2" :size="18" />
-                <IconCheck v-else-if="orderDetail.status === 3" :size="18" />
-                <IconCheck v-else-if="orderDetail.status === 4" :size="18" />
-                <IconHelp v-else :size="18" />
-                <span>{{ getStatusText(orderDetail.status) }}</span>
-              </div>
+              <button
+                v-if="!loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
+                class="overview-cancel-btn"
+                @click="cancelCurrentOrder"
+                :disabled="loading.cancelling"
+              >
+                <IconX v-if="!loading.cancelling" :size="14" />
+                <div v-else class="loader"></div>
+                <span>{{ $t("payment.cancel_order") }}</span>
+              </button>
             </div>
 
             <div class="product-info" v-if="!loading.order">
               <!-- 充值订单时显示简化信息 -->
-              <div v-if="orderDetail.period === 'deposit'">
-                <div class="info-row">
-                  <div class="info-label">{{ $t("wallet.deposit.title") }}</div>
-                  <div class="info-value">
-                    {{ formatAmount(orderDetail.total_amount) }}
-                  </div>
-                </div>
+              <div v-if="orderDetail.period === 'deposit'" class="overview-plan-block">
+                <div class="overview-plan-name">{{ $t("wallet.deposit.title") }}</div>
+                <div class="overview-plan-meta">{{ formatAmount(orderDetail.total_amount) }}</div>
               </div>
               <!-- 普通订单显示完整信息 -->
-              <div v-else>
-                <div class="info-row">
-                  <div class="info-label">{{ $t("payment.plan_name") }}</div>
-                  <div class="info-value">
-                    {{ orderDetail.plan?.name || "-" }}
-                  </div>
-                </div>
-                <div class="info-row">
-                  <div class="info-label">{{ $t("payment.period") }}</div>
-                  <div class="info-value">
-                    {{ formatPeriod(orderDetail.period) }}
-                  </div>
-                </div>
-                <div class="info-row">
-                  <div class="info-label">{{ $t("payment.traffic") }}</div>
-                  <div class="info-value">
-                    {{ formatTraffic(orderDetail.plan?.transfer_enable) }}
-                  </div>
+              <div v-else class="overview-plan-block">
+                <div class="overview-plan-name">{{ orderDetail.plan?.name || "-" }}</div>
+                <div class="overview-plan-meta">
+                  {{ formatTraffic(orderDetail.plan?.transfer_enable) }} · {{ formatPeriod(orderDetail.period) }}
                 </div>
               </div>
 
+              <div class="overview-divider"></div>
+
               <div class="info-row">
                 <div class="info-label">{{ $t("payment.trade_no") }}</div>
-                <div class="info-value trade-no-value">
-                  <span>{{ orderDetail.trade_no || "-" }}</span>
-                  <button
-                    v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
-                    class="trade-no-cancel-btn"
-                    @click="cancelCurrentOrder"
-                    :disabled="loading.cancelling"
-                  >
-                    <IconX v-if="!loading.cancelling" :size="14" />
-                    <div v-else class="loader"></div>
-                    <span>{{ $t("payment.cancel_order") }}</span>
-                  </button>
-                </div>
+                <div class="info-value">{{ orderDetail.trade_no || "-" }}</div>
               </div>
               <div class="info-row">
                 <div class="info-label">{{ $t("payment.created_at") }}</div>
                 <div class="info-value">
                   {{ formatDate(orderDetail.created_at) }}
+                </div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">优惠</div>
+                <div class="info-value discount">-{{ formatAmount(discountAmount || 0) }}</div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">状态</div>
+                <div class="info-value">
+                  <span class="inline-status-badge" :class="getStatusClass(orderDetail.status)">
+                    <IconClock
+                      v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
+                      :size="16"
+                    />
+                    <IconClock
+                      v-else-if="orderDetail.status === 0 && orderDetail.total_amount === 0"
+                      :size="16"
+                    />
+                    <IconLoader2 v-else-if="orderDetail.status === 1" :size="16" class="rotating-icon" />
+                    <IconX v-else-if="orderDetail.status === 2" :size="16" />
+                    <IconCheck v-else-if="orderDetail.status === 3" :size="16" />
+                    <IconCheck v-else-if="orderDetail.status === 4" :size="16" />
+                    <IconHelp v-else :size="16" />
+                    <span>{{ getStatusText(orderDetail.status) }}</span>
+                  </span>
                 </div>
               </div>
 
@@ -1374,15 +1365,8 @@ export default {
       }
     }
 
-    .trade-no-value {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .trade-no-cancel-btn {
-      height: 28px;
+    .overview-cancel-btn {
+      height: 30px;
       padding: 0 10px;
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
@@ -1403,15 +1387,45 @@ export default {
         opacity: 0.6;
         cursor: not-allowed;
       }
+    }
 
-      .loader {
-        width: 14px;
-        height: 14px;
-        border: 2px solid rgba(0, 0, 0, 0.2);
-        border-top-color: var(--text-color);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
+    .overview-plan-block {
+      margin-bottom: 4px;
+    }
+
+    .overview-plan-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-color);
+      line-height: 1.2;
+    }
+
+    .overview-plan-meta {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--secondary-text-color);
+      line-height: 1.3;
+    }
+
+    .overview-divider {
+      height: 1px;
+      background-color: var(--border-color);
+      margin: 14px 0 12px;
+    }
+
+    .inline-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .overview-cancel-btn .loader {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      border-top-color: var(--text-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
   }
 
