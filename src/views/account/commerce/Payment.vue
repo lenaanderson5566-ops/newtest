@@ -1442,12 +1442,14 @@ export default {
   }
 
   .section-wrapper.payment-methods-section {
-    padding: 8px !important;
+    padding: 0 !important;
     margin-bottom: 8px !important;
+    background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
 
     .section-title {
-      margin-bottom: 8px;
+      margin-bottom: 0;
       font-size: 15px;
+      padding: 12px 14px 10px;
     }
   }
 
@@ -1520,18 +1522,20 @@ export default {
   .payment-methods {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0;
 
     .payment-method-item {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 7px 10px;
+      padding: 10px 12px;
       min-height: 42px;
-      border-radius: $border-radius-sm;
+      border-radius: 0;
       cursor: pointer;
       transition: border-color 0.2s ease, background-color 0.2s ease;
-      border: 1px solid var(--border-color);
+      border: none;
+      border-top: 1px solid var(--border-color);
+      background-color: #fff;
 
       &:hover {
         border-color: rgba(var(--theme-color-rgb), 0.42);
@@ -1563,8 +1567,10 @@ export default {
         height: 30px;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         color: var(--theme-color);
+        overflow: hidden;
+        flex-shrink: 0;
 
         &.right-icon {
           margin-left: auto;
@@ -1572,7 +1578,7 @@ export default {
 
         img {
           width: auto;
-          max-width: none;
+          max-width: 100%;
           max-height: 100%;
           object-fit: contain;
         }
