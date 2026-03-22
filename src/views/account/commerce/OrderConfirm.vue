@@ -303,11 +303,16 @@
       <div v-if="showPendingOrderModal" class="pending-order-modal">
         <div class="pending-order-overlay" @click="closePendingOrderModal"></div>
         <div class="pending-order-dialog" role="dialog" aria-modal="true" aria-labelledby="pending-order-title">
-          <h3 id="pending-order-title">注意</h3>
-          <p>您还有未完成的订单，购买前需要先取消，确定要取消之前的订单吗？</p>
+          <div class="pending-order-icon">
+            <IconAlertTriangle :size="28" />
+          </div>
+          <div class="pending-order-header">
+            <h3 id="pending-order-title">注意</h3>
+            <p>您还有未完成的订单，购买前需要先取消，确定要取消之前的订单吗？</p>
+          </div>
           <div class="pending-order-actions">
-            <button class="btn-return-orders" @click="goToMyOrders">返回我的订单</button>
-            <button class="btn-confirm-cancel" @click="confirmCancelPreviousOrder" :disabled="loading.cancellingExisting">
+            <button class="btn-return-orders cancel-btn" @click="goToMyOrders">返回我的订单</button>
+            <button class="btn-confirm-cancel confirm-btn" @click="confirmCancelPreviousOrder" :disabled="loading.cancellingExisting">
               <span v-if="!loading.cancellingExisting">确定取消</span>
               <span v-else class="loader"></span>
             </button>

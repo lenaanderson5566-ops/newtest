@@ -5,7 +5,7 @@
         <!-- 左侧内容：产品信息 -->
         <div class="left-column">
           <!-- 订单概览 -->
-          <div class="section-wrapper">
+          <div class="section-wrapper overview-section">
             <div class="section-title with-status">
               <span>订单概览</span>
               <div class="inline-status-badge" :class="getStatusClass(orderDetail.status)" v-if="!loading.order">
@@ -1483,7 +1483,11 @@ export default {
         padding-top: 10px;
         margin-top: 8px;
 
-        .info-label,
+        .info-label {
+          color: #ffffff;
+          font-weight: 600;
+        }
+
         .info-value.final {
           color: #ffffff;
           font-weight: 700;
@@ -1496,13 +1500,13 @@ export default {
 
       .btn-pay {
         width: 100%;
-        height: 46px;
+        height: 44px;
         border-radius: $border-radius-sm;
-        border: 1px solid rgba(255, 255, 255, 0.16);
         background-color: var(--theme-color);
         color: #fff;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.2);
+        border: none;
 
         &:hover:not(:disabled) {
           background-color: color-mix(in srgb, var(--theme-color) 85%, black) !important;
@@ -1567,7 +1571,8 @@ export default {
         }
 
         img {
-          max-width: 100%;
+          width: auto;
+          max-width: none;
           max-height: 100%;
           object-fit: contain;
         }
@@ -2311,6 +2316,10 @@ export default {
       transform: scale(0.95) translateY(10px);
     }
   }
+}
+
+.payment-container .overview-section {
+  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
 }
 
 .cancel-modal {
