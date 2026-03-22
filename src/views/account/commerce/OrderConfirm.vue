@@ -162,6 +162,7 @@
             <div class="order-summary glassmorphism">
               <div class="coupon-merge-block">
                 <div class="coupon-input" v-if="!couponApplied">
+                  <span class="coupon-input-prefix">优惠码</span>
                   <input
                     type="text"
                     v-model="couponCode"
@@ -184,6 +185,7 @@
                 <div v-else class="coupon-light-row">
                   <span class="coupon-code-label">优惠码 {{ couponCode || couponInfo?.code || "-" }}</span>
                   <span class="coupon-applied-tag">✓ 已应用</span>
+                  <span v-if="totalDiscountAmount > 0" class="coupon-discount-value">-{{ formatCurrencyAmount(totalDiscountAmount) }}</span>
                   <button class="btn-remove-text" @click="removeCoupon">移除</button>
                 </div>
                 <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
@@ -1633,6 +1635,20 @@ export default {
 
     flex-wrap: wrap;
 
+    .coupon-input-prefix {
+      height: 48px;
+      padding: 0 12px;
+      border-radius: $border-radius-sm;
+      border: 1px solid var(--border-color);
+      background: rgba(148, 163, 184, 0.08);
+      color: var(--secondary-text-color);
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
     .coupon-field {
       flex: 1;
 
@@ -1787,6 +1803,13 @@ export default {
       min-width: 0;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .coupon-discount-value {
+      color: #22c55e;
+      font-size: 12px;
+      font-weight: 600;
       white-space: nowrap;
     }
   }
@@ -1945,6 +1968,12 @@ export default {
     &::placeholder {
       color: rgba(248, 250, 252, 0.66);
     }
+  }
+
+  .order-summary-section .coupon-input-prefix {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #cbd5e1;
   }
 
   .order-summary-section .coupon-light-row {
