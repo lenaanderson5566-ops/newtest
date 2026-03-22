@@ -22,6 +22,13 @@
   --global-card-gap: 14px;
   --page-content-max-width: 1120px;
   --page-stack-gap: var(--global-card-gap);
+  --global-page-bg: #f5f7fa;
+}
+
+.app-content-wrapper,
+.app-content-wrapper .page-shell,
+body {
+  background-color: var(--global-page-bg);
 }
 
 .app-content-wrapper .page-shell {
@@ -38,26 +45,6 @@
 .app-content-wrapper .page-stack {
   display: grid;
   gap: var(--page-stack-gap);
-}
-
-/* 全局：卡片底色默认白色（避免主题/文档渲染导致卡片底色不一致） */
-.app-content-wrapper :is(
-  .dashboard-card,
-  .section-block,
-  .order-summary,
-  .order-card,
-  .order-table-container,
-  .records-table-wrapper,
-  .doc-content,
-  .doc-item,
-  .download-option,
-  .summary-item,
-  .stats-card,
-  .period-card,
-  .modal-content,
-  .error-card
-) {
-  background-color: #fff !important;
 }
 
 .dashboard-card p,

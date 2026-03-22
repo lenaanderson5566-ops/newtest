@@ -1359,7 +1359,7 @@ onUnmounted(() => {
 
     max-width: 400px;
 
-    background: #fff;
+    background: var(--card-bg);
 
     border-radius: 16px;
 
@@ -1543,7 +1543,7 @@ onUnmounted(() => {
 
 .doc-content {
 
-  background-color: #fff;
+  background-color: var(--card-bg);
 
   border-radius: 16px;
 
