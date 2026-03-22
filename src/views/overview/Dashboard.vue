@@ -2023,9 +2023,9 @@ export default {
       }
 
       &.traffic-board-subscription {
-        background: #2f343d;
-        border: 1px solid rgba(148, 163, 184, 0.32);
-        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
+        background: #2f343d !important;
+        border: 1px solid rgba(148, 163, 184, 0.32) !important;
+        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
 
         .usage-card-title,
         .usage-percent,
