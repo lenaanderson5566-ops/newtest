@@ -1495,6 +1495,10 @@ export default {
         border-radius: $border-radius-sm;
         background-color: var(--theme-color);
         color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 1px 4px rgba(var(--theme-color-rgb), 0.2);
         border: none;
@@ -1510,6 +1514,11 @@ export default {
           display: inline-flex;
           align-items: center;
           line-height: 1;
+        }
+
+        svg {
+          flex-shrink: 0;
+          vertical-align: middle;
         }
       }
     }
@@ -1559,13 +1568,14 @@ export default {
       }
 
       .method-icon {
-        width: 30px;
+        width: auto;
+        min-width: 64px;
+        max-width: 42%;
         height: 30px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
         color: var(--theme-color);
-        overflow: hidden;
         flex-shrink: 0;
 
         &.right-icon {
@@ -1574,9 +1584,10 @@ export default {
 
         img {
           width: auto;
-          max-width: none;
+          max-width: 100%;
           max-height: 24px;
           object-fit: contain;
+          display: block;
         }
       }
 
