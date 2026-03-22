@@ -1956,6 +1956,7 @@ export default {
     color: #fda4af;
   }
 
+  .order-summary-section .summary-row.total .summary-label,
   .order-summary-section .summary-row.total .summary-value {
     color: #ffffff;
   }
