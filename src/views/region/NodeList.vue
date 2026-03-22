@@ -89,7 +89,6 @@
             <div class="node-info">
               <div class="node-tags">
                 <span class="node-tag rate-tag" v-if="showNodeRate">x{{ line.rate }}</span>
-                <span class="node-tag type-tag">{{ line.type }}</span>
               </div>
 
               <h3 class="node-name">{{ line.name }}</h3>
@@ -966,14 +965,6 @@ onMounted(() => {
         }
 
         
-
-        &.type-tag {
-
-          background-color: rgba(96, 165, 250, 0.18);
-
-          color: #2563eb;
-
-        }
 
                 &.feature-tag {
           background-color: rgba(99, 102, 241, 0.12);
