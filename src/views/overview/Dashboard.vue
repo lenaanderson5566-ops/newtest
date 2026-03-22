@@ -1609,6 +1609,7 @@ export default {
 
     .stats-card {
       position: relative;
+      z-index: 1;
       background-color: var(--card-bg-color);
       border-radius: var(--dashboard-radius);
       box-shadow: var(--dashboard-shadow-compact);
@@ -2015,12 +2016,13 @@ export default {
 
       &.traffic-board-subscription,
       &.traffic-board-package {
-        background: #fff;
+        background: var(--saas-card-bg);
       }
 
       &.traffic-board-package {
         min-height: auto;
         height: auto;
+        z-index: 8;
       }
 
         /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
@@ -2196,7 +2198,8 @@ export default {
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--theme-text-primary);
-    background: #fff;
+    background: var(--saas-card-bg);
+    z-index: 2;
     align-items: flex-start;
     flex-direction: column;
     justify-content: center;
@@ -2339,6 +2342,7 @@ export default {
 
   .info-tooltip {
     position: relative;
+    z-index: 12;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2387,6 +2391,11 @@ export default {
       visibility: visible;
       transform: translate(-50%, 0);
       transition-delay: 0.2s;
+    }
+
+    &:hover,
+    &:focus-visible {
+      z-index: 14;
     }
   }
 

@@ -196,15 +196,6 @@ export default {
         background: rgba(var(--theme-color-rgb), 0.08);
       }
 
-      &:last-child {
-        border: 1px solid var(--border-color);
-        background: rgba(var(--card-background-rgb), 0.98);
-
-        &:hover,
-        &.active {
-          background: rgba(var(--theme-color-rgb), 0.1);
-        }
-      }
     }
   }
 }
