@@ -162,7 +162,7 @@
         <!-- 右侧内容：支付方式 -->
         <div class="right-column">
           <!-- 订单金额摘要 -->
-          <div class="section-wrapper">
+          <div class="section-wrapper order-amount-section">
             <div class="section-title">
               <span>订单金额</span>
             </div>
@@ -1447,6 +1447,47 @@ export default {
     .section-title {
       margin-bottom: 8px;
       font-size: 15px;
+    }
+  }
+
+  .order-amount-section {
+    background: #2f343d;
+    border: 1px solid rgba(148, 163, 184, 0.32);
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
+
+    .section-title {
+      color: #f8fafc;
+
+      &::after {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    .order-info {
+      .info-label,
+      .info-value {
+        color: #f8fafc;
+      }
+
+      .info-value.discount {
+        color: #fda4af;
+      }
+
+      .info-value.fee {
+        color: #bfdbfe;
+      }
+
+      .info-row.final-row {
+        border-top: 1px solid rgba(255, 255, 255, 0.18);
+        padding-top: 10px;
+        margin-top: 8px;
+
+        .info-label,
+        .info-value.final {
+          color: #ffffff;
+          font-weight: 700;
+        }
+      }
     }
   }
 

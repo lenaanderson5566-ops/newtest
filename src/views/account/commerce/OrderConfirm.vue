@@ -158,7 +158,7 @@
         <div class="right-column">
           <!-- 优惠码 -->
 
-          <div class="section-wrapper">
+          <div class="section-wrapper coupon-verify-section">
             <div class="coupon-input">
               <input
                 type="text"
@@ -1906,6 +1906,59 @@ export default {
 
       margin: 16px 0;
     }
+  }
+
+  .coupon-verify-section,
+  .order-summary-section {
+    .section-title {
+      color: #f8fafc;
+    }
+  }
+
+  .coupon-verify-section .coupon-input,
+  .order-summary-section .order-summary {
+    background: #2f343d;
+    border: 1px solid rgba(148, 163, 184, 0.32);
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
+    color: #f8fafc;
+  }
+
+  .coupon-verify-section .coupon-input {
+    padding: 14px;
+    margin-bottom: 0;
+  }
+
+  .coupon-verify-section .coupon-field {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #f8fafc;
+
+    &::placeholder {
+      color: rgba(241, 245, 249, 0.62);
+    }
+  }
+
+  .order-summary-section .order-summary {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .order-summary-section .summary-row .summary-label,
+  .order-summary-section .summary-row .summary-value {
+    color: #f8fafc;
+  }
+
+  .order-summary-section .summary-row .summary-value.discount {
+    color: #fda4af;
+  }
+
+  .order-summary-section .summary-row.total .summary-value {
+    color: #ffffff;
+  }
+
+  .order-summary-section .summary-divider {
+    background: rgba(255, 255, 255, 0.18);
   }
 
   .order-summary-section {
