@@ -2023,6 +2023,13 @@ export default {
     color: #f8fafc;
   }
 
+  .right-column .order-summary-section .order-summary {
+    background: #2f343d !important;
+    border: 1px solid rgba(148, 163, 184, 0.32) !important;
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
+    color: #f8fafc !important;
+  }
+
   .coupon-verify-section .coupon-input {
     padding: 14px;
     margin-bottom: 0;

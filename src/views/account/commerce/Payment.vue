@@ -1429,6 +1429,12 @@ export default {
     }
   }
 
+  .right-column .section-wrapper.payment-methods-section {
+    background: #2f343d !important;
+    border: 1px solid rgba(148, 163, 184, 0.32) !important;
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
+  }
+
   .order-amount-section {
     background: #2f343d;
     border: 1px solid rgba(148, 163, 184, 0.32);
@@ -1509,6 +1515,12 @@ export default {
         }
       }
     }
+  }
+
+  .right-column .order-amount-section {
+    background: #2f343d !important;
+    border: 1px solid rgba(148, 163, 184, 0.32) !important;
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
   }
 
   .payment-methods {
@@ -1607,6 +1619,12 @@ export default {
       line-height: 1.4;
       background: #2f343d;
     }
+  }
+
+  .right-column .payment-methods .payment-method-item,
+  .right-column .payment-methods .payment-security-note {
+    background: #2f343d !important;
+    color: #f8fafc !important;
   }
 
   .free-notice {
