@@ -1430,9 +1430,13 @@ export default {
   }
 
   .right-column .section-wrapper.payment-methods-section {
-    background: var(--card-bg-color) !important;
-    border: 1px solid var(--border-color) !important;
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06) !important;
+    background: #2f343d !important;
+    border: 1px solid rgba(148, 163, 184, 0.32) !important;
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
+  }
+
+  .right-column .section-wrapper.payment-methods-section .section-title {
+    color: #f8fafc !important;
   }
 
   .order-amount-section {
@@ -1518,9 +1522,19 @@ export default {
   }
 
   .right-column .order-amount-section {
-    background: var(--card-bg-color) !important;
-    border: 1px solid var(--border-color) !important;
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06) !important;
+    background: #2f343d !important;
+    border: 1px solid rgba(148, 163, 184, 0.32) !important;
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
+  }
+
+  .right-column .order-amount-section .section-title,
+  .right-column .order-amount-section .info-label,
+  .right-column .order-amount-section .info-value {
+    color: #f8fafc !important;
+  }
+
+  .right-column .order-amount-section .info-row.final-row {
+    border-top-color: rgba(255, 255, 255, 0.18) !important;
   }
 
   .payment-methods {
@@ -1622,8 +1636,8 @@ export default {
   }
 
   .right-column .payment-methods .payment-security-note {
-    background: #fff !important;
-    color: var(--secondary-text-color) !important;
+    background: #2f343d !important;
+    color: #f8fafc !important;
   }
 
   .free-notice {
