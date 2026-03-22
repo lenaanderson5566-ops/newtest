@@ -1060,6 +1060,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .order-confirm-container {
   padding: 0;
 
@@ -1083,7 +1085,7 @@ export default {
 
     background-color: var(--card-bg-color);
 
-    border-radius: var(--radius-sm);
+    border-radius: $border-radius-sm;
 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
@@ -1135,7 +1137,7 @@ export default {
 
     border: 1px solid rgba(255, 152, 0, 0.2);
 
-    border-radius: var(--radius-sm);
+    border-radius: $border-radius-sm;
 
     padding: 16px;
 
@@ -1174,7 +1176,7 @@ export default {
 
       height: 44px;
 
-      border-radius: var(--radius-sm);
+      border-radius: $border-radius-sm;
 
       display: flex;
 
@@ -1281,7 +1283,7 @@ export default {
   .plan-card {
     background-color: var(--card-bg-color);
 
-    border-radius: var(--radius-sm);
+    border-radius: $border-radius-sm;
 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 
@@ -1331,7 +1333,7 @@ export default {
 
         padding: 4px 12px;
 
-        border-radius: var(--radius-sm);
+        border-radius: $border-radius-sm;
 
         font-size: 12px;
 
@@ -1454,7 +1456,7 @@ export default {
 
         background-color: rgba(0, 0, 0, 0.05);
 
-        border-radius: var(--radius-sm);
+        border-radius: $border-radius-sm;
 
         position: relative;
 
@@ -1505,7 +1507,7 @@ export default {
       .period-card {
         cursor: pointer;
 
-        border-radius: var(--radius-sm);
+        border-radius: $border-radius-sm;
 
         overflow: hidden;
 
@@ -1638,7 +1640,7 @@ export default {
 
       padding: 0 18px;
 
-      border-radius: var(--radius-sm);
+      border-radius: $border-radius-sm;
 
       border: 1px solid var(--border-color);
 
@@ -1682,7 +1684,7 @@ export default {
 
       padding: 0 24px;
 
-      border-radius: var(--radius-sm);
+      border-radius: $border-radius-sm;
 
       background-color: var(--theme-color);
 
@@ -1756,7 +1758,7 @@ export default {
 
       padding: 0 16px;
 
-      border-radius: var(--radius-sm);
+      border-radius: $border-radius-sm;
 
       background-color: #f44336;
 
@@ -1797,7 +1799,7 @@ export default {
   .order-summary {
     background-color: var(--card-bg-color);
 
-    border-radius: var(--radius-sm);
+    border-radius: $border-radius-sm;
 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
@@ -1915,7 +1917,7 @@ export default {
   .order-summary-section .order-summary {
     background: #2f343d;
     border: 1px solid rgba(148, 163, 184, 0.32);
-    border-radius: var(--radius-sm);
+    border-radius: $border-radius-sm;
     box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
     color: #f8fafc;
   }
@@ -1966,7 +1968,7 @@ export default {
     margin-top: 14px;
     height: 44px;
     padding: 0 24px;
-    border-radius: var(--radius-sm);
+    border-radius: $border-radius-sm;
     background-color: var(--theme-color);
     color: white;
     font-size: 14px;
@@ -2014,7 +2016,7 @@ export default {
 
       padding: 0 20px;
 
-      border-radius: var(--radius-sm);
+      border-radius: $border-radius-sm;
 
       background-color: transparent;
 
@@ -2052,7 +2054,7 @@ export default {
 
       padding: 0 24px;
 
-      border-radius: var(--radius-sm);
+      border-radius: $border-radius-sm;
 
       background-color: var(--theme-color);
 
@@ -2128,7 +2130,7 @@ export default {
 
   overflow: hidden;
 
-  border-radius: var(--radius-sm);
+  border-radius: $border-radius-sm;
 
   .skeleton-header {
     height: 24px;
@@ -2137,7 +2139,7 @@ export default {
 
     background-color: rgba(0, 0, 0, 0.05);
 
-    border-radius: var(--radius-sm);
+    border-radius: $border-radius-sm;
 
     margin-bottom: 20px;
 
@@ -2154,7 +2156,7 @@ export default {
 
       background-color: rgba(0, 0, 0, 0.05);
 
-      border-radius: var(--radius-sm);
+      border-radius: $border-radius-sm;
 
       margin-bottom: 24px;
 
@@ -2171,7 +2173,7 @@ export default {
 
         background-color: rgba(0, 0, 0, 0.05);
 
-        border-radius: var(--radius-sm);
+        border-radius: $border-radius-sm;
 
         margin-bottom: 12px;
 
@@ -2237,7 +2239,7 @@ export default {
 
   background-color: rgba(0, 0, 0, 0.05);
 
-  border-radius: var(--radius-sm);
+  border-radius: $border-radius-sm;
 
   position: relative;
 

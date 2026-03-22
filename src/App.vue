@@ -268,13 +268,6 @@ export default {
 @use "@/assets/styles/base/animations.scss" as *;
 @use "@/assets/styles/base/scrollbar.scss" as *;
 
-:root {
-  --radius-xs: #{$border-radius-sm};
-  --radius-sm: #{$border-radius-sm};
-  --radius-md: #{$border-radius-sm};
-  --radius-lg: #{$border-radius-sm};
-  --radius-xl: #{$border-radius-sm};
-}
 
 .card,
 .dashboard-card,
@@ -287,7 +280,7 @@ export default {
 .slide-tabs-nav .nav-item,
 .pending-order-dialog,
 .modal-content {
-  border-radius: var(--radius-lg) !important;
+  border-radius: $border-radius-sm !important;
 }
 
 .page-transitioning {
