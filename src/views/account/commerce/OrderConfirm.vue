@@ -159,33 +159,32 @@
           <!-- 优惠码 -->
 
           <div class="section-wrapper coupon-verify-section">
-            <div class="coupon-input" v-if="!couponApplied">
+            <div class="coupon-input">
               <input
                 type="text"
                 v-model="couponCode"
-                :disabled="loading.plan"
+                :disabled="loading.plan || couponApplied"
                 :placeholder="$t('order.enter_coupon')"
                 class="coupon-field"
+                :class="{ applied: couponApplied }"
               />
 
               <button
                 class="btn-verify"
                 @click="verifyCoupon"
                 :disabled="
-                  !couponCode || verifying || loading.plan
+                  !couponCode || verifying || loading.plan || couponApplied
                 "
+                :class="{ applied: couponApplied }"
               >
-                <IconDiscount2 v-if="!verifying" />
+                <IconDiscount2 v-if="!verifying && !couponApplied" />
 
                 <span v-else-if="verifying" class="loader"></span>
-
-                <span>{{ $t("order.verify_coupon") }}</span>
+                <span v-else-if="couponApplied">✓ 已应用</span>
+                <span v-else>{{ $t("order.verify_coupon") }}</span>
               </button>
-            </div>
-            <div v-else class="coupon-applied-row">
-              <span class="coupon-code-label">优惠码 {{ couponCode || couponInfo?.code || '-' }}</span>
-              <span class="coupon-applied-tag">✓ 已应用</span>
-              <button class="btn-remove-text" @click="removeCoupon">移除</button>
+
+              <button v-if="couponApplied" class="btn-remove-text" @click="removeCoupon">移除</button>
             </div>
             <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
           </div>
@@ -1671,6 +1670,11 @@ export default {
 
       min-width: 0;
 
+      &.applied {
+        background-color: var(--input-bg-color);
+        border-color: var(--border-color);
+      }
+
       &:focus {
         border-color: rgba(var(--theme-color-rgb), 0.5);
 
@@ -1752,52 +1756,27 @@ export default {
       }
     }
 
-    .coupon-applied-tag {
-      height: 32px;
-      padding: 0 10px;
-      border-radius: 999px;
-      background-color: rgba(34, 197, 94, 0.1);
-      color: #16a34a;
-      font-size: 12px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .coupon-applied-row {
-      min-height: 40px;
-      border: 1px solid var(--border-color);
-      border-radius: $border-radius-sm;
-      background: rgba(34, 197, 94, 0.06);
-      border-left: 3px solid #22c55e;
-      padding: 0 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .coupon-code-label {
-      font-size: 13px;
-      color: var(--text-color);
-      font-weight: 600;
+    .btn-verify.applied {
+      background-color: #64748b;
+      box-shadow: none;
+      cursor: default;
     }
 
     .btn-remove-text {
-      margin-left: auto;
-      border: none;
-      background: transparent;
+      height: 32px;
+      padding: 0 12px;
+      border-radius: $border-radius-sm;
+      border: 1px solid var(--border-color);
+      background: rgba(148, 163, 184, 0.08);
       color: var(--secondary-text-color);
       font-size: 12px;
       cursor: pointer;
-      padding: 0;
-      line-height: 1.2;
+      line-height: 1;
+      white-space: nowrap;
 
       &:hover {
+        background: rgba(148, 163, 184, 0.14);
         color: var(--text-color);
-        text-decoration: underline;
       }
     }
   }
@@ -2421,14 +2400,6 @@ export default {
         white-space: nowrap;
       }
 
-    }
-
-    .coupon-applied-row {
-      gap: 8px;
-
-      .btn-remove-text {
-        margin-left: 0;
-      }
     }
 
     .plan-card,
