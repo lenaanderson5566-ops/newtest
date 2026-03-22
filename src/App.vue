@@ -13,9 +13,9 @@
         <div class="top-toolbar">
         <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
         <LanguageSelector />
-        <button 
-          v-if="PROFILE_CONFIG.showGiftCardRedeem" 
-          class="gift-btn" 
+        <button
+          v-if="PROFILE_CONFIG.showGiftCardRedeem"
+          class="gift-btn"
           @click="$router.push('/profile')"
         >
           <IconGift :size="18" />
@@ -39,14 +39,14 @@
     <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]">
       <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
         <router-view v-slot="{ Component, route }">
-          <transition 
-            name="page-transition" 
+          <transition
+            name="page-transition"
             mode="out-in"
             appear
           >
             <keep-alive :include="cachedRoutes" :max="5">
-              <component 
-                :is="Component" 
+              <component
+                :is="Component"
                 :key="route.path"
                 :is-active="true"
               />
@@ -55,19 +55,19 @@
         </router-view>
       </div>
     </div>
-    
+
     <!-- 全局Toast通知 - 放在最外层，确保不受页面切换影响 -->
     <Toast />
-    
+
     <!-- 返回顶部按钮 -->
     <BackToTop />
-    
+
     <!-- 自定义鼠标右键菜单 -->
     <CustomContextMenu />
-    
+
     <!-- 资源预加载组件 -->
     <ResourcePreloader />
-    
+
     <!-- SVG图标定义 -->
     <IconDefinitions />
   </div>
@@ -118,29 +118,29 @@ export default {
     const { showToast } = useToast();
     const siteConfig = ref(SITE_CONFIG);
     const cachedRoutes = computed(() => pageCache.getCachedRoutes());
-    
+
     const handleRedirectParam = () => {
       let redirectParam = null;
-      
+
       const hashParts = window.location.hash.split('?');
       if (hashParts.length > 1) {
         const hashParams = new URLSearchParams(hashParts[1]);
         redirectParam = hashParams.get('redirect');
       }
-      
+
       if (!redirectParam) {
         redirectParam = route.query.redirect;
       }
-      
+
       if (redirectParam && typeof redirectParam === 'string') {
         const targetPath = handleRedirectPath(redirectParam);
-        
+
         if (route.path !== targetPath) {
           router.replace(targetPath);
         }
       }
     };
-    
+
     watch(() => route.fullPath, () => {
       handleRedirectParam();
     });
@@ -162,7 +162,7 @@ export default {
       },
       { immediate: true }
     );
-    
+
     const loadUnreadNoticeCount = async () => {
       if (!route.meta.requiresAuth) {
         unreadNoticeCount.value = 0;
@@ -179,10 +179,10 @@ export default {
     };
 
     const languageChangedSignal = ref(0);
-    
+
     const onLanguageChanged = () => {
       languageChangedSignal.value++;
-      
+
       setTimeout(() => {
         document.body.classList.add('language-transitioning');
         setTimeout(() => {
@@ -190,7 +190,7 @@ export default {
         }, 300);
       }, 0);
     };
-    
+
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         checkAuthAndReloadMessages();
@@ -207,30 +207,30 @@ export default {
         });
       }
     };
-    
+
     provide('languageChangedSignal', languageChangedSignal);
-    
+
     const clearCache = () => {
       pageCache.clearCache();
     };
-    
+
     const removeCachedRoute = (routeName) => {
       pageCache.removeRouteFromCache(routeName);
     };
-    
+
     provide('clearCache', clearCache);
     provide('removeCachedRoute', removeCachedRoute);
-    
+
     onMounted(() => {
       window.addEventListener('languageChanged', onLanguageChanged);
-      
+
       applyTheme(store.currentTheme);
-      
+
       checkAuthAndReloadMessages();
       loadUnreadNoticeCount();
 
       document.addEventListener('visibilitychange', handleVisibilityChange);
-      
+
       checkUserLoginStatus().then(result => {
         if (result.isLoggedIn === false && result.message) {
           if (showToast) {
@@ -240,15 +240,15 @@ export default {
       }).catch(err => {
         console.error('检查登录状态出错:', err);
       });
-      
+
       handleRedirectParam();
     });
-    
+
     onUnmounted(() => {
       window.removeEventListener('languageChanged', onLanguageChanged);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     });
-    
+
     return {
       username,
       avatarUrl,
@@ -271,16 +271,21 @@ export default {
 
 .card,
 .dashboard-card,
+.stats-card,
+.profile-card,
 .info-card,
 .section-wrapper,
 .plan-card,
+.auth-card,
 .order-summary,
 .payment-method-item,
-.slide-tabs-wrapper,
-.slide-tabs-nav .nav-item,
+.dialog-content,
 .pending-order-dialog,
 .modal-content {
+  background-color: #ffffff !important;
   border-radius: $border-radius-sm !important;
+  box-shadow: none !important;
+  border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 .page-transitioning {
@@ -480,7 +485,7 @@ export default {
     .stats-card,
     .card,
     .info-card {
-      border-radius: 10px !important;
+      border-radius: $border-radius-sm !important;
     }
 
     .dashboard-card {
@@ -511,7 +516,7 @@ export default {
       gap: 8px !important;
     }
   }
-  
+
   main, .main-content, .content-container {
     padding-bottom: 64px !important;
     margin-bottom: 6px !important;
@@ -617,7 +622,7 @@ html {
   top: env(safe-area-inset-top, 0px);
   right: 0;
   z-index: 100;
-  
+
   .top-toolbar {
     position: fixed;
     top: 20px;
@@ -636,12 +641,12 @@ html {
   background-repeat: no-repeat !important;
   background-position: initial !important;
   background-size: initial !important;
-  
+
   &:hover, &:active, &:focus, &:visited {
     text-decoration: none !important;
     border-bottom: none !important;
   }
-  
+
   &::after, &::before {
     display: none !important;
     content: none !important;
@@ -651,7 +656,7 @@ html {
 
 #nprogress {
   pointer-events: none;
-  
+
   .bar {
     background: var(--theme-color);
     position: fixed;
@@ -662,15 +667,15 @@ html {
     height: 2px;
     box-shadow: 0 0 10px var(--theme-color), 0 0 5px var(--theme-color);
   }
-  
-  
+
+
   .spinner {
     display: block;
     position: fixed;
     z-index: 1031;
-    top: 10px;  
-    left: 10px; 
-    
+    top: 10px;
+    left: 10px;
+
     .spinner-icon {
       width: 18px;
       height: 18px;
@@ -702,4 +707,4 @@ html {
 .nprogress-custom-parent #nprogress .bar {
   position: absolute;
 }
-</style> 
+</style>

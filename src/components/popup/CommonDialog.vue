@@ -4,9 +4,9 @@
       <div class="dialog-container">
         <div class="dialog-header">
           <h2 class="dialog-title" v-html="title"></h2>
-          <button 
-            v-if="showCloseIcon" 
-            class="dialog-close-btn" 
+          <button
+            v-if="showCloseIcon"
+            class="dialog-close-btn"
             @click="handleClose"
           >
             <IconX :size="20" />
@@ -18,17 +18,17 @@
         </div>
 
         <div class="dialog-footer" v-if="showCancelButton || showConfirmButton">
-          <button 
+          <button
             v-if="showCancelButton"
-            class="dialog-btn dialog-btn-cancel" 
+            class="dialog-btn dialog-btn-cancel"
             @click="handleClose"
           >
             {{ cancelButtonText || $t(cancelButtonI18nKey) }}
           </button>
 
-          <button 
+          <button
             v-if="showConfirmButton"
-            class="dialog-btn dialog-btn-confirm" 
+            class="dialog-btn dialog-btn-confirm"
             @click="handleConfirm"
           >
             {{ confirmButtonText || $t(confirmButtonI18nKey) }}
@@ -174,6 +174,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .dialog-overlay {
   position: fixed;
   top: 0;
@@ -188,24 +190,20 @@ export default {
   padding: 20px;
   box-sizing: border-box;
   backdrop-filter: blur(4px);
-  
+
   .dialog-container {
     width: 100%;
     max-width: 500px;
-    background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-    border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(var(--theme-color-rgb), 0.15);
+    background-color: #fff;
+    border-radius: $border-radius-sm;
+    box-shadow: none;
+    border: 1px solid rgba(15, 23, 42, 0.08);
     overflow: hidden;
     display: flex;
     flex-direction: column;
     max-height: 80vh;
     animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    
-    @media (prefers-color-scheme: dark) {
-      background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
-    }
-    
+
     .dialog-header {
       padding: 20px;
       display: flex;
@@ -213,14 +211,14 @@ export default {
       align-items: center;
       border-bottom: 1px solid var(--border-color);
       background-color: rgba(var(--theme-color-rgb), 0.03);
-      
+
       .dialog-title {
         margin: 0;
         font-size: 18px;
         font-weight: 600;
         color: var(--text-color);
       }
-      
+
       .dialog-close-btn {
         background: none;
         border: none;
@@ -233,7 +231,7 @@ export default {
         margin: -8px;
         border-radius: 50%;
         transition: all 0.3s ease;
-        
+
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
           color: var(--text-color);
@@ -241,41 +239,41 @@ export default {
         }
       }
     }
-    
+
     .dialog-content {
       padding: 20px;
       overflow-y: auto;
       flex: 1;
       background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
-      
+
       :deep(p) {
         margin: 12px 0;
         line-height: 1.6;
         color: var(--text-color);
       }
-      
+
       :deep(strong) {
         color: var(--theme-color);
         font-weight: 600;
       }
-      
+
       :deep(a) {
         color: var(--theme-color);
         text-decoration: none;
-        
+
         &:hover {
           text-decoration: underline;
         }
       }
     }
-    
+
     .dialog-footer {
       padding: 15px 20px;
       border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: flex-end;
       gap: 10px;
-      
+
       .dialog-btn {
         padding: 8px 20px;
         border: none;
@@ -285,26 +283,26 @@ export default {
         cursor: pointer;
         transition: all 0.3s ease;
         min-width: 80px;
-        
+
         &:hover {
           transform: translateY(-2px);
         }
       }
-      
+
       .dialog-btn-cancel {
         background-color: var(--border-color);
         color: var(--text-color);
-        
+
         &:hover {
           background-color: var(--secondary-text-color);
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
       }
-      
+
       .dialog-btn-confirm {
         background-color: var(--theme-color);
         color: white;
-        
+
         &:hover {
           box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
         }
@@ -340,27 +338,27 @@ export default {
 @media (max-width: 768px) {
   .dialog-overlay {
     padding: 15px;
-    
+
     .dialog-container {
       max-width: 100%;
       max-height: 85vh;
-      
+
       .dialog-header {
         padding: 15px;
-        
+
         .dialog-title {
           font-size: 16px;
         }
       }
-      
+
       .dialog-content {
         padding: 15px;
       }
-      
+
       .dialog-footer {
         padding: 12px 15px;
         flex-direction: column-reverse;
-        
+
         .dialog-btn {
           width: 100%;
           margin: 0;
@@ -369,5 +367,5 @@ export default {
     }
   }
 }
-</style> 
-  
+</style>
+
