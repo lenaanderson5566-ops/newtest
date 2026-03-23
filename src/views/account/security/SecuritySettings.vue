@@ -11,11 +11,6 @@
               <IconLock :size="18" />
               {{ $t('profile.changePassword') }}
             </button>
-            <button class="action-btn action-btn-danger" :disabled="loggingOutAllSessions" @click="handleLogoutAllSessions">
-              <IconLogout :size="18" />
-              <span v-if="!loggingOutAllSessions">{{ $t('profile.logoutAllSessions') }}</span>
-              <span v-else>{{ $t('profile.loggingOutAllSessions') }}</span>
-            </button>
           </div>
         </div>
       </div>
@@ -76,6 +71,16 @@
               </button>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="profile-card logout-all-card">
+        <div class="settings-content">
+          <button class="action-btn action-btn-danger" :disabled="loggingOutAllSessions" @click="handleLogoutAllSessions">
+            <IconLogout :size="18" />
+            <span v-if="!loggingOutAllSessions">{{ $t('profile.logoutAllSessions') }}</span>
+            <span v-else>{{ $t('profile.loggingOutAllSessions') }}</span>
+          </button>
         </div>
       </div>
     </div>
@@ -413,6 +418,11 @@ onMounted(() => {
 .action-btn-danger {
   border-color: rgba(255, 77, 79, 0.5);
   color: #ff4d4f;
+}
+
+.logout-all-card .settings-content {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .device-item {
