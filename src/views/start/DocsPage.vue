@@ -1230,7 +1230,7 @@ onMounted(async () => {
 
     margin: 0;
 
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 
     line-height: 1.5;
 

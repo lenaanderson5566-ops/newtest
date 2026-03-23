@@ -2242,7 +2242,7 @@ fetchTickets();
 }
 
 .upload-tip-text {
-  color: var(--text-color);
+  color: var(--secondary-text-color);
 
   font-weight: 500;
 
@@ -2291,7 +2291,7 @@ fetchTickets();
   }
 
   .upload-tip-text {
-    color: var(--text-color);
+    color: var(--secondary-text-color);
   }
 
   .upload-desc {

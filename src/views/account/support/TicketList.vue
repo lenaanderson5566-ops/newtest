@@ -2415,7 +2415,7 @@ onUnmounted(() => {
     font-size: 1rem;
     margin-bottom: 4px;
     .upload-tip-text {
-      color: var(--text-color);
+      color: var(--secondary-text-color);
       font-weight: 500;
       font-size: 1.08rem;
       transition: color 0.2s;
