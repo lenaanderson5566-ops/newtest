@@ -48,14 +48,11 @@
           <h2>导入订阅</h2>
           <div class="actions" v-if="subscriptionUrl">
             <button class="action-btn primary" @click="copySubscriptionUrl">一键复制</button>
+            <button class="action-btn" @click="openQrCodeModal">扫描二维码</button>
             <button class="action-btn" @click="showImportPanel = !showImportPanel">{{ showImportPanel ? '收起详细导入' : '查看详细导入' }}</button>
           </div>
         </header>
         <div class="step-body">
-          <p class="subscription-text">
-            订阅链接：
-            <span class="url">{{ maskedSubscriptionUrl }}</span>
-          </p>
           <ImportConfigCard v-if="showImportPanel && userStatus === USER_STATUS.ACTIVE" />
         </div>
       </section>
@@ -70,6 +67,18 @@
           <button class="help-btn" @click="router.push('/docs')">需要帮助？查看详细教程 →</button>
         </div>
       </section>
+
+      <Teleport to="body">
+        <div v-if="showQrCode" class="qrcode-modal-overlay" @click="showQrCode = false">
+          <div class="qrcode-modal" @click.stop>
+            <div class="qrcode-header">
+              <h3>扫描二维码添加配置</h3>
+              <button class="close-btn" @click="showQrCode = false">✕</button>
+            </div>
+            <img :src="qrCodeUrl" alt="QR Code" />
+          </div>
+        </div>
+      </Teleport>
     </div>
   </div>
 </template>
@@ -81,6 +90,7 @@ import { IconBrandApple, IconBrandAndroid, IconBrandFinder, IconBrandWindows } f
 import ImportConfigCard from '@/components/common/ImportConfigCard.vue';
 import { CLIENT_CONFIG } from '@/utils/baseConfig';
 import { getSubscribe } from '@/api/overview/dashboard';
+import QRCode from 'qrcode';
 
 const router = useRouter();
 const $toast = inject('$toast');
@@ -95,6 +105,8 @@ const USER_STATUS = Object.freeze({
 const userStatus = ref(USER_STATUS.NEW);
 const subscriptionUrl = ref('');
 const showImportPanel = ref(true);
+const showQrCode = ref(false);
+const qrCodeUrl = ref('');
 
 const statusCardContentMap = Object.freeze({
   [USER_STATUS.NEW]: {
@@ -115,16 +127,25 @@ const statusCardContent = computed(() => statusCardContentMap[userStatus.value] 
 const statusCardTitle = computed(() => statusCardContent.value.title);
 const statusCardDescription = computed(() => statusCardContent.value.description);
 
-const maskedSubscriptionUrl = computed(() => {
-  if (!subscriptionUrl.value) return '暂无可用订阅链接';
-  if (subscriptionUrl.value.length < 18) return subscriptionUrl.value;
-  return `${subscriptionUrl.value.slice(0, 16)}...${subscriptionUrl.value.slice(-10)}`;
-});
-
 const downloadClient = (platform) => {
   const downloadUrl = clientConfig.clientLinks?.[platform];
   if (downloadUrl) {
     window.open(downloadUrl, '_blank');
+  }
+};
+
+const openQrCodeModal = async () => {
+  if (!subscriptionUrl.value) {
+    $toast?.warning('当前暂无订阅链接');
+    return;
+  }
+
+  try {
+    qrCodeUrl.value = await QRCode.toDataURL(subscriptionUrl.value);
+    showQrCode.value = true;
+  } catch (err) {
+    console.error('Generate QRCode failed:', err);
+    $toast?.error('二维码生成失败');
   }
 };
 
@@ -250,7 +271,6 @@ onMounted(fetchUserStatus);
 }
 
 .step-tip,
-.subscription-text,
 .connect-text {
   margin: 0;
   color: var(--secondary-text-color);
@@ -329,7 +349,41 @@ onMounted(fetchUserStatus);
   margin-top: 12px;
 }
 
-.url {
-  opacity: 0.65;
+.qrcode-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.qrcode-modal {
+  width: min(420px, 92vw);
+  border-radius: 14px;
+  background: #fff;
+  padding: 16px;
+
+  .qrcode-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .close-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  img {
+    width: 100%;
+    max-width: 260px;
+    display: block;
+    margin: 0 auto;
+  }
 }
 </style>

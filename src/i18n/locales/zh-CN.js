@@ -534,6 +534,8 @@ profile: {
         passwordChanged: '密码已更改',
         passwordError: '修改密码失败，请检查当前密码是否正确',
         subscription: '订阅管理',
+        configManagement: '配置管理',
+        configManagementSubtitle: '前往配置管理页进行重置配置地址等操作',
         resetSecurity: '重置配置地址',
         resetSecurityTitle: '重置配置地址',
         confirmReset: '确认重置',

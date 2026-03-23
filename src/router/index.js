@@ -36,6 +36,7 @@ const getActiveNavForRoute = (routeName) => {
   const usageRoutes = new Set(['Docs', 'DocDetail']);
   const myRoutes = new Set([
     'Profile',
+    'ConfigManagement',
     'SecuritySettings',
     'Billing',
     'TicketList',
@@ -469,6 +470,25 @@ const routes = [
           requiresAuth: true,
 
           get activeNav() { return getActiveNavForRoute('Profile'); } 
+        }
+
+      },
+
+      {
+
+        path: 'config-management',
+
+        name: 'ConfigManagement',
+
+        component: () => import('@/views/account/profile/ConfigManagement.vue'),
+
+        meta: {
+
+          titleKey: 'profile.configManagement',
+
+          requiresAuth: true,
+
+          get activeNav() { return getActiveNavForRoute('ConfigManagement'); }
         }
 
       },

@@ -534,6 +534,8 @@ profile: {
         passwordChanged: 'Password changed',
         passwordError: 'Failed to change password, please check if the current password is correct',
         subscription: 'Subscription Management',
+        configManagement: 'Config Management',
+        configManagementSubtitle: 'Manage configuration actions like reset subscription address',
         resetSecurity: 'Reset Configuration Address',
         resetSecurityTitle: 'Reset Configuration Address',
         confirmReset: 'Confirm Reset',

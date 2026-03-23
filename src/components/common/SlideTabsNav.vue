@@ -68,6 +68,7 @@ export default {
       const profileRoutes = new Set([
         'Announcements',
         'Profile',
+        'ConfigManagement',
         'SecuritySettings',
         'Billing',
         'TicketList',
