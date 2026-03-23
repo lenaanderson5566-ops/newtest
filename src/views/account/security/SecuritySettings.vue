@@ -213,7 +213,13 @@ const fetchActiveSessions = async () => {
     }
   } catch (err) {
     console.error('Failed to fetch active sessions:', err);
-    sessionError.value = err?.message || t('common.networkError');
+    const statusCode = err?.response?.status;
+    if (statusCode === 401 || statusCode === 403) {
+      forceLogout();
+      window.location.href = '/#/login?logout=true';
+      return;
+    }
+    sessionError.value = t('profile.sessionError');
   } finally {
     loadingSessions.value = false;
   }
@@ -227,6 +233,7 @@ const resolveSessionId = (session) => {
 const handleLogoutAllSessions = async () => {
   if (loggingOutAllSessions.value) return;
   loggingOutAllSessions.value = true;
+  sessionError.value = '';
   try {
     const response = await logoutAllSessions();
     if (response?.data) {
