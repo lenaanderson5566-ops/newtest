@@ -209,7 +209,7 @@ onMounted(fetchUserStatus);
   background: linear-gradient(120deg, rgba(var(--theme-color-rgb), 0.08), rgba(111, 116, 245, 0.12));
   border: 1px solid rgba(var(--theme-color-rgb), 0.15);
   border-radius: $border-radius-sm;
-  padding: 24px;
+  padding: 18px;
 
   .hero-title-wrap {
     display: flex;
@@ -219,16 +219,16 @@ onMounted(fetchUserStatus);
 
   .hero-title {
     margin: 0;
-    font-size: 36px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: 600;
     color: var(--text-color);
   }
 
   .hero-desc {
-    margin: 10px 0 0;
-    font-size: 26px;
-    color: var(--text-color);
-    opacity: 0.86;
+    margin: 8px 0 0;
+    font-size: 15px;
+    color: var(--secondary-text-color);
+    opacity: 1;
   }
 }
 
@@ -237,7 +237,7 @@ onMounted(fetchUserStatus);
   background: #f8faff;
   border: 1px solid rgba(47, 85, 212, 0.08);
   border-radius: $border-radius-sm;
-  padding: 16px;
+  padding: 14px;
 
   .step-header {
     display: flex;
@@ -247,7 +247,8 @@ onMounted(fetchUserStatus);
 
     h2 {
       margin: 0;
-      font-size: 28px;
+      font-size: 20px;
+      font-weight: 600;
     }
 
     .actions {
@@ -258,15 +259,16 @@ onMounted(fetchUserStatus);
   }
 
   .step-index {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: #4177e9;
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
+    font-weight: 600;
+    font-size: 14px;
   }
 }
 
@@ -274,7 +276,7 @@ onMounted(fetchUserStatus);
 .connect-text {
   margin: 0;
   color: var(--secondary-text-color);
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .download-grid {
@@ -301,7 +303,7 @@ onMounted(fetchUserStatus);
   }
 
   strong {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   span {
