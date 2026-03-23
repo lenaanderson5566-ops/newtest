@@ -213,6 +213,31 @@ export const config = {
       windows: "https://github.com/xxx/releases/latest",
     },
 
+    // 快速开始页：各平台下载客户端（可自定义名称/地址/图标/是否推荐）
+    // icon 可复用下方常见客户端键名；未匹配时前端会使用通用图标
+    quickStartClients: {
+      windows: [
+        { name: 'Clash Meta', url: 'https://github.com/MetaCubeX/mihomo/releases', icon: 'clash-meta', recommended: true },
+        { name: 'sing-box 客户端', url: 'https://sing-box.sagernet.org/zh/clients/', icon: 'singbox-windows' },
+        { name: 'FlClash', url: 'https://github.com/chen08209/FlClash/releases', icon: 'flclash' }
+      ],
+      macos: [
+        { name: 'Clash Meta', url: 'https://github.com/MetaCubeX/mihomo/releases', icon: 'clashx-meta', recommended: true },
+        { name: 'ClashX', url: 'https://github.com/yichengchen/clashX/releases', icon: 'clashx' },
+        { name: 'Stash', url: 'https://stash.wiki/', icon: 'stash-mac' }
+      ],
+      android: [
+        { name: 'sing-box', url: 'https://sing-box.sagernet.org/zh/clients/', icon: 'singbox-android', recommended: true },
+        { name: 'v2rayNG', url: 'https://github.com/2dust/v2rayNG/releases', icon: 'v2rayng' },
+        { name: 'FlClash', url: 'https://github.com/chen08209/FlClash/releases', icon: 'flclash' }
+      ],
+      ios: [
+        { name: 'Stash', url: 'https://apps.apple.com/app/stash-rule-based-proxy/id1596063349', icon: 'stash-ios', recommended: true },
+        { name: 'Shadowrocket', url: 'https://apps.apple.com/app/shadowrocket/id932747118', icon: 'shadowrocket' },
+        { name: 'Surge', url: 'https://apps.apple.com/app/surge-5/id1442620678', icon: 'surge-ios' }
+      ]
+    },
+
     // 订阅导入客户端显示控制 部分面板不支持SingBox导入请您注意检查
 
     // iOS平台
