@@ -435,10 +435,13 @@ export default {
 
 .content-layout-shell {
   width: 100%;
+  box-sizing: border-box;
+}
+
+.content-layout-shell.fixed-content-width {
   max-width: var(--page-content-max-width);
   margin: 0 auto;
   padding-inline: var(--page-edge-gap, 2px);
-  box-sizing: border-box;
 }
 
 @media (min-width: 992px) {
