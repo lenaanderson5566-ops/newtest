@@ -1,12 +1,9 @@
 <template>
   <div class="quick-start-container page-shell">
     <div class="quick-start-inner page-inner page-stack">
-      <section class="hero-card">
-        <div class="hero-title-wrap">
-          <span class="hero-icon">🎉</span>
-          <h1 class="hero-title">{{ statusCardTitle }}</h1>
-        </div>
-        <p class="hero-desc">{{ statusCardDescription }}</p>
+      <section class="status-strip">
+        <p class="status-main">{{ statusStripText }}</p>
+        <p class="status-sub">{{ statusStripDesc }}</p>
       </section>
 
       <section class="step-card">
@@ -151,24 +148,17 @@ const clientIconMap = Object.freeze({
   'stash-mac': stashMacIconImg
 });
 
-const statusCardContentMap = Object.freeze({
-  [USER_STATUS.NEW]: {
-    title: '欢迎使用，先购买订阅',
-    description: '当前尚未购买订阅，请先前往订阅页面购买订阅。'
-  },
-  [USER_STATUS.ACTIVE]: {
-    title: '已成功开通服务',
-    description: '立即开始使用您的网络加速服务。'
-  },
-  [USER_STATUS.EXPIRED]: {
-    title: '订阅已到期',
-    description: '您的订阅已过期，请及时续费后继续使用服务。'
-  }
+const statusStripText = computed(() => {
+  if (userStatus.value === USER_STATUS.NEW) return '尚未开通服务 · 请先购买订阅';
+  if (userStatus.value === USER_STATUS.EXPIRED) return '订阅已到期 · 请及时续费';
+  return '服务已开通 · 可开始连接';
 });
 
-const statusCardContent = computed(() => statusCardContentMap[userStatus.value] || statusCardContentMap[USER_STATUS.NEW]);
-const statusCardTitle = computed(() => statusCardContent.value.title);
-const statusCardDescription = computed(() => statusCardContent.value.description);
+const statusStripDesc = computed(() => {
+  if (userStatus.value === USER_STATUS.NEW) return '完成订阅后即可下载客户端并导入订阅使用。';
+  if (userStatus.value === USER_STATUS.EXPIRED) return '续费后下载客户端并导入订阅即可恢复使用。';
+  return '下载客户端并导入订阅后即可使用。';
+});
 
 const resolveClientIcon = (iconKey) => clientIconMap[iconKey] || '';
 const getPlatformClients = (platform) => {
@@ -275,30 +265,23 @@ onBeforeUnmount(() => window.removeEventListener('click', closeDropdown));
   }
 }
 
-.hero-card {
-  background: linear-gradient(120deg, rgba(var(--theme-color-rgb), 0.08), rgba(111, 116, 245, 0.12));
-  border: 1px solid rgba(var(--theme-color-rgb), 0.15);
+.status-strip {
+  background: rgba(var(--theme-color-rgb), 0.06);
+  border: 1px solid rgba(var(--theme-color-rgb), 0.14);
   border-radius: $border-radius-sm;
-  padding: 18px;
+  padding: 10px 14px;
 
-  .hero-title-wrap {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .hero-title {
+  .status-main {
     margin: 0;
-    font-size: 24px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--text-color);
   }
 
-  .hero-desc {
-    margin: 8px 0 0;
-    font-size: 15px;
+  .status-sub {
+    margin: 4px 0 0;
+    font-size: 13px;
     color: var(--secondary-text-color);
-    opacity: 1;
   }
 }
 

@@ -86,10 +86,10 @@ const activePlatform = ref('ios');
 const clientConfig = reactive(CLIENT_CONFIG);
 
 const platforms = [
-  { id: 'ios', label: 'iOS', icon: IconBrandApple, showFlag: 'showIOS' },
-  { id: 'android', label: 'Android', icon: IconBrandAndroid, showFlag: 'showAndroid' },
   { id: 'windows', label: 'Windows', icon: IconBrandWindows, showFlag: 'showWindows' },
-  { id: 'macos', label: 'MacOS', icon: IconDeviceLaptop, showFlag: 'showMacOS' }
+  { id: 'macos', label: 'MacOS', icon: IconDeviceLaptop, showFlag: 'showMacOS' },
+  { id: 'android', label: 'Android', icon: IconBrandAndroid, showFlag: 'showAndroid' },
+  { id: 'ios', label: 'iOS', icon: IconBrandApple, showFlag: 'showIOS' }
 ];
 
 const platformClientMap = {
