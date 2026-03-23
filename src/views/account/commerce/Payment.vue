@@ -1296,6 +1296,10 @@ export default {
       flex: 0.85;
       min-width: 0;
       max-width: 520px;
+      --right-card-bg: #2f343d;
+      --right-card-border: rgba(148, 163, 184, 0.32);
+      --right-card-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
+      --right-card-text: #f8fafc;
     }
   }
 
@@ -1430,13 +1434,13 @@ export default {
   }
 
   .right-column .section-wrapper.payment-methods-section {
-    background: #2f343d !important;
-    border: 1px solid rgba(148, 163, 184, 0.32) !important;
-    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
+    background: var(--right-card-bg) !important;
+    border: 1px solid var(--right-card-border) !important;
+    box-shadow: var(--right-card-shadow) !important;
   }
 
   .right-column .section-wrapper.payment-methods-section .section-title {
-    color: #f8fafc !important;
+    color: var(--right-card-text) !important;
   }
 
   .order-amount-section {
@@ -1522,15 +1526,15 @@ export default {
   }
 
   .right-column .order-amount-section {
-    background: #2f343d !important;
-    border: 1px solid rgba(148, 163, 184, 0.32) !important;
-    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
+    background: var(--right-card-bg) !important;
+    border: 1px solid var(--right-card-border) !important;
+    box-shadow: var(--right-card-shadow) !important;
   }
 
   .right-column .order-amount-section .section-title,
   .right-column .order-amount-section .info-label,
   .right-column .order-amount-section .info-value {
-    color: #f8fafc !important;
+    color: var(--right-card-text) !important;
   }
 
   .right-column .order-amount-section .info-row.final-row {
@@ -1636,8 +1640,8 @@ export default {
   }
 
   .right-column .payment-methods .payment-security-note {
-    background: #2f343d !important;
-    color: #f8fafc !important;
+    background: var(--right-card-bg) !important;
+    color: var(--right-card-text) !important;
   }
 
   .free-notice {

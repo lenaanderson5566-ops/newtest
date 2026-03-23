@@ -1313,6 +1313,10 @@ export default {
       min-width: 0;
 
       max-width: 520px;
+      --right-card-bg: #2f343d;
+      --right-card-border: rgba(148, 163, 184, 0.32);
+      --right-card-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
+      --right-card-text: #f8fafc;
     }
   }
 
@@ -2024,10 +2028,10 @@ export default {
   }
 
   .right-column .order-summary-section .order-summary {
-    background: #2f343d !important;
-    border: 1px solid rgba(148, 163, 184, 0.32) !important;
-    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24) !important;
-    color: #f8fafc !important;
+    background: var(--right-card-bg) !important;
+    border: 1px solid var(--right-card-border) !important;
+    box-shadow: var(--right-card-shadow) !important;
+    color: var(--right-card-text) !important;
   }
 
   .right-column .order-summary-section .summary-row .summary-label,
@@ -2035,7 +2039,7 @@ export default {
   .right-column .order-summary-section .summary-row.total .summary-label,
   .right-column .order-summary-section .summary-row.total .summary-value,
   .right-column .order-summary-section .coupon-code-label {
-    color: #f8fafc !important;
+    color: var(--right-card-text) !important;
   }
 
   .coupon-verify-section .coupon-input {
