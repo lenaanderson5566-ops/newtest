@@ -132,14 +132,6 @@
         </div>
       </section>
 
-      <section class="session-panel section-block dashboard-like-card">
-        <div>
-          <h3 class="section-title">{{ $t('myCenter.sessionTitle') }}</h3>
-          <p class="session-tip">{{ $t('myCenter.sessionDesc') }}</p>
-        </div>
-        <button class="btn btn-outline logout-btn" @click="logout">{{ $t('myCenter.logout') }}</button>
-      </section>
-
       <div class="bottom-safe-area"></div>
     </div>
   </div>
@@ -261,12 +253,6 @@ const updateAutoRenewalSetting = async () => {
   } finally {
     updatingAutoRenewal.value = false;
   }
-};
-
-
-const logout = async () => {
-  localStorage.removeItem('token');
-  router.push('/login');
 };
 
 onMounted(async () => {
@@ -558,32 +544,6 @@ input:checked + .slider:before { transform: translateX(18px); }
 .slider.round { border-radius: 24px; }
 .slider.round:before { border-radius: 50%; }
 
-.session-panel {
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
-.session-tip {
-  margin: 4px 0 0;
-  color: var(--secondary-text-color);
-  font-size: 12px;
-}
-
-.logout-btn {
-  height: 36px;
-  padding: 0 14px;
-  border-radius: $border-radius-sm;
-  border-color: rgba(220, 38, 38, 0.35);
-  color: #b91c1c;
-
-  &:hover {
-    background: rgba(220, 38, 38, 0.08);
-  }
-}
-
 .bottom-safe-area { height: calc(env(safe-area-inset-bottom, 0px) + 10px); }
 
 @media (max-width: 1100px) {
@@ -603,6 +563,5 @@ input:checked + .slider:before { transform: translateX(18px); }
   .section-block > .section-title { padding: 12px 12px 8px; }
   .settings-row,
   .nav-row { min-height: 58px; padding: 10px 12px; }
-  .session-panel { flex-direction: column; align-items: stretch; padding: 12px; }
 }
 </style>
