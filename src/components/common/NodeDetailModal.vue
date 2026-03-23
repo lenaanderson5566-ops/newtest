@@ -673,6 +673,7 @@ watchEffect(() => {
 
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 
 .fade-enter-active, .fade-leave-active {
 
@@ -786,7 +787,7 @@ watchEffect(() => {
 
   background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
 
-  border-radius: 16px;
+  border-radius: $border-radius-sm;
 
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 
@@ -1086,7 +1087,7 @@ watchEffect(() => {
 
     background-color: rgba(var(--theme-color-rgb), 0.05);
 
-    border-radius: 8px;
+    border-radius: $border-radius-sm;
 
     padding: 12px;
 
@@ -1138,7 +1139,7 @@ watchEffect(() => {
 
       border: none;
 
-      border-radius: 6px;
+      border-radius: $border-radius-sm;
 
       padding: 8px 12px;
 
@@ -1172,7 +1173,7 @@ watchEffect(() => {
 
     background-color: rgba(var(--theme-color-rgb), 0.05);
 
-    border-radius: 8px;
+    border-radius: $border-radius-sm;
 
     padding: 16px;
 
@@ -1252,7 +1253,7 @@ watchEffect(() => {
 
         height: 200px;
 
-        border-radius: 8px;
+        border-radius: $border-radius-sm;
 
         background-color: white;
 
@@ -1340,7 +1341,7 @@ watchEffect(() => {
 
   border: 1px solid rgba(var(--theme-color-rgb), 0.2);
 
-  border-radius: 8px;
+  border-radius: $border-radius-sm;
 
   padding: 10px 16px;
 

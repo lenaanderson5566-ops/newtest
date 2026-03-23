@@ -13,8 +13,8 @@
             <div v-html="content"></div>
           </div>
           <div class="auth-popup-footer">
-            <button 
-              class="popup-action-btn" 
+            <button
+              class="popup-action-btn"
               @click="attemptClose"
               :disabled="waitTimeRemaining > 0"
             >
@@ -68,15 +68,15 @@ export default {
     const show = ref(false);
     const waitTimeRemaining = ref(0);
     let countdownTimer = null;
-    
+
     const startCountdown = () => {
       if (countdownTimer) {
         clearInterval(countdownTimer);
       }
-      
+
       if (props.closeWaitSeconds > 0) {
         waitTimeRemaining.value = props.closeWaitSeconds;
-        
+
         countdownTimer = setInterval(() => {
           if (waitTimeRemaining.value > 0) {
             waitTimeRemaining.value -= 1;
@@ -88,22 +88,22 @@ export default {
         waitTimeRemaining.value = 0;
       }
     };
-    
+
     const attemptClose = () => {
       if (waitTimeRemaining.value > 0) {
         return;
       }
-      
+
       show.value = false;
-      
+
       if (props.cooldownHours > 0) {
         const closeTime = new Date().getTime();
         localStorage.setItem('auth_popup_close_time', closeTime.toString());
       }
-      
+
       emit('close');
     };
-    
+
     watch(() => props.showPopup, (newVal) => {
       if (newVal) {
         setTimeout(() => {
@@ -117,13 +117,13 @@ export default {
         }
       }
     }, { immediate: true });
-    
+
     onUnmounted(() => {
       if (countdownTimer) {
         clearInterval(countdownTimer);
       }
     });
-    
+
     return {
       show,
       attemptClose,
@@ -134,6 +134,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .auth-popup-overlay {
   position: fixed;
   top: 0;
@@ -148,24 +150,20 @@ export default {
   padding: 20px;
   box-sizing: border-box;
   backdrop-filter: blur(4px);
-  
+
   .auth-popup-container {
     width: 100%;
     max-width: 500px;
-    background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-    border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(var(--theme-color-rgb), 0.15);
+    background-color: #fff;
+    border-radius: $border-radius-sm;
+    box-shadow: none;
+    border: 1px solid rgba(15, 23, 42, 0.08);
     overflow: hidden;
     display: flex;
     flex-direction: column;
     max-height: 80vh;
     animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    
-    @media (prefers-color-scheme: dark) {
-      background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
-    }
-    
+
     .auth-popup-header {
       padding: 20px;
       display: flex;
@@ -173,14 +171,14 @@ export default {
       align-items: center;
       border-bottom: 1px solid var(--border-color);
       background-color: rgba(var(--theme-color-rgb), 0.03);
-      
+
       .popup-title {
         margin: 0;
         font-size: 18px;
         font-weight: 600;
         color: var(--text-color);
       }
-      
+
       .popup-close-btn {
         background: none;
         border: none;
@@ -193,53 +191,53 @@ export default {
         margin: -8px;
         border-radius: 50%;
         transition: all 0.3s ease;
-        
+
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
           color: var(--text-color);
           transform: rotate(90deg);
         }
-        
+
         &:disabled {
           opacity: 0.5;
           cursor: not-allowed;
         }
       }
     }
-    
+
     .auth-popup-content {
       padding: 20px;
       overflow-y: auto;
       flex: 1;
       background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
-      
+
       :deep(p) {
         margin: 12px 0;
         line-height: 1.6;
         color: var(--text-color);
       }
-      
+
       :deep(strong) {
         color: var(--theme-color);
         font-weight: 600;
       }
-      
+
       :deep(a) {
         color: var(--theme-color);
         text-decoration: none;
-        
+
         &:hover {
           text-decoration: underline;
         }
       }
     }
-    
+
     .auth-popup-footer {
       padding: 15px 20px;
       border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: flex-end;
-      
+
       .popup-action-btn {
         padding: 8px 20px;
         background-color: var(--theme-color);
@@ -251,12 +249,12 @@ export default {
         cursor: pointer;
         transition: all 0.3s ease;
         min-width: 120px;
-        
+
         &:hover:not(:disabled) {
           transform: translateY(-2px);
           box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
         }
-        
+
         &:disabled {
           opacity: 0.7;
           cursor: not-allowed;
@@ -324,27 +322,27 @@ export default {
 @media (max-width: 768px) {
   .auth-popup-overlay {
     padding: 15px;
-    
+
     .auth-popup-container {
       max-width: 100%;
       max-height: 85vh;
-      
+
       .auth-popup-header {
         padding: 15px;
-        
+
         .popup-title {
           font-size: 16px;
         }
       }
-      
+
       .auth-popup-content {
         padding: 15px;
       }
-      
+
       .auth-popup-footer {
         padding: 12px 15px;
       }
     }
   }
 }
-</style> 
+</style>

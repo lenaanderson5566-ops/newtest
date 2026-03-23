@@ -16,48 +16,10 @@
       
       <!-- 订单列表 -->
       <div v-else-if="orders.length > 0" class="orders-content">
-        <!-- 分页控制 -->
-        <div class="pagination-container" v-if="totalPages > 1">
-          <div class="pagination">
-            <button 
-              class="page-button prev" 
-              @click="prevPage" 
-              :disabled="currentPage === 1"
-              :class="{ 'disabled': currentPage === 1 }"
-            >
-              <IconChevronLeft :size="16" />
-            </button>
-            
-            <div class="page-info">
-              {{ $t('common.page') || '页' }} {{ currentPage }} / {{ totalPages }}
-            </div>
-            
-            <button 
-              class="page-button next" 
-              @click="nextPage" 
-              :disabled="currentPage === totalPages"
-              :class="{ 'disabled': currentPage === totalPages }"
-            >
-              <IconChevronRight :size="16" />
-            </button>
-          </div>
-        </div>
-
         <!-- 移动端卡片视图 -->
-        <div class="order-cards" 
-             v-if="isMobileView"
-             @touchstart="handleTouchStart" 
-             @touchmove="handleTouchMove" 
-             @touchend="handleTouchEnd">
-          <!-- 滑动提示 -->
-          <div class="swipe-hint" v-if="orders.length > pageSize">
-            <IconArrowLeft :size="16" class="swipe-icon" />
-            <span>{{ $t('common.swipeHint') || '左右滑动切换' }}</span>
-            <IconArrowRight :size="16" class="swipe-icon" />
-          </div>
-          
-          <transition-group :name="slideDirection === 'right' ? 'page-switch-right' : 'page-switch'">
-            <div v-for="order in paginatedOrders" :key="order.trade_no" class="order-card">
+        <div class="order-cards" v-if="isMobileView">
+          <transition-group name="page-switch">
+            <div v-for="order in orders" :key="order.trade_no" class="order-card">
               <div class="order-card-header">
                 <div class="order-number">
                   <span class="label">{{ headerTexts.tradeNo }}:</span>
@@ -108,11 +70,7 @@
         </div>
 
         <!-- 桌面端表格视图 -->
-        <div class="order-table-container" 
-             v-else
-             @touchstart="handleTouchStart" 
-             @touchmove="handleTouchMove" 
-             @touchend="handleTouchEnd">
+        <div class="order-table-container" v-else>
           <table class="order-table">
             <thead>
               <tr>
@@ -125,8 +83,8 @@
               </tr>
             </thead>
             <tbody>
-              <transition-group :name="slideDirection === 'right' ? 'page-switch-right' : 'page-switch'">
-                <tr v-for="order in paginatedOrders" :key="order.trade_no">
+              <transition-group name="page-switch">
+                <tr v-for="order in orders" :key="order.trade_no">
                   <td class="trade-no">{{ order.trade_no }}</td>
                   <td>{{ formatDate(order.created_at) }}</td>
                   <td>{{ formatCycle(order.period) }}</td>
@@ -213,11 +171,7 @@ import {
   IconAlertTriangle,
   IconShoppingCart,
   IconEye,
-  IconX,
-  IconChevronLeft,
-  IconChevronRight,
-  IconArrowLeft,
-  IconArrowRight
+  IconX
 } from '@tabler/icons-vue';
 import { fetchOrderList, cancelOrder } from '@/api/account/orderlist';
 
@@ -232,7 +186,6 @@ const showConfirmModal = ref(false);
 const currentTradeNo = ref('');
 const canceling = ref(false);
 const isMobileView = ref(false);
-const slideDirection = ref('left'); 
 
 const checkMobileView = () => {
   isMobileView.value = window.innerWidth < 768;
@@ -240,61 +193,7 @@ const checkMobileView = () => {
 
 window.addEventListener('resize', checkMobileView);
 
-const currentPage = ref(1);
-const pageSize = 10; 
 
-const totalPages = computed(() => {
-  return Math.ceil(orders.value.length / pageSize);
-});
-
-const paginatedOrders = computed(() => {
-  const startIndex = (currentPage.value - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  return orders.value.slice(startIndex, endIndex);
-});
-
-const touchStartX = ref(0);
-const touchEndX = ref(0);
-const minSwipeDistance = 50; 
-
-const handleTouchStart = (e) => {
-  touchStartX.value = e.touches[0].clientX;
-};
-
-const handleTouchMove = (e) => {
-  touchEndX.value = e.touches[0].clientX;
-};
-
-const handleTouchEnd = () => {
-  const swipeDistance = touchEndX.value - touchStartX.value;
-  
-  if (Math.abs(swipeDistance) > minSwipeDistance) {
-    if (swipeDistance > 0) {
-      slideDirection.value = 'right';
-      prevPage();
-    } else {
-      slideDirection.value = 'left';
-      nextPage();
-    }
-  }
-  
-  touchStartX.value = 0;
-  touchEndX.value = 0;
-};
-
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    slideDirection.value = 'left';
-    currentPage.value++;
-  }
-};
-
-const prevPage = () => {
-  if (currentPage.value > 1) {
-    slideDirection.value = 'right';
-    currentPage.value--;
-  }
-};
 
 const fetchOrders = async () => {
   loading.value = true;
@@ -305,7 +204,6 @@ const fetchOrders = async () => {
     
     if (result && result.data) {
       orders.value = result.data;
-      currentPage.value = 1;
     } else {
       orders.value = [];
     }
@@ -478,6 +376,8 @@ watch(locale, () => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .orders-container {
   padding: 0;
   padding-bottom: calc(2px + 64px); 
@@ -497,8 +397,8 @@ watch(locale, () => {
 
 
 .dashboard-card {
-  background-color: var(--card-bg);
-  border-radius: 12px;
+  background-color: #fff;
+  border-radius: $border-radius-sm;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   padding: 20px;
   margin-bottom: 24px;
@@ -544,8 +444,8 @@ watch(locale, () => {
 
 .order-table-container {
   overflow-x: auto; 
-  background-color: var(--card-bg);
-  border-radius: 12px;
+  background-color: #fff;
+  border-radius: $border-radius-sm;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
@@ -788,7 +688,7 @@ watch(locale, () => {
 
 .modal-content {
   background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   width: 90%;
   max-width: 480px;
@@ -936,51 +836,6 @@ watch(locale, () => {
 }
 
 
-.pagination-container {
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.pagination {
-  display: flex;
-  align-items: center;
-  background-color: var(--card-bg);
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--border-color);
-  
-  .page-button {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    background-color: transparent;
-    border: none;
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    
-    &:hover:not(.disabled) {
-      background-color: rgba(var(--theme-color-rgb), 0.1);
-      color: var(--theme-color);
-    }
-    
-    &.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  }
-  
-  .page-info {
-    margin: 0 1rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-  }
-}
 
 
 .page-switch-enter-active,
@@ -998,44 +853,27 @@ watch(locale, () => {
   transform: translateX(-30px);
 }
 
-.page-switch-right-enter-active,
-.page-switch-right-leave-active {
-  transition: all 0.3s ease;
-}
-
-.page-switch-right-enter-from {
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-.page-switch-right-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
 
 
 @media (max-width: 768px) {
-  .order-table-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; 
-    cursor: grab;
-    
-    &:active {
-      cursor: grabbing;
-    }
+  .orders-container {
+    padding-bottom: calc(2px + 56px);
   }
+
+
+
 }
 
 
 .order-cards {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.7rem;
 }
 
 .order-card {
-  background-color: var(--card-bg);
-  border-radius: 12px;
+  background-color: #fff;
+  border-radius: $border-radius-sm;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
@@ -1048,7 +886,7 @@ watch(locale, () => {
 }
 
 .order-card-header {
-  padding: 1rem;
+  padding: 0.75rem 0.85rem;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
@@ -1074,12 +912,12 @@ watch(locale, () => {
 }
 
 .order-card-body {
-  padding: 0.75rem 1rem;
+  padding: 0.55rem 0.85rem;
   
   .info-row {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem 0;
+    padding: 0.35rem 0;
     border-bottom: 1px solid rgba(var(--border-color-rgb), 0.5);
     
     &:last-child {
@@ -1104,18 +942,18 @@ watch(locale, () => {
 }
 
 .order-card-footer {
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 0.85rem;
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
+  gap: 0.5rem;
   background-color: rgba(var(--theme-color-rgb), 0.02);
   
   .action-button {
     display: flex;
     align-items: center;
     gap: 0.25rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.4rem 0.65rem;
     border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 500;
@@ -1152,30 +990,4 @@ watch(locale, () => {
 }
 
 
-.swipe-hint {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  margin-bottom: 0.75rem;
-  background-color: rgba(var(--theme-color-rgb), 0.05);
-  border-radius: 8px;
-  font-size: 0.85rem;
-  color: rgba(var(--theme-color-rgb), 0.68);
-  
-  .swipe-icon {
-    color: var(--theme-color);
-    animation: swipe-animation 1.5s infinite alternate;
-  }
-  
-  @keyframes swipe-animation {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(3px);
-    }
-  }
-}
 </style> 

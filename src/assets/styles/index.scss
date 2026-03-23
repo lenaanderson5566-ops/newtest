@@ -27,6 +27,15 @@
 .app-content-wrapper .page-shell {
   padding-inline: 0 !important;
   padding-top: 0;
+  background-color: var(--background-color);
+  background-image: none;
+}
+
+/* 统一去除半透明玻璃态背景，避免页面呈现混合底色 */
+.app-content-wrapper .glassmorphism {
+  background-color: var(--card-background) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 .app-content-wrapper .page-inner {
@@ -197,16 +206,32 @@
 .pending-order-modal .pending-order-dialog {
   position: relative;
   width: 90%;
-  max-width: 480px;
-  background: var(--card-background);
+  max-width: 320px;
+  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
   color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: $border-radius-sm;
+  overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
+}
+
+.pending-order-modal .pending-order-icon {
+  margin: 24px auto 0;
+  width: 48px;
+  height: 48px;
+  background-color: #ff980020;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff9800;
+}
+
+.pending-order-modal .pending-order-header {
+  padding: 16px 24px;
+  text-align: center;
 }
 
 .pending-order-modal .pending-order-dialog h3 {
@@ -225,14 +250,15 @@
 
 .pending-order-modal .pending-order-actions {
   display: flex;
+  padding: 0 16px 20px;
   gap: 12px;
 }
 
 .pending-order-modal .pending-order-actions button {
   flex: 1;
   min-height: 40px;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 10px 0;
+  border-radius: $border-radius-sm;
   border: 1px solid var(--border-color);
   font-size: 14px;
   cursor: pointer;
@@ -243,19 +269,27 @@
 .pending-order-modal .pending-order-actions .btn-return-orders {
   background: transparent;
   color: var(--text-color);
+  box-shadow: none;
 
   &:hover {
     background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
+    transform: none;
+    box-shadow: none;
+  }
+
+  &:active {
+    transform: none;
+    box-shadow: none;
   }
 }
 
 .pending-order-modal .pending-order-actions .btn-confirm-cancel {
-  background: var(--theme-color);
+  background: #ff4d4f;
   color: #fff;
-  border-color: var(--theme-color);
+  border-color: #ff4d4f;
 
   &:hover:not(:disabled) {
-    filter: brightness(1.05);
+    background: #ff7875;
   }
 }
 

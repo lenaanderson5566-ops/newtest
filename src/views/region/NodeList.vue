@@ -89,7 +89,6 @@
             <div class="node-info">
               <div class="node-tags">
                 <span class="node-tag rate-tag" v-if="showNodeRate">x{{ line.rate }}</span>
-                <span class="node-tag type-tag">{{ line.type }}</span>
               </div>
 
               <h3 class="node-name">{{ line.name }}</h3>
@@ -373,6 +372,7 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 
 .nodes-container {
 
@@ -406,7 +406,7 @@ onMounted(() => {
 
   background-color: var(--card-bg);
 
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
 
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
@@ -491,7 +491,7 @@ onMounted(() => {
     border: 1px solid var(--border-color);
     background: #fff;
     color: #1f2937;
-    border-radius: 12px;
+    border-radius: $border-radius-sm;
     padding: 10px 18px;
     cursor: pointer;
     display: inline-flex;
@@ -514,7 +514,7 @@ onMounted(() => {
   .import-panel {
     margin-top: 16px;
     border: 1px solid var(--border-color);
-    border-radius: 14px;
+    border-radius: $border-radius-sm;
     padding: 16px;
     background: var(--card-bg);
 
@@ -532,7 +532,7 @@ onMounted(() => {
       align-items: center;
       gap: 12px;
       padding: 14px;
-      border-radius: 12px;
+      border-radius: $border-radius-sm;
       background: #f6f7fb;
       margin-bottom: 12px;
       cursor: pointer;
@@ -541,7 +541,7 @@ onMounted(() => {
     .import-icon {
       width: 56px;
       height: 56px;
-      border-radius: 12px;
+      border-radius: $border-radius-sm;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -590,7 +590,7 @@ onMounted(() => {
 
     .platform-option {
       border: 1px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: $border-radius-sm;
       padding: 22px 14px;
       background: #f5f7fb;
       font-size: 14px;
@@ -633,7 +633,7 @@ onMounted(() => {
 
     .qrcode-modal {
       background: #fff;
-      border-radius: 14px;
+      border-radius: $border-radius-sm;
       width: min(90vw, 320px);
       padding: 14px;
 
@@ -679,9 +679,9 @@ onMounted(() => {
 
 
 .nodes-no-plan {
-  background: var(--card-bg);
+  background: rgba(var(--card-background-rgb, 255, 255, 255), 1);
   border: 1px solid var(--border-color);
-  border-radius: 18px;
+  border-radius: $border-radius-sm;
   padding: 24px;
   box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
 
@@ -706,7 +706,7 @@ onMounted(() => {
   .no-plan-map {
     position: relative;
     height: 240px;
-    border-radius: 16px;
+    border-radius: $border-radius-sm;
     margin-bottom: 20px;
     border: 1px solid rgba(var(--theme-color-rgb), 0.22);
     background:
@@ -785,7 +785,7 @@ onMounted(() => {
 
     .region-lock-card {
       border: 1px solid var(--border-color);
-      border-radius: 14px;
+      border-radius: $border-radius-sm;
       padding: 14px;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.96));
       position: relative;
@@ -824,7 +824,7 @@ onMounted(() => {
     .cta-btn {
       min-width: 168px;
       padding: 10px 18px;
-      border-radius: 12px;
+      border-radius: $border-radius-sm;
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
@@ -872,9 +872,9 @@ onMounted(() => {
 
   padding: 0.9rem 1.05rem;
 
-  border-radius: 14px;
+  border-radius: $border-radius-sm;
 
-  background: var(--card-bg);
+  background: rgba(var(--card-background-rgb, 255, 255, 255), 1);
 
   transition: all 0.25s ease;
 
@@ -946,7 +946,7 @@ onMounted(() => {
 
         padding: 0 9px;
 
-        border-radius: 8px;
+        border-radius: $border-radius-sm;
 
         background-color: rgba(var(--theme-color-rgb), 0.1);
 
@@ -965,14 +965,6 @@ onMounted(() => {
         }
 
         
-
-        &.type-tag {
-
-          background-color: rgba(96, 165, 250, 0.18);
-
-          color: #2563eb;
-
-        }
 
                 &.feature-tag {
           background-color: rgba(99, 102, 241, 0.12);
@@ -1185,7 +1177,7 @@ onMounted(() => {
 
   gap: 8px;
 
-  border-radius: 8px;
+  border-radius: $border-radius-sm;
 
   background-color: rgba(var(--theme-color-rgb), 0.85);
 

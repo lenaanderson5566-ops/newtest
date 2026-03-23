@@ -59,6 +59,18 @@
       <section class="section-block dashboard-like-card">
         <h3 class="section-title">{{ $t('myCenter.financeTitle') }}</h3>
         <div class="settings-list">
+
+          <div class="settings-row">
+            <div class="row-main">
+              <div class="row-title">{{ $t('profile.autoRenewal') }}</div>
+              <p>{{ $t('profile.autoRenewalDesc') }}</p>
+            </div>
+            <label class="switch" :class="{ disabled: updatingAutoRenewal }">
+              <input type="checkbox" v-model="autoRenewal" @change="updateAutoRenewalSetting" :disabled="updatingAutoRenewal" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
           <button class="nav-row" @click="go('/billing?tab=wallet')">
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.accountBalance') }}</div>
@@ -151,7 +163,9 @@ const subscribeInfo = ref({});
 const currencySymbol = ref('$');
 const remindExpire = ref(false);
 const remindTraffic = ref(false);
+const autoRenewal = ref(false);
 const updatingSettings = ref(false);
+const updatingAutoRenewal = ref(false);
 
 const userTier = computed(() => {
   const tier = userInfo.value?.tier || {};
@@ -207,23 +221,48 @@ const subscriptionExpireText = computed(() => {
 const formatBalance = (balance) => ((Number(balance || 0) / 100).toFixed(2));
 const go = (path) => router.push(path);
 
+const buildRemindPayload = () => ({
+  remind_expire: remindExpire.value ? 1 : 0,
+  remind_traffic: remindTraffic.value ? 1 : 0,
+  auto_renewal: autoRenewal.value ? 1 : 0
+});
+
+const resetLocalReminderStateFromUserInfo = () => {
+  remindExpire.value = !!userInfo.value.remind_expire;
+  remindTraffic.value = !!userInfo.value.remind_traffic;
+  autoRenewal.value = !!userInfo.value.auto_renewal;
+};
+
 const updateRemindSettings = async () => {
   try {
     updatingSettings.value = true;
-    await apiUpdateRemind({
-      remind_expire: remindExpire.value ? 1 : 0,
-      remind_traffic: remindTraffic.value ? 1 : 0,
-      auto_renewal: userInfo.value.auto_renewal ? 1 : 0
-    });
+    await apiUpdateRemind(buildRemindPayload());
+    userInfo.value.remind_expire = remindExpire.value ? 1 : 0;
+    userInfo.value.remind_traffic = remindTraffic.value ? 1 : 0;
+    userInfo.value.auto_renewal = autoRenewal.value ? 1 : 0;
     showToast(t('myCenter.settingsUpdated'), 'success');
   } catch (error) {
-    remindExpire.value = !!userInfo.value.remind_expire;
-    remindTraffic.value = !!userInfo.value.remind_traffic;
+    resetLocalReminderStateFromUserInfo();
     showToast(t('myCenter.settingsUpdateFailed'), 'error');
   } finally {
     updatingSettings.value = false;
   }
 };
+
+const updateAutoRenewalSetting = async () => {
+  try {
+    updatingAutoRenewal.value = true;
+    await apiUpdateRemind(buildRemindPayload());
+    userInfo.value.auto_renewal = autoRenewal.value ? 1 : 0;
+    showToast(t('profile.updateSuccess'), 'success');
+  } catch (error) {
+    resetLocalReminderStateFromUserInfo();
+    showToast(t('profile.updateError'), 'error');
+  } finally {
+    updatingAutoRenewal.value = false;
+  }
+};
+
 
 const logout = async () => {
   localStorage.removeItem('token');
@@ -239,8 +278,7 @@ onMounted(async () => {
 
   if (userResp.status === 'fulfilled') {
     userInfo.value = userResp.value?.data || {};
-    remindExpire.value = !!userInfo.value.remind_expire;
-    remindTraffic.value = !!userInfo.value.remind_traffic;
+    resetLocalReminderStateFromUserInfo();
   }
   if (subscribeResp.status === 'fulfilled') subscribeInfo.value = subscribeResp.value?.data || {};
   if (configResp.status === 'fulfilled' && configResp.value?.data?.currency_symbol) {
@@ -250,9 +288,11 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
+
 .my-center {
   padding: 0 0 2px;
-  background: linear-gradient(180deg, rgba(var(--theme-color-rgb), 0.03), transparent 42%);
+  background: var(--background-color);
 }
 
 .my-center-inner {
@@ -261,7 +301,7 @@ onMounted(async () => {
 }
 
 .section-block {
-  border-radius: 16px;
+  border-radius: $border-radius-sm;
   background-color: var(--card-bg-color, var(--card-background));
   border: 1px solid rgba(var(--text-color-rgb), 0.08);
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04), 0 10px 24px rgba(15, 23, 42, 0.05);
@@ -416,7 +456,7 @@ onMounted(async () => {
 .summary-item {
   padding: 12px;
   border: 1px solid rgba(var(--text-color-rgb), 0.08);
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
   background: linear-gradient(180deg, rgba(var(--card-background-rgb), 0.96), rgba(var(--card-background-rgb), 0.9));
 
   .label {
@@ -506,7 +546,7 @@ onMounted(async () => {
 .mini-action {
   height: 34px;
   padding: 0 12px;
-  border-radius: 10px;
+  border-radius: $border-radius-sm;
 }
 
 .switch { position: relative; display: inline-block; width: 42px; height: 24px; }
@@ -535,7 +575,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .logout-btn {
   height: 36px;
   padding: 0 14px;
-  border-radius: 10px;
+  border-radius: $border-radius-sm;
   border-color: rgba(220, 38, 38, 0.35);
   color: #b91c1c;
 

@@ -242,6 +242,8 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .deposit-container {
   padding: 0;
   display: flex;
@@ -254,7 +256,7 @@ onMounted(() => {
   
   .dashboard-card {
     background-color: var(--card-bg-color);
-    border-radius: 12px;
+    border-radius: $border-radius-sm;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 20px;
     margin-bottom: 24px;
@@ -380,7 +382,7 @@ onMounted(() => {
       gap: 10px;
       padding: 12px;
       background-color: rgba(var(--theme-color-rgb), 0.1);
-      border-radius: 8px;
+      border-radius: $border-radius-sm;
       
       .notice-icon {
         color: var(--primary-color);
@@ -404,7 +406,7 @@ onMounted(() => {
         
         .period-card {
           cursor: pointer;
-          border-radius: 12px;
+          border-radius: $border-radius-sm;
           overflow: hidden;
           border: 2px solid var(--border-color);
           transition: all 0.3s ease;
@@ -494,7 +496,7 @@ onMounted(() => {
           width: 100%;
           height: 100%;
           border: 2px solid var(--border-color);
-          border-radius: 12px;
+          border-radius: $border-radius-sm;
           background-color: var(--input-bg, rgba(0, 0, 0, 0.02));
           padding: 0 15px 0 35px;
           font-size: 1.2rem;
@@ -539,7 +541,7 @@ onMounted(() => {
         background-color: var(--theme-color);
         color: white;
         border: none;
-        border-radius: 12px;
+        border-radius: $border-radius-sm;
         padding: 0 30px;
         height: 50px;
         font-size: 1.1rem;
@@ -613,21 +615,60 @@ onMounted(() => {
 }
 @media (max-width: 768px) {
   .deposit-container {
-    padding: 15px;
-    padding-bottom: 100px;
+    padding: 10px;
+    padding-bottom: 84px;
+
+    .dashboard-card {
+      padding: 14px;
+      margin-bottom: 14px;
+    }
     
     .balance-card {
+      .card-body {
+        padding: 14px;
+        gap: 10px;
+      }
+
       .balance-display {
         .balance-value {
-          font-size: 2.5rem;
+          font-size: 2.2rem;
+          margin-bottom: 6px;
         }
       }
     }
     
     .deposit-card {
+      .deposit-notice {
+        padding: 8px 10px;
+        gap: 8px;
+      }
+
       .amount-selection {
+        margin-bottom: 6px;
+
         .period-cards {
           grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+
+          .period-card .period-card-inner {
+            padding: 12px 8px;
+          }
+        }
+      }
+
+      .custom-amount {
+        margin-top: 10px;
+      }
+
+      .deposit-actions {
+        margin-top: 14px;
+
+        .btn-order {
+          min-width: 0;
+          width: 100%;
+          height: 44px;
+          font-size: 1rem;
+          padding: 0 18px;
         }
       }
     }

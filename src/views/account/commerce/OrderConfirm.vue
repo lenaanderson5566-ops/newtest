@@ -107,7 +107,7 @@
                   <div class="period-card-inner">
                     <div class="period-type">
                       {{
-                        $t(`shop.plan.price_options.${getPriceTypeKey(type)}`)
+                        formatPeriodOption(type)
                       }}
                       <span
                         v-if="showPeriodDiscountTag(type, price)"
@@ -118,7 +118,7 @@
                     </div>
 
                     <div class="period-price">
-                      <span class="currency">{{ currencySymbol }}</span>
+                      <span class="currency">{{ displayCurrency }}</span>
 
                       <span class="amount">{{ (price / 100).toFixed(2) }}</span>
                       <span
@@ -156,60 +156,32 @@
         <!-- 右侧内容：订单信息 -->
 
         <div class="right-column">
-          <!-- 优惠码 -->
-
-          <div class="section-wrapper">
-            <div class="coupon-input">
-              <input
-                type="text"
-                v-model="couponCode"
-                :disabled="loading.plan || couponApplied"
-                :placeholder="$t('order.enter_coupon')"
-                class="coupon-field"
-                :class="{ applied: couponApplied }"
-              />
-
-              <button
-                class="btn-verify"
-                @click="verifyCoupon"
-                :disabled="
-                  !couponCode || verifying || loading.plan || couponApplied
-                "
-                :class="{ applied: couponApplied }"
-              >
-                <IconDiscount2 v-if="!verifying && !couponApplied" />
-
-                <IconCheck v-else-if="couponApplied" />
-
-                <span v-else-if="verifying" class="loader"></span>
-
-                <span>{{
-                  couponApplied
-                    ? $t("order.coupon_applied")
-                    : $t("order.verify_coupon")
-                }}</span>
-              </button>
-
-              <button
-                v-if="couponApplied"
-                class="btn-remove-coupon"
-                @click="removeCoupon"
-              >
-                <IconX :size="16" />
-
-                <span>{{ $t("order.remove_coupon") }}</span>
-              </button>
-            </div>
-          </div>
-
           <!-- 订单摘要 -->
 
           <div class="section-wrapper order-summary-section">
-            <div class="section-title">
-              <span>{{ $t("order.order_summary") }}</span>
-            </div>
-
             <div class="order-summary glassmorphism">
+              <div class="coupon-merge-block">
+                <div class="coupon-input">
+                  <input
+                    type="text"
+                    v-model="couponCode"
+                    :disabled="loading.plan || couponApplied"
+                    :placeholder="$t('order.enter_coupon')"
+                    class="coupon-field"
+                    :class="{ applied: couponApplied }"
+                  />
+                  <button v-if="!couponApplied" class="btn-verify" @click="verifyCoupon"
+                    :disabled="!couponCode || verifying || loading.plan">
+                    <IconDiscount2 v-if="!verifying" />
+                    <span v-else class="loader"></span>
+                    <span>{{ $t("order.verify_coupon") }}</span>
+                  </button>
+                  <span v-if="couponApplied" class="coupon-applied-tag">✓ 已应用</span>
+                  <button v-if="couponApplied" class="btn-remove-text" @click="removeCoupon">移除</button>
+                </div>
+                <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
+              </div>
+
               <!-- 骨架屏 -->
 
               <div v-if="loading.plan">
@@ -232,7 +204,7 @@
 
               <div v-else>
                 <div class="summary-row">
-                  <div class="summary-label">{{ $t("payment.total_price") }}</div>
+                  <div class="summary-label">订阅价格</div>
 
                   <div class="summary-value">
                     {{ formatCurrencyAmount(originalPrice) }}
@@ -240,7 +212,7 @@
                 </div>
 
                 <div class="summary-row" v-if="couponDiscountAmount > 0">
-                  <div class="summary-label">{{ $t("payment.coupon_discount_amount") }}</div>
+                  <div class="summary-label">优惠券 · {{ couponCode }}</div>
 
                   <div class="summary-value discount">
                     -{{ formatCurrencyAmount(couponDiscountAmount) }}
@@ -248,30 +220,36 @@
                 </div>
 
                 <div class="summary-row" v-if="userDiscountAmount > 0">
-                  <div class="summary-label">{{ $t("payment.user_discount_amount") }}</div>
+                  <div class="summary-label">会员折扣</div>
 
                   <div class="summary-value discount">
                     -{{ formatCurrencyAmount(userDiscountAmount) }}
                   </div>
                 </div>
 
-                <div class="summary-row" v-if="totalDiscountAmount > 0">
-                  <div class="summary-label">{{ $t("payment.total_discount_amount") }}</div>
-
-                  <div class="summary-value discount">
-                    -{{ formatCurrencyAmount(totalDiscountAmount) }}
-                  </div>
-                </div>
-
                 <div class="summary-divider"></div>
 
                 <div class="summary-row total">
-                  <div class="summary-label">合计</div>
+                  <div class="summary-label">应付金额</div>
 
                   <div class="summary-value">
                     {{ formatCurrencyAmount(totalWithFee) }}
                   </div>
                 </div>
+
+                <button
+                  class="btn-order summary-submit-action"
+                  @click="submitOrder"
+                  :disabled="
+                    !selectedPriceType || loading.submitting || loading.plan
+                  "
+                >
+                  <IconShoppingCart v-if="!loading.submitting" :size="18" />
+
+                  <span v-else class="loader"></span>
+
+                  <span>{{ $t("order.place_order") }}</span>
+                </button>
               </div>
             </div>
           </div>
@@ -284,20 +262,6 @@
 
               <span>{{ $t("order.back_to_shop") }}</span>
             </button>
-
-            <button
-              class="btn-order"
-              @click="submitOrder"
-              :disabled="
-                !selectedPriceType || loading.submitting || loading.plan
-              "
-            >
-              <IconShoppingCart v-if="!loading.submitting" :size="18" />
-
-              <span v-else class="loader"></span>
-
-              <span>{{ $t("order.place_order") }}</span>
-            </button>
           </div>
         </div>
       </div>
@@ -307,11 +271,16 @@
       <div v-if="showPendingOrderModal" class="pending-order-modal">
         <div class="pending-order-overlay" @click="closePendingOrderModal"></div>
         <div class="pending-order-dialog" role="dialog" aria-modal="true" aria-labelledby="pending-order-title">
-          <h3 id="pending-order-title">注意</h3>
-          <p>您还有未完成的订单，购买前需要先取消，确定要取消之前的订单吗？</p>
+          <div class="pending-order-icon">
+            <IconAlertTriangle :size="28" />
+          </div>
+          <div class="pending-order-header">
+            <h3 id="pending-order-title">注意</h3>
+            <p>您还有未完成的订单，购买前需要先取消，确定要取消之前的订单吗？</p>
+          </div>
           <div class="pending-order-actions">
-            <button class="btn-return-orders" @click="goToMyOrders">返回我的订单</button>
-            <button class="btn-confirm-cancel" @click="confirmCancelPreviousOrder" :disabled="loading.cancellingExisting">
+            <button class="btn-return-orders cancel-btn" @click="goToMyOrders">返回我的订单</button>
+            <button class="btn-confirm-cancel confirm-btn" @click="confirmCancelPreviousOrder" :disabled="loading.cancellingExisting">
               <span v-if="!loading.cancellingExisting">确定取消</span>
               <span v-else class="loader"></span>
             </button>
@@ -404,6 +373,8 @@ export default {
 
     const couponApplied = ref(false);
 
+    const couponErrorMessage = ref("");
+
     const verifying = ref(false);
 
     const couponInfo = ref(null);
@@ -469,12 +440,18 @@ export default {
     const totalWithFee = computed(() => finalPrice.value);
 
     const displayCurrency = computed(() => {
-      return `${currency.value || 'CNY'}`.toUpperCase();
+      return `${currency.value || 'USD'}`.toUpperCase();
     });
 
     const formatCurrencyAmount = (amount) => {
       if (amount === null || amount === undefined) return '-';
       return `${displayCurrency.value} ${(Number(amount) / 100).toFixed(2)}`;
+    };
+
+    const formatPeriodOption = (type) => {
+      if (type === "month_price") return "月付";
+      if (type === "year_price") return "年付";
+      return t(`shop.plan.price_options.${getPriceTypeKey(type)}`);
     };
 
     const userHasActivePlan = computed(() => {
@@ -658,6 +635,7 @@ export default {
       if (!couponCode.value || verifying.value) return;
 
       verifying.value = true;
+      couponErrorMessage.value = "";
 
       try {
         const response = await checkCoupon(couponCode.value, plan.value.id);
@@ -709,6 +687,7 @@ export default {
 
           couponInfo.value = null;
 
+          couponErrorMessage.value = response.message || t("order.coupon_invalid");
           showToast(response.message || t("order.coupon_invalid"), "error");
         }
       } catch (error) {
@@ -719,6 +698,9 @@ export default {
         discountPercent.value = 0;
 
         couponInfo.value = null;
+
+        couponErrorMessage.value =
+          error.response?.message || error.message || t("order.coupon_invalid");
 
         showToast(
           error.response?.message || error.message || t("order.coupon_invalid"),
@@ -750,16 +732,60 @@ export default {
       );
     };
 
-    const fetchLatestPendingTradeNo = async () => {
+    const toComparablePlanId = (value) => {
+      const numeric = Number(value);
+      return Number.isFinite(numeric) ? numeric : null;
+    };
+
+    const isUnpaidCreatedOrder = (order) => {
+      if (!order) return false;
+      return order.total_amount !== null && order.payment_amount == null;
+    };
+
+    const isSameOrderSpecAsCurrentSelection = (order) => {
+      if (!order || !plan.value?.id || !selectedPriceType.value) {
+        return false;
+      }
+
+      const orderPlanId =
+        toComparablePlanId(order.plan_id) ??
+        toComparablePlanId(order.plan?.id) ??
+        toComparablePlanId(order.planId);
+      const currentPlanId = toComparablePlanId(plan.value.id);
+
+      const orderPeriod = String(order.period || "");
+      const currentPeriod = String(selectedPriceType.value || "");
+
+      return (
+        currentPlanId !== null &&
+        orderPlanId === currentPlanId &&
+        orderPeriod === currentPeriod
+      );
+    };
+
+    const fetchLatestPendingOrder = async (tradeNo = "") => {
       try {
         const resp = await fetchOrderList();
         const orders = Array.isArray(resp?.data) ? resp.data : [];
-        const pending = orders.find((item) => Number(item?.status) === 0 || Number(item?.status) === 1);
-        return pending?.trade_no || "";
+        const pendingOrders = orders.filter(
+          (item) => Number(item?.status) === 0 || Number(item?.status) === 1
+        );
+        if (tradeNo) {
+          const matched = pendingOrders.find((item) => item?.trade_no === tradeNo);
+          if (matched) {
+            return matched;
+          }
+        }
+        return pendingOrders[0] || null;
       } catch (err) {
         console.error("Failed to fetch pending orders:", err);
-        return "";
+        return null;
       }
+    };
+
+    const fetchLatestPendingTradeNo = async () => {
+      const pending = await fetchLatestPendingOrder();
+      return pending?.trade_no || "";
     };
 
     const closePendingOrderModal = () => {
@@ -810,7 +836,8 @@ export default {
 
     // 实际的订单提交逻辑
 
-    const executeOrderSubmission = async () => {
+    const executeOrderSubmission = async (options = {}) => {
+      const { conflictResolved = false } = options;
       loading.submitting = true;
 
       try {
@@ -844,7 +871,43 @@ export default {
 
         const message = error.response?.message || error.message || t("order.order_failed");
         if (isPendingOrderConflict(message)) {
-          pendingOrderTradeNo.value = extractPendingTradeNo(error) || (await fetchLatestPendingTradeNo());
+          const fallbackTradeNo = extractPendingTradeNo(error) || (await fetchLatestPendingTradeNo());
+          const matchedOrder = await fetchLatestPendingOrder(fallbackTradeNo);
+
+          if (matchedOrder && isUnpaidCreatedOrder(matchedOrder)) {
+            pendingOrderTradeNo.value = matchedOrder.trade_no || fallbackTradeNo || "";
+
+            if (isSameOrderSpecAsCurrentSelection(matchedOrder)) {
+              router.push({
+                path: "/payment",
+                query: {
+                  trade_no: pendingOrderTradeNo.value,
+                },
+              });
+              return;
+            }
+
+            if (!conflictResolved && pendingOrderTradeNo.value) {
+              loading.cancellingExisting = true;
+              try {
+                await cancelExistingOrder(pendingOrderTradeNo.value);
+                pendingOrderTradeNo.value = "";
+                await executeOrderSubmission({ conflictResolved: true });
+              } catch (cancelError) {
+                showToast(
+                  cancelError?.response?.message ||
+                    cancelError?.message ||
+                    "取消订单失败",
+                  "error"
+                );
+              } finally {
+                loading.cancellingExisting = false;
+              }
+              return;
+            }
+          }
+
+          pendingOrderTradeNo.value = fallbackTradeNo;
           showPendingOrderModal.value = true;
           return;
         }
@@ -956,6 +1019,7 @@ export default {
       discountPercent.value = 0;
 
       couponInfo.value = null;
+      couponErrorMessage.value = "";
 
       showToast(t("order.coupon_removed"), "info");
     };
@@ -996,11 +1060,15 @@ export default {
 
       currencySymbol,
 
+      displayCurrency,
+
       selectedPriceType,
 
       couponCode,
 
       couponApplied,
+
+      couponErrorMessage,
 
       verifying,
 
@@ -1027,6 +1095,8 @@ export default {
       bestValuePeriod,
 
       getPriceTypeKey,
+
+      formatPeriodOption,
 
       isJsonContent,
 
@@ -1064,6 +1134,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .order-confirm-container {
   padding: 0;
 
@@ -1087,7 +1159,7 @@ export default {
 
     background-color: var(--card-bg-color);
 
-    border-radius: 12px;
+    border-radius: $border-radius-sm;
 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
@@ -1139,7 +1211,7 @@ export default {
 
     border: 1px solid rgba(255, 152, 0, 0.2);
 
-    border-radius: 16px;
+    border-radius: $border-radius-sm;
 
     padding: 16px;
 
@@ -1178,7 +1250,7 @@ export default {
 
       height: 44px;
 
-      border-radius: 14px;
+      border-radius: $border-radius-sm;
 
       display: flex;
 
@@ -1241,6 +1313,10 @@ export default {
       min-width: 0;
 
       max-width: 520px;
+      --right-card-bg: #2f343d;
+      --right-card-border: rgba(148, 163, 184, 0.32);
+      --right-card-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
+      --right-card-text: #f8fafc;
     }
   }
 
@@ -1285,7 +1361,7 @@ export default {
   .plan-card {
     background-color: var(--card-bg-color);
 
-    border-radius: 16px;
+    border-radius: $border-radius-sm;
 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 
@@ -1335,7 +1411,7 @@ export default {
 
         padding: 4px 12px;
 
-        border-radius: 20px;
+        border-radius: $border-radius-sm;
 
         font-size: 12px;
 
@@ -1458,7 +1534,7 @@ export default {
 
         background-color: rgba(0, 0, 0, 0.05);
 
-        border-radius: 12px;
+        border-radius: $border-radius-sm;
 
         position: relative;
 
@@ -1509,7 +1585,7 @@ export default {
       .period-card {
         cursor: pointer;
 
-        border-radius: 12px;
+        border-radius: $border-radius-sm;
 
         overflow: hidden;
 
@@ -1529,7 +1605,7 @@ export default {
           box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.15);
 
           .period-card-inner {
-            background-color: rgba(var(--theme-color-rgb), 0.1);
+            background-color: var(--background-color, #f3f5f7) !important;
           }
 
           .period-price {
@@ -1549,7 +1625,7 @@ export default {
         }
 
         .period-card-inner {
-          background-color: var(--card-bg-color);
+          background-color: var(--background-color, #f3f5f7) !important;
 
           padding: 16px 12px !important;
 
@@ -1642,7 +1718,7 @@ export default {
 
       padding: 0 18px;
 
-      border-radius: 10px;
+      border-radius: $border-radius-sm;
 
       border: 1px solid var(--border-color);
 
@@ -1661,12 +1737,11 @@ export default {
       min-width: 0;
 
       &.applied {
-        border-color: #4caf50;
-
-        background-color: rgba(76, 175, 80, 0.05);
+        background-color: var(--input-bg-color);
+        border-color: var(--border-color);
       }
 
-      &:focus:not(.applied) {
+      &:focus {
         border-color: rgba(var(--theme-color-rgb), 0.5);
 
         box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.2);
@@ -1686,7 +1761,7 @@ export default {
 
       padding: 0 24px;
 
-      border-radius: 10px;
+      border-radius: $border-radius-sm;
 
       background-color: var(--theme-color);
 
@@ -1714,15 +1789,7 @@ export default {
 
       flex-shrink: 0;
 
-      &.applied {
-        background-color: #4caf50;
-
-        box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
-
-        cursor: default;
-      }
-
-      &:hover:not(:disabled):not(.applied) {
+      &:hover:not(:disabled) {
         background-color: color-mix(
           in srgb,
           var(--theme-color) 85%,
@@ -1755,53 +1822,89 @@ export default {
       }
     }
 
-    .btn-remove-coupon {
-      height: 48px;
-
-      padding: 0 16px;
-
-      border-radius: 10px;
-
-      background-color: #f44336;
-
-      color: white;
-
-      font-size: 14px;
-
-      font-weight: 500;
-
-      display: flex;
-
+    .coupon-applied-tag {
+      height: 32px;
+      padding: 0 12px;
+      border-radius: $border-radius-sm;
+      border: 1px solid var(--border-color);
+      background: rgba(148, 163, 184, 0.08);
+      color: var(--secondary-text-color);
+      font-size: 12px;
+      display: inline-flex;
       align-items: center;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: default;
+    }
 
-      gap: 6px;
-
-      border: none;
-
+    .btn-remove-text {
+      height: 32px;
+      padding: 0 12px;
+      border-radius: $border-radius-sm;
+      border: 1px solid var(--border-color);
+      background: rgba(148, 163, 184, 0.08);
+      color: var(--secondary-text-color);
+      font-size: 12px;
       cursor: pointer;
-
-      transition: all 0.3s ease;
-
-      box-shadow: 0 4px 10px rgba(244, 67, 54, 0.2);
-
+      line-height: 1;
       white-space: nowrap;
 
-      flex-shrink: 0;
-
       &:hover {
-        background-color: #d32f2f;
-
-        transform: translateY(-2px);
-
-        box-shadow: 0 6px 16px rgba(244, 67, 54, 0.3);
+        background: rgba(148, 163, 184, 0.14);
+        color: var(--text-color);
       }
+    }
+  }
+
+  .coupon-merge-block {
+    margin-bottom: 14px;
+
+    .coupon-input {
+      margin-bottom: 0;
+    }
+  }
+
+  .coupon-light-row {
+    min-height: 38px;
+    padding: 0 10px;
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-sm;
+    background: rgba(var(--theme-color-rgb), 0.03);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+
+    .coupon-code-label {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .coupon-discount-value {
+      color: #22c55e;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+  }
+
+  .coupon-feedback {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+
+    &.error {
+      color: #ef4444;
     }
   }
 
   .order-summary {
     background-color: var(--card-bg-color);
 
-    border-radius: 16px;
+    border-radius: $border-radius-sm;
 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
@@ -1908,14 +2011,158 @@ export default {
     }
   }
 
+  .coupon-verify-section,
+  .order-summary-section {
+    .section-title {
+      color: var(--text-color);
+    }
+  }
+
+  .coupon-verify-section .coupon-input,
+  .order-summary-section .order-summary {
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-sm;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    color: var(--text-color);
+  }
+
+  .right-column .order-summary-section .order-summary {
+    background: var(--right-card-bg) !important;
+    border: 1px solid var(--right-card-border) !important;
+    box-shadow: var(--right-card-shadow) !important;
+    color: var(--right-card-text) !important;
+  }
+
+  .right-column .order-summary-section .summary-row .summary-label,
+  .right-column .order-summary-section .summary-row .summary-value,
+  .right-column .order-summary-section .summary-row.total .summary-label,
+  .right-column .order-summary-section .summary-row.total .summary-value,
+  .right-column .order-summary-section .coupon-code-label {
+    color: var(--right-card-text) !important;
+  }
+
+  .coupon-verify-section .coupon-input {
+    padding: 14px;
+    margin-bottom: 0;
+  }
+
+  .order-summary-section .coupon-input {
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  .order-summary-section .coupon-field {
+    background: var(--input-bg-color);
+    border-color: var(--border-color);
+    color: var(--text-color);
+
+    &::placeholder {
+      color: var(--secondary-text-color);
+    }
+  }
+
+  .order-summary-section .coupon-light-row {
+    background: rgba(var(--theme-color-rgb), 0.04);
+    border-color: var(--border-color);
+  }
+
+  .order-summary-section .coupon-code-label {
+    color: var(--text-color);
+  }
+
+  .order-summary-section .btn-remove-text {
+    color: var(--secondary-text-color);
+    border-color: var(--border-color);
+    background: rgba(var(--theme-color-rgb), 0.04);
+  }
+
+  .order-summary-section .coupon-applied-tag {
+    color: var(--secondary-text-color);
+    border-color: var(--border-color);
+    background: rgba(var(--theme-color-rgb), 0.04);
+  }
+
+  .coupon-verify-section .coupon-field {
+    background: var(--input-bg-color);
+    border-color: var(--border-color);
+    color: var(--text-color);
+
+    &::placeholder {
+      color: var(--secondary-text-color);
+    }
+  }
+
+  .order-summary-section .order-summary {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .order-summary-section .summary-row .summary-label,
+  .order-summary-section .summary-row .summary-value {
+    color: var(--text-color);
+  }
+
+  .order-summary-section .summary-row .summary-value.discount {
+    color: #f44336;
+  }
+
+  .order-summary-section .summary-row.total .summary-label,
+  .order-summary-section .summary-row.total .summary-value {
+    color: var(--text-color);
+  }
+
+  .order-summary-section .summary-divider {
+    background: var(--border-color);
+  }
+
   .order-summary-section {
     margin-top: 0;
   }
 
+  .order-summary .summary-submit-action {
+    width: 100%;
+    margin-top: 14px;
+    height: 44px;
+    padding: 0 24px;
+    border-radius: $border-radius-sm;
+    background-color: var(--theme-color);
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.2);
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--theme-color) 85%, black) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(var(--theme-color-rgb), 0.3);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .loader {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s linear infinite;
+    }
+  }
+
   .action-buttons {
     display: flex;
-
-    justify-content: space-between;
+    justify-content: flex-start;
 
     margin: 30px 0 40px 0;
 
@@ -1926,7 +2173,7 @@ export default {
 
       padding: 0 20px;
 
-      border-radius: 10px;
+      border-radius: $border-radius-sm;
 
       background-color: transparent;
 
@@ -1964,7 +2211,7 @@ export default {
 
       padding: 0 24px;
 
-      border-radius: 10px;
+      border-radius: $border-radius-sm;
 
       background-color: var(--theme-color);
 
@@ -2040,7 +2287,7 @@ export default {
 
   overflow: hidden;
 
-  border-radius: 10px;
+  border-radius: $border-radius-sm;
 
   .skeleton-header {
     height: 24px;
@@ -2049,7 +2296,7 @@ export default {
 
     background-color: rgba(0, 0, 0, 0.05);
 
-    border-radius: 6px;
+    border-radius: $border-radius-sm;
 
     margin-bottom: 20px;
 
@@ -2066,7 +2313,7 @@ export default {
 
       background-color: rgba(0, 0, 0, 0.05);
 
-      border-radius: 8px;
+      border-radius: $border-radius-sm;
 
       margin-bottom: 24px;
 
@@ -2083,7 +2330,7 @@ export default {
 
         background-color: rgba(0, 0, 0, 0.05);
 
-        border-radius: 6px;
+        border-radius: $border-radius-sm;
 
         margin-bottom: 12px;
 
@@ -2149,7 +2396,7 @@ export default {
 
   background-color: rgba(0, 0, 0, 0.05);
 
-  border-radius: 6px;
+  border-radius: $border-radius-sm;
 
   position: relative;
 
@@ -2314,32 +2561,6 @@ export default {
         white-space: nowrap;
       }
 
-      .btn-remove-coupon {
-        padding: 0 12px;
-
-        span {
-          font-size: 13px;
-        }
-      }
-
-      &:has(.coupon-field.applied) {
-        .coupon-field {
-          width: 100%;
-
-          flex: none;
-
-          margin-bottom: 8px;
-        }
-
-        .btn-verify,
-        .btn-remove-coupon {
-          flex: 1;
-
-          min-width: 0;
-
-          justify-content: center;
-        }
-      }
     }
 
     .plan-card,

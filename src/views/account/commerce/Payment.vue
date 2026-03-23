@@ -5,57 +5,32 @@
         <!-- 左侧内容：产品信息 -->
         <div class="left-column">
           <!-- 订单概览 -->
-          <div class="section-wrapper">
+          <div class="section-wrapper overview-section">
             <div class="section-title with-status">
-              <span>订单概览</span>
-              <div class="inline-status-badge" :class="getStatusClass(orderDetail.status)" v-if="!loading.order">
-                <IconClock
-                  v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
-                  :size="18"
-                />
-                <IconClock
-                  v-else-if="orderDetail.status === 0 && orderDetail.total_amount === 0"
-                  :size="18"
-                />
-                <IconLoader2 v-else-if="orderDetail.status === 1" :size="18" class="rotating-icon" />
-                <IconX v-else-if="orderDetail.status === 2" :size="18" />
-                <IconCheck v-else-if="orderDetail.status === 3" :size="18" />
-                <IconCheck v-else-if="orderDetail.status === 4" :size="18" />
-                <IconHelp v-else :size="18" />
-                <span>{{ getStatusText(orderDetail.status) }}</span>
-              </div>
+              <span>订单摘要</span>
+              <button
+                v-if="!loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
+                class="overview-cancel-btn"
+                @click="cancelCurrentOrder"
+                :disabled="loading.cancelling"
+              >
+                <IconX v-if="!loading.cancelling" :size="14" />
+                <div v-else class="loader"></div>
+                <span>{{ $t("payment.cancel_order") }}</span>
+              </button>
             </div>
 
             <div class="product-info" v-if="!loading.order">
               <!-- 充值订单时显示简化信息 -->
-              <div v-if="orderDetail.period === 'deposit'">
-                <div class="info-row">
-                  <div class="info-label">{{ $t("wallet.deposit.title") }}</div>
-                  <div class="info-value">
-                    {{ formatAmount(orderDetail.total_amount) }}
-                  </div>
-                </div>
+              <div class="overview-divider"></div>
+
+              <div class="info-row">
+                <div class="info-label">订阅</div>
+                <div class="info-value">{{ orderDetail.plan?.name || (orderDetail.period === 'deposit' ? $t("wallet.deposit.title") : "-") }}</div>
               </div>
-              <!-- 普通订单显示完整信息 -->
-              <div v-else>
-                <div class="info-row">
-                  <div class="info-label">{{ $t("payment.plan_name") }}</div>
-                  <div class="info-value">
-                    {{ orderDetail.plan?.name || "-" }}
-                  </div>
-                </div>
-                <div class="info-row">
-                  <div class="info-label">{{ $t("payment.period") }}</div>
-                  <div class="info-value">
-                    {{ formatPeriod(orderDetail.period) }}
-                  </div>
-                </div>
-                <div class="info-row">
-                  <div class="info-label">{{ $t("payment.traffic") }}</div>
-                  <div class="info-value">
-                    {{ formatTraffic(orderDetail.plan?.transfer_enable) }}
-                  </div>
-                </div>
+              <div class="info-row" v-if="orderDetail.period !== 'deposit'">
+                <div class="info-label">周期</div>
+                <div class="info-value">{{ formatPeriod(orderDetail.period) }}</div>
               </div>
 
               <div class="info-row">
@@ -68,31 +43,28 @@
                   {{ formatDate(orderDetail.created_at) }}
                 </div>
               </div>
-
-              <div
-                class="overview-actions"
-                v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
-              >
-                <button
-                  class="btn-back secondary-action"
-                  @click="cancelCurrentOrder"
-                  :disabled="loading.cancelling"
-                >
-                  <IconX v-if="!loading.cancelling" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.cancel_order") }}</span>
-                </button>
-
-                <button
-                  class="btn-check secondary-action"
-                  @click="checkPaymentStatus"
-                  :disabled="(orderDetail.total_amount > 0 && !selectedMethod) || loading.checking || loading.paying"
-                >
-                  <IconRefresh v-if="!loading.checking" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.check_payment") }}</span>
-                </button>
+              <div class="info-row">
+                <div class="info-label">状态</div>
+                <div class="info-value">
+                  <span class="inline-status-badge" :class="getStatusClass(orderDetail.status)">
+                    <IconClock
+                      v-if="orderDetail.status === 0 && orderDetail.total_amount > 0"
+                      :size="16"
+                    />
+                    <IconClock
+                      v-else-if="orderDetail.status === 0 && orderDetail.total_amount === 0"
+                      :size="16"
+                    />
+                    <IconLoader2 v-else-if="orderDetail.status === 1" :size="16" class="rotating-icon" />
+                    <IconX v-else-if="orderDetail.status === 2" :size="16" />
+                    <IconCheck v-else-if="orderDetail.status === 3" :size="16" />
+                    <IconCheck v-else-if="orderDetail.status === 4" :size="16" />
+                    <IconHelp v-else :size="16" />
+                    <span>{{ getStatusText(orderDetail.status) }}</span>
+                  </span>
+                </div>
               </div>
+
             </div>
 
             <!-- 产品信息骨架屏 -->
@@ -146,6 +118,7 @@
                   <img v-else :src="method.icon" :alt="method.name" />
                 </div>
               </div>
+              <div class="payment-security-note">安全支付 · 实时到账</div>
             </div>
 
             <!-- 支付方式骨架屏 -->
@@ -162,9 +135,9 @@
         <!-- 右侧内容：支付方式 -->
         <div class="right-column">
           <!-- 订单金额摘要 -->
-          <div class="section-wrapper">
+          <div class="section-wrapper order-amount-section">
             <div class="section-title">
-              <span>订单金额</span>
+              <span>支付信息</span>
             </div>
 
             <div class="order-info" v-if="!loading.order">
@@ -175,7 +148,7 @@
                 </div>
               </div>
               <div v-else class="info-row">
-                <div class="info-label">{{ $t("payment.total_price") }}</div>
+                <div class="info-label">订阅价格</div>
                 <div class="info-value amount">
                   {{ formatAmount(getPlanPrice()) }}
                 </div>
@@ -196,15 +169,7 @@
               </div>
 
               <div class="info-row discount-row" v-if="discountBreakdownVisible">
-                <div class="info-label">{{ $t("payment.coupon_discount_amount") }}</div>
-                <div class="info-value discount">-{{ formatAmount(couponDiscountAmount) }}</div>
-              </div>
-              <div class="info-row discount-row" v-if="discountBreakdownVisible">
-                <div class="info-label">{{ $t("payment.user_discount_amount") }}</div>
-                <div class="info-value discount">-{{ formatAmount(userDiscountAmount) }}</div>
-              </div>
-              <div class="info-row discount-row" v-if="discountBreakdownVisible">
-                <div class="info-label">{{ $t("payment.total_discount_amount") }}</div>
+                <div class="info-label">优惠金额</div>
                 <div class="info-value discount">-{{ formatAmount(discountAmount) }}</div>
               </div>
               <div
@@ -215,7 +180,7 @@
                   orderDetail.balance_amount > 0
                 "
               >
-                <div class="info-label">{{ $t("payment.use_credit") }}</div>
+                <div class="info-label">余额抵扣</div>
                 <div class="info-value discount">-{{ formatAmount(orderDetail.balance_amount) }}</div>
               </div>
               <div
@@ -234,13 +199,32 @@
                 <div class="info-value fee">{{ formatAmount(handleFeeAmount) }}</div>
               </div>
               <div class="info-row final-row">
-                <div class="info-label">合计</div>
+                <div class="info-label">应付金额</div>
                 <div class="info-value final">{{ formatAmount(totalWithFee) }}</div>
               </div>
             </div>
 
             <div class="skeleton-card" v-else>
               <div class="skeleton-text" v-for="i in 5" :key="'summary-' + i"></div>
+            </div>
+
+            <div
+              class="order-amount-actions"
+              v-if="!loading.order && orderDetail.status === 0 && !paymentSuccessful && orderDetail.total_amount > 0"
+            >
+              <button
+                class="btn-pay main-action full-width"
+                @click="processPayment"
+                :disabled="
+                  (orderDetail.total_amount > 0 && !selectedMethod) ||
+                  loading.paying ||
+                  loading.checking
+                "
+              >
+                <IconCreditCard v-if="!loading.paying" :size="18" />
+                <div v-else class="loader"></div>
+                <span>{{ $t("payment.pay_now") }}</span>
+              </button>
             </div>
           </div>
 
@@ -284,26 +268,6 @@
                 !loading.order && orderDetail.status === 0 && !paymentSuccessful
               "
             >
-              <!-- 支付/激活按钮单独占一行 -->
-              <div
-                class="btn-group pay-row"
-                v-if="orderDetail.total_amount > 0"
-              >
-                <button
-                  class="btn-pay main-action full-width"
-                  @click="processPayment"
-                  :disabled="
-                    (orderDetail.total_amount > 0 && !selectedMethod) ||
-                    loading.paying ||
-                    loading.checking
-                  "
-                >
-                  <IconCreditCard v-if="!loading.paying" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.pay_now") }}</span>
-                </button>
-              </div>
-
               <!-- 免费订单场景 - 修改为取消和激活按钮在同一行 -->
               <div
                 class="btn-group action-row"
@@ -753,7 +717,7 @@ export default {
 
     const displayCurrency = computed(() => {
       const currency = orderDetail.value?.pricing_currency;
-      return currency ? `${currency}`.toUpperCase() : '¥';
+      return currency ? `${currency}`.toUpperCase() : "USD";
     });
 
     const formatAmount = (amount) => {
@@ -767,23 +731,15 @@ export default {
       }
 
       const periodMap = {
-        month_price: t("shop.plan.price_options.month"),
+        month_price: "月付",
         quarter_price: t("shop.plan.price_options.quarter"),
         half_year_price: t("shop.plan.price_options.half_year"),
-        year_price: t("shop.plan.price_options.year"),
+        year_price: "年付",
         two_year_price: t("shop.plan.price_options.two_year"),
         three_year_price: t("shop.plan.price_options.three_year"),
         onetime_price: t("shop.plan.price_options.onetime"),
       };
       return periodMap[period] || period;
-    };
-
-    const formatTraffic = (gb) => {
-      if (!gb) return "-";
-      if (gb >= 1024) {
-        return `${(gb / 1024).toFixed(1)} TB`;
-      }
-      return `${gb} GB`;
     };
 
     const formatFee = (method) => {
@@ -1149,59 +1105,6 @@ export default {
       }
     };
 
-    const checkPaymentStatus = async () => {
-      loading.checking = true;
-      try {
-        const response = await checkOrderStatus(orderDetail.value.trade_no);
-
-        if (response.data === 0) {
-          showToast(t("payment.payment_pending"), "info");
-        } else if (response.data === 2) {
-          showToast(t("payment.order_cancelled"), "warning");
-
-          if (paymentCheckTimer.value) {
-            clearInterval(paymentCheckTimer.value);
-            paymentCheckTimer.value = null;
-          }
-
-          orderDetail.value.status = response.data;
-        } else {
-          showToast(t("payment.payment_successful"), "success");
-
-          orderDetail.value.status = response.data;
-
-          paymentSuccessful.value = true;
-
-          if (paymentCheckTimer.value) {
-            clearInterval(paymentCheckTimer.value);
-            paymentCheckTimer.value = null;
-          }
-
-          closePaymentModal();
-
-          showSuccessAnimation.value = true;
-
-          setTimeout(() => {
-            showConfettiAnimation.value = true;
-          }, 300);
-
-          setTimeout(() => {
-            showConfettiAnimation.value = false;
-
-            setTimeout(() => {
-              showSuccessAnimation.value = false;
-            }, 500);
-          }, 4500);
-        }
-      } catch (error) {
-        console.error("Failed to check payment status:", error);
-        showToast(t("payment.check_failed"), "error");
-      } finally {
-        loading.checking = false;
-        loading.paying = false;
-      }
-    };
-
     const getStatusText = (status) => {
       const statusMap = {
         0: t("payment.status.pending"),
@@ -1288,7 +1191,6 @@ export default {
       formatDate,
       formatAmount,
       formatPeriod,
-      formatTraffic,
       formatFee,
       selectMethod,
       checkPayment,
@@ -1314,7 +1216,6 @@ export default {
       discountAmount,
       discountBreakdownVisible,
       window: window,
-      checkPaymentStatus,
       detectBrowser,
       getStatusText,
       getStatusClass,
@@ -1325,6 +1226,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .payment-container {
   padding: 0;
   display: flex;
@@ -1342,8 +1245,8 @@ export default {
 
   .dashboard-card {
     background-color: var(--card-bg-color);
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-radius: $border-radius-sm;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
     padding: 20px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
@@ -1351,8 +1254,8 @@ export default {
     position: relative;
 
     &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      border-color: rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: 0 1px 5px rgba(15, 23, 42, 0.08);
+      border-color: var(--border-color);
     }
 
     .card-header {
@@ -1393,13 +1296,17 @@ export default {
       flex: 0.85;
       min-width: 0;
       max-width: 520px;
+      --right-card-bg: #2f343d;
+      --right-card-border: rgba(148, 163, 184, 0.32);
+      --right-card-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
+      --right-card-text: #f8fafc;
     }
   }
 
   .section-wrapper {
     background-color: var(--card-bg-color);
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-radius: $border-radius-sm;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
     padding: 20px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
@@ -1410,8 +1317,8 @@ export default {
     }
 
     &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      border-color: rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: 0 1px 5px rgba(15, 23, 42, 0.08);
+      border-color: var(--border-color);
     }
 
     .section-title {
@@ -1438,43 +1345,229 @@ export default {
         }
       }
     }
+
+    .overview-cancel-btn {
+      height: 26px;
+      padding: 0 8px;
+      border-radius: $border-radius-sm;
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--secondary-text-color);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover:not(:disabled) {
+        background-color: rgba(148, 163, 184, 0.08);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    .overview-plan-block {
+      margin-bottom: 4px;
+    }
+
+    .overview-plan-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-color);
+      line-height: 1.2;
+    }
+
+    .overview-plan-meta {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--secondary-text-color);
+      line-height: 1.3;
+    }
+
+    .overview-divider {
+      height: 1px;
+      background-color: var(--border-color);
+      margin: 10px 0 8px;
+    }
+
+    .product-info .info-row {
+      margin-bottom: 6px;
+    }
+
+    .inline-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .overview-cancel-btn .loader {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      border-top-color: var(--text-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
   }
 
   .section-wrapper.payment-methods-section {
-    padding: 8px !important;
-    margin-bottom: 8px !important;
+    padding: 0 !important;
+    margin-bottom: 6px !important;
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
 
     .section-title {
-      margin-bottom: 8px;
+      margin-bottom: 0;
       font-size: 15px;
+      padding: 10px 12px 8px;
+      color: var(--text-color);
+
+      &::after {
+        background-color: var(--border-color);
+      }
     }
+  }
+
+  .right-column .section-wrapper.payment-methods-section {
+    background: var(--right-card-bg) !important;
+    border: 1px solid var(--right-card-border) !important;
+    box-shadow: var(--right-card-shadow) !important;
+  }
+
+  .right-column .section-wrapper.payment-methods-section .section-title {
+    color: var(--right-card-text) !important;
+  }
+
+  .order-amount-section {
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+
+    .section-title {
+      color: var(--text-color);
+
+      &::after {
+        background-color: var(--border-color);
+      }
+    }
+
+    .order-info {
+      .info-label,
+      .info-value {
+        color: var(--text-color);
+      }
+
+      .info-value.discount {
+        color: #f44336;
+      }
+
+      .info-value.fee {
+        color: var(--secondary-text-color);
+      }
+
+      .info-row.final-row {
+        border-top: 1px solid var(--border-color);
+        padding-top: 10px;
+        margin-top: 8px;
+
+        .info-label {
+          color: var(--text-color);
+          font-weight: 600;
+        }
+
+        .info-value.final {
+          color: var(--theme-color);
+          font-weight: 700;
+        }
+      }
+    }
+
+    .order-amount-actions {
+      margin-top: 14px;
+
+      .btn-pay {
+        width: 100%;
+        height: 44px;
+        border-radius: $border-radius-sm;
+        background-color: var(--theme-color);
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 1px 4px rgba(var(--theme-color-rgb), 0.2);
+        border: none;
+
+        &:hover:not(:disabled) {
+          background-color: color-mix(in srgb, var(--theme-color) 88%, black) !important;
+          box-shadow: 0 1px 5px rgba(var(--theme-color-rgb), 0.24);
+          transform: none;
+        }
+
+        svg,
+        span {
+          display: inline-flex;
+          align-items: center;
+          line-height: 1;
+        }
+
+        svg {
+          flex-shrink: 0;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+  .right-column .order-amount-section {
+    background: var(--right-card-bg) !important;
+    border: 1px solid var(--right-card-border) !important;
+    box-shadow: var(--right-card-shadow) !important;
+  }
+
+  .right-column .order-amount-section .section-title,
+  .right-column .order-amount-section .info-label,
+  .right-column .order-amount-section .info-value {
+    color: var(--right-card-text) !important;
+  }
+
+  .right-column .order-amount-section .info-row.final-row {
+    border-top-color: rgba(255, 255, 255, 0.18) !important;
   }
 
   .payment-methods {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0;
 
     .payment-method-item {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 7px 10px;
-      min-height: 42px;
-      border-radius: 8px;
+      padding: 10px 12px;
+      min-height: 38px;
+      border-radius: 0;
       cursor: pointer;
       transition: border-color 0.2s ease, background-color 0.2s ease;
-      border: 1px solid var(--border-color);
+      border: none;
+      border-top: 1px solid rgba(148, 163, 184, 0.32);
+      background-color: rgba(255, 255, 255, 0.95);
 
       &:hover {
         border-color: rgba(var(--theme-color-rgb), 0.42);
-        background-color: rgba(var(--theme-color-rgb), 0.04);
+        background-color: rgba(var(--theme-color-rgb), 0.08);
       }
 
       &.active {
         border-color: var(--theme-color);
-        background-color: rgba(var(--theme-color-rgb), 0.08);
-        box-shadow: 0 2px 10px rgba(var(--theme-color-rgb), 0.12);
+        background-color: rgba(var(--theme-color-rgb), 0.14);
+        box-shadow: 0 2px 10px rgba(var(--theme-color-rgb), 0.22);
       }
 
       .method-check {
@@ -1492,21 +1585,26 @@ export default {
       }
 
       .method-icon {
-        width: 30px;
+        width: auto;
+        min-width: 64px;
+        max-width: 42%;
         height: 30px;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         color: var(--theme-color);
+        flex-shrink: 0;
 
         &.right-icon {
           margin-left: auto;
         }
 
         img {
+          width: auto;
           max-width: 100%;
-          max-height: 100%;
+          max-height: 24px;
           object-fit: contain;
+          display: block;
         }
       }
 
@@ -1530,6 +1628,20 @@ export default {
         }
       }
     }
+
+    .payment-security-note {
+      padding: 6px 12px 8px;
+      border-top: 1px solid var(--border-color);
+      font-size: 12px;
+      color: var(--secondary-text-color);
+      line-height: 1.4;
+      background: #fff;
+    }
+  }
+
+  .right-column .payment-methods .payment-security-note {
+    background: var(--right-card-bg) !important;
+    color: var(--right-card-text) !important;
   }
 
   .free-notice {
@@ -1537,7 +1649,7 @@ export default {
     align-items: center;
     padding: 20px;
     background-color: rgba(76, 175, 80, 0.1);
-    border-radius: 10px;
+    border-radius: $border-radius-sm;
     border: 1px solid rgba(76, 175, 80, 0.2);
 
     .notice-icon {
@@ -1631,7 +1743,7 @@ export default {
       align-items: center;
       justify-content: center;
       gap: 8px;
-      border-radius: 10px;
+      border-radius: $border-radius-sm;
       font-size: 14px;
       font-weight: 500;
       padding: 0 24px;
@@ -1669,8 +1781,8 @@ export default {
 
       &:hover:not(:disabled) {
         background-color: var(--hover-color);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: none;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
       }
 
       &:active:not(:disabled) {
@@ -1690,12 +1802,12 @@ export default {
       background-color: var(--theme-color);
       color: white;
       flex: 2;
-      box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.25);
+      box-shadow: 0 1px 4px rgba(var(--theme-color-rgb), 0.2);
 
       &:hover:not(:disabled) {
         background-color: var(--primary-color-hover);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(var(--theme-color-rgb), 0.35);
+        transform: none;
+        box-shadow: 0 1px 5px rgba(var(--theme-color-rgb), 0.24);
       }
     }
 
@@ -1708,8 +1820,8 @@ export default {
 
       &:hover:not(:disabled) {
         background-color: var(--card-bg-color);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: none;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
       }
     }
 
@@ -2018,7 +2130,7 @@ export default {
     .modal-card {
       position: relative;
       background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-      border-radius: 20px;
+      border-radius: $border-radius-sm;
       box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
       border: 1px solid rgba(var(--theme-color-rgb), 0.1);
       overflow: hidden;
@@ -2032,7 +2144,7 @@ export default {
         height: 44px;
         width: 44px;
         padding: 0;
-        border-radius: 10px;
+        border-radius: $border-radius-sm;
         background-color: transparent;
         color: var(--text-color);
         font-size: 22px;
@@ -2048,8 +2160,8 @@ export default {
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
-          transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          transform: none;
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
         }
       }
 
@@ -2111,7 +2223,7 @@ export default {
 
           canvas,
           svg {
-            border-radius: 8px;
+            border-radius: $border-radius-sm;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
           }
         }
@@ -2123,7 +2235,7 @@ export default {
             padding: 10px 16px;
             background-color: transparent;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: $border-radius-sm;
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -2148,7 +2260,7 @@ export default {
         button {
           flex: 1;
           height: 46px;
-          border-radius: 14px;
+          border-radius: $border-radius-sm;
           border: none;
           font-size: 15px;
           font-weight: 600;
@@ -2190,8 +2302,8 @@ export default {
 
           &:hover {
             background-color: var(--hover-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: none;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
           }
 
           &:active {
@@ -2204,13 +2316,13 @@ export default {
         .btn-primary {
           background-color: var(--theme-color);
           color: white;
-          box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.25);
+          box-shadow: 0 1px 4px rgba(var(--theme-color-rgb), 0.2);
           transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
           &:hover {
             background-color: var(--primary-color-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(var(--theme-color-rgb), 0.35);
+            transform: none;
+            box-shadow: 0 1px 5px rgba(var(--theme-color-rgb), 0.24);
           }
 
           &:active {
@@ -2250,6 +2362,10 @@ export default {
   }
 }
 
+.payment-container .overview-section {
+  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+}
+
 .cancel-modal {
   position: fixed;
   top: 0;
@@ -2279,7 +2395,7 @@ export default {
 
   .cancel-modal-content {
     background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
-    border-radius: 12px;
+    border-radius: $border-radius-sm;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     transform: translateZ(0);
@@ -2328,7 +2444,7 @@ export default {
     button {
       flex: 1;
       padding: 10px 0;
-      border-radius: 6px;
+      border-radius: $border-radius-sm;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
@@ -2435,76 +2551,6 @@ export default {
     color: #757575;
     background-color: rgba(158, 158, 158, 0.12);
     border-color: rgba(158, 158, 158, 0.2);
-  }
-}
-
-.overview-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-
-  .btn-back,
-  .btn-check {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 0 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid var(--border-color);
-    flex: 1;
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none !important;
-      box-shadow: none !important;
-    }
-  }
-
-  .btn-back {
-    background-color: transparent;
-    color: var(--text-color);
-
-    &:hover:not(:disabled) {
-      background-color: var(--hover-color);
-      transform: translateY(-1px);
-    }
-  }
-
-  .btn-check {
-    background-color: var(--hover-color);
-    color: var(--text-color);
-
-    &:hover:not(:disabled) {
-      background-color: var(--card-bg-color);
-      transform: translateY(-1px);
-    }
-  }
-
-  @media (max-width: 480px) {
-    flex-direction: column;
-
-    .btn-back,
-    .btn-check {
-      width: 100%;
-    }
-  }
-
-  .loader {
-    width: 16px;
-    height: 16px;
-    min-width: 16px;
-    min-height: 16px;
-    border: 2px solid rgba(148, 163, 184, 0.35);
-    border-radius: 50%;
-    border-top-color: var(--text-color);
-    animation: spin 1s linear infinite;
   }
 }
 

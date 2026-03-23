@@ -31,7 +31,7 @@ export default {
   name: 'SlideTabsNav',
   setup() {
     const route = useRoute();
-    const SIDEBAR_WIDTH = 176;
+    const SIDEBAR_WIDTH = 220;
     const SIDEBAR_BREAKPOINT = 992;
     let mediaQueryList = null;
 
@@ -120,21 +120,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .slide-tabs-container {
   margin-bottom: 14px;
   position: fixed;
   top: 108px;
   left: var(--left-nav-gap, 10px);
   z-index: 10;
-  width: var(--left-nav-occupy, 176px);
+  width: var(--left-nav-occupy, 220px);
   transition: width 0.25s ease;
 
   .slide-tabs-wrapper {
-    background: rgba(var(--card-background-rgb), 0.98);
-    border-radius: 10px;
+    background: #fff;
+    border-radius: $border-radius-sm;
     padding: 2px;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
-    border: 1px solid var(--border-color);
+    box-shadow: none;
+    border: 1px solid rgba(15, 23, 42, 0.08);
     overflow: hidden;
   }
 
@@ -145,7 +147,7 @@ export default {
 
     .nav-item {
       padding: 8px 10px;
-      border-radius: 8px;
+      border-radius: $border-radius-sm;
       font-weight: 500;
       font-size: 13px;
       color: var(--secondary-text-color);
@@ -173,7 +175,7 @@ export default {
 
       .nav-text {
         display: inline-block;
-        max-width: 96px;
+        max-width: 112px;
         opacity: 1;
         transform: translateX(0);
         overflow: hidden;
@@ -196,15 +198,6 @@ export default {
         background: rgba(var(--theme-color-rgb), 0.08);
       }
 
-      &:last-child {
-        border: 1px solid var(--border-color);
-        background: rgba(var(--card-background-rgb), 0.98);
-
-        &:hover,
-        &.active {
-          background: rgba(var(--theme-color-rgb), 0.1);
-        }
-      }
     }
   }
 }
@@ -222,7 +215,7 @@ export default {
     .slide-tabs-wrapper {
       width: 100%;
       display: block;
-      border-radius: 20px;
+      border-radius: $border-radius-sm;
       padding: 3px;
     }
 
@@ -286,7 +279,7 @@ export default {
     width: 94%;
 
     .slide-tabs-wrapper {
-      border-radius: 18px;
+      border-radius: 14px;
     }
 
     .slide-tabs-nav {

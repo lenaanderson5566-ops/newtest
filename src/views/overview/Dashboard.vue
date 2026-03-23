@@ -26,7 +26,7 @@
           :disabled="ipLocationLoading"
         >
           <span class="exit-banner-text">
-            <template v-if="ipLocationLoading">{{ $t('common.loading') }}...</template>
+            <template v-if="isIpLocationPending">{{ $t('common.loading') }}...</template>
             <template v-else-if="ipLocationError">{{ ipLocationError }}</template>
             <template v-else>
               当前出口：{{ ipLocationCode }} · {{ ipLocationPrimaryRegionText }} · IP {{ ipLocationData?.ip || '-' }}
@@ -117,29 +117,6 @@
                 </div>
               </div>
 
-              <div class="plan-summary-section plan-summary-section-renew">
-                <div class="plan-summary-row auto-renewal-row">
-                  <div>
-                    <span class="plan-summary-label with-tooltip">
-                      <span>{{ $t('profile.autoRenewal') }}</span>
-                      <span class="info-tooltip" tabindex="0" role="button" :aria-label="$t('profile.autoRenewalDesc')">
-                        <IconHelpCircle :size="14" />
-                        <span class="info-tooltip-content">{{ $t('profile.autoRenewalDesc') }}</span>
-                      </span>
-                    </span>
-                  </div>
-                  <label class="switch" :class="{ disabled: updatingAutoRenewalSetting }">
-                    <input
-                      type="checkbox"
-                      v-model="autoRenewalEnabled"
-                      :disabled="updatingAutoRenewalSetting"
-                      @change="updateAutoRenewalSetting"
-                    />
-                    <span class="slider round" :class="{ loading: updatingAutoRenewalSetting }"></span>
-                  </label>
-                </div>
-              </div>
-
               <div class="plan-summary-section plan-summary-section-actions">
                 <div class="plan-summary-actions">
                   <button
@@ -206,13 +183,17 @@
             </div>
           </div>
 
-          <div class="stats-card overview-card overview-card--today-traffic today-traffic-card">
-            <div class="today-traffic-title">今日流量</div>
-            <div class="today-traffic-values">
-              <span class="traffic-up">↑ {{ todayTrafficStats.uploadGb }} GB</span>
-              <span class="traffic-down">↓ {{ todayTrafficStats.downloadGb }} GB</span>
+          <div
+            class="stats-card overview-card overview-card--today-traffic today-traffic-card"
+            :class="{ 'card-animate': !loading.userStats }"
+            :style="{ animationDelay: todayTrafficAnimationDelay }"
+          >
+            <div class="usage-card-title today-card-title">今日流量</div>
+            <div class="today-traffic-total-main">今日总流量 {{ todayTrafficStats.totalGb }} GB</div>
+            <div class="today-traffic-breakdown">
+              <span class="traffic-up">上行 {{ todayTrafficStats.uploadGb }} GB</span>
+              <span class="traffic-down">下行 {{ todayTrafficStats.downloadGb }} GB</span>
             </div>
-            <div class="today-traffic-total">总计 {{ todayTrafficStats.totalGb }} GB</div>
           </div>
 
         </template>
@@ -220,7 +201,7 @@
 
       <div class="dashboard-card usage-trend-card" v-if="hasPlan">
         <div class="card-header">
-          <h2 class="card-title">{{ $t('trafficLog.title') }}</h2>
+          <h2 class="card-title usage-card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
         <div class="card-body">
           <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
@@ -299,7 +280,7 @@ import {
 } from 'vue';
 import {useRouter} from 'vue-router';
 import {useI18n} from 'vue-i18n';
-import {DASHBOARD_CONFIG, isXiaoV2board} from '@/utils/baseConfig';
+import { isXiaoV2board } from '@/utils/baseConfig';
 import {
   IconAlertTriangle,
   IconBox,
@@ -341,7 +322,6 @@ import {
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import InfoCard from '@/components/common/InfoCard.vue';
 import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
-import { updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
@@ -417,10 +397,6 @@ export default {
       packageQuotaRemaining: null,
       expiredAt: null
     });
-    const remindExpireSetting = ref(false);
-    const remindTrafficSetting = ref(false);
-    const autoRenewalEnabled = ref(false);
-    const updatingAutoRenewalSetting = ref(false);
     const allowNewPeriod = ref('');
 
         const trafficMetrics = reactive({
@@ -525,9 +501,6 @@ export default {
             updateAccountBalanceDisplay();
           }
 
-          remindExpireSetting.value = !!info.remind_expire;
-          remindTrafficSetting.value = !!info.remind_traffic;
-          autoRenewalEnabled.value = !!info.auto_renewal;
           if (info.expired_at) {
             userPlan.value.expireDate = formatDate(info.expired_at);
             userPlan.value.expiredAt = Number(info.expired_at);
@@ -559,25 +532,6 @@ export default {
         loading.userInfo = false;
       }
     };
-
-    const updateAutoRenewalSetting = async () => {
-      const originalValue = !autoRenewalEnabled.value;
-      updatingAutoRenewalSetting.value = true;
-      try {
-        await apiUpdateRemind({
-          remind_expire: remindExpireSetting.value ? 1 : 0,
-          remind_traffic: remindTrafficSetting.value ? 1 : 0,
-          auto_renewal: autoRenewalEnabled.value ? 1 : 0,
-        });
-        showToast(t('profile.updateSuccess'), 'success');
-      } catch (error) {
-        autoRenewalEnabled.value = originalValue;
-        showToast(t('profile.updateError'), 'error');
-      } finally {
-        updatingAutoRenewalSetting.value = false;
-      }
-    };
-
     const isExpiringSoon = computed(() => {
       if (userStats.isRemainingDaysPermanent) return false;
 
@@ -1134,11 +1088,8 @@ export default {
       scheduleIpLocationRefresh(true);
     };
 
-    const ipLocationDisplayText = computed(() => {
-      if (!ipLocationData.value) return '';
-      return [ipLocationData.value.city, ipLocationData.value.region, ipLocationData.value.country]
-        .filter(Boolean)
-        .join(', ');
+    const isIpLocationPending = computed(() => {
+      return ipLocationLoading.value || (!ipLocationData.value && !ipLocationError.value);
     });
 
     const ipLocationCode = computed(() => {
@@ -1149,12 +1100,6 @@ export default {
     const ipLocationPrimaryRegionText = computed(() => {
       if (!ipLocationData.value) return '-';
       return ipLocationData.value.city || ipLocationData.value.region || ipLocationData.value.country || '-';
-    });
-
-    const ipLocationCodeBadgeClass = computed(() => {
-      const code = ipLocationCode.value;
-      const badgeMap = DASHBOARD_CONFIG.ipRegionBadgeByCountryCode || {};
-      return badgeMap[code] || 'is-red';
     });
 
     const fetchTrafficTrend = async () => {
@@ -1431,6 +1376,12 @@ export default {
       });
     });
 
+    const todayTrafficAnimationDelay = computed(() => {
+      const baseDelay = 0.5;
+      const step = 0.1;
+      return `${baseDelay + trafficBoardSections.value.length * step}s`;
+    });
+
     return {
       userStats,
       userBalance,
@@ -1466,24 +1417,20 @@ export default {
       showDeviceLimit,
       needRefreshData,
       trafficBoardSections,
-      autoRenewalEnabled,
-      updatingAutoRenewalSetting,
-      updateAutoRenewalSetting,
       hasPurchasedTrafficPackage,
       trafficTrendChartRef,
       trafficTrendData,
       trafficTrendLoading,
       trafficTrendError,
       todayTrafficStats,
+      todayTrafficAnimationDelay,
       ipLocationLoading,
+      isIpLocationPending,
       ipLocationError,
       ipLocationData,
-      ipLocationDisplayText,
       ipLocationCode,
       ipLocationPrimaryRegionText,
-      ipLocationCodeBadgeClass,
       triggerIpLocationRefresh,
-      DASHBOARD_CONFIG,
       allowNewPeriod,
       showTrafficPackageModal,
       trafficPackageLoading,
@@ -1500,12 +1447,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .dashboard-container {
   display: flex;
   justify-content: center;
   --dashboard-card-padding: 12px;
-  --dashboard-radius: 10px;
-  --dashboard-shadow-compact: 0 1px 3px rgba(15, 23, 42, 0.05), 0 6px 14px rgba(15, 23, 42, 0.04);
+  --dashboard-radius: #{$border-radius-sm};
+  --dashboard-pill-radius: 999px;
+  --dashboard-button-radius: 12px;
+  --dashboard-shadow-compact: 0 2px 8px rgba(15, 23, 42, 0.06), 0 10px 22px rgba(15, 23, 42, 0.05);
+  --dashboard-border-color: rgba(148, 163, 184, 0.22);
+  --dashboard-title-size: 14px;
+  --dashboard-value-size: 30px;
+  --dashboard-kpi-size: 13px;
   --dashboard-gap-compact: var(--global-card-gap);
   --dashboard-section-margin: var(--global-card-gap);
 
@@ -1581,12 +1536,13 @@ export default {
       gap: 8px;
       max-width: 100%;
       padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      background: rgba(255, 255, 255, 0.8);
+      border-radius: $border-radius-sm;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      background: #fff;
       color: var(--theme-text-primary);
       font-size: 13px;
       font-weight: 500;
+      box-shadow: none;
 
       .exit-banner-text {
         white-space: nowrap;
@@ -1604,7 +1560,8 @@ export default {
     background-color: var(--saas-card-bg);
     box-shadow: var(--saas-card-shadow);
     padding: var(--dashboard-card-padding);
-    border: none;
+    border: 1px solid var(--dashboard-border-color);
+    border-radius: var(--dashboard-radius);
     transition: box-shadow 0.2s ease;
 
     &:hover {
@@ -1632,6 +1589,10 @@ export default {
     }
   }
 
+  .btn {
+    border-radius: var(--dashboard-button-radius);
+  }
+
   /* 数据统计卡片区域（会员等级 + 流量卡片） */
   .stats-grid {
     position: relative;
@@ -1651,6 +1612,7 @@ export default {
 
     .stats-card {
       position: relative;
+      z-index: 1;
       background-color: var(--card-bg-color);
       border-radius: var(--dashboard-radius);
       box-shadow: var(--dashboard-shadow-compact);
@@ -1660,7 +1622,7 @@ export default {
       padding: var(--dashboard-card-padding);
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--dashboard-border-color);
 
       /* 流量额度包卡片（订阅流量 / 叠加包 / 总览）样式 */
       &.traffic-board-card {
@@ -1697,12 +1659,16 @@ export default {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
+          font-size: var(--dashboard-title-size);
+          line-height: 1.35;
+          min-height: 20px;
         }
 
         .usage-card-main {
           display: flex;
           align-items: baseline;
           gap: 8px;
+          min-height: 42px;
 
           &.package-main {
             align-items: baseline;
@@ -1713,7 +1679,7 @@ export default {
             margin-left: auto;
             width: 26px;
             height: 26px;
-            border-radius: 999px;
+            border-radius: var(--dashboard-button-radius);
             border: none;
             display: inline-flex;
             align-items: center;
@@ -1896,12 +1862,9 @@ export default {
           .plan-summary-desc {
             margin: 4px 0 0;
             font-size: 12px;
-            color: var(--theme-text-secondary);
+            color: rgba(248, 250, 252, 0.72);
           }
 
-          .auto-renewal-row {
-            align-items: flex-start;
-          }
 
           .plan-summary-actions {
             display: flex;
@@ -1911,7 +1874,7 @@ export default {
 
             .plan-action-btn {
               flex: 1;
-              border-radius: var(--dashboard-radius);
+              border-radius: var(--dashboard-button-radius);
               padding: 10px 14px;
               font-size: 14px;
               font-weight: 600;
@@ -2013,7 +1976,7 @@ export default {
         .usage-percent {
           writing-mode: horizontal-tb;
           text-orientation: mixed;
-          font-size: 36px;
+          font-size: var(--dashboard-value-size);
           line-height: 1;
           font-weight: 700;
           color: var(--theme-text-primary);
@@ -2024,7 +1987,7 @@ export default {
         }
 
         .usage-percent-label {
-          font-size: 13px;
+          font-size: var(--dashboard-kpi-size);
           color: var(--quota-label-color);
           font-weight: 500;
         }
@@ -2056,12 +2019,46 @@ export default {
 
       &.traffic-board-subscription,
       &.traffic-board-package {
-        background: #fff;
+        background: var(--saas-card-bg);
+      }
+
+      &.traffic-board-subscription {
+        background: var(--saas-card-bg);
+        border: 1px solid var(--dashboard-border-color);
+        box-shadow: var(--saas-card-shadow);
+
+        .usage-card-title,
+        .usage-percent,
+        .usage-summary-line,
+        .usage-reset-hint,
+        .usage-kpi-value,
+        .usage-kpi-label {
+          color: var(--theme-text-primary);
+        }
+
+        .usage-kpi {
+          background: var(--theme-surface-soft);
+        }
+
+        .section-progress-track {
+          background: var(--theme-border-soft);
+        }
       }
 
       &.traffic-board-package {
         min-height: auto;
         height: auto;
+        z-index: 8;
+      }
+
+      &.traffic-board-total {
+        background: var(--saas-card-bg);
+        border: 1px solid var(--dashboard-border-color);
+        box-shadow: var(--saas-card-shadow);
+
+        .usage-card-title {
+          color: var(--theme-text-primary);
+        }
       }
 
         /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
@@ -2199,7 +2196,7 @@ export default {
       }
 
       &:hover {
-        border-color: rgba(148, 163, 184, 0.24);
+        border-color: rgba(148, 163, 184, 0.3);
         box-shadow: 0 3px 10px rgba(15, 23, 42, 0.07);
       }
     }
@@ -2222,12 +2219,22 @@ export default {
     padding: var(--dashboard-card-padding);
   }
 
+  .stats-grid .stats-card.traffic-board-card,
+  .stats-grid .stats-card.today-traffic-card,
+  .dashboard-card.usage-trend-card {
+    background: var(--saas-card-bg);
+    border: 1px solid var(--dashboard-border-color);
+    border-radius: var(--dashboard-radius);
+    box-shadow: var(--dashboard-shadow-compact);
+  }
+
   /* 概览卡片左上角标题统一样式 */
-  .overview-card--today-traffic .today-traffic-title,
+  .overview-card--today-traffic .usage-card-title,
   .overview-card--traffic-quota .usage-card-title,
-  .overview-card--exit-region .ip-meta-title {
+  .overview-card--exit-region .ip-meta-title,
+  .usage-trend-card .card-title.usage-card-title {
     margin: 0;
-    font-size: 14px;
+    font-size: var(--dashboard-title-size);
     line-height: 1.3;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -2237,28 +2244,36 @@ export default {
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--theme-text-primary);
-    background: #fff;
+    background: var(--saas-card-bg);
+    z-index: 2;
     align-items: flex-start;
     flex-direction: column;
-    gap: 8px;
+    justify-content: flex-start;
+    gap: 10px;
 
-    .today-traffic-values {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 1.2;
-
-      .traffic-up { color: #059669; }
-      .traffic-down { color: #dc2626; }
+    .today-card-title {
+      margin-bottom: 2px;
     }
 
-    .today-traffic-total {
-      font-size: 16px;
-      font-weight: 600;
+    .today-traffic-total-main {
+      font-size: clamp(20px, 2.1vw, 24px);
+      line-height: 1.2;
+      font-weight: 700;
       color: var(--theme-text-primary);
+      letter-spacing: 0.01em;
+    }
+
+    .today-traffic-breakdown {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--theme-text-secondary);
+
+      .traffic-up { color: #059669; font-weight: 600; }
+      .traffic-down { color: #dc2626; font-weight: 600; }
     }
   }
 
@@ -2377,6 +2392,7 @@ export default {
 
   .info-tooltip {
     position: relative;
+    z-index: 12;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2426,6 +2442,11 @@ export default {
       transform: translate(-50%, 0);
       transition-delay: 0.2s;
     }
+
+    &:hover,
+    &:focus-visible {
+      z-index: 14;
+    }
   }
 
   /* 流量趋势图卡片 */
@@ -2435,7 +2456,7 @@ export default {
     }
 
     .trend-state {
-      min-height: 140px;
+      min-height: 116px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2445,7 +2466,7 @@ export default {
 
     .usage-trend-chart {
       width: 100%;
-      height: 280px;
+      height: 230px;
     }
   }
   /* 待支付横幅卡片 */
@@ -2545,7 +2566,7 @@ export default {
       order: 2;
       grid-column: 1 / -1;
 
-      .today-traffic-values {
+      .today-traffic-total-main {
         font-size: 20px;
       }
     }
