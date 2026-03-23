@@ -525,6 +525,8 @@ profile: {
         trafficRemindDesc: '接收流量用尽提醒邮件',
         autoRenewalDesc: '订阅到期时若余额充足将自动续费当前订阅',
         security: '安全设置',
+        securityCenter: '进入安全中心',
+        securityCenterSubtitle: '管理账号安全和配置管理',
         changePassword: '修改密码',
         changePasswordTitle: '修改账户密码',
         oldPassword: '当前密码',

@@ -15,6 +15,20 @@
         </div>
       </div>
 
+      <div class="profile-card">
+        <div class="card-header">
+          <h3>{{ $t('profile.configManagement') }}</h3>
+        </div>
+        <div class="settings-content">
+          <div class="action-buttons">
+            <button class="action-btn" @click="router.push('/config-management')">
+              <IconLock :size="18" />
+              {{ $t('profile.resetSecurity') }}
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div v-if="PROFILE_CONFIG.showRecentDevices" class="profile-card">
         <div class="card-header">
           <h3>{{ $t('profile.recentDevices') }}</h3>
@@ -125,6 +139,7 @@
 <script setup name="SecuritySettings">
 import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import { changePassword as apiChangePassword, getActiveSession, logoutAllSessions, removeActiveSession } from '@/api/account/user';
 import {
   IconLock,
@@ -140,6 +155,7 @@ import { PROFILE_CONFIG } from '@/utils/baseConfig';
 import { forceLogout } from '@/api/auth';
 
 const { t } = useI18n();
+const router = useRouter();
 const { success, error: showError } = useToast();
 
 const showPasswordModal = ref(false);

@@ -289,10 +289,10 @@
         <!-- 安全设置 -->
 
         <SecurityCard
-          :title="$t('profile.configManagement')"
-          :label="$t('profile.resetSecurity')"
-          :subtitle="$t('profile.configManagementSubtitle')"
-          path="/config-management"
+          :title="$t('profile.security')"
+          :label="$t('profile.securityCenter')"
+          :subtitle="$t('profile.securityCenterSubtitle')"
+          path="/security"
         />
 
 

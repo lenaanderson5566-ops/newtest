@@ -525,6 +525,8 @@ profile: {
         trafficRemindDesc: 'Receive traffic exhaustion reminder emails',
         autoRenewalDesc: 'Automatically renew subscription when expired',
         security: 'Security Settings',
+        securityCenter: 'Open Security Center',
+        securityCenterSubtitle: 'Manage account security and config management',
         changePassword: 'Change Password',
         changePasswordTitle: 'Change Account Password',
         oldPassword: 'Current Password',
