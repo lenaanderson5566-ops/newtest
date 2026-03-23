@@ -1607,7 +1607,7 @@ export default {
           box-shadow: none;
 
           .period-card-inner {
-            background-color: #ffffff !important;
+            background-color: var(--background-color) !important;
           }
 
           .period-price {
@@ -1627,7 +1627,7 @@ export default {
         }
 
         .period-card-inner {
-          background-color: #ffffff !important;
+          background-color: var(--background-color) !important;
 
           padding: 16px 12px !important;
 
