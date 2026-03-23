@@ -9,39 +9,22 @@
       <section class="step-card">
         <header class="step-header">
           <div class="step-index">1</div>
-          <h2>下载客户端</h2>
+          <h2>选择系统</h2>
         </header>
         <div class="step-body">
-          <p class="step-tip">选择你的设备并下载客户端</p>
-          <div class="download-grid">
-            <div class="download-item" v-for="platform in quickStartPlatforms" :key="platform.id">
-              <component :is="platform.icon" :size="38" />
+          <p class="step-tip">选择你当前使用的设备系统</p>
+          <div class="system-grid">
+            <button
+              v-for="platform in quickStartPlatforms"
+              :key="platform.id"
+              class="system-item"
+              :class="{ active: selectedPlatform === platform.id }"
+              @click="selectedPlatform = platform.id"
+            >
+              <component :is="platform.icon" :size="36" />
               <strong>{{ platform.label }}</strong>
-              <button class="download-trigger" @click="handleDownloadTrigger(platform.id)">
-                {{ getPlatformClients(platform.id).length > 1 ? '选择客户端' : '下载客户端' }}
-                <IconChevronDown :size="16" />
-              </button>
-
-              <div v-if="activeDropdown === platform.id" class="download-dropdown">
-                <button
-                  v-for="client in getPlatformClients(platform.id)"
-                  :key="`${platform.id}-${client.name}`"
-                  class="dropdown-item"
-                  @click="openClientDownload(client.url)"
-                >
-                  <img
-                    v-if="resolveClientIcon(client.icon)"
-                    :src="resolveClientIcon(client.icon)"
-                    :alt="client.name"
-                    class="client-icon"
-                    :class="{ grayscale: !client.recommended }"
-                  />
-                  <IconApps v-else :size="18" class="fallback-icon" :class="{ grayscale: !client.recommended }" />
-                  <span>{{ client.name }}</span>
-                  <small v-if="client.recommended">(推荐)</small>
-                </button>
-              </div>
-            </div>
+              <IconCheck v-if="selectedPlatform === platform.id" :size="16" class="selected-mark" />
+            </button>
           </div>
         </div>
       </section>
@@ -49,15 +32,38 @@
       <section class="step-card">
         <header class="step-header">
           <div class="step-index">2</div>
-          <h2>导入订阅</h2>
-          <div class="actions" v-if="subscriptionUrl">
-            <button class="action-btn primary" @click="copySubscriptionUrl">一键复制</button>
-            <button class="action-btn" @click="openQrCodeModal">扫描二维码</button>
-            <button class="action-btn" @click="showImportPanel = !showImportPanel">{{ showImportPanel ? '收起详细导入' : '查看详细导入' }}</button>
-          </div>
+          <h2>下载并导入</h2>
         </header>
         <div class="step-body">
-          <ImportConfigCard v-if="showImportPanel && userStatus === USER_STATUS.ACTIVE" />
+          <p class="step-tip">下载推荐客户端并完成订阅导入</p>
+          <div class="client-grid" v-if="selectedPlatformClients.length">
+            <button
+              v-for="client in selectedPlatformClients"
+              :key="`${selectedPlatform}-${client.name}`"
+              class="client-item"
+              :class="{ active: selectedClient?.name === client.name }"
+              @click="selectedClientName = client.name"
+            >
+              <img
+                v-if="resolveClientIcon(client.icon)"
+                :src="resolveClientIcon(client.icon)"
+                :alt="client.name"
+                class="client-icon-large"
+                :class="{ grayscale: !client.recommended }"
+              />
+              <IconApps v-else :size="20" class="fallback-icon-large" :class="{ grayscale: !client.recommended }" />
+              <span>{{ client.name }}</span>
+              <small v-if="client.recommended">推荐</small>
+            </button>
+          </div>
+
+          <div class="action-row" v-if="subscriptionUrl">
+            <button class="action-btn primary" @click="downloadSelectedClient">下载客户端</button>
+            <button class="action-btn" @click="copySubscriptionUrl">复制订阅</button>
+            <button class="action-btn" @click="openQrCodeModal">扫码导入</button>
+            <button class="action-btn" @click="router.push('/docs')">查看教程</button>
+          </div>
+
         </div>
       </section>
 
@@ -88,10 +94,9 @@
 </template>
 
 <script setup>
-import { computed, inject, onBeforeUnmount, onMounted, reactive, ref } from 'vue';
+import { computed, inject, onMounted, reactive, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { IconBrandApple, IconBrandAndroid, IconBrandFinder, IconBrandWindows, IconChevronDown, IconApps } from '@tabler/icons-vue';
-import ImportConfigCard from '@/components/common/ImportConfigCard.vue';
+import { IconBrandApple, IconBrandAndroid, IconBrandFinder, IconBrandWindows, IconApps, IconCheck } from '@tabler/icons-vue';
 import { CLIENT_CONFIG } from '@/utils/baseConfig';
 import { getSubscribe } from '@/api/overview/dashboard';
 import QRCode from 'qrcode';
@@ -118,15 +123,10 @@ const USER_STATUS = Object.freeze({
 
 const userStatus = ref(USER_STATUS.NEW);
 const subscriptionUrl = ref('');
-const showImportPanel = ref(true);
 const showQrCode = ref(false);
 const qrCodeUrl = ref('');
-const activeDropdown = ref(null);
-const closeDropdown = (event) => {
-  const target = event?.target;
-  if (target?.closest?.('.download-item')) return;
-  activeDropdown.value = null;
-};
+const selectedPlatform = ref('windows');
+const selectedClientName = ref('');
 
 const quickStartPlatforms = computed(() => [
   { id: 'windows', label: 'Windows', icon: IconBrandWindows, visible: clientConfig.showWindows },
@@ -169,27 +169,35 @@ const getPlatformClients = (platform) => {
   return clients.sort((a, b) => Number(Boolean(b.recommended)) - Number(Boolean(a.recommended)));
 };
 
-const openClientDownload = (url) => {
-  if (!url) return;
-  window.open(url, '_blank');
-  activeDropdown.value = null;
-};
+const selectedPlatformClients = computed(() => getPlatformClients(selectedPlatform.value));
+const selectedClient = computed(() => selectedPlatformClients.value.find((item) => item.name === selectedClientName.value) || null);
 
-const handleDownloadTrigger = (platform) => {
-  const clients = getPlatformClients(platform);
+watch(quickStartPlatforms, (next) => {
+  if (!next.length) return;
+  if (!next.some((item) => item.id === selectedPlatform.value)) {
+    selectedPlatform.value = next[0].id;
+  }
+}, { immediate: true });
 
+watch(selectedPlatformClients, (clients) => {
   if (!clients.length) {
-    const fallback = clientConfig.clientLinks?.[platform];
-    if (fallback) window.open(fallback, '_blank');
+    selectedClientName.value = '';
     return;
   }
 
-  if (clients.length === 1) {
-    openClientDownload(clients[0].url);
+  if (clients.some((item) => item.name === selectedClientName.value)) return;
+  selectedClientName.value = clients.find((item) => item.recommended)?.name || clients[0].name;
+}, { immediate: true });
+
+const downloadSelectedClient = () => {
+  const target = selectedClient.value || selectedPlatformClients.value[0];
+  if (target?.url) {
+    window.open(target.url, '_blank');
     return;
   }
 
-  activeDropdown.value = activeDropdown.value === platform ? null : platform;
+  const fallback = clientConfig.clientLinks?.[selectedPlatform.value];
+  if (fallback) window.open(fallback, '_blank');
 };
 
 const openQrCodeModal = async () => {
@@ -250,8 +258,6 @@ const fetchUserStatus = async () => {
 };
 
 onMounted(fetchUserStatus);
-onMounted(() => window.addEventListener('click', closeDropdown));
-onBeforeUnmount(() => window.removeEventListener('click', closeDropdown));
 </script>
 
 <style scoped lang="scss">
@@ -332,14 +338,14 @@ onBeforeUnmount(() => window.removeEventListener('click', closeDropdown));
   font-size: 14px;
 }
 
-.download-grid {
+.system-grid {
   margin-top: 14px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
 }
 
-.download-item {
+.system-item {
   border: 1px solid var(--border-color);
   border-radius: $border-radius-sm;
   background: #fff;
@@ -354,78 +360,82 @@ onBeforeUnmount(() => window.removeEventListener('click', closeDropdown));
     border-color: rgba(var(--theme-color-rgb), 0.5);
   }
 
-  strong {
-    font-size: 15px;
+  strong { font-size: 15px; }
+
+  &.active {
+    border-color: rgba(var(--theme-color-rgb), 0.85);
+    background: rgba(var(--theme-color-rgb), 0.05);
+    color: var(--theme-color);
   }
 
-  .download-trigger {
-    width: 100%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    border: none;
-    border-radius: 8px;
-    padding: 9px 0;
-    background: #3f72e8;
-    color: #fff;
-    font-size: 14px;
-    cursor: pointer;
+  .selected-mark {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--theme-color);
   }
 }
 
-.download-dropdown {
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  top: calc(100% - 2px);
-  z-index: 12;
-  background: #fff;
+.client-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.client-item {
   border: 1px solid var(--border-color);
-  border-radius: 10px;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
-  overflow: hidden;
-}
-
-.dropdown-item {
-  width: 100%;
-  border: none;
   background: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 12px;
+  position: relative;
   cursor: pointer;
-  color: var(--text-color);
   text-align: left;
 
-  &:hover {
-    background: rgba(var(--theme-color-rgb), 0.06);
+  span {
+    font-weight: 600;
   }
 
   small {
-    color: rgba(var(--theme-color-rgb), 0.9);
     margin-left: auto;
+    color: #f08c2e;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  &.active {
+    border-color: rgba(var(--theme-color-rgb), 0.85);
+    background: rgba(var(--theme-color-rgb), 0.06);
   }
 }
 
-.client-icon {
-  width: 18px;
-  height: 18px;
+.client-icon-large {
+  width: 20px;
+  height: 20px;
   object-fit: contain;
 }
 
-.fallback-icon,
-.client-icon {
+.fallback-icon-large,
+.client-icon-large {
   &.grayscale {
     filter: grayscale(1);
     opacity: 0.65;
   }
 }
 
+.action-row {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
 .action-btn,
 .help-btn {
-  border: 1px solid #cdd7f7;
+  border: 1px solid var(--border-color);
   background: #fff;
   color: #3f72e8;
   border-radius: 8px;
