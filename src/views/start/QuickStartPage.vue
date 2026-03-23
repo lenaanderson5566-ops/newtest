@@ -59,9 +59,9 @@
 
           <div class="action-row" v-if="subscriptionUrl">
             <button class="action-btn primary" @click="downloadSelectedClient">下载客户端</button>
+            <button class="action-btn" @click="quickImportSelectedClient">一键导入</button>
             <button class="action-btn" @click="copySubscriptionUrl">复制订阅</button>
             <button class="action-btn" @click="openQrCodeModal">扫码导入</button>
-            <button class="action-btn" @click="router.push('/docs')">查看教程</button>
           </div>
 
         </div>
@@ -198,6 +198,102 @@ const downloadSelectedClient = () => {
 
   const fallback = clientConfig.clientLinks?.[selectedPlatform.value];
   if (fallback) window.open(fallback, '_blank');
+};
+
+const normalizeBase64 = (content) => window.btoa(content).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+const resolveClientType = (client) => {
+  if (!client) return '';
+  const iconKey = (client.icon || '').toLowerCase();
+  const name = (client.name || '').toLowerCase();
+
+  if (iconKey.includes('shadowrocket') || name.includes('shadowrocket')) return 'shadowrocket';
+  if (iconKey.includes('surge') || name.includes('surge')) return selectedPlatform.value === 'macos' ? 'surge-mac' : 'surge';
+  if (iconKey.includes('stash') || name.includes('stash')) return selectedPlatform.value === 'macos' ? 'stash-mac' : 'stash';
+  if (iconKey.includes('quantumult') || name.includes('quantumult')) return selectedPlatform.value === 'macos' ? 'quantumultx-mac' : 'quantumultx';
+  if (iconKey.includes('loon') || name.includes('loon')) return 'loon';
+  if (iconKey.includes('v2rayng') || name.includes('v2ray')) return 'v2rayng';
+  if (iconKey.includes('surfboard') || name.includes('surfboard')) return 'surfboard';
+  if (iconKey.includes('singbox') || name.includes('sing-box') || name.includes('singbox')) {
+    if (selectedPlatform.value === 'ios') return 'singbox-ios';
+    if (selectedPlatform.value === 'android') return 'singbox-android';
+    if (selectedPlatform.value === 'windows') return 'singbox-windows';
+    if (selectedPlatform.value === 'macos') return 'singbox-macos';
+  }
+  if (iconKey.includes('hiddify') || name.includes('hiddify')) {
+    if (selectedPlatform.value === 'ios') return 'hiddify-ios';
+    if (selectedPlatform.value === 'android') return 'hiddify-android';
+    if (selectedPlatform.value === 'windows') return 'hiddify-windows';
+    if (selectedPlatform.value === 'macos') return 'hiddify-macos';
+  }
+
+  if (
+    iconKey.includes('clash') ||
+    iconKey.includes('flclash') ||
+    iconKey.includes('clashx') ||
+    name.includes('clash') ||
+    name.includes('nekobox') ||
+    name.includes('nekoray')
+  ) {
+    return 'clash';
+  }
+  return '';
+};
+
+const buildClientSchemeUrl = (clientType, subscribeUrl) => {
+  const siteName = '订阅';
+  switch (clientType) {
+    case 'shadowrocket':
+      return `shadowrocket://add/sub://${normalizeBase64(subscribeUrl)}?remark=${encodeURIComponent(siteName)}`;
+    case 'surge':
+    case 'surge-mac':
+      return `surge:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+    case 'stash':
+    case 'stash-mac':
+      return `stash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+    case 'quantumultx':
+    case 'quantumultx-mac':
+      return `quantumult-x:///update-configuration?remote-resource=${encodeURI(JSON.stringify({ server_remote: [`${subscribeUrl}, tag=${encodeURIComponent(siteName)}`] }))}`;
+    case 'loon':
+      return `loon://import?nodelist=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+    case 'v2rayng':
+      return `v2rayng://install-sub?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
+    case 'clash':
+      return `clash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+    case 'surfboard':
+      return `surfboard:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+    case 'singbox-ios':
+    case 'singbox-android':
+    case 'singbox-windows':
+    case 'singbox-macos':
+      return `sing-box://import-remote-profile?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
+    case 'hiddify-android':
+    case 'hiddify-windows':
+    case 'hiddify-macos':
+    case 'hiddify-ios':
+      return `hiddify://import/${subscribeUrl}#${encodeURIComponent(siteName)}`;
+    default:
+      return subscribeUrl;
+  }
+};
+
+const quickImportSelectedClient = async () => {
+  if (!subscriptionUrl.value) {
+    $toast?.warning('当前暂无订阅链接');
+    return;
+  }
+
+  const target = selectedClient.value || selectedPlatformClients.value[0];
+  const schemeUrl = buildClientSchemeUrl(resolveClientType(target), subscriptionUrl.value);
+
+  try {
+    await navigator.clipboard.writeText(subscriptionUrl.value);
+  } catch (err) {
+    console.warn('Copy subscription failed before import:', err);
+  }
+
+  window.open(schemeUrl, '_blank');
+  $toast?.success('已尝试唤起客户端，订阅地址已复制到剪贴板');
 };
 
 const openQrCodeModal = async () => {
