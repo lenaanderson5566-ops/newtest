@@ -61,7 +61,13 @@
             <button class="action-btn primary" @click="downloadSelectedClient">下载客户端</button>
             <button class="action-btn" @click="quickImportSelectedClient">一键导入</button>
             <button class="action-btn" @click="copySubscriptionUrl">复制订阅</button>
-            <button class="action-btn" @click="openQrCodeModal">扫码导入</button>
+            <button
+              v-if="selectedPlatform === 'ios' || selectedPlatform === 'android'"
+              class="action-btn"
+              @click="openQrCodeModal"
+            >
+              扫码导入
+            </button>
           </div>
 
         </div>
