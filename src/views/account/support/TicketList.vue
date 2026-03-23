@@ -19,18 +19,6 @@
     <!-- 原有内容在非小屏时显示 -->
 
     <template v-else>
-      <!-- 欢迎卡片 -->
-
-      <div class="dashboard-card welcome-card">
-        <div class="card-header">
-          <h2 class="card-title">{{ $t("tickets.title") }}</h2>
-        </div>
-
-        <div class="card-body">
-          <p>{{ $t("tickets.description") }}</p>
-        </div>
-      </div>
-
       <div class="ticket-list-container">
         <!-- 左侧工单列表 -->
 
@@ -273,45 +261,6 @@
           </div>
         </div>
 
-        <div class="ticket-context-sidebar">
-          <div class="context-card" v-if="selectedTicket">
-            <h3 class="context-title">{{ $t('tickets.title') }}</h3>
-            <div class="context-list">
-              <div class="context-item">
-                <span class="context-label">ID</span>
-                <span class="context-value">#{{ selectedTicket.id }}</span>
-              </div>
-              <div class="context-item">
-                <span class="context-label">{{ $t('tickets.statusOpen') }}/{{ $t('tickets.statusClosed') }}</span>
-                <span class="context-value">
-                  <span class="status-badge" :class="getStatusClass(selectedTicket.status)">
-                    {{ getStatusText(selectedTicket.status) }}
-                  </span>
-                </span>
-              </div>
-              <div class="context-item">
-                <span class="context-label">{{ $t('tickets.level') }}</span>
-                <span class="context-value">
-                  <span class="level-badge" :class="getLevelClass(selectedTicket.level)">
-                    {{ getLevelText(selectedTicket.level) }}
-                  </span>
-                </span>
-              </div>
-              <div class="context-item">
-                <span class="context-label">{{ $t('tickets.createdAt') }}</span>
-                <span class="context-value">{{ formatTime(selectedTicket.created_at) }}</span>
-              </div>
-              <div class="context-item">
-                <span class="context-label">{{ $t('tickets.loadingMessages') }}</span>
-                <span class="context-value">{{ loadingMessages ? '…' : ticketMessages.length }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="context-card context-empty" v-else>
-            <h3 class="context-title">{{ $t('tickets.title') }}</h3>
-            <p>{{ $t('tickets.selectTicket') }}</p>
-          </div>
-        </div>
       </div>
 
       <!-- 新建工单弹窗 并将弹窗置顶-->
@@ -975,7 +924,7 @@ onUnmounted(() => {
 
   border-radius: 12px;
 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 
   padding: 20px;
 
@@ -986,7 +935,7 @@ onUnmounted(() => {
   transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
   }
@@ -1081,14 +1030,14 @@ onUnmounted(() => {
 
       transition: all 0.3s ease;
 
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      box-shadow: none;
 
       &:focus {
         outline: none;
 
         border-color: rgba(var(--theme-color-rgb), 0.5);
 
-        box-shadow: 0 2px 12px rgba(var(--theme-color-rgb), 0.1);
+        box-shadow: none;
       }
 
       &::placeholder {
@@ -1152,12 +1101,12 @@ onUnmounted(() => {
 
     border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
-    box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+    box-shadow: none;
 
     &:hover {
       transform: translateY(-2px);
 
-      box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
+      box-shadow: none;
 
       background-color: rgba(var(--theme-color-rgb), 0.95);
     }
@@ -1165,7 +1114,7 @@ onUnmounted(() => {
     &:active {
       transform: translateY(0);
 
-      box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: none;
     }
   }
 }
@@ -1258,7 +1207,7 @@ onUnmounted(() => {
 .status-closed {
   background-color: rgba(158, 158, 158, 0.1);
 
-  color: #9e9e9e;
+  color: var(--secondary-text-color);
 }
 
 .level-low {
@@ -1502,7 +1451,7 @@ onUnmounted(() => {
 
     flex-shrink: 0;
 
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: none;
 
     position: relative;
 
@@ -1550,7 +1499,7 @@ onUnmounted(() => {
 
     border-radius: 18px;
 
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
 
     position: relative;
 
@@ -1640,7 +1589,7 @@ onUnmounted(() => {
 
     transition: all 0.3s ease;
 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    box-shadow: none;
 
     min-height: 90px;
 
@@ -1649,7 +1598,7 @@ onUnmounted(() => {
 
       border-color: var(--theme-color);
 
-      box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.1);
+      box-shadow: none;
 
       transform: translateY(-2px);
     }
@@ -1691,7 +1640,7 @@ onUnmounted(() => {
 
     font-weight: 500;
 
-    box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+    box-shadow: none;
 
     backdrop-filter: blur(8px);
 
@@ -1702,7 +1651,7 @@ onUnmounted(() => {
     &:hover:not(:disabled) {
       transform: translateY(-2px);
 
-      box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
+      box-shadow: none;
 
       background-color: rgba(var(--theme-color-rgb), 0.95);
     }
@@ -1710,7 +1659,7 @@ onUnmounted(() => {
     &:active:not(:disabled) {
       transform: translateY(0);
 
-      box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: none;
     }
 
     &:disabled {
@@ -1857,7 +1806,7 @@ onUnmounted(() => {
 }
 
 .modal-content {
-  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+  background-color: var(--card-background);
 
   border-radius: 16px;
 
@@ -1869,7 +1818,7 @@ onUnmounted(() => {
 
   overflow-y: auto;
 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 
   animation: modal-appear 0.3s cubic-bezier(0.21, 1.02, 0.73, 1);
 
@@ -1999,14 +1948,14 @@ onUnmounted(() => {
 
       transition: all 0.2s ease;
 
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+      box-shadow: none;
 
       &:focus {
         outline: none;
 
         border-color: rgba(var(--theme-color-rgb), 0.5);
 
-        box-shadow: 0 2px 12px rgba(var(--theme-color-rgb), 0.1);
+        box-shadow: none;
       }
 
       &::placeholder {
@@ -2159,7 +2108,7 @@ onUnmounted(() => {
 
       color: white;
 
-      box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+      box-shadow: none;
 
       backdrop-filter: blur(8px);
 
@@ -2168,7 +2117,7 @@ onUnmounted(() => {
       &:hover:not(:disabled) {
         transform: translateY(-2px);
 
-        box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
+        box-shadow: none;
 
         background-color: rgba(var(--theme-color-rgb), 0.95);
       }
@@ -2176,7 +2125,7 @@ onUnmounted(() => {
       &:active:not(:disabled) {
         transform: translateY(0);
 
-        box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.3);
+        box-shadow: none;
       }
 
       &:disabled {
@@ -2298,7 +2247,7 @@ onUnmounted(() => {
 
     border-radius: 16px;
 
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: none;
 
     max-width: 90%;
 
@@ -2355,20 +2304,20 @@ onUnmounted(() => {
 
       gap: 0.75rem;
 
-      box-shadow: 0 6px 15px rgba(var(--theme-color-rgb), 0.25);
+      box-shadow: none;
 
       &:hover {
         background-color: rgba(var(--theme-color-rgb), 0.9);
 
         transform: translateY(-1px);
 
-        box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.35);
+        box-shadow: none;
       }
 
       &:active {
         transform: translateY(-1px);
 
-        box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.25);
+        box-shadow: none;
       }
     }
   }
@@ -2415,7 +2364,7 @@ onUnmounted(() => {
     font-size: 1rem;
     margin-bottom: 4px;
     .upload-tip-text {
-      color: var(--text-color);
+      color: var(--secondary-text-color);
       font-weight: 500;
       font-size: 1.08rem;
       transition: color 0.2s;
@@ -2423,7 +2372,7 @@ onUnmounted(() => {
     .upload-desc {
       display: block;
       font-size: 0.92rem;
-      color: #888;
+      color: var(--secondary-text-color);
       margin-top: 2px;
     }
     .upload-method {
@@ -2459,18 +2408,17 @@ onUnmounted(() => {
 
 .ticket-list-container {
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr) 260px;
+  grid-template-columns: 320px minmax(0, 1fr);
   gap: 16px;
   align-items: stretch;
 }
 
 .ticket-sidebar,
-.ticket-content,
-.ticket-context-sidebar .context-card {
+.ticket-content {
   border: 1px solid var(--border-color);
   border-radius: 14px;
   background: var(--card-bg-color);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  box-shadow: none;
 }
 
 .ticket-sidebar {
@@ -2557,62 +2505,9 @@ onUnmounted(() => {
   font-weight: 550;
 }
 
-.ticket-context-sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.ticket-context-sidebar .context-card {
-  padding: 14px;
-}
-
-.context-title {
-  margin: 0 0 10px;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.context-list {
-  display: grid;
-  gap: 8px;
-}
-
-.context-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: rgba(var(--theme-color-rgb), 0.03);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.08);
-}
-
-.context-label {
-  font-size: 12px;
-  color: var(--secondary-text-color);
-}
-
-.context-value {
-  font-size: 12px;
-  color: var(--text-color);
-  text-align: right;
-}
-
-.context-empty p {
-  margin: 0;
-  color: var(--secondary-text-color);
-  font-size: 13px;
-}
-
 @media (max-width: 1320px) {
   .ticket-list-container {
     grid-template-columns: 280px minmax(0, 1fr);
-  }
-
-  .ticket-context-sidebar {
-    grid-column: 1 / -1;
   }
 }
 

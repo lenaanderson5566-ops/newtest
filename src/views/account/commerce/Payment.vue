@@ -1246,7 +1246,7 @@ export default {
   .dashboard-card {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+    box-shadow: none;
     padding: 20px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
@@ -1254,7 +1254,7 @@ export default {
     position: relative;
 
     &:hover {
-      box-shadow: 0 1px 5px rgba(15, 23, 42, 0.08);
+      box-shadow: none;
       border-color: var(--border-color);
     }
 
@@ -1298,7 +1298,7 @@ export default {
       max-width: 520px;
       --right-card-bg: #2f343d;
       --right-card-border: rgba(148, 163, 184, 0.32);
-      --right-card-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
+      --right-card-shadow: none;
       --right-card-text: #f8fafc;
     }
   }
@@ -1306,7 +1306,7 @@ export default {
   .section-wrapper {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+    box-shadow: none;
     padding: 20px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
@@ -1317,7 +1317,7 @@ export default {
     }
 
     &:hover {
-      box-shadow: 0 1px 5px rgba(15, 23, 42, 0.08);
+      box-shadow: none;
       border-color: var(--border-color);
     }
 
@@ -1419,7 +1419,7 @@ export default {
     margin-bottom: 6px !important;
     background: var(--card-bg-color);
     border: 1px solid var(--border-color);
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+    box-shadow: none;
 
     .section-title {
       margin-bottom: 0;
@@ -1436,7 +1436,7 @@ export default {
   .right-column .section-wrapper.payment-methods-section {
     background: var(--right-card-bg) !important;
     border: 1px solid var(--right-card-border) !important;
-    box-shadow: var(--right-card-shadow) !important;
+    box-shadow: none !important;
   }
 
   .right-column .section-wrapper.payment-methods-section .section-title {
@@ -1446,7 +1446,7 @@ export default {
   .order-amount-section {
     background: var(--card-bg-color);
     border: 1px solid var(--border-color);
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+    box-shadow: none;
 
     .section-title {
       color: var(--text-color);
@@ -1501,12 +1501,12 @@ export default {
         justify-content: center;
         gap: 8px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 1px 4px rgba(var(--theme-color-rgb), 0.2);
+        box-shadow: none;
         border: none;
 
         &:hover:not(:disabled) {
           background-color: color-mix(in srgb, var(--theme-color) 88%, black) !important;
-          box-shadow: 0 1px 5px rgba(var(--theme-color-rgb), 0.24);
+          box-shadow: none;
           transform: none;
         }
 
@@ -1528,7 +1528,7 @@ export default {
   .right-column .order-amount-section {
     background: var(--right-card-bg) !important;
     border: 1px solid var(--right-card-border) !important;
-    box-shadow: var(--right-card-shadow) !important;
+    box-shadow: none !important;
   }
 
   .right-column .order-amount-section .section-title,
@@ -1567,7 +1567,7 @@ export default {
       &.active {
         border-color: var(--theme-color);
         background-color: rgba(var(--theme-color-rgb), 0.14);
-        box-shadow: 0 2px 10px rgba(var(--theme-color-rgb), 0.22);
+        box-shadow: none;
       }
 
       .method-check {
@@ -1777,17 +1777,17 @@ export default {
       color: var(--text-color);
       flex: 1;
       border: 1px solid var(--border-color);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+      box-shadow: none;
 
       &:hover:not(:disabled) {
         background-color: var(--hover-color);
         transform: none;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        box-shadow: none;
       }
 
       &:active:not(:disabled) {
         transform: translateY(0);
-        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+        box-shadow: none;
       }
 
       &.full-width {
@@ -1802,12 +1802,12 @@ export default {
       background-color: var(--theme-color);
       color: white;
       flex: 2;
-      box-shadow: 0 1px 4px rgba(var(--theme-color-rgb), 0.2);
+      box-shadow: none;
 
       &:hover:not(:disabled) {
         background-color: var(--primary-color-hover);
         transform: none;
-        box-shadow: 0 1px 5px rgba(var(--theme-color-rgb), 0.24);
+        box-shadow: none;
       }
     }
 
@@ -1816,12 +1816,12 @@ export default {
       color: var(--text-color);
       flex: 1;
       border: 1px solid var(--border-color);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+      box-shadow: none;
 
       &:hover:not(:disabled) {
         background-color: var(--card-bg-color);
         transform: none;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        box-shadow: none;
       }
     }
 
@@ -1930,7 +1930,7 @@ export default {
           justify-content: center;
           margin: 0 auto;
           animation: zoomIn 0.5s ease, pulse 2s infinite ease-in-out;
-          box-shadow: 0 0 30px rgba(var(--theme-color-rgb), 0.7);
+          box-shadow: none;
 
           .check-icon {
             color: white;
@@ -2024,13 +2024,13 @@ export default {
 
   @keyframes pulse {
     0% {
-      box-shadow: 0 0 20px rgba(var(--theme-color-rgb), 0.7);
+      box-shadow: none;
     }
     50% {
-      box-shadow: 0 0 40px rgba(var(--theme-color-rgb), 0.9);
+      box-shadow: none;
     }
     100% {
-      box-shadow: 0 0 20px rgba(var(--theme-color-rgb), 0.7);
+      box-shadow: none;
     }
   }
 
@@ -2115,7 +2115,7 @@ export default {
     .modal-backdrop {
       position: absolute;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.65);
+      background-color: rgba(var(--text-color-rgb), 0.45);
       will-change: opacity;
     }
 
@@ -2129,9 +2129,9 @@ export default {
 
     .modal-card {
       position: relative;
-      background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+      background-color: var(--card-background);
       border-radius: $border-radius-sm;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+      box-shadow: none;
       border: 1px solid rgba(var(--theme-color-rgb), 0.1);
       overflow: hidden;
       transform: translateZ(0);
@@ -2155,13 +2155,13 @@ export default {
         border: 1px solid var(--border-color);
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        box-shadow: none;
         z-index: 10;
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
           transform: none;
-          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+          box-shadow: none;
         }
       }
 
@@ -2184,7 +2184,7 @@ export default {
             color: #ff9800;
 
             svg {
-              filter: drop-shadow(0 2px 8px rgba(255, 152, 0, 0.3));
+              filter: none;
             }
           }
 
@@ -2193,7 +2193,7 @@ export default {
             color: var(--theme-color);
 
             svg {
-              filter: drop-shadow(0 2px 8px rgba(var(--theme-color-rgb), 0.3));
+              filter: none;
             }
           }
         }
@@ -2224,7 +2224,7 @@ export default {
           canvas,
           svg {
             border-radius: $border-radius-sm;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: none;
           }
         }
 
@@ -2297,18 +2297,18 @@ export default {
           background-color: transparent;
           border: 1px solid var(--border-color);
           color: var(--text-color);
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+          box-shadow: none;
           transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
           &:hover {
             background-color: var(--hover-color);
             transform: none;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            box-shadow: none;
           }
 
           &:active {
             transform: translateY(0);
-            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: none;
             transition-duration: 0.1s;
           }
         }
@@ -2316,18 +2316,18 @@ export default {
         .btn-primary {
           background-color: var(--theme-color);
           color: white;
-          box-shadow: 0 1px 4px rgba(var(--theme-color-rgb), 0.2);
+          box-shadow: none;
           transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
           &:hover {
             background-color: var(--primary-color-hover);
             transform: none;
-            box-shadow: 0 1px 5px rgba(var(--theme-color-rgb), 0.24);
+            box-shadow: none;
           }
 
           &:active {
             transform: translateY(0);
-            box-shadow: 0 4px 8px rgba(var(--theme-color-rgb), 0.2);
+            box-shadow: none;
             transition-duration: 0.1s;
           }
         }
@@ -2363,7 +2363,7 @@ export default {
 }
 
 .payment-container .overview-section {
-  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+  background-color: var(--card-background);
 }
 
 .cancel-modal {
@@ -2394,10 +2394,10 @@ export default {
   }
 
   .cancel-modal-content {
-    background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+    background-color: var(--card-background);
     border-radius: $border-radius-sm;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: none;
     transform: translateZ(0);
 
     @media (prefers-color-scheme: dark) {
@@ -2548,7 +2548,7 @@ export default {
   }
 
   &.status-unknown {
-    color: #757575;
+    color: var(--secondary-text-color);
     background-color: rgba(158, 158, 158, 0.12);
     border-color: rgba(158, 158, 158, 0.2);
   }

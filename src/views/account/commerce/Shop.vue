@@ -909,7 +909,7 @@ export default {
   .welcome-card {
     border: 1px solid var(--border-color);
     border-radius: var(--shop-card-radius);
-    box-shadow: var(--shadow-card-sm);
+    box-shadow: none;
 
     margin-bottom: 24px;
 
@@ -926,7 +926,7 @@ export default {
 
     border-radius: 12px;
 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 
     padding: 20px;
 
@@ -939,7 +939,7 @@ export default {
     position: relative;
 
     &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      box-shadow: none;
 
       border-color: rgba(var(--theme-color-rgb), 0.3);
     }
@@ -994,7 +994,7 @@ export default {
     border-radius: 999px;
     padding: 5px 10px;
     white-space: nowrap;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+    box-shadow: none;
   }
 
       .card-badge {
@@ -1220,13 +1220,13 @@ export default {
     .plan-card {
       border-radius: var(--shop-card-radius);
       border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-card-sm);
+      box-shadow: none;
 
       background-color: var(--card-bg-color);
 
       border-radius: 16px;
 
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      box-shadow: none;
 
       padding: 24px;
 
@@ -1243,7 +1243,7 @@ export default {
       height: auto;
 
       &:hover {
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        box-shadow: none;
 
         border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -1252,7 +1252,7 @@ export default {
 
       &.current-plan-card {
         border-color: rgba(var(--theme-color-rgb), 0.5);
-        box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.16), 0 10px 24px rgba(var(--theme-color-rgb), 0.12);
+        box-shadow: none;
       }
 
       .card-header {
@@ -1396,7 +1396,7 @@ export default {
         .currency {
           font-size: 22px;
           font-weight: 500;
-          color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
+          color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
         }
 
         .amount {
@@ -1410,7 +1410,7 @@ export default {
         .unit-line {
           font-size: 13px;
           font-weight: 500;
-          color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
+          color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
         }
       }
     }
@@ -1523,7 +1523,7 @@ export default {
           flex: 1; // 占据剩余空间
 
           &.disabled-text {
-            color: #999;
+            color: var(--secondary-text-color);
           }
         }
       }
@@ -1560,7 +1560,7 @@ export default {
     margin-top: 4px;
     align-self: flex-start;
     background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
-    box-shadow: 0 8px 18px rgba(var(--theme-color-rgb), 0.24);
+    box-shadow: none;
 
     &.glassmorphism {
       backdrop-filter: none;
@@ -1570,7 +1570,7 @@ export default {
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: none;
       filter: brightness(1.03);
     }
 
@@ -1624,7 +1624,7 @@ export default {
       border-radius: 12px;
       border: 1px solid var(--border-color);
       background: var(--surface-subtle);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+      box-shadow: none;
 
       .filter-highlight {
         position: absolute;
@@ -1633,7 +1633,7 @@ export default {
         bottom: 3px;
         border-radius: 9px;
         background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
-        box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.22);
+        box-shadow: none;
         transition: transform 0.22s ease, width 0.22s ease;
         pointer-events: none;
       }
@@ -1668,7 +1668,7 @@ export default {
 
         .option-text {
           font-size: 12px;
-          color: #475569;
+          color: var(--secondary-text-color);
           font-weight: 500;
           white-space: nowrap;
         }

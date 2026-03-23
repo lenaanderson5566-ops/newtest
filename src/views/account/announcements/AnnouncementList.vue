@@ -61,6 +61,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .announcement-page {
   padding: 0 0 24px;
 }
@@ -73,7 +75,7 @@ export default {
 .announcement-item {
   background: #fff;
   border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
   padding: 16px;
 
   header {
@@ -86,18 +88,18 @@ export default {
     h3 {
       margin: 0;
       font-size: 18px;
-      color: #0f172a;
+      color: var(--text-color);
     }
 
     time {
       font-size: 12px;
-      color: #64748b;
+      color: var(--secondary-text-color);
       white-space: nowrap;
     }
   }
 
   .announcement-content {
-    color: #334155;
+    color: var(--secondary-text-color);
     line-height: 1.6;
   }
 }
@@ -106,9 +108,9 @@ export default {
 .announcement-empty {
   background: #fff;
   border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
   padding: 24px;
   text-align: center;
-  color: #64748b;
+  color: var(--secondary-text-color);
 }
 </style>

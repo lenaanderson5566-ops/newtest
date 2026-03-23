@@ -399,7 +399,7 @@ watch(locale, () => {
 .dashboard-card {
   background-color: #fff;
   border-radius: $border-radius-sm;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
   padding: 20px;
   margin-bottom: 24px;
   border: 1px solid var(--border-color);
@@ -407,7 +407,7 @@ watch(locale, () => {
   position: relative;
   
   &:hover {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
     border-color: rgba(var(--theme-color-rgb), 0.3);
   }
   
@@ -446,12 +446,12 @@ watch(locale, () => {
   overflow-x: auto; 
   background-color: #fff;
   border-radius: $border-radius-sm;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
   
   &:hover {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
     border-color: rgba(var(--theme-color-rgb), 0.3);
   }
 }
@@ -634,7 +634,7 @@ watch(locale, () => {
   font-weight: 500;
   font-size: 14px;
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
-  box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+  box-shadow: none;
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(8px);
@@ -642,13 +642,13 @@ watch(locale, () => {
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
+    box-shadow: none;
     background-color: rgba(var(--theme-color-rgb), 0.95);
   }
   
   &:active {
     transform: translateY(0);
-    box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.3);
+    box-shadow: none;
   }
 }
 
@@ -687,9 +687,9 @@ watch(locale, () => {
 }
 
 .modal-content {
-  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+  background-color: var(--card-background);
   border-radius: $border-radius-sm;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
   width: 90%;
   max-width: 480px;
   overflow: hidden;
@@ -874,13 +874,13 @@ watch(locale, () => {
 .order-card {
   background-color: #fff;
   border-radius: $border-radius-sm;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
   overflow: hidden;
   
   &:hover {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
     border-color: rgba(var(--theme-color-rgb), 0.3);
   }
 }

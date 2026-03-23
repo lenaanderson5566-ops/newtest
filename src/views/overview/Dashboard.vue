@@ -189,7 +189,10 @@
             :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
             <div class="usage-card-title today-card-title">今日流量</div>
-            <div class="today-traffic-total-main">今日总流量 {{ todayTrafficStats.totalGb }} GB</div>
+            <div class="today-traffic-total-main">
+              <span class="usage-percent compact">{{ todayTrafficStats.totalGb }} GB</span>
+              <span class="usage-percent-label">已使用</span>
+            </div>
             <div class="today-traffic-breakdown">
               <span class="traffic-up">上行 {{ todayTrafficStats.uploadGb }} GB</span>
               <span class="traffic-down">下行 {{ todayTrafficStats.downloadGb }} GB</span>
@@ -1173,7 +1176,9 @@ export default {
         trafficTrendChart.dispose();
       }
       const rootStyles = getComputedStyle(document.documentElement);
-      const textColor = rootStyles.getPropertyValue('--text-color').trim() || '#333333';
+      const textColor =
+        rootStyles.getPropertyValue('--text-color').trim() ||
+        `rgb(${rootStyles.getPropertyValue('--text-color-rgb').trim() || '51, 51, 51'})`;
       const borderColor = rootStyles.getPropertyValue('--border-color').trim() || '#e8e8e8';
       const themeColor = rootStyles.getPropertyValue('--theme-color').trim() || '#6753f6';
       trafficTrendChart = echarts.init(trafficTrendChartRef.value);
@@ -1456,7 +1461,7 @@ export default {
   --dashboard-radius: #{$border-radius-sm};
   --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
-  --dashboard-shadow-compact: 0 2px 8px rgba(15, 23, 42, 0.06), 0 10px 22px rgba(15, 23, 42, 0.05);
+  --dashboard-shadow-compact: none;
   --dashboard-border-color: rgba(148, 163, 184, 0.22);
   --dashboard-title-size: 14px;
   --dashboard-value-size: 30px;
@@ -1466,27 +1471,27 @@ export default {
 
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
-  --saas-text-secondary: #6b7280;
+  --saas-text-secondary: var(--secondary-text-color);
   --saas-border-soft: #eef1f5;
   --saas-card-bg: #ffffff;
-  --saas-card-shadow: var(--dashboard-shadow-compact);
+  --saas-card-shadow: none;
 
   --theme-text-primary: #111827;
-  --theme-text-secondary: #6b7280;
+  --theme-text-secondary: var(--secondary-text-color);
   --theme-text-subtle: #9ca3af;
-  --theme-text-emphasis: #374151;
+  --theme-text-emphasis: var(--text-color);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
   --theme-border-soft: #e5e7eb;
   --theme-white: #ffffff;
-  --quota-label-color: #4b5563;
-  --quota-value-color: #1f2937;
+  --quota-label-color: var(--secondary-text-color);
+  --quota-value-color: var(--text-color);
   --quota-progress-start: #60a5fa;
   --quota-progress-end: #3b82f6;
   --quota-muted-fill: #cbd5e1;
   --quota-total-bg-end: #f8fbff;
   --quota-expired-border: #d1d5db;
-  --plan-meta-text: #64748b;
+  --plan-meta-text: var(--secondary-text-color);
   --plan-expired-strip-text: #b91c1c;
   --plan-expired-strip-bg: rgba(248, 113, 113, 0.16);
   --plan-expired-strip-border: rgba(239, 68, 68, 0.32);
@@ -1558,14 +1563,14 @@ export default {
 
   .dashboard-card {
     background-color: var(--saas-card-bg);
-    box-shadow: var(--saas-card-shadow);
+    box-shadow: none;
     padding: var(--dashboard-card-padding);
     border: 1px solid var(--dashboard-border-color);
     border-radius: var(--dashboard-radius);
     transition: box-shadow 0.2s ease;
 
     &:hover {
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 8px 16px rgba(15, 23, 42, 0.05);
+      box-shadow: none;
       transform: none;
     }
 
@@ -1615,7 +1620,7 @@ export default {
       z-index: 1;
       background-color: var(--card-bg-color);
       border-radius: var(--dashboard-radius);
-      box-shadow: var(--dashboard-shadow-compact);
+      box-shadow: none;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -1686,7 +1691,7 @@ export default {
             justify-content: center;
             color: var(--theme-white);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-            box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.2);
+            box-shadow: none;
             cursor: pointer;
           }
         }
@@ -1890,7 +1895,7 @@ export default {
           .plan-action-helper-text {
             margin-top: 10px;
             font-size: 12px;
-            color: #475569;
+            color: var(--secondary-text-color);
             text-align: center;
           }
 
@@ -2025,7 +2030,7 @@ export default {
       &.traffic-board-subscription {
         background: var(--saas-card-bg);
         border: 1px solid var(--dashboard-border-color);
-        box-shadow: var(--saas-card-shadow);
+        box-shadow: none;
 
         .usage-card-title,
         .usage-percent,
@@ -2054,7 +2059,7 @@ export default {
       &.traffic-board-total {
         background: var(--saas-card-bg);
         border: 1px solid var(--dashboard-border-color);
-        box-shadow: var(--saas-card-shadow);
+        box-shadow: none;
 
         .usage-card-title {
           color: var(--theme-text-primary);
@@ -2121,6 +2126,18 @@ export default {
         &.today-traffic-card {
           grid-column: 2;
           grid-row: 1;
+
+          .today-traffic-total-main {
+            .usage-percent {
+              &.compact {
+                font-size: 30px;
+              }
+            }
+
+            .usage-percent-label {
+              font-size: 12px;
+            }
+          }
         }
 
         &.traffic-board-card.total-main-card {
@@ -2197,7 +2214,7 @@ export default {
 
       &:hover {
         border-color: rgba(148, 163, 184, 0.3);
-        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.07);
+        box-shadow: none;
       }
     }
   }
@@ -2209,7 +2226,7 @@ export default {
   .overview-card--exit-region {
     border-radius: var(--dashboard-radius);
     background: var(--saas-card-bg);
-    box-shadow: var(--saas-card-shadow);
+    box-shadow: none;
     border: 1px solid rgba(148, 163, 184, 0.2);
   }
 
@@ -2225,7 +2242,7 @@ export default {
     background: var(--saas-card-bg);
     border: 1px solid var(--dashboard-border-color);
     border-radius: var(--dashboard-radius);
-    box-shadow: var(--dashboard-shadow-compact);
+    box-shadow: none;
   }
 
   /* 概览卡片左上角标题统一样式 */
@@ -2256,11 +2273,27 @@ export default {
     }
 
     .today-traffic-total-main {
-      font-size: clamp(20px, 2.1vw, 24px);
-      line-height: 1.2;
-      font-weight: 700;
-      color: var(--theme-text-primary);
-      letter-spacing: 0.01em;
+      display: inline-flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      .usage-percent {
+        line-height: 1;
+        font-weight: 700;
+        color: var(--theme-text-primary);
+        font-size: 30px;
+
+        &.compact {
+          font-size: 26px;
+        }
+      }
+
+      .usage-percent-label {
+        font-size: var(--dashboard-kpi-size);
+        color: var(--quota-label-color);
+        font-weight: 500;
+      }
     }
 
     .today-traffic-breakdown {
@@ -2376,7 +2409,7 @@ export default {
       color: var(--theme-white);
       letter-spacing: 0.4px;
       background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
-      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.22);
+      box-shadow: none;
 
       &.is-red { background: linear-gradient(135deg, #e11d48, #9f1239); }
       &.is-pink { background: linear-gradient(135deg, #be185d, #831843); }
@@ -2414,7 +2447,7 @@ export default {
       font-size: 12px;
       line-height: 1.4;
       font-weight: 500;
-      box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
+      box-shadow: none;
       opacity: 0;
       visibility: hidden;
       transform: translate(-50%, 4px);
@@ -2567,7 +2600,11 @@ export default {
       grid-column: 1 / -1;
 
       .today-traffic-total-main {
-        font-size: 20px;
+        .usage-percent {
+          &.compact {
+            font-size: 22px;
+          }
+        }
       }
     }
 
@@ -2690,7 +2727,7 @@ export default {
   padding: 16px;
   animation: none;
   background-color: var(--card-bg-color);
-  box-shadow: var(--card-shadow);
+  box-shadow: none;
   border: 1px solid var(--border-color);
   position: relative;
 }
@@ -2740,7 +2777,7 @@ export default {
   &.warning-card,
   &.danger-card {
     border-color: rgba(var(--stats-alert-rgb), 0.42);
-    box-shadow: 0 4px 10px rgba(var(--stats-alert-rgb), 0.15);
+    box-shadow: none;
 
     .stats-icon {
       background-color: rgba(var(--stats-alert-rgb), 0.1);
@@ -2798,7 +2835,7 @@ export default {
   max-height: calc(100vh - 32px);
   border-radius: var(--dashboard-radius);
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 }
 
 .traffic-package-modal-card-global {
@@ -2809,7 +2846,7 @@ export default {
   background-color: var(--card-background);
   border: 1px solid rgba(var(--theme-color-rgb), 0.15);
   border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 
   .modal-header {
     display: flex;

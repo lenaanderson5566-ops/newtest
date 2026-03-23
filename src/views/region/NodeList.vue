@@ -408,7 +408,7 @@ onMounted(() => {
 
   border-radius: $border-radius-sm;
 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 
   padding: 20px;
 
@@ -424,7 +424,7 @@ onMounted(() => {
 
   &:hover {
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -462,7 +462,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--text-color-light, #6b7280);
+      color: var(--text-color-light, var(--secondary-text-color));
 
       margin: 0;
 
@@ -490,7 +490,7 @@ onMounted(() => {
   .quick-btn {
     border: 1px solid var(--border-color);
     background: #fff;
-    color: #1f2937;
+    color: var(--text-color);
     border-radius: $border-radius-sm;
     padding: 10px 18px;
     cursor: pointer;
@@ -550,7 +550,7 @@ onMounted(() => {
     }
 
     .import-title { font-size: 18px; font-weight: 600; }
-    .import-desc { color: #6b7280; font-size: 14px; }
+    .import-desc { color: var(--secondary-text-color); font-size: 14px; }
 
     .platform-selector {
       display: flex;
@@ -657,7 +657,7 @@ onMounted(() => {
     }
 
     .reset-modal-text {
-      color: #374151;
+      color: var(--text-color);
       font-size: 14px;
       margin: 0 0 12px;
       line-height: 1.6;
@@ -679,11 +679,11 @@ onMounted(() => {
 
 
 .nodes-no-plan {
-  background: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+  background: var(--card-background);
   border: 1px solid var(--border-color);
   border-radius: $border-radius-sm;
   padding: 24px;
-  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+  box-shadow: none;
 
   .no-plan-head {
     text-align: center;
@@ -698,7 +698,7 @@ onMounted(() => {
 
     p {
       margin: 8px 0 0;
-      color: var(--text-color-light, #6b7280);
+      color: var(--text-color-light, var(--secondary-text-color));
       font-size: 15px;
     }
   }
@@ -736,7 +736,7 @@ onMounted(() => {
         fill: rgba(59, 130, 246, 0.16);
         stroke: rgba(147, 197, 253, 0.5);
         stroke-width: 2;
-        filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.25));
+        filter: none;
       }
 
       .grid-lines {
@@ -759,7 +759,7 @@ onMounted(() => {
       font-weight: 700;
       color: #fff;
       background: radial-gradient(circle at center, rgba(var(--theme-color-rgb), 0.95), rgba(var(--theme-color-rgb), 0.35));
-      box-shadow: 0 0 0 6px rgba(var(--theme-color-rgb), 0.18), 0 0 26px rgba(var(--theme-color-rgb), 0.55);
+      box-shadow: none;
       animation: regionPulse 2.8s ease-in-out infinite;
     }
 
@@ -797,7 +797,7 @@ onMounted(() => {
 
       p {
         margin: 0;
-        color: var(--text-color-light, #6b7280);
+        color: var(--text-color-light, var(--secondary-text-color));
         font-size: 13px;
       }
 
@@ -834,7 +834,7 @@ onMounted(() => {
     .primary {
       color: #fff;
       background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
+      box-shadow: none;
     }
 
     .secondary {
@@ -874,11 +874,11 @@ onMounted(() => {
 
   border-radius: $border-radius-sm;
 
-  background: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+  background: var(--card-background);
 
   transition: all 0.25s ease;
 
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  box-shadow: none;
 
   border: 1px solid var(--border-color);
 
@@ -888,7 +888,7 @@ onMounted(() => {
 
     transform: translateY(-1px);
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -907,7 +907,7 @@ onMounted(() => {
     color: #fff;
     letter-spacing: 0.5px;
     background: linear-gradient(135deg, #d90429, #9d174d);
-    box-shadow: 0 6px 14px rgba(157, 23, 77, 0.35);
+    box-shadow: none;
 
     &.is-red { background: linear-gradient(135deg, #d90429, #9d174d); }
     &.is-pink { background: linear-gradient(135deg, #db2777, #be185d); }
@@ -1009,7 +1009,7 @@ onMounted(() => {
 
       font-size: 0.8rem;
 
-      color: var(--text-color-light, #6b7280);
+      color: var(--text-color-light, var(--secondary-text-color));
 
       margin: 0;
 
@@ -1089,7 +1089,7 @@ onMounted(() => {
 
       justify-content: center;
 
-      color: var(--text-color-light, #6b7280);
+      color: var(--text-color-light, var(--secondary-text-color));
 
       cursor: pointer;
 
@@ -1137,7 +1137,7 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-color-light, #6b7280);
+    color: var(--text-color-light, var(--secondary-text-color));
 
     font-size: 1.1rem;
 
@@ -1149,7 +1149,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-color-light, #6b7280);
+    color: var(--text-color-light, var(--secondary-text-color));
 
     opacity: 0.7;
 
@@ -1189,7 +1189,7 @@ onMounted(() => {
 
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
-  box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+  box-shadow: none;
 
   cursor: pointer;
 
@@ -1205,7 +1205,7 @@ onMounted(() => {
 
     transform: translateY(-2px);
 
-    box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
+    box-shadow: none;
 
     background-color: rgba(var(--theme-color-rgb), 0.95);
 
@@ -1217,7 +1217,7 @@ onMounted(() => {
 
     transform: translateY(0);
 
-    box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.3);
+    box-shadow: none;
 
   }
 
@@ -1231,19 +1231,19 @@ onMounted(() => {
 
   0% {
 
-    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+    box-shadow: none;
 
   }
 
   70% {
 
-    box-shadow: 0 0 0 8px rgba(76, 175, 80, 0);
+    box-shadow: none;
 
   }
 
   100% {
 
-    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    box-shadow: none;
 
   }
 

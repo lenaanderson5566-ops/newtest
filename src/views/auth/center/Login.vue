@@ -749,7 +749,7 @@ export default {
 
       border-color: var(--theme-color);
 
-      box-shadow: 0 0 0 2px var(--primary-color-focus);
+      box-shadow: none;
 
       background-color: var(--input-focus-bg-color, #fff);
 

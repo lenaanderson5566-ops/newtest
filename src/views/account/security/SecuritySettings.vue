@@ -367,7 +367,7 @@ onMounted(() => {
 .modal-content {
   background-color: var(--card-background);
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
   width: 90%;
   max-width: 480px;
   overflow: hidden;
@@ -439,7 +439,7 @@ onMounted(() => {
       &:focus {
         outline: none;
         border-color: var(--theme-color);
-        box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.1);
+        box-shadow: none;
       }
     }
 

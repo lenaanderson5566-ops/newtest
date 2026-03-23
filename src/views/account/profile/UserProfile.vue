@@ -1645,7 +1645,7 @@ onMounted(() => {
 
   border-radius: 12px;
 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 
   padding: 20px;
 
@@ -1659,7 +1659,7 @@ onMounted(() => {
 
   &:hover {
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -1729,7 +1729,7 @@ onMounted(() => {
 
     border-radius: 12px;
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 
     border: 1px solid var(--border-color);
 
@@ -2034,7 +2034,7 @@ onMounted(() => {
 
     border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
-    box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+    box-shadow: none;
 
     cursor: pointer;
 
@@ -2046,7 +2046,7 @@ onMounted(() => {
 
       transform: translateY(-2px);
 
-      box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
+      box-shadow: none;
 
       background-color: rgba(var(--theme-color-rgb), 0.95);
 
@@ -2066,7 +2066,7 @@ onMounted(() => {
 
   border-radius: 12px;
 
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 
   border: 1px solid var(--border-color);
 
@@ -2080,7 +2080,7 @@ onMounted(() => {
 
   &:hover {
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -2372,7 +2372,7 @@ onMounted(() => {
 
             border-color: var(--theme-color);
 
-            box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.1);
+            box-shadow: none;
 
           }
 
@@ -2632,19 +2632,19 @@ onMounted(() => {
 
   0% {
 
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    box-shadow: none;
 
   }
 
   70% {
 
-    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
+    box-shadow: none;
 
   }
 
   100% {
 
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    box-shadow: none;
 
   }
 
@@ -2708,7 +2708,7 @@ onMounted(() => {
 
   border-radius: 12px;
 
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 
   width: 90%;
 
@@ -2866,7 +2866,7 @@ onMounted(() => {
 
         border-color: var(--theme-color);
 
-        box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.1);
+        box-shadow: none;
 
       }
 

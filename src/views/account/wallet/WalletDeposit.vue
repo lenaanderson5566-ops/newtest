@@ -257,14 +257,14 @@ onMounted(() => {
   .dashboard-card {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
     padding: 20px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     
     &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      box-shadow: none;
       border-color: rgba(var(--theme-color-rgb), 0.3);
     }
     
@@ -320,7 +320,7 @@ onMounted(() => {
         font-weight: bold;
         color: var(--primary-color);
         margin-bottom: 12px;
-        text-shadow: 0 2px 4px rgba(var(--theme-color-rgb), 0.1);
+        text-shadow: none;
       }
       
       .balance-label {
@@ -411,11 +411,11 @@ onMounted(() => {
           border: 2px solid var(--border-color);
           transition: all 0.3s ease;
           position: relative;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+          box-shadow: none;
           
           &.active {
             border-color: var(--theme-color);
-            box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.15);
+            box-shadow: none;
             
             .period-card-inner {
               background-color: rgba(var(--theme-color-rgb), 0.1);
@@ -432,7 +432,7 @@ onMounted(() => {
           &:hover {
             border-color: rgba(var(--theme-color-rgb), 0.5);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: none;
           }
           
           .period-card-inner {
@@ -510,7 +510,7 @@ onMounted(() => {
           &:focus {
             outline: none;
             border-color: var(--theme-color);
-            box-shadow: 0 0 0 4px rgba(var(--theme-color-rgb), 0.15);
+            box-shadow: none;
           }
           
           &::placeholder {
@@ -549,16 +549,16 @@ onMounted(() => {
         cursor: pointer;
         transition: all 0.3s ease;
         min-width: 200px;
-        box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.3);
+        box-shadow: none;
         
         &:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 15px rgba(var(--theme-color-rgb), 0.4);
+          box-shadow: none;
         }
         
         &:active {
           transform: translateY(0);
-          box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.3);
+          box-shadow: none;
         }
         
         &:disabled {
@@ -595,13 +595,13 @@ onMounted(() => {
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    box-shadow: none;
   }
   70% {
-    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
+    box-shadow: none;
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    box-shadow: none;
   }
 }
 

@@ -1366,7 +1366,7 @@ onUnmounted(() => {
 
     padding: 2rem;
 
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    box-shadow: none;
 
     border: 1px solid rgba(var(--theme-color-rgb), 0.1);
 
@@ -1492,7 +1492,7 @@ onUnmounted(() => {
 
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.3);
+  box-shadow: none;
 
   
 
@@ -1516,7 +1516,7 @@ onUnmounted(() => {
 
     transform: translateY(-3px);
 
-    box-shadow: 0 6px 16px rgba(var(--theme-color-rgb), 0.4);
+    box-shadow: none;
 
     
 
@@ -1534,7 +1534,7 @@ onUnmounted(() => {
 
     transform: translateY(-1px);
 
-    box-shadow: 0 3px 8px rgba(var(--theme-color-rgb), 0.3);
+    box-shadow: none;
 
   }
 
@@ -1550,7 +1550,7 @@ onUnmounted(() => {
 
   padding: 1.5rem;
 
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
 
   border: 1px solid var(--border-color);
 
@@ -1570,7 +1570,7 @@ onUnmounted(() => {
 
   &:hover {
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.2);
 
@@ -1868,7 +1868,7 @@ onUnmounted(() => {
 
     border: 1px solid var(--border-color);
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 
     
 
@@ -1876,7 +1876,7 @@ onUnmounted(() => {
 
       transform: scale(1.01);
 
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: none;
 
       border-color: var(--theme-color);
 
@@ -1926,7 +1926,7 @@ onUnmounted(() => {
 
     border: 1px solid var(--border-color);
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 
     position: relative;
 
@@ -1938,7 +1938,7 @@ onUnmounted(() => {
 
       border-color: var(--theme-color);
 
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      box-shadow: none;
 
     }
 
@@ -2062,7 +2062,7 @@ onUnmounted(() => {
 
     border-radius: 6px;
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 
     border: 1px solid var(--border-color);
 
@@ -2072,7 +2072,7 @@ onUnmounted(() => {
 
     &:hover {
 
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      box-shadow: none;
 
       border-color: rgba(var(--theme-color-rgb), 0.2);
 
@@ -2230,7 +2230,7 @@ onUnmounted(() => {
 
     border: 1px solid rgba(var(--theme-color-rgb), 0.15);
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 
     position: relative;
 
@@ -2242,7 +2242,7 @@ onUnmounted(() => {
 
     &:hover {
 
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      box-shadow: none;
 
       border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -2361,7 +2361,7 @@ onUnmounted(() => {
 
     transform: translateY(-1px) !important;
 
-    box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.1) !important;
+    box-shadow: none !important;
 
     border-bottom: none !important;
 
@@ -2389,7 +2389,7 @@ onUnmounted(() => {
 
     outline: none !important;
 
-    box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.3) !important;
+    box-shadow: none !important;
 
   }
 

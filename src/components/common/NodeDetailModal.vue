@@ -785,7 +785,7 @@ watchEffect(() => {
 
   max-width: 500px;
 
-  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+  background-color: var(--card-background);
 
   border-radius: $border-radius-sm;
 

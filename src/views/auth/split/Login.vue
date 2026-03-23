@@ -465,12 +465,12 @@ export default {
 
     &.white {
       color: #ffffff;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      text-shadow: none;
     }
 
     &.black {
       color: #000000;
-      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+      text-shadow: none;
     }
   }
 
@@ -484,12 +484,12 @@ export default {
 
     &.white {
       color: #ffffff;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      text-shadow: none;
     }
 
     &.black {
       color: #000000;
-      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+      text-shadow: none;
     }
   }
 }
@@ -634,7 +634,7 @@ export default {
     &:focus {
       outline: none;
       border-color: var(--theme-color);
-      box-shadow: 0 0 0 2px var(--primary-color-focus);
+      box-shadow: none;
       background-color: var(--input-focus-bg-color, #fff);
     }
 

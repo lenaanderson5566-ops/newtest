@@ -581,7 +581,7 @@ onMounted(async () => {
 
   border-radius: $border-radius-sm;
 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 
   padding: 20px;
 
@@ -597,7 +597,7 @@ onMounted(async () => {
 
   &:hover {
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -827,7 +827,7 @@ onMounted(async () => {
 
       border-color: var(--theme-color);
 
-      box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
+      box-shadow: none;
 
       
 
@@ -958,7 +958,7 @@ onMounted(async () => {
 
   transition: all 0.25s ease;
 
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 
   border: 1px solid var(--border-color);
 
@@ -968,7 +968,7 @@ onMounted(async () => {
 
     transform: translateY(-2px);
 
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -1128,7 +1128,7 @@ onMounted(async () => {
 
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
-  box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+  box-shadow: none;
 
   cursor: pointer;
 
@@ -1144,7 +1144,7 @@ onMounted(async () => {
 
     transform: translateY(-2px);
 
-    box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
+    box-shadow: none;
 
     background-color: rgba(var(--theme-color-rgb), 0.95);
 
@@ -1156,7 +1156,7 @@ onMounted(async () => {
 
     transform: translateY(0);
 
-    box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.3);
+    box-shadow: none;
 
   }
 
@@ -1230,7 +1230,7 @@ onMounted(async () => {
 
     margin: 0;
 
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 
     line-height: 1.5;
 
