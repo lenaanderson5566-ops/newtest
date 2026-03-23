@@ -11,6 +11,11 @@
               <IconLock :size="18" />
               {{ $t('profile.changePassword') }}
             </button>
+            <button class="action-btn action-btn-danger" :disabled="loggingOutAllSessions" @click="handleLogoutAllSessions">
+              <IconLogout :size="18" />
+              <span v-if="!loggingOutAllSessions">{{ $t('profile.logoutAllSessions') }}</span>
+              <span v-else>{{ $t('profile.loggingOutAllSessions') }}</span>
+            </button>
           </div>
         </div>
       </div>
@@ -54,6 +59,17 @@
                   <span class="device-time">{{ formatTimestamp(session.login_at) }}</span>
                 </div>
               </div>
+              <button
+                class="remove-session-btn"
+                :disabled="!resolveSessionId(session) || removingSessionIds.has(resolveSessionId(session))"
+                @click="handleRemoveSession(session)"
+              >
+                {{
+                  removingSessionIds.has(resolveSessionId(session))
+                    ? $t('profile.loggingOutDevice')
+                    : $t('profile.logoutDevice')
+                }}
+              </button>
             </div>
           </div>
         </div>
@@ -100,9 +116,10 @@
 <script setup name="SecuritySettings">
 import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { changePassword as apiChangePassword, getActiveSession } from '@/api/account/user';
+import { changePassword as apiChangePassword, getActiveSession, logoutAllSessions, removeActiveSession } from '@/api/account/user';
 import {
   IconLock,
+  IconLogout,
   IconX,
   IconDevices,
   IconDeviceMobile,
@@ -120,6 +137,8 @@ const changingPassword = ref(false);
 const activeSessions = ref([]);
 const loadingSessions = ref(false);
 const sessionError = ref('');
+const loggingOutAllSessions = ref(false);
+const removingSessionIds = ref(new Set());
 
 const passwordForm = ref({
   oldPassword: '',
@@ -190,6 +209,54 @@ const fetchActiveSessions = async () => {
     sessionError.value = err?.message || t('common.networkError');
   } finally {
     loadingSessions.value = false;
+  }
+};
+
+const resolveSessionId = (session) => {
+  if (!session || typeof session !== 'object') return '';
+  return session.session_id || session.session || session.id || '';
+};
+
+const handleLogoutAllSessions = async () => {
+  if (loggingOutAllSessions.value) return;
+  loggingOutAllSessions.value = true;
+  try {
+    const response = await logoutAllSessions();
+    if (response?.data) {
+      success(t('profile.logoutAllSessionsSuccess'));
+      activeSessions.value = [];
+      await fetchActiveSessions();
+      return;
+    }
+    showError(t('profile.logoutAllSessionsError'));
+  } catch (err) {
+    console.error('Failed to logout all sessions:', err);
+    showError(t('profile.logoutAllSessionsError'));
+  } finally {
+    loggingOutAllSessions.value = false;
+  }
+};
+
+const handleRemoveSession = async (session) => {
+  const sessionId = resolveSessionId(session);
+  if (!sessionId || removingSessionIds.value.has(sessionId)) return;
+
+  removingSessionIds.value.add(sessionId);
+  removingSessionIds.value = new Set(removingSessionIds.value);
+  try {
+    const response = await removeActiveSession(sessionId);
+    if (response?.data) {
+      success(t('profile.logoutDeviceSuccess'));
+      activeSessions.value = activeSessions.value.filter((item) => resolveSessionId(item) !== sessionId);
+      return;
+    }
+    showError(t('profile.logoutDeviceError'));
+  } catch (err) {
+    console.error('Failed to remove active session:', err);
+    showError(t('profile.logoutDeviceError'));
+  } finally {
+    removingSessionIds.value.delete(sessionId);
+    removingSessionIds.value = new Set(removingSessionIds.value);
   }
 };
 
@@ -288,6 +355,23 @@ onMounted(() => {
   cursor: pointer;
 }
 
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.action-btn:disabled,
+.remove-session-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.action-btn-danger {
+  border-color: rgba(255, 77, 79, 0.5);
+  color: #ff4d4f;
+}
+
 .device-item {
   display: flex;
   gap: 12px;
@@ -297,6 +381,21 @@ onMounted(() => {
   &:last-child {
     border-bottom: 0;
   }
+}
+
+.device-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.remove-session-btn {
+  border: 1px solid rgba(255, 77, 79, 0.5);
+  background: transparent;
+  color: #ff4d4f;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .device-meta {

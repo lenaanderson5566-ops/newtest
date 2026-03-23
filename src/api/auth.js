@@ -2,7 +2,7 @@
 import request from './request';
 import { pinia, useAppStore } from '@/store';
 import { SITE_CONFIG } from '@/utils/baseConfig';
-import { updateUserLanguage } from './account/user';
+import { updateUserLanguage, logoutCurrentSession } from './account/user';
 import { getDefaultRegisterLanguage } from '@/utils/userLanguage';
 
 
@@ -286,6 +286,12 @@ export function getUserInfo() {
 
 export const logout = async () => {
   try {
+    try {
+      await logoutCurrentSession();
+    } catch (apiError) {
+      console.warn('调用退出当前会话接口失败，将继续清理本地登录态:', apiError);
+    }
+
     _clearAllAuthData();
     
     return new Promise(resolve => {
