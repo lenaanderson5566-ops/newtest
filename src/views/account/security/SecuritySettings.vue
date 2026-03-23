@@ -192,8 +192,14 @@ const fetchActiveSessions = async () => {
     const response = await getActiveSession();
 
     if (response && response.data) {
-      const sessions = Array.isArray(response.data) ? response.data :
-        (typeof response.data === 'object' && response.data !== null ? Object.values(response.data) : []);
+      const sessions = Array.isArray(response.data)
+        ? response.data
+        : (typeof response.data === 'object' && response.data !== null
+          ? Object.entries(response.data).map(([session_id, session]) => ({
+            ...(session || {}),
+            session_id
+          }))
+          : []);
 
       const sortedSessions = sessions.sort((a, b) => {
         if (!a.login_at || !b.login_at) return 0;
@@ -214,7 +220,7 @@ const fetchActiveSessions = async () => {
 
 const resolveSessionId = (session) => {
   if (!session || typeof session !== 'object') return '';
-  return session.session_id || session.session || session.id || '';
+  return session.session_id || '';
 };
 
 const handleLogoutAllSessions = async () => {
