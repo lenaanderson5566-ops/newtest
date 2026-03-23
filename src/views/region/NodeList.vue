@@ -679,7 +679,7 @@ onMounted(() => {
 
 
 .nodes-no-plan {
-  background: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+  background: var(--card-background);
   border: 1px solid var(--border-color);
   border-radius: $border-radius-sm;
   padding: 24px;
@@ -874,7 +874,7 @@ onMounted(() => {
 
   border-radius: $border-radius-sm;
 
-  background: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+  background: var(--card-background);
 
   transition: all 0.25s ease;
 

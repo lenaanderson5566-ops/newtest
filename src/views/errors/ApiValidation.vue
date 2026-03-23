@@ -317,7 +317,7 @@ export default {
 
   justify-content: center;
 
-  background-color: var(--background-color, #f8f9fc);
+  background-color: var(--background-color);
 
   overflow: hidden;
 
@@ -431,7 +431,7 @@ export default {
 
         font-weight: 600;
 
-        color: var(--text-color, #333333);
+        color: var(--text-color);
 
         text-shadow: none;
       }
@@ -446,7 +446,7 @@ export default {
 
       font-weight: 500;
 
-      color: var(--text-color, #333333);
+      color: var(--text-color);
 
       margin-bottom: 10px;
     }
@@ -456,7 +456,7 @@ export default {
 
       font-weight: 400;
 
-      color: var(--secondary-text-color, #666666);
+      color: var(--secondary-text-color);
     }
   }
 }

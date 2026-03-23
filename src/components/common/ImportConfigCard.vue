@@ -420,9 +420,9 @@ onUnmounted(() => {
   }
 
   .quick-btn {
-    border: 1px solid var(--border-color, #e5e7eb);
-    background: #fff;
-    color: #1f2937;
+    border: 1px solid var(--border-color);
+    background: var(--card-background);
+    color: var(--text-color);
     border-radius: 12px;
     padding: 10px 18px;
     cursor: pointer;
@@ -452,7 +452,7 @@ onUnmounted(() => {
 
   .import-action {
     border: 1px solid rgba(var(--theme-color-rgb), 0.12);
-    background: #fff;
+    background: var(--card-background);
     width: 100%;
     text-align: left;
     display: flex;
@@ -490,7 +490,7 @@ onUnmounted(() => {
 
   .import-desc {
     margin-top: 6px;
-    color: var(--theme-text-secondary, #6b7280);
+    color: var(--secondary-text-color);
     font-size: 13px;
     line-height: 1.4;
   }
@@ -505,7 +505,7 @@ onUnmounted(() => {
       align-items: center;
       gap: 8px;
       font-size: 13px;
-      color: var(--theme-text-secondary, #6b7280);
+      color: var(--secondary-text-color);
     }
 
     .step-badge {
@@ -530,8 +530,8 @@ onUnmounted(() => {
   }
 
   .platform-button {
-    border: 1px solid var(--border-color, #e5e7eb);
-    background: #fff;
+    border: 1px solid var(--border-color);
+    background: var(--card-background);
     border-radius: 999px;
     padding: 10px 18px;
     cursor: pointer;
@@ -562,10 +562,10 @@ onUnmounted(() => {
     }
 
     .platform-option {
-      border: 1px solid var(--border-color, #e5e7eb);
+      border: 1px solid var(--border-color);
       border-radius: 14px;
       padding: 12px 14px;
-      background: #fff;
+      background: var(--card-background);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -591,9 +591,9 @@ onUnmounted(() => {
 
     .no-clients-tip {
       padding: 12px;
-      border: 1px dashed var(--border-color, #e5e7eb);
+      border: 1px dashed var(--border-color);
       border-radius: 10px;
-      color: var(--theme-text-secondary, #6b7280);
+      color: var(--secondary-text-color);
       font-size: 13px;
       text-align: center;
     }
@@ -615,14 +615,14 @@ onUnmounted(() => {
   max-height: calc(100vh - 40px);
   overflow-y: auto;
   border-radius: 14px;
-  background: var(--card-bg, var(--card-background, #fff));
-  border: 1px solid var(--border-color, #e5e7eb);
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
 }
 
 .qrcode-header {
   padding: 14px 16px;
-  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -648,7 +648,7 @@ onUnmounted(() => {
   border: none;
   background: transparent;
   cursor: pointer;
-  color: var(--theme-text-secondary, #6b7280);
+  color: var(--secondary-text-color);
 }
 
 .reset-modal {
@@ -657,7 +657,7 @@ onUnmounted(() => {
 
 .reset-modal-text {
   padding: 16px;
-  color: var(--theme-text-secondary, #6b7280);
+  color: var(--secondary-text-color);
 }
 
 .reset-modal-actions {
@@ -668,8 +668,8 @@ onUnmounted(() => {
 }
 
 .modal-btn {
-  border: 1px solid var(--border-color, #e5e7eb);
-  background: #fff;
+  border: 1px solid var(--border-color);
+  background: var(--card-background);
   border-radius: 10px;
   padding: 10px 14px;
   cursor: pointer;

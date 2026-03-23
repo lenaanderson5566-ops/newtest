@@ -749,8 +749,8 @@ export default {
             <style>
               body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
               img { max-width: 100%; height: auto; margin-bottom: 20px; }
-              h2 { color: #333; }
-              p { color: #666; }
+              h2 { color: var(--text-color, #2f3640); }
+              p { color: var(--secondary-text-color, #5f6b7a); }
             
 
 /* Compact dashboard layout overrides for Billing / Referral */

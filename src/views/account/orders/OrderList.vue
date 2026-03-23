@@ -687,7 +687,7 @@ watch(locale, () => {
 }
 
 .modal-content {
-  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+  background-color: var(--card-background);
   border-radius: $border-radius-sm;
   box-shadow: none;
   width: 90%;

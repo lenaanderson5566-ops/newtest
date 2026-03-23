@@ -2115,7 +2115,7 @@ export default {
     .modal-backdrop {
       position: absolute;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.65);
+      background-color: rgba(var(--text-color-rgb), 0.45);
       will-change: opacity;
     }
 
@@ -2129,7 +2129,7 @@ export default {
 
     .modal-card {
       position: relative;
-      background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+      background-color: var(--card-background);
       border-radius: $border-radius-sm;
       box-shadow: none;
       border: 1px solid rgba(var(--theme-color-rgb), 0.1);
@@ -2363,7 +2363,7 @@ export default {
 }
 
 .payment-container .overview-section {
-  background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+  background-color: var(--card-background);
 }
 
 .cancel-modal {
@@ -2394,7 +2394,7 @@ export default {
   }
 
   .cancel-modal-content {
-    background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
+    background-color: var(--card-background);
     border-radius: $border-radius-sm;
     overflow: hidden;
     box-shadow: none;
