@@ -208,6 +208,10 @@ export default {
           { path: 'DocDetail', name: 'DocDetail', priority: 2, component: () => import('@/views/start/DocDetail.vue') },
           { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/overview/Dashboard.vue') }
         ],
+        '/quick-start': [
+          { path: 'Docs', name: 'Docs', priority: 1, component: () => import('@/views/start/DocsPage.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/overview/Dashboard.vue') }
+        ],
         '/docs/:id': [
           { path: 'Docs', name: 'Docs', priority: 1, component: () => import('@/views/start/DocsPage.vue') },
         ],
