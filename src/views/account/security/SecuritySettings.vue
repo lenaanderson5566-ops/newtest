@@ -128,6 +128,7 @@ import {
 } from '@tabler/icons-vue';
 import useToast from '@/hooks/useToast';
 import { PROFILE_CONFIG } from '@/utils/baseConfig';
+import { forceLogout } from '@/api/auth';
 
 const { t } = useI18n();
 const { success, error: showError } = useToast();
@@ -230,8 +231,8 @@ const handleLogoutAllSessions = async () => {
     const response = await logoutAllSessions();
     if (response?.data) {
       success(t('profile.logoutAllSessionsSuccess'));
-      activeSessions.value = [];
-      await fetchActiveSessions();
+      forceLogout();
+      window.location.href = '/#/login?logout=true';
       return;
     }
     showError(t('profile.logoutAllSessionsError'));
