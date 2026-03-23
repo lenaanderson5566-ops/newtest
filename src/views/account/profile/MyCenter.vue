@@ -98,6 +98,35 @@
       </section>
 
       <section class="section-block dashboard-like-card">
+        <h3 class="section-title">{{ $t('myCenter.securityCenterTitle') }}</h3>
+        <div class="settings-list">
+          <button class="nav-row" @click="go('/security?section=password')">
+            <div class="row-main">
+              <div class="row-title">{{ $t('myCenter.passwordManagement') }}</div>
+              <p>{{ $t('myCenter.passwordManagementDesc') }}</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+
+          <button class="nav-row" @click="go('/security?section=sessions')">
+            <div class="row-main">
+              <div class="row-title">{{ $t('myCenter.loginRecords') }}</div>
+              <p>{{ $t('myCenter.loginRecordsDesc') }}</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+
+          <button class="nav-row" @click="go('/config-management')">
+            <div class="row-main">
+              <div class="row-title">{{ $t('myCenter.deviceReset') }}</div>
+              <p>{{ $t('myCenter.deviceResetDesc') }}</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+        </div>
+      </section>
+
+      <section class="section-block dashboard-like-card">
         <h3 class="section-title">{{ $t('myCenter.settingsTitle') }}</h3>
         <div class="settings-list">
           <div class="settings-row">
@@ -122,13 +151,6 @@
             </label>
           </div>
 
-          <button class="nav-row" @click="go('/security')">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.securitySettings') }}</div>
-              <p>{{ $t('myCenter.securityDesc') }}</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
         </div>
       </section>
 
