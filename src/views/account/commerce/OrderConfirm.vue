@@ -1514,6 +1514,14 @@ export default {
 
     width: 100%;
 
+    background: var(--background-color);
+
+    border: 1px solid var(--border-color);
+
+    border-radius: $border-radius-sm;
+
+    padding: 16px;
+
     .skeleton-period-cards {
       display: flex;
 
@@ -1605,7 +1613,7 @@ export default {
           box-shadow: none;
 
           .period-card-inner {
-            background-color: var(--background-color) !important;
+            background-color: #ffffff !important;
           }
 
           .period-price {
@@ -1625,7 +1633,7 @@ export default {
         }
 
         .period-card-inner {
-          background-color: var(--background-color) !important;
+          background-color: #ffffff !important;
 
           padding: 16px 12px !important;
 
