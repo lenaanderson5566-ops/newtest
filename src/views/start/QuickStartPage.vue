@@ -106,10 +106,13 @@ import surgeIOSIconImg from '@/assets/images/client-img-ios/Surge.png';
 import singboxAndroidIconImg from '@/assets/images/client-img-android/singbox.png';
 import v2rayngIconImg from '@/assets/images/client-img-android/v2rayng.png';
 import flclashWindowsIconImg from '@/assets/images/client-img-windows/flclash.png';
+import clashVergeIconImg from '@/assets/images/client-img-windows/clashverge.png';
+import singboxWindowsIconImg from '@/assets/images/client-img-windows/singbox.png';
 import clashMetaAndroidIconImg from '@/assets/images/client-img-android/clashmeta.png';
 import clashMetaXIconImg from '@/assets/images/client-img-macos/clashmetax.png';
 import clashxIconImg from '@/assets/images/client-img-macos/clashx.png';
 import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
+import loonIconImg from '@/assets/images/client-img-ios/loon.png';
 
 const router = useRouter();
 const $toast = inject('$toast');
@@ -140,12 +143,16 @@ const clientIconMap = Object.freeze({
   shadowrocket: shadowrocketIconImg,
   'surge-ios': surgeIOSIconImg,
   'singbox-android': singboxAndroidIconImg,
+  'singbox-windows': singboxWindowsIconImg,
   v2rayng: v2rayngIconImg,
   flclash: flclashWindowsIconImg,
+  clashverge: clashVergeIconImg,
   'clash-meta': clashMetaAndroidIconImg,
+  'clash-meta-android': clashMetaAndroidIconImg,
   'clashx-meta': clashMetaXIconImg,
   clashx: clashxIconImg,
-  'stash-mac': stashMacIconImg
+  'stash-mac': stashMacIconImg,
+  loon: loonIconImg
 });
 
 const statusStripText = computed(() => {
