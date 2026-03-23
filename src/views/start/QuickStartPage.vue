@@ -52,8 +52,10 @@
                 :class="{ grayscale: !client.recommended }"
               />
               <IconApps v-else :size="20" class="fallback-icon-large" :class="{ grayscale: !client.recommended }" />
-              <span>{{ client.name }}</span>
-              <small v-if="client.recommended">推荐</small>
+              <div class="client-text">
+                <span class="client-name">{{ client.name }}</span>
+              </div>
+              <small v-if="client.recommended" class="recommend-badge">推荐</small>
               <IconCheck v-if="selectedClient?.name === client.name" :size="16" class="client-selected-mark" />
             </button>
           </div>
@@ -106,6 +108,7 @@ import { useRouter } from 'vue-router';
 import { IconBrandApple, IconBrandAndroid, IconBrandFinder, IconBrandWindows, IconApps, IconCheck } from '@tabler/icons-vue';
 import { CLIENT_CONFIG } from '@/utils/baseConfig';
 import { getSubscribe } from '@/api/overview/dashboard';
+import { useToast } from '@/composables/useToast';
 import QRCode from 'qrcode';
 import stashIconImg from '@/assets/images/client-img-ios/stash.png';
 import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
@@ -123,7 +126,13 @@ import loonIconImg from '@/assets/images/client-img-ios/loon.png';
 
 const router = useRouter();
 const $toast = inject('$toast');
+const { showToast } = useToast();
 const clientConfig = reactive(CLIENT_CONFIG);
+const toast = {
+  success: (message) => ($toast?.success ? $toast.success(message) : showToast.success(message)),
+  warning: (message) => ($toast?.warning ? $toast.warning(message) : showToast.warning(message)),
+  error: (message) => ($toast?.error ? $toast.error(message) : showToast.error(message))
+};
 
 const USER_STATUS = Object.freeze({
   NEW: 'new',
@@ -294,7 +303,7 @@ const buildClientSchemeUrl = (clientType, subscribeUrl) => {
 
 const quickImportSelectedClient = async () => {
   if (!subscriptionUrl.value) {
-    $toast?.warning('当前暂无订阅链接');
+    toast.warning('当前暂无订阅链接');
     return;
   }
 
@@ -308,12 +317,12 @@ const quickImportSelectedClient = async () => {
   }
 
   window.open(schemeUrl, '_blank');
-  $toast?.success('已尝试唤起客户端，订阅地址已复制到剪贴板');
+  toast.success('已尝试唤起客户端，订阅地址已复制到剪贴板');
 };
 
 const openQrCodeModal = async () => {
   if (!subscriptionUrl.value) {
-    $toast?.warning('当前暂无订阅链接');
+    toast.warning('当前暂无订阅链接');
     return;
   }
 
@@ -322,22 +331,22 @@ const openQrCodeModal = async () => {
     showQrCode.value = true;
   } catch (err) {
     console.error('Generate QRCode failed:', err);
-    $toast?.error('二维码生成失败');
+    toast.error('二维码生成失败');
   }
 };
 
 const copySubscriptionUrl = async () => {
   if (!subscriptionUrl.value) {
-    $toast?.warning('当前暂无订阅链接');
+    toast.warning('当前暂无订阅链接');
     return;
   }
 
   try {
     await navigator.clipboard.writeText(subscriptionUrl.value);
-    $toast?.success('订阅链接已复制');
+    toast.success('订阅链接已复制');
   } catch (err) {
     console.error('Copy subscription failed:', err);
-    $toast?.error('复制失败，请稍后重试');
+    toast.error('复制失败，请稍后重试');
   }
 };
 
@@ -509,20 +518,36 @@ onMounted(fetchUserStatus);
   cursor: pointer;
   text-align: left;
 
-  span {
-    font-weight: 600;
+  .client-text {
+    min-width: 0;
+    flex: 1;
   }
 
-  small {
-    margin-left: auto;
-    color: #f08c2e;
-    font-size: 12px;
+  .client-name {
+    display: block;
+    min-width: 0;
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &.active {
     border-color: rgba(var(--theme-color-rgb), 0.85);
     background: rgba(var(--theme-color-rgb), 0.06);
+  }
+
+  .recommend-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    color: #f08c2e;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    background: rgba(240, 140, 46, 0.14);
+    border-radius: 999px;
+    padding: 2px 6px;
   }
 
   .client-selected-mark {
