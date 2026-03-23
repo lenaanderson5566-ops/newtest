@@ -1,16 +1,6 @@
 <template>
   <div class="dashboard-card import-config-card" v-if="subscriptionUrl">
-    <div class="card-header">
-      <div class="quick-actions">
-        <button class="quick-btn" :class="{ active: showImportPanel }" @click="showImportPanel = !showImportPanel">
-          {{ $t('dashboard.importSubscription') }}
-          <IconChevronDown v-if="!showImportPanel" :size="14" />
-          <IconChevronUp v-else :size="14" />
-        </button>
-      </div>
-    </div>
-
-    <div class="card-body" v-if="showImportPanel">
+    <div class="card-body">
       <div class="platform-selector">
         <button
           v-for="platform in availablePlatforms"
@@ -56,9 +46,7 @@ import {
   IconBrandApple,
   IconBrandAndroid,
   IconBrandWindows,
-  IconDeviceLaptop,
-  IconChevronDown,
-  IconChevronUp
+  IconDeviceLaptop
 } from '@tabler/icons-vue';
 import { getSubscribe } from '@/api/overview/dashboard';
 import { CLIENT_CONFIG } from '@/utils/baseConfig';
@@ -95,7 +83,6 @@ const $toast = inject('$toast');
 
 const subscriptionUrl = ref('');
 const activePlatform = ref('ios');
-const showImportPanel = ref(true);
 const clientConfig = reactive(CLIENT_CONFIG);
 
 const platforms = [
@@ -269,36 +256,6 @@ onMounted(() => {
   .card-body {
     display: grid;
     gap: 14px;
-  }
-
-  .quick-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .quick-btn {
-    border: 1px solid var(--border-color);
-    background: var(--card-background);
-    color: var(--text-color);
-    border-radius: 12px;
-    padding: 10px 18px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-
-    &.active {
-      border-color: rgba(var(--theme-color-rgb), 0.65);
-      color: rgba(var(--theme-color-rgb), 0.95);
-      background: rgba(var(--theme-color-rgb), 0.08);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
   }
 
   .platform-selector {
