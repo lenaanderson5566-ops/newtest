@@ -88,7 +88,7 @@
 
           <!-- 周期选择 -->
 
-          <div class="section-wrapper" v-if="!loading.plan">
+          <div class="section-wrapper period-section" v-if="!loading.plan">
             <div class="section-title">
               <span>{{ $t("order.select_period") }}</span>
             </div>
@@ -136,7 +136,7 @@
 
           <!-- 周期选择骨架屏 -->
 
-          <div class="section-wrapper" v-else>
+          <div class="section-wrapper period-section" v-else>
             <div class="section-title">
               <span>{{ $t("order.select_period") }}</span>
             </div>
@@ -1356,6 +1356,10 @@ export default {
         border-radius: 2px;
       }
     }
+  }
+
+  .section-wrapper.period-section {
+    background-color: var(--background-color);
   }
 
   .plan-card {
