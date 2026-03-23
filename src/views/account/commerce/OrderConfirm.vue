@@ -1601,7 +1601,7 @@ export default {
           box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.15);
 
           .period-card-inner {
-            background-color: rgba(var(--theme-color-rgb), 0.1);
+            background-color: var(--background-color, #f3f5f7) !important;
           }
 
           .period-price {
