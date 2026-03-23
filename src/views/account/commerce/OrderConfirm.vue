@@ -169,6 +169,9 @@
                     :placeholder="$t('order.enter_coupon')"
                     class="coupon-field"
                     :class="{ applied: couponApplied }"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    autocomplete="off"
                   />
                   <button v-if="!couponApplied" class="btn-verify" @click="verifyCoupon"
                     :disabled="!couponCode || verifying || loading.plan">
@@ -1719,6 +1722,8 @@ export default {
 
     flex-wrap: wrap;
 
+    align-items: center;
+
     .coupon-field {
       flex: 1;
 
@@ -1831,13 +1836,13 @@ export default {
     }
 
     .coupon-applied-tag {
-      height: 32px;
-      padding: 0 12px;
+      height: 48px;
+      padding: 0 16px;
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--secondary-text-color);
-      font-size: 12px;
+      font-size: 14px;
       display: inline-flex;
       align-items: center;
       line-height: 1;
@@ -1846,13 +1851,13 @@ export default {
     }
 
     .btn-remove-text {
-      height: 32px;
-      padding: 0 12px;
+      height: 48px;
+      padding: 0 16px;
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--secondary-text-color);
-      font-size: 12px;
+      font-size: 14px;
       cursor: pointer;
       line-height: 1;
       white-space: nowrap;
@@ -2063,10 +2068,10 @@ export default {
   .order-summary-section .coupon-field {
     background: var(--input-bg-color);
     border-color: var(--border-color);
-    color: var(--text-color);
+    color: var(--right-card-text);
 
     &::placeholder {
-      color: var(--secondary-text-color);
+      color: rgba(248, 250, 252, 0.55);
     }
   }
 
@@ -2080,15 +2085,15 @@ export default {
   }
 
   .order-summary-section .btn-remove-text {
-    color: var(--secondary-text-color);
-    border-color: var(--border-color);
-    background: rgba(var(--theme-color-rgb), 0.04);
+    color: var(--right-card-text);
+    border-color: var(--right-card-border);
+    background: rgba(148, 163, 184, 0.08);
   }
 
   .order-summary-section .coupon-applied-tag {
-    color: var(--secondary-text-color);
-    border-color: var(--border-color);
-    background: rgba(var(--theme-color-rgb), 0.04);
+    color: rgba(248, 250, 252, 0.82);
+    border-color: var(--right-card-border);
+    background: rgba(148, 163, 184, 0.08);
   }
 
   .coupon-verify-section .coupon-field {
