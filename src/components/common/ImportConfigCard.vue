@@ -38,14 +38,6 @@
         </button>
       </div>
 
-      <div class="section-title">导入步骤</div>
-      <div class="import-guide">
-        <div class="guide-step"><span class="step-badge">1</span><span>先下载并打开客户端</span></div>
-        <div class="guide-step"><span class="step-badge">2</span><span>选择平台后点击下方客户端，一键导入</span></div>
-        <div class="guide-step"><span class="step-badge">3</span><span>若唤起失败，可使用复制地址或二维码导入</span></div>
-      </div>
-
-      <div class="section-title">选择平台并一键导入</div>
       <div class="platform-selector">
         <button
           v-for="platform in availablePlatforms"
@@ -493,33 +485,6 @@ onUnmounted(() => {
     color: var(--secondary-text-color);
     font-size: 13px;
     line-height: 1.4;
-  }
-
-  .import-guide {
-    display: grid;
-    gap: 8px;
-    margin-top: 4px;
-
-    .guide-step {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--secondary-text-color);
-    }
-
-    .step-badge {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      color: #fff;
-      background: rgba(var(--theme-color-rgb), 0.9);
-      flex-shrink: 0;
-    }
   }
 
   .platform-selector {
