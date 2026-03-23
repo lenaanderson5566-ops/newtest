@@ -2266,7 +2266,7 @@ export default {
 
     border-color: var(--theme-color);
 
-    box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
+    box-shadow: none;
 
     background-color: var(--input-focus-bg-color, #fff);
 
@@ -2436,7 +2436,7 @@ export default {
 
       border-radius: 8px;
 
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: none;
 
       z-index: 100;
 
@@ -2666,7 +2666,7 @@ export default {
 
       border-color: var(--theme-color);
 
-      box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
+      box-shadow: none;
 
       background-color: var(--input-focus-bg-color, #fff);
 
@@ -2782,7 +2782,7 @@ export default {
 
       transform: translateY(0);
 
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: none;
 
 
 
@@ -2790,7 +2790,7 @@ export default {
 
         transform: translateY(-2px);
 
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        box-shadow: none;
 
       }
 
@@ -3497,7 +3497,7 @@ export default {
 
     border-radius: 12px;
 
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: none;
 
     z-index: 1001;
 

@@ -99,7 +99,7 @@ watch(
   border-radius: 10px;
   border: 1px solid var(--border-color);
   background: var(--surface-subtle);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.65);
+  box-shadow: none;
   margin-bottom: 12px;
 }
 
@@ -121,7 +121,7 @@ watch(
   &.active {
     background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
     color: #fff;
-    box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.24);
+    box-shadow: none;
   }
 }
 

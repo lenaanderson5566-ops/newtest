@@ -1542,7 +1542,7 @@ export default {
   .dashboard-card {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
     padding: 20px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
@@ -1551,7 +1551,7 @@ export default {
     overflow: visible; 
     
     &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      box-shadow: none;
       border-color: rgba(var(--theme-color-rgb), 0.3);
     }
     
@@ -1591,7 +1591,7 @@ export default {
     .stats-card {
       background-color: var(--card-bg-color);
       border-radius: $border-radius-sm;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      box-shadow: none;
       padding: 20px;
       display: flex;
       align-items: center;
@@ -1600,7 +1600,7 @@ export default {
       
       &:hover {
         border-color: rgba(var(--theme-color-rgb), 0.3);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        box-shadow: none;
       }
       
       .stats-icon {
@@ -1660,7 +1660,7 @@ export default {
     cursor: pointer;
     z-index: 5;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     
     &:hover {
       background-color: var(--theme-color);
@@ -1737,7 +1737,7 @@ export default {
     overflow: hidden;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 10px rgba(var(--theme-color-rgb), 0.15);
+    box-shadow: none;
     
     
     &::before {
@@ -1777,7 +1777,7 @@ export default {
     }
     
     &:hover {
-      box-shadow: 0 3px 12px rgba(var(--theme-color-rgb), 0.25);
+      box-shadow: none;
       
       .card-shine {
         display: none;
@@ -1928,7 +1928,7 @@ export default {
         
         &:focus {
           border-color: var(--theme-color);
-          box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.15);
+          box-shadow: none;
         }
         
         &::placeholder {
@@ -2067,7 +2067,7 @@ export default {
     overflow-x: auto;
     margin-bottom: 20px;
     border-radius: $border-radius-sm;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
     background-color: var(--card-bg-color);
     
     .records-table {
@@ -2107,7 +2107,7 @@ export default {
         
         &:hover {
           background-color: rgba(var(--theme-color-rgb), 0.05);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+          box-shadow: none;
         }
         
         &:last-child td {
@@ -2256,13 +2256,13 @@ export default {
   border: none;
   border-radius: 8px;
   font-weight: 500;
-  box-shadow: 0 2px 5px rgba(var(--theme-color-rgb), 0.2);
+  box-shadow: none;
   transition: all 0.3s ease;
   
   &:hover:not(:disabled) {
     background-color: var(--theme-hover-color, #3070e0);
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(var(--theme-color-rgb), 0.3);
+    box-shadow: none;
   }
   
   &:disabled {
@@ -2603,7 +2603,7 @@ export default {
 .modal-content {
   background-color: var(--card-background);
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: none;
   width: 90%;
   max-width: 480px;
   max-height: 90vh;
@@ -2737,7 +2737,7 @@ export default {
       
       .alert-icon {
         color: #ff9800;
-        filter: drop-shadow(0 2px 4px rgba(255, 152, 0, 0.3));
+        filter: none;
       }
       
       .alert-title {
@@ -2772,11 +2772,11 @@ export default {
       border-radius: 10px;
       overflow: hidden;
       transition: all 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      box-shadow: none;
       
       &:focus-within {
         border-color: var(--theme-color);
-        box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.15);
+        box-shadow: none;
       }
       
       .input-prefix {
@@ -2877,12 +2877,12 @@ export default {
       justify-content: center;
       gap: 8px;
       min-width: 100px;
-      box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: none;
       
       &:hover:not(:disabled) {
         background-color: rgba(var(--theme-color-rgb), 0.9);
         transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(var(--theme-color-rgb), 0.4);
+        box-shadow: none;
       }
       
       &:disabled {
@@ -2931,7 +2931,7 @@ export default {
     color: var(--text-color);
     cursor: pointer;
     transition: all 0.25s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
     max-width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -2940,7 +2940,7 @@ export default {
     &:hover {
       background-color: rgba(var(--theme-color-rgb), 0.08);
       transform: translateY(-2px);
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: none;
     }
     
     &.active {
@@ -2984,7 +2984,7 @@ export default {
   cursor: pointer;
   z-index: 5;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   
   &:hover {
     background-color: var(--theme-color);
@@ -3061,7 +3061,7 @@ export default {
   overflow: hidden;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 10px rgba(var(--theme-color-rgb), 0.15);
+  box-shadow: none;
   
   
   &::before {
@@ -3101,7 +3101,7 @@ export default {
   }
   
   &:hover {
-    box-shadow: 0 3px 12px rgba(var(--theme-color-rgb), 0.25);
+    box-shadow: none;
     
     .card-shine {
       display: none;
@@ -3340,7 +3340,7 @@ export default {
   
   &:hover {
     transform: none;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07);
+    box-shadow: none;
     border-color: rgba(var(--theme-color-rgb), 0.2);
   }
 }
@@ -3393,11 +3393,11 @@ export default {
       padding: 0 20px;
       border-radius: 10px;
       min-width: 140px;
-      box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.25);
+      box-shadow: none;
       
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.35);
+        box-shadow: none;
       }
     }
     
@@ -3422,7 +3422,7 @@ export default {
   border: 1px solid var(--border-color);
   border-radius: 12px;
   background-color: var(--card-bg-color);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
   
   .card-header {
     display: flex;
@@ -3501,7 +3501,7 @@ export default {
       
       .alert-icon {
         color: #ff9800;
-        filter: drop-shadow(0 2px 4px rgba(255, 152, 0, 0.3));
+        filter: none;
       }
       
       .alert-title {
@@ -3536,7 +3536,7 @@ export default {
         display: flex;
         align-items: stretch;
         width: 100%;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        box-shadow: none;
         border-radius: 8px;
         overflow: hidden;
         
@@ -3569,7 +3569,7 @@ export default {
           
           &:focus {
             border-color: var(--theme-color);
-            box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.15);
+            box-shadow: none;
           }
           
           &::placeholder {
@@ -3632,7 +3632,7 @@ export default {
       
       &:not(:disabled):hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.3);
+        box-shadow: none;
       }
       
       &:not(:disabled):active {
@@ -3718,7 +3718,7 @@ export default {
     background-color: var(--card-bg-color, #1e1e1e);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     z-index: 3001; 
     padding: 5px 0;
   }
@@ -3758,7 +3758,7 @@ export default {
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
   }
   
   .btn-icon {
@@ -3807,11 +3807,11 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
   
   &:focus-within {
     border-color: var(--theme-color);
-    box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.15);
+    box-shadow: none;
   }
   
   .input-prefix {
@@ -3888,7 +3888,7 @@ export default {
       color: var(--theme-color);
       border-color: var(--theme-color);
       font-weight: 600;
-      box-shadow: 0 2px 6px rgba(var(--theme-color-rgb), 0.2);
+      box-shadow: none;
       background-color: rgba(var(--theme-color-rgb), 0.05);
     }
     
@@ -3979,7 +3979,7 @@ export default {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
   
   &:hover {
     background-color: var(--input-hover-bg-color, rgba(0, 0, 0, 0.05));
@@ -4024,7 +4024,7 @@ export default {
     background-color: var(--card-bg-color);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     z-index: 3001; 
     padding: 5px 0;
   }

@@ -1161,7 +1161,7 @@ export default {
 
     border-radius: $border-radius-sm;
 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 
     padding: 20px;
 
@@ -1170,7 +1170,7 @@ export default {
     transition: all 0.3s ease;
 
     &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      box-shadow: none;
 
       border-color: rgba(var(--theme-color-rgb), 0.3);
     }
@@ -1223,7 +1223,7 @@ export default {
 
     width: 100%;
 
-    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.1);
+    box-shadow: none;
 
     backdrop-filter: blur(10px);
 
@@ -1234,7 +1234,7 @@ export default {
     &:hover {
       transform: translateY(-2px);
 
-      box-shadow: 0 6px 20px rgba(255, 152, 0, 0.15);
+      box-shadow: none;
     }
 
     .alert-icon {
@@ -1315,7 +1315,7 @@ export default {
       max-width: 520px;
       --right-card-bg: #2f343d;
       --right-card-border: rgba(148, 163, 184, 0.32);
-      --right-card-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
+      --right-card-shadow: none;
       --right-card-text: #f8fafc;
     }
   }
@@ -1363,7 +1363,7 @@ export default {
 
     border-radius: $border-radius-sm;
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 
     padding: 24px;
 
@@ -1595,14 +1595,14 @@ export default {
 
         position: relative;
 
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        box-shadow: none;
 
         &.active {
           border-color: var(--theme-color);
 
           transform: translateY(-3px);
 
-          box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.15);
+          box-shadow: none;
 
           .period-card-inner {
             background-color: var(--background-color, #f3f5f7) !important;
@@ -1621,7 +1621,7 @@ export default {
 
           border-color: rgba(var(--theme-color-rgb), 0.3);
 
-          box-shadow: 0 3px 10px rgba(var(--theme-color-rgb), 0.1);
+          box-shadow: none;
         }
 
         .period-card-inner {
@@ -1732,7 +1732,7 @@ export default {
 
       transition: all 0.3s ease;
 
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+      box-shadow: none;
 
       min-width: 0;
 
@@ -1744,7 +1744,7 @@ export default {
       &:focus {
         border-color: rgba(var(--theme-color-rgb), 0.5);
 
-        box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.2);
+        box-shadow: none;
 
         transform: translateY(-1px);
       }
@@ -1783,7 +1783,7 @@ export default {
 
       transition: all 0.3s ease;
 
-      box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.2);
+      box-shadow: none;
 
       white-space: nowrap;
 
@@ -1798,7 +1798,7 @@ export default {
 
         transform: translateY(-2px);
 
-        box-shadow: 0 6px 16px rgba(var(--theme-color-rgb), 0.3);
+        box-shadow: none;
       }
 
       &:disabled {
@@ -1906,7 +1906,7 @@ export default {
 
     border-radius: $border-radius-sm;
 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 
     padding: 24px;
 
@@ -2023,14 +2023,14 @@ export default {
     background: var(--card-bg-color);
     border: 1px solid var(--border-color);
     border-radius: $border-radius-sm;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
     color: var(--text-color);
   }
 
   .right-column .order-summary-section .order-summary {
     background: var(--right-card-bg) !important;
     border: 1px solid var(--right-card-border) !important;
-    box-shadow: var(--right-card-shadow) !important;
+    box-shadow: none !important;
     color: var(--right-card-text) !important;
   }
 
@@ -2137,12 +2137,12 @@ export default {
     border: none;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.2);
+    box-shadow: none;
 
     &:hover:not(:disabled) {
       background-color: color-mix(in srgb, var(--theme-color) 85%, black) !important;
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: none;
     }
 
     &:disabled {
@@ -2195,14 +2195,14 @@ export default {
 
       transition: all 0.3s ease;
 
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+      box-shadow: none;
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);
 
         transform: translateY(-2px);
 
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: none;
       }
     }
 
@@ -2233,7 +2233,7 @@ export default {
 
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-      box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.2);
+      box-shadow: none;
 
       will-change: transform, box-shadow;
 
@@ -2246,13 +2246,13 @@ export default {
 
         transform: translateY(-2px);
 
-        box-shadow: 0 6px 16px rgba(var(--theme-color-rgb), 0.3);
+        box-shadow: none;
       }
 
       &:active:not(:disabled) {
         transform: translateY(0);
 
-        box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.2);
+        box-shadow: none;
       }
 
       &:disabled {

@@ -478,7 +478,7 @@ export default {
 
   
 
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
 
   overflow: hidden;
 
@@ -828,7 +828,7 @@ export default {
 
             
 
-            box-shadow: 0 3px 8px rgba(var(--theme-color-rgb), 0.2);
+            box-shadow: none;
 
           }
 
@@ -1006,7 +1006,7 @@ export default {
 
     
 
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 
     
 

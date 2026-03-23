@@ -364,8 +364,7 @@ export default {
 
   backdrop-filter: blur(10px);
 
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1),
-    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  box-shadow: none;
 
   text-align: center;
 
@@ -422,9 +421,7 @@ export default {
 
         transition: stroke-dashoffset 0.5s ease;
 
-        filter: drop-shadow(
-          0 0 6px rgba(var(--theme-color-rgb, 61, 126, 255), 0.4)
-        );
+        filter: none;
       }
 
       .progress-text {
@@ -436,7 +433,7 @@ export default {
 
         color: var(--text-color, #333333);
 
-        text-shadow: 0 0 10px rgba(var(--theme-color-rgb, 61, 126, 255), 0.2);
+        text-shadow: none;
       }
     }
   }
@@ -493,8 +490,7 @@ export default {
   .validation-container {
     background-color: var(--card-background, rgba(30, 32, 35, 0.6));
 
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1),
-      inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    box-shadow: none;
 
     .progress-ring-bg {
       stroke: var(--border-color, rgba(255, 255, 255, 0.1));
@@ -503,7 +499,7 @@ export default {
     .progress-text {
       color: var(--text-color, rgba(255, 255, 255, 0.95));
 
-      text-shadow: 0 0 10px rgba(var(--theme-color-rgb, 61, 126, 255), 0.3);
+      text-shadow: none;
     }
   }
 }

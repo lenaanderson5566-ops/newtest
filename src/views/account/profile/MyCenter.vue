@@ -304,11 +304,11 @@ onMounted(async () => {
   border-radius: $border-radius-sm;
   background-color: var(--card-bg-color, var(--card-background));
   border: 1px solid rgba(var(--text-color-rgb), 0.08);
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04), 0 10px 24px rgba(15, 23, 42, 0.05);
+  box-shadow: none;
   transition: box-shadow 0.22s ease, border-color 0.22s ease;
 
   &:hover {
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06), 0 16px 32px rgba(15, 23, 42, 0.08);
+    box-shadow: none;
     border-color: rgba(var(--theme-color-rgb), 0.22);
   }
 }
@@ -386,7 +386,7 @@ onMounted(async () => {
     border-radius: 999px;
     font-size: 13px;
     font-weight: 700;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+    box-shadow: none;
 
     &.is-bronze { background: linear-gradient(135deg, #b27241, #d39d63); }
     &.is-silver { background: linear-gradient(135deg, #8ea0bf, #d4deef); color: #23324d; }
@@ -475,7 +475,7 @@ onMounted(async () => {
   &.is-highlight {
     border-color: rgba(var(--theme-color-rgb), 0.32);
     background: linear-gradient(130deg, rgba(var(--theme-color-rgb), 0.14), rgba(var(--theme-color-rgb), 0.05));
-    box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.08);
+    box-shadow: none;
   }
 }
 

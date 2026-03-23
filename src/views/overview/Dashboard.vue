@@ -1456,7 +1456,7 @@ export default {
   --dashboard-radius: #{$border-radius-sm};
   --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
-  --dashboard-shadow-compact: 0 2px 8px rgba(15, 23, 42, 0.06), 0 10px 22px rgba(15, 23, 42, 0.05);
+  --dashboard-shadow-compact: none;
   --dashboard-border-color: rgba(148, 163, 184, 0.22);
   --dashboard-title-size: 14px;
   --dashboard-value-size: 30px;
@@ -1469,7 +1469,7 @@ export default {
   --saas-text-secondary: #6b7280;
   --saas-border-soft: #eef1f5;
   --saas-card-bg: #ffffff;
-  --saas-card-shadow: var(--dashboard-shadow-compact);
+  --saas-card-shadow: none;
 
   --theme-text-primary: #111827;
   --theme-text-secondary: #6b7280;
@@ -1558,14 +1558,14 @@ export default {
 
   .dashboard-card {
     background-color: var(--saas-card-bg);
-    box-shadow: var(--saas-card-shadow);
+    box-shadow: none;
     padding: var(--dashboard-card-padding);
     border: 1px solid var(--dashboard-border-color);
     border-radius: var(--dashboard-radius);
     transition: box-shadow 0.2s ease;
 
     &:hover {
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 8px 16px rgba(15, 23, 42, 0.05);
+      box-shadow: none;
       transform: none;
     }
 
@@ -1615,7 +1615,7 @@ export default {
       z-index: 1;
       background-color: var(--card-bg-color);
       border-radius: var(--dashboard-radius);
-      box-shadow: var(--dashboard-shadow-compact);
+      box-shadow: none;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -1686,7 +1686,7 @@ export default {
             justify-content: center;
             color: var(--theme-white);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-            box-shadow: 0 6px 14px rgba(var(--theme-color-rgb), 0.2);
+            box-shadow: none;
             cursor: pointer;
           }
         }
@@ -2025,7 +2025,7 @@ export default {
       &.traffic-board-subscription {
         background: var(--saas-card-bg);
         border: 1px solid var(--dashboard-border-color);
-        box-shadow: var(--saas-card-shadow);
+        box-shadow: none;
 
         .usage-card-title,
         .usage-percent,
@@ -2054,7 +2054,7 @@ export default {
       &.traffic-board-total {
         background: var(--saas-card-bg);
         border: 1px solid var(--dashboard-border-color);
-        box-shadow: var(--saas-card-shadow);
+        box-shadow: none;
 
         .usage-card-title {
           color: var(--theme-text-primary);
@@ -2197,7 +2197,7 @@ export default {
 
       &:hover {
         border-color: rgba(148, 163, 184, 0.3);
-        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.07);
+        box-shadow: none;
       }
     }
   }
@@ -2209,7 +2209,7 @@ export default {
   .overview-card--exit-region {
     border-radius: var(--dashboard-radius);
     background: var(--saas-card-bg);
-    box-shadow: var(--saas-card-shadow);
+    box-shadow: none;
     border: 1px solid rgba(148, 163, 184, 0.2);
   }
 
@@ -2225,7 +2225,7 @@ export default {
     background: var(--saas-card-bg);
     border: 1px solid var(--dashboard-border-color);
     border-radius: var(--dashboard-radius);
-    box-shadow: var(--dashboard-shadow-compact);
+    box-shadow: none;
   }
 
   /* 概览卡片左上角标题统一样式 */
@@ -2376,7 +2376,7 @@ export default {
       color: var(--theme-white);
       letter-spacing: 0.4px;
       background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
-      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.22);
+      box-shadow: none;
 
       &.is-red { background: linear-gradient(135deg, #e11d48, #9f1239); }
       &.is-pink { background: linear-gradient(135deg, #be185d, #831843); }
@@ -2414,7 +2414,7 @@ export default {
       font-size: 12px;
       line-height: 1.4;
       font-weight: 500;
-      box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
+      box-shadow: none;
       opacity: 0;
       visibility: hidden;
       transform: translate(-50%, 4px);
@@ -2690,7 +2690,7 @@ export default {
   padding: 16px;
   animation: none;
   background-color: var(--card-bg-color);
-  box-shadow: var(--card-shadow);
+  box-shadow: none;
   border: 1px solid var(--border-color);
   position: relative;
 }
@@ -2740,7 +2740,7 @@ export default {
   &.warning-card,
   &.danger-card {
     border-color: rgba(var(--stats-alert-rgb), 0.42);
-    box-shadow: 0 4px 10px rgba(var(--stats-alert-rgb), 0.15);
+    box-shadow: none;
 
     .stats-icon {
       background-color: rgba(var(--stats-alert-rgb), 0.1);
@@ -2798,7 +2798,7 @@ export default {
   max-height: calc(100vh - 32px);
   border-radius: var(--dashboard-radius);
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 }
 
 .traffic-package-modal-card-global {
@@ -2809,7 +2809,7 @@ export default {
   background-color: var(--card-background);
   border: 1px solid rgba(var(--theme-color-rgb), 0.15);
   border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 
   .modal-header {
     display: flex;

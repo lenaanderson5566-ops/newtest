@@ -975,7 +975,7 @@ onUnmounted(() => {
 
   border-radius: 12px;
 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 
   padding: 20px;
 
@@ -986,7 +986,7 @@ onUnmounted(() => {
   transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
   }
@@ -1081,14 +1081,14 @@ onUnmounted(() => {
 
       transition: all 0.3s ease;
 
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      box-shadow: none;
 
       &:focus {
         outline: none;
 
         border-color: rgba(var(--theme-color-rgb), 0.5);
 
-        box-shadow: 0 2px 12px rgba(var(--theme-color-rgb), 0.1);
+        box-shadow: none;
       }
 
       &::placeholder {
@@ -1152,12 +1152,12 @@ onUnmounted(() => {
 
     border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
-    box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+    box-shadow: none;
 
     &:hover {
       transform: translateY(-2px);
 
-      box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
+      box-shadow: none;
 
       background-color: rgba(var(--theme-color-rgb), 0.95);
     }
@@ -1165,7 +1165,7 @@ onUnmounted(() => {
     &:active {
       transform: translateY(0);
 
-      box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: none;
     }
   }
 }
@@ -1502,7 +1502,7 @@ onUnmounted(() => {
 
     flex-shrink: 0;
 
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: none;
 
     position: relative;
 
@@ -1550,7 +1550,7 @@ onUnmounted(() => {
 
     border-radius: 18px;
 
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
 
     position: relative;
 
@@ -1640,7 +1640,7 @@ onUnmounted(() => {
 
     transition: all 0.3s ease;
 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    box-shadow: none;
 
     min-height: 90px;
 
@@ -1649,7 +1649,7 @@ onUnmounted(() => {
 
       border-color: var(--theme-color);
 
-      box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.1);
+      box-shadow: none;
 
       transform: translateY(-2px);
     }
@@ -1691,7 +1691,7 @@ onUnmounted(() => {
 
     font-weight: 500;
 
-    box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+    box-shadow: none;
 
     backdrop-filter: blur(8px);
 
@@ -1702,7 +1702,7 @@ onUnmounted(() => {
     &:hover:not(:disabled) {
       transform: translateY(-2px);
 
-      box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
+      box-shadow: none;
 
       background-color: rgba(var(--theme-color-rgb), 0.95);
     }
@@ -1710,7 +1710,7 @@ onUnmounted(() => {
     &:active:not(:disabled) {
       transform: translateY(0);
 
-      box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: none;
     }
 
     &:disabled {
@@ -1869,7 +1869,7 @@ onUnmounted(() => {
 
   overflow-y: auto;
 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 
   animation: modal-appear 0.3s cubic-bezier(0.21, 1.02, 0.73, 1);
 
@@ -1999,14 +1999,14 @@ onUnmounted(() => {
 
       transition: all 0.2s ease;
 
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+      box-shadow: none;
 
       &:focus {
         outline: none;
 
         border-color: rgba(var(--theme-color-rgb), 0.5);
 
-        box-shadow: 0 2px 12px rgba(var(--theme-color-rgb), 0.1);
+        box-shadow: none;
       }
 
       &::placeholder {
@@ -2159,7 +2159,7 @@ onUnmounted(() => {
 
       color: white;
 
-      box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.25);
+      box-shadow: none;
 
       backdrop-filter: blur(8px);
 
@@ -2168,7 +2168,7 @@ onUnmounted(() => {
       &:hover:not(:disabled) {
         transform: translateY(-2px);
 
-        box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
+        box-shadow: none;
 
         background-color: rgba(var(--theme-color-rgb), 0.95);
       }
@@ -2176,7 +2176,7 @@ onUnmounted(() => {
       &:active:not(:disabled) {
         transform: translateY(0);
 
-        box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.3);
+        box-shadow: none;
       }
 
       &:disabled {
@@ -2298,7 +2298,7 @@ onUnmounted(() => {
 
     border-radius: 16px;
 
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: none;
 
     max-width: 90%;
 
@@ -2355,20 +2355,20 @@ onUnmounted(() => {
 
       gap: 0.75rem;
 
-      box-shadow: 0 6px 15px rgba(var(--theme-color-rgb), 0.25);
+      box-shadow: none;
 
       &:hover {
         background-color: rgba(var(--theme-color-rgb), 0.9);
 
         transform: translateY(-1px);
 
-        box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.35);
+        box-shadow: none;
       }
 
       &:active {
         transform: translateY(-1px);
 
-        box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.25);
+        box-shadow: none;
       }
     }
   }
@@ -2470,7 +2470,7 @@ onUnmounted(() => {
   border: 1px solid var(--border-color);
   border-radius: 14px;
   background: var(--card-bg-color);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  box-shadow: none;
 }
 
 .ticket-sidebar {
