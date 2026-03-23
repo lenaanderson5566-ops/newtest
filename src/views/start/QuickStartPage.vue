@@ -80,7 +80,7 @@
           <h2>开始连接</h2>
         </header>
         <div class="step-body">
-          <p class="connect-text">打开客户端 → 粘贴订阅 → 选择节点 → 点击连接</p>
+          <p class="connect-text">打开客户端 → → 选择节点 → 点击连接</p>
           <button class="help-btn" @click="router.push('/docs')">需要帮助？查看详细教程 →</button>
         </div>
       </section>
