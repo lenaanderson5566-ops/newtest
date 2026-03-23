@@ -61,6 +61,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .announcement-page {
   padding: 0 0 24px;
 }
@@ -73,7 +75,7 @@ export default {
 .announcement-item {
   background: #fff;
   border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
   padding: 16px;
 
   header {
@@ -106,7 +108,7 @@ export default {
 .announcement-empty {
   background: #fff;
   border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
   padding: 24px;
   text-align: center;
   color: var(--secondary-text-color);
