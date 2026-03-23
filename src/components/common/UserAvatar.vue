@@ -25,10 +25,6 @@
           <IconMessageCircle class="menu-icon" />
           <span>提交反馈</span>
         </div>
-        <div class="menu-item" @click="navigateTo('/security')">
-          <IconLock class="menu-icon" />
-          <span>{{ $t('profile.securityCenter') }}</span>
-        </div>
         <div class="divider"></div>
         <div class="menu-item" @click="logout">
           <IconLogout class="menu-icon" />
@@ -47,7 +43,6 @@ import { useToast } from '@/composables/useToast';
 import { IconUserCircle, IconMessageCircle } from '@tabler/icons-vue';
 import IconUser from '@/components/icons/IconUser.vue';
 import IconLogout from '@/components/icons/IconLogout.vue';
-import IconLock from '@/components/icons/IconLock.vue';
 
 export default {
   name: 'UserAvatar',
@@ -55,8 +50,7 @@ export default {
     IconUserCircle,
     IconMessageCircle,
     IconUser,
-    IconLogout,
-    IconLock
+    IconLogout
   },
   props: {
     username: {
