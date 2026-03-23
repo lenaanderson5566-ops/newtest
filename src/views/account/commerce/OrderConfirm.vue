@@ -1359,7 +1359,7 @@ export default {
   }
 
   .section-wrapper.period-section {
-    background-color: var(--background-color);
+    background-color: var(--background-color) !important;
   }
 
   .plan-card {
