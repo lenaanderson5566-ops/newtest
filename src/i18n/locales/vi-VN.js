@@ -1,4 +1,4 @@
-import {SITE_CONFIG} from '../../utils/baseConfig';
+﻿import {SITE_CONFIG} from '../../utils/baseConfig';
 
 export default {
     common: {
@@ -555,11 +555,20 @@ profile: {
         logoutDesc: 'Bạn có chắc chắn muốn đăng xuất không?',
         logout: 'Đăng xuất',
         recentDevices: 'Thiết bị đăng nhập gần đây',
+        currentSession: 'Thiết bị hiện tại',
         noDevices: 'Chưa có lịch sử đăng nhập',
         unknownDevice: 'Thiết bị không xác định',
         unknownIP: 'IP không xác định',
         unknownBrowser: 'Trình duyệt không xác định',
         sessionError: 'Lấy lịch sử đăng nhập thất bại',
+        logoutAllSessions: 'Đăng xuất tất cả phiên',
+        loggingOutAllSessions: 'Đang đăng xuất tất cả phiên...',
+        logoutAllSessionsSuccess: 'Đã đăng xuất tất cả phiên',
+        logoutAllSessionsError: 'Đăng xuất tất cả phiên thất bại',
+        logoutDevice: 'Đăng xuất',
+        loggingOutDevice: 'Đang đăng xuất...',
+        logoutDeviceSuccess: 'Đã đăng xuất phiên thiết bị',
+        logoutDeviceError: 'Không thể đăng xuất phiên thiết bị',
         telegramGroup: 'Nhóm Telegram',
         telegramBot: 'Bot Telegram',
         bindTelegram: 'Liên kết Bot Telegram',

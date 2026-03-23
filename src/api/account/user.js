@@ -70,6 +70,30 @@ export function getActiveSession() {
   });
 }
 
+export function logoutCurrentSession(data = {}) {
+  return request({
+    url: '/user/logout',
+    method: 'post',
+    data
+  });
+}
+
+export function logoutAllSessions(data = {}) {
+  return request({
+    url: '/user/logoutAll',
+    method: 'post',
+    data
+  });
+}
+
+export function removeActiveSession(session_id) {
+  return request({
+    url: '/user/removeActiveSession',
+    method: 'post',
+    data: { session_id }
+  });
+}
+
 
 export function getCommConfig() {
   return request({

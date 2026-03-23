@@ -48,14 +48,39 @@
                 <component :is="getDeviceIcon(session.ua)" :size="24" />
               </div>
               <div class="device-info">
-                <div class="device-name">{{ formatDeviceInfo(session.ua) }}</div>
+                <div class="device-name-row">
+                  <div class="device-name">{{ formatDeviceInfo(session.ua) }}</div>
+                  <span v-if="isCurrentSession(session)" class="current-session-badge">{{ $t('profile.currentSession') }}</span>
+                </div>
                 <div class="device-meta">
                   <span class="device-ip">{{ session.ip || $t('profile.unknownIP') }}</span>
                   <span class="device-time">{{ formatTimestamp(session.login_at) }}</span>
                 </div>
               </div>
+              <button
+                v-if="!isCurrentSession(session)"
+                class="remove-session-btn"
+                :disabled="!resolveSessionId(session) || removingSessionIds.has(resolveSessionId(session))"
+                @click="handleRemoveSession(session)"
+              >
+                {{
+                  removingSessionIds.has(resolveSessionId(session))
+                    ? $t('profile.loggingOutDevice')
+                    : $t('profile.logoutDevice')
+                }}
+              </button>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="profile-card logout-all-card">
+        <div class="settings-content">
+          <button class="action-btn action-btn-danger" :disabled="loggingOutAllSessions" @click="handleLogoutAllSessions">
+            <IconLogout :size="18" />
+            <span v-if="!loggingOutAllSessions">{{ $t('profile.logoutAllSessions') }}</span>
+            <span v-else>{{ $t('profile.loggingOutAllSessions') }}</span>
+          </button>
         </div>
       </div>
     </div>
@@ -100,9 +125,10 @@
 <script setup name="SecuritySettings">
 import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { changePassword as apiChangePassword, getActiveSession } from '@/api/account/user';
+import { changePassword as apiChangePassword, getActiveSession, logoutAllSessions, removeActiveSession } from '@/api/account/user';
 import {
   IconLock,
+  IconLogout,
   IconX,
   IconDevices,
   IconDeviceMobile,
@@ -111,6 +137,7 @@ import {
 } from '@tabler/icons-vue';
 import useToast from '@/hooks/useToast';
 import { PROFILE_CONFIG } from '@/utils/baseConfig';
+import { forceLogout } from '@/api/auth';
 
 const { t } = useI18n();
 const { success, error: showError } = useToast();
@@ -120,6 +147,9 @@ const changingPassword = ref(false);
 const activeSessions = ref([]);
 const loadingSessions = ref(false);
 const sessionError = ref('');
+const loggingOutAllSessions = ref(false);
+const removingSessionIds = ref(new Set());
+const currentSessionId = ref('');
 
 const passwordForm = ref({
   oldPassword: '',
@@ -173,8 +203,14 @@ const fetchActiveSessions = async () => {
     const response = await getActiveSession();
 
     if (response && response.data) {
-      const sessions = Array.isArray(response.data) ? response.data :
-        (typeof response.data === 'object' && response.data !== null ? Object.values(response.data) : []);
+      const sessions = Array.isArray(response.data)
+        ? response.data
+        : (typeof response.data === 'object' && response.data !== null
+          ? Object.entries(response.data).map(([session_id, session]) => ({
+            ...(session || {}),
+            session_id
+          }))
+          : []);
 
       const sortedSessions = sessions.sort((a, b) => {
         if (!a.login_at || !b.login_at) return 0;
@@ -187,9 +223,87 @@ const fetchActiveSessions = async () => {
     }
   } catch (err) {
     console.error('Failed to fetch active sessions:', err);
-    sessionError.value = err?.message || t('common.networkError');
+    const statusCode = err?.response?.status;
+    if (statusCode === 401 || statusCode === 403) {
+      forceLogout();
+      window.location.href = '/#/login?logout=true';
+      return;
+    }
+    sessionError.value = t('profile.sessionError');
   } finally {
     loadingSessions.value = false;
+  }
+};
+
+const resolveSessionId = (session) => {
+  if (!session || typeof session !== 'object') return '';
+  return session.session_id || '';
+};
+
+const decodeJwtPayload = (token) => {
+  if (!token || typeof token !== 'string') return null;
+  const parts = token.split('.');
+  if (parts.length < 2 || !parts[1]) return null;
+
+  try {
+    const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+    const normalized = base64 + '='.repeat((4 - (base64.length % 4)) % 4);
+    const payload = atob(normalized);
+    return JSON.parse(payload);
+  } catch (error) {
+    return null;
+  }
+};
+
+const getCurrentSessionId = () => {
+  const authData = localStorage.getItem('auth_data') || '';
+  const payload = decodeJwtPayload(authData);
+  return payload?.session || '';
+};
+
+const isCurrentSession = (session) => resolveSessionId(session) === currentSessionId.value;
+
+const handleLogoutAllSessions = async () => {
+  if (loggingOutAllSessions.value) return;
+  loggingOutAllSessions.value = true;
+  sessionError.value = '';
+  try {
+    const response = await logoutAllSessions();
+    if (response?.data) {
+      success(t('profile.logoutAllSessionsSuccess'));
+      forceLogout();
+      window.location.href = '/#/login?logout=true';
+      return;
+    }
+    showError(t('profile.logoutAllSessionsError'));
+  } catch (err) {
+    console.error('Failed to logout all sessions:', err);
+    showError(t('profile.logoutAllSessionsError'));
+  } finally {
+    loggingOutAllSessions.value = false;
+  }
+};
+
+const handleRemoveSession = async (session) => {
+  const sessionId = resolveSessionId(session);
+  if (!sessionId || removingSessionIds.value.has(sessionId)) return;
+
+  removingSessionIds.value.add(sessionId);
+  removingSessionIds.value = new Set(removingSessionIds.value);
+  try {
+    const response = await removeActiveSession(sessionId);
+    if (response?.data) {
+      success(t('profile.logoutDeviceSuccess'));
+      activeSessions.value = activeSessions.value.filter((item) => resolveSessionId(item) !== sessionId);
+      return;
+    }
+    showError(t('profile.logoutDeviceError'));
+  } catch (err) {
+    console.error('Failed to remove active session:', err);
+    showError(t('profile.logoutDeviceError'));
+  } finally {
+    removingSessionIds.value.delete(sessionId);
+    removingSessionIds.value = new Set(removingSessionIds.value);
   }
 };
 
@@ -243,6 +357,7 @@ const formatTimestamp = (timestamp) => {
 };
 
 onMounted(() => {
+  currentSessionId.value = getCurrentSessionId();
   if (PROFILE_CONFIG.showRecentDevices) {
     fetchActiveSessions();
   }
@@ -288,6 +403,28 @@ onMounted(() => {
   cursor: pointer;
 }
 
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.action-btn:disabled,
+.remove-session-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.action-btn-danger {
+  border-color: rgba(255, 77, 79, 0.5);
+  color: #ff4d4f;
+}
+
+.logout-all-card .settings-content {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .device-item {
   display: flex;
   gap: 12px;
@@ -297,6 +434,39 @@ onMounted(() => {
   &:last-child {
     border-bottom: 0;
   }
+}
+
+.device-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.device-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.current-session-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--theme-color);
+  background: rgba(var(--theme-color-rgb), 0.12);
+  border: 1px solid rgba(var(--theme-color-rgb), 0.28);
+  white-space: nowrap;
+}
+
+.remove-session-btn {
+  border: 1px solid rgba(255, 77, 79, 0.5);
+  background: transparent;
+  color: #ff4d4f;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .device-meta {
