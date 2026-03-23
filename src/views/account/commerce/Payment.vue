@@ -2548,7 +2548,7 @@ export default {
   }
 
   &.status-unknown {
-    color: #757575;
+    color: var(--secondary-text-color);
     background-color: rgba(158, 158, 158, 0.12);
     border-color: rgba(158, 158, 158, 0.2);
   }

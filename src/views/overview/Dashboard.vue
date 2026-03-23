@@ -1173,7 +1173,9 @@ export default {
         trafficTrendChart.dispose();
       }
       const rootStyles = getComputedStyle(document.documentElement);
-      const textColor = rootStyles.getPropertyValue('--text-color').trim() || '#333333';
+      const textColor =
+        rootStyles.getPropertyValue('--text-color').trim() ||
+        `rgb(${rootStyles.getPropertyValue('--text-color-rgb').trim() || '51, 51, 51'})`;
       const borderColor = rootStyles.getPropertyValue('--border-color').trim() || '#e8e8e8';
       const themeColor = rootStyles.getPropertyValue('--theme-color').trim() || '#6753f6';
       trafficTrendChart = echarts.init(trafficTrendChartRef.value);
@@ -1466,27 +1468,27 @@ export default {
 
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
-  --saas-text-secondary: #6b7280;
+  --saas-text-secondary: var(--secondary-text-color);
   --saas-border-soft: #eef1f5;
   --saas-card-bg: #ffffff;
   --saas-card-shadow: none;
 
   --theme-text-primary: #111827;
-  --theme-text-secondary: #6b7280;
+  --theme-text-secondary: var(--secondary-text-color);
   --theme-text-subtle: #9ca3af;
-  --theme-text-emphasis: #374151;
+  --theme-text-emphasis: var(--text-color);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
   --theme-border-soft: #e5e7eb;
   --theme-white: #ffffff;
-  --quota-label-color: #4b5563;
-  --quota-value-color: #1f2937;
+  --quota-label-color: var(--secondary-text-color);
+  --quota-value-color: var(--text-color);
   --quota-progress-start: #60a5fa;
   --quota-progress-end: #3b82f6;
   --quota-muted-fill: #cbd5e1;
   --quota-total-bg-end: #f8fbff;
   --quota-expired-border: #d1d5db;
-  --plan-meta-text: #64748b;
+  --plan-meta-text: var(--secondary-text-color);
   --plan-expired-strip-text: #b91c1c;
   --plan-expired-strip-bg: rgba(248, 113, 113, 0.16);
   --plan-expired-strip-border: rgba(239, 68, 68, 0.32);
@@ -1890,7 +1892,7 @@ export default {
           .plan-action-helper-text {
             margin-top: 10px;
             font-size: 12px;
-            color: #475569;
+            color: var(--secondary-text-color);
             text-align: center;
           }
 

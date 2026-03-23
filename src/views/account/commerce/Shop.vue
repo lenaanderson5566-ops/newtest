@@ -1396,7 +1396,7 @@ export default {
         .currency {
           font-size: 22px;
           font-weight: 500;
-          color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
+          color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
         }
 
         .amount {
@@ -1410,7 +1410,7 @@ export default {
         .unit-line {
           font-size: 13px;
           font-weight: 500;
-          color: color-mix(in srgb, var(--text-color) 72%, #6b7280 28%);
+          color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
         }
       }
     }
@@ -1523,7 +1523,7 @@ export default {
           flex: 1; // 占据剩余空间
 
           &.disabled-text {
-            color: #999;
+            color: var(--secondary-text-color);
           }
         }
       }
@@ -1668,7 +1668,7 @@ export default {
 
         .option-text {
           font-size: 12px;
-          color: #475569;
+          color: var(--secondary-text-color);
           font-weight: 500;
           white-space: nowrap;
         }

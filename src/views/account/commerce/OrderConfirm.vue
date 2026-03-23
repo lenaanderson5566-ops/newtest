@@ -1493,7 +1493,7 @@ export default {
             line-height: 1.5;
 
             &.disabled-text {
-              color: #999;
+              color: var(--secondary-text-color);
             }
           }
         }
@@ -1689,7 +1689,7 @@ export default {
 
           .original-price {
             text-decoration: line-through;
-            color: #999;
+            color: var(--secondary-text-color);
             font-size: 12px;
             margin-left: 5px;
           }

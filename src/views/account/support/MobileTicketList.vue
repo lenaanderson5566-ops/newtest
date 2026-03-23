@@ -1054,7 +1054,7 @@ fetchTickets();
       &.status-1 {
         background-color: rgba(158, 158, 158, 0.1);
 
-        color: #9e9e9e;
+        color: var(--secondary-text-color);
       }
     }
   }
@@ -1245,7 +1245,7 @@ fetchTickets();
   &.status-1 {
     background-color: rgba(158, 158, 158, 0.1);
 
-    color: #9e9e9e;
+    color: var(--secondary-text-color);
   }
 }
 
@@ -2242,7 +2242,7 @@ fetchTickets();
 }
 
 .upload-tip-text {
-  color: #333;
+  color: var(--text-color);
 
   font-weight: 500;
 
@@ -2256,7 +2256,7 @@ fetchTickets();
 
   font-size: 0.92rem;
 
-  color: #888;
+  color: var(--secondary-text-color);
 
   margin-top: 2px;
 }
@@ -2295,7 +2295,7 @@ fetchTickets();
   }
 
   .upload-desc {
-    color: #b0bec5;
+    color: var(--secondary-text-color);
   }
 }
 </style>

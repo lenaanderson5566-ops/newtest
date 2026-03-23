@@ -462,7 +462,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--text-color-light, #6b7280);
+      color: var(--text-color-light, var(--secondary-text-color));
 
       margin: 0;
 
@@ -490,7 +490,7 @@ onMounted(() => {
   .quick-btn {
     border: 1px solid var(--border-color);
     background: #fff;
-    color: #1f2937;
+    color: var(--text-color);
     border-radius: $border-radius-sm;
     padding: 10px 18px;
     cursor: pointer;
@@ -550,7 +550,7 @@ onMounted(() => {
     }
 
     .import-title { font-size: 18px; font-weight: 600; }
-    .import-desc { color: #6b7280; font-size: 14px; }
+    .import-desc { color: var(--secondary-text-color); font-size: 14px; }
 
     .platform-selector {
       display: flex;
@@ -657,7 +657,7 @@ onMounted(() => {
     }
 
     .reset-modal-text {
-      color: #374151;
+      color: var(--text-color);
       font-size: 14px;
       margin: 0 0 12px;
       line-height: 1.6;
@@ -698,7 +698,7 @@ onMounted(() => {
 
     p {
       margin: 8px 0 0;
-      color: var(--text-color-light, #6b7280);
+      color: var(--text-color-light, var(--secondary-text-color));
       font-size: 15px;
     }
   }
@@ -797,7 +797,7 @@ onMounted(() => {
 
       p {
         margin: 0;
-        color: var(--text-color-light, #6b7280);
+        color: var(--text-color-light, var(--secondary-text-color));
         font-size: 13px;
       }
 
@@ -1009,7 +1009,7 @@ onMounted(() => {
 
       font-size: 0.8rem;
 
-      color: var(--text-color-light, #6b7280);
+      color: var(--text-color-light, var(--secondary-text-color));
 
       margin: 0;
 
@@ -1089,7 +1089,7 @@ onMounted(() => {
 
       justify-content: center;
 
-      color: var(--text-color-light, #6b7280);
+      color: var(--text-color-light, var(--secondary-text-color));
 
       cursor: pointer;
 
@@ -1137,7 +1137,7 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-color-light, #6b7280);
+    color: var(--text-color-light, var(--secondary-text-color));
 
     font-size: 1.1rem;
 
@@ -1149,7 +1149,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-color-light, #6b7280);
+    color: var(--text-color-light, var(--secondary-text-color));
 
     opacity: 0.7;
 

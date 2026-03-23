@@ -1258,7 +1258,7 @@ onUnmounted(() => {
 .status-closed {
   background-color: rgba(158, 158, 158, 0.1);
 
-  color: #9e9e9e;
+  color: var(--secondary-text-color);
 }
 
 .level-low {
@@ -2423,7 +2423,7 @@ onUnmounted(() => {
     .upload-desc {
       display: block;
       font-size: 0.92rem;
-      color: #888;
+      color: var(--secondary-text-color);
       margin-top: 2px;
     }
     .upload-method {

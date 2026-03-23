@@ -86,18 +86,18 @@ export default {
     h3 {
       margin: 0;
       font-size: 18px;
-      color: #0f172a;
+      color: var(--text-color);
     }
 
     time {
       font-size: 12px;
-      color: #64748b;
+      color: var(--secondary-text-color);
       white-space: nowrap;
     }
   }
 
   .announcement-content {
-    color: #334155;
+    color: var(--secondary-text-color);
     line-height: 1.6;
   }
 }
@@ -109,6 +109,6 @@ export default {
   border-radius: 12px;
   padding: 24px;
   text-align: center;
-  color: #64748b;
+  color: var(--secondary-text-color);
 }
 </style>
