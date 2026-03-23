@@ -54,11 +54,12 @@
               <IconApps v-else :size="20" class="fallback-icon-large" :class="{ grayscale: !client.recommended }" />
               <span>{{ client.name }}</span>
               <small v-if="client.recommended">推荐</small>
+              <IconCheck v-if="selectedClient?.name === client.name" :size="16" class="client-selected-mark" />
             </button>
           </div>
 
           <div class="action-row" v-if="subscriptionUrl">
-            <button class="action-btn primary" @click="downloadSelectedClient">下载客户端</button>
+            <button class="action-btn primary" @click="downloadSelectedClient">{{ downloadButtonText }}</button>
             <button class="action-btn" @click="quickImportSelectedClient">一键导入</button>
             <button class="action-btn" @click="copySubscriptionUrl">复制订阅</button>
             <button
@@ -184,6 +185,7 @@ const getPlatformClients = (platform) => {
 
 const selectedPlatformClients = computed(() => getPlatformClients(selectedPlatform.value));
 const selectedClient = computed(() => selectedPlatformClients.value.find((item) => item.name === selectedClientName.value) || null);
+const downloadButtonText = computed(() => `下载${selectedClient.value?.name || '客户端'}`);
 
 watch(quickStartPlatforms, (next) => {
   if (!next.length) return;
@@ -458,11 +460,13 @@ onMounted(fetchUserStatus);
   border: 1px solid var(--border-color);
   border-radius: $border-radius-sm;
   background: #fff;
-  padding: 14px;
+  padding: 12px;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
   position: relative;
 
   &:hover {
@@ -496,7 +500,8 @@ onMounted(fetchUserStatus);
   border: 1px solid var(--border-color);
   background: #fff;
   border-radius: 10px;
-  padding: 10px 12px;
+  padding: 12px 14px;
+  min-height: 62px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -518,6 +523,13 @@ onMounted(fetchUserStatus);
   &.active {
     border-color: rgba(var(--theme-color-rgb), 0.85);
     background: rgba(var(--theme-color-rgb), 0.06);
+  }
+
+  .client-selected-mark {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: var(--theme-color);
   }
 }
 
