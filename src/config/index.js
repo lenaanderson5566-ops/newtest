@@ -199,25 +199,18 @@ export const config = {
 
   // 客户端下载配置
   CLIENT_CONFIG: {
-    // 整个下载卡片显示控制
-    showDownloadCard: true,
-
     // 平台显示控制 (true=显示, false=隐藏)
     showIOS: true,
     showAndroid: true,
     showMacOS: true,
     showWindows: true,
-    showLinux: true,
-    showOpenWrt: true,
 
-    // 客户端下载链接  //可以改成文档链接直接在新标签页打开
+    // 客户端下载/文档链接（会在新标签页打开）
     clientLinks: {
       ios: "https://apps.apple.com/app/xxx",
       android: "https://play.google.com/store/apps/xxx",
       macos: "https://github.com/xxx/releases/latest",
       windows: "https://github.com/xxx/releases/latest",
-      linux: "https://github.com/xxx/releases/latest",
-      openwrt: "https://github.com/xxx/releases/latest",
     },
 
     // 订阅导入客户端显示控制 部分面板不支持SingBox导入请您注意检查
