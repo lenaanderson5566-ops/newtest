@@ -562,6 +562,7 @@ profile: {
     logoutDesc: 'آیا مطمئن هستید که می خواهید خارج شوید؟',
     logout: 'خروج',
     recentDevices: 'دستگاه های اخیرا وارد شده',
+    currentSession: 'دستگاه فعلی',
     noDevices: 'رکوردی از ورود وجود ندارد',
     unknownDevice: 'دستگاه ناشناخته',
     unknownIP: 'IP ناشناخته',

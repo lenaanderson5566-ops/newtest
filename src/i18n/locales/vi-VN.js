@@ -555,6 +555,7 @@ profile: {
         logoutDesc: 'Bạn có chắc chắn muốn đăng xuất không?',
         logout: 'Đăng xuất',
         recentDevices: 'Thiết bị đăng nhập gần đây',
+        currentSession: 'Thiết bị hiện tại',
         noDevices: 'Chưa có lịch sử đăng nhập',
         unknownDevice: 'Thiết bị không xác định',
         unknownIP: 'IP không xác định',

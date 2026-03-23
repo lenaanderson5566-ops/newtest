@@ -565,6 +565,7 @@ profile: {
         logoutDesc: 'Are you sure you want to log out?',
         logout: 'Logout',
         recentDevices: 'Recent Login Devices',
+        currentSession: 'Current Device',
         noDevices: 'No login records',
         unknownDevice: 'Unknown Device',
         unknownIP: 'Unknown IP',

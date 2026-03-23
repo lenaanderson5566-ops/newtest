@@ -563,6 +563,7 @@ profile: {
     logoutDesc: '로그아웃하시겠습니까?',
     logout: '로그아웃',
     recentDevices: '최근 로그인 기기',
+    currentSession: '현재 기기',
     noDevices: '로그인 기록 없음',
     unknownDevice: '알 수 없는 기기',
     unknownIP: '알 수 없는 IP',

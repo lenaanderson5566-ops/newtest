@@ -562,6 +562,7 @@ profile: {
     logoutDesc: 'ログアウトしますか？',
     logout: 'ログアウト',
     recentDevices: '最近のログイン機器',
+    currentSession: '現在のデバイス',
     noDevices: 'ログイン記録なし',
     unknownDevice: '不明なデバイス',
     unknownIP: '不明なIP',

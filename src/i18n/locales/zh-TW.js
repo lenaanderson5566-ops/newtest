@@ -561,6 +561,7 @@ profile: {
     logoutDesc: '您確定要登出？',
     logout: '登出',
     recentDevices: '近期登入設備',
+    currentSession: '目前裝置',
     noDevices: '暫無登入記錄',
     unknownDevice: '未知設備',
     unknownIP: '未知IP',

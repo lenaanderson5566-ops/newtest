@@ -53,13 +53,17 @@
                 <component :is="getDeviceIcon(session.ua)" :size="24" />
               </div>
               <div class="device-info">
-                <div class="device-name">{{ formatDeviceInfo(session.ua) }}</div>
+                <div class="device-name-row">
+                  <div class="device-name">{{ formatDeviceInfo(session.ua) }}</div>
+                  <span v-if="isCurrentSession(session)" class="current-session-badge">{{ $t('profile.currentSession') }}</span>
+                </div>
                 <div class="device-meta">
                   <span class="device-ip">{{ session.ip || $t('profile.unknownIP') }}</span>
                   <span class="device-time">{{ formatTimestamp(session.login_at) }}</span>
                 </div>
               </div>
               <button
+                v-if="!isCurrentSession(session)"
                 class="remove-session-btn"
                 :disabled="!resolveSessionId(session) || removingSessionIds.has(resolveSessionId(session))"
                 @click="handleRemoveSession(session)"
@@ -140,6 +144,7 @@ const loadingSessions = ref(false);
 const sessionError = ref('');
 const loggingOutAllSessions = ref(false);
 const removingSessionIds = ref(new Set());
+const currentSessionId = ref('');
 
 const passwordForm = ref({
   oldPassword: '',
@@ -229,6 +234,29 @@ const resolveSessionId = (session) => {
   if (!session || typeof session !== 'object') return '';
   return session.session_id || '';
 };
+
+const decodeJwtPayload = (token) => {
+  if (!token || typeof token !== 'string') return null;
+  const parts = token.split('.');
+  if (parts.length < 2 || !parts[1]) return null;
+
+  try {
+    const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+    const normalized = base64 + '='.repeat((4 - (base64.length % 4)) % 4);
+    const payload = atob(normalized);
+    return JSON.parse(payload);
+  } catch (error) {
+    return null;
+  }
+};
+
+const getCurrentSessionId = () => {
+  const authData = localStorage.getItem('auth_data') || '';
+  const payload = decodeJwtPayload(authData);
+  return payload?.session || '';
+};
+
+const isCurrentSession = (session) => resolveSessionId(session) === currentSessionId.value;
 
 const handleLogoutAllSessions = async () => {
   if (loggingOutAllSessions.value) return;
@@ -324,6 +352,7 @@ const formatTimestamp = (timestamp) => {
 };
 
 onMounted(() => {
+  currentSessionId.value = getCurrentSessionId();
   if (PROFILE_CONFIG.showRecentDevices) {
     fetchActiveSessions();
   }
@@ -400,6 +429,24 @@ onMounted(() => {
 .device-info {
   flex: 1;
   min-width: 0;
+}
+
+.device-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.current-session-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--theme-color);
+  background: rgba(var(--theme-color-rgb), 0.12);
+  border: 1px solid rgba(var(--theme-color-rgb), 0.28);
+  white-space: nowrap;
 }
 
 .remove-session-btn {

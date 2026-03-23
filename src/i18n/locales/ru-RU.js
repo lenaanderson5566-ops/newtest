@@ -562,6 +562,7 @@ profile: {
     logoutDesc: 'Вы уверены, что хотите выйти?',
     logout: 'Выйти',
     recentDevices: 'Недавние устройства',
+    currentSession: 'Текущее устройство',
     noDevices: 'Нет записей о входе',
     unknownDevice: 'Неизвестное устройство',
     unknownIP: 'Неизвестный IP',

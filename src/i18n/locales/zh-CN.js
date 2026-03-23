@@ -565,6 +565,7 @@ profile: {
         logoutDesc: '您确定要退出登录吗？',
         logout: '退出登录',
         recentDevices: '近期登录设备',
+        currentSession: '当前设备',
         noDevices: '暂无登录记录',
         unknownDevice: '未知设备',
         unknownIP: '未知IP',
