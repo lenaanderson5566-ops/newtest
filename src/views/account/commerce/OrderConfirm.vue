@@ -1514,13 +1514,7 @@ export default {
 
     width: 100%;
 
-    background: var(--background-color);
-
-    border: 1px solid var(--border-color);
-
-    border-radius: $border-radius-sm;
-
-    padding: 16px;
+    background: transparent;
 
     .skeleton-period-cards {
       display: flex;
