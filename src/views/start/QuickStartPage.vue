@@ -553,8 +553,8 @@ onMounted(fetchUserStatus);
 
   .client-selected-mark {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 10px;
+    right: 10px;
     color: var(--theme-color);
   }
 }
