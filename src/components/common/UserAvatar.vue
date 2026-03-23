@@ -126,6 +126,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .user-avatar-container {
   position: relative;
 }
@@ -133,7 +135,7 @@ export default {
 .avatar-wrapper {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
+  border-radius: $border-radius-sm;
   cursor: pointer;
   overflow: hidden;
   background: transparent;
@@ -156,7 +158,7 @@ export default {
   .avatar-image {
     width: 100%;
     height: 100%;
-    border-radius: 8px;
+    border-radius: $border-radius-sm;
     object-fit: cover;
   }
   
@@ -183,8 +185,8 @@ export default {
   background: rgba(var(--card-background-rgb), 0.9);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px var(--shadow-color);
+  border-radius: $border-radius-sm;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
   border: 1px solid var(--border-color);
   overflow: hidden;
   z-index: 100;

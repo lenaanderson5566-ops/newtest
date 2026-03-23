@@ -155,6 +155,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
+
 .language-selector {
   position: relative;
   display: inline-block;
@@ -167,7 +169,7 @@ export default {
   min-width: 120px;
   height: 36px;
   padding: 6px 10px;
-  border-radius: 8px;
+  border-radius: $border-radius-sm;
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-color, #111827);
@@ -208,8 +210,8 @@ export default {
   background: rgba(var(--card-background-rgb), 0.95);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-radius: $border-radius-sm;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
   border: 1px solid var(--border-color);
   z-index: 200;
   overflow: hidden;
