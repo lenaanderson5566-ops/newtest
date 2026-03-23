@@ -344,7 +344,7 @@ export default {
 .top-toolbar {
   --toolbar-control-height: 34px;
   --toolbar-control-padding: 5px 8px;
-  --toolbar-control-radius: 8px;
+  --toolbar-control-radius: #{$border-radius-sm};
   --toolbar-control-border: transparent;
   --toolbar-control-bg: transparent;
   --toolbar-control-hover-bg: #f5f7fa;
@@ -363,7 +363,7 @@ export default {
     justify-content: center;
     width: var(--toolbar-control-height);
     height: var(--toolbar-control-height);
-    border-radius: 50%;
+    border-radius: var(--toolbar-control-radius);
     background: var(--toolbar-control-bg);
     border: 1px solid var(--toolbar-control-border);
     box-shadow: var(--toolbar-control-shadow);

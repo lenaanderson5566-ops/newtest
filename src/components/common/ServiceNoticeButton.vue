@@ -33,6 +33,8 @@ const goToAnnouncements = () => {
 </script>
 
 <style scoped lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
+
 .service-notice-button {
   position: relative;
   display: inline-flex;
@@ -42,7 +44,7 @@ const goToAnnouncements = () => {
   min-width: 40px;
   height: 40px;
   min-height: 40px;
-  border-radius: 10px;
+  border-radius: $border-radius-sm;
   border: 1px solid transparent;
   background: transparent;
   color: var(--text-color);
