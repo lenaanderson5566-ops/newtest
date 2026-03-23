@@ -54,8 +54,8 @@
               <IconApps v-else :size="20" class="fallback-icon-large" :class="{ grayscale: !client.recommended }" />
               <div class="client-text">
                 <span class="client-name">{{ client.name }}</span>
+                <small v-if="client.recommended" class="recommend-inline">推荐</small>
               </div>
-              <small v-if="client.recommended" class="recommend-badge">推荐</small>
               <IconCheck v-if="selectedClient?.name === client.name" :size="16" class="client-selected-mark" />
             </button>
           </div>
@@ -521,10 +521,13 @@ onMounted(fetchUserStatus);
   .client-text {
     min-width: 0;
     flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 
   .client-name {
-    display: block;
+    flex: 1;
     min-width: 0;
     font-weight: 600;
     overflow: hidden;
@@ -537,10 +540,7 @@ onMounted(fetchUserStatus);
     background: rgba(var(--theme-color-rgb), 0.06);
   }
 
-  .recommend-badge {
-    position: absolute;
-    top: 8px;
-    left: 8px;
+  .recommend-inline {
     color: #f08c2e;
     font-size: 11px;
     font-weight: 600;
@@ -548,6 +548,7 @@ onMounted(fetchUserStatus);
     background: rgba(240, 140, 46, 0.14);
     border-radius: 999px;
     padding: 2px 6px;
+    flex: 0 0 auto;
   }
 
   .client-selected-mark {
