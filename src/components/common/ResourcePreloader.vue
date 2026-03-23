@@ -177,6 +177,7 @@ export default {
 
         '/profile': [
           { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/overview/Dashboard.vue') },
+          { path: 'ConfigManagement', name: 'ConfigManagement', priority: 1, component: () => import('@/views/account/profile/ConfigManagement.vue') },
           { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/account/commerce/Shop.vue') },
           { path: 'TicketList', name: 'TicketList', priority: 4, component: () => import('@/views/account/support/TicketList.vue') },
           { path: 'Profile', name: 'Profile', priority: 5, component: () => import('@/views/account/profile/UserProfile.vue') },
@@ -208,6 +209,10 @@ export default {
           { path: 'DocDetail', name: 'DocDetail', priority: 2, component: () => import('@/views/start/DocDetail.vue') },
           { path: 'Dashboard', name: 'Dashboard', priority: 3, component: () => import('@/views/overview/Dashboard.vue') }
         ],
+        '/quick-start': [
+          { path: 'Docs', name: 'Docs', priority: 1, component: () => import('@/views/start/DocsPage.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/overview/Dashboard.vue') }
+        ],
         '/docs/:id': [
           { path: 'Docs', name: 'Docs', priority: 1, component: () => import('@/views/start/DocsPage.vue') },
         ],
@@ -221,6 +226,10 @@ export default {
           { path: 'Profile', name: 'Profile', priority: 3, component: () => import('@/views/account/profile/UserProfile.vue') }
         ],
         '/security-settings': [
+          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/account/profile/UserProfile.vue') },
+          { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/overview/Dashboard.vue') }
+        ],
+        '/config-management': [
           { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/account/profile/UserProfile.vue') },
           { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/overview/Dashboard.vue') }
         ],

@@ -32,9 +32,11 @@ const getAuthComponent = (componentName) => {
 const getActiveNavForRoute = (routeName) => {
   const dashboardRoutes = new Set(['Dashboard']);
   const regionRoutes = new Set(['NodeList']);
+  const quickStartRoutes = new Set(['QuickStart']);
   const usageRoutes = new Set(['Docs', 'DocDetail']);
   const myRoutes = new Set([
     'Profile',
+    'ConfigManagement',
     'SecuritySettings',
     'Billing',
     'TicketList',
@@ -47,6 +49,7 @@ const getActiveNavForRoute = (routeName) => {
   ]);
 
   if (regionRoutes.has(routeName)) return 'Nodes';
+  if (quickStartRoutes.has(routeName)) return 'QuickStart';
   if (usageRoutes.has(routeName)) return 'Docs';
   if (myRoutes.has(routeName)) return 'Profile';
   if (dashboardRoutes.has(routeName)) return 'Dashboard';
@@ -320,6 +323,17 @@ const routes = [
       },
 
       {
+        path: 'quick-start',
+        name: 'QuickStart',
+        component: () => import('@/views/start/QuickStartPage.vue'),
+        meta: {
+          titleKey: 'menu.quickStart',
+          requiresAuth: true,
+          get activeNav() { return getActiveNavForRoute('QuickStart'); }
+        }
+      },
+
+      {
 
         path: 'docs',
 
@@ -456,6 +470,25 @@ const routes = [
           requiresAuth: true,
 
           get activeNav() { return getActiveNavForRoute('Profile'); } 
+        }
+
+      },
+
+      {
+
+        path: 'config-management',
+
+        name: 'ConfigManagement',
+
+        component: () => import('@/views/account/profile/ConfigManagement.vue'),
+
+        meta: {
+
+          titleKey: 'profile.configManagement',
+
+          requiresAuth: true,
+
+          get activeNav() { return getActiveNavForRoute('ConfigManagement'); }
         }
 
       },

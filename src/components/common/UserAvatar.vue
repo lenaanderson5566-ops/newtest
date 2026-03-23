@@ -25,9 +25,9 @@
           <IconMessageCircle class="menu-icon" />
           <span>提交反馈</span>
         </div>
-        <div class="menu-item" @click="navigateTo('/security-settings')">
+        <div class="menu-item" @click="navigateTo('/security')">
           <IconLock class="menu-icon" />
-          <span>{{ $t('profile.security') }}</span>
+          <span>{{ $t('profile.securityCenter') }}</span>
         </div>
         <div class="divider"></div>
         <div class="menu-item" @click="logout">

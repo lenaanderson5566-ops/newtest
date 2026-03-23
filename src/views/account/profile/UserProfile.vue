@@ -289,17 +289,10 @@
         <!-- 安全设置 -->
 
         <SecurityCard
-
-          v-if="false"
-
           :title="$t('profile.security')"
-
-          :label="$t('profile.changePassword')"
-
-          subtitle="前往安全中心修改密码"
-
+          :label="$t('profile.securityCenter')"
+          :subtitle="$t('profile.securityCenterSubtitle')"
           path="/security"
-
         />
 
 

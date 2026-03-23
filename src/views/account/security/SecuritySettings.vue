@@ -1,7 +1,7 @@
 <template>
   <div class="security-container page-shell">
     <div class="security-inner page-inner page-stack">
-      <div class="profile-card">
+      <div class="profile-card" v-if="showPasswordModule">
         <div class="card-header">
           <h3>{{ $t('profile.security') }}</h3>
         </div>
@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div v-if="PROFILE_CONFIG.showRecentDevices" class="profile-card">
+      <div v-if="showSessionModule && PROFILE_CONFIG.showRecentDevices" class="profile-card">
         <div class="card-header">
           <h3>{{ $t('profile.recentDevices') }}</h3>
         </div>
@@ -74,7 +74,7 @@
         </div>
       </div>
 
-      <div class="profile-card logout-all-card">
+      <div v-if="showSessionModule" class="profile-card logout-all-card">
         <div class="settings-content">
           <button class="action-btn action-btn-danger" :disabled="loggingOutAllSessions" @click="handleLogoutAllSessions">
             <IconLogout :size="18" />
@@ -125,6 +125,7 @@
 <script setup name="SecuritySettings">
 import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 import { changePassword as apiChangePassword, getActiveSession, logoutAllSessions, removeActiveSession } from '@/api/account/user';
 import {
   IconLock,
@@ -140,6 +141,9 @@ import { PROFILE_CONFIG } from '@/utils/baseConfig';
 import { forceLogout } from '@/api/auth';
 
 const { t } = useI18n();
+const route = useRoute();
+const showPasswordModule = computed(() => route.query.section !== 'sessions');
+const showSessionModule = computed(() => route.query.section !== 'password');
 const { success, error: showError } = useToast();
 
 const showPasswordModal = ref(false);
