@@ -189,7 +189,10 @@
             :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
             <div class="usage-card-title today-card-title">今日流量</div>
-            <div class="today-traffic-total-main">今日总流量 {{ todayTrafficStats.totalGb }} GB</div>
+            <div class="today-traffic-total-main">
+              <span class="usage-percent compact">{{ todayTrafficStats.totalGb }} GB</span>
+              <span class="usage-percent-label">已使用</span>
+            </div>
             <div class="today-traffic-breakdown">
               <span class="traffic-up">上行 {{ todayTrafficStats.uploadGb }} GB</span>
               <span class="traffic-down">下行 {{ todayTrafficStats.downloadGb }} GB</span>
@@ -2123,6 +2126,18 @@ export default {
         &.today-traffic-card {
           grid-column: 2;
           grid-row: 1;
+
+          .today-traffic-total-main {
+            .usage-percent {
+              &.compact {
+                font-size: 30px;
+              }
+            }
+
+            .usage-percent-label {
+              font-size: 12px;
+            }
+          }
         }
 
         &.traffic-board-card.total-main-card {
@@ -2258,11 +2273,27 @@ export default {
     }
 
     .today-traffic-total-main {
-      font-size: clamp(20px, 2.1vw, 24px);
-      line-height: 1.2;
-      font-weight: 700;
-      color: var(--theme-text-primary);
-      letter-spacing: 0.01em;
+      display: inline-flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      .usage-percent {
+        line-height: 1;
+        font-weight: 700;
+        color: var(--theme-text-primary);
+        font-size: 30px;
+
+        &.compact {
+          font-size: 26px;
+        }
+      }
+
+      .usage-percent-label {
+        font-size: var(--dashboard-kpi-size);
+        color: var(--quota-label-color);
+        font-weight: 500;
+      }
     }
 
     .today-traffic-breakdown {
@@ -2569,7 +2600,11 @@ export default {
       grid-column: 1 / -1;
 
       .today-traffic-total-main {
-        font-size: 20px;
+        .usage-percent {
+          &.compact {
+            font-size: 22px;
+          }
+        }
       }
     }
 
