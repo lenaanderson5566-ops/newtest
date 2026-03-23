@@ -1360,6 +1360,8 @@ export default {
 
   .section-wrapper.period-section {
     background-color: var(--background-color) !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   .plan-card {
