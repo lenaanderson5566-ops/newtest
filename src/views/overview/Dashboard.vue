@@ -196,6 +196,29 @@
         </div>
       </div>
 
+      <div class="dashboard-card ai-tools-support-card">
+        <div class="card-header ai-support-header">
+          <h2 class="card-title">{{ $t('dashboard.aiSupportTitle') }}</h2>
+          <p class="ai-support-subtitle">{{ $t('dashboard.aiSupportSubtitle') }}</p>
+        </div>
+        <div class="ai-tools-grid">
+          <article
+            v-for="tool in aiToolsSupport"
+            :key="tool.name"
+            class="ai-tool-card"
+          >
+            <div class="ai-tool-top">
+              <h3 class="ai-tool-name">{{ tool.name }}</h3>
+              <span class="ai-tool-status" :class="`is-${tool.status}`">{{ tool.statusLabel }}</span>
+            </div>
+            <p class="ai-tool-description">{{ tool.description }}</p>
+            <div class="ai-tool-tags">
+              <span v-for="feature in tool.features" :key="`${tool.name}-${feature}`" class="ai-tool-tag">{{ feature }}</span>
+            </div>
+          </article>
+        </div>
+      </div>
+
     </div>
     <!-- 弹窗组件 -->
     <CommonDialog
@@ -1254,6 +1277,42 @@ export default {
       return `${baseDelay + trafficBoardSections.value.length * step}s`;
     });
 
+    const aiToolsSupport = computed(() => ([
+      {
+        name: 'Claude',
+        description: t('dashboard.aiSupportClaudeDesc'),
+        features: [
+          t('dashboard.aiSupportFeatureLongContext'),
+          t('dashboard.aiSupportFeatureReasoning'),
+          t('dashboard.aiSupportFeatureSummarization')
+        ],
+        status: 'ready',
+        statusLabel: t('dashboard.aiSupportStatusReady')
+      },
+      {
+        name: 'ChatGPT',
+        description: t('dashboard.aiSupportChatgptDesc'),
+        features: [
+          t('dashboard.aiSupportFeatureAssistant'),
+          t('dashboard.aiSupportFeatureCoding'),
+          t('dashboard.aiSupportFeatureWorkflow')
+        ],
+        status: 'ready',
+        statusLabel: t('dashboard.aiSupportStatusReady')
+      },
+      {
+        name: 'Gemini',
+        description: t('dashboard.aiSupportGeminiDesc'),
+        features: [
+          t('dashboard.aiSupportFeatureMultimodal'),
+          t('dashboard.aiSupportFeatureSearch'),
+          t('dashboard.aiSupportFeatureAnalysis')
+        ],
+        status: 'beta',
+        statusLabel: t('dashboard.aiSupportStatusBeta')
+      }
+    ]));
+
     return {
       userStats,
       userBalance,
@@ -1296,6 +1355,7 @@ export default {
       trafficTrendError,
       todayTrafficStats,
       todayTrafficAnimationDelay,
+      aiToolsSupport,
       allowNewPeriod,
       showTrafficPackageModal,
       trafficPackageLoading,
@@ -1423,6 +1483,93 @@ export default {
 
   .btn {
     border-radius: var(--dashboard-button-radius);
+  }
+
+  .ai-tools-support-card {
+    .ai-support-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .ai-support-subtitle {
+      margin: 0;
+      font-size: 13px;
+      color: var(--secondary-text-color);
+      line-height: 1.4;
+    }
+
+    .ai-tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .ai-tool-card {
+      border: 1px solid var(--dashboard-border-color);
+      border-radius: var(--dashboard-radius);
+      background: var(--theme-surface-soft);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ai-tool-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .ai-tool-name {
+      margin: 0;
+      font-size: 15px;
+      color: var(--theme-text-primary);
+      font-weight: 650;
+    }
+
+    .ai-tool-status {
+      font-size: 12px;
+      border-radius: var(--dashboard-pill-radius);
+      padding: 2px 8px;
+      font-weight: 600;
+
+      &.is-ready {
+        color: #166534;
+        background: rgba(34, 197, 94, 0.15);
+      }
+
+      &.is-beta {
+        color: #92400e;
+        background: rgba(245, 158, 11, 0.15);
+      }
+    }
+
+    .ai-tool-description {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--theme-text-secondary);
+    }
+
+    .ai-tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .ai-tool-tag {
+      font-size: 12px;
+      color: var(--theme-text-emphasis);
+      border: 1px solid var(--theme-border-soft);
+      border-radius: var(--dashboard-pill-radius);
+      padding: 3px 8px;
+      background: var(--theme-white);
+      line-height: 1.2;
+    }
   }
 
   /* 数据统计卡片区域（会员等级 + 流量卡片） */
