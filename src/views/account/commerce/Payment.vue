@@ -172,6 +172,10 @@
                 <div class="info-label">优惠金额</div>
                 <div class="info-value discount">-{{ formatAmount(discountAmount) }}</div>
               </div>
+              <div class="info-row" v-if="surplusAmount > 0">
+                <div class="info-label">原订阅抵折</div>
+                <div class="info-value discount">-{{ formatAmount(surplusAmount) }}</div>
+              </div>
               <div
                 class="info-row"
                 v-if="
@@ -533,6 +537,7 @@ export default {
     const couponDiscountAmount = computed(() => Number(orderDetail.value?.coupon_discount_amount || 0));
     const userDiscountAmount = computed(() => Number(orderDetail.value?.user_discount_amount || 0));
     const discountAmount = computed(() => Number(orderDetail.value?.discount_amount || 0));
+    const surplusAmount = computed(() => Number(orderDetail.value?.surplus_amount || 0));
     const discountBreakdownVisible = computed(() => {
       return (
         couponDiscountAmount.value > 0 ||
@@ -1214,6 +1219,7 @@ export default {
       couponDiscountAmount,
       userDiscountAmount,
       discountAmount,
+      surplusAmount,
       discountBreakdownVisible,
       window: window,
       detectBrowser,
