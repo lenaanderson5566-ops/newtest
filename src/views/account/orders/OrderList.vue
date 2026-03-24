@@ -352,8 +352,8 @@ const headerTexts = computed(() => {
     totalAmount: t('orders.totalAmount', '金额'),
     statusLabel: t('orders.statusLabel', '状态') || '状态',
     actions: t('orders.actions', '操作'),
-    viewDetail: t('orders.viewDetail', '查看详情'),
-    cancel: t('orders.cancel', '取消订单'),
+    viewDetail: t('orders.viewDetailShort', '详情'),
+    cancel: t('orders.cancelShort', '取消'),
     noOrders: t('orders.noOrders', '暂无订单'),
     goShopping: t('orders.goShopping', '去购买订阅'),
     loading: t('orders.loading', '正在加载订单...'),
@@ -465,8 +465,10 @@ watch(locale, () => {
   th, td {
     padding: 1rem;
     text-align: left;
-    word-break: break-all; 
+    white-space: nowrap;
+    word-break: normal;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   th {
@@ -557,7 +559,12 @@ watch(locale, () => {
       display: flex;
       align-items: center;
       gap: 0.25rem;
-      padding: 0.4rem 0.75rem;
+      justify-content: center;
+      padding: 0.35rem 0.65rem;
+      height: 34px;
+      min-width: 72px;
+      flex: 0 0 72px;
+      white-space: nowrap;
       border-radius: 6px;
       font-size: 0.85rem;
       font-weight: 500;
@@ -824,12 +831,11 @@ watch(locale, () => {
     
     .actions {
       .action-button {
-        padding: 0.3rem 0.5rem;
+        padding: 0.3rem 0.45rem;
         font-size: 0.75rem;
-        
-        span {
-          display: none; 
-        }
+        height: 30px;
+        min-width: 64px;
+        flex: 0 0 64px;
       }
     }
   }
@@ -906,7 +912,10 @@ watch(locale, () => {
     .value {
       font-size: 0.9rem;
       font-weight: 500;
-      word-break: break-all;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 180px;
     }
   }
 }
@@ -917,6 +926,8 @@ watch(locale, () => {
   .info-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
     padding: 0.35rem 0;
     border-bottom: 1px solid rgba(var(--border-color-rgb), 0.5);
     
@@ -927,11 +938,17 @@ watch(locale, () => {
     .label {
       color: rgba(var(--theme-color-rgb), 0.68);
       font-size: 0.9rem;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     
     .value {
       font-size: 0.9rem;
       text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-left: 10px;
       
       &.amount {
         font-weight: 600;
@@ -953,7 +970,12 @@ watch(locale, () => {
     display: flex;
     align-items: center;
     gap: 0.25rem;
-    padding: 0.4rem 0.65rem;
+    justify-content: center;
+    padding: 0.35rem 0.5rem;
+    height: 34px;
+    min-width: 72px;
+    flex: 0 0 72px;
+    white-space: nowrap;
     border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 500;
