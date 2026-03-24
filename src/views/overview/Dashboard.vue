@@ -1196,16 +1196,16 @@ export default {
         },
         legend: {
           data: [t('trafficLog.uploadTraffic'), t('trafficLog.downloadTraffic'), t('trafficLog.totalTraffic')],
-          bottom: 0,
+          bottom: 8,
           textStyle: { color: textColor }
         },
-        grid: { left: '3%', right: '4%', bottom: '52px', top: '24px', containLabel: true },
+        grid: { left: '5%', right: '3%', bottom: '34px', top: '34px', containLabel: true },
         xAxis: {
           type: 'category',
           boundaryGap: false,
           data: trafficTrendData.value.map((i) => i.date),
           axisLabel: {
-            rotate: 45,
+            rotate: 38,
             color: textColor,
             interval: (index) => {
               const total = trafficTrendData.value.length;
@@ -1219,8 +1219,6 @@ export default {
         },
         yAxis: {
           type: 'value',
-          name: t('trafficLog.unitGb'),
-          nameTextStyle: { padding: [0, 0, 0, 10], color: textColor },
           axisLabel: { formatter: (value) => `${value} ${t('trafficLog.unitGb')}`, color: textColor },
           axisLine: { lineStyle: { color: borderColor } },
           splitLine: { lineStyle: { color: lightGridColor, width: 1 } }
