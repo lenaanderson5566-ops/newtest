@@ -9,7 +9,17 @@
         <div class="card-body">
           <!-- 余额信息 - 已加载 -->
           <div class="balance-display" v-if="!loading.balance">
-            <div class="balance-value">{{ currencySymbol }}{{ formatAmount(userBalance) }}</div>
+            <div class="balance-value">{{ primaryBalanceDisplay }}</div>
+            <div v-if="walletBalances.length > 1" class="wallet-balance-list">
+              <div
+                v-for="wallet in walletBalances"
+                :key="wallet.currency"
+                class="wallet-balance-item"
+              >
+                <span class="wallet-currency">{{ wallet.currency }}</span>
+                <span class="wallet-amount">{{ formatAmount(wallet.balance) }}</span>
+              </div>
+            </div>
             <div class="balance-label">{{ $t('wallet.balance.description') }}</div>
           </div>
 
@@ -79,7 +89,7 @@
                 id="customAmount"
                 v-model="customAmount"
                 type="number"
-                min="1"
+                :min="minimumDepositAmount"
                 :placeholder="$t('wallet.deposit.customAmountPlaceholder')"
                 @input="onCustomAmountInput"
               />
@@ -128,8 +138,20 @@ if (!isXiaoPanel) {
 }
 const userBalance = ref(0);
 const currencySymbol = ref('$');
-const presetAmounts = ref(WALLET_CONFIG.presetAmounts || [6, 30, 68, 128, 256, 328, 648, 1280]);
-const selectedAmount = ref(WALLET_CONFIG.defaultSelectedAmount || null);
+const currencyCode = ref('USD');
+const walletBalances = ref([]);
+const defaultPresetAmounts = [20, 50, 100, 200];
+const presetAmounts = ref(
+  (Array.isArray(WALLET_CONFIG.presetAmounts) && WALLET_CONFIG.presetAmounts.length
+    ? WALLET_CONFIG.presetAmounts
+    : defaultPresetAmounts
+  ).slice(0, 4)
+);
+const selectedAmount = ref(
+  WALLET_CONFIG.defaultSelectedAmount && presetAmounts.value.includes(WALLET_CONFIG.defaultSelectedAmount)
+    ? WALLET_CONFIG.defaultSelectedAmount
+    : presetAmounts.value[0] || null
+);
 const customAmount = ref('');
 const amountError = ref('');
 const minimumDepositAmount = WALLET_CONFIG.minimumDepositAmount || 1;
@@ -141,8 +163,11 @@ const loading = reactive({
 const fetchUserConfig = async () => {
   try {
     const response = await getUserConfig();
-    if (response && response.data && response.data.currency_symbol) {
+    if (response?.data?.currency_symbol) {
       currencySymbol.value = response.data.currency_symbol;
+    }
+    if (response?.data?.currency) {
+      currencyCode.value = String(response.data.currency).toUpperCase();
     }
   } catch (error) {
     console.error('获取用户配置失败:', error);
@@ -152,6 +177,33 @@ const fetchUserConfig = async () => {
 };
 const formatAmount = (amount) => {
   return (parseFloat(amount) / 100).toFixed(2);
+};
+const primaryBalanceDisplay = computed(() => {
+  if (walletBalances.value.length > 0) {
+    const preferredWallet = walletBalances.value.find((wallet) => wallet.currency === currencyCode.value);
+    const displayWallet = preferredWallet || walletBalances.value[0];
+    const prefix = displayWallet.currency === currencyCode.value ? currencySymbol.value : `${displayWallet.currency} `;
+    return `${prefix}${formatAmount(displayWallet.balance)}`;
+  }
+  return `${currencySymbol.value}${formatAmount(userBalance.value)}`;
+});
+
+const normalizeWallets = (userData = {}) => {
+  if (Array.isArray(userData.wallets) && userData.wallets.length > 0) {
+    return userData.wallets
+      .map((wallet) => ({
+        currency: String(wallet?.currency || '').toUpperCase(),
+        balance: Number(wallet?.balance || 0)
+      }))
+      .filter((wallet) => wallet.currency);
+  }
+
+  return [
+    {
+      currency: currencyCode.value,
+      balance: Number(userData.balance || 0)
+    }
+  ];
 };
 const selectAmount = (amount) => {
   selectedAmount.value = amount;
@@ -194,7 +246,8 @@ const fetchUserBalance = async () => {
   try {
     const response = await getUserInfo();
     if (response && response.data) {
-      userBalance.value = response.data.balance || 0;
+      walletBalances.value = normalizeWallets(response.data);
+      userBalance.value = walletBalances.value[0]?.balance || 0;
     }
   } catch (error) {
     console.error('获取用户余额失败:', error);
@@ -255,7 +308,7 @@ onMounted(() => {
       }
   
   .dashboard-card {
-    background-color: var(--card-bg-color);
+    background-color: var(--card-bg);
     border-radius: $border-radius-sm;
     box-shadow: none;
     padding: 20px;
@@ -285,6 +338,7 @@ onMounted(() => {
         font-size: 18px;
         font-weight: 600;
         margin: 0;
+        color: var(--text-color);
       }
     }
   }
@@ -308,19 +362,49 @@ onMounted(() => {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 25px;
-      gap: 20px;
+      padding: 20px;
+      gap: 14px;
     }
     
     .balance-display {
       text-align: center;
       
       .balance-value {
-        font-size: 3.5rem;
-        font-weight: bold;
-        color: var(--primary-color);
-        margin-bottom: 12px;
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: var(--theme-color);
+        margin-bottom: 10px;
         text-shadow: none;
+      }
+
+      .wallet-balance-list {
+        width: 100%;
+        max-width: 360px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      .wallet-balance-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: $border-radius-sm;
+        border: 1px solid var(--border-color);
+        background: var(--card-background);
+        font-size: 0.95rem;
+      }
+
+      .wallet-currency {
+        font-weight: 700;
+        color: var(--text-color);
+      }
+
+      .wallet-amount {
+        color: var(--secondary-text-color);
+        font-variant-numeric: tabular-nums;
       }
       
       .balance-label {
@@ -381,7 +465,7 @@ onMounted(() => {
       align-items: center;
       gap: 10px;
       padding: 12px;
-      background-color: rgba(var(--theme-color-rgb), 0.1);
+      background-color: rgba(var(--theme-color-rgb), 0.08);
       border-radius: $border-radius-sm;
       
       .notice-icon {
@@ -395,20 +479,20 @@ onMounted(() => {
     
     
     .amount-selection {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       width: 100%;
       
       .period-cards {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 15px;
+        gap: 10px;
         width: 100%;
         
         .period-card {
           cursor: pointer;
           border-radius: $border-radius-sm;
           overflow: hidden;
-          border: 2px solid var(--border-color);
+          border: 1px solid var(--border-color);
           transition: all 0.3s ease;
           position: relative;
           box-shadow: none;
@@ -436,7 +520,7 @@ onMounted(() => {
           }
           
           .period-card-inner {
-            padding: 16px 12px;
+            padding: 12px 8px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -458,7 +542,7 @@ onMounted(() => {
             }
             
             .amount {
-              font-size: 20px;
+              font-size: 18px;
               font-weight: 700;
               color: var(--text-color);
             }
@@ -468,7 +552,7 @@ onMounted(() => {
     }
     
     .custom-amount {
-      margin-top: 15px;
+      margin-top: 12px;
       
       label {
         display: block;
@@ -495,7 +579,7 @@ onMounted(() => {
         input {
           width: 100%;
           height: 100%;
-          border: 2px solid var(--border-color);
+          border: 1px solid var(--border-color);
           border-radius: $border-radius-sm;
           background-color: var(--input-bg, rgba(0, 0, 0, 0.02));
           padding: 0 15px 0 35px;
