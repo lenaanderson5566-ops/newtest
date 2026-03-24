@@ -1235,6 +1235,18 @@ export default {
 @use "@/assets/styles/base/variables.scss" as *;
 
 .payment-container {
+  --commerce-page-title-size: var(--font-size-page-title);
+  --commerce-section-title-size: var(--font-size-card-title);
+  --commerce-sub-title-size: var(--font-size-body);
+  --commerce-meta-size: var(--font-size-helper);
+  --commerce-title-weight: var(--font-weight-card-title);
+  --commerce-text-primary: var(--text-color);
+  --commerce-text-secondary: var(--secondary-text-color);
+  --commerce-text-muted: var(--text-muted);
+  --commerce-text-on-dark: var(--text-on-dark);
+  --commerce-text-on-dark-secondary: var(--text-on-dark-secondary);
+  --commerce-text-on-dark-muted: var(--text-on-dark-muted);
+
   padding: 0;
   display: flex;
   justify-content: center;
@@ -1271,16 +1283,18 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 18px;
-        font-weight: 600;
+        font-size: var(--commerce-section-title-size);
+        font-weight: var(--commerce-title-weight);
         margin: 0;
+        color: var(--commerce-text-primary);
       }
     }
 
     .card-body {
       p {
-        color: var(--secondary-text-color);
+        color: var(--commerce-text-secondary);
         margin: 0;
+        font-size: var(--commerce-sub-title-size);
       }
     }
   }
@@ -1305,7 +1319,9 @@ export default {
       --right-card-bg: #2f343d;
       --right-card-border: rgba(148, 163, 184, 0.32);
       --right-card-shadow: none;
-      --right-card-text: #f8fafc;
+      --right-card-text: var(--commerce-text-on-dark);
+      --right-card-text-secondary: var(--commerce-text-on-dark-secondary);
+      --right-card-text-muted: var(--commerce-text-on-dark-muted);
     }
   }
 
@@ -1328,10 +1344,10 @@ export default {
     }
 
     .section-title {
-      font-size: 16px;
-      font-weight: 600;
+      font-size: var(--commerce-section-title-size);
+      font-weight: var(--commerce-title-weight);
       margin-bottom: 16px;
-      color: var(--text-color);
+      color: var(--commerce-text-primary);
       display: flex;
       align-items: center;
 
@@ -1358,7 +1374,7 @@ export default {
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: transparent;
-      color: var(--secondary-text-color);
+      color: var(--commerce-text-secondary);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1381,16 +1397,16 @@ export default {
     }
 
     .overview-plan-name {
-      font-size: 18px;
+      font-size: var(--commerce-section-title-size);
       font-weight: 700;
-      color: var(--text-color);
+      color: var(--commerce-text-primary);
       line-height: 1.2;
     }
 
     .overview-plan-meta {
       margin-top: 8px;
-      font-size: 14px;
-      color: var(--secondary-text-color);
+      font-size: var(--commerce-sub-title-size);
+      color: var(--commerce-text-secondary);
       line-height: 1.3;
     }
 
@@ -1429,9 +1445,9 @@ export default {
 
     .section-title {
       margin-bottom: 0;
-      font-size: 15px;
+      font-size: var(--font-size-label);
       padding: 10px 12px 8px;
-      color: var(--text-color);
+      color: var(--commerce-text-primary);
 
       &::after {
         background-color: var(--border-color);
@@ -1449,13 +1465,18 @@ export default {
     color: var(--right-card-text) !important;
   }
 
+  .right-column .section-wrapper.payment-methods-section .pay-method-label,
+  .right-column .section-wrapper.payment-methods-section .pay-method-desc {
+    color: var(--right-card-text-secondary) !important;
+  }
+
   .order-amount-section {
     background: var(--card-bg-color);
     border: 1px solid var(--border-color);
     box-shadow: none;
 
     .section-title {
-      color: var(--text-color);
+      color: var(--commerce-text-primary);
 
       &::after {
         background-color: var(--border-color);
@@ -1483,7 +1504,7 @@ export default {
 
         .info-label {
           color: var(--text-color);
-          font-weight: 600;
+          font-weight: var(--commerce-title-weight);
         }
 
         .info-value.final {

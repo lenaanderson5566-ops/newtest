@@ -1140,6 +1140,18 @@ export default {
 @use "@/assets/styles/base/variables.scss" as *;
 
 .order-confirm-container {
+  --commerce-page-title-size: var(--font-size-page-title);
+  --commerce-section-title-size: var(--font-size-card-title);
+  --commerce-sub-title-size: var(--font-size-body);
+  --commerce-meta-size: var(--font-size-helper);
+  --commerce-title-weight: var(--font-weight-card-title);
+  --commerce-text-primary: var(--text-color);
+  --commerce-text-secondary: var(--secondary-text-color);
+  --commerce-text-muted: var(--text-muted);
+  --commerce-text-on-dark: var(--text-on-dark);
+  --commerce-text-on-dark-secondary: var(--text-on-dark-secondary);
+  --commerce-text-on-dark-muted: var(--text-on-dark-muted);
+
   padding: 0;
 
   display: flex;
@@ -1188,11 +1200,11 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 18px;
-
-        font-weight: 600;
+        font-size: var(--commerce-section-title-size);
+        font-weight: var(--commerce-title-weight);
 
         margin: 0;
+        color: var(--commerce-text-primary);
       }
     }
 
@@ -1200,9 +1212,8 @@ export default {
       p {
         margin: 0;
 
-        color: var(--secondary-text-color);
-
-        font-size: 14px;
+        color: var(--commerce-text-secondary);
+        font-size: var(--commerce-sub-title-size);
 
         line-height: 1.6;
       }
@@ -1276,9 +1287,8 @@ export default {
       min-width: 0;
 
       h4 {
-        font-size: 15px;
-
-        font-weight: 600;
+        font-size: var(--font-size-label);
+        font-weight: var(--commerce-title-weight);
 
         margin: 0 0 6px 0;
 
@@ -1288,11 +1298,11 @@ export default {
       }
 
       p {
-        font-size: 14px;
+        font-size: var(--commerce-sub-title-size);
 
         margin: 0;
 
-        color: var(--secondary-text-color);
+        color: var(--commerce-text-secondary);
 
         line-height: 1.5;
       }
@@ -1319,7 +1329,9 @@ export default {
       --right-card-bg: #2f343d;
       --right-card-border: rgba(148, 163, 184, 0.32);
       --right-card-shadow: none;
-      --right-card-text: #f8fafc;
+      --right-card-text: var(--commerce-text-on-dark);
+      --right-card-text-secondary: var(--commerce-text-on-dark-secondary);
+      --right-card-text-muted: var(--commerce-text-on-dark-muted);
     }
   }
 
@@ -1327,13 +1339,12 @@ export default {
     margin-bottom: 25px;
 
     .section-title {
-      font-size: 18px;
-
-      font-weight: 600;
+      font-size: var(--commerce-section-title-size);
+      font-weight: var(--commerce-title-weight);
 
       margin-bottom: 15px;
 
-      color: var(--text-color);
+      color: var(--commerce-text-primary);
 
       position: relative;
 
