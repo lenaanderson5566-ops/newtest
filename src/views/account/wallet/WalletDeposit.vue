@@ -9,15 +9,14 @@
         <div class="card-body">
           <!-- 余额信息 - 已加载 -->
           <div class="balance-display" v-if="!loading.balance">
-            <div class="balance-value">{{ primaryBalanceDisplay }}</div>
-            <div v-if="walletBalances.length > 1" class="wallet-balance-list">
+            <div class="wallet-balance-list">
               <div
                 v-for="wallet in walletBalances"
                 :key="wallet.currency"
                 class="wallet-balance-item"
               >
                 <span class="wallet-currency">{{ wallet.currency }}</span>
-                <span class="wallet-amount">{{ formatAmount(wallet.balance) }}</span>
+                <span class="wallet-amount">{{ wallet.currency === currencyCode ? currencySymbol : wallet.currency }} {{ formatAmount(wallet.balance) }}</span>
               </div>
             </div>
             <div class="balance-label">{{ $t('wallet.balance.description') }}</div>
@@ -136,15 +135,13 @@ const isXiaoPanel = isXiaoV2board();
 if (!isXiaoPanel) {
   router.push('/dashboard');
 }
-const userBalance = ref(0);
 const currencySymbol = ref('$');
 const currencyCode = ref('USD');
 const walletBalances = ref([]);
-const defaultPresetAmounts = [20, 50, 100, 200];
 const presetAmounts = ref(
   (Array.isArray(WALLET_CONFIG.presetAmounts) && WALLET_CONFIG.presetAmounts.length
     ? WALLET_CONFIG.presetAmounts
-    : defaultPresetAmounts
+    : []
   ).slice(0, 4)
 );
 const selectedAmount = ref(
@@ -178,16 +175,6 @@ const fetchUserConfig = async () => {
 const formatAmount = (amount) => {
   return (parseFloat(amount) / 100).toFixed(2);
 };
-const primaryBalanceDisplay = computed(() => {
-  if (walletBalances.value.length > 0) {
-    const preferredWallet = walletBalances.value.find((wallet) => wallet.currency === currencyCode.value);
-    const displayWallet = preferredWallet || walletBalances.value[0];
-    const prefix = displayWallet.currency === currencyCode.value ? currencySymbol.value : `${displayWallet.currency} `;
-    return `${prefix}${formatAmount(displayWallet.balance)}`;
-  }
-  return `${currencySymbol.value}${formatAmount(userBalance.value)}`;
-});
-
 const normalizeWallets = (userData = {}) => {
   if (Array.isArray(userData.wallets) && userData.wallets.length > 0) {
     return userData.wallets
@@ -247,7 +234,6 @@ const fetchUserBalance = async () => {
     const response = await getUserInfo();
     if (response && response.data) {
       walletBalances.value = normalizeWallets(response.data);
-      userBalance.value = walletBalances.value[0]?.balance || 0;
     }
   } catch (error) {
     console.error('获取用户余额失败:', error);
@@ -368,14 +354,6 @@ onMounted(() => {
     
     .balance-display {
       text-align: center;
-      
-      .balance-value {
-        font-size: 2.6rem;
-        font-weight: 700;
-        color: var(--theme-color);
-        margin-bottom: 10px;
-        text-shadow: none;
-      }
 
       .wallet-balance-list {
         width: 100%;
@@ -383,7 +361,7 @@ onMounted(() => {
         display: flex;
         flex-direction: column;
         gap: 8px;
-        margin-bottom: 8px;
+        margin: 2px auto 8px;
       }
 
       .wallet-balance-item {
@@ -711,13 +689,6 @@ onMounted(() => {
       .card-body {
         padding: 14px;
         gap: 10px;
-      }
-
-      .balance-display {
-        .balance-value {
-          font-size: 2.2rem;
-          margin-bottom: 6px;
-        }
       }
     }
     
