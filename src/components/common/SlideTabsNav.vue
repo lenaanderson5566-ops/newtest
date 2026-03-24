@@ -23,7 +23,6 @@
 import { computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRoute } from 'vue-router';
 import IconDashboard from '@/components/icons/IconDashboard.vue';
-import IconFileText from '@/components/icons/IconFileText.vue';
 import IconUser from '@/components/icons/IconUser.vue';
 import IconSubscription from '@/components/icons/IconSubscription.vue';
 import { IconServer } from '@tabler/icons-vue';
@@ -40,7 +39,6 @@ export default {
       { path: '/dashboard', name: 'Dashboard', icon: 'IconDashboard', i18nKey: 'overview' },
       { path: '/nodes', name: 'Nodes', icon: 'IconServer', i18nKey: 'region' },
       { path: '/quick-start', name: 'QuickStart', icon: 'IconSubscription', i18nKey: 'quickStart' },
-      { path: '/docs', name: 'Docs', icon: 'IconFileText', i18nKey: 'start' },
       { path: '/profile', name: 'Profile', icon: 'IconUser', i18nKey: 'my' }
     ];
 
@@ -48,8 +46,6 @@ export default {
       switch (iconName) {
         case 'IconDashboard':
           return IconDashboard;
-        case 'IconFileText':
-          return IconFileText;
         case 'IconServer':
           return IconServer;
         case 'IconUser':
@@ -81,7 +77,7 @@ export default {
 
       if (regionRoutes.has(routeName)) return 'Nodes';
       if (quickStartRoutes.has(routeName)) return 'QuickStart';
-      if (docsRoutes.has(routeName)) return 'Docs';
+      if (docsRoutes.has(routeName)) return 'QuickStart';
       if (profileRoutes.has(routeName)) return 'Profile';
       return 'Dashboard';
     };

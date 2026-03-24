@@ -52,16 +52,25 @@
                 :class="{ grayscale: !client.recommended }"
               />
               <IconApps v-else :size="20" class="fallback-icon-large" :class="{ grayscale: !client.recommended }" />
-              <span>{{ client.name }}</span>
-              <small v-if="client.recommended">推荐</small>
+              <div class="client-text">
+                <span class="client-name">{{ client.name }}</span>
+                <small v-if="client.recommended" class="recommend-inline">推荐</small>
+              </div>
+              <IconCheck v-if="selectedClient?.name === client.name" :size="16" class="client-selected-mark" />
             </button>
           </div>
 
           <div class="action-row" v-if="subscriptionUrl">
-            <button class="action-btn primary" @click="downloadSelectedClient">下载客户端</button>
+            <button class="action-btn primary" @click="downloadSelectedClient">{{ downloadButtonText }}</button>
+            <button class="action-btn" @click="quickImportSelectedClient">一键导入</button>
             <button class="action-btn" @click="copySubscriptionUrl">复制订阅</button>
-            <button class="action-btn" @click="openQrCodeModal">扫码导入</button>
-            <button class="action-btn" @click="router.push('/docs')">查看教程</button>
+            <button
+              v-if="selectedPlatform === 'ios' || selectedPlatform === 'android'"
+              class="action-btn"
+              @click="openQrCodeModal"
+            >
+              扫码导入
+            </button>
           </div>
 
         </div>
@@ -73,7 +82,7 @@
           <h2>开始连接</h2>
         </header>
         <div class="step-body">
-          <p class="connect-text">打开客户端 → 粘贴订阅 → 选择节点 → 点击连接</p>
+          <p class="connect-text">打开客户端 → → 选择节点 → 点击连接</p>
           <button class="help-btn" @click="router.push('/docs')">需要帮助？查看详细教程 →</button>
         </div>
       </section>
@@ -99,6 +108,7 @@ import { useRouter } from 'vue-router';
 import { IconBrandApple, IconBrandAndroid, IconBrandFinder, IconBrandWindows, IconApps, IconCheck } from '@tabler/icons-vue';
 import { CLIENT_CONFIG } from '@/utils/baseConfig';
 import { getSubscribe } from '@/api/overview/dashboard';
+import { useToast } from '@/composables/useToast';
 import QRCode from 'qrcode';
 import stashIconImg from '@/assets/images/client-img-ios/stash.png';
 import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
@@ -106,14 +116,23 @@ import surgeIOSIconImg from '@/assets/images/client-img-ios/Surge.png';
 import singboxAndroidIconImg from '@/assets/images/client-img-android/singbox.png';
 import v2rayngIconImg from '@/assets/images/client-img-android/v2rayng.png';
 import flclashWindowsIconImg from '@/assets/images/client-img-windows/flclash.png';
+import clashVergeIconImg from '@/assets/images/client-img-windows/clashverge.png';
+import singboxWindowsIconImg from '@/assets/images/client-img-windows/singbox.png';
 import clashMetaAndroidIconImg from '@/assets/images/client-img-android/clashmeta.png';
 import clashMetaXIconImg from '@/assets/images/client-img-macos/clashmetax.png';
 import clashxIconImg from '@/assets/images/client-img-macos/clashx.png';
 import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
+import loonIconImg from '@/assets/images/client-img-ios/loon.png';
 
 const router = useRouter();
 const $toast = inject('$toast');
+const { showToast } = useToast();
 const clientConfig = reactive(CLIENT_CONFIG);
+const toast = {
+  success: (message) => ($toast?.success ? $toast.success(message) : showToast.success(message)),
+  warning: (message) => ($toast?.warning ? $toast.warning(message) : showToast.warning(message)),
+  error: (message) => ($toast?.error ? $toast.error(message) : showToast.error(message))
+};
 
 const USER_STATUS = Object.freeze({
   NEW: 'new',
@@ -140,12 +159,16 @@ const clientIconMap = Object.freeze({
   shadowrocket: shadowrocketIconImg,
   'surge-ios': surgeIOSIconImg,
   'singbox-android': singboxAndroidIconImg,
+  'singbox-windows': singboxWindowsIconImg,
   v2rayng: v2rayngIconImg,
   flclash: flclashWindowsIconImg,
+  clashverge: clashVergeIconImg,
   'clash-meta': clashMetaAndroidIconImg,
+  'clash-meta-android': clashMetaAndroidIconImg,
   'clashx-meta': clashMetaXIconImg,
   clashx: clashxIconImg,
-  'stash-mac': stashMacIconImg
+  'stash-mac': stashMacIconImg,
+  loon: loonIconImg
 });
 
 const statusStripText = computed(() => {
@@ -171,6 +194,7 @@ const getPlatformClients = (platform) => {
 
 const selectedPlatformClients = computed(() => getPlatformClients(selectedPlatform.value));
 const selectedClient = computed(() => selectedPlatformClients.value.find((item) => item.name === selectedClientName.value) || null);
+const downloadButtonText = computed(() => `下载${selectedClient.value?.name || '客户端'}`);
 
 watch(quickStartPlatforms, (next) => {
   if (!next.length) return;
@@ -200,9 +224,105 @@ const downloadSelectedClient = () => {
   if (fallback) window.open(fallback, '_blank');
 };
 
+const normalizeBase64 = (content) => window.btoa(content).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+const resolveClientType = (client) => {
+  if (!client) return '';
+  const iconKey = (client.icon || '').toLowerCase();
+  const name = (client.name || '').toLowerCase();
+
+  if (iconKey.includes('shadowrocket') || name.includes('shadowrocket')) return 'shadowrocket';
+  if (iconKey.includes('surge') || name.includes('surge')) return selectedPlatform.value === 'macos' ? 'surge-mac' : 'surge';
+  if (iconKey.includes('stash') || name.includes('stash')) return selectedPlatform.value === 'macos' ? 'stash-mac' : 'stash';
+  if (iconKey.includes('quantumult') || name.includes('quantumult')) return selectedPlatform.value === 'macos' ? 'quantumultx-mac' : 'quantumultx';
+  if (iconKey.includes('loon') || name.includes('loon')) return 'loon';
+  if (iconKey.includes('v2rayng') || name.includes('v2ray')) return 'v2rayng';
+  if (iconKey.includes('surfboard') || name.includes('surfboard')) return 'surfboard';
+  if (iconKey.includes('singbox') || name.includes('sing-box') || name.includes('singbox')) {
+    if (selectedPlatform.value === 'ios') return 'singbox-ios';
+    if (selectedPlatform.value === 'android') return 'singbox-android';
+    if (selectedPlatform.value === 'windows') return 'singbox-windows';
+    if (selectedPlatform.value === 'macos') return 'singbox-macos';
+  }
+  if (iconKey.includes('hiddify') || name.includes('hiddify')) {
+    if (selectedPlatform.value === 'ios') return 'hiddify-ios';
+    if (selectedPlatform.value === 'android') return 'hiddify-android';
+    if (selectedPlatform.value === 'windows') return 'hiddify-windows';
+    if (selectedPlatform.value === 'macos') return 'hiddify-macos';
+  }
+
+  if (
+    iconKey.includes('clash') ||
+    iconKey.includes('flclash') ||
+    iconKey.includes('clashx') ||
+    name.includes('clash') ||
+    name.includes('nekobox') ||
+    name.includes('nekoray')
+  ) {
+    return 'clash';
+  }
+  return '';
+};
+
+const buildClientSchemeUrl = (clientType, subscribeUrl) => {
+  const siteName = '订阅';
+  switch (clientType) {
+    case 'shadowrocket':
+      return `shadowrocket://add/sub://${normalizeBase64(subscribeUrl)}?remark=${encodeURIComponent(siteName)}`;
+    case 'surge':
+    case 'surge-mac':
+      return `surge:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+    case 'stash':
+    case 'stash-mac':
+      return `stash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+    case 'quantumultx':
+    case 'quantumultx-mac':
+      return `quantumult-x:///update-configuration?remote-resource=${encodeURI(JSON.stringify({ server_remote: [`${subscribeUrl}, tag=${encodeURIComponent(siteName)}`] }))}`;
+    case 'loon':
+      return `loon://import?nodelist=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+    case 'v2rayng':
+      return `v2rayng://install-sub?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
+    case 'clash':
+      return `clash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+    case 'surfboard':
+      return `surfboard:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+    case 'singbox-ios':
+    case 'singbox-android':
+    case 'singbox-windows':
+    case 'singbox-macos':
+      return `sing-box://import-remote-profile?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
+    case 'hiddify-android':
+    case 'hiddify-windows':
+    case 'hiddify-macos':
+    case 'hiddify-ios':
+      return `hiddify://import/${subscribeUrl}#${encodeURIComponent(siteName)}`;
+    default:
+      return subscribeUrl;
+  }
+};
+
+const quickImportSelectedClient = async () => {
+  if (!subscriptionUrl.value) {
+    toast.warning('当前暂无订阅链接');
+    return;
+  }
+
+  const target = selectedClient.value || selectedPlatformClients.value[0];
+  const schemeUrl = buildClientSchemeUrl(resolveClientType(target), subscriptionUrl.value);
+
+  try {
+    await navigator.clipboard.writeText(subscriptionUrl.value);
+  } catch (err) {
+    console.warn('Copy subscription failed before import:', err);
+  }
+
+  window.open(schemeUrl, '_blank');
+  toast.success('已尝试唤起客户端，订阅地址已复制到剪贴板');
+};
+
 const openQrCodeModal = async () => {
   if (!subscriptionUrl.value) {
-    $toast?.warning('当前暂无订阅链接');
+    toast.warning('当前暂无订阅链接');
     return;
   }
 
@@ -211,22 +331,22 @@ const openQrCodeModal = async () => {
     showQrCode.value = true;
   } catch (err) {
     console.error('Generate QRCode failed:', err);
-    $toast?.error('二维码生成失败');
+    toast.error('二维码生成失败');
   }
 };
 
 const copySubscriptionUrl = async () => {
   if (!subscriptionUrl.value) {
-    $toast?.warning('当前暂无订阅链接');
+    toast.warning('当前暂无订阅链接');
     return;
   }
 
   try {
     await navigator.clipboard.writeText(subscriptionUrl.value);
-    $toast?.success('订阅链接已复制');
+    toast.success('订阅链接已复制');
   } catch (err) {
     console.error('Copy subscription failed:', err);
-    $toast?.error('复制失败，请稍后重试');
+    toast.error('复制失败，请稍后重试');
   }
 };
 
@@ -349,11 +469,13 @@ onMounted(fetchUserStatus);
   border: 1px solid var(--border-color);
   border-radius: $border-radius-sm;
   background: #fff;
-  padding: 14px;
+  padding: 12px;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
   position: relative;
 
   &:hover {
@@ -387,7 +509,8 @@ onMounted(fetchUserStatus);
   border: 1px solid var(--border-color);
   background: #fff;
   border-radius: 10px;
-  padding: 10px 12px;
+  padding: 12px 34px 12px 14px;
+  min-height: 62px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -395,20 +518,45 @@ onMounted(fetchUserStatus);
   cursor: pointer;
   text-align: left;
 
-  span {
-    font-weight: 600;
+  .client-text {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 
-  small {
-    margin-left: auto;
-    color: #f08c2e;
-    font-size: 12px;
+  .client-name {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &.active {
     border-color: rgba(var(--theme-color-rgb), 0.85);
     background: rgba(var(--theme-color-rgb), 0.06);
+  }
+
+  .recommend-inline {
+    color: #f08c2e;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    background: rgba(240, 140, 46, 0.14);
+    border-radius: 999px;
+    padding: 2px 6px;
+    flex: 0 0 auto;
+  }
+
+  .client-selected-mark {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--theme-color);
   }
 }
 
