@@ -509,7 +509,7 @@ onMounted(fetchUserStatus);
   border: 1px solid var(--border-color);
   background: #fff;
   border-radius: 10px;
-  padding: 12px 14px;
+  padding: 12px 34px 12px 14px;
   min-height: 62px;
   display: flex;
   align-items: center;
@@ -527,8 +527,9 @@ onMounted(fetchUserStatus);
   }
 
   .client-name {
-    flex: 1;
+    flex: 0 1 auto;
     min-width: 0;
+    max-width: 100%;
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
