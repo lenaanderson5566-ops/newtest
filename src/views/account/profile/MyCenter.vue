@@ -72,6 +72,9 @@
           </div>
 
           <button class="nav-row" @click="go('/billing?tab=wallet')">
+            <span class="row-icon">
+              <IconWallet :size="18" />
+            </span>
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.accountBalance') }}</div>
               <p>{{ $t('myCenter.balanceDesc') }}</p>
@@ -80,6 +83,9 @@
           </button>
 
           <button class="nav-row" @click="go('/billing?tab=orders')">
+            <span class="row-icon">
+              <IconReceipt :size="18" />
+            </span>
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.orderHistory') }}</div>
               <p>{{ $t('myCenter.orderDesc') }}</p>
@@ -88,6 +94,9 @@
           </button>
 
           <button class="nav-row" @click="go('/billing?tab=referral')">
+            <span class="row-icon">
+              <IconGift :size="18" />
+            </span>
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.referral') }}</div>
               <p>{{ $t('myCenter.referralDesc') }}</p>
@@ -101,6 +110,9 @@
         <h3 class="section-title">{{ $t('myCenter.securityCenterTitle') }}</h3>
         <div class="settings-list">
           <button class="nav-row" @click="go('/security?section=password')">
+            <span class="row-icon">
+              <IconLock :size="18" />
+            </span>
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.passwordManagement') }}</div>
               <p>{{ $t('myCenter.passwordManagementDesc') }}</p>
@@ -109,6 +121,9 @@
           </button>
 
           <button class="nav-row" @click="go('/security?section=sessions')">
+            <span class="row-icon">
+              <IconDevices :size="18" />
+            </span>
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.loginRecords') }}</div>
               <p>{{ $t('myCenter.loginRecordsDesc') }}</p>
@@ -117,6 +132,9 @@
           </button>
 
           <button class="nav-row" @click="go('/config-management')">
+            <span class="row-icon">
+              <IconShieldCog :size="18" />
+            </span>
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.deviceReset') }}</div>
               <p>{{ $t('myCenter.deviceResetDesc') }}</p>
@@ -162,7 +180,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { IconChevronRight } from '@tabler/icons-vue';
+import { IconChevronRight, IconDevices, IconGift, IconLock, IconReceipt, IconShieldCog, IconWallet } from '@tabler/icons-vue';
 import { useI18n } from 'vue-i18n';
 import { getUserInfo, getUserSubscribe, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
@@ -299,8 +317,8 @@ onMounted(async () => {
 @use "@/assets/styles/base/variables.scss" as *;
 
 .my-center {
-  padding: 0 0 2px;
-  background: var(--background-color);
+  padding: 0 0 10px;
+  background: #141414;
 }
 
 .my-center-inner {
@@ -309,15 +327,16 @@ onMounted(async () => {
 }
 
 .section-block {
-  border-radius: $border-radius-sm;
-  background-color: var(--card-bg-color, var(--card-background));
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
-  box-shadow: none;
-  transition: box-shadow 0.22s ease, border-color 0.22s ease;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #252525 0%, #1e1e1e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  transition: box-shadow 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
 
   &:hover {
-    box-shadow: none;
-    border-color: rgba(var(--theme-color-rgb), 0.22);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.42);
+    border-color: rgba(229, 9, 20, 0.45);
+    transform: translateY(-2px);
   }
 }
 
@@ -330,14 +349,13 @@ onMounted(async () => {
     position: absolute;
     inset: 0 auto auto 0;
     width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.92), rgba(var(--theme-color-rgb), 0.35));
+    height: 2px;
+    background: linear-gradient(90deg, #e50914 0%, #b20710 100%);
     pointer-events: none;
   }
 }
 
 .summary-panel { padding: 1rem; }
-
 
 .overview-panels {
   display: grid;
@@ -349,13 +367,12 @@ onMounted(async () => {
   }
 }
 
-
 .tier-panel {
   padding: 1rem;
-  background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.25), transparent 35%),
-    linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%);
-  color: #e8edff;
-  border-color: rgba(161, 181, 255, 0.3);
+  background: radial-gradient(circle at 85% 10%, rgba(229, 9, 20, 0.35), transparent 38%),
+    linear-gradient(135deg, #2f0b0b 0%, #460d11 45%, #69141b 100%);
+  color: #f6f6f6;
+  border-color: rgba(229, 9, 20, 0.34);
 
   .tier-header {
     display: flex;
@@ -368,13 +385,13 @@ onMounted(async () => {
       margin: 0;
       font-size: 16px;
       font-weight: 700;
-      color: #f8fbff;
+      color: #ffffff;
     }
 
     p {
       margin: 0;
       font-size: 14px;
-      color: rgba(232, 237, 255, 0.9);
+      color: rgba(255, 255, 255, 0.9);
     }
   }
 
@@ -394,7 +411,6 @@ onMounted(async () => {
     border-radius: 999px;
     font-size: 13px;
     font-weight: 700;
-    box-shadow: none;
 
     &.is-bronze { background: linear-gradient(135deg, #b27241, #d39d63); }
     &.is-silver { background: linear-gradient(135deg, #8ea0bf, #d4deef); color: #23324d; }
@@ -443,16 +459,17 @@ onMounted(async () => {
 
   h2 {
     margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #ffffff;
   }
 }
 
 .summary-desc {
   margin: 3px 0 0;
-  font-size: 13px;
-  color: var(--secondary-text-color);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .summary-grid {
@@ -463,27 +480,27 @@ onMounted(async () => {
 
 .summary-item {
   padding: 12px;
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
-  border-radius: $border-radius-sm;
-  background: linear-gradient(180deg, rgba(var(--card-background-rgb), 0.96), rgba(var(--card-background-rgb), 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: #2c2c2c;
 
   .label {
     display: block;
     margin-bottom: 6px;
     font-size: 12px;
-    color: var(--secondary-text-color);
+    color: rgba(255, 255, 255, 0.6);
   }
 
   strong {
-    font-size: 14px;
-    color: var(--text-color);
+    font-size: 18px;
+    color: #ffffff;
     word-break: break-word;
   }
 
   &.is-highlight {
-    border-color: rgba(var(--theme-color-rgb), 0.32);
-    background: linear-gradient(130deg, rgba(var(--theme-color-rgb), 0.14), rgba(var(--theme-color-rgb), 0.05));
-    box-shadow: none;
+    border-color: rgba(229, 9, 20, 0.45);
+    background: linear-gradient(135deg, rgba(229, 9, 20, 0.25) 0%, rgba(229, 9, 20, 0.08) 100%);
+    box-shadow: inset 0 0 0 1px rgba(229, 9, 20, 0.1);
   }
 }
 
@@ -491,7 +508,7 @@ onMounted(async () => {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
-  color: var(--text-color);
+  color: #ffffff;
 }
 
 .section-block > .section-title {
@@ -500,36 +517,50 @@ onMounted(async () => {
 
 .settings-list {
   overflow: hidden;
-  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .settings-row,
 .nav-row {
-  min-height: 62px;
-  padding: 12px 16px;
+  min-height: 72px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
 }
 
 .settings-row + .settings-row,
 .nav-row + .nav-row {
-  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .row-main { min-width: 0; }
 
+.row-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #f5f5f5;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  flex-shrink: 0;
+}
+
 .row-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-color);
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
 }
 
 .row-main p {
   margin: 3px 0 0;
-  font-size: 12px;
-  color: var(--secondary-text-color);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .nav-row {
@@ -537,31 +568,45 @@ onMounted(async () => {
   border: none;
   background: transparent;
   text-align: left;
-  color: var(--text-color);
+  color: #f4f4f4;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 
   &:hover {
-    background: rgba(var(--theme-color-rgb), 0.07);
-    color: var(--theme-color);
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+
+    .row-icon {
+      border-color: rgba(229, 9, 20, 0.75);
+      background: rgba(229, 9, 20, 0.2);
+      color: #ffffff;
+    }
   }
 
   &:active {
-    background: rgba(var(--theme-color-rgb), 0.11);
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  :deep(.tabler-icon-chevron-right) {
+    margin-left: auto;
+    color: rgba(255, 255, 255, 0.72);
   }
 }
 
 .mini-action {
-  height: 34px;
-  padding: 0 12px;
-  border-radius: $border-radius-sm;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 6px;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
 }
 
-.switch { position: relative; display: inline-block; width: 42px; height: 24px; }
+.switch { position: relative; display: inline-block; width: 42px; height: 24px; margin-left: auto; }
 .switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; inset: 0; background-color: #cbd5e1; transition: .2s; }
+.slider { position: absolute; cursor: pointer; inset: 0; background-color: #5f5f5f; transition: .2s; }
 .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; top: 3px; background: #fff; transition: .2s; }
-input:checked + .slider { background-color: rgba(var(--theme-color-rgb), 1); }
+input:checked + .slider { background-color: #e50914; }
 input:checked + .slider:before { transform: translateX(18px); }
 .slider.round { border-radius: 24px; }
 .slider.round:before { border-radius: 50%; }
@@ -585,5 +630,10 @@ input:checked + .slider:before { transform: translateX(18px); }
   .section-block > .section-title { padding: 12px 12px 8px; }
   .settings-row,
   .nav-row { min-height: 58px; padding: 10px 12px; }
+  .row-title { font-size: 18px; }
+  .row-main p { font-size: 13px; }
+  .summary-top h2 { font-size: 24px; }
+  .summary-item strong { font-size: 15px; }
+  .row-icon { width: 30px; height: 30px; }
 }
 </style>
