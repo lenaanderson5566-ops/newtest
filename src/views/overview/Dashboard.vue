@@ -18,24 +18,6 @@
         <button class="banner-action btn btn-primary" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
       </div>
 
-      <div v-if="hasPlan" class="overview-header-bar">
-        <button
-          class="exit-banner-light btn"
-          type="button"
-          @click="triggerIpLocationRefresh"
-          :disabled="ipLocationLoading"
-        >
-          <span class="exit-banner-text">
-            <template v-if="isIpLocationPending">{{ $t('common.loading') }}...</template>
-            <template v-else-if="ipLocationError">{{ ipLocationError }}</template>
-            <template v-else>
-              当前出口：{{ ipLocationCode }} · {{ ipLocationPrimaryRegionText }} · IP {{ ipLocationData?.ip || '-' }}
-            </template>
-          </span>
-          <IconRefresh :size="14" :class="{ spinning: ipLocationLoading }" />
-        </button>
-      </div>
-
       <div class="stats-grid">
         <template v-if="loading.userStats">
           <div v-for="i in 4" :key="i" class="stats-card skeleton-card">
@@ -319,8 +301,7 @@ import {
   IconWaveSine,
   IconX,
   IconCalendarPlus,
-  IconPlus,
-  IconRefresh
+  IconPlus
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import InfoCard from '@/components/common/InfoCard.vue';
@@ -423,12 +404,6 @@ export default {
     });
     let trafficTrendChart = null;
 
-    const ipLocationLoading = ref(false);
-    const ipLocationError = ref('');
-    const ipLocationData = ref(null);
-    const ipLocationCache = ref(null);
-    const ipLocationDebounceTimer = ref(null);
-
     const loading = reactive({
       userInfo: true,
       userStats: true,
@@ -439,10 +414,6 @@ export default {
     watch(() => locale.value, async () => {
       if (userPlan.value.isExpireDatePermanent) {
         userPlan.value.expireDate = t('dashboard.permanent');
-      }
-
-      if (ipLocationError.value) {
-        ipLocationError.value = t('trafficLog.errorLoadingTraffic');
       }
 
       await Promise.allSettled([
@@ -999,112 +970,6 @@ export default {
       return [];
     };
 
-
-    const normalizeIpLocation = (payload = {}) => {
-      const latitude = Number(
-        payload.latitude ?? payload.lat ?? payload.location?.latitude ?? payload.loc?.split(',')?.[0]
-      );
-      const longitude = Number(
-        payload.longitude ?? payload.lon ?? payload.lng ?? payload.location?.longitude ?? payload.loc?.split(',')?.[1]
-      );
-      const city = payload.city || payload.town || payload.district || '';
-      const region = payload.region || payload.regionName || payload.state || '';
-      const country = payload.country || payload.country_name || '';
-      const countryCode = (payload.country_code || payload.countryCode || payload.countryCode2 || '').toString().toUpperCase();
-      const ip = payload.ip || payload.query || '';
-
-      if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
-
-      return {
-        ip,
-        city,
-        region,
-        country,
-        countryCode,
-        latitude,
-        longitude
-      };
-    };
-
-    const fetchIpLocationFromSources = async () => {
-      const endpoints = [
-        'https://ipapi.co/json',
-        'https://ident.me/json',
-        'http://ip-api.com/json',
-        'https://api.ip.sb/geoip',
-        'https://ipinfo.io/json'
-      ];
-
-      const requests = endpoints.map((url) => (
-        fetch(url, { cache: 'no-store' })
-          .then(async (resp) => {
-            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-            const data = await resp.json();
-            const normalized = normalizeIpLocation(data);
-            if (!normalized) throw new Error('Invalid location payload');
-            return normalized;
-          })
-      ));
-
-      const settled = await Promise.allSettled(requests);
-      const hit = settled.find((item) => item.status === 'fulfilled');
-      if (hit && hit.status === 'fulfilled') {
-        return hit.value;
-      }
-      throw new Error('IP location lookup failed on all providers.');
-    };
-
-    const scheduleIpLocationRefresh = (force = false) => {
-      if (ipLocationDebounceTimer.value) {
-        clearTimeout(ipLocationDebounceTimer.value);
-      }
-
-      ipLocationDebounceTimer.value = setTimeout(async () => {
-        const now = Date.now();
-        const cache = ipLocationCache.value;
-        if (!force && cache?.expiresAt > now) {
-          ipLocationData.value = cache.data;
-          ipLocationError.value = '';
-          return;
-        }
-
-        ipLocationLoading.value = true;
-        ipLocationError.value = '';
-
-        try {
-          const data = await fetchIpLocationFromSources();
-          ipLocationData.value = data;
-          ipLocationCache.value = {
-            data,
-            expiresAt: now + 5 * 60 * 1000
-          };
-        } catch (error) {
-          console.error('Failed to fetch IP location:', error);
-          ipLocationError.value = t('trafficLog.errorLoadingTraffic');
-        } finally {
-          ipLocationLoading.value = false;
-        }
-      }, 2000);
-    };
-
-    const triggerIpLocationRefresh = () => {
-      scheduleIpLocationRefresh(true);
-    };
-
-    const isIpLocationPending = computed(() => {
-      return ipLocationLoading.value || (!ipLocationData.value && !ipLocationError.value);
-    });
-
-    const ipLocationCode = computed(() => {
-      const code = (ipLocationData.value?.countryCode || '').trim().toUpperCase();
-      return /^[A-Z]{2}$/.test(code) ? code : '--';
-    });
-
-    const ipLocationPrimaryRegionText = computed(() => {
-      if (!ipLocationData.value) return '-';
-      return ipLocationData.value.city || ipLocationData.value.region || ipLocationData.value.country || '-';
-    });
-
     const fetchTrafficTrend = async () => {
       trafficTrendLoading.value = true;
       trafficTrendError.value = false;
@@ -1272,7 +1137,6 @@ export default {
 
       fetchUserStats();
       fetchTrafficTrend();
-      scheduleIpLocationRefresh();
 
     });
 
@@ -1294,10 +1158,6 @@ export default {
       if (trafficTrendChart) {
         trafficTrendChart.dispose();
         trafficTrendChart = null;
-      }
-      if (ipLocationDebounceTimer.value) {
-        clearTimeout(ipLocationDebounceTimer.value);
-        ipLocationDebounceTimer.value = null;
       }
     });
 
@@ -1327,7 +1187,6 @@ export default {
       if (needRefreshData.value) {
         fetchUserInfo();
         fetchUserStats();
-        scheduleIpLocationRefresh();
         needRefreshData.value = false;
       }
 
@@ -1437,13 +1296,6 @@ export default {
       trafficTrendError,
       todayTrafficStats,
       todayTrafficAnimationDelay,
-      ipLocationLoading,
-      isIpLocationPending,
-      ipLocationError,
-      ipLocationData,
-      ipLocationCode,
-      ipLocationPrimaryRegionText,
-      triggerIpLocationRefresh,
       allowNewPeriod,
       showTrafficPackageModal,
       trafficPackageLoading,
@@ -1522,7 +1374,6 @@ export default {
       margin-bottom: 0;
     }
 
-    > .overview-header-bar,
     > .stats-grid,
     > .usage-trend-card {
       grid-column: 1 / -1;
@@ -1530,42 +1381,9 @@ export default {
 
     @media (max-width: 992px) {
       > .pending-order-banner,
-      > .overview-header-bar,
       > .stats-grid,
       > .usage-trend-card {
         grid-column: 1 / -1;
-      }
-    }
-  }
-
-  .overview-header-bar {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 12px;
-
-    .exit-banner-light {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      max-width: 100%;
-      padding: 8px 12px;
-      border-radius: $border-radius-sm;
-      border: 1px solid rgba(15, 23, 42, 0.08);
-      background: #fff;
-      color: var(--theme-text-primary);
-      font-size: 13px;
-      font-weight: 500;
-      box-shadow: none;
-
-      .exit-banner-text {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .spinning {
-        animation: spin 1s linear infinite;
       }
     }
   }
@@ -2228,11 +2046,10 @@ export default {
     }
   }
 
-  /* 概览核心卡片统一外观：今日流量 / 流量额度包 / 出口地区 */
+  /* 概览核心卡片统一外观：今日流量 / 流量额度包 */
   .overview-card,
   .overview-card--today-traffic,
-  .overview-card--traffic-quota,
-  .overview-card--exit-region {
+  .overview-card--traffic-quota {
     border-radius: var(--dashboard-radius);
     background: var(--saas-card-bg);
     box-shadow: none;
@@ -2257,7 +2074,6 @@ export default {
   /* 概览卡片左上角标题统一样式 */
   .overview-card--today-traffic .usage-card-title,
   .overview-card--traffic-quota .usage-card-title,
-  .overview-card--exit-region .ip-meta-title,
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
     font-size: var(--dashboard-title-size);
@@ -2583,16 +2399,6 @@ export default {
   .dashboard-container {
     padding-bottom: 74px;
     --dashboard-card-padding: 12px;
-  }
-
-  .overview-header-bar {
-    flex-direction: column;
-    align-items: flex-start;
-
-    .exit-banner-light {
-      width: 100%;
-      justify-content: space-between;
-    }
   }
 
   .stats-grid {
