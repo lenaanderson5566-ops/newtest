@@ -87,10 +87,6 @@
             <div class="node-country" :class="countryBadgeClass(getCountryTag(line.tags))">{{ formatCountryTag(getCountryTag(line.tags) || '--') }}</div>
 
             <div class="node-info">
-              <div class="node-tags">
-                <span class="node-tag rate-tag" v-if="showNodeRate">x{{ line.rate }}</span>
-              </div>
-
               <h3 class="node-name">{{ line.name }}</h3>
               <p class="node-host" v-if="showNodeDetails">{{ line.host }}:{{ line.port }}</p>
             </div>
@@ -100,9 +96,6 @@
                 <span v-for="(tag, index) in getFeatureTags(line.tags)" :key="index" class="node-tag feature-tag">{{ tag }}</span>
               </div>
               <span class="node-online-status" :class="{ online: line.is_online === 1 }">{{ line.is_online === 1 ? $t('lines.status.online') : $t('lines.status.offline') }}</span>
-              <button v-if="showNodeRate && allowViewNodeInfo" class="more-btn" @click="openNodeDetail(line)">
-                <IconDotsVertical :size="20" />
-              </button>
             </div>
 
           </div>
@@ -120,24 +113,6 @@
       </div>
 
     </div>
-
-    
-
-    <!-- 节点详情模态框 -->
-
-    <NodeDetailModal 
-
-      v-if="allowViewNodeInfo"
-
-      :show="showDetailModal" 
-
-      :node="selectedNode" 
-
-      :userInfo="userInfo"
-
-      @close="closeNodeDetail"
-
-    />
 
   </div>
 
@@ -158,9 +133,7 @@ import {
 
   IconAlertTriangle,
 
-  IconServer,
-
-  IconDotsVertical
+  IconServer
 
 } from '@tabler/icons-vue';
 
@@ -170,8 +143,6 @@ import { getUserInfo } from '@/api/account/user';
 
 
 import { NODES_CONFIG } from '@/utils/baseConfig';
-
-import NodeDetailModal from '@/components/common/NodeDetailModal.vue';
 
 
 
@@ -188,42 +159,10 @@ const error = ref('');
 const lines = ref([]);
 
 const showNodeDetails = ref(NODES_CONFIG.showNodeDetails); 
-const showNodeRate = ref(NODES_CONFIG.showNodeRate);
-
-const allowViewNodeInfo = ref(NODES_CONFIG.allowViewNodeInfo);
 
 
 
 const userInfo = ref(null);
-
-
-const showDetailModal = ref(false);
-
-const selectedNode = ref(null);
-
-
-
-const openNodeDetail = (node) => {
-
-  selectedNode.value = node;
-
-  showDetailModal.value = true;
-
-};
-
-
-
-const closeNodeDetail = () => {
-
-  showDetailModal.value = false;
-
-  setTimeout(() => {
-
-    selectedNode.value = null;
-
-  }, 300);
-
-};
 
 
 
@@ -924,59 +863,6 @@ onMounted(() => {
 
     
 
-    .node-tags {
-
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 0.5rem;
-
-      margin-bottom: 0.5rem;
-
-      
-
-      .node-tag {
-
-        font-size: 12px;
-
-        height: 22px;
-
-        line-height: 22px;
-
-        padding: 0 9px;
-
-        border-radius: $border-radius-sm;
-
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-
-        color: var(--theme-color);
-
-        
-
-        &.rate-tag {
-
-          background-color: rgba(74, 222, 128, 0.16);
-
-          color: #16a34a;
-
-          font-weight: 600;
-
-        }
-
-        
-
-                &.feature-tag {
-          background-color: rgba(99, 102, 241, 0.12);
-          color: #4f46e5;
-        }
-
-      }
-
-    }
-
-    
-
     .node-name {
 
       font-size: 1rem;
@@ -1069,40 +955,6 @@ onMounted(() => {
         background: rgba(74, 222, 128, 0.2);
         color: #16a34a;
       }
-    }
-
-    .more-btn {
-
-      background: none;
-
-      border: none;
-
-      width: 32px;
-
-      height: 32px;
-
-      border-radius: 50%;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      color: var(--text-color-light, var(--secondary-text-color));
-
-      cursor: pointer;
-
-      transition: all 0.2s ease;
-
-      &:hover {
-
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-
-        color: var(--theme-color);
-
-      }
-
     }
 
   }
