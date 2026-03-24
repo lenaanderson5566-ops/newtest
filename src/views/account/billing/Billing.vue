@@ -1,6 +1,11 @@
 <template>
   <div class="billing-container page-shell">
     <div class="billing-inner page-inner page-stack">
+      <header class="account-heading">
+        <h1>Membership</h1>
+        <p>Plan Details</p>
+      </header>
+
       <div class="billing-tabs-card">
         <button
           class="billing-tab"
@@ -103,6 +108,22 @@ watch(
   margin-bottom: 12px;
 }
 
+.account-heading {
+  h1 {
+    margin: 0;
+    font-size: 44px;
+    line-height: 1.04;
+    font-weight: 800;
+    color: #101010;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: #444;
+    font-size: 14px;
+  }
+}
+
 .billing-tab {
   border: 0;
   background: transparent;
@@ -143,6 +164,10 @@ watch(
   .billing-tab {
     flex: 1;
     text-align: center;
+  }
+
+  .account-heading h1 {
+    font-size: 34px;
   }
 }
 </style>

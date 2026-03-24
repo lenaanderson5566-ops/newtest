@@ -1,31 +1,37 @@
 <template>
   <div>
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
-    <div class="static-layout" v-if="$route.meta.requiresAuth">
+    <div class="static-layout" :class="{ 'account-static-layout': isAccountLayout }" v-if="$route.meta.requiresAuth">
       <div class="top-fixed-bar">
-        <!-- 网站名称 -->
-        <div class="site-logo">
-          <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
-          {{ siteConfig.siteName }}
+        <div class="site-logo" :class="{ 'netflix-logo': isAccountLayout }">
+          <template v-if="isAccountLayout">NETFLIX</template>
+          <template v-else>
+            <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
+            {{ siteConfig.siteName }}
+          </template>
         </div>
 
-        <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
         <div class="top-toolbar">
-        <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
-        <LanguageSelector />
-        <button
-          v-if="PROFILE_CONFIG.showGiftCardRedeem"
-          class="gift-btn"
-          @click="$router.push('/profile')"
-        >
-          <IconGift :size="18" />
-        </button>
-        <UserAvatar :username="username" :avatarUrl="avatarUrl" />
+          <template v-if="isAccountLayout">
+            <UserAvatar :username="username" :avatarUrl="avatarUrl" />
+          </template>
+          <template v-else>
+            <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
+            <LanguageSelector />
+            <button
+              v-if="PROFILE_CONFIG.showGiftCardRedeem"
+              class="gift-btn"
+              @click="$router.push('/profile')"
+            >
+              <IconGift :size="18" />
+            </button>
+            <UserAvatar :username="username" :avatarUrl="avatarUrl" />
+          </template>
         </div>
       </div>
 
-      <!-- 顶部导航栏 - 保持不变 -->
-      <SlideTabsNav />
+      <AccountSideNav v-if="isAccountLayout" />
+      <SlideTabsNav v-else />
     </div>
 
     <!-- 认证页面顶部工具栏，确保认证页面也有语言切换器 -->
@@ -36,7 +42,7 @@
     </div>
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
-    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]">
+    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth, 'account-layout': isAccountLayout }]">
       <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
         <router-view v-slot="{ Component, route }">
           <transition
@@ -86,6 +92,7 @@ import { handleRedirectPath } from '@/utils/redirectHandler';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
 import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
+import AccountSideNav from '@/components/common/AccountSideNav.vue';
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 import UserAvatar from '@/components/common/UserAvatar.vue';
 import ServiceNoticeButton from '@/components/common/ServiceNoticeButton.vue';
@@ -102,6 +109,7 @@ export default {
     Toast,
     IconDefinitions,
     SlideTabsNav,
+    AccountSideNav,
     LanguageSelector,
     UserAvatar,
     ServiceNoticeButton,
@@ -118,6 +126,8 @@ export default {
     const { showToast } = useToast();
     const siteConfig = ref(SITE_CONFIG);
     const cachedRoutes = computed(() => pageCache.getCachedRoutes());
+    const accountRouteNames = new Set(['Dashboard', 'Profile', 'Billing', 'SecuritySettings']);
+    const isAccountLayout = computed(() => route.meta.requiresAuth && accountRouteNames.has(String(route.name || '')));
 
     const handleRedirectParam = () => {
       let redirectParam = null;
@@ -255,7 +265,8 @@ export default {
       siteConfig,
       PROFILE_CONFIG,
       cachedRoutes,
-      hasUnreadNotice
+      hasUnreadNotice,
+      isAccountLayout
     };
   }
 };
@@ -320,6 +331,18 @@ export default {
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.account-static-layout {
+  .top-fixed-bar {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    background: #f3f3f3;
+    border-bottom: 1px solid #dfdfdf;
+    height: 60px;
+    padding: 0 18px;
+  }
+}
+
 
 .site-logo {
   font-size: 16px;
@@ -336,6 +359,13 @@ export default {
     border-radius: 6px;
     object-fit: cover;
   }
+}
+
+.netflix-logo {
+  color: #e50914;
+  font-size: 48px;
+  letter-spacing: 0.5px;
+  font-weight: 800;
 }
 
 
@@ -411,6 +441,14 @@ export default {
   }
 }
 
+.account-static-layout {
+  .top-toolbar :deep(.avatar-wrapper) {
+    border: 0;
+    background: transparent;
+    padding: 0;
+  }
+}
+
 
 
 .app-content-wrapper.with-top-bar {
@@ -431,6 +469,13 @@ export default {
     padding-top: calc(56px + env(safe-area-inset-top, 0px) + var(--page-content-top-gap, 8px));
   }
 
+}
+
+.app-content-wrapper.account-layout {
+  --left-nav-occupy: 280px;
+  --page-content-max-width: 1240px;
+  --page-content-top-gap: 20px;
+  background: #f3f3f3;
 }
 
 
@@ -464,6 +509,11 @@ export default {
     --mobile-bottom-nav-space: calc(86px + env(safe-area-inset-bottom, 0px));
     padding-bottom: var(--mobile-bottom-nav-space);
   }
+
+  .app-content-wrapper.account-layout.with-left-nav {
+    --mobile-bottom-nav-space: 0px;
+    padding-bottom: 0;
+  }
 }
 
 
@@ -480,6 +530,10 @@ export default {
       width: 18px;
       height: 18px;
     }
+  }
+
+  .netflix-logo {
+    font-size: 24px;
   }
 
   .top-toolbar {

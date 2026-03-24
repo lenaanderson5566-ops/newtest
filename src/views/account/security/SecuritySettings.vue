@@ -1,6 +1,11 @@
 <template>
   <div class="security-container page-shell">
     <div class="security-inner page-inner page-stack">
+      <header class="account-heading">
+        <h1>{{ $t('menu.security') }}</h1>
+        <p>Account Details</p>
+      </header>
+
       <div class="profile-card" v-if="showPasswordModule">
         <div class="card-header">
           <h3>{{ $t('profile.security') }}</h3>
@@ -374,6 +379,22 @@ onMounted(() => {
 }
 
 .security-inner {
+}
+
+.account-heading {
+  h1 {
+    margin: 0;
+    font-size: 44px;
+    line-height: 1.06;
+    font-weight: 800;
+    color: #101010;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: #444;
+    font-size: 14px;
+  }
 }
 
 .profile-card {

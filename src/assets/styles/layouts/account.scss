@@ -1,0 +1,73 @@
+:root {
+  --account-bg: #f3f3f3;
+  --account-border: #d2d2d2;
+  --account-card-radius: 10px;
+  --account-card-padding: 20px;
+}
+
+.app-content-wrapper.account-layout .page-shell {
+  background: var(--account-bg) !important;
+}
+
+.app-content-wrapper.account-layout .page-inner {
+  max-width: 920px;
+}
+
+.app-content-wrapper.account-layout .page-stack {
+  gap: 18px;
+}
+
+.app-content-wrapper.account-layout h1,
+.app-content-wrapper.account-layout h2,
+.app-content-wrapper.account-layout h3 {
+  color: #0f0f0f;
+}
+
+.app-content-wrapper.account-layout .dashboard-card,
+.app-content-wrapper.account-layout .profile-card,
+.app-content-wrapper.account-layout .section-wrapper,
+.app-content-wrapper.account-layout .section-block,
+.app-content-wrapper.account-layout .billing-tabs-card,
+.app-content-wrapper.account-layout .billing-panel {
+  border: 1px solid var(--account-border) !important;
+  border-radius: var(--account-card-radius) !important;
+  box-shadow: none !important;
+  background: #f6f6f6 !important;
+}
+
+.app-content-wrapper.account-layout .settings-list .nav-row,
+.app-content-wrapper.account-layout .settings-list .settings-row,
+.app-content-wrapper.account-layout .device-item,
+.app-content-wrapper.account-layout .info-item {
+  min-height: 68px;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.app-content-wrapper.account-layout .settings-list .nav-row:last-child,
+.app-content-wrapper.account-layout .settings-list .settings-row:last-child,
+.app-content-wrapper.account-layout .device-item:last-child,
+.app-content-wrapper.account-layout .info-item:last-child {
+  border-bottom: 0;
+}
+
+.app-content-wrapper.account-layout .section-title,
+.app-content-wrapper.account-layout .card-header h3 {
+  font-size: 32px;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.app-content-wrapper.account-layout p {
+  color: #4a4a4a;
+}
+
+@media (max-width: 991px) {
+  .app-content-wrapper.account-layout .page-inner {
+    max-width: 100%;
+  }
+
+  .app-content-wrapper.account-layout .section-title,
+  .app-content-wrapper.account-layout .card-header h3 {
+    font-size: 26px;
+  }
+}
