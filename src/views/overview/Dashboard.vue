@@ -1181,6 +1181,7 @@ export default {
         `rgb(${rootStyles.getPropertyValue('--text-color-rgb').trim() || '51, 51, 51'})`;
       const borderColor = rootStyles.getPropertyValue('--border-color').trim() || '#e8e8e8';
       const themeColor = rootStyles.getPropertyValue('--theme-color').trim() || '#6753f6';
+      const lightGridColor = 'rgba(148, 163, 184, 0.14)';
       trafficTrendChart = echarts.init(trafficTrendChartRef.value);
       trafficTrendChart.setOption({
         tooltip: {
@@ -1198,14 +1199,23 @@ export default {
           bottom: 0,
           textStyle: { color: textColor }
         },
-        grid: { left: '3%', right: '4%', bottom: '60px', top: '30px', containLabel: true },
+        grid: { left: '3%', right: '4%', bottom: '52px', top: '24px', containLabel: true },
         xAxis: {
           type: 'category',
           boundaryGap: false,
           data: trafficTrendData.value.map((i) => i.date),
-          axisLabel: { rotate: 45, interval: 'auto', color: textColor },
+          axisLabel: {
+            rotate: 45,
+            color: textColor,
+            interval: (index) => {
+              const total = trafficTrendData.value.length;
+              if (total > 18) return index % 3 !== 0;
+              if (total > 10) return index % 2 !== 0;
+              return false;
+            }
+          },
           axisLine: { lineStyle: { color: borderColor } },
-          splitLine: { lineStyle: { color: borderColor } }
+          splitLine: { lineStyle: { color: lightGridColor, width: 1 } }
         },
         yAxis: {
           type: 'value',
@@ -1213,7 +1223,7 @@ export default {
           nameTextStyle: { padding: [0, 0, 0, 10], color: textColor },
           axisLabel: { formatter: (value) => `${value} ${t('trafficLog.unitGb')}`, color: textColor },
           axisLine: { lineStyle: { color: borderColor } },
-          splitLine: { lineStyle: { color: borderColor } }
+          splitLine: { lineStyle: { color: lightGridColor, width: 1 } }
         },
         series: [
           {
@@ -1221,9 +1231,9 @@ export default {
             type: 'line',
             stack: 'Total',
             smooth: true,
-            lineStyle: { width: 2 },
+            lineStyle: { width: 1.5 },
             showSymbol: false,
-            areaStyle: { opacity: 0.2 },
+            areaStyle: { opacity: 0.12 },
             emphasis: { focus: 'series' },
             data: trafficTrendData.value.map((i) => i.uploadGb),
             color: '#36AD47'
@@ -1233,9 +1243,9 @@ export default {
             type: 'line',
             stack: 'Total',
             smooth: true,
-            lineStyle: { width: 2 },
+            lineStyle: { width: 1.5 },
             showSymbol: false,
-            areaStyle: { opacity: 0.2 },
+            areaStyle: { opacity: 0.12 },
             emphasis: { focus: 'series' },
             data: trafficTrendData.value.map((i) => i.downloadGb),
             color: '#4080FF'
@@ -1244,7 +1254,7 @@ export default {
             name: t('trafficLog.totalTraffic'),
             type: 'line',
             smooth: true,
-            lineStyle: { width: 3 },
+            lineStyle: { width: 2 },
             showSymbol: false,
             emphasis: { focus: 'series' },
             data: trafficTrendData.value.map((i) => i.totalGb),
@@ -1464,6 +1474,7 @@ export default {
   --dashboard-shadow-compact: none;
   --dashboard-border-color: rgba(148, 163, 184, 0.22);
   --dashboard-title-size: 14px;
+  --dashboard-subtitle-color: var(--secondary-text-color);
   --dashboard-value-size: 30px;
   --dashboard-kpi-size: 13px;
   --dashboard-gap-compact: var(--global-card-gap);
@@ -1581,10 +1592,10 @@ export default {
       margin-bottom: 12px;
 
       .card-title {
-        font-size: 16px;
+        font-size: var(--dashboard-title-size);
         font-weight: 600;
         margin: 0;
-        color: var(--saas-text-primary);
+        color: var(--theme-text-primary);
       }
 
       .card-actions {
@@ -1618,7 +1629,7 @@ export default {
     .stats-card {
       position: relative;
       z-index: 1;
-      background-color: var(--card-bg-color);
+      background-color: var(--saas-card-bg);
       border-radius: var(--dashboard-radius);
       box-shadow: none;
       display: flex;
@@ -1993,7 +2004,7 @@ export default {
 
         .usage-percent-label {
           font-size: var(--dashboard-kpi-size);
-          color: var(--quota-label-color);
+          color: var(--dashboard-subtitle-color);
           font-weight: 500;
         }
 
@@ -2095,7 +2106,7 @@ export default {
             writing-mode: horizontal-tb;
             text-orientation: mixed;
             font-size: 12px;
-            color: var(--muted-text-color);
+            color: var(--dashboard-subtitle-color);
             line-height: 1;
           }
 
@@ -2227,7 +2238,7 @@ export default {
     border-radius: var(--dashboard-radius);
     background: var(--saas-card-bg);
     box-shadow: none;
-    border: 1px solid rgba(148, 163, 184, 0.2);
+    border: 1px solid var(--dashboard-border-color);
   }
 
   .stats-grid .stats-card.overview-card,
@@ -2499,7 +2510,7 @@ export default {
 
     .usage-trend-chart {
       width: 100%;
-      height: 230px;
+      height: 208px;
     }
   }
   /* 待支付横幅卡片 */
