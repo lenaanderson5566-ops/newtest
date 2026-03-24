@@ -8,29 +8,58 @@
   --background-color: #f5f7fa;
   --card-background: #ffffff;
   --card-background-rgb: 255, 255, 255;
-  
-  // 文本颜色
+
+  // 文本颜色（浅色背景）
   --text-color: #2f3640;
   --text-color-rgb: 47, 54, 64;
   --secondary-text-color: #5f6b7a;
-  
+  --text-muted: #7f8a99;
+  --text-weaken: #98a2b3;
+
+  // 文本颜色（深色背景）
+  --text-on-dark: #f8fafc;
+  --text-on-dark-secondary: rgba(248, 250, 252, 0.82);
+  --text-on-dark-muted: rgba(248, 250, 252, 0.64);
+
+  // 排版 tokens
+  --font-size-page-title: 28px;
+  --font-size-section-title: 22px;
+  --font-size-card-title: 18px;
+  --font-size-body: 14px;
+  --font-size-label: 13px;
+  --font-size-helper: 12px;
+
+  --font-weight-page-title: 700;
+  --font-weight-section-title: 650;
+  --font-weight-card-title: 600;
+  --font-weight-body: 400;
+  --font-weight-label: 500;
+
+  --line-height-title: 1.3;
+  --line-height-body: 1.5;
+  --line-height-helper: 1.45;
+
+  // 兼容旧变量命名
+  --heading-color: var(--text-color);
+  --text-color-light: var(--secondary-text-color);
+
   // 边框和阴影
   --border-color: #dde3ea;
   --shadow-color: rgba(15, 23, 42, 0.08);
-  
+
   // 功能色
   --success-color: #2f8f57;
   --success-background: #edf7f1;
   --success-color-rgb: 47, 143, 87;
-  
+
   --warning-color: #b7791f;
   --warning-background: #fff6e8;
   --warning-color-rgb: 183, 121, 31;
-  
+
   --error-color: #c24b4b;
   --error-background: #fdf0f0;
   --error-color-rgb: 194, 75, 75;
-  
+
   --info-color: #3b67b3;
   --info-background: #edf3ff;
   --info-color-rgb: 59, 103, 179;

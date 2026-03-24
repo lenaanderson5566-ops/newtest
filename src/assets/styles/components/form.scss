@@ -18,7 +18,8 @@
 .form-label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: $font-weight-medium;
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
   color: var(--text-color);
 }
 
@@ -27,7 +28,7 @@
   display: block;
   width: 100%;
   padding: 0.75rem 1rem;
-  font-size: $font-size-base;
+  font-size: var(--font-size-body);
   line-height: 1.5;
   color: var(--text-color);
   background-color: var(--card-background);
@@ -58,28 +59,28 @@
 .form-text {
   display: block;
   margin-top: 0.5rem;
-  font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  font-size: var(--font-size-helper);
+  color: var(--text-muted);
 }
 
 // 表单错误文本
 .form-error {
   display: block;
   margin-top: 0.5rem;
-  font-size: $font-size-sm;
+  font-size: var(--font-size-helper);
   color: var(--error-color);
 }
 
 // 按钮
 .btn {
   display: inline-block;
-  font-weight: $font-weight-medium;
+  font-weight: var(--font-weight-label);
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
   padding: 0.75rem 1.5rem;
-  font-size: $font-size-base;
+  font-size: var(--font-size-body);
   line-height: 1.5;
   border-radius: $border-radius;
   transition: all 0.3s ease;
@@ -144,7 +145,7 @@
 
 // 链接按钮
 .btn-link {
-  font-weight: $font-weight-normal;
+  font-weight: var(--font-weight-body);
   color: var(--theme-color);
   background-color: transparent;
   border: none;

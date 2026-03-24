@@ -1,0 +1,161 @@
+/**
+ * 全站排版规范（Typography）
+ * 优先通过 token + 公共 class + 通用选择器收口，减少页面内零散定义。
+ */
+
+:root {
+  --typo-page-title-size: var(--font-size-page-title);
+  --typo-section-title-size: var(--font-size-section-title);
+  --typo-card-title-size: var(--font-size-card-title);
+  --typo-body-size: var(--font-size-body);
+  --typo-label-size: var(--font-size-label);
+  --typo-helper-size: var(--font-size-helper);
+}
+
+body {
+  font-size: var(--typo-body-size);
+  line-height: var(--line-height-body);
+}
+
+/* 通用 class：可供后续页面持续复用 */
+.typo-page-title {
+  font-size: var(--typo-page-title-size);
+  font-weight: var(--font-weight-page-title);
+  line-height: var(--line-height-title);
+  color: var(--text-color);
+  letter-spacing: -0.01em;
+}
+
+.typo-section-title {
+  font-size: var(--typo-section-title-size);
+  font-weight: var(--font-weight-section-title);
+  line-height: var(--line-height-title);
+  color: var(--text-color);
+}
+
+.typo-card-title {
+  font-size: var(--typo-card-title-size);
+  font-weight: var(--font-weight-card-title);
+  line-height: var(--line-height-title);
+  color: var(--text-color);
+}
+
+.typo-body {
+  font-size: var(--typo-body-size);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  color: var(--text-color);
+}
+
+.typo-secondary {
+  font-size: var(--typo-body-size);
+  line-height: var(--line-height-body);
+  color: var(--secondary-text-color);
+}
+
+.typo-muted {
+  font-size: var(--typo-helper-size);
+  line-height: var(--line-height-helper);
+  color: var(--text-muted);
+}
+
+/* 深色卡片文字体系 */
+.typo-on-dark {
+  color: var(--text-on-dark) !important;
+}
+
+.typo-on-dark-secondary {
+  color: var(--text-on-dark-secondary) !important;
+}
+
+.typo-on-dark-muted {
+  color: var(--text-on-dark-muted) !important;
+}
+
+/* 兼容与收口：覆盖项目中高频标题类 */
+.app-content-wrapper :where(.page-title, .docs-title) {
+  font-size: var(--typo-page-title-size);
+  font-weight: var(--font-weight-page-title);
+  line-height: var(--line-height-title);
+  color: var(--text-color);
+}
+
+.app-content-wrapper :where(.section-title) {
+  font-size: var(--typo-section-title-size);
+  font-weight: var(--font-weight-section-title);
+  line-height: var(--line-height-title);
+  color: var(--text-color);
+}
+
+.app-content-wrapper :where(.card-title, .info-card-title, .usage-card-title) {
+  font-size: var(--typo-card-title-size);
+  font-weight: var(--font-weight-card-title);
+  line-height: var(--line-height-title);
+  color: var(--text-color);
+}
+
+/* 正文和辅助说明 */
+.app-content-wrapper :where(p, li, td, .card-desc, .description, .desc) {
+  font-size: var(--typo-body-size);
+  line-height: var(--line-height-body);
+}
+
+.app-content-wrapper :where(
+  .text-muted,
+  .muted,
+  .helper-text,
+  .form-text,
+  .card-subtitle,
+  .subtitle,
+  .hint,
+  .empty-text,
+  .meta,
+  .time,
+  .timestamp
+) {
+  color: var(--text-muted);
+  font-size: var(--typo-helper-size);
+  line-height: var(--line-height-helper);
+}
+
+/* 表单 / 输入 / 按钮 / 表格 / 菜单文字统一 */
+.app-content-wrapper :where(label, .form-label, th, .nav-text, .menu-item, .tab-label) {
+  font-size: var(--typo-label-size);
+  font-weight: var(--font-weight-label);
+}
+
+.app-content-wrapper :where(input, textarea, select, .form-control, button, .btn, td) {
+  font-size: var(--typo-body-size);
+}
+
+.app-content-wrapper :where(th, td) {
+  color: var(--text-color);
+}
+
+.app-content-wrapper :where(th) {
+  color: var(--secondary-text-color);
+}
+
+/* 深色区域自动适配：避免深底深字 */
+.app-content-wrapper :where(
+  .is-dark,
+  .dark-card,
+  .theme-dark,
+  .payment-methods-section,
+  .order-amount-section
+) {
+  --text-color: var(--text-on-dark);
+  --secondary-text-color: var(--text-on-dark-secondary);
+  --text-muted: var(--text-on-dark-muted);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --typo-page-title-size: 24px;
+    --typo-section-title-size: 20px;
+    --typo-card-title-size: 17px;
+    --typo-body-size: 14px;
+    --typo-label-size: 13px;
+    --typo-helper-size: 12px;
+  }
+}
