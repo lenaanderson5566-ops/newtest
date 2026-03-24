@@ -424,6 +424,7 @@ export default {
   --page-edge-gap: 2px;
   --left-nav-gap: 10px;
   --left-nav-occupy: 220px;
+  --mobile-bottom-nav-space: 0px;
 
   &.with-top-bar {
     --page-content-top-gap: 8px;
@@ -456,6 +457,13 @@ export default {
     padding-inline: var(--page-edge-gap, 2px);
   }
 
+}
+
+@media (max-width: 991px) {
+  .app-content-wrapper.with-left-nav {
+    --mobile-bottom-nav-space: calc(86px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: var(--mobile-bottom-nav-space);
+  }
 }
 
 
@@ -519,7 +527,7 @@ export default {
   }
 
   main, .main-content, .content-container {
-    padding-bottom: 64px !important;
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
     margin-bottom: 6px !important;
   }
 }
