@@ -70,7 +70,7 @@
               <div class="row-main row-main-with-icon">
                 <IconRefresh :size="18" class="row-leading-icon" />
                 <div class="row-content">
-                  <div class="row-title">切换订阅</div>
+                  <div class="row-title">更改订阅</div>
                 </div>
               </div>
               <IconChevronRight :size="18" />
@@ -84,8 +84,14 @@
 
           <div class="settings-row">
             <div class="row-main">
-              <div class="row-title">{{ $t('profile.autoRenewal') }}</div>
-              <p>{{ $t('profile.autoRenewalDesc') }}</p>
+              <div class="row-title row-title-with-icon">
+                <IconRefresh :size="14" class="row-inline-icon" />
+                {{ $t('profile.autoRenewal') }}
+              </div>
+              <p class="row-subline">
+                <IconClock :size="14" class="row-inline-icon" />
+                {{ $t('profile.autoRenewalDesc') }}
+              </p>
             </div>
             <label class="switch" :class="{ disabled: updatingAutoRenewal }">
               <input type="checkbox" v-model="autoRenewal" @change="updateAutoRenewalSetting" :disabled="updatingAutoRenewal" />
@@ -131,30 +137,30 @@
             </div>
             <IconChevronRight :size="18" />
           </button>
-
-          <button class="nav-row" @click="go('/security?section=sessions')">
-            <div class="row-main row-main-with-icon">
-              <IconDevices :size="18" class="row-leading-icon" />
-              <div class="row-content">
-                <div class="row-title">{{ $t('myCenter.loginRecords') }}</div>
-                <p>{{ $t('myCenter.loginRecordsDesc') }}</p>
-              </div>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
         </div>
         </section>
 
         <p class="section-subtitle">Access & Privacy</p>
         <section class="section-block dashboard-like-card">
         <div class="settings-list">
+          <button class="nav-row" @click="go('/security?section=sessions')">
+            <div class="row-main">
+              <div class="row-title">{{ $t('myCenter.loginRecords') }}</div>
+              <p class="row-subline">
+                <IconDevices :size="14" class="row-inline-icon" />
+                {{ $t('myCenter.loginRecordsDesc') }}
+              </p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+
           <button class="nav-row" @click="confirmSecurityReset">
-            <div class="row-main row-main-with-icon">
-              <IconAlertCircle :size="18" class="row-leading-icon" />
-              <div class="row-content">
-                <div class="row-title">{{ $t('myCenter.deviceReset') }}</div>
-                <p>{{ $t('myCenter.deviceResetDesc') }}</p>
-              </div>
+            <div class="row-main">
+              <div class="row-title">{{ $t('myCenter.deviceReset') }}</div>
+              <p class="row-subline">
+                <IconAlertCircle :size="14" class="row-inline-icon" />
+                {{ $t('myCenter.deviceResetDesc') }}
+              </p>
             </div>
             <IconChevronRight :size="18" />
           </button>
@@ -167,12 +173,15 @@
         <section class="section-block dashboard-like-card">
         <div class="settings-list">
           <div class="settings-row">
-            <div class="row-main row-main-with-icon">
-              <IconClock :size="18" class="row-leading-icon" />
-              <div class="row-content">
-                <div class="row-title">{{ $t('myCenter.expireReminder') }}</div>
-                <p>{{ $t('myCenter.expireReminderDesc') }}</p>
+            <div class="row-main">
+              <div class="row-title row-title-with-icon">
+                <IconRefresh :size="14" class="row-inline-icon" />
+                {{ $t('myCenter.expireReminder') }}
               </div>
+              <p class="row-subline">
+                <IconClock :size="14" class="row-inline-icon" />
+                {{ $t('myCenter.expireReminderDesc') }}
+              </p>
             </div>
             <label class="switch" :class="{ disabled: updatingSettings }">
               <input type="checkbox" v-model="remindExpire" @change="updateRemindSettings" :disabled="updatingSettings" />
@@ -181,12 +190,15 @@
           </div>
 
           <div class="settings-row">
-            <div class="row-main row-main-with-icon">
-              <IconBell :size="18" class="row-leading-icon" />
-              <div class="row-content">
-                <div class="row-title">{{ $t('myCenter.trafficReminder') }}</div>
-                <p>{{ $t('myCenter.trafficReminderDesc') }}</p>
+            <div class="row-main">
+              <div class="row-title row-title-with-icon">
+                <IconBell :size="14" class="row-inline-icon" />
+                {{ $t('myCenter.trafficReminder') }}
               </div>
+              <p class="row-subline">
+                <IconAlertCircle :size="14" class="row-inline-icon" />
+                {{ $t('myCenter.trafficReminderDesc') }}
+              </p>
             </div>
             <label class="switch" :class="{ disabled: updatingSettings }">
               <input type="checkbox" v-model="remindTraffic" @change="updateRemindSettings" :disabled="updatingSettings" />
@@ -824,6 +836,23 @@ onMounted(async () => {
 
 .row-content {
   min-width: 0;
+}
+
+.row-title-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.row-subline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.row-inline-icon {
+  color: rgba(var(--theme-color-rgb), 0.9);
+  flex-shrink: 0;
 }
 
 .balance-amount {

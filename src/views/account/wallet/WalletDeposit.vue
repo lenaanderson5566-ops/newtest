@@ -20,10 +20,9 @@
                 class="wallet-balance-item"
               >
                 <span class="wallet-currency">{{ wallet.currency }}</span>
-                <span class="wallet-amount">{{ wallet.currency === currencyCode ? currencySymbol : wallet.currency }} {{ formatAmount(wallet.balance) }}</span>
+                <span class="wallet-amount">{{ formatAmount(wallet.balance) }}</span>
               </div>
             </div>
-            <div class="balance-label">{{ $t('wallet.balance.description') }}</div>
           </div>
 
           <!-- 余额信息 - 骨架屏 -->
