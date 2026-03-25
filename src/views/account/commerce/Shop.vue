@@ -8,7 +8,7 @@
 
       <!-- 欢迎卡片 -->
 
-      <div class="dashboard-card welcome-card">
+      <div class="welcome-card">
         <div class="card-header shop-title-header">
           <h2 class="card-title">{{ $t("shop.title") }}</h2>
         </div>
@@ -1068,6 +1068,7 @@ export default {
     box-shadow: none;
     background: transparent;
     background-color: transparent;
+    padding: 20px;
 
     margin-bottom: 24px;
 
@@ -1138,13 +1139,6 @@ export default {
     justify-content: center;
     max-width: min(62%, 280px);
     pointer-events: none;
-  }
-
-  .dashboard-card.welcome-card {
-    background: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
   }
 
   .current-plan-badge {
