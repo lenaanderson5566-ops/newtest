@@ -154,15 +154,19 @@
             :key="plan.id"
             @click="setDesktopSelectedPlan(plan)"
           >
+            <div v-if="isCurrentPlan(plan)" class="desktop-current-outside-strip">{{ currentPlanBadgeLabel }}</div>
             <div class="card-header">
               <div class="desktop-plan-hero" :class="{ 'is-current': isCurrentPlan(plan) }">
-                <div v-if="isCurrentPlan(plan)" class="desktop-current-strip">{{ currentPlanBadgeLabel }}</div>
                 <div class="desktop-plan-gradient">
                   <div class="header-main">
                     <h2 class="card-title">{{ plan.name }}</h2>
                     <p v-if="getPlanHeroSubtitle(plan)" class="desktop-subtitle">{{ getPlanHeroSubtitle(plan) }}</p>
                   </div>
-                  <IconCheck v-if="isCurrentPlan(plan)" class="desktop-current-check" :size="18" />
+                  <IconCheck
+                    v-if="Number(selectedDesktopPlanId) === Number(plan.id)"
+                    class="desktop-current-check"
+                    :size="18"
+                  />
                 </div>
               </div>
 
@@ -1402,6 +1406,22 @@ export default {
         cursor: pointer;
       }
 
+      .desktop-current-outside-strip {
+        position: absolute;
+        top: -26px;
+        left: 16px;
+        right: 16px;
+        height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #2d2d2d;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 12px 12px 0 0;
+      }
+
       &:hover {
         box-shadow: none;
 
@@ -1416,6 +1436,7 @@ export default {
       &.selected-plan-card {
         border-color: rgba(var(--theme-color-rgb), 0.7);
         box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.24);
+        transform: translateY(-2px);
       }
 
       .card-header {
@@ -1433,17 +1454,6 @@ export default {
           overflow: hidden;
           border: 1px solid rgba(var(--theme-color-rgb), 0.16);
           background: var(--card-bg-color);
-
-          .desktop-current-strip {
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #2d2d2d;
-            color: #fff;
-            font-size: 13px;
-            font-weight: 700;
-          }
 
           .desktop-plan-gradient {
             min-height: 86px;
