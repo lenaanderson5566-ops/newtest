@@ -55,8 +55,9 @@
 
       </div>
 
-      <section v-show="activeSection === 'subscription'" class="section-block dashboard-like-card">
-        <h3 class="section-title">{{ $t('myCenter.subscriptionPlanTitle') }}</h3>
+      <div v-show="activeSection === 'subscription'" class="section-group">
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.subscriptionPlanTitle') }}</h3>
+        <section class="section-block dashboard-like-card">
         <div class="subscription-plan-card">
           <div class="plan-name">{{ subscriptionText }}</div>
           <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
@@ -83,29 +84,28 @@
           <button class="nav-row" @click="go('/orders')">
             <div class="row-main">
               <div class="row-title">账单记录</div>
-              <p>查看账单明细与支付状态</p>
             </div>
             <IconChevronRight :size="18" />
           </button>
 
           <button class="nav-row" @click="go('/billing')">
             <div class="row-main">
-              <div class="row-title">礼品卡</div>
-              <p>兑换礼品卡或促销代码</p>
+              <div class="row-title">兑换礼品卡</div>
             </div>
             <IconChevronRight :size="18" />
           </button>
 
         </div>
-      </section>
+        </section>
+      </div>
 
-      <section v-show="activeSection === 'security'" class="section-block dashboard-like-card">
-        <h3 class="section-title">{{ $t('myCenter.securityCenterTitle') }}</h3>
+      <div v-show="activeSection === 'security'" class="section-group">
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.securityCenterTitle') }}</h3>
+        <section class="section-block dashboard-like-card">
         <div class="settings-list">
           <button class="nav-row" @click="openPasswordChangePrompt">
             <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.passwordManagement') }}</div>
-              <p>{{ $t('myCenter.passwordManagementDesc') }}</p>
+              <div class="row-title">修改密码</div>
             </div>
             <IconChevronRight :size="18" />
           </button>
@@ -126,10 +126,12 @@
             <IconChevronRight :size="18" />
           </button>
         </div>
-      </section>
+        </section>
+      </div>
 
-      <section v-show="activeSection === 'settings'" class="section-block dashboard-like-card">
-        <h3 class="section-title">{{ $t('myCenter.settingsTitle') }}</h3>
+      <div v-show="activeSection === 'settings'" class="section-group">
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.settingsTitle') }}</h3>
+        <section class="section-block dashboard-like-card">
         <div class="settings-list">
           <div class="settings-row">
             <div class="row-main">
@@ -153,15 +155,9 @@
             </label>
           </div>
 
-          <button class="nav-row" @click="go('/profile')">
-            <div class="row-main">
-              <div class="row-title">语言偏好</div>
-              <p>调整页面显示语言</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
         </div>
-      </section>
+        </section>
+      </div>
 
       <div v-show="activeSection === 'benefits'" class="benefits-stack">
         <section v-if="hasTierInfo" class="tier-panel section-block dashboard-like-card">
@@ -188,8 +184,8 @@
           </div>
         </section>
 
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.levelBenefitsTitle') }}</h3>
         <section class="section-block dashboard-like-card">
-          <h3 class="section-title">{{ $t('myCenter.levelBenefitsTitle') }}</h3>
           <div class="settings-list">
             <div class="settings-row">
               <div class="row-main">
@@ -197,13 +193,6 @@
                 <p>{{ tierMemberDisplay }} · Lv.{{ userTier.level || 0 }} · {{ formatTierNumber(userTier.points) }} 积分</p>
               </div>
             </div>
-            <button class="nav-row" @click="go('/dashboard')">
-              <div class="row-main">
-                <div class="row-title">权益说明</div>
-                <p>查看当前会员等级可用权益</p>
-              </div>
-              <IconChevronRight :size="18" />
-            </button>
           </div>
         </section>
       </div>
@@ -737,6 +726,15 @@ onMounted(async () => {
   font-size: 16px;
   font-weight: 700;
   color: var(--text-color);
+}
+
+.section-group {
+  display: grid;
+  gap: 10px;
+}
+
+.section-title-outside {
+  padding: 0 2px;
 }
 
 .section-block > .section-title {
