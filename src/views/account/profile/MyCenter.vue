@@ -58,7 +58,7 @@
       <div v-show="activeSection === 'subscription'" class="section-group">
         <h3 class="section-title section-title-outside">{{ $t('myCenter.subscriptionPlanTitle') }}</h3>
         <p class="section-subtitle">Plan Details</p>
-        <section class="section-block dashboard-like-card subscription-plan-card">
+        <section class="section-block dashboard-like-card">
           <div class="settings-list">
             <div class="settings-row plan-overview-row">
               <div class="row-main">
@@ -800,10 +800,6 @@ onMounted(async () => {
   padding: 14px 16px 10px;
 }
 
-.subscription-plan-card {
-  padding: 0;
-}
-
 .plan-overview-row {
   align-items: flex-start;
 }
@@ -1141,14 +1137,6 @@ input:checked + .slider:before { transform: translateX(18px); }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
   .section-block > .section-title { padding: 14px 14px 8px; font-size: 18px; }
-  .subscription-plan-card {
-    margin: 0 10px 10px;
-    padding: 12px;
-
-    .plan-name {
-      font-size: 18px;
-    }
-  }
   .settings-row,
   .nav-row { min-height: 62px; padding: 12px 14px; }
 }
