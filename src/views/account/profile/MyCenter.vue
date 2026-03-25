@@ -789,6 +789,13 @@ onMounted(async () => {
   padding: 0 2px;
 }
 
+.section-subtitle {
+  margin: 0;
+  padding: 0 2px;
+  font-size: 13px;
+  color: var(--secondary-text-color);
+}
+
 .section-block > .section-title {
   padding: 14px 16px 10px;
 }

@@ -2135,10 +2135,6 @@ export default {
           border-top-right-radius: 0;
         }
 
-        &.current-plan-chip.active {
-          background: var(--card-bg-color);
-          color: var(--text-color);
-        }
       }
 
       .chip-name {
