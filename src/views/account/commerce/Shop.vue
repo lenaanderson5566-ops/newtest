@@ -82,17 +82,6 @@
 
         <template v-else>
           <div class="mobile-plan-layout">
-            <div class="mobile-current-summary" v-if="mobileCurrentPlan">
-              <div class="summary-header">{{ currentPlanBadgeLabel }}</div>
-              <div class="summary-card">
-                <div class="summary-name">{{ mobileCurrentPlan.name }}</div>
-                <div class="summary-subtitle">{{ getMobilePlanSubtitle(mobileCurrentPlan) }}</div>
-                <div class="summary-check">
-                  <IconCheck :size="16" />
-                </div>
-              </div>
-            </div>
-
             <div class="mobile-plan-selector">
               <button
                 v-for="plan in filteredPlans"
@@ -105,10 +94,13 @@
                 }"
                 @click="onSelectPlan(plan)"
               >
-                <span class="chip-name">{{ plan.name }}</span>
-                <span class="chip-price">{{ currencySymbol }}{{ getPlanMainPrice(plan) }}</span>
-                <span class="chip-period">
-                  {{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`) }}
+                <span class="chip-current-header" v-if="isCurrentPlan(plan)">{{ currentPlanBadgeLabel }}</span>
+                <span class="chip-body">
+                  <span class="chip-name">{{ plan.name }}</span>
+                  <span class="chip-period">{{ getMobilePlanSubtitle(plan) }}</span>
+                  <span class="chip-check" v-if="selectedPlan && Number(selectedPlan.id) === Number(plan.id)">
+                    <IconCheck :size="16" />
+                  </span>
                 </span>
               </button>
             </div>
@@ -783,11 +775,6 @@ export default {
       return matched || filteredPlans.value[0];
     });
 
-    const mobileCurrentPlan = computed(() => {
-      const matched = filteredPlans.value.find((plan) => isCurrentPlan(plan));
-      return matched || selectedPlan.value;
-    });
-
     const getMobilePlanSubtitle = (plan) => {
       if (!plan) return "";
       if (isJsonContent(plan.content)) {
@@ -994,7 +981,6 @@ export default {
       setFilter,
       getFilterDisplayLabel,
       selectedPlan,
-      mobileCurrentPlan,
       onSelectPlan,
       getMobileFeatureRows,
       getMobilePlanSubtitle,
@@ -1932,60 +1918,6 @@ export default {
         gap: 12px;
       }
 
-      .mobile-current-summary {
-        border: 1px solid var(--border-color);
-        border-radius: 14px;
-        overflow: hidden;
-        background: var(--card-bg-color);
-      }
-
-      .summary-header {
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #2d2d2d;
-        color: #fff;
-        font-size: 16px;
-        font-weight: 700;
-      }
-
-      .summary-card {
-        margin: 12px;
-        border-radius: 14px;
-        padding: 16px 16px 18px;
-        background: linear-gradient(135deg, #2259aa 0%, #5d35d9 100%);
-        color: #fff;
-        position: relative;
-      }
-
-      .summary-name {
-        font-size: 22px;
-        line-height: 1.2;
-        font-weight: 700;
-      }
-
-      .summary-subtitle {
-        font-size: 16px;
-        margin-top: 6px;
-        font-weight: 600;
-        opacity: 0.95;
-      }
-
-      .summary-check {
-        position: absolute;
-        right: 14px;
-        bottom: 14px;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: #4d4ad5;
-        background: #fff;
-      }
-
       .mobile-plan-selector {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2003,12 +1935,52 @@ export default {
         text-align: left;
         color: var(--text-color);
         position: relative;
-        min-height: 96px;
+        min-height: 136px;
+        overflow: hidden;
 
         &.active {
           border-color: rgba(var(--theme-color-rgb), 0.65);
-          background: rgba(var(--theme-color-rgb), 0.08);
+          background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
+          color: #fff;
         }
+
+        &.current-plan-chip {
+          padding: 0;
+
+          .chip-current-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 38px;
+            background: #2d2d2d;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+          }
+
+          .chip-body {
+            padding: 10px;
+            min-height: 96px;
+          }
+        }
+
+        &.current-plan-chip.active {
+          background: var(--card-bg-color);
+          color: var(--text-color);
+
+          .chip-body {
+            background: linear-gradient(135deg, #2259aa 0%, #5d35d9 100%);
+            color: #fff;
+          }
+        }
+      }
+
+      .chip-body {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        position: relative;
+        height: 100%;
       }
 
       .chip-name {
@@ -2016,14 +1988,28 @@ export default {
         font-weight: 700;
       }
 
-      .chip-price {
-        font-size: 16px;
-        font-weight: 700;
-      }
-
       .chip-period {
         font-size: 12px;
         color: var(--secondary-text-color);
+      }
+
+      .mobile-plan-chip.active .chip-period,
+      .mobile-plan-chip.current-plan-chip.active .chip-period {
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .chip-check {
+        position: absolute;
+        right: 2px;
+        bottom: 2px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #4d4ad5;
+        background: #fff;
       }
 
       .mobile-plan-details {
