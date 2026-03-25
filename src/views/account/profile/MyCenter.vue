@@ -68,7 +68,7 @@
             </div>
             <button class="nav-row" @click="go('/shop')">
               <div class="row-main row-main-with-icon">
-                <IconRefresh :size="18" class="row-leading-icon" />
+                <IconRefresh :size="20" class="row-leading-icon" />
                 <div class="row-content">
                   <div class="row-title">更改订阅</div>
                 </div>
@@ -84,7 +84,7 @@
 
           <div class="settings-row">
             <div class="row-main row-main-with-icon">
-              <IconRefresh :size="18" class="row-leading-icon" />
+              <IconRefresh :size="20" class="row-leading-icon" />
               <div class="row-content">
                 <div class="row-title">{{ $t('profile.autoRenewal') }}</div>
                 <p>{{ $t('profile.autoRenewalDesc') }}</p>
@@ -98,7 +98,7 @@
 
           <button class="nav-row" @click="go('/orders')">
             <div class="row-main row-main-with-icon">
-              <IconReceipt :size="18" class="row-leading-icon" />
+              <IconReceipt :size="20" class="row-leading-icon" />
               <div class="row-content">
                 <div class="row-title">账单记录</div>
               </div>
@@ -108,7 +108,7 @@
 
           <button class="nav-row" @click="go('/billing')">
             <div class="row-main row-main-with-icon">
-              <IconGift :size="18" class="row-leading-icon" />
+              <IconGift :size="20" class="row-leading-icon" />
               <div class="row-content">
                 <div class="row-title">兑换礼品卡</div>
               </div>
@@ -127,7 +127,7 @@
         <div class="settings-list">
           <button class="nav-row" @click="openPasswordChangePrompt">
             <div class="row-main row-main-with-icon">
-              <IconLock :size="18" class="row-leading-icon" />
+              <IconLock :size="20" class="row-leading-icon" />
               <div class="row-content">
                 <div class="row-title">修改密码</div>
               </div>
@@ -142,7 +142,7 @@
         <div class="settings-list">
           <button class="nav-row" @click="go('/security?section=sessions')">
             <div class="row-main row-main-with-icon">
-              <IconDevices :size="18" class="row-leading-icon" />
+              <IconDevices :size="20" class="row-leading-icon" />
               <div class="row-content">
                 <div class="row-title">{{ $t('myCenter.loginRecords') }}</div>
                 <p>{{ $t('myCenter.loginRecordsDesc') }}</p>
@@ -153,7 +153,7 @@
 
           <button class="nav-row" @click="confirmSecurityReset">
             <div class="row-main row-main-with-icon">
-              <IconAlertCircle :size="18" class="row-leading-icon" />
+              <IconAlertCircle :size="20" class="row-leading-icon" />
               <div class="row-content">
                 <div class="row-title">{{ $t('myCenter.deviceReset') }}</div>
                 <p>{{ $t('myCenter.deviceResetDesc') }}</p>
@@ -171,7 +171,7 @@
         <div class="settings-list">
           <div class="settings-row">
             <div class="row-main row-main-with-icon">
-              <IconClock :size="18" class="row-leading-icon" />
+              <IconClock :size="20" class="row-leading-icon" />
               <div class="row-content">
                 <div class="row-title">{{ $t('myCenter.expireReminder') }}</div>
                 <p>{{ $t('myCenter.expireReminderDesc') }}</p>
@@ -185,7 +185,7 @@
 
           <div class="settings-row">
             <div class="row-main row-main-with-icon">
-              <IconBell :size="18" class="row-leading-icon" />
+              <IconBell :size="20" class="row-leading-icon" />
               <div class="row-content">
                 <div class="row-title">{{ $t('myCenter.trafficReminder') }}</div>
                 <p>{{ $t('myCenter.trafficReminderDesc') }}</p>
@@ -815,14 +815,15 @@ onMounted(async () => {
 
 .row-main-with-icon {
   display: flex;
-  align-items: flex-start;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
 }
 
 .row-leading-icon {
   color: rgba(var(--theme-color-rgb), 0.9);
   flex-shrink: 0;
-  margin-top: 2px;
+  width: 20px;
+  height: 20px;
 }
 
 .row-content {
