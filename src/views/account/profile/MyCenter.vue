@@ -7,7 +7,7 @@
           :key="item.key"
           class="top-nav-item"
           :class="{ active: activeSection === item.key }"
-          @click="activeSection = item.key"
+          @click="handleSectionClick(item.key)"
         >
           {{ item.label }}
         </button>
@@ -92,13 +92,6 @@
             <IconChevronRight :size="18" />
           </button>
 
-          <button class="nav-row" @click="go('/billing?tab=referral')">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.referral') }}</div>
-              <p>{{ $t('myCenter.referralDesc') }}</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
         </div>
       </section>
 
@@ -211,34 +204,6 @@
         </section>
       </div>
 
-      <section v-show="activeSection === 'invite'" class="section-block dashboard-like-card">
-        <h3 class="section-title">邀请返利</h3>
-        <div class="settings-list">
-          <button class="nav-row" @click="go('/invite')">
-            <div class="row-main">
-              <div class="row-title">邀请链接</div>
-              <p>创建和复制你的专属邀请链接</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-          <button class="nav-row" @click="go('/invite')">
-            <div class="row-main">
-              <div class="row-title">邀请记录</div>
-              <p>查看邀请用户和奖励明细</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-          <button class="nav-row" @click="go('/invite')">
-            <div class="row-main">
-              <div class="row-title">返利收益</div>
-              <p>管理可提现收益和结算记录</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-
-        </div>
-      </section>
-
       <div class="bottom-safe-area"></div>
     </div>
   </div>
@@ -328,6 +293,13 @@ const subscriptionExpireText = computed(() => {
 
 const formatBalance = (balance) => ((Number(balance || 0) / 100).toFixed(2));
 const go = (path) => router.push(path);
+const handleSectionClick = (sectionKey) => {
+  if (sectionKey === 'invite') {
+    go('/invite');
+    return;
+  }
+  activeSection.value = sectionKey;
+};
 
 const buildRemindPayload = () => ({
   remind_expire: remindExpire.value ? 1 : 0,
