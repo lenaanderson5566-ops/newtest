@@ -57,6 +57,16 @@
 
       <section v-show="activeSection === 'subscription'" class="section-block dashboard-like-card">
         <h3 class="section-title">{{ $t('myCenter.financeTitle') }}</h3>
+        <div class="subscription-plan-card">
+          <div class="plan-name">{{ subscriptionText }}</div>
+          <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
+          <div class="plan-action-wrap">
+            <button class="plan-action-btn" @click="go('/shop')">
+              <span>切换订阅</span>
+              <IconChevronRight :size="18" />
+            </button>
+          </div>
+        </div>
         <div class="settings-list">
 
           <div class="settings-row">
@@ -82,14 +92,6 @@
             <div class="row-main">
               <div class="row-title">礼品卡</div>
               <p>兑换礼品卡或促销代码</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-
-          <button class="nav-row" @click="go('/shop')">
-            <div class="row-main">
-              <div class="row-title">续费 / 升级</div>
-              <p>切换套餐并继续服务</p>
             </div>
             <IconChevronRight :size="18" />
           </button>
@@ -741,6 +743,46 @@ onMounted(async () => {
   padding: 14px 16px 10px;
 }
 
+.subscription-plan-card {
+  margin: 0 12px 12px;
+  border: 1px solid rgba(var(--text-color-rgb), 0.1);
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff;
+
+  .plan-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-color);
+  }
+
+  .plan-desc {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: var(--secondary-text-color);
+  }
+}
+
+.plan-action-wrap {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(var(--text-color-rgb), 0.1);
+}
+
+.plan-action-btn {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
 .settings-list {
   overflow: hidden;
   border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
@@ -1005,6 +1047,14 @@ input:checked + .slider:before { transform: translateX(18px); }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
   .section-block > .section-title { padding: 14px 14px 8px; font-size: 18px; }
+  .subscription-plan-card {
+    margin: 0 10px 10px;
+    padding: 12px;
+
+    .plan-name {
+      font-size: 18px;
+    }
+  }
   .settings-row,
   .nav-row { min-height: 62px; padding: 12px 14px; }
 }
