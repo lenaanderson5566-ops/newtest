@@ -1388,7 +1388,7 @@ export default {
 
       box-shadow: none;
 
-      padding: 16px;
+      padding: 10px;
 
       border: 1px solid var(--border-color);
 
@@ -1409,8 +1409,8 @@ export default {
       .desktop-current-outside-strip {
         position: absolute;
         top: -26px;
-        left: 16px;
-        right: 16px;
+        left: 10px;
+        right: 10px;
         height: 26px;
         display: flex;
         align-items: center;
@@ -1431,6 +1431,8 @@ export default {
       &.current-plan-card {
         border-color: var(--border-color);
         box-shadow: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
       }
 
       &.selected-plan-card {
@@ -1445,7 +1447,7 @@ export default {
         justify-content: center;
         align-items: flex-start;
         min-height: 116px;
-        margin-bottom: 18px;
+        margin-bottom: 12px;
         padding-top: 0;
 
         .desktop-plan-hero {
@@ -1454,16 +1456,6 @@ export default {
           overflow: hidden;
           border: 1px solid rgba(var(--theme-color-rgb), 0.16);
           background: var(--card-bg-color);
-
-          &.is-current {
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-
-            .desktop-plan-gradient {
-              border-top-left-radius: 0;
-              border-top-right-radius: 0;
-            }
-          }
 
           .desktop-plan-gradient {
             min-height: 86px;
