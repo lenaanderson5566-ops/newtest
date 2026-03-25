@@ -366,7 +366,7 @@ export const config = {
   // 充值相关配置
   WALLET_CONFIG: {
     // 预设充值金额选项（单位：元）
-    presetAmounts: [6, 30, 68, 128, 256, 328, 648, 1280],
+    presetAmounts: [20, 50, 100, 200],
 
     // 默认选中的充值金额（如果设为null则不预选金额）
     defaultSelectedAmount: null,
