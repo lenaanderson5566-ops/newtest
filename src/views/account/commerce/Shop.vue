@@ -1935,6 +1935,7 @@ export default {
 
       .mobile-plan-chip-wrap {
         position: relative;
+        min-width: 0;
       }
 
       .mobile-plan-chip-wrap.current-plan-chip {
@@ -1942,6 +1943,7 @@ export default {
       }
 
       .chip-current-header {
+        box-sizing: border-box;
         position: absolute;
         top: -34px;
         left: 0;
@@ -1963,6 +1965,8 @@ export default {
       }
 
       .mobile-plan-chip {
+        box-sizing: border-box;
+        width: 100%;
         border: 1px solid var(--border-color);
         background: var(--card-bg-color);
         border-radius: 12px;
