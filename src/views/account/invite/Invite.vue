@@ -1622,6 +1622,124 @@ export default {
   font-weight: 700;
 }
 
+.invite-codes-wrapper {
+  display: grid;
+  gap: 10px;
+}
+
+.invite-cards-container {
+  display: grid;
+  grid-template-columns: 30px 1fr 30px;
+  align-items: center;
+  gap: 8px;
+}
+
+.invite-cards-nav {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary-text-color);
+}
+
+.invite-cards-wrapper {
+  overflow: hidden;
+}
+
+.invite-cards {
+  display: flex;
+  gap: 8px;
+}
+
+.invite-card {
+  min-width: 100%;
+}
+
+.invite-card-inner {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.invite-card-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.invite-code-display {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.code-char {
+  min-width: 20px;
+  padding: 3px 5px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+  font-weight: 600;
+}
+
+.invite-card-footer {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--secondary-text-color);
+}
+
+.invite-cards-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(var(--text-color-rgb), 0.22);
+
+  &.active {
+    background: rgba(var(--theme-color-rgb), 0.9);
+  }
+}
+
+.invite-link-wrapper {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0 10px;
+}
+
+.invite-link {
+  flex: 1;
+  min-width: 0;
+  height: 38px;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+}
+
+.share-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
 .records-table-wrapper {
   overflow-x: auto;
 }
@@ -1684,6 +1802,14 @@ export default {
   }
 
   .referral-kpi-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .invite-link-wrapper {
+    grid-template-columns: 1fr 180px;
+  }
+
+  .share-buttons {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
