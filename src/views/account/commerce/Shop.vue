@@ -103,7 +103,7 @@
                 >
                   <span class="chip-body">
                     <span class="chip-name">{{ plan.name }}</span>
-                    <span class="chip-period">{{ getMobilePlanSubtitle(plan) }}</span>
+                    <span class="chip-period" v-if="getMobilePlanSubtitle(plan)">{{ getMobilePlanSubtitle(plan) }}</span>
                     <span class="chip-check" v-if="selectedPlan && Number(selectedPlan.id) === Number(plan.id)">
                       <IconCheck :size="16" />
                     </span>
@@ -146,9 +146,13 @@
 
           <div
             class="plan-card desktop-plan-card"
-            :class="{ 'current-plan-card': isCurrentPlan(plan) }"
+            :class="{
+              'current-plan-card': isCurrentPlan(plan),
+              'selected-plan-card': Number(selectedDesktopPlanId) === Number(plan.id),
+            }"
             v-for="plan in filteredPlans"
             :key="plan.id"
+            @click="setDesktopSelectedPlan(plan)"
           >
             <div class="card-header">
               <div class="desktop-plan-hero" :class="{ 'is-current': isCurrentPlan(plan) }">
@@ -372,6 +376,7 @@ export default {
 
     const selectedFilter = ref("month_price");
     const selectedPlanId = ref(null);
+    const selectedDesktopPlanId = ref(null);
 
     const filterToggle = ref(null);
 
@@ -417,6 +422,10 @@ export default {
 
     const onSelectPlan = (plan) => {
       selectedPlanId.value = plan?.id ?? null;
+    };
+
+    const setDesktopSelectedPlan = (plan) => {
+      selectedDesktopPlanId.value = plan?.id ?? null;
     };
 
     const getFilterDisplayLabel = (filter) => {
@@ -785,7 +794,7 @@ export default {
       return matched || filteredPlans.value[0];
     });
 
-    const getMobilePlanSubtitle = (plan) => {
+    const getPlanResolutionSubtitle = (plan) => {
       if (!plan) return "";
       if (isJsonContent(plan.content)) {
         const matched = parseJsonContent(plan.content).find((item) => /\b(4k|[0-9]{3,4}p)\b/i.test(String(item?.feature || "")));
@@ -793,10 +802,14 @@ export default {
           return matched.feature;
         }
       }
-      return t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`).replace("/", "").trim();
+      return "";
     };
 
-    const getPlanHeroSubtitle = (plan) => getMobilePlanSubtitle(plan);
+    const getMobilePlanSubtitle = (plan) => {
+      return getPlanResolutionSubtitle(plan);
+    };
+
+    const getPlanHeroSubtitle = (plan) => getPlanResolutionSubtitle(plan);
 
     const getMobileFeatureRows = (plan) => {
       if (!plan || !isJsonContent(plan.content)) return [];
@@ -818,6 +831,11 @@ export default {
         const stillExists = nextPlans.some((plan) => Number(plan.id) === Number(selectedPlanId.value));
         if (!stillExists) {
           selectedPlanId.value = nextPlans[0].id;
+        }
+
+        const desktopStillExists = nextPlans.some((plan) => Number(plan.id) === Number(selectedDesktopPlanId.value));
+        if (!desktopStillExists) {
+          selectedDesktopPlanId.value = (nextPlans.find((plan) => isCurrentPlan(plan)) || nextPlans[0]).id;
         }
       },
       { immediate: true }
@@ -993,7 +1011,9 @@ export default {
       setFilter,
       getFilterDisplayLabel,
       selectedPlan,
+      selectedDesktopPlanId,
       onSelectPlan,
+      setDesktopSelectedPlan,
       getMobileFeatureRows,
       getMobilePlanSubtitle,
       getPlanHeroSubtitle,
@@ -1378,17 +1398,24 @@ export default {
 
       height: auto;
 
+      &.desktop-plan-card {
+        cursor: pointer;
+      }
+
       &:hover {
         box-shadow: none;
 
         border-color: rgba(var(--theme-color-rgb), 0.3);
-
-        transform: translateY(-5px);
       }
 
       &.current-plan-card {
+        border-color: var(--border-color);
+        box-shadow: none;
+      }
+
+      &.selected-plan-card {
         border-color: rgba(var(--theme-color-rgb), 0.7);
-        box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.25);
+        box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.24);
       }
 
       .card-header {
