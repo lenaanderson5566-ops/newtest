@@ -56,7 +56,7 @@
       </div>
 
       <section v-show="activeSection === 'subscription'" class="section-block dashboard-like-card">
-        <h3 class="section-title">{{ $t('myCenter.financeTitle') }}</h3>
+        <h3 class="section-title">{{ $t('myCenter.subscriptionPlanTitle') }}</h3>
         <div class="subscription-plan-card">
           <div class="plan-name">{{ subscriptionText }}</div>
           <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
@@ -189,7 +189,7 @@
         </section>
 
         <section class="section-block dashboard-like-card">
-          <h3 class="section-title">会员权益</h3>
+          <h3 class="section-title">{{ $t('myCenter.levelBenefitsTitle') }}</h3>
           <div class="settings-list">
             <div class="settings-row">
               <div class="row-main">
@@ -297,14 +297,14 @@ const passwordForm = ref({
   confirmPassword: ''
 });
 const activeSection = ref('overview');
-const sectionTabs = [
-  { key: 'overview', label: '总览' },
-  { key: 'subscription', label: '订阅' },
-  { key: 'security', label: '安全性' },
-  { key: 'settings', label: '设置' },
-  { key: 'benefits', label: '会员权益' },
-  { key: 'invite', label: '邀请返利' }
-];
+const sectionTabs = computed(() => [
+  { key: 'overview', label: t('myCenter.tabOverview') },
+  { key: 'subscription', label: t('myCenter.tabSubscriptionPlan') },
+  { key: 'security', label: t('myCenter.tabSecurity') },
+  { key: 'settings', label: t('myCenter.tabSettings') },
+  { key: 'benefits', label: t('myCenter.tabLevelBenefits') },
+  { key: 'invite', label: t('myCenter.tabInvite') }
+]);
 
 const userTier = computed(() => {
   const tier = userInfo.value?.tier || {};
