@@ -72,8 +72,8 @@
 
           <button class="nav-row" @click="go('/orders')">
             <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.orderHistory') }}</div>
-              <p>{{ $t('myCenter.orderDesc') }}</p>
+              <div class="row-title">账单记录</div>
+              <p>查看账单明细与支付状态</p>
             </div>
             <IconChevronRight :size="18" />
           </button>
@@ -100,7 +100,7 @@
       <section v-show="activeSection === 'security'" class="section-block dashboard-like-card">
         <h3 class="section-title">{{ $t('myCenter.securityCenterTitle') }}</h3>
         <div class="settings-list">
-          <button class="nav-row" @click="go('/security?section=password')">
+          <button class="nav-row" @click="go('/security?section=password&action=change-password')">
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.passwordManagement') }}</div>
               <p>{{ $t('myCenter.passwordManagementDesc') }}</p>
@@ -116,7 +116,7 @@
             <IconChevronRight :size="18" />
           </button>
 
-          <button class="nav-row" @click="go('/config-management')">
+          <button class="nav-row" @click="go('/config-management?action=reset')">
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.deviceReset') }}</div>
               <p>{{ $t('myCenter.deviceResetDesc') }}</p>

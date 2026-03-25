@@ -26,10 +26,6 @@
           <transition-group name="page-switch">
             <div v-for="order in orders" :key="order.trade_no" class="order-card">
               <div class="order-card-header">
-                <div class="order-number">
-                  <span class="label">{{ headerTexts.tradeNo }}:</span>
-                  <span class="value">{{ order.trade_no }}</span>
-                </div>
                 <div class="status-wrapper">
                   <span class="status-badge" :class="getStatusClass(order.status)">
                     {{ getStatusText(order.status) }}
@@ -79,18 +75,16 @@
           <table class="order-table">
             <thead>
               <tr>
-                <th width="22%">{{ headerTexts.tradeNo }}</th>
-                <th width="18%">{{ headerTexts.createdAt }}</th>
-                <th width="12%">{{ headerTexts.cycle }}</th>
-                <th width="14%">{{ headerTexts.totalAmount }}</th>
-                <th width="12%">{{ headerTexts.statusLabel }}</th>
-                <th width="22%">{{ headerTexts.actions }}</th>
+                <th width="20%">{{ headerTexts.createdAt }}</th>
+                <th width="14%">{{ headerTexts.cycle }}</th>
+                <th width="16%">{{ headerTexts.totalAmount }}</th>
+                <th width="16%">{{ headerTexts.statusLabel }}</th>
+                <th width="34%">{{ headerTexts.actions }}</th>
               </tr>
             </thead>
             <tbody>
               <transition-group name="page-switch">
                 <tr v-for="order in orders" :key="order.trade_no">
-                  <td class="trade-no">{{ order.trade_no }}</td>
                   <td>{{ formatDate(order.created_at) }}</td>
                   <td>{{ formatCycle(order.period) }}</td>
                   <td class="amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</td>
@@ -146,10 +140,6 @@
             </div>
             <div class="modal-body">
               <p>{{ headerTexts.cancelConfirmText }}</p>
-              <div class="trade-no-info">
-                <span>{{ headerTexts.tradeNo }}:</span>
-                <span class="trade-no">{{ currentTradeNo }}</span>
-              </div>
             </div>
             <div class="modal-footer">
               <button class="btn-cancel" @click="closeConfirmModal">
