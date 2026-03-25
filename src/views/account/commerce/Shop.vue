@@ -151,12 +151,15 @@
             :key="plan.id"
           >
             <div class="card-header">
-              <div class="header-main">
-                <h2 class="card-title">{{ plan.name }}</h2>
-              </div>
-
-              <div v-if="isCurrentPlan(plan)" class="current-plan-meta">
-                <span class="current-plan-badge">{{ currentPlanBadgeLabel }}</span>
+              <div class="desktop-plan-hero" :class="{ 'is-current': isCurrentPlan(plan) }">
+                <div v-if="isCurrentPlan(plan)" class="desktop-current-strip">{{ currentPlanBadgeLabel }}</div>
+                <div class="desktop-plan-gradient">
+                  <div class="header-main">
+                    <h2 class="card-title">{{ plan.name }}</h2>
+                    <p class="desktop-subtitle">{{ getMobilePlanSubtitle(plan) }}</p>
+                  </div>
+                  <IconCheck v-if="isCurrentPlan(plan)" class="desktop-current-check" :size="18" />
+                </div>
               </div>
 
               <div
@@ -1389,23 +1392,53 @@ export default {
         position: relative;
         display: flex;
         justify-content: center;
-        align-items: center;
-        min-height: 64px;
+        align-items: flex-start;
+        min-height: 116px;
         margin-bottom: 18px;
-        padding-top: 6px;
+        padding-top: 0;
+
+        .desktop-plan-hero {
+          width: 100%;
+          border-radius: 12px;
+          overflow: hidden;
+          border: 1px solid rgba(var(--theme-color-rgb), 0.16);
+          background: var(--card-bg-color);
+
+          .desktop-current-strip {
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2d2d2d;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+          }
+
+          .desktop-plan-gradient {
+            min-height: 86px;
+            padding: 14px 16px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+          }
+        }
 
         .header-main {
           width: 100%;
           min-width: 0;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          text-align: center;
-          gap: 4px;
+          align-items: flex-start;
+          text-align: left;
+          gap: 2px;
         }
 
         .card-title {
-          font-size: 22px;
+          font-size: 20px;
 
           font-weight: 600;
 
@@ -1418,13 +1451,31 @@ export default {
           hyphens: auto;
 
           max-width: 100%;
-          padding: 0 48px;
+          padding: 0;
           line-height: 1.25;
+          color: #fff;
+        }
+
+        .desktop-subtitle {
+          margin: 0;
+          font-size: 14px;
+          font-weight: 600;
+          color: rgba(255, 255, 255, 0.95);
+        }
+
+        .desktop-current-check {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          color: #4d4ad5;
+          background: #fff;
+          padding: 5px;
+          flex-shrink: 0;
         }
 
         .card-badge {
           position: absolute;
-          top: 0;
+          top: -8px;
           right: 0;
           display: flex;
 

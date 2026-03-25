@@ -486,10 +486,10 @@ export default {
         expireAt: 'Expiry Date',
         accountBalance: 'Account Balance',
         financeTitle: 'Finance Center',
-        subscriptionPlanTitle: 'Subscription Plan',
+        subscriptionPlanTitle: 'Membership',
         levelBenefitsTitle: 'Tier Benefits',
         tabOverview: 'Overview',
-        tabSubscriptionPlan: 'Subscription Plan',
+        tabSubscriptionPlan: 'Membership',
         tabSecurity: 'Security',
         tabSettings: 'Settings',
         tabLevelBenefits: 'Tier Benefits',
@@ -653,7 +653,7 @@ profile: {
             renew: 'Renew',
             add_quota: 'Add Quota',
             upgrade_to: 'Upgrade to {name}',
-            current: 'Your Current Subscription',
+            current: 'Current Plan',
             sold_out_btn: 'Sold Out',
             stock: {
                 plenty: 'Plenty in Stock',
@@ -686,7 +686,7 @@ profile: {
             }
         },
         current_plan_info: {
-            plan: 'Current Subscription',
+            plan: 'Current Plan',
             expire: 'Expiry Date',
             traffic: 'Traffic Usage'
         },
