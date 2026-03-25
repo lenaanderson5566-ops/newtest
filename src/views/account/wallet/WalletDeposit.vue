@@ -1,6 +1,11 @@
 <template>
   <div class="deposit-container page-shell">
     <div class="deposit-inner page-inner page-stack">
+      <button class="account-back-btn" @click="goBackToAccount">
+        <span aria-hidden="true">←</span>
+        <span class="back-label">返回账号中心</span>
+      </button>
+
       <!-- 余额信息卡片 -->
       <div class="dashboard-card balance-card">
         <div class="card-header">
@@ -157,6 +162,13 @@ const loading = reactive({
   submitting: false,
   config: true
 });
+const goBackToAccount = () => {
+  if (window.history.length > 1) {
+    router.back();
+    return;
+  }
+  router.push('/profile');
+};
 const fetchUserConfig = async () => {
   try {
     const response = await getUserConfig();
@@ -292,6 +304,26 @@ onMounted(() => {
   .deposit-inner {
     width: 100%;
       }
+
+  .account-back-btn {
+    width: fit-content;
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 8px;
+  }
+
+  .back-label {
+    font-size: 14px;
+    color: var(--secondary-text-color);
+  }
   
   .dashboard-card {
     background-color: var(--card-bg);
@@ -676,6 +708,10 @@ onMounted(() => {
   }
 }
 @media (max-width: 768px) {
+  .back-label {
+    display: none;
+  }
+
   .deposit-container {
     padding: 10px;
     padding-bottom: 84px;

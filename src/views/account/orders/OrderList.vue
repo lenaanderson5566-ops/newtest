@@ -1,6 +1,11 @@
 <template>
   <div class="orders-container page-shell">
     <div class="orders-inner page-inner page-stack">
+      <button class="account-back-btn" @click="goBackToAccount">
+        <span aria-hidden="true">←</span>
+        <span class="back-label">返回账号中心</span>
+      </button>
+
       <!-- 加载状态 -->
       <div v-if="loading" class="orders-loading">
         <LoadingSpinner />
@@ -186,6 +191,13 @@ const showConfirmModal = ref(false);
 const currentTradeNo = ref('');
 const canceling = ref(false);
 const isMobileView = ref(false);
+const goBackToAccount = () => {
+  if (window.history.length > 1) {
+    router.back();
+    return;
+  }
+  router.push('/profile');
+};
 
 const checkMobileView = () => {
   isMobileView.value = window.innerWidth < 768;
@@ -393,6 +405,26 @@ watch(locale, () => {
 }
 
 .orders-inner {
+}
+
+.account-back-btn {
+  width: fit-content;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.back-label {
+  font-size: 14px;
+  color: var(--secondary-text-color);
 }
 
 
@@ -824,6 +856,10 @@ watch(locale, () => {
 
 
 @media (max-width: 768px) {
+  .back-label {
+    display: none;
+  }
+
   .order-table {
     th, td {
       padding: 0.75rem 0.5rem;

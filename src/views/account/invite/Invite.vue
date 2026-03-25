@@ -27,6 +27,11 @@
     </transition>
     
     <div class="account-inner page-inner page-stack">
+      <button class="account-back-btn" @click="goBackToAccount">
+        <span aria-hidden="true">←</span>
+        <span class="back-label">返回账号中心</span>
+      </button>
+
       <!-- 佣金余额卡片 -->
       <div class="dashboard-card balance-card">
         <div class="card-header">
@@ -505,6 +510,7 @@
 <script>
 import { useI18n } from 'vue-i18n';
 import { ref, computed, onMounted, onUnmounted, reactive, nextTick } from 'vue';
+import { useRouter } from 'vue-router';
 import { useToast } from '@/composables/useToast';
 import { INVITE_CONFIG } from '@/utils/baseConfig';
 import { getInviteData, getInviteDetails, getCommissionConfig, generateInviteCode, transferCommission, withdrawCommission } from '@/api/account/invite';
@@ -550,6 +556,7 @@ export default {
   setup() {
     const { showToast } = useToast();
     const { t } = useI18n();
+    const router = useRouter();
     
     const loading = reactive({
       inviteData: true,
@@ -1450,6 +1457,13 @@ export default {
       const message = error.response?.message || t('common.error');
       showToast(message, 'error');
     };
+    const goBackToAccount = () => {
+      if (window.history.length > 1) {
+        router.back();
+        return;
+      }
+      router.push('/profile');
+    };
     
     return {
       loading,
@@ -1517,7 +1531,8 @@ export default {
       togglePageSizeDropdown,
       selectPageSize,
       closePageSizeDropdownOnClickOutside,
-      isMobile 
+      isMobile,
+      goBackToAccount
     };
   }
 };
@@ -4295,6 +4310,32 @@ export default {
       padding-top: 8px;
       padding-bottom: 8px;
     }
+  }
+}
+
+.account-back-btn {
+  width: fit-content;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.back-label {
+  font-size: 14px;
+  color: var(--secondary-text-color);
+}
+
+@media (max-width: 768px) {
+  .back-label {
+    display: none;
   }
 }
 
