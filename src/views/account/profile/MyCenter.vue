@@ -59,11 +59,18 @@
         <h3 class="section-title section-title-outside">{{ $t('myCenter.subscriptionPlanTitle') }}</h3>
         <p class="section-subtitle">Plan Details</p>
         <section class="section-block dashboard-like-card subscription-plan-card">
-          <div class="plan-name">{{ subscriptionText }}</div>
-          <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
-          <div class="plan-action-wrap">
-            <button class="plan-action-btn" @click="go('/shop')">
-              <span>切换订阅</span>
+          <div class="settings-list">
+            <div class="settings-row plan-overview-row">
+              <div class="row-main">
+                <div class="plan-name">{{ subscriptionText }}</div>
+                <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
+              </div>
+            </div>
+            <button class="nav-row" @click="go('/shop')">
+              <div class="row-main row-main-with-icon">
+                <IconRefresh :size="18" class="row-leading-icon" />
+                <div class="row-title">切换订阅</div>
+              </div>
               <IconChevronRight :size="18" />
             </button>
           </div>
@@ -85,14 +92,16 @@
           </div>
 
           <button class="nav-row" @click="go('/orders')">
-            <div class="row-main">
+            <div class="row-main row-main-with-icon">
+              <IconReceipt :size="18" class="row-leading-icon" />
               <div class="row-title">账单记录</div>
             </div>
             <IconChevronRight :size="18" />
           </button>
 
           <button class="nav-row" @click="go('/billing')">
-            <div class="row-main">
+            <div class="row-main row-main-with-icon">
+              <IconGift :size="18" class="row-leading-icon" />
               <div class="row-title">兑换礼品卡</div>
             </div>
             <IconChevronRight :size="18" />
@@ -271,7 +280,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { IconChevronRight, IconX } from '@tabler/icons-vue';
+import { IconChevronRight, IconGift, IconReceipt, IconRefresh, IconX } from '@tabler/icons-vue';
 import { useI18n } from 'vue-i18n';
 import { changePassword as apiChangePassword, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
@@ -755,39 +764,34 @@ onMounted(async () => {
 }
 
 .subscription-plan-card {
-  padding: 14px;
-
-  .plan-name {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text-color);
-  }
-
-  .plan-desc {
-    margin: 8px 0 0;
-    font-size: 14px;
-    color: var(--secondary-text-color);
-  }
-}
-
-.plan-action-wrap {
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(var(--text-color-rgb), 0.1);
-}
-
-.plan-action-btn {
-  width: 100%;
-  border: none;
-  background: transparent;
   padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 16px;
+}
+
+.plan-overview-row {
+  align-items: flex-start;
+}
+
+.plan-name {
+  font-size: 24px;
   font-weight: 700;
   color: var(--text-color);
-  cursor: pointer;
+}
+
+.plan-desc {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: var(--secondary-text-color);
+}
+
+.row-main-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row-leading-icon {
+  color: rgba(var(--theme-color-rgb), 0.9);
+  flex-shrink: 0;
 }
 
 .settings-list {
