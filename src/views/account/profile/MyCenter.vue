@@ -13,7 +13,7 @@
         </button>
       </div>
 
-      <div v-show="activeSection === 'overview'" class="overview-panels" :class="{ 'no-tier': !hasTierInfo }">
+      <div v-show="activeSection === 'overview'" class="overview-panels">
         <section class="summary-panel section-block dashboard-like-card">
           <div class="summary-top">
             <div>
@@ -43,29 +43,6 @@
           </div>
         </section>
 
-        <section v-if="hasTierInfo" class="tier-panel section-block dashboard-like-card">
-          <div class="tier-header">
-            <div>
-              <h3>{{ $t('dashboard.memberTier') }}</h3>
-              <div class="tier-member-row">
-                <span class="tier-badge" :class="tierBadgeClass">{{ tierBadgeText }}</span>
-                <p>{{ tierMemberDisplay }}</p>
-              </div>
-            </div>
-            <span class="tier-level">Lv.{{ userTier.level || '-' }}</span>
-          </div>
-
-          <div class="tier-progress-meta">
-            {{ $t('dashboard.tierPointsProgress', { points: formatTierNumber(userTier.points), total: formatTierNumber(userTier.nextPointsRequired) }) }}
-          </div>
-          <div class="tier-progress-track">
-            <div class="tier-progress-fill" :style="{ width: `${tierProgress}%` }"></div>
-          </div>
-
-          <div class="tier-next" v-if="userTier.nextTierKey">
-            {{ $t('dashboard.nextTierHint', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}
-          </div>
-        </section>
       </div>
 
       <section v-show="activeSection === 'subscription'" class="section-block dashboard-like-card">
@@ -179,17 +156,6 @@
             </label>
           </div>
 
-          <div class="settings-row">
-            <div class="row-main">
-              <div class="row-title">自动续费失败提醒</div>
-              <p>在自动续费失败时发送通知</p>
-            </div>
-            <label class="switch" :class="{ disabled: true }">
-              <input type="checkbox" checked disabled />
-              <span class="slider round"></span>
-            </label>
-          </div>
-
           <button class="nav-row" @click="go('/profile')">
             <div class="row-main">
               <div class="row-title">语言偏好</div>
@@ -200,24 +166,50 @@
         </div>
       </section>
 
-      <section v-show="activeSection === 'benefits'" class="section-block dashboard-like-card">
-        <h3 class="section-title">会员权益</h3>
-        <div class="settings-list">
-          <div class="settings-row">
-            <div class="row-main">
-              <div class="row-title">等级与成长值</div>
-              <p>{{ tierMemberDisplay }} · Lv.{{ userTier.level || 0 }} · {{ formatTierNumber(userTier.points) }} 积分</p>
+      <div v-show="activeSection === 'benefits'" class="benefits-stack">
+        <section v-if="hasTierInfo" class="tier-panel section-block dashboard-like-card">
+          <div class="tier-header">
+            <div>
+              <h3>{{ $t('dashboard.memberTier') }}</h3>
+              <div class="tier-member-row">
+                <span class="tier-badge" :class="tierBadgeClass">{{ tierBadgeText }}</span>
+                <p>{{ tierMemberDisplay }}</p>
+              </div>
             </div>
+            <span class="tier-level">Lv.{{ userTier.level || '-' }}</span>
           </div>
-          <button class="nav-row" @click="go('/dashboard')">
-            <div class="row-main">
-              <div class="row-title">权益说明</div>
-              <p>查看当前会员等级可用权益</p>
+
+          <div class="tier-progress-meta">
+            {{ $t('dashboard.tierPointsProgress', { points: formatTierNumber(userTier.points), total: formatTierNumber(userTier.nextPointsRequired) }) }}
+          </div>
+          <div class="tier-progress-track">
+            <div class="tier-progress-fill" :style="{ width: `${tierProgress}%` }"></div>
+          </div>
+
+          <div class="tier-next" v-if="userTier.nextTierKey">
+            {{ $t('dashboard.nextTierHint', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}
+          </div>
+        </section>
+
+        <section class="section-block dashboard-like-card">
+          <h3 class="section-title">会员权益</h3>
+          <div class="settings-list">
+            <div class="settings-row">
+              <div class="row-main">
+                <div class="row-title">等级与成长值</div>
+                <p>{{ tierMemberDisplay }} · Lv.{{ userTier.level || 0 }} · {{ formatTierNumber(userTier.points) }} 积分</p>
+              </div>
             </div>
-            <IconChevronRight :size="18" />
-          </button>
-        </div>
-      </section>
+            <button class="nav-row" @click="go('/dashboard')">
+              <div class="row-main">
+                <div class="row-title">权益说明</div>
+                <p>查看当前会员等级可用权益</p>
+              </div>
+              <IconChevronRight :size="18" />
+            </button>
+          </div>
+        </section>
+      </div>
 
       <section v-show="activeSection === 'invite'" class="section-block dashboard-like-card">
         <h3 class="section-title">邀请返利</h3>
@@ -483,12 +475,13 @@ onMounted(async () => {
 
 .overview-panels {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
+}
 
-  &.no-tier {
-    grid-template-columns: minmax(0, 1fr);
-  }
+.benefits-stack {
+  display: grid;
+  gap: 1rem;
 }
 
 
