@@ -1455,6 +1455,16 @@ export default {
           border: 1px solid rgba(var(--theme-color-rgb), 0.16);
           background: var(--card-bg-color);
 
+          &.is-current {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+
+            .desktop-plan-gradient {
+              border-top-left-radius: 0;
+              border-top-right-radius: 0;
+            }
+          }
+
           .desktop-plan-gradient {
             min-height: 86px;
             padding: 14px 16px;
@@ -2079,6 +2089,8 @@ export default {
 
         &.current-plan-chip {
           padding: 0;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
         }
 
         &.current-plan-chip.active {
@@ -2101,6 +2113,11 @@ export default {
         min-height: 136px;
         padding: 10px;
         border-radius: 12px;
+      }
+
+      .mobile-plan-chip.current-plan-chip .chip-body {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
       }
 
       .chip-name {
