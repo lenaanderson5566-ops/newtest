@@ -80,134 +80,186 @@
           </div>
         </div>
 
-        <!-- 订阅卡片 修改内容 -->
-
-        <div
-          class="plan-card"
-          :class="{ 'current-plan-card': isCurrentPlan(plan) }"
-          v-else
-          v-for="plan in filteredPlans"
-          :key="plan.id"
-        >
-          <div class="card-header">
-            <div class="header-main">
-              <h2 class="card-title">{{ plan.name }}</h2>
+        <template v-else>
+          <div class="mobile-plan-layout">
+            <div class="mobile-plan-selector">
+              <button
+                v-for="plan in filteredPlans"
+                :key="`mobile-${plan.id}`"
+                type="button"
+                class="mobile-plan-chip"
+                :class="{
+                  active: selectedPlan && Number(selectedPlan.id) === Number(plan.id),
+                  'current-plan-chip': isCurrentPlan(plan),
+                }"
+                @click="onSelectPlan(plan)"
+              >
+                <span class="chip-name">{{ plan.name }}</span>
+                <span class="chip-price">{{ currencySymbol }}{{ getPlanMainPrice(plan) }}</span>
+                <span class="chip-period">
+                  {{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`) }}
+                </span>
+              </button>
             </div>
 
-            <div v-if="isCurrentPlan(plan)" class="current-plan-meta">
-              <span class="current-plan-badge">{{ currentPlanBadgeLabel }}</span>
-            </div>
-
-            <div
-              class="card-badge glassmorphism stock-warning"
-              v-if="
-                !isCurrentPlan(plan) &&
-                plan.capacity_limit > 0 &&
-                plan.capacity_limit < SHOP_CONFIG.lowStockThreshold
-              "
-            >
-              <IconBox :size="16" class="badge-icon" />
-
-              <span>{{ $t("shop.plan.stock.warning") }}</span>
-            </div>
-
-            <div
-              class="card-badge glassmorphism stock-danger"
-              v-if="plan.capacity_limit === 0"
-            >
-              <IconBox :size="16" class="badge-icon" />
-
-              <span>{{ $t("shop.plan.stock.sold_out") }}</span>
-            </div>
-          </div>
-
-          <div class="card-body">
-            <!-- 价格区域 - 修改为显示支持的所有周期 -->
-
-            <div class="plan-price">
-              <div class="price-display">
-                <div class="price-main-line">
-                  <span class="currency">{{ currencySymbol }}</span>
-                  <span class="amount">{{ getPlanMainPrice(plan) }}</span>
-                </div>
-                <span class="unit-line">{{ currency }} {{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`) }}</span>
+            <div class="mobile-plan-details" v-if="selectedPlan">
+              <div class="mobile-detail-row">
+                <span class="mobile-label">价格</span>
+                <span class="mobile-value">{{ currencySymbol }}{{ getPlanMainPrice(selectedPlan) }}</span>
+              </div>
+              <div class="mobile-detail-row">
+                <span class="mobile-label">周期</span>
+                <span class="mobile-value">{{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(selectedPlan))}`) }}</span>
+              </div>
+              <div
+                class="mobile-detail-row"
+                v-for="(feature, index) in getMobileFeatureRows(selectedPlan)"
+                :key="`mobile-feature-${index}`"
+              >
+                <span class="mobile-label">{{ feature.label }}</span>
+                <span class="mobile-value">{{ feature.value }}</span>
               </div>
             </div>
 
             <button
-              class="btn-purchase glassmorphism"
-              :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
-              @click="purchasePlan(plan)"
-              :disabled="plan.capacity_limit === 0"
+              class="mobile-continue-btn"
+              :class="{ 'btn-disabled': !selectedPlan || selectedPlan.capacity_limit === 0 }"
+              :disabled="!selectedPlan || selectedPlan.capacity_limit === 0"
+              @click="selectedPlan && purchasePlan(selectedPlan)"
             >
               <IconShoppingCart class="btn-icon" />
-              <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
+              <span class="btn-text">{{ selectedPlan ? getPurchaseButtonText(selectedPlan) : $t("shop.plan.purchase") }}</span>
             </button>
+          </div>
 
-            <!-- 周期折扣计算 -->
+          <!-- 订阅卡片 修改内容 -->
 
-            <div
-              class="discount-calculation"
-              v-if="
-                SHOP_CONFIG.enableDiscountCalculation &&
-                calculateDiscount(plan).showDiscount
-              "
-            >
-              <div class="discount-info">
-                <span class="period-name">{{
-                  calculateDiscount(plan).periodName
-                }}</span>
+          <div
+            class="plan-card desktop-plan-card"
+            :class="{ 'current-plan-card': isCurrentPlan(plan) }"
+            v-for="plan in filteredPlans"
+            :key="plan.id"
+          >
+            <div class="card-header">
+              <div class="header-main">
+                <h2 class="card-title">{{ plan.name }}</h2>
+              </div>
 
-                <span class="discount-label"
-                  >&nbsp;{{ $t("shop.plan.discount.relative") }}
-                </span>
+              <div v-if="isCurrentPlan(plan)" class="current-plan-meta">
+                <span class="current-plan-badge">{{ currentPlanBadgeLabel }}</span>
+              </div>
 
-                <span class="discount-value"
-                  >&nbsp;{{ calculateDiscount(plan).discountPercentage }}%</span
-                >
+              <div
+                class="card-badge glassmorphism stock-warning"
+                v-if="
+                  !isCurrentPlan(plan) &&
+                  plan.capacity_limit > 0 &&
+                  plan.capacity_limit < SHOP_CONFIG.lowStockThreshold
+                "
+              >
+                <IconBox :size="16" class="badge-icon" />
 
-                <span class="saving-text"
-                  >，{{ $t("shop.plan.discount.savings") }}
-                </span>
+                <span>{{ $t("shop.plan.stock.warning") }}</span>
+              </div>
 
-                <span class="saving-amount"
-                  >&nbsp;{{ currencySymbol
-                  }}{{ calculateDiscount(plan).savingsAmount }}</span
-                >
+              <div
+                class="card-badge glassmorphism stock-danger"
+                v-if="plan.capacity_limit === 0"
+              >
+                <IconBox :size="16" class="badge-icon" />
+
+                <span>{{ $t("shop.plan.stock.sold_out") }}</span>
               </div>
             </div>
 
-            <!-- 订阅特性 -->
+            <div class="card-body">
+              <!-- 价格区域 - 修改为显示支持的所有周期 -->
 
-            <div class="plan-features">
-              <!-- JSON格式内容 -->
-
-              <template v-if="isJsonContent(plan.content)">
-                <div
-                  class="feature-item"
-                  v-for="(feature, index) in parseJsonContent(plan.content)"
-                  :key="index"
-                >
-                  <IconCheck
-                    v-if="feature.support"
-                    class="feature-icon enabled"
-                  />
-
-                  <IconX v-else class="feature-icon disabled" />
-
-                  <span :class="{ 'disabled-text': !feature.support }">{{
-                    feature.feature
-                  }}</span>
+              <div class="plan-price">
+                <div class="price-display">
+                  <div class="price-main-line">
+                    <span class="currency">{{ currencySymbol }}</span>
+                    <span class="amount">{{ getPlanMainPrice(plan) }}</span>
+                  </div>
+                  <span class="unit-line">{{ currency }} {{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`) }}</span>
                 </div>
-              </template>
+              </div>
 
-              <!-- HTML格式内容 -->
+              <button
+                class="btn-purchase glassmorphism"
+                :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
+                @click="purchasePlan(plan)"
+                :disabled="plan.capacity_limit === 0"
+              >
+                <IconShoppingCart class="btn-icon" />
+                <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
+              </button>
 
-              <div v-else class="html-content" v-html="plan.content"></div>
+              <!-- 周期折扣计算 -->
+
+              <div
+                class="discount-calculation"
+                v-if="
+                  SHOP_CONFIG.enableDiscountCalculation &&
+                  calculateDiscount(plan).showDiscount
+                "
+              >
+                <div class="discount-info">
+                  <span class="period-name">{{
+                    calculateDiscount(plan).periodName
+                  }}</span>
+
+                  <span class="discount-label"
+                    >&nbsp;{{ $t("shop.plan.discount.relative") }}
+                  </span>
+
+                  <span class="discount-value"
+                    >&nbsp;{{ calculateDiscount(plan).discountPercentage }}%</span
+                  >
+
+                  <span class="saving-text"
+                    >，{{ $t("shop.plan.discount.savings") }}
+                  </span>
+
+                  <span class="saving-amount"
+                    >&nbsp;{{ currencySymbol
+                    }}{{ calculateDiscount(plan).savingsAmount }}</span
+                  >
+                </div>
+              </div>
+
+              <!-- 订阅特性 -->
+
+              <div class="plan-features">
+                <!-- JSON格式内容 -->
+
+                <template v-if="isJsonContent(plan.content)">
+                  <div
+                    class="feature-item"
+                    v-for="(feature, index) in parseJsonContent(plan.content)"
+                    :key="index"
+                  >
+                    <IconCheck
+                      v-if="feature.support"
+                      class="feature-icon enabled"
+                    />
+
+                    <IconX v-else class="feature-icon disabled" />
+
+                    <span :class="{ 'disabled-text': !feature.support }">{{
+                      feature.feature
+                    }}</span>
+                  </div>
+                </template>
+
+                <!-- HTML格式内容 -->
+
+                <div v-else class="html-content" v-html="plan.content"></div>
+              </div>
+
             </div>
-
           </div>
-        </div>
+        </template>
       </div>
 
 
@@ -306,6 +358,7 @@ export default {
     const paymentMethods = ref([]);
 
     const selectedFilter = ref("month_price");
+    const selectedPlanId = ref(null);
 
     const filterToggle = ref(null);
 
@@ -347,6 +400,10 @@ export default {
 
     const setFilter = (filter) => {
       selectedFilter.value = filter;
+    };
+
+    const onSelectPlan = (plan) => {
+      selectedPlanId.value = plan?.id ?? null;
     };
 
     const getFilterDisplayLabel = (filter) => {
@@ -709,6 +766,37 @@ export default {
       return visiblePlans.value.filter((plan) => hasPeriodPrice(plan, fallbackFilterValue.value));
     });
 
+    const selectedPlan = computed(() => {
+      if (filteredPlans.value.length === 0) return null;
+      const matched = filteredPlans.value.find((plan) => Number(plan.id) === Number(selectedPlanId.value));
+      return matched || filteredPlans.value[0];
+    });
+
+    const getMobileFeatureRows = (plan) => {
+      if (!plan || !isJsonContent(plan.content)) return [];
+      return parseJsonContent(plan.content)
+        .slice(0, 6)
+        .map((item) => ({
+          label: item?.feature || "特性",
+          value: item?.support ? "支持" : "不支持",
+        }));
+    };
+
+    watch(
+      () => filteredPlans.value,
+      (nextPlans) => {
+        if (!nextPlans.length) {
+          selectedPlanId.value = null;
+          return;
+        }
+        const stillExists = nextPlans.some((plan) => Number(plan.id) === Number(selectedPlanId.value));
+        if (!stillExists) {
+          selectedPlanId.value = nextPlans[0].id;
+        }
+      },
+      { immediate: true }
+    );
+
     const hasRecurringPrice = (plan) => {
       return RECURRING_PERIOD_TYPES.some((type) => hasPeriodPrice(plan, type));
     };
@@ -878,6 +966,9 @@ export default {
 
       setFilter,
       getFilterDisplayLabel,
+      selectedPlan,
+      onSelectPlan,
+      getMobileFeatureRows,
 
       getPlanMainPrice,
 
@@ -1228,6 +1319,10 @@ export default {
       border-radius: 16px;
 
       overflow: hidden;
+    }
+
+    .mobile-plan-layout {
+      display: none;
     }
 
     .plan-card {
@@ -1795,6 +1890,110 @@ export default {
 
     .plans-wrapper {
       grid-template-columns: 1fr;
+      display: block;
+      margin-bottom: 0;
+
+      .desktop-plan-card {
+        display: none;
+      }
+
+      .mobile-plan-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .mobile-plan-selector {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .mobile-plan-chip {
+        flex: 0 0 220px;
+        border: 1px solid var(--border-color);
+        background: var(--card-bg-color);
+        border-radius: 12px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        text-align: left;
+        color: var(--text-color);
+
+        &.active {
+          border-color: rgba(var(--theme-color-rgb), 0.65);
+          background: rgba(var(--theme-color-rgb), 0.08);
+        }
+      }
+
+      .chip-name {
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .chip-price {
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .chip-period {
+        font-size: 12px;
+        color: var(--secondary-text-color);
+      }
+
+      .mobile-plan-details {
+        border: 1px solid var(--border-color);
+        background: var(--card-bg-color);
+        border-radius: 12px;
+        padding: 10px 14px;
+      }
+
+      .mobile-detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .mobile-detail-row:last-child {
+        border-bottom: none;
+      }
+
+      .mobile-label {
+        font-size: 13px;
+        color: var(--secondary-text-color);
+      }
+
+      .mobile-value {
+        font-size: 13px;
+        font-weight: 600;
+        text-align: right;
+      }
+
+      .mobile-continue-btn {
+        position: sticky;
+        bottom: max(12px, env(safe-area-inset-bottom));
+        width: 100%;
+        height: 44px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
+        color: #fff;
+        font-weight: 600;
+
+        &.btn-disabled {
+          background: var(--button-disabled-bg);
+          border-color: var(--button-disabled-bg);
+        }
+      }
     }
   }
 
