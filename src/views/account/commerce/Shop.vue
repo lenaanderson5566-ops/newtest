@@ -156,7 +156,7 @@
                 <div class="desktop-plan-gradient">
                   <div class="header-main">
                     <h2 class="card-title">{{ plan.name }}</h2>
-                    <p class="desktop-subtitle">{{ getMobilePlanSubtitle(plan) }}</p>
+                    <p v-if="getPlanHeroSubtitle(plan)" class="desktop-subtitle">{{ getPlanHeroSubtitle(plan) }}</p>
                   </div>
                   <IconCheck v-if="isCurrentPlan(plan)" class="desktop-current-check" :size="18" />
                 </div>
@@ -793,8 +793,10 @@ export default {
           return matched.feature;
         }
       }
-      return `${currencySymbol.value}${getPlanMainPrice(plan)} / ${t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`)}`;
+      return t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`).replace("/", "").trim();
     };
+
+    const getPlanHeroSubtitle = (plan) => getMobilePlanSubtitle(plan);
 
     const getMobileFeatureRows = (plan) => {
       if (!plan || !isJsonContent(plan.content)) return [];
@@ -994,6 +996,7 @@ export default {
       onSelectPlan,
       getMobileFeatureRows,
       getMobilePlanSubtitle,
+      getPlanHeroSubtitle,
 
       getPlanMainPrice,
 
@@ -1361,7 +1364,7 @@ export default {
 
       box-shadow: none;
 
-      padding: 24px;
+      padding: 16px;
 
       border: 1px solid var(--border-color);
 
@@ -1384,8 +1387,8 @@ export default {
       }
 
       &.current-plan-card {
-        border-color: rgba(var(--theme-color-rgb), 0.5);
-        box-shadow: none;
+        border-color: rgba(var(--theme-color-rgb), 0.7);
+        box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.25);
       }
 
       .card-header {
