@@ -1067,6 +1067,7 @@ export default {
     border-radius: var(--shop-card-radius);
     box-shadow: none;
     background: transparent;
+    background-color: transparent;
 
     margin-bottom: 24px;
 
@@ -1137,6 +1138,13 @@ export default {
     justify-content: center;
     max-width: min(62%, 280px);
     pointer-events: none;
+  }
+
+  .dashboard-card.welcome-card {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   .current-plan-badge {
