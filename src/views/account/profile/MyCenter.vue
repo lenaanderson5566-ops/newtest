@@ -57,7 +57,7 @@
 
       <div v-show="activeSection === 'subscription'" class="section-group">
         <h3 class="section-title section-title-outside">{{ $t('myCenter.subscriptionPlanTitle') }}</h3>
-        <p class="section-subtitle">Plan Details</p>
+        <p class="section-subtitle">{{ $t('myCenter.planDetails') }}</p>
         <section class="section-block dashboard-like-card">
           <div class="settings-list">
             <div class="settings-row plan-overview-row">
@@ -70,7 +70,7 @@
               <div class="row-main row-main-with-icon">
                 <IconRefresh :size="20" class="row-leading-icon" />
                 <div class="row-content">
-                  <div class="row-title">更改订阅</div>
+                  <div class="row-title">{{ $t('myCenter.changeSubscription') }}</div>
                 </div>
               </div>
               <IconChevronRight :size="18" />
@@ -78,7 +78,7 @@
           </div>
         </section>
 
-        <p class="section-subtitle">Payment Info</p>
+        <p class="section-subtitle">{{ $t('myCenter.paymentInfo') }}</p>
         <section class="section-block dashboard-like-card">
         <div class="settings-list">
 
@@ -100,7 +100,7 @@
             <div class="row-main row-main-with-icon">
               <IconReceipt :size="20" class="row-leading-icon" />
               <div class="row-content">
-                <div class="row-title">账单记录</div>
+                <div class="row-title">{{ $t('myCenter.billRecords') }}</div>
               </div>
             </div>
             <IconChevronRight :size="18" />
@@ -110,7 +110,7 @@
             <div class="row-main row-main-with-icon">
               <IconGift :size="20" class="row-leading-icon" />
               <div class="row-content">
-                <div class="row-title">兑换礼品卡</div>
+                <div class="row-title">{{ $t('myCenter.redeemGiftCard') }}</div>
               </div>
             </div>
             <IconChevronRight :size="18" />
@@ -122,14 +122,14 @@
 
       <div v-show="activeSection === 'security'" class="section-group">
         <h3 class="section-title section-title-outside">{{ $t('myCenter.securityCenterTitle') }}</h3>
-        <p class="section-subtitle">Account Details</p>
+        <p class="section-subtitle">{{ $t('myCenter.accountDetails') }}</p>
         <section class="section-block dashboard-like-card">
         <div class="settings-list">
           <button class="nav-row" @click="openPasswordChangePrompt">
             <div class="row-main row-main-with-icon">
               <IconLock :size="20" class="row-leading-icon" />
               <div class="row-content">
-                <div class="row-title">修改密码</div>
+                <div class="row-title">{{ $t('myCenter.changePassword') }}</div>
               </div>
             </div>
             <IconChevronRight :size="18" />
@@ -137,7 +137,7 @@
         </div>
         </section>
 
-        <p class="section-subtitle">Access & Privacy</p>
+        <p class="section-subtitle">{{ $t('myCenter.accessPrivacy') }}</p>
         <section class="section-block dashboard-like-card">
         <div class="settings-list">
           <button class="nav-row" @click="go('/security?section=sessions')">

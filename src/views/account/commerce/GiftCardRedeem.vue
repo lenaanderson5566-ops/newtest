@@ -25,13 +25,13 @@
       </section>
 
       <section class="dashboard-card rule-card">
-        <h3>兑换说明</h3>
+        <h3>{{ $t('myCenter.giftCardRuleTitle') }}</h3>
         <ul>
-          <li><strong>type 1：</strong>余额充值（value 单位：分）</li>
-          <li><strong>type 2：</strong>延长有效期（value 单位：天）</li>
-          <li><strong>type 3：</strong>增加流量（value 单位：GB）</li>
-          <li><strong>type 4：</strong>清空流量</li>
-          <li><strong>type 5：</strong>直开套餐（value 为天数，0 表示不过期）</li>
+          <li>{{ $t('myCenter.giftCardRuleType1') }}</li>
+          <li>{{ $t('myCenter.giftCardRuleType2') }}</li>
+          <li>{{ $t('myCenter.giftCardRuleType3') }}</li>
+          <li>{{ $t('myCenter.giftCardRuleType4') }}</li>
+          <li>{{ $t('myCenter.giftCardRuleType5') }}</li>
         </ul>
       </section>
 
@@ -70,12 +70,14 @@ const formatResultText = (payload) => {
   const type = Number(payload?.type || 0);
   const value = Number(payload?.value || 0);
 
-  if (type === 1) return `已充值余额：${(value / 100).toFixed(2)}`;
-  if (type === 2) return `已延长有效期：${value} 天`;
-  if (type === 3) return `已增加流量：${value} GB`;
-  if (type === 4) return '已清空流量';
-  if (type === 5) return value === 0 ? '已开通不过期套餐' : `已开通套餐：${value} 天`;
-  return '兑换成功';
+  if (type === 1) return t('myCenter.giftCardResultType1', { value: (value / 100).toFixed(2) });
+  if (type === 2) return t('myCenter.giftCardResultType2', { value });
+  if (type === 3) return t('myCenter.giftCardResultType3', { value });
+  if (type === 4) return t('myCenter.giftCardResultType4');
+  if (type === 5) return value === 0
+    ? t('myCenter.giftCardResultType5NoExpire')
+    : t('myCenter.giftCardResultType5', { value });
+  return t('profile.giftCardSuccess');
 };
 
 const lastResultText = computed(() => (lastResult.value ? formatResultText(lastResult.value) : ''));
