@@ -95,6 +95,7 @@
                 @click="onSelectPlan(plan)"
               >
                 <span class="chip-name">{{ plan.name }}</span>
+                <span v-if="isCurrentPlan(plan)" class="chip-current-badge">{{ currentPlanBadgeLabel }}</span>
                 <span class="chip-price">{{ currencySymbol }}{{ getPlanMainPrice(plan) }}</span>
                 <span class="chip-period">
                   {{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`) }}
@@ -103,6 +104,9 @@
             </div>
 
             <div class="mobile-plan-details" v-if="selectedPlan">
+              <div class="mobile-current-plan-tip" v-if="isCurrentPlan(selectedPlan)">
+                {{ currentPlanBadgeLabel }} · {{ selectedPlan.name }}
+              </div>
               <div class="mobile-detail-row">
                 <span class="mobile-label">价格</span>
                 <span class="mobile-value">{{ currencySymbol }}{{ getPlanMainPrice(selectedPlan) }}</span>
@@ -1907,11 +1911,14 @@ export default {
         display: flex;
         gap: 10px;
         overflow-x: auto;
-        padding-bottom: 4px;
+        padding: 2px 2px 6px;
+        margin: 0 -2px;
+        scroll-padding-left: 2px;
+        -webkit-overflow-scrolling: touch;
       }
 
       .mobile-plan-chip {
-        flex: 0 0 220px;
+        flex: 0 0 min(220px, calc(100vw - 46px));
         border: 1px solid var(--border-color);
         background: var(--card-bg-color);
         border-radius: 12px;
@@ -1921,6 +1928,8 @@ export default {
         gap: 4px;
         text-align: left;
         color: var(--text-color);
+        position: relative;
+        min-height: 108px;
 
         &.active {
           border-color: rgba(var(--theme-color-rgb), 0.65);
@@ -1928,9 +1937,27 @@ export default {
         }
       }
 
+      .mobile-plan-chip:last-child {
+        margin-right: 2px;
+      }
+
       .chip-name {
         font-size: 14px;
         font-weight: 700;
+        padding-right: 86px;
+      }
+
+      .chip-current-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--theme-color);
+        border: 1px solid rgba(var(--theme-color-rgb), 0.26);
+        background: rgba(var(--theme-color-rgb), 0.1);
+        border-radius: 999px;
+        padding: 2px 8px;
       }
 
       .chip-price {
@@ -1948,6 +1975,18 @@ export default {
         background: var(--card-bg-color);
         border-radius: 12px;
         padding: 10px 14px;
+      }
+
+      .mobile-current-plan-tip {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--theme-color);
+        background: rgba(var(--theme-color-rgb), 0.08);
+        border: 1px solid rgba(var(--theme-color-rgb), 0.2);
+        border-radius: 999px;
+        padding: 5px 10px;
+        display: inline-flex;
+        margin-bottom: 8px;
       }
 
       .mobile-detail-row {
@@ -2021,6 +2060,10 @@ export default {
 }
 
 @media (max-width: 480px) {
+  .shop-container .plans-wrapper .mobile-plan-chip {
+    flex-basis: calc(100vw - 38px);
+  }
+
   .shop-container .filter-toggle-container .filter-toggle-wrapper {
     padding: 2px;
 
