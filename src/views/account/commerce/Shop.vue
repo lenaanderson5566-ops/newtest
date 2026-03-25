@@ -1930,6 +1930,7 @@ export default {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
         align-items: start;
+        padding-top: 34px;
       }
 
       .mobile-plan-chip-wrap {
@@ -1941,9 +1942,12 @@ export default {
       }
 
       .chip-current-header {
-        position: static;
-        min-height: 34px;
-        padding: 6px 8px;
+        position: absolute;
+        top: -34px;
+        left: 0;
+        right: 0;
+        height: 34px;
+        padding: 0 8px;
         border-radius: 12px 12px 0 0;
         display: flex;
         align-items: center;
@@ -1979,9 +1983,6 @@ export default {
         }
 
         &.current-plan-chip {
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
-
           .chip-body {
             min-height: 96px;
           }
