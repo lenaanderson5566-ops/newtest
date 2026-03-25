@@ -1841,8 +1841,8 @@ export default {
     margin-top: 10px;
     margin-bottom: 0;
     flex-shrink: 0;
-    display: flex;
-    justify-content: flex-end;
+    width: fit-content;
+    margin-left: auto;
 
     .filter-toggle-wrapper {
       position: relative;
@@ -2212,7 +2212,8 @@ export default {
   }
 
   .shop-container .filter-toggle-container {
-    width: 100%;
+    width: fit-content;
+    margin-left: auto;
 
     .filter-toggle-wrapper {
       border: 1px solid var(--border-color);
