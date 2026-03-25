@@ -1063,9 +1063,10 @@ export default {
       }
 
   .welcome-card {
-    border: 1px solid var(--border-color);
+    border: none;
     border-radius: var(--shop-card-radius);
     box-shadow: none;
+    background: transparent;
 
     margin-bottom: 24px;
 
@@ -1409,8 +1410,8 @@ export default {
       .desktop-current-outside-strip {
         position: absolute;
         top: -26px;
-        left: 10px;
-        right: 10px;
+        left: 0;
+        right: 0;
         height: 26px;
         display: flex;
         align-items: center;
@@ -1506,12 +1507,12 @@ export default {
         }
 
         .desktop-current-check {
-          width: 28px;
-          height: 28px;
+          width: 22px;
+          height: 22px;
           border-radius: 50%;
           color: #4d4ad5;
           background: #fff;
-          padding: 5px;
+          padding: 3px;
           flex-shrink: 0;
         }
 
@@ -1593,7 +1594,7 @@ export default {
     }
 
     .plan-price {
-      margin: 14px 0 18px;
+      margin: 8px 0 10px;
 
       padding: 0 4px;
       text-align: center;
@@ -1641,7 +1642,7 @@ export default {
     .plan-price + .btn-purchase {
       align-self: center;
       margin-top: 0;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .discount-calculation {
@@ -1697,7 +1698,7 @@ export default {
 
     .plan-features {
       width: 100%;
-      margin: 24px 0 10px 0;
+      margin: 14px 0 8px 0;
 
       padding: 0 4px;
 
