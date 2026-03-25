@@ -209,13 +209,65 @@
       <div class="bottom-safe-area"></div>
     </div>
 
+    <transition name="modal-fade">
+      <div v-if="showPasswordModal" class="modal-overlay" @click="closePasswordModal">
+        <div class="modal-content" @click.stop>
+          <div class="modal-header">
+            <h3>{{ $t('profile.changePasswordTitle') }}</h3>
+            <button class="modal-close" @click="closePasswordModal">
+              <IconX :size="20" />
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>{{ $t('profile.oldPassword') }}</label>
+              <input v-model="passwordForm.oldPassword" type="password" :placeholder="$t('profile.oldPassword')" />
+            </div>
+            <div class="form-group">
+              <label>{{ $t('profile.newPassword') }}</label>
+              <input v-model="passwordForm.newPassword" type="password" :placeholder="$t('profile.newPassword')" />
+            </div>
+            <div class="form-group">
+              <label>{{ $t('profile.confirmPassword') }}</label>
+              <input v-model="passwordForm.confirmPassword" type="password" :placeholder="$t('profile.confirmPassword')" />
+            </div>
+            <div v-if="passwordMismatch" class="error-text">{{ $t('profile.passwordMismatch') }}</div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn-cancel" @click="closePasswordModal">{{ $t('common.cancel') }}</button>
+            <button class="btn-submit" :disabled="!validatePasswordForm() || updatingPassword" @click="submitPasswordChange">
+              <span v-if="updatingPassword" class="loader"></span>
+              <span>{{ $t('common.submit') }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <transition name="fade">
+      <div v-if="showResetModal" class="modal-overlay" @click="closeResetModal">
+        <div class="modal-content reset-modal-content" @click.stop>
+          <div class="modal-header">
+            <h3>{{ $t('profile.resetSecurityTitle') }}</h3>
+            <button class="close-btn" @click="closeResetModal">✕</button>
+          </div>
+          <p class="modal-text">{{ $t('profile.resetSecurityConfirm') }}</p>
+          <div class="modal-actions">
+            <button class="action-btn" @click="closeResetModal">{{ $t('common.cancel') }}</button>
+            <button class="action-btn danger" :disabled="resettingSecurity" @click="submitSecurityReset">
+              {{ resettingSecurity ? $t('common.processing') : $t('profile.confirmReset') }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { IconChevronRight } from '@tabler/icons-vue';
+import { IconChevronRight, IconX } from '@tabler/icons-vue';
 import { useI18n } from 'vue-i18n';
 import { changePassword as apiChangePassword, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
@@ -233,8 +285,15 @@ const remindTraffic = ref(false);
 const autoRenewal = ref(false);
 const updatingSettings = ref(false);
 const updatingAutoRenewal = ref(false);
+const showPasswordModal = ref(false);
+const showResetModal = ref(false);
 const updatingPassword = ref(false);
 const resettingSecurity = ref(false);
+const passwordForm = ref({
+  oldPassword: '',
+  newPassword: '',
+  confirmPassword: ''
+});
 const activeSection = ref('overview');
 const sectionTabs = [
   { key: 'overview', label: '总览' },
@@ -306,30 +365,38 @@ const handleSectionClick = (sectionKey) => {
   activeSection.value = sectionKey;
 };
 
-const openPasswordChangePrompt = async () => {
-  if (updatingPassword.value) return;
-  const oldPassword = window.prompt('请输入旧密码');
-  if (oldPassword === null) return;
-  const newPassword = window.prompt('请输入新密码');
-  if (newPassword === null) return;
-  const confirmPassword = window.prompt('请确认新密码');
-  if (confirmPassword === null) return;
+const passwordMismatch = computed(() => {
+  if (!passwordForm.value.confirmPassword) return false;
+  return passwordForm.value.newPassword !== passwordForm.value.confirmPassword;
+});
 
-  if (!oldPassword || !newPassword || !confirmPassword) {
-    showToast('请填写完整密码信息', 'warning');
-    return;
-  }
-  if (newPassword !== confirmPassword) {
-    showToast('两次输入的新密码不一致', 'warning');
-    return;
-  }
+const validatePasswordForm = () => (
+  passwordForm.value.oldPassword &&
+  passwordForm.value.newPassword &&
+  passwordForm.value.confirmPassword &&
+  !passwordMismatch.value
+);
+
+const openPasswordChangePrompt = () => {
+  showPasswordModal.value = true;
+};
+
+const closePasswordModal = () => {
+  showPasswordModal.value = false;
+  passwordForm.value = { oldPassword: '', newPassword: '', confirmPassword: '' };
+};
+
+const submitPasswordChange = async () => {
+  if (updatingPassword.value) return;
+  if (!validatePasswordForm()) return;
   try {
     updatingPassword.value = true;
     await apiChangePassword({
-      old_password: oldPassword,
-      new_password: newPassword
+      old_password: passwordForm.value.oldPassword,
+      new_password: passwordForm.value.newPassword
     });
     showToast('密码修改成功', 'success');
+    closePasswordModal();
   } catch (error) {
     showToast('密码修改失败，请稍后重试', 'error');
   } finally {
@@ -337,14 +404,20 @@ const openPasswordChangePrompt = async () => {
   }
 };
 
-const confirmSecurityReset = async () => {
-  if (!window.confirm('将会重置当前设备标识，你需要重新导入订阅配置，是否继续？')) {
-    return;
-  }
+const confirmSecurityReset = () => {
+  showResetModal.value = true;
+};
+
+const closeResetModal = () => {
+  showResetModal.value = false;
+};
+
+const submitSecurityReset = async () => {
   try {
     resettingSecurity.value = true;
     await apiResetSecurity();
     showToast('重置成功，请重新导入订阅', 'success');
+    closeResetModal();
   } catch (error) {
     showToast('重置失败，请稍后重试', 'error');
   } finally {
@@ -736,6 +809,165 @@ input:checked + .slider:before { transform: translateX(18px); }
 .slider.round:before { border-radius: 50%; }
 
 .bottom-safe-area { height: calc(env(safe-area-inset-bottom, 0px) + 10px); }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background-color: var(--card-background);
+  border-radius: 12px;
+  box-shadow: none;
+  width: 90%;
+  max-width: 480px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .modal-close,
+  .close-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(var(--theme-color-rgb), 0.1);
+      color: var(--theme-color);
+    }
+  }
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 8px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-secondary);
+    color: var(--text-color);
+    font-size: 15px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--theme-color);
+      box-shadow: none;
+    }
+  }
+}
+
+.error-text {
+  margin-top: 6px;
+  color: #f44336;
+  font-size: 13px;
+}
+
+.modal-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-cancel,
+.action-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-color);
+}
+
+.btn-submit,
+.action-btn.danger {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background: rgba(var(--theme-color-rgb), 0.92);
+  color: #fff;
+}
+
+.modal-text {
+  padding: 16px;
+  margin: 0;
+  color: var(--secondary-text-color);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 16px 16px;
+}
+
+.loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 
 @media (max-width: 1100px) {
   .overview-panels {
