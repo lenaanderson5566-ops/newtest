@@ -57,17 +57,22 @@
 
       <div v-show="activeSection === 'subscription'" class="section-group">
         <h3 class="section-title section-title-outside">{{ $t('myCenter.subscriptionPlanTitle') }}</h3>
+        <p class="section-subtitle">Plan Details</p>
         <section class="section-block dashboard-like-card">
-        <div class="subscription-plan-card">
-          <div class="plan-name">{{ subscriptionText }}</div>
-          <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
-          <div class="plan-action-wrap">
-            <button class="plan-action-btn" @click="go('/shop')">
-              <span>切换订阅</span>
-              <IconChevronRight :size="18" />
-            </button>
+          <div class="subscription-plan-card">
+            <div class="plan-name">{{ subscriptionText }}</div>
+            <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
+            <div class="plan-action-wrap">
+              <button class="plan-action-btn" @click="go('/shop')">
+                <span>切换订阅</span>
+                <IconChevronRight :size="18" />
+              </button>
+            </div>
           </div>
-        </div>
+        </section>
+
+        <p class="section-subtitle">Payment Info</p>
+        <section class="section-block dashboard-like-card">
         <div class="settings-list">
 
           <div class="settings-row">
