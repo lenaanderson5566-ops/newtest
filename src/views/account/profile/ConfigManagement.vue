@@ -1,6 +1,11 @@
 <template>
   <div class="config-management page-shell">
     <div class="config-management-inner page-inner page-stack">
+      <button class="account-back-btn" @click="goBackToAccount">
+        <span aria-hidden="true">←</span>
+        <span class="back-label">返回账号中心</span>
+      </button>
+
       <div class="profile-card">
         <div class="card-header">
           <h3>{{ $t('profile.configManagement') }}</h3>
@@ -38,11 +43,20 @@
 
 <script setup>
 import { inject, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { resetSecurity as apiResetSecurity } from '@/api/account/user';
 
 const $toast = inject('$toast');
+const router = useRouter();
 const showResetModal = ref(false);
 const resetting = ref(false);
+const goBackToAccount = () => {
+  if (window.history.length > 1) {
+    router.back();
+    return;
+  }
+  router.push('/profile');
+};
 
 const handleResetSecurity = async () => {
   if (resetting.value) return;
@@ -64,6 +78,26 @@ const handleResetSecurity = async () => {
 <style scoped lang="scss">
 .config-management {
   padding-bottom: 2px;
+}
+
+.account-back-btn {
+  width: fit-content;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.back-label {
+  font-size: 14px;
+  color: var(--secondary-text-color);
 }
 
 .profile-card {
@@ -139,5 +173,11 @@ const handleResetSecurity = async () => {
   border: none;
   background: transparent;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .back-label {
+    display: none;
+  }
 }
 </style>

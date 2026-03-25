@@ -1,6 +1,11 @@
 ﻿<template>
   <div class="shop-container page-shell">
     <div class="shop-inner page-inner page-stack">
+      <button class="account-back-btn" @click="goBackToAccount">
+        <span aria-hidden="true">←</span>
+        <span class="back-label">返回账号中心</span>
+      </button>
+
       <!-- 欢迎卡片 -->
 
       <div class="dashboard-card welcome-card">
@@ -259,6 +264,13 @@ export default {
     const { showToast } = useToast();
 
     const router = useRouter();
+    const goBackToAccount = () => {
+      if (window.history.length > 1) {
+        router.back();
+        return;
+      }
+      router.push('/profile');
+    };
     const RECURRING_PERIOD_TYPES = [
       "month_price",
       "quarter_price",
@@ -886,6 +898,7 @@ export default {
 
       calculateDiscount,
       isCurrentPlan,
+      goBackToAccount,
     };
   },
 };
@@ -1748,7 +1761,31 @@ export default {
   }
 }
 
+.account-back-btn {
+  width: fit-content;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.back-label {
+  font-size: 14px;
+  color: var(--secondary-text-color);
+}
+
 @media (max-width: 768px) {
+  .back-label {
+    display: none;
+  }
+
   .shop-container {
   --shop-card-radius: var(--radius-lg);
 
