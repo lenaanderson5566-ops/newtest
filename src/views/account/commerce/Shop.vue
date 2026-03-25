@@ -82,6 +82,17 @@
 
         <template v-else>
           <div class="mobile-plan-layout">
+            <div class="mobile-current-summary" v-if="mobileCurrentPlan">
+              <div class="summary-header">{{ currentPlanBadgeLabel }}</div>
+              <div class="summary-card">
+                <div class="summary-name">{{ mobileCurrentPlan.name }}</div>
+                <div class="summary-subtitle">{{ getMobilePlanSubtitle(mobileCurrentPlan) }}</div>
+                <div class="summary-check">
+                  <IconCheck :size="16" />
+                </div>
+              </div>
+            </div>
+
             <div class="mobile-plan-selector">
               <button
                 v-for="plan in filteredPlans"
@@ -95,7 +106,6 @@
                 @click="onSelectPlan(plan)"
               >
                 <span class="chip-name">{{ plan.name }}</span>
-                <span v-if="isCurrentPlan(plan)" class="chip-current-badge">{{ currentPlanBadgeLabel }}</span>
                 <span class="chip-price">{{ currencySymbol }}{{ getPlanMainPrice(plan) }}</span>
                 <span class="chip-period">
                   {{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`) }}
@@ -104,9 +114,6 @@
             </div>
 
             <div class="mobile-plan-details" v-if="selectedPlan">
-              <div class="mobile-current-plan-tip" v-if="isCurrentPlan(selectedPlan)">
-                {{ currentPlanBadgeLabel }} · {{ selectedPlan.name }}
-              </div>
               <div class="mobile-detail-row">
                 <span class="mobile-label">价格</span>
                 <span class="mobile-value">{{ currencySymbol }}{{ getPlanMainPrice(selectedPlan) }}</span>
@@ -776,6 +783,22 @@ export default {
       return matched || filteredPlans.value[0];
     });
 
+    const mobileCurrentPlan = computed(() => {
+      const matched = filteredPlans.value.find((plan) => isCurrentPlan(plan));
+      return matched || selectedPlan.value;
+    });
+
+    const getMobilePlanSubtitle = (plan) => {
+      if (!plan) return "";
+      if (isJsonContent(plan.content)) {
+        const matched = parseJsonContent(plan.content).find((item) => /\b(4k|[0-9]{3,4}p)\b/i.test(String(item?.feature || "")));
+        if (matched?.feature) {
+          return matched.feature;
+        }
+      }
+      return `${currencySymbol.value}${getPlanMainPrice(plan)} / ${t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`)}`;
+    };
+
     const getMobileFeatureRows = (plan) => {
       if (!plan || !isJsonContent(plan.content)) return [];
       return parseJsonContent(plan.content)
@@ -971,8 +994,10 @@ export default {
       setFilter,
       getFilterDisplayLabel,
       selectedPlan,
+      mobileCurrentPlan,
       onSelectPlan,
       getMobileFeatureRows,
+      getMobilePlanSubtitle,
 
       getPlanMainPrice,
 
@@ -1907,29 +1932,78 @@ export default {
         gap: 12px;
       }
 
-      .mobile-plan-selector {
+      .mobile-current-summary {
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        overflow: hidden;
+        background: var(--card-bg-color);
+      }
+
+      .summary-header {
+        height: 40px;
         display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #2d2d2d;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .summary-card {
+        margin: 12px;
+        border-radius: 14px;
+        padding: 16px 16px 18px;
+        background: linear-gradient(135deg, #2259aa 0%, #5d35d9 100%);
+        color: #fff;
+        position: relative;
+      }
+
+      .summary-name {
+        font-size: 22px;
+        line-height: 1.2;
+        font-weight: 700;
+      }
+
+      .summary-subtitle {
+        font-size: 16px;
+        margin-top: 6px;
+        font-weight: 600;
+        opacity: 0.95;
+      }
+
+      .summary-check {
+        position: absolute;
+        right: 14px;
+        bottom: 14px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #4d4ad5;
+        background: #fff;
+      }
+
+      .mobile-plan-selector {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
-        overflow-x: auto;
-        padding: 2px 2px 6px;
-        margin: 0 -2px;
-        scroll-padding-left: 2px;
-        -webkit-overflow-scrolling: touch;
       }
 
       .mobile-plan-chip {
-        flex: 0 0 min(220px, calc(100vw - 46px));
         border: 1px solid var(--border-color);
         background: var(--card-bg-color);
         border-radius: 12px;
-        padding: 12px;
+        padding: 10px;
         display: flex;
         flex-direction: column;
         gap: 4px;
         text-align: left;
         color: var(--text-color);
         position: relative;
-        min-height: 108px;
+        min-height: 96px;
 
         &.active {
           border-color: rgba(var(--theme-color-rgb), 0.65);
@@ -1937,31 +2011,13 @@ export default {
         }
       }
 
-      .mobile-plan-chip:last-child {
-        margin-right: 2px;
-      }
-
       .chip-name {
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 700;
-        padding-right: 86px;
-      }
-
-      .chip-current-badge {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--theme-color);
-        border: 1px solid rgba(var(--theme-color-rgb), 0.26);
-        background: rgba(var(--theme-color-rgb), 0.1);
-        border-radius: 999px;
-        padding: 2px 8px;
       }
 
       .chip-price {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 700;
       }
 
@@ -1975,18 +2031,6 @@ export default {
         background: var(--card-bg-color);
         border-radius: 12px;
         padding: 10px 14px;
-      }
-
-      .mobile-current-plan-tip {
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--theme-color);
-        background: rgba(var(--theme-color-rgb), 0.08);
-        border: 1px solid rgba(var(--theme-color-rgb), 0.2);
-        border-radius: 999px;
-        padding: 5px 10px;
-        display: inline-flex;
-        margin-bottom: 8px;
       }
 
       .mobile-detail-row {
@@ -2060,8 +2104,8 @@ export default {
 }
 
 @media (max-width: 480px) {
-  .shop-container .plans-wrapper .mobile-plan-chip {
-    flex-basis: calc(100vw - 38px);
+  .shop-container .plans-wrapper .mobile-plan-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .shop-container .filter-toggle-container .filter-toggle-wrapper {
