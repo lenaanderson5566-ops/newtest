@@ -1966,7 +1966,7 @@ export default {
         border: 1px solid var(--border-color);
         background: var(--card-bg-color);
         border-radius: 12px;
-        padding: 10px;
+        padding: 0;
         display: flex;
         flex-direction: column;
         gap: 4px;
@@ -1983,9 +1983,7 @@ export default {
         }
 
         &.current-plan-chip {
-          .chip-body {
-            min-height: 96px;
-          }
+          padding: 0;
         }
 
         &.current-plan-chip.active {
@@ -2005,6 +2003,9 @@ export default {
         gap: 6px;
         position: relative;
         height: 100%;
+        min-height: 136px;
+        padding: 10px;
+        border-radius: 12px;
       }
 
       .chip-name {
