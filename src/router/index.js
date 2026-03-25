@@ -48,6 +48,7 @@ const getActiveNavForRoute = (routeName) => {
     'Shop',
     'OrderConfirm',
     'Payment',
+    'GiftCardRedeem',
     'AnnouncementList'
   ]);
 
@@ -391,6 +392,17 @@ const routes = [
           get activeNav() { return getActiveNavForRoute('NodeList'); } 
         }
 
+      },
+
+      {
+        path: 'gift-card',
+        name: 'GiftCardRedeem',
+        component: () => import('@/views/account/commerce/GiftCardRedeem.vue'),
+        meta: {
+          titleKey: 'profile.giftCardTitle',
+          requiresAuth: true,
+          get activeNav() { return getActiveNavForRoute('GiftCardRedeem'); }
+        }
       },
 
       {

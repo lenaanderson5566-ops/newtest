@@ -106,7 +106,7 @@
             <IconChevronRight :size="18" />
           </button>
 
-          <button class="nav-row" @click="go('/billing')">
+          <button class="nav-row" @click="go('/gift-card')">
             <div class="row-main row-main-with-icon">
               <IconGift :size="20" class="row-leading-icon" />
               <div class="row-content">
