@@ -10,7 +10,6 @@
           <IconGift :size="22" />
           <h2>{{ $t('profile.giftCardTitle') }}</h2>
         </div>
-        <p class="hero-desc">输入礼品卡代码，快速兑换余额、时长或流量权益。</p>
 
         <div class="redeem-form">
           <input
@@ -20,7 +19,7 @@
             :disabled="redeeming"
           />
           <button class="btn-primary" :disabled="redeeming || !giftCode" @click="submitRedeem">
-            {{ redeeming ? $t('common.processing') : $t('profile.giftCardSubmit') }}
+            {{ redeemButtonText }}
           </button>
         </div>
       </section>
@@ -62,6 +61,10 @@ const { showToast } = useToast();
 const giftCode = ref('');
 const redeeming = ref(false);
 const lastResult = ref(null);
+const redeemButtonText = computed(() => {
+  const label = t('profile.giftCardSubmit');
+  return redeeming.value ? `${label}...` : label;
+});
 
 const formatResultText = (payload) => {
   const type = Number(payload?.type || 0);
@@ -141,11 +144,6 @@ const goBack = () => {
     margin: 0;
     font-size: 20px;
   }
-}
-
-.hero-desc {
-  margin: 8px 0 0;
-  color: var(--secondary-text-color);
 }
 
 .redeem-form {
