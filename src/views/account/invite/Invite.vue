@@ -954,53 +954,6 @@ export default {
   }
 }
 
-/* 简化邀请页风格，减少花哨装饰（最终覆盖） */
-.account-container {
-  .dashboard-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    box-shadow: none;
-  }
-
-  .balance-card .balance-container,
-  .referral-kpi-card,
-  .kpi-item,
-  .invite-card,
-  .invite-card-inner,
-  .records-card,
-  .records-table-wrapper {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    box-shadow: none;
-  }
-
-  .invite-card,
-  .invite-card-inner,
-  .invite-card-header,
-  .invite-card-body,
-  .invite-card-footer,
-  .invite-cards-nav {
-    transform: none !important;
-    animation: none !important;
-  }
-
-  .invite-card-inner::before,
-  .invite-card-inner::after,
-  .invite-card-body::before,
-  .invite-card-body::after {
-    display: none !important;
-    content: none !important;
-  }
-
-  .invite-card:hover,
-  .invite-card-inner:hover,
-  .kpi-item:hover,
-  .dashboard-card:hover {
-    transform: none;
-    box-shadow: none;
-  }
-}
-
 @media (max-width: 1100px) {
   .account-container {
     .stats-grid {
@@ -4342,39 +4295,6 @@ export default {
       padding-top: 8px;
       padding-bottom: 8px;
     }
-  }
-}
-
-/* 简化邀请页风格，减少花哨装饰（文件尾最终覆盖） */
-.account-container {
-  .dashboard-card,
-  .referral-kpi-card,
-  .kpi-item,
-  .invite-card,
-  .invite-card-inner,
-  .records-card,
-  .records-table-wrapper {
-    background: var(--card-bg) !important;
-    border: 1px solid var(--border-color) !important;
-    box-shadow: none !important;
-  }
-
-  .invite-card,
-  .invite-card-inner,
-  .invite-card-header,
-  .invite-card-body,
-  .invite-card-footer,
-  .invite-cards-nav {
-    transform: none !important;
-    animation: none !important;
-  }
-
-  .invite-card-inner::before,
-  .invite-card-inner::after,
-  .invite-card-body::before,
-  .invite-card-body::after {
-    content: none !important;
-    display: none !important;
   }
 }
 
