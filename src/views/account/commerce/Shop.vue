@@ -14,20 +14,22 @@
         </div>
 
         <div class="card-body">
-          <p>{{ $t("shop.description") }}</p>
-          <div class="filter-toggle-container" v-if="displayedFilters.length > 0">
-            <div class="filter-toggle-wrapper" role="tablist" :aria-label="$t('shop.billingPeriodAria')">
-              <span class="filter-highlight" :style="filterHighlightStyle"></span>
-              <button
-                v-for="filter in displayedFilters"
-                :key="`${filter.value}-${currentLanguage}`"
-                type="button"
-                class="filter-option"
-                :class="{ active: selectedFilter === filter.value }"
-                @click="setFilter(filter.value)"
-              >
-                <span class="option-text">{{ getFilterDisplayLabel(filter) }}</span>
-              </button>
+          <div class="welcome-top-row">
+            <p>{{ $t("shop.description") }}</p>
+            <div class="filter-toggle-container" v-if="displayedFilters.length > 0">
+              <div class="filter-toggle-wrapper" role="tablist" :aria-label="$t('shop.billingPeriodAria')">
+                <span class="filter-highlight" :style="filterHighlightStyle"></span>
+                <button
+                  v-for="filter in displayedFilters"
+                  :key="`${filter.value}-${currentLanguage}`"
+                  type="button"
+                  class="filter-option"
+                  :class="{ active: selectedFilter === filter.value }"
+                  @click="setFilter(filter.value)"
+                >
+                  <span class="option-text">{{ getFilterDisplayLabel(filter) }}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1079,6 +1081,18 @@ export default {
       line-height: 1.6;
       font-weight: 500;
     }
+
+    .welcome-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+
+      p {
+        margin: 0;
+      }
+    }
   }
 
   .dashboard-card {
@@ -1838,11 +1852,11 @@ export default {
   }
 
   .filter-toggle-container {
-    margin-top: 10px;
+    margin-top: 0;
     margin-bottom: 0;
     flex-shrink: 0;
     width: fit-content;
-    margin-left: auto;
+    margin-left: 0;
 
     .filter-toggle-wrapper {
       position: relative;
