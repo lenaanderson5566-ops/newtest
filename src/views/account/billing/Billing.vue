@@ -1,31 +1,6 @@
 <template>
   <div class="billing-container page-shell">
     <div class="billing-inner page-inner page-stack">
-      <div class="billing-tabs-card">
-        <button
-          class="billing-tab"
-          :class="{ active: activeTab === 'wallet' }"
-          v-if="showWalletTab"
-          @click="switchTab('wallet')"
-        >
-          {{ $t('menu.wallet') }}
-        </button>
-        <button
-          class="billing-tab"
-          :class="{ active: activeTab === 'orders' }"
-          @click="switchTab('orders')"
-        >
-          {{ $t('menu.orders') }}
-        </button>
-        <button
-          class="billing-tab"
-          :class="{ active: activeTab === 'referral' }"
-          @click="switchTab('referral')"
-        >
-          {{ $t('menu.referral') }}
-        </button>
-      </div>
-
       <div class="billing-panel">
         <WalletDeposit v-if="activeTab === 'wallet' && showWalletTab" />
         <OrderList v-else-if="activeTab === 'orders'" />
@@ -55,17 +30,6 @@ const activeTab = computed(() => {
   return allowedTabs.value.includes(queryTab) ? queryTab : allowedTabs.value[0];
 });
 
-const switchTab = (tab) => {
-  if (!allowedTabs.value.includes(tab) || tab === activeTab.value) return;
-  router.replace({
-    path: '/billing',
-    query: {
-      ...route.query,
-      tab,
-    },
-  });
-};
-
 watch(
   () => route.query.tab,
   () => {
@@ -92,57 +56,8 @@ watch(
 .billing-inner {
 }
 
-.billing-tabs-card {
-  display: inline-flex;
-  gap: 6px;
-  padding: 5px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: var(--surface-subtle);
-  box-shadow: none;
-  margin-bottom: 12px;
-}
-
-.billing-tab {
-  border: 0;
-  background: transparent;
-  color: var(--neutral-strong);
-  height: 34px;
-  padding: 0 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: rgba(var(--theme-color-rgb), 0.08);
-  }
-
-  &.active {
-    background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
-    color: #fff;
-    box-shadow: none;
-  }
-}
-
 .billing-panel {
   border-radius: var(--radius-lg);
   margin-top: 0;
-}
-
-@media (max-width: 768px) {
-  .billing-container {
-    padding: 0;
-  }
-
-  .billing-tabs-card {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .billing-tab {
-    flex: 1;
-    text-align: center;
-  }
 }
 </style>
