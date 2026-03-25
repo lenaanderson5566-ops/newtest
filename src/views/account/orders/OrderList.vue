@@ -348,7 +348,6 @@ const confirmCancelOrder = async () => {
 
 const headerTexts = computed(() => {
   return {
-    tradeNo: t('orders.tradeNo', '订单号'),
     createdAt: t('orders.createdAt', '创建时间'),
     cycle: t('orders.cycle', '周期'),
     totalAmount: t('orders.totalAmount', '金额'),
@@ -522,11 +521,6 @@ watch(locale, () => {
     &:last-child {
       border-bottom: none;
     }
-  }
-  
-  .trade-no {
-    font-size: 0.9rem;
-    color: var(--text-color);
   }
   
   .amount {
@@ -769,20 +763,6 @@ watch(locale, () => {
   p {
     margin: 0 0 1.5rem;
     color: var(--text-color);
-  }
-  
-  .trade-no-info {
-    background-color: rgba(var(--theme-color-rgb), 0.05);
-    padding: 1rem;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    
-    .trade-no {
-      font-weight: 600;
-      color: var(--theme-color);
-    }
   }
 }
 

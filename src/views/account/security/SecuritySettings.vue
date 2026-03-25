@@ -374,25 +374,7 @@ const goBackToAccount = () => {
   router.push('/profile');
 };
 
-const consumeActionQuery = () => {
-  if (!route.query.action) return;
-  const nextQuery = { ...route.query };
-  delete nextQuery.action;
-  router.replace({
-    path: '/security',
-    query: nextQuery
-  });
-};
-
-const handleDirectAction = () => {
-  if (route.query.action === 'change-password' && showPasswordModule.value) {
-    showPasswordModal.value = true;
-    consumeActionQuery();
-  }
-};
-
 onMounted(() => {
-  handleDirectAction();
   currentSessionId.value = getCurrentSessionId();
   if (PROFILE_CONFIG.showRecentDevices) {
     fetchActiveSessions();

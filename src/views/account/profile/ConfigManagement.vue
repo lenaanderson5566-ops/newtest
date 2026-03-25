@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { inject, onMounted, ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { resetSecurity as apiResetSecurity } from '@/api/account/user';
 
@@ -57,17 +57,6 @@ const goBackToAccount = () => {
   }
   router.push('/profile');
 };
-onMounted(() => {
-  if (router.currentRoute.value.query.action === 'reset') {
-    showResetModal.value = true;
-    const nextQuery = { ...router.currentRoute.value.query };
-    delete nextQuery.action;
-    router.replace({
-      path: '/config-management',
-      query: nextQuery
-    });
-  }
-});
 
 const handleResetSecurity = async () => {
   if (resetting.value) return;
