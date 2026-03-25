@@ -86,7 +86,7 @@
           <div class="mobile-plan-layout">
             <div class="mobile-plan-selector">
               <div
-                v-for="plan in filteredPlans"
+                v-for="(plan, planIndex) in filteredPlans"
                 :key="`mobile-${plan.id}`"
                 class="mobile-plan-chip-wrap"
                 :class="{
@@ -103,7 +103,7 @@
                   }"
                   @click="onSelectPlan(plan)"
                 >
-                  <span class="chip-body">
+                  <span class="chip-body" :class="getPlanToneClass(planIndex)">
                     <span class="chip-name">{{ plan.name }}</span>
                     <span class="chip-period" v-if="getMobilePlanSubtitle(plan)">{{ getMobilePlanSubtitle(plan) }}</span>
                     <span class="chip-check" v-if="selectedPlan && Number(selectedPlan.id) === Number(plan.id)">
@@ -152,14 +152,14 @@
               'current-plan-card': isCurrentPlan(plan),
               'selected-plan-card': Number(selectedDesktopPlanId) === Number(plan.id),
             }"
-            v-for="plan in filteredPlans"
+            v-for="(plan, planIndex) in filteredPlans"
             :key="plan.id"
             @click="setDesktopSelectedPlan(plan)"
           >
             <div v-if="isCurrentPlan(plan)" class="desktop-current-outside-strip">{{ currentPlanBadgeLabel }}</div>
             <div class="card-header">
               <div class="desktop-plan-hero" :class="{ 'is-current': isCurrentPlan(plan) }">
-                <div class="desktop-plan-gradient">
+                <div class="desktop-plan-gradient" :class="getPlanToneClass(planIndex)">
                   <div class="header-main">
                     <h2 class="card-title">{{ plan.name }}</h2>
                     <p v-if="getPlanHeroSubtitle(plan)" class="desktop-subtitle">{{ getPlanHeroSubtitle(plan) }}</p>
@@ -612,6 +612,11 @@ export default {
       return t("shop.plan.purchase");
     };
 
+    const getPlanToneClass = (index) => {
+      const tones = ["tone-1", "tone-2", "tone-3"];
+      return tones[Math.abs(Number(index) || 0) % tones.length];
+    };
+
     const fetchPlanData = async () => {
       loading.plans = true;
 
@@ -1037,6 +1042,7 @@ export default {
 
       getDisplayPriceType,
       getPurchaseButtonText,
+      getPlanToneClass,
       normalizePriceValue,
 
       SHOP_CONFIG,
@@ -1473,17 +1479,27 @@ export default {
           border-radius: 12px;
           overflow: hidden;
           border: 1px solid rgba(var(--theme-color-rgb), 0.16);
-          background: var(--card-bg-color);
 
           .desktop-plan-gradient {
             min-height: 86px;
             padding: 14px 16px;
             border-radius: 10px;
-            background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
             color: #fff;
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: flex-start;
+          }
+
+          .desktop-plan-gradient.tone-1 {
+            background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
+          }
+
+          .desktop-plan-gradient.tone-2 {
+            background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
+          }
+
+          .desktop-plan-gradient.tone-3 {
+            background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%);
           }
         }
 
@@ -2095,8 +2111,6 @@ export default {
 
         &.active {
           border-color: rgba(var(--theme-color-rgb), 0.65);
-          background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
-          color: #fff;
         }
 
         &.current-plan-chip {
@@ -2108,11 +2122,6 @@ export default {
         &.current-plan-chip.active {
           background: var(--card-bg-color);
           color: var(--text-color);
-
-          .chip-body {
-            background: linear-gradient(135deg, #2259aa 0%, #5d35d9 100%);
-            color: #fff;
-          }
         }
       }
 
@@ -2125,6 +2134,22 @@ export default {
         min-height: 108px;
         padding: 10px;
         border-radius: 12px;
+      }
+
+      .mobile-plan-chip.active .chip-body {
+        color: #fff;
+      }
+
+      .mobile-plan-chip.active .chip-body.tone-1 {
+        background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
+      }
+
+      .mobile-plan-chip.active .chip-body.tone-2 {
+        background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
+      }
+
+      .mobile-plan-chip.active .chip-body.tone-3 {
+        background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%);
       }
 
       .mobile-plan-chip.current-plan-chip .chip-body {
