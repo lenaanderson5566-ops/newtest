@@ -2,8 +2,7 @@
   <div class="security-container page-shell">
     <div class="security-inner page-inner page-stack">
       <button class="account-back-btn" @click="goBackToAccount">
-        <span aria-hidden="true">←</span>
-        <span class="back-label">返回账号中心</span>
+        <IconChevronLeft :size="20" />
       </button>
 
       <div class="profile-card" v-if="showPasswordModule">
@@ -133,6 +132,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { changePassword as apiChangePassword, getActiveSession, logoutAllSessions, removeActiveSession } from '@/api/account/user';
 import {
+  IconChevronLeft,
   IconLock,
   IconLogout,
   IconX,

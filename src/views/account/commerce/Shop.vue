@@ -2,8 +2,7 @@
   <div class="shop-container page-shell">
     <div class="shop-inner page-inner page-stack">
       <button class="account-back-btn" @click="goBackToAccount">
-        <span aria-hidden="true">←</span>
-        <span class="back-label">返回账号中心</span>
+        <IconChevronLeft :size="20" />
       </button>
 
       <!-- 欢迎卡片 -->
@@ -100,15 +99,14 @@
                   :class="{
                     active: selectedPlan && Number(selectedPlan.id) === Number(plan.id),
                     'current-plan-chip': isCurrentPlan(plan),
+                    [getPlanToneClass(planIndex)]: true,
                   }"
                   @click="onSelectPlan(plan)"
                 >
-                  <span class="chip-body" :class="getPlanToneClass(planIndex)">
-                    <span class="chip-name">{{ plan.name }}</span>
-                    <span class="chip-period" v-if="getMobilePlanSubtitle(plan)">{{ getMobilePlanSubtitle(plan) }}</span>
-                    <span class="chip-check" v-if="selectedPlan && Number(selectedPlan.id) === Number(plan.id)">
-                      <IconCheck :size="16" />
-                    </span>
+                  <span class="chip-name">{{ plan.name }}</span>
+                  <span class="chip-period" v-if="getMobilePlanSubtitle(plan)">{{ getMobilePlanSubtitle(plan) }}</span>
+                  <span class="chip-check" v-if="selectedPlan && Number(selectedPlan.id) === Number(plan.id)">
+                    <IconCheck :size="16" />
                   </span>
                 </button>
               </div>
@@ -305,6 +303,7 @@ import { SHOP_CONFIG } from "@/utils/baseConfig";
 
 
 import {
+  IconChevronLeft,
   IconCheck,
   IconX,
   IconShoppingCart,
@@ -318,6 +317,7 @@ export default {
   name: "ShopView",
 
   components: {
+    IconChevronLeft,
   
   
   
@@ -2058,13 +2058,14 @@ export default {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
-        align-items: start;
+        align-items: stretch;
         padding-top: 34px;
       }
 
       .mobile-plan-chip-wrap {
         position: relative;
         min-width: 0;
+        display: flex;
       }
 
       .mobile-plan-chip-wrap.current-plan-chip {
@@ -2108,13 +2109,28 @@ export default {
         position: relative;
         min-height: 116px;
         overflow: hidden;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 10px;
 
         &.active {
           border-color: rgba(var(--theme-color-rgb), 0.65);
+          color: #fff;
+        }
+
+        &.active.tone-1 {
+          background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
+        }
+
+        &.active.tone-2 {
+          background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
+        }
+
+        &.active.tone-3 {
+          background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%);
         }
 
         &.current-plan-chip {
-          padding: 0;
           border-top-left-radius: 0;
           border-top-right-radius: 0;
         }
@@ -2123,38 +2139,6 @@ export default {
           background: var(--card-bg-color);
           color: var(--text-color);
         }
-      }
-
-      .chip-body {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        position: relative;
-        height: 100%;
-        min-height: 108px;
-        padding: 10px;
-        border-radius: 12px;
-      }
-
-      .mobile-plan-chip.active .chip-body {
-        color: #fff;
-      }
-
-      .mobile-plan-chip.active .chip-body.tone-1 {
-        background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
-      }
-
-      .mobile-plan-chip.active .chip-body.tone-2 {
-        background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
-      }
-
-      .mobile-plan-chip.active .chip-body.tone-3 {
-        background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%);
-      }
-
-      .mobile-plan-chip.current-plan-chip .chip-body {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
       }
 
       .chip-name {

@@ -2,8 +2,7 @@
   <div class="config-management page-shell">
     <div class="config-management-inner page-inner page-stack">
       <button class="account-back-btn" @click="goBackToAccount">
-        <span aria-hidden="true">←</span>
-        <span class="back-label">返回账号中心</span>
+        <IconChevronLeft :size="20" />
       </button>
 
       <div class="profile-card">
@@ -44,6 +43,7 @@
 <script setup>
 import { inject, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { IconChevronLeft } from '@tabler/icons-vue';
 import { resetSecurity as apiResetSecurity } from '@/api/account/user';
 
 const $toast = inject('$toast');

@@ -189,17 +189,27 @@
 
         <h3 class="section-title section-title-outside">{{ $t('myCenter.levelBenefitsTitle') }}</h3>
         <section class="section-block dashboard-like-card">
-          <div class="settings-list">
-            <div class="settings-row">
-              <div class="row-main">
-                <div class="row-title">等级与成长值</div>
-                <p>{{ tierMemberDisplay }} · Lv.{{ userTier.level || 0 }} · {{ formatTierNumber(userTier.points) }} 积分</p>
-              </div>
+          <div class="tier-intro-list">
+            <div class="tier-intro-card">
+              <div class="tier-intro-title">积分规则介绍</div>
+              <p>每充值 1 美元可获得 100 积分，积分可用于提升会员等级并解锁对应权益。</p>
+            </div>
+            <div class="tier-intro-card">
+              <div class="tier-intro-title">积分等级介绍</div>
+              <p>当前等级：{{ tierMemberDisplay }}（Lv.{{ userTier.level || 0 }}），当前积分：{{ formatTierNumber(userTier.points) }}。</p>
+              <p v-if="userTier.nextTierKey">距离 {{ nextTierNameDisplay }} 还需 {{ formatTierNumber(userTier.pointsToNextTier) }} 积分。</p>
+              <p v-else>您已达到最高等级，继续累计积分可保持高等级权益。</p>
+              <p class="tier-intro-note">建议持续订阅并保持活跃充值，积分将自动累计并用于等级成长。</p>
+            </div>
+            <div class="tier-intro-card tier-intro-card--muted">
+              <div class="tier-intro-title">权益说明</div>
+              <p>不同等级可获得差异化服务权益，等级越高可享受的资源与优先支持越丰富。</p>
+              <p>系统会根据最新积分自动刷新等级展示，无需手动操作。</p>
             </div>
           </div>
         </section>
       </div>
-
+ 
       <div class="bottom-safe-area"></div>
     </div>
 
@@ -812,6 +822,41 @@ onMounted(async () => {
   margin: 3px 0 0;
   font-size: 12px;
   color: var(--secondary-text-color);
+}
+
+.tier-intro-list {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.tier-intro-card {
+  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-radius: 12px;
+  background: rgba(var(--card-background-rgb), 0.7);
+  padding: 12px;
+
+  p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--secondary-text-color);
+  }
+}
+
+.tier-intro-card--muted {
+  background: rgba(var(--theme-color-rgb), 0.06);
+}
+
+.tier-intro-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.tier-intro-note {
+  color: var(--text-color) !important;
+  font-weight: 600;
 }
 
 .nav-row {

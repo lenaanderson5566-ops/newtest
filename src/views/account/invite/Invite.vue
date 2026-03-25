@@ -28,8 +28,7 @@
     
     <div class="account-inner page-inner page-stack">
       <button class="account-back-btn" @click="goBackToAccount">
-        <span aria-hidden="true">←</span>
-        <span class="back-label">返回账号中心</span>
+        <IconChevronLeft :size="20" />
       </button>
 
       <!-- 佣金余额卡片 -->

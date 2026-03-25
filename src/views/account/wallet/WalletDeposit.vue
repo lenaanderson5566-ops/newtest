@@ -2,8 +2,7 @@
   <div class="deposit-container page-shell">
     <div class="deposit-inner page-inner page-stack">
       <button class="account-back-btn" @click="goBackToAccount">
-        <span aria-hidden="true">←</span>
-        <span class="back-label">返回账号中心</span>
+        <IconChevronLeft :size="20" />
       </button>
 
       <!-- 余额信息卡片 -->
@@ -127,7 +126,7 @@
 import { ref, computed, onMounted, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
-import { IconAlertCircle, IconShoppingCart } from '@tabler/icons-vue';
+import { IconAlertCircle, IconChevronLeft, IconShoppingCart } from '@tabler/icons-vue';
 import { getUserInfo } from '@/api/account/user';
 import { createOrderDeposit, getUserConfig } from '@/api/account/wallet';
 import { isXiaoV2board } from '@/utils/baseConfig';
