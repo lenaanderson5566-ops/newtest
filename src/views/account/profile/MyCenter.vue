@@ -41,6 +41,16 @@
               <strong>{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
             </div>
           </div>
+
+          <div class="summary-actions">
+            <button class="nav-row summary-nav-row" @click="go('/wallet/deposit')">
+              <div class="row-main">
+                <div class="row-title">{{ $t('myCenter.accountBalance') }}</div>
+                <p>{{ $t('myCenter.balanceDesc') }}</p>
+              </div>
+              <IconChevronRight :size="18" />
+            </button>
+          </div>
         </section>
 
       </div>
@@ -59,14 +69,6 @@
               <span class="slider round"></span>
             </label>
           </div>
-
-          <button class="nav-row" @click="go('/wallet/deposit')">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.accountBalance') }}</div>
-              <p>{{ $t('myCenter.balanceDesc') }}</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
 
           <button class="nav-row" @click="go('/orders')">
             <div class="row-main">
@@ -566,6 +568,17 @@ onMounted(async () => {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
+}
+
+.summary-actions {
+  margin-top: 10px;
+}
+
+.summary-nav-row {
+  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-radius: $border-radius-sm;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .summary-item {
