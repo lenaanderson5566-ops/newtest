@@ -1937,16 +1937,14 @@ export default {
       }
 
       .mobile-plan-chip-wrap.current-plan-chip {
-        padding-top: 34px;
+        padding-top: 0;
       }
 
       .chip-current-header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 34px;
-        border-radius: 18px 18px 0 0;
+        position: static;
+        min-height: 34px;
+        padding: 6px 8px;
+        border-radius: 12px 12px 0 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1954,6 +1952,10 @@ export default {
         color: #fff;
         font-size: 13px;
         font-weight: 700;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .mobile-plan-chip {
@@ -1977,6 +1979,9 @@ export default {
         }
 
         &.current-plan-chip {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+
           .chip-body {
             min-height: 96px;
           }
