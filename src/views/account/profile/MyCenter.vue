@@ -100,7 +100,7 @@
       <section v-show="activeSection === 'security'" class="section-block dashboard-like-card">
         <h3 class="section-title">{{ $t('myCenter.securityCenterTitle') }}</h3>
         <div class="settings-list">
-          <button class="nav-row" @click="showPasswordModal = true">
+          <button class="nav-row" @click="openPasswordChangePrompt">
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.passwordManagement') }}</div>
               <p>{{ $t('myCenter.passwordManagementDesc') }}</p>
@@ -116,7 +116,7 @@
             <IconChevronRight :size="18" />
           </button>
 
-          <button class="nav-row" @click="showResetModal = true">
+          <button class="nav-row" @click="confirmSecurityReset">
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.deviceReset') }}</div>
               <p>{{ $t('myCenter.deviceResetDesc') }}</p>
@@ -209,47 +209,6 @@
       <div class="bottom-safe-area"></div>
     </div>
 
-    <transition name="modal-fade">
-      <div v-if="showPasswordModal" class="modal-overlay" @click="closePasswordModal">
-        <div class="modal-content" @click.stop>
-          <div class="modal-header">
-            <h3>修改密码</h3>
-            <button class="modal-close" @click="closePasswordModal">✕</button>
-          </div>
-          <div class="modal-body">
-            <input v-model="passwordForm.oldPassword" type="password" class="modal-input" placeholder="请输入旧密码" />
-            <input v-model="passwordForm.newPassword" type="password" class="modal-input" placeholder="请输入新密码" />
-            <input v-model="passwordForm.confirmPassword" type="password" class="modal-input" placeholder="请确认新密码" />
-          </div>
-          <div class="modal-footer">
-            <button class="btn-secondary" @click="closePasswordModal">取消</button>
-            <button class="btn btn-primary" :disabled="updatingPassword" @click="submitPasswordChange">
-              {{ updatingPassword ? '处理中...' : '确认修改' }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </transition>
-
-    <transition name="modal-fade">
-      <div v-if="showResetModal" class="modal-overlay" @click="closeResetModal">
-        <div class="modal-content" @click.stop>
-          <div class="modal-header">
-            <h3>确认设备重置</h3>
-            <button class="modal-close" @click="closeResetModal">✕</button>
-          </div>
-          <div class="modal-body">
-            <p>将会重置当前设备标识，你需要重新导入订阅配置，是否继续？</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn-secondary" @click="closeResetModal">取消</button>
-            <button class="btn btn-primary" :disabled="resettingSecurity" @click="submitSecurityReset">
-              {{ resettingSecurity ? '处理中...' : '确认重置' }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -274,15 +233,8 @@ const remindTraffic = ref(false);
 const autoRenewal = ref(false);
 const updatingSettings = ref(false);
 const updatingAutoRenewal = ref(false);
-const showPasswordModal = ref(false);
-const showResetModal = ref(false);
 const updatingPassword = ref(false);
 const resettingSecurity = ref(false);
-const passwordForm = ref({
-  oldPassword: '',
-  newPassword: '',
-  confirmPassword: ''
-});
 const activeSection = ref('overview');
 const sectionTabs = [
   { key: 'overview', label: '总览' },
@@ -354,32 +306,30 @@ const handleSectionClick = (sectionKey) => {
   activeSection.value = sectionKey;
 };
 
-const closePasswordModal = () => {
-  showPasswordModal.value = false;
-  passwordForm.value = { oldPassword: '', newPassword: '', confirmPassword: '' };
-};
+const openPasswordChangePrompt = async () => {
+  if (updatingPassword.value) return;
+  const oldPassword = window.prompt('请输入旧密码');
+  if (oldPassword === null) return;
+  const newPassword = window.prompt('请输入新密码');
+  if (newPassword === null) return;
+  const confirmPassword = window.prompt('请确认新密码');
+  if (confirmPassword === null) return;
 
-const closeResetModal = () => {
-  showResetModal.value = false;
-};
-
-const submitPasswordChange = async () => {
-  if (!passwordForm.value.oldPassword || !passwordForm.value.newPassword || !passwordForm.value.confirmPassword) {
+  if (!oldPassword || !newPassword || !confirmPassword) {
     showToast('请填写完整密码信息', 'warning');
     return;
   }
-  if (passwordForm.value.newPassword !== passwordForm.value.confirmPassword) {
+  if (newPassword !== confirmPassword) {
     showToast('两次输入的新密码不一致', 'warning');
     return;
   }
   try {
     updatingPassword.value = true;
     await apiChangePassword({
-      old_password: passwordForm.value.oldPassword,
-      new_password: passwordForm.value.newPassword
+      old_password: oldPassword,
+      new_password: newPassword
     });
     showToast('密码修改成功', 'success');
-    closePasswordModal();
   } catch (error) {
     showToast('密码修改失败，请稍后重试', 'error');
   } finally {
@@ -387,12 +337,14 @@ const submitPasswordChange = async () => {
   }
 };
 
-const submitSecurityReset = async () => {
+const confirmSecurityReset = async () => {
+  if (!window.confirm('将会重置当前设备标识，你需要重新导入订阅配置，是否继续？')) {
+    return;
+  }
   try {
     resettingSecurity.value = true;
     await apiResetSecurity();
     showToast('重置成功，请重新导入订阅', 'success');
-    closeResetModal();
   } catch (error) {
     showToast('重置失败，请稍后重试', 'error');
   } finally {
@@ -784,70 +736,6 @@ input:checked + .slider:before { transform: translateX(18px); }
 .slider.round:before { border-radius: 50%; }
 
 .bottom-safe-area { height: calc(env(safe-area-inset-bottom, 0px) + 10px); }
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 16px;
-}
-
-.modal-content {
-  width: min(420px, 100%);
-  background: var(--card-bg-color, var(--card-background));
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
-  border-radius: $border-radius-sm;
-}
-
-.modal-header,
-.modal-footer {
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.modal-header {
-  border-bottom: 1px solid rgba(var(--text-color-rgb), 0.08);
-}
-
-.modal-body {
-  padding: 12px 14px;
-  display: grid;
-  gap: 10px;
-}
-
-.modal-input {
-  width: 100%;
-  height: 38px;
-  border: 1px solid rgba(var(--text-color-rgb), 0.14);
-  border-radius: 8px;
-  padding: 0 10px;
-  background: var(--input-bg-color, transparent);
-  color: var(--text-color);
-}
-
-.modal-close {
-  border: none;
-  background: transparent;
-  color: var(--secondary-text-color);
-  cursor: pointer;
-}
-
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.modal-fade-enter-from,
-.modal-fade-leave-to {
-  opacity: 0;
-}
 
 @media (max-width: 1100px) {
   .overview-panels {
