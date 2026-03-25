@@ -1059,6 +1059,7 @@ export default {
 
   .shop-inner {
     width: 100%;
+    gap: 12px;
 
       }
 
@@ -1070,7 +1071,7 @@ export default {
     background-color: transparent;
     padding: 20px;
 
-    margin-bottom: 24px;
+    margin-bottom: 12px;
 
     .card-body p {
       color: var(--secondary-text-color);
@@ -1840,6 +1841,8 @@ export default {
     margin-top: 10px;
     margin-bottom: 0;
     flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
 
     .filter-toggle-wrapper {
       position: relative;
@@ -2073,7 +2076,7 @@ export default {
         text-align: left;
         color: var(--text-color);
         position: relative;
-        min-height: 136px;
+        min-height: 116px;
         overflow: hidden;
 
         &.active {
@@ -2105,7 +2108,7 @@ export default {
         gap: 6px;
         position: relative;
         height: 100%;
-        min-height: 136px;
+        min-height: 108px;
         padding: 10px;
         border-radius: 12px;
       }
