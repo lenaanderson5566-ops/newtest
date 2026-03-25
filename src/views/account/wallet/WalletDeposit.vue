@@ -414,6 +414,8 @@ onMounted(() => {
       .wallet-amount {
         color: var(--secondary-text-color);
         font-variant-numeric: tabular-nums;
+        font-size: 1.05rem;
+        font-weight: 600;
       }
       
       .balance-label {

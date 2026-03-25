@@ -4240,18 +4240,18 @@ export default {
 
 @media (max-width: 768px) {
   .account-container {
-    padding: 10px;
+    padding: 8px;
 
     .account-inner {
-      gap: 10px;
+      gap: 8px;
     }
 
     .dashboard-card {
-      padding: 14px;
-      margin-bottom: 10px;
+      padding: 12px;
+      margin-bottom: 8px;
 
       .card-header {
-        margin-bottom: 8px;
+        margin-bottom: 6px;
       }
     }
 
@@ -4262,33 +4262,41 @@ export default {
     }
 
     .balance-container {
-      gap: 10px;
+      gap: 8px;
 
       .balance-info {
+        .balance-value {
+          font-size: 28px;
+          margin-bottom: 4px;
+        }
+
         .balance-description {
-          margin-top: 2px;
+          display: none;
         }
       }
 
       .balance-actions {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
         gap: 6px;
 
         .btn-primary {
-          width: 100%;
-          height: 38px;
+          width: calc(50% - 3px);
+          min-width: 0;
+          height: 36px;
           font-size: 13px;
+          padding: 0 8px;
         }
       }
     }
 
     .referral-kpi-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
+      gap: 6px;
     }
 
     .kpi-item {
-      padding: 8px;
+      padding: 7px;
       border-radius: $border-radius-sm;
     }
 

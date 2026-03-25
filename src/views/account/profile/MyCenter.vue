@@ -38,7 +38,7 @@
             </div>
             <div class="summary-item is-highlight">
               <span class="label">{{ $t('myCenter.accountBalance') }}</span>
-              <strong>{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
+              <strong class="balance-amount">{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
             </div>
           </div>
 
@@ -69,7 +69,9 @@
             <button class="nav-row" @click="go('/shop')">
               <div class="row-main row-main-with-icon">
                 <IconRefresh :size="18" class="row-leading-icon" />
-                <div class="row-title">切换订阅</div>
+                <div class="row-content">
+                  <div class="row-title">切换订阅</div>
+                </div>
               </div>
               <IconChevronRight :size="18" />
             </button>
@@ -94,7 +96,9 @@
           <button class="nav-row" @click="go('/orders')">
             <div class="row-main row-main-with-icon">
               <IconReceipt :size="18" class="row-leading-icon" />
-              <div class="row-title">账单记录</div>
+              <div class="row-content">
+                <div class="row-title">账单记录</div>
+              </div>
             </div>
             <IconChevronRight :size="18" />
           </button>
@@ -102,7 +106,9 @@
           <button class="nav-row" @click="go('/billing')">
             <div class="row-main row-main-with-icon">
               <IconGift :size="18" class="row-leading-icon" />
-              <div class="row-title">兑换礼品卡</div>
+              <div class="row-content">
+                <div class="row-title">兑换礼品卡</div>
+              </div>
             </div>
             <IconChevronRight :size="18" />
           </button>
@@ -113,27 +119,42 @@
 
       <div v-show="activeSection === 'security'" class="section-group">
         <h3 class="section-title section-title-outside">{{ $t('myCenter.securityCenterTitle') }}</h3>
+        <p class="section-subtitle">Account Details</p>
         <section class="section-block dashboard-like-card">
         <div class="settings-list">
           <button class="nav-row" @click="openPasswordChangePrompt">
-            <div class="row-main">
-              <div class="row-title">修改密码</div>
+            <div class="row-main row-main-with-icon">
+              <IconLock :size="18" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">修改密码</div>
+              </div>
             </div>
             <IconChevronRight :size="18" />
           </button>
 
           <button class="nav-row" @click="go('/security?section=sessions')">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.loginRecords') }}</div>
-              <p>{{ $t('myCenter.loginRecordsDesc') }}</p>
+            <div class="row-main row-main-with-icon">
+              <IconDevices :size="18" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('myCenter.loginRecords') }}</div>
+                <p>{{ $t('myCenter.loginRecordsDesc') }}</p>
+              </div>
             </div>
             <IconChevronRight :size="18" />
           </button>
+        </div>
+        </section>
 
+        <p class="section-subtitle">Access & Privacy</p>
+        <section class="section-block dashboard-like-card">
+        <div class="settings-list">
           <button class="nav-row" @click="confirmSecurityReset">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.deviceReset') }}</div>
-              <p>{{ $t('myCenter.deviceResetDesc') }}</p>
+            <div class="row-main row-main-with-icon">
+              <IconAlertCircle :size="18" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('myCenter.deviceReset') }}</div>
+                <p>{{ $t('myCenter.deviceResetDesc') }}</p>
+              </div>
             </div>
             <IconChevronRight :size="18" />
           </button>
@@ -146,9 +167,12 @@
         <section class="section-block dashboard-like-card">
         <div class="settings-list">
           <div class="settings-row">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.expireReminder') }}</div>
-              <p>{{ $t('myCenter.expireReminderDesc') }}</p>
+            <div class="row-main row-main-with-icon">
+              <IconClock :size="18" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('myCenter.expireReminder') }}</div>
+                <p>{{ $t('myCenter.expireReminderDesc') }}</p>
+              </div>
             </div>
             <label class="switch" :class="{ disabled: updatingSettings }">
               <input type="checkbox" v-model="remindExpire" @change="updateRemindSettings" :disabled="updatingSettings" />
@@ -157,9 +181,12 @@
           </div>
 
           <div class="settings-row">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.trafficReminder') }}</div>
-              <p>{{ $t('myCenter.trafficReminderDesc') }}</p>
+            <div class="row-main row-main-with-icon">
+              <IconBell :size="18" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('myCenter.trafficReminder') }}</div>
+                <p>{{ $t('myCenter.trafficReminderDesc') }}</p>
+              </div>
             </div>
             <label class="switch" :class="{ disabled: updatingSettings }">
               <input type="checkbox" v-model="remindTraffic" @change="updateRemindSettings" :disabled="updatingSettings" />
@@ -280,7 +307,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { IconChevronRight, IconGift, IconReceipt, IconRefresh, IconX } from '@tabler/icons-vue';
+import { IconAlertCircle, IconBell, IconChevronRight, IconClock, IconDevices, IconGift, IconLock, IconReceipt, IconRefresh, IconX } from '@tabler/icons-vue';
 import { useI18n } from 'vue-i18n';
 import { changePassword as apiChangePassword, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
@@ -785,13 +812,23 @@ onMounted(async () => {
 
 .row-main-with-icon {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
 }
 
 .row-leading-icon {
   color: rgba(var(--theme-color-rgb), 0.9);
   flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.row-content {
+  min-width: 0;
+}
+
+.balance-amount {
+  font-size: 18px !important;
+  line-height: 1.2;
 }
 
 .settings-list {
