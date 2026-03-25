@@ -58,16 +58,14 @@
       <div v-show="activeSection === 'subscription'" class="section-group">
         <h3 class="section-title section-title-outside">{{ $t('myCenter.subscriptionPlanTitle') }}</h3>
         <p class="section-subtitle">Plan Details</p>
-        <section class="section-block dashboard-like-card">
-          <div class="subscription-plan-card">
-            <div class="plan-name">{{ subscriptionText }}</div>
-            <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
-            <div class="plan-action-wrap">
-              <button class="plan-action-btn" @click="go('/shop')">
-                <span>切换订阅</span>
-                <IconChevronRight :size="18" />
-              </button>
-            </div>
+        <section class="section-block dashboard-like-card subscription-plan-card">
+          <div class="plan-name">{{ subscriptionText }}</div>
+          <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
+          <div class="plan-action-wrap">
+            <button class="plan-action-btn" @click="go('/shop')">
+              <span>切换订阅</span>
+              <IconChevronRight :size="18" />
+            </button>
           </div>
         </section>
 
@@ -747,11 +745,7 @@ onMounted(async () => {
 }
 
 .subscription-plan-card {
-  margin: 0 12px 12px;
-  border: 1px solid rgba(var(--text-color-rgb), 0.1);
-  border-radius: 14px;
   padding: 14px;
-  background: #fff;
 
   .plan-name {
     font-size: 24px;
