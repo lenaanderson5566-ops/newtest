@@ -1,6 +1,10 @@
 <template>
   <div class="deposit-container page-shell">
     <div class="deposit-inner page-inner page-stack">
+      <button class="account-back-btn" @click="goBackToAccount">
+        <IconChevronLeft :size="20" />
+      </button>
+
       <!-- 余额信息卡片 -->
       <div class="dashboard-card balance-card">
         <div class="card-header">
@@ -16,10 +20,9 @@
                 class="wallet-balance-item"
               >
                 <span class="wallet-currency">{{ wallet.currency }}</span>
-                <span class="wallet-amount">{{ wallet.currency === currencyCode ? currencySymbol : wallet.currency }} {{ formatAmount(wallet.balance) }}</span>
+                <span class="wallet-amount">{{ formatAmount(wallet.balance) }}</span>
               </div>
             </div>
-            <div class="balance-label">{{ $t('wallet.balance.description') }}</div>
           </div>
 
           <!-- 余额信息 - 骨架屏 -->
@@ -122,7 +125,7 @@
 import { ref, computed, onMounted, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
-import { IconAlertCircle, IconShoppingCart } from '@tabler/icons-vue';
+import { IconAlertCircle, IconChevronLeft, IconShoppingCart } from '@tabler/icons-vue';
 import { getUserInfo } from '@/api/account/user';
 import { createOrderDeposit, getUserConfig } from '@/api/account/wallet';
 import { isXiaoV2board } from '@/utils/baseConfig';
@@ -157,6 +160,13 @@ const loading = reactive({
   submitting: false,
   config: true
 });
+const goBackToAccount = () => {
+  if (window.history.length > 1) {
+    router.back();
+    return;
+  }
+  router.push('/profile');
+};
 const fetchUserConfig = async () => {
   try {
     const response = await getUserConfig();
@@ -292,6 +302,26 @@ onMounted(() => {
   .deposit-inner {
     width: 100%;
       }
+
+  .account-back-btn {
+    width: fit-content;
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 8px;
+  }
+
+  .back-label {
+    font-size: 14px;
+    color: var(--secondary-text-color);
+  }
   
   .dashboard-card {
     background-color: var(--card-bg);
@@ -383,6 +413,8 @@ onMounted(() => {
       .wallet-amount {
         color: var(--secondary-text-color);
         font-variant-numeric: tabular-nums;
+        font-size: 1.05rem;
+        font-weight: 600;
       }
       
       .balance-label {
@@ -676,6 +708,10 @@ onMounted(() => {
   }
 }
 @media (max-width: 768px) {
+  .back-label {
+    display: none;
+  }
+
   .deposit-container {
     padding: 10px;
     padding-bottom: 84px;

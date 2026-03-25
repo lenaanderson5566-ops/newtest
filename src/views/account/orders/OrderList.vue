@@ -1,6 +1,10 @@
 <template>
   <div class="orders-container page-shell">
     <div class="orders-inner page-inner page-stack">
+      <button class="account-back-btn" @click="goBackToAccount">
+        <IconChevronLeft :size="20" />
+      </button>
+
       <!-- 加载状态 -->
       <div v-if="loading" class="orders-loading">
         <LoadingSpinner />
@@ -21,10 +25,6 @@
           <transition-group name="page-switch">
             <div v-for="order in orders" :key="order.trade_no" class="order-card">
               <div class="order-card-header">
-                <div class="order-number">
-                  <span class="label">{{ headerTexts.tradeNo }}:</span>
-                  <span class="value">{{ order.trade_no }}</span>
-                </div>
                 <div class="status-wrapper">
                   <span class="status-badge" :class="getStatusClass(order.status)">
                     {{ getStatusText(order.status) }}
@@ -74,18 +74,16 @@
           <table class="order-table">
             <thead>
               <tr>
-                <th width="22%">{{ headerTexts.tradeNo }}</th>
-                <th width="18%">{{ headerTexts.createdAt }}</th>
-                <th width="12%">{{ headerTexts.cycle }}</th>
-                <th width="14%">{{ headerTexts.totalAmount }}</th>
-                <th width="12%">{{ headerTexts.statusLabel }}</th>
-                <th width="22%">{{ headerTexts.actions }}</th>
+                <th width="20%">{{ headerTexts.createdAt }}</th>
+                <th width="14%">{{ headerTexts.cycle }}</th>
+                <th width="16%">{{ headerTexts.totalAmount }}</th>
+                <th width="16%">{{ headerTexts.statusLabel }}</th>
+                <th width="34%">{{ headerTexts.actions }}</th>
               </tr>
             </thead>
             <tbody>
               <transition-group name="page-switch">
                 <tr v-for="order in orders" :key="order.trade_no">
-                  <td class="trade-no">{{ order.trade_no }}</td>
                   <td>{{ formatDate(order.created_at) }}</td>
                   <td>{{ formatCycle(order.period) }}</td>
                   <td class="amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</td>
@@ -141,10 +139,6 @@
             </div>
             <div class="modal-body">
               <p>{{ headerTexts.cancelConfirmText }}</p>
-              <div class="trade-no-info">
-                <span>{{ headerTexts.tradeNo }}:</span>
-                <span class="trade-no">{{ currentTradeNo }}</span>
-              </div>
             </div>
             <div class="modal-footer">
               <button class="btn-cancel" @click="closeConfirmModal">
@@ -168,6 +162,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import { 
+  IconChevronLeft,
   IconAlertTriangle,
   IconShoppingCart,
   IconEye,
@@ -186,6 +181,13 @@ const showConfirmModal = ref(false);
 const currentTradeNo = ref('');
 const canceling = ref(false);
 const isMobileView = ref(false);
+const goBackToAccount = () => {
+  if (window.history.length > 1) {
+    router.back();
+    return;
+  }
+  router.push('/profile');
+};
 
 const checkMobileView = () => {
   isMobileView.value = window.innerWidth < 768;
@@ -346,7 +348,6 @@ const confirmCancelOrder = async () => {
 
 const headerTexts = computed(() => {
   return {
-    tradeNo: t('orders.tradeNo', '订单号'),
     createdAt: t('orders.createdAt', '创建时间'),
     cycle: t('orders.cycle', '周期'),
     totalAmount: t('orders.totalAmount', '金额'),
@@ -393,6 +394,26 @@ watch(locale, () => {
 }
 
 .orders-inner {
+}
+
+.account-back-btn {
+  width: fit-content;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.back-label {
+  font-size: 14px;
+  color: var(--secondary-text-color);
 }
 
 
@@ -500,11 +521,6 @@ watch(locale, () => {
     &:last-child {
       border-bottom: none;
     }
-  }
-  
-  .trade-no {
-    font-size: 0.9rem;
-    color: var(--text-color);
   }
   
   .amount {
@@ -748,20 +764,6 @@ watch(locale, () => {
     margin: 0 0 1.5rem;
     color: var(--text-color);
   }
-  
-  .trade-no-info {
-    background-color: rgba(var(--theme-color-rgb), 0.05);
-    padding: 1rem;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    
-    .trade-no {
-      font-weight: 600;
-      color: var(--theme-color);
-    }
-  }
 }
 
 .modal-footer {
@@ -824,6 +826,10 @@ watch(locale, () => {
 
 
 @media (max-width: 768px) {
+  .back-label {
+    display: none;
+  }
+
   .order-table {
     th, td {
       padding: 0.75rem 0.5rem;

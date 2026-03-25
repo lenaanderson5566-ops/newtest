@@ -1,7 +1,19 @@
 <template>
   <div class="my-center page-shell">
     <div class="my-center-inner page-inner page-stack">
-      <div class="overview-panels" :class="{ 'no-tier': !hasTierInfo }">
+      <div class="top-nav-wrap">
+        <button
+          v-for="item in sectionTabs"
+          :key="item.key"
+          class="top-nav-item"
+          :class="{ active: activeSection === item.key }"
+          @click="handleSectionClick(item.key)"
+        >
+          {{ item.label }}
+        </button>
+      </div>
+
+      <div v-show="activeSection === 'overview'" class="overview-panels">
         <section class="summary-panel section-block dashboard-like-card">
           <div class="summary-top">
             <div>
@@ -26,11 +38,170 @@
             </div>
             <div class="summary-item is-highlight">
               <span class="label">{{ $t('myCenter.accountBalance') }}</span>
-              <strong>{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
+              <strong class="balance-amount">{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
             </div>
+          </div>
+
+          <div class="summary-actions">
+            <button class="nav-row summary-nav-row" @click="go('/wallet/deposit')">
+              <div class="row-main">
+                <div class="row-title">{{ $t('myCenter.accountBalance') }}</div>
+                <p>{{ $t('myCenter.balanceDesc') }}</p>
+              </div>
+              <IconChevronRight :size="18" />
+            </button>
           </div>
         </section>
 
+      </div>
+
+      <div v-show="activeSection === 'subscription'" class="section-group">
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.subscriptionPlanTitle') }}</h3>
+        <p class="section-subtitle">{{ $t('myCenter.planDetails') }}</p>
+        <section class="section-block dashboard-like-card">
+          <div class="settings-list">
+            <div class="settings-row plan-overview-row">
+              <div class="row-main">
+                <div class="plan-name">{{ subscriptionText }}</div>
+                <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
+              </div>
+            </div>
+            <button class="nav-row" @click="go('/shop')">
+              <div class="row-main row-main-with-icon">
+                <IconRefresh :size="20" class="row-leading-icon" />
+                <div class="row-content">
+                  <div class="row-title">{{ $t('myCenter.changeSubscription') }}</div>
+                </div>
+              </div>
+              <IconChevronRight :size="18" />
+            </button>
+          </div>
+        </section>
+
+        <p class="section-subtitle">{{ $t('myCenter.paymentInfo') }}</p>
+        <section class="section-block dashboard-like-card">
+        <div class="settings-list">
+
+          <div class="settings-row">
+            <div class="row-main row-main-with-icon">
+              <IconRefresh :size="20" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('profile.autoRenewal') }}</div>
+                <p>{{ $t('profile.autoRenewalDesc') }}</p>
+              </div>
+            </div>
+            <label class="switch" :class="{ disabled: updatingAutoRenewal }">
+              <input type="checkbox" v-model="autoRenewal" @change="updateAutoRenewalSetting" :disabled="updatingAutoRenewal" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <button class="nav-row" @click="go('/orders')">
+            <div class="row-main row-main-with-icon">
+              <IconReceipt :size="20" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('myCenter.billRecords') }}</div>
+              </div>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+
+          <button class="nav-row" @click="go('/gift-card')">
+            <div class="row-main row-main-with-icon">
+              <IconGift :size="20" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('myCenter.redeemGiftCard') }}</div>
+              </div>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+
+        </div>
+        </section>
+      </div>
+
+      <div v-show="activeSection === 'security'" class="section-group">
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.securityCenterTitle') }}</h3>
+        <p class="section-subtitle">{{ $t('myCenter.accountDetails') }}</p>
+        <section class="section-block dashboard-like-card">
+        <div class="settings-list">
+          <button class="nav-row" @click="openPasswordChangePrompt">
+            <div class="row-main row-main-with-icon">
+              <IconLock :size="20" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('myCenter.changePassword') }}</div>
+              </div>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+        </div>
+        </section>
+
+        <p class="section-subtitle">{{ $t('myCenter.accessPrivacy') }}</p>
+        <section class="section-block dashboard-like-card">
+        <div class="settings-list">
+          <button class="nav-row" @click="go('/security?section=sessions')">
+            <div class="row-main row-main-with-icon">
+              <IconDevices :size="20" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('myCenter.loginRecords') }}</div>
+                <p>{{ $t('myCenter.loginRecordsDesc') }}</p>
+              </div>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+
+          <button class="nav-row" @click="confirmSecurityReset">
+            <div class="row-main row-main-with-icon">
+              <IconAlertCircle :size="20" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('myCenter.deviceReset') }}</div>
+                <p>{{ $t('myCenter.deviceResetDesc') }}</p>
+              </div>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+        </div>
+        </section>
+      </div>
+
+      <div v-show="activeSection === 'settings'" class="section-group">
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.settingsTitle') }}</h3>
+        <section class="section-block dashboard-like-card">
+        <div class="settings-list">
+          <div class="settings-row">
+            <div class="row-main row-main-with-icon">
+              <IconClock :size="20" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('myCenter.expireReminder') }}</div>
+                <p>{{ $t('myCenter.expireReminderDesc') }}</p>
+              </div>
+            </div>
+            <label class="switch" :class="{ disabled: updatingSettings }">
+              <input type="checkbox" v-model="remindExpire" @change="updateRemindSettings" :disabled="updatingSettings" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="row-main row-main-with-icon">
+              <IconBell :size="20" class="row-leading-icon" />
+              <div class="row-content">
+                <div class="row-title">{{ $t('myCenter.trafficReminder') }}</div>
+                <p>{{ $t('myCenter.trafficReminderDesc') }}</p>
+              </div>
+            </div>
+            <label class="switch" :class="{ disabled: updatingSettings }">
+              <input type="checkbox" v-model="remindTraffic" @change="updateRemindSettings" :disabled="updatingSettings" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+        </div>
+        </section>
+      </div>
+
+      <div v-show="activeSection === 'benefits'" class="benefits-stack">
         <section v-if="hasTierInfo" class="tier-panel section-block dashboard-like-card">
           <div class="tier-header">
             <div>
@@ -54,117 +225,94 @@
             {{ $t('dashboard.nextTierHint', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}
           </div>
         </section>
+
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.levelBenefitsTitle') }}</h3>
+        <section class="section-block dashboard-like-card">
+          <div class="tier-intro-list">
+            <div class="tier-intro-card">
+              <div class="tier-intro-title">积分规则介绍</div>
+              <p>每充值 1 美元可获得 100 积分，积分可用于提升会员等级并解锁对应权益。</p>
+            </div>
+            <div class="tier-intro-card">
+              <div class="tier-intro-title">积分等级介绍</div>
+              <p>当前等级：{{ tierMemberDisplay }}（Lv.{{ userTier.level || 0 }}），当前积分：{{ formatTierNumber(userTier.points) }}。</p>
+              <p v-if="userTier.nextTierKey">距离 {{ nextTierNameDisplay }} 还需 {{ formatTierNumber(userTier.pointsToNextTier) }} 积分。</p>
+              <p v-else>您已达到最高等级，继续累计积分可保持高等级权益。</p>
+              <p class="tier-intro-note">建议持续订阅并保持活跃充值，积分将自动累计并用于等级成长。</p>
+            </div>
+            <div class="tier-intro-card tier-intro-card--muted">
+              <div class="tier-intro-title">权益说明</div>
+              <p>不同等级可获得差异化服务权益，等级越高可享受的资源与优先支持越丰富。</p>
+              <p>系统会根据最新积分自动刷新等级展示，无需手动操作。</p>
+            </div>
+          </div>
+        </section>
       </div>
-
-      <section class="section-block dashboard-like-card">
-        <h3 class="section-title">{{ $t('myCenter.financeTitle') }}</h3>
-        <div class="settings-list">
-
-          <div class="settings-row">
-            <div class="row-main">
-              <div class="row-title">{{ $t('profile.autoRenewal') }}</div>
-              <p>{{ $t('profile.autoRenewalDesc') }}</p>
-            </div>
-            <label class="switch" :class="{ disabled: updatingAutoRenewal }">
-              <input type="checkbox" v-model="autoRenewal" @change="updateAutoRenewalSetting" :disabled="updatingAutoRenewal" />
-              <span class="slider round"></span>
-            </label>
-          </div>
-
-          <button class="nav-row" @click="go('/billing?tab=wallet')">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.accountBalance') }}</div>
-              <p>{{ $t('myCenter.balanceDesc') }}</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-
-          <button class="nav-row" @click="go('/billing?tab=orders')">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.orderHistory') }}</div>
-              <p>{{ $t('myCenter.orderDesc') }}</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-
-          <button class="nav-row" @click="go('/billing?tab=referral')">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.referral') }}</div>
-              <p>{{ $t('myCenter.referralDesc') }}</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-        </div>
-      </section>
-
-      <section class="section-block dashboard-like-card">
-        <h3 class="section-title">{{ $t('myCenter.securityCenterTitle') }}</h3>
-        <div class="settings-list">
-          <button class="nav-row" @click="go('/security?section=password')">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.passwordManagement') }}</div>
-              <p>{{ $t('myCenter.passwordManagementDesc') }}</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-
-          <button class="nav-row" @click="go('/security?section=sessions')">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.loginRecords') }}</div>
-              <p>{{ $t('myCenter.loginRecordsDesc') }}</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-
-          <button class="nav-row" @click="go('/config-management')">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.deviceReset') }}</div>
-              <p>{{ $t('myCenter.deviceResetDesc') }}</p>
-            </div>
-            <IconChevronRight :size="18" />
-          </button>
-        </div>
-      </section>
-
-      <section class="section-block dashboard-like-card">
-        <h3 class="section-title">{{ $t('myCenter.settingsTitle') }}</h3>
-        <div class="settings-list">
-          <div class="settings-row">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.expireReminder') }}</div>
-              <p>{{ $t('myCenter.expireReminderDesc') }}</p>
-            </div>
-            <label class="switch" :class="{ disabled: updatingSettings }">
-              <input type="checkbox" v-model="remindExpire" @change="updateRemindSettings" :disabled="updatingSettings" />
-              <span class="slider round"></span>
-            </label>
-          </div>
-
-          <div class="settings-row">
-            <div class="row-main">
-              <div class="row-title">{{ $t('myCenter.trafficReminder') }}</div>
-              <p>{{ $t('myCenter.trafficReminderDesc') }}</p>
-            </div>
-            <label class="switch" :class="{ disabled: updatingSettings }">
-              <input type="checkbox" v-model="remindTraffic" @change="updateRemindSettings" :disabled="updatingSettings" />
-              <span class="slider round"></span>
-            </label>
-          </div>
-
-        </div>
-      </section>
-
+ 
       <div class="bottom-safe-area"></div>
     </div>
+
+    <transition name="modal-fade">
+      <div v-if="showPasswordModal" class="modal-overlay" @click="closePasswordModal">
+        <div class="modal-content" @click.stop>
+          <div class="modal-header">
+            <h3>{{ $t('profile.changePasswordTitle') }}</h3>
+            <button class="modal-close" @click="closePasswordModal">
+              <IconX :size="20" />
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>{{ $t('profile.oldPassword') }}</label>
+              <input v-model="passwordForm.oldPassword" type="password" :placeholder="$t('profile.oldPassword')" />
+            </div>
+            <div class="form-group">
+              <label>{{ $t('profile.newPassword') }}</label>
+              <input v-model="passwordForm.newPassword" type="password" :placeholder="$t('profile.newPassword')" />
+            </div>
+            <div class="form-group">
+              <label>{{ $t('profile.confirmPassword') }}</label>
+              <input v-model="passwordForm.confirmPassword" type="password" :placeholder="$t('profile.confirmPassword')" />
+            </div>
+            <div v-if="passwordMismatch" class="error-text">{{ $t('profile.passwordMismatch') }}</div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn-cancel" @click="closePasswordModal">{{ $t('common.cancel') }}</button>
+            <button class="btn-submit" :disabled="!validatePasswordForm() || updatingPassword" @click="submitPasswordChange">
+              <span v-if="updatingPassword" class="loader"></span>
+              <span>{{ $t('common.submit') }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <transition name="fade">
+      <div v-if="showResetModal" class="modal-overlay" @click="closeResetModal">
+        <div class="modal-content reset-modal-content" @click.stop>
+          <div class="modal-header">
+            <h3>{{ $t('profile.resetSecurityTitle') }}</h3>
+            <button class="close-btn" @click="closeResetModal">✕</button>
+          </div>
+          <p class="modal-text">{{ $t('profile.resetSecurityConfirm') }}</p>
+          <div class="modal-actions">
+            <button class="action-btn" @click="closeResetModal">{{ $t('common.cancel') }}</button>
+            <button class="action-btn danger" :disabled="resettingSecurity" @click="submitSecurityReset">
+              {{ resettingSecurity ? $t('common.processing') : $t('profile.confirmReset') }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { IconChevronRight } from '@tabler/icons-vue';
+import { IconAlertCircle, IconBell, IconChevronRight, IconClock, IconDevices, IconGift, IconLock, IconReceipt, IconRefresh, IconX } from '@tabler/icons-vue';
 import { useI18n } from 'vue-i18n';
-import { getUserInfo, getUserSubscribe, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
+import { changePassword as apiChangePassword, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
 import { formatDate } from '@/utils/formatters';
 import { useToast } from '@/composables/useToast';
@@ -180,6 +328,24 @@ const remindTraffic = ref(false);
 const autoRenewal = ref(false);
 const updatingSettings = ref(false);
 const updatingAutoRenewal = ref(false);
+const showPasswordModal = ref(false);
+const showResetModal = ref(false);
+const updatingPassword = ref(false);
+const resettingSecurity = ref(false);
+const passwordForm = ref({
+  oldPassword: '',
+  newPassword: '',
+  confirmPassword: ''
+});
+const activeSection = ref('overview');
+const sectionTabs = computed(() => [
+  { key: 'overview', label: t('myCenter.tabOverview') },
+  { key: 'subscription', label: t('myCenter.tabSubscriptionPlan') },
+  { key: 'security', label: t('myCenter.tabSecurity') },
+  { key: 'settings', label: t('myCenter.tabSettings') },
+  { key: 'benefits', label: t('myCenter.tabLevelBenefits') },
+  { key: 'invite', label: t('myCenter.tabInvite') }
+]);
 
 const userTier = computed(() => {
   const tier = userInfo.value?.tier || {};
@@ -234,6 +400,73 @@ const subscriptionExpireText = computed(() => {
 
 const formatBalance = (balance) => ((Number(balance || 0) / 100).toFixed(2));
 const go = (path) => router.push(path);
+const handleSectionClick = (sectionKey) => {
+  if (sectionKey === 'invite') {
+    go('/invite');
+    return;
+  }
+  activeSection.value = sectionKey;
+};
+
+const passwordMismatch = computed(() => {
+  if (!passwordForm.value.confirmPassword) return false;
+  return passwordForm.value.newPassword !== passwordForm.value.confirmPassword;
+});
+
+const validatePasswordForm = () => (
+  passwordForm.value.oldPassword &&
+  passwordForm.value.newPassword &&
+  passwordForm.value.confirmPassword &&
+  !passwordMismatch.value
+);
+
+const openPasswordChangePrompt = () => {
+  showPasswordModal.value = true;
+};
+
+const closePasswordModal = () => {
+  showPasswordModal.value = false;
+  passwordForm.value = { oldPassword: '', newPassword: '', confirmPassword: '' };
+};
+
+const submitPasswordChange = async () => {
+  if (updatingPassword.value) return;
+  if (!validatePasswordForm()) return;
+  try {
+    updatingPassword.value = true;
+    await apiChangePassword({
+      old_password: passwordForm.value.oldPassword,
+      new_password: passwordForm.value.newPassword
+    });
+    showToast('密码修改成功', 'success');
+    closePasswordModal();
+  } catch (error) {
+    showToast('密码修改失败，请稍后重试', 'error');
+  } finally {
+    updatingPassword.value = false;
+  }
+};
+
+const confirmSecurityReset = () => {
+  showResetModal.value = true;
+};
+
+const closeResetModal = () => {
+  showResetModal.value = false;
+};
+
+const submitSecurityReset = async () => {
+  try {
+    resettingSecurity.value = true;
+    await apiResetSecurity();
+    showToast('重置成功，请重新导入订阅', 'success');
+    closeResetModal();
+  } catch (error) {
+    showToast('重置失败，请稍后重试', 'error');
+  } finally {
+    resettingSecurity.value = false;
+  }
+};
 
 const buildRemindPayload = () => ({
   remind_expire: remindExpire.value ? 1 : 0,
@@ -300,7 +533,7 @@ onMounted(async () => {
 
 .my-center {
   padding: 0 0 2px;
-  background: var(--background-color);
+  background: #f5f5f7;
 }
 
 .my-center-inner {
@@ -308,10 +541,51 @@ onMounted(async () => {
   gap: 1rem;
 }
 
-.section-block {
-  border-radius: $border-radius-sm;
-  background-color: var(--card-bg-color, var(--card-background));
+.top-nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  background: var(--card-bg-color, var(--card-background));
   border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-radius: $border-radius-sm;
+}
+
+.top-nav-item {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: var(--secondary-text-color);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &.active {
+    color: var(--text-color);
+    font-weight: 700;
+  }
+
+  &.active::after {
+    content: '';
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 0;
+    height: 3px;
+    border-radius: 999px;
+    background: #e50914;
+  }
+}
+
+.section-block {
+  border-radius: 16px;
+  background-color: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.15);
   box-shadow: none;
   transition: box-shadow 0.22s ease, border-color 0.22s ease;
 
@@ -341,12 +615,13 @@ onMounted(async () => {
 
 .overview-panels {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
+}
 
-  &.no-tier {
-    grid-template-columns: minmax(0, 1fr);
-  }
+.benefits-stack {
+  display: grid;
+  gap: 1rem;
 }
 
 
@@ -461,6 +736,17 @@ onMounted(async () => {
   gap: 10px;
 }
 
+.summary-actions {
+  margin-top: 10px;
+}
+
+.summary-nav-row {
+  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-radius: $border-radius-sm;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
 .summary-item {
   padding: 12px;
   border: 1px solid rgba(var(--text-color-rgb), 0.08);
@@ -494,8 +780,62 @@ onMounted(async () => {
   color: var(--text-color);
 }
 
+.section-group {
+  display: grid;
+  gap: 10px;
+}
+
+.section-title-outside {
+  padding: 0 2px;
+}
+
+.section-subtitle {
+  margin: 0;
+  padding: 0 2px;
+  font-size: 13px;
+  color: var(--secondary-text-color);
+}
+
 .section-block > .section-title {
   padding: 14px 16px 10px;
+}
+
+.plan-overview-row {
+  align-items: flex-start;
+}
+
+.plan-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.plan-desc {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: var(--secondary-text-color);
+}
+
+.row-main-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.row-leading-icon {
+  color: rgba(var(--theme-color-rgb), 0.9);
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.row-content {
+  min-width: 0;
+}
+
+.balance-amount {
+  font-size: 18px !important;
+  line-height: 1.2;
 }
 
 .settings-list {
@@ -530,6 +870,41 @@ onMounted(async () => {
   margin: 3px 0 0;
   font-size: 12px;
   color: var(--secondary-text-color);
+}
+
+.tier-intro-list {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.tier-intro-card {
+  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-radius: 12px;
+  background: rgba(var(--card-background-rgb), 0.7);
+  padding: 12px;
+
+  p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--secondary-text-color);
+  }
+}
+
+.tier-intro-card--muted {
+  background: rgba(var(--theme-color-rgb), 0.06);
+}
+
+.tier-intro-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.tier-intro-note {
+  color: var(--text-color) !important;
+  font-weight: 600;
 }
 
 .nav-row {
@@ -568,6 +943,165 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 .bottom-safe-area { height: calc(env(safe-area-inset-bottom, 0px) + 10px); }
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background-color: var(--card-background);
+  border-radius: 12px;
+  box-shadow: none;
+  width: 90%;
+  max-width: 480px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .modal-close,
+  .close-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(var(--theme-color-rgb), 0.1);
+      color: var(--theme-color);
+    }
+  }
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 8px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-secondary);
+    color: var(--text-color);
+    font-size: 15px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--theme-color);
+      box-shadow: none;
+    }
+  }
+}
+
+.error-text {
+  margin-top: 6px;
+  color: #f44336;
+  font-size: 13px;
+}
+
+.modal-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-cancel,
+.action-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-color);
+}
+
+.btn-submit,
+.action-btn.danger {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background: rgba(var(--theme-color-rgb), 0.92);
+  color: #fff;
+}
+
+.modal-text {
+  padding: 16px;
+  margin: 0;
+  color: var(--secondary-text-color);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 16px 16px;
+}
+
+.loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 @media (max-width: 1100px) {
   .overview-panels {
     grid-template-columns: 1fr;
@@ -577,13 +1111,33 @@ input:checked + .slider:before { transform: translateX(18px); }
 }
 
 @media (max-width: 768px) {
-  .my-center-inner { max-width: 100%; gap: 0.75rem; }
+  .my-center {
+    background: #f3f3f5;
+  }
+
+  .my-center-inner { max-width: 100%; gap: 0.9rem; }
+
+  .top-nav-wrap {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.12);
+    padding: 0 8px;
+    background: #fff;
+  }
+
+  .top-nav-item {
+    padding: 14px 12px 12px;
+    font-size: 15px;
+  }
+
   .overview-panels { gap: 0.75rem; }
-  .summary-panel { padding: 12px; }
+  .summary-panel { padding: 14px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
-  .section-block > .section-title { padding: 12px 12px 8px; }
+  .section-block > .section-title { padding: 14px 14px 8px; font-size: 18px; }
   .settings-row,
-  .nav-row { min-height: 58px; padding: 10px 12px; }
+  .nav-row { min-height: 62px; padding: 12px 14px; }
 }
 </style>

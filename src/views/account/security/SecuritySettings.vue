@@ -1,6 +1,10 @@
 <template>
   <div class="security-container page-shell">
     <div class="security-inner page-inner page-stack">
+      <button class="account-back-btn" @click="goBackToAccount">
+        <IconChevronLeft :size="20" />
+      </button>
+
       <div class="profile-card" v-if="showPasswordModule">
         <div class="card-header">
           <h3>{{ $t('profile.security') }}</h3>
@@ -125,9 +129,10 @@
 <script setup name="SecuritySettings">
 import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { changePassword as apiChangePassword, getActiveSession, logoutAllSessions, removeActiveSession } from '@/api/account/user';
 import {
+  IconChevronLeft,
   IconLock,
   IconLogout,
   IconX,
@@ -142,6 +147,7 @@ import { forceLogout } from '@/api/auth';
 
 const { t } = useI18n();
 const route = useRoute();
+const router = useRouter();
 const showPasswordModule = computed(() => route.query.section !== 'sessions');
 const showSessionModule = computed(() => route.query.section !== 'password');
 const { success, error: showError } = useToast();
@@ -360,6 +366,14 @@ const formatTimestamp = (timestamp) => {
   }).format(new Date(numTimestamp * 1000));
 };
 
+const goBackToAccount = () => {
+  if (window.history.length > 1) {
+    router.back();
+    return;
+  }
+  router.push('/profile');
+};
+
 onMounted(() => {
   currentSessionId.value = getCurrentSessionId();
   if (PROFILE_CONFIG.showRecentDevices) {
@@ -374,6 +388,26 @@ onMounted(() => {
 }
 
 .security-inner {
+}
+
+.account-back-btn {
+  width: fit-content;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.back-label {
+  font-size: 14px;
+  color: var(--secondary-text-color);
 }
 
 .profile-card {
@@ -696,6 +730,12 @@ onMounted(() => {
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .back-label {
+    display: none;
   }
 }
 </style>

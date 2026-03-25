@@ -1,28 +1,34 @@
 ﻿<template>
   <div class="shop-container page-shell">
     <div class="shop-inner page-inner page-stack">
+      <button class="account-back-btn" @click="goBackToAccount">
+        <IconChevronLeft :size="20" />
+      </button>
+
       <!-- 欢迎卡片 -->
 
-      <div class="dashboard-card welcome-card">
+      <div class="welcome-card">
         <div class="card-header shop-title-header">
           <h2 class="card-title">{{ $t("shop.title") }}</h2>
         </div>
 
         <div class="card-body">
-          <p>{{ $t("shop.description") }}</p>
-          <div class="filter-toggle-container" v-if="displayedFilters.length > 0">
-            <div class="filter-toggle-wrapper" role="tablist" :aria-label="$t('shop.billingPeriodAria')">
-              <span class="filter-highlight" :style="filterHighlightStyle"></span>
-              <button
-                v-for="filter in displayedFilters"
-                :key="`${filter.value}-${currentLanguage}`"
-                type="button"
-                class="filter-option"
-                :class="{ active: selectedFilter === filter.value }"
-                @click="setFilter(filter.value)"
-              >
-                <span class="option-text">{{ getFilterDisplayLabel(filter) }}</span>
-              </button>
+          <div class="welcome-top-row">
+            <p>{{ $t("shop.description") }}</p>
+            <div class="filter-toggle-container" v-if="displayedFilters.length > 0">
+              <div class="filter-toggle-wrapper" role="tablist" :aria-label="$t('shop.billingPeriodAria')">
+                <span class="filter-highlight" :style="filterHighlightStyle"></span>
+                <button
+                  v-for="filter in displayedFilters"
+                  :key="`${filter.value}-${currentLanguage}`"
+                  type="button"
+                  class="filter-option"
+                  :class="{ active: selectedFilter === filter.value }"
+                  @click="setFilter(filter.value)"
+                >
+                  <span class="option-text">{{ getFilterDisplayLabel(filter) }}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -75,134 +81,206 @@
           </div>
         </div>
 
-        <!-- 订阅卡片 修改内容 -->
-
-        <div
-          class="plan-card"
-          :class="{ 'current-plan-card': isCurrentPlan(plan) }"
-          v-else
-          v-for="plan in filteredPlans"
-          :key="plan.id"
-        >
-          <div class="card-header">
-            <div class="header-main">
-              <h2 class="card-title">{{ plan.name }}</h2>
+        <template v-else>
+          <div class="mobile-plan-layout">
+            <div class="mobile-plan-selector">
+              <div
+                v-for="(plan, planIndex) in filteredPlans"
+                :key="`mobile-${plan.id}`"
+                class="mobile-plan-chip-wrap"
+                :class="{
+                  'current-plan-chip': isCurrentPlan(plan),
+                }"
+              >
+                <span class="chip-current-header" v-if="isCurrentPlan(plan)">{{ currentPlanBadgeLabel }}</span>
+                <button
+                  type="button"
+                  class="mobile-plan-chip"
+                  :class="{
+                    active: selectedPlan && Number(selectedPlan.id) === Number(plan.id),
+                    'current-plan-chip': isCurrentPlan(plan),
+                    [getPlanToneClass(planIndex)]: true,
+                  }"
+                  @click="onSelectPlan(plan)"
+                >
+                  <span class="chip-name">{{ plan.name }}</span>
+                  <span class="chip-period" v-if="getMobilePlanSubtitle(plan)">{{ getMobilePlanSubtitle(plan) }}</span>
+                  <span class="chip-check" v-if="selectedPlan && Number(selectedPlan.id) === Number(plan.id)">
+                    <IconCheck :size="16" />
+                  </span>
+                </button>
+              </div>
             </div>
 
-            <div v-if="isCurrentPlan(plan)" class="current-plan-meta">
-              <span class="current-plan-badge">{{ currentPlanBadgeLabel }}</span>
-            </div>
-
-            <div
-              class="card-badge glassmorphism stock-warning"
-              v-if="
-                !isCurrentPlan(plan) &&
-                plan.capacity_limit > 0 &&
-                plan.capacity_limit < SHOP_CONFIG.lowStockThreshold
-              "
-            >
-              <IconBox :size="16" class="badge-icon" />
-
-              <span>{{ $t("shop.plan.stock.warning") }}</span>
-            </div>
-
-            <div
-              class="card-badge glassmorphism stock-danger"
-              v-if="plan.capacity_limit === 0"
-            >
-              <IconBox :size="16" class="badge-icon" />
-
-              <span>{{ $t("shop.plan.stock.sold_out") }}</span>
-            </div>
-          </div>
-
-          <div class="card-body">
-            <!-- 价格区域 - 修改为显示支持的所有周期 -->
-
-            <div class="plan-price">
-              <div class="price-display">
-                <div class="price-main-line">
-                  <span class="currency">{{ currencySymbol }}</span>
-                  <span class="amount">{{ getPlanMainPrice(plan) }}</span>
-                </div>
-                <span class="unit-line">{{ currency }} {{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`) }}</span>
+            <div class="mobile-plan-details" v-if="selectedPlan">
+              <div class="mobile-detail-row">
+                <span class="mobile-label">价格</span>
+                <span class="mobile-value">{{ currencySymbol }}{{ getPlanMainPrice(selectedPlan) }}</span>
+              </div>
+              <div class="mobile-detail-row">
+                <span class="mobile-label">周期</span>
+                <span class="mobile-value">{{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(selectedPlan))}`) }}</span>
+              </div>
+              <div
+                class="mobile-detail-row"
+                v-for="(feature, index) in getMobileFeatureRows(selectedPlan)"
+                :key="`mobile-feature-${index}`"
+              >
+                <span class="mobile-label">{{ feature.label }}</span>
+                <span class="mobile-value">{{ feature.value }}</span>
               </div>
             </div>
 
             <button
-              class="btn-purchase glassmorphism"
-              :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
-              @click="purchasePlan(plan)"
-              :disabled="plan.capacity_limit === 0"
+              class="mobile-continue-btn"
+              :class="{ 'btn-disabled': !selectedPlan || selectedPlan.capacity_limit === 0 }"
+              :disabled="!selectedPlan || selectedPlan.capacity_limit === 0"
+              @click="selectedPlan && purchasePlan(selectedPlan)"
             >
               <IconShoppingCart class="btn-icon" />
-              <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
+              <span class="btn-text">{{ selectedPlan ? getPurchaseButtonText(selectedPlan) : $t("shop.plan.purchase") }}</span>
             </button>
+          </div>
 
-            <!-- 周期折扣计算 -->
+          <!-- 订阅卡片 修改内容 -->
 
-            <div
-              class="discount-calculation"
-              v-if="
-                SHOP_CONFIG.enableDiscountCalculation &&
-                calculateDiscount(plan).showDiscount
-              "
-            >
-              <div class="discount-info">
-                <span class="period-name">{{
-                  calculateDiscount(plan).periodName
-                }}</span>
+          <div
+            class="plan-card desktop-plan-card"
+            :class="{
+              'current-plan-card': isCurrentPlan(plan),
+              'selected-plan-card': Number(selectedDesktopPlanId) === Number(plan.id),
+            }"
+            v-for="(plan, planIndex) in filteredPlans"
+            :key="plan.id"
+            @click="setDesktopSelectedPlan(plan)"
+          >
+            <div v-if="isCurrentPlan(plan)" class="desktop-current-outside-strip">{{ currentPlanBadgeLabel }}</div>
+            <div class="card-header">
+              <div class="desktop-plan-hero" :class="{ 'is-current': isCurrentPlan(plan) }">
+                <div class="desktop-plan-gradient" :class="getPlanToneClass(planIndex)">
+                  <div class="header-main">
+                    <h2 class="card-title">{{ plan.name }}</h2>
+                    <p v-if="getPlanHeroSubtitle(plan)" class="desktop-subtitle">{{ getPlanHeroSubtitle(plan) }}</p>
+                  </div>
+                  <IconCheck
+                    v-if="Number(selectedDesktopPlanId) === Number(plan.id)"
+                    class="desktop-current-check"
+                    :size="18"
+                  />
+                </div>
+              </div>
 
-                <span class="discount-label"
-                  >&nbsp;{{ $t("shop.plan.discount.relative") }}
-                </span>
+              <div
+                class="card-badge glassmorphism stock-warning"
+                v-if="
+                  !isCurrentPlan(plan) &&
+                  plan.capacity_limit > 0 &&
+                  plan.capacity_limit < SHOP_CONFIG.lowStockThreshold
+                "
+              >
+                <IconBox :size="16" class="badge-icon" />
 
-                <span class="discount-value"
-                  >&nbsp;{{ calculateDiscount(plan).discountPercentage }}%</span
-                >
+                <span>{{ $t("shop.plan.stock.warning") }}</span>
+              </div>
 
-                <span class="saving-text"
-                  >，{{ $t("shop.plan.discount.savings") }}
-                </span>
+              <div
+                class="card-badge glassmorphism stock-danger"
+                v-if="plan.capacity_limit === 0"
+              >
+                <IconBox :size="16" class="badge-icon" />
 
-                <span class="saving-amount"
-                  >&nbsp;{{ currencySymbol
-                  }}{{ calculateDiscount(plan).savingsAmount }}</span
-                >
+                <span>{{ $t("shop.plan.stock.sold_out") }}</span>
               </div>
             </div>
 
-            <!-- 订阅特性 -->
+            <div class="card-body">
+              <!-- 价格区域 - 修改为显示支持的所有周期 -->
 
-            <div class="plan-features">
-              <!-- JSON格式内容 -->
-
-              <template v-if="isJsonContent(plan.content)">
-                <div
-                  class="feature-item"
-                  v-for="(feature, index) in parseJsonContent(plan.content)"
-                  :key="index"
-                >
-                  <IconCheck
-                    v-if="feature.support"
-                    class="feature-icon enabled"
-                  />
-
-                  <IconX v-else class="feature-icon disabled" />
-
-                  <span :class="{ 'disabled-text': !feature.support }">{{
-                    feature.feature
-                  }}</span>
+              <div class="plan-price">
+                <div class="price-display">
+                  <div class="price-main-line">
+                    <span class="currency">{{ currencySymbol }}</span>
+                    <span class="amount">{{ getPlanMainPrice(plan) }}</span>
+                  </div>
+                  <span class="unit-line">{{ currency }} {{ $t(`shop.plan.periods.${getPriceTypeKey(getDisplayPriceType(plan))}`) }}</span>
                 </div>
-              </template>
+              </div>
 
-              <!-- HTML格式内容 -->
+              <button
+                class="btn-purchase glassmorphism"
+                :class="{ 'btn-disabled': plan.capacity_limit === 0 }"
+                @click="purchasePlan(plan)"
+                :disabled="plan.capacity_limit === 0"
+              >
+                <IconShoppingCart class="btn-icon" />
+                <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
+              </button>
 
-              <div v-else class="html-content" v-html="plan.content"></div>
+              <!-- 周期折扣计算 -->
+
+              <div
+                class="discount-calculation"
+                v-if="
+                  SHOP_CONFIG.enableDiscountCalculation &&
+                  calculateDiscount(plan).showDiscount
+                "
+              >
+                <div class="discount-info">
+                  <span class="period-name">{{
+                    calculateDiscount(plan).periodName
+                  }}</span>
+
+                  <span class="discount-label"
+                    >&nbsp;{{ $t("shop.plan.discount.relative") }}
+                  </span>
+
+                  <span class="discount-value"
+                    >&nbsp;{{ calculateDiscount(plan).discountPercentage }}%</span
+                  >
+
+                  <span class="saving-text"
+                    >，{{ $t("shop.plan.discount.savings") }}
+                  </span>
+
+                  <span class="saving-amount"
+                    >&nbsp;{{ currencySymbol
+                    }}{{ calculateDiscount(plan).savingsAmount }}</span
+                  >
+                </div>
+              </div>
+
+              <!-- 订阅特性 -->
+
+              <div class="plan-features">
+                <!-- JSON格式内容 -->
+
+                <template v-if="isJsonContent(plan.content)">
+                  <div
+                    class="feature-item"
+                    v-for="(feature, index) in parseJsonContent(plan.content)"
+                    :key="index"
+                  >
+                    <IconCheck
+                      v-if="feature.support"
+                      class="feature-icon enabled"
+                    />
+
+                    <IconX v-else class="feature-icon disabled" />
+
+                    <span :class="{ 'disabled-text': !feature.support }">{{
+                      feature.feature
+                    }}</span>
+                  </div>
+                </template>
+
+                <!-- HTML格式内容 -->
+
+                <div v-else class="html-content" v-html="plan.content"></div>
+              </div>
+
             </div>
-
           </div>
-        </div>
+        </template>
       </div>
 
 
@@ -225,6 +303,7 @@ import { SHOP_CONFIG } from "@/utils/baseConfig";
 
 
 import {
+  IconChevronLeft,
   IconCheck,
   IconX,
   IconShoppingCart,
@@ -238,6 +317,7 @@ export default {
   name: "ShopView",
 
   components: {
+    IconChevronLeft,
   
   
   
@@ -259,6 +339,13 @@ export default {
     const { showToast } = useToast();
 
     const router = useRouter();
+    const goBackToAccount = () => {
+      if (window.history.length > 1) {
+        router.back();
+        return;
+      }
+      router.push('/profile');
+    };
     const RECURRING_PERIOD_TYPES = [
       "month_price",
       "quarter_price",
@@ -294,6 +381,8 @@ export default {
     const paymentMethods = ref([]);
 
     const selectedFilter = ref("month_price");
+    const selectedPlanId = ref(null);
+    const selectedDesktopPlanId = ref(null);
 
     const filterToggle = ref(null);
 
@@ -335,6 +424,14 @@ export default {
 
     const setFilter = (filter) => {
       selectedFilter.value = filter;
+    };
+
+    const onSelectPlan = (plan) => {
+      selectedPlanId.value = plan?.id ?? null;
+    };
+
+    const setDesktopSelectedPlan = (plan) => {
+      selectedDesktopPlanId.value = plan?.id ?? null;
     };
 
     const getFilterDisplayLabel = (filter) => {
@@ -513,6 +610,11 @@ export default {
       if (isSameSpecPlan(plan)) return t("shop.plan.renew");
       if (isHigherSpecPlan(plan)) return t("shop.plan.upgrade_to", { name: plan.name });
       return t("shop.plan.purchase");
+    };
+
+    const getPlanToneClass = (index) => {
+      const tones = ["tone-1", "tone-2", "tone-3"];
+      return tones[Math.abs(Number(index) || 0) % tones.length];
     };
 
     const fetchPlanData = async () => {
@@ -697,6 +799,59 @@ export default {
       return visiblePlans.value.filter((plan) => hasPeriodPrice(plan, fallbackFilterValue.value));
     });
 
+    const selectedPlan = computed(() => {
+      if (filteredPlans.value.length === 0) return null;
+      const matched = filteredPlans.value.find((plan) => Number(plan.id) === Number(selectedPlanId.value));
+      return matched || filteredPlans.value[0];
+    });
+
+    const getPlanResolutionSubtitle = (plan) => {
+      if (!plan) return "";
+      if (isJsonContent(plan.content)) {
+        const matched = parseJsonContent(plan.content).find((item) => /\b(4k|[0-9]{3,4}p)\b/i.test(String(item?.feature || "")));
+        if (matched?.feature) {
+          return matched.feature;
+        }
+      }
+      return "";
+    };
+
+    const getMobilePlanSubtitle = (plan) => {
+      return getPlanResolutionSubtitle(plan);
+    };
+
+    const getPlanHeroSubtitle = (plan) => getPlanResolutionSubtitle(plan);
+
+    const getMobileFeatureRows = (plan) => {
+      if (!plan || !isJsonContent(plan.content)) return [];
+      return parseJsonContent(plan.content)
+        .slice(0, 6)
+        .map((item) => ({
+          label: item?.feature || "特性",
+          value: item?.support ? "支持" : "不支持",
+        }));
+    };
+
+    watch(
+      () => filteredPlans.value,
+      (nextPlans) => {
+        if (!nextPlans.length) {
+          selectedPlanId.value = null;
+          return;
+        }
+        const stillExists = nextPlans.some((plan) => Number(plan.id) === Number(selectedPlanId.value));
+        if (!stillExists) {
+          selectedPlanId.value = nextPlans[0].id;
+        }
+
+        const desktopStillExists = nextPlans.some((plan) => Number(plan.id) === Number(selectedDesktopPlanId.value));
+        if (!desktopStillExists) {
+          selectedDesktopPlanId.value = (nextPlans.find((plan) => isCurrentPlan(plan)) || nextPlans[0]).id;
+        }
+      },
+      { immediate: true }
+    );
+
     const hasRecurringPrice = (plan) => {
       return RECURRING_PERIOD_TYPES.some((type) => hasPeriodPrice(plan, type));
     };
@@ -866,6 +1021,13 @@ export default {
 
       setFilter,
       getFilterDisplayLabel,
+      selectedPlan,
+      selectedDesktopPlanId,
+      onSelectPlan,
+      setDesktopSelectedPlan,
+      getMobileFeatureRows,
+      getMobilePlanSubtitle,
+      getPlanHeroSubtitle,
 
       getPlanMainPrice,
 
@@ -880,12 +1042,14 @@ export default {
 
       getDisplayPriceType,
       getPurchaseButtonText,
+      getPlanToneClass,
       normalizePriceValue,
 
       SHOP_CONFIG,
 
       calculateDiscount,
       isCurrentPlan,
+      goBackToAccount,
     };
   },
 };
@@ -903,21 +1067,37 @@ export default {
 
   .shop-inner {
     width: 100%;
+    gap: 12px;
 
       }
 
   .welcome-card {
-    border: 1px solid var(--border-color);
+    border: none;
     border-radius: var(--shop-card-radius);
     box-shadow: none;
+    background: transparent;
+    background-color: transparent;
+    padding: 20px;
 
-    margin-bottom: 24px;
+    margin-bottom: 12px;
 
     .card-body p {
       color: var(--secondary-text-color);
       font-size: 14px;
       line-height: 1.6;
       font-weight: 500;
+    }
+
+    .welcome-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+
+      p {
+        margin: 0;
+      }
     }
   }
 
@@ -1217,6 +1397,10 @@ export default {
       overflow: hidden;
     }
 
+    .mobile-plan-layout {
+      display: none;
+    }
+
     .plan-card {
       border-radius: var(--shop-card-radius);
       border: 1px solid var(--border-color);
@@ -1228,7 +1412,7 @@ export default {
 
       box-shadow: none;
 
-      padding: 24px;
+      padding: 10px;
 
       border: 1px solid var(--border-color);
 
@@ -1242,40 +1426,95 @@ export default {
 
       height: auto;
 
+      &.desktop-plan-card {
+        cursor: pointer;
+      }
+
+      .desktop-current-outside-strip {
+        position: absolute;
+        top: -26px;
+        left: 0;
+        right: 0;
+        height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #2d2d2d;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 12px 12px 0 0;
+      }
+
       &:hover {
         box-shadow: none;
 
         border-color: rgba(var(--theme-color-rgb), 0.3);
-
-        transform: translateY(-5px);
       }
 
       &.current-plan-card {
-        border-color: rgba(var(--theme-color-rgb), 0.5);
+        border-color: var(--border-color);
         box-shadow: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+
+      &.selected-plan-card {
+        border-color: rgba(var(--theme-color-rgb), 0.7);
+        box-shadow: inset 0 0 0 1px rgba(var(--theme-color-rgb), 0.24);
+        transform: translateY(-2px);
       }
 
       .card-header {
         position: relative;
         display: flex;
         justify-content: center;
-        align-items: center;
-        min-height: 64px;
-        margin-bottom: 18px;
-        padding-top: 6px;
+        align-items: flex-start;
+        min-height: 116px;
+        margin-bottom: 12px;
+        padding-top: 0;
+
+        .desktop-plan-hero {
+          width: 100%;
+          border-radius: 12px;
+          overflow: hidden;
+          border: 1px solid rgba(var(--theme-color-rgb), 0.16);
+
+          .desktop-plan-gradient {
+            min-height: 86px;
+            padding: 14px 16px;
+            border-radius: 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+          }
+
+          .desktop-plan-gradient.tone-1 {
+            background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
+          }
+
+          .desktop-plan-gradient.tone-2 {
+            background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
+          }
+
+          .desktop-plan-gradient.tone-3 {
+            background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%);
+          }
+        }
 
         .header-main {
           width: 100%;
           min-width: 0;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          text-align: center;
-          gap: 4px;
+          align-items: flex-start;
+          text-align: left;
+          gap: 2px;
         }
 
         .card-title {
-          font-size: 22px;
+          font-size: 20px;
 
           font-weight: 600;
 
@@ -1288,13 +1527,31 @@ export default {
           hyphens: auto;
 
           max-width: 100%;
-          padding: 0 48px;
+          padding: 0;
           line-height: 1.25;
+          color: #fff;
+        }
+
+        .desktop-subtitle {
+          margin: 0;
+          font-size: 14px;
+          font-weight: 600;
+          color: rgba(255, 255, 255, 0.95);
+        }
+
+        .desktop-current-check {
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          color: #4d4ad5;
+          background: #fff;
+          padding: 3px;
+          flex-shrink: 0;
         }
 
         .card-badge {
           position: absolute;
-          top: 0;
+          top: -8px;
           right: 0;
           display: flex;
 
@@ -1370,7 +1627,7 @@ export default {
     }
 
     .plan-price {
-      margin: 14px 0 18px;
+      margin: 8px 0 10px;
 
       padding: 0 4px;
       text-align: center;
@@ -1418,7 +1675,7 @@ export default {
     .plan-price + .btn-purchase {
       align-self: center;
       margin-top: 0;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .discount-calculation {
@@ -1474,7 +1731,7 @@ export default {
 
     .plan-features {
       width: 100%;
-      margin: 24px 0 10px 0;
+      margin: 14px 0 8px 0;
 
       padding: 0 4px;
 
@@ -1611,9 +1868,11 @@ export default {
   }
 
   .filter-toggle-container {
-    margin-top: 10px;
+    margin-top: 0;
     margin-bottom: 0;
     flex-shrink: 0;
+    width: fit-content;
+    margin-left: 0;
 
     .filter-toggle-wrapper {
       position: relative;
@@ -1748,7 +2007,31 @@ export default {
   }
 }
 
+.account-back-btn {
+  width: fit-content;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.back-label {
+  font-size: 14px;
+  color: var(--secondary-text-color);
+}
+
 @media (max-width: 768px) {
+  .back-label {
+    display: none;
+  }
+
   .shop-container {
   --shop-card-radius: var(--radius-lg);
 
@@ -1758,6 +2041,182 @@ export default {
 
     .plans-wrapper {
       grid-template-columns: 1fr;
+      display: block;
+      margin-bottom: 0;
+
+      .desktop-plan-card {
+        display: none;
+      }
+
+      .mobile-plan-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .mobile-plan-selector {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        align-items: stretch;
+        padding-top: 34px;
+      }
+
+      .mobile-plan-chip-wrap {
+        position: relative;
+        min-width: 0;
+        display: flex;
+      }
+
+      .mobile-plan-chip-wrap.current-plan-chip {
+        padding-top: 0;
+      }
+
+      .chip-current-header {
+        box-sizing: border-box;
+        position: absolute;
+        top: -34px;
+        left: 0;
+        right: 0;
+        height: 34px;
+        padding: 0 8px;
+        border-radius: 12px 12px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #2d2d2d;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .mobile-plan-chip {
+        box-sizing: border-box;
+        width: 100%;
+        border: 1px solid var(--border-color);
+        background: var(--card-bg-color);
+        border-radius: 12px;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        text-align: left;
+        color: var(--text-color);
+        position: relative;
+        min-height: 116px;
+        overflow: hidden;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 10px;
+
+        &.active {
+          border-color: rgba(var(--theme-color-rgb), 0.65);
+          color: #fff;
+        }
+
+        &.active.tone-1 {
+          background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
+        }
+
+        &.active.tone-2 {
+          background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
+        }
+
+        &.active.tone-3 {
+          background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%);
+        }
+
+        &.current-plan-chip {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+
+      }
+
+      .chip-name {
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .chip-period {
+        font-size: 12px;
+        color: var(--secondary-text-color);
+      }
+
+      .mobile-plan-chip.active .chip-period,
+      .mobile-plan-chip.current-plan-chip.active .chip-period {
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .chip-check {
+        position: absolute;
+        right: 2px;
+        bottom: 2px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #4d4ad5;
+        background: #fff;
+      }
+
+      .mobile-plan-details {
+        border: 1px solid var(--border-color);
+        background: var(--card-bg-color);
+        border-radius: 12px;
+        padding: 10px 14px;
+      }
+
+      .mobile-detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .mobile-detail-row:last-child {
+        border-bottom: none;
+      }
+
+      .mobile-label {
+        font-size: 13px;
+        color: var(--secondary-text-color);
+      }
+
+      .mobile-value {
+        font-size: 13px;
+        font-weight: 600;
+        text-align: right;
+      }
+
+      .mobile-continue-btn {
+        position: sticky;
+        bottom: max(12px, env(safe-area-inset-bottom));
+        width: 100%;
+        height: 44px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
+        color: #fff;
+        font-weight: 600;
+
+        &.btn-disabled {
+          background: var(--button-disabled-bg);
+          border-color: var(--button-disabled-bg);
+        }
+      }
     }
   }
 
@@ -1772,7 +2231,8 @@ export default {
   }
 
   .shop-container .filter-toggle-container {
-    width: 100%;
+    width: fit-content;
+    margin-left: auto;
 
     .filter-toggle-wrapper {
       border: 1px solid var(--border-color);
@@ -1785,6 +2245,10 @@ export default {
 }
 
 @media (max-width: 480px) {
+  .shop-container .plans-wrapper .mobile-plan-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .shop-container .filter-toggle-container .filter-toggle-wrapper {
     padding: 2px;
 
