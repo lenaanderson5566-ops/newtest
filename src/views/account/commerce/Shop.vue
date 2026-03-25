@@ -83,26 +83,33 @@
         <template v-else>
           <div class="mobile-plan-layout">
             <div class="mobile-plan-selector">
-              <button
+              <div
                 v-for="plan in filteredPlans"
                 :key="`mobile-${plan.id}`"
-                type="button"
-                class="mobile-plan-chip"
+                class="mobile-plan-chip-wrap"
                 :class="{
-                  active: selectedPlan && Number(selectedPlan.id) === Number(plan.id),
                   'current-plan-chip': isCurrentPlan(plan),
                 }"
-                @click="onSelectPlan(plan)"
               >
                 <span class="chip-current-header" v-if="isCurrentPlan(plan)">{{ currentPlanBadgeLabel }}</span>
-                <span class="chip-body">
-                  <span class="chip-name">{{ plan.name }}</span>
-                  <span class="chip-period">{{ getMobilePlanSubtitle(plan) }}</span>
-                  <span class="chip-check" v-if="selectedPlan && Number(selectedPlan.id) === Number(plan.id)">
-                    <IconCheck :size="16" />
+                <button
+                  type="button"
+                  class="mobile-plan-chip"
+                  :class="{
+                    active: selectedPlan && Number(selectedPlan.id) === Number(plan.id),
+                    'current-plan-chip': isCurrentPlan(plan),
+                  }"
+                  @click="onSelectPlan(plan)"
+                >
+                  <span class="chip-body">
+                    <span class="chip-name">{{ plan.name }}</span>
+                    <span class="chip-period">{{ getMobilePlanSubtitle(plan) }}</span>
+                    <span class="chip-check" v-if="selectedPlan && Number(selectedPlan.id) === Number(plan.id)">
+                      <IconCheck :size="16" />
+                    </span>
                   </span>
-                </span>
-              </button>
+                </button>
+              </div>
             </div>
 
             <div class="mobile-plan-details" v-if="selectedPlan">
@@ -1922,6 +1929,31 @@ export default {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
+        align-items: start;
+      }
+
+      .mobile-plan-chip-wrap {
+        position: relative;
+      }
+
+      .mobile-plan-chip-wrap.current-plan-chip {
+        padding-top: 34px;
+      }
+
+      .chip-current-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 34px;
+        border-radius: 18px 18px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #2d2d2d;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
       }
 
       .mobile-plan-chip {
@@ -1945,21 +1977,7 @@ export default {
         }
 
         &.current-plan-chip {
-          padding: 0;
-
-          .chip-current-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 38px;
-            background: #2d2d2d;
-            color: #fff;
-            font-size: 13px;
-            font-weight: 700;
-          }
-
           .chip-body {
-            padding: 10px;
             min-height: 96px;
           }
         }
