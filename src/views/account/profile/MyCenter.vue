@@ -60,7 +60,7 @@
             </label>
           </div>
 
-          <button class="nav-row" @click="go('/billing?tab=wallet')">
+          <button class="nav-row" @click="go('/wallet/deposit')">
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.accountBalance') }}</div>
               <p>{{ $t('myCenter.balanceDesc') }}</p>
@@ -68,7 +68,7 @@
             <IconChevronRight :size="18" />
           </button>
 
-          <button class="nav-row" @click="go('/billing?tab=orders')">
+          <button class="nav-row" @click="go('/orders')">
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.orderHistory') }}</div>
               <p>{{ $t('myCenter.orderDesc') }}</p>

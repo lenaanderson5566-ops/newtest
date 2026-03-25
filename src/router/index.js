@@ -39,6 +39,9 @@ const getActiveNavForRoute = (routeName) => {
     'ConfigManagement',
     'SecuritySettings',
     'Billing',
+    'WalletDeposit',
+    'OrderList',
+    'Invite',
     'TicketList',
     'MobileTickets',
     'TrafficLog',
@@ -413,7 +416,37 @@ const routes = [
 
         path: 'orders',
 
-        redirect: { path: '/billing', query: { tab: 'orders' } }
+        name: 'OrderList',
+
+        component: () => import('@/views/account/orders/OrderList.vue'),
+
+        meta: {
+
+          titleKey: 'orders.title',
+
+          requiresAuth: true,
+
+          get activeNav() { return getActiveNavForRoute('OrderList'); }
+        }
+
+      },
+
+      {
+
+        path: 'invite',
+
+        name: 'Invite',
+
+        component: () => import('@/views/account/invite/Invite.vue'),
+
+        meta: {
+
+          titleKey: 'menu.invite',
+
+          requiresAuth: true,
+
+          get activeNav() { return getActiveNavForRoute('Invite'); }
+        }
 
       },
 
@@ -551,11 +584,17 @@ const routes = [
 
         path: 'wallet/deposit',
 
-        redirect: () => {
-          if (!isXiaoV2board()) {
-            return '/billing?tab=orders';
-          }
-          return '/billing?tab=wallet';
+        name: 'WalletDeposit',
+
+        component: () => import('@/views/account/wallet/WalletDeposit.vue'),
+
+        meta: {
+
+          titleKey: 'wallet.title',
+
+          requiresAuth: true,
+
+          get activeNav() { return getActiveNavForRoute('WalletDeposit'); }
         }
 
       }
