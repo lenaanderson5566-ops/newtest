@@ -1,7 +1,19 @@
 <template>
   <div class="my-center page-shell">
     <div class="my-center-inner page-inner page-stack">
-      <div class="overview-panels" :class="{ 'no-tier': !hasTierInfo }">
+      <div class="top-nav-wrap">
+        <button
+          v-for="item in sectionTabs"
+          :key="item.key"
+          class="top-nav-item"
+          :class="{ active: activeSection === item.key }"
+          @click="activeSection = item.key"
+        >
+          {{ item.label }}
+        </button>
+      </div>
+
+      <div v-show="activeSection === 'overview'" class="overview-panels" :class="{ 'no-tier': !hasTierInfo }">
         <section class="summary-panel section-block dashboard-like-card">
           <div class="summary-top">
             <div>
@@ -56,7 +68,7 @@
         </section>
       </div>
 
-      <section class="section-block dashboard-like-card">
+      <section v-show="activeSection === 'subscription'" class="section-block dashboard-like-card">
         <h3 class="section-title">{{ $t('myCenter.financeTitle') }}</h3>
         <div class="settings-list">
 
@@ -87,6 +99,22 @@
             <IconChevronRight :size="18" />
           </button>
 
+          <button class="nav-row" @click="go('/billing')">
+            <div class="row-main">
+              <div class="row-title">礼品卡</div>
+              <p>兑换礼品卡或促销代码</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+
+          <button class="nav-row" @click="go('/shop')">
+            <div class="row-main">
+              <div class="row-title">续费 / 升级</div>
+              <p>切换套餐并继续服务</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+
           <button class="nav-row" @click="go('/billing?tab=referral')">
             <div class="row-main">
               <div class="row-title">{{ $t('myCenter.referral') }}</div>
@@ -97,7 +125,7 @@
         </div>
       </section>
 
-      <section class="section-block dashboard-like-card">
+      <section v-show="activeSection === 'security'" class="section-block dashboard-like-card">
         <h3 class="section-title">{{ $t('myCenter.securityCenterTitle') }}</h3>
         <div class="settings-list">
           <button class="nav-row" @click="go('/security?section=password')">
@@ -126,7 +154,7 @@
         </div>
       </section>
 
-      <section class="section-block dashboard-like-card">
+      <section v-show="activeSection === 'settings'" class="section-block dashboard-like-card">
         <h3 class="section-title">{{ $t('myCenter.settingsTitle') }}</h3>
         <div class="settings-list">
           <div class="settings-row">
@@ -150,6 +178,71 @@
               <span class="slider round"></span>
             </label>
           </div>
+
+          <div class="settings-row">
+            <div class="row-main">
+              <div class="row-title">自动续费失败提醒</div>
+              <p>在自动续费失败时发送通知</p>
+            </div>
+            <label class="switch" :class="{ disabled: true }">
+              <input type="checkbox" checked disabled />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <button class="nav-row" @click="go('/profile')">
+            <div class="row-main">
+              <div class="row-title">语言偏好</div>
+              <p>调整页面显示语言</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+        </div>
+      </section>
+
+      <section v-show="activeSection === 'benefits'" class="section-block dashboard-like-card">
+        <h3 class="section-title">会员权益</h3>
+        <div class="settings-list">
+          <div class="settings-row">
+            <div class="row-main">
+              <div class="row-title">等级与成长值</div>
+              <p>{{ tierMemberDisplay }} · Lv.{{ userTier.level || 0 }} · {{ formatTierNumber(userTier.points) }} 积分</p>
+            </div>
+          </div>
+          <button class="nav-row" @click="go('/dashboard')">
+            <div class="row-main">
+              <div class="row-title">权益说明</div>
+              <p>查看当前会员等级可用权益</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+        </div>
+      </section>
+
+      <section v-show="activeSection === 'invite'" class="section-block dashboard-like-card">
+        <h3 class="section-title">邀请返利</h3>
+        <div class="settings-list">
+          <button class="nav-row" @click="go('/invite')">
+            <div class="row-main">
+              <div class="row-title">邀请链接</div>
+              <p>创建和复制你的专属邀请链接</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+          <button class="nav-row" @click="go('/invite')">
+            <div class="row-main">
+              <div class="row-title">邀请记录</div>
+              <p>查看邀请用户和奖励明细</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
+          <button class="nav-row" @click="go('/invite')">
+            <div class="row-main">
+              <div class="row-title">返利收益</div>
+              <p>管理可提现收益和结算记录</p>
+            </div>
+            <IconChevronRight :size="18" />
+          </button>
 
         </div>
       </section>
@@ -180,6 +273,15 @@ const remindTraffic = ref(false);
 const autoRenewal = ref(false);
 const updatingSettings = ref(false);
 const updatingAutoRenewal = ref(false);
+const activeSection = ref('overview');
+const sectionTabs = [
+  { key: 'overview', label: '总览' },
+  { key: 'subscription', label: '订阅' },
+  { key: 'security', label: '安全性' },
+  { key: 'settings', label: '设置' },
+  { key: 'benefits', label: '会员权益' },
+  { key: 'invite', label: '邀请返利' }
+];
 
 const userTier = computed(() => {
   const tier = userInfo.value?.tier || {};
@@ -306,6 +408,46 @@ onMounted(async () => {
 .my-center-inner {
   display: grid;
   gap: 1rem;
+}
+
+.top-nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  background: var(--card-bg-color, var(--card-background));
+  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-radius: $border-radius-sm;
+}
+
+.top-nav-item {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: var(--secondary-text-color);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &.active {
+    color: var(--text-color);
+  }
+
+  &.active::after {
+    content: '';
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 0;
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(var(--theme-color-rgb), 1);
+  }
 }
 
 .section-block {
