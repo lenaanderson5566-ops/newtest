@@ -645,19 +645,19 @@ watch(locale, () => {
     table-layout: fixed;
 
     th, td {
-      padding: 0.42rem 0.32rem;
-      font-size: 0.78rem;
+      padding: 0.32rem 0.24rem;
+      line-height: 1.15;
     }
 
     .actions {
-      gap: 0.25rem;
+      gap: 0.18rem;
 
       .action-button {
-        min-width: 28px;
-        width: 28px;
-        height: 28px;
+        min-width: 24px;
+        width: 24px;
+        height: 24px;
         padding: 0;
-        flex: 0 0 28px;
+        flex: 0 0 24px;
       }
 
       .action-button span {
@@ -666,8 +666,8 @@ watch(locale, () => {
     }
 
     .status-badge {
-      padding: 0.25rem 0.35rem;
-      font-size: 0.74rem;
+      padding: 0.18rem 0.28rem;
+      line-height: 1.05;
     }
   }
 }
