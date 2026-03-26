@@ -301,7 +301,7 @@ export default {
     region: '區域',
     usage: '使用',
         start: '幫助與支援',
-        quickStart: 'Quick Start',
+        quickStart: '快速開始',
     my: '帳號',
     shop: '商店',
     subscription: '訂閱',
@@ -497,7 +497,7 @@ export default {
 
         planDetails: '方案詳情',
         planExpireAtLabel: '到期時間：{date}',
-        paymentInfo: '支付資訊',
+        paymentInfo: '付款資訊',
         accountDetails: '帳號詳情',
         accessPrivacy: '存取與隱私',
         changeSubscription: '更改訂閱',
