@@ -22,6 +22,10 @@
   --global-card-gap: 14px;
   --page-content-max-width: 1120px;
   --page-stack-gap: var(--global-card-gap);
+  --view-font-size-base: 14px;
+  --view-font-size-small: 13px;
+  --view-font-size-title: 16px;
+  --view-line-height-base: 1.45;
 }
 
 .app-content-wrapper .page-shell {
@@ -29,6 +33,28 @@
   padding-top: 0;
   background-color: var(--background-color);
   background-image: none;
+  color: var(--text-color);
+  font-size: var(--view-font-size-base);
+  line-height: var(--view-line-height-base);
+}
+
+/* 统一 views 下常见文本风格，减少各页面重复定义 */
+.app-content-wrapper .page-shell h1,
+.app-content-wrapper .page-shell h2,
+.app-content-wrapper .page-shell h3,
+.app-content-wrapper .page-shell h4,
+.app-content-wrapper .page-shell .card-title {
+  color: var(--text-color);
+  line-height: 1.3;
+}
+
+.app-content-wrapper .page-shell .muted,
+.app-content-wrapper .page-shell .secondary,
+.app-content-wrapper .page-shell .subtitle,
+.app-content-wrapper .page-shell .description,
+.app-content-wrapper .page-shell .info-label {
+  color: var(--secondary-text-color);
+  font-size: var(--view-font-size-small);
 }
 
 /* 统一去除半透明玻璃态背景，避免页面呈现混合底色 */
