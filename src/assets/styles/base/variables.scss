@@ -14,6 +14,12 @@
   --tertiary-text-color: #9aa4b2;
   --text-color-rgb: 31, 41, 55;
 
+  /* 文本颜色（深色表面） */
+  --text-on-dark-primary: rgba(255, 255, 255, 0.96);
+  --text-on-dark-secondary: rgba(255, 255, 255, 0.78);
+  --text-on-dark-tertiary: rgba(255, 255, 255, 0.56);
+  --text-on-dark-disabled: rgba(255, 255, 255, 0.38);
+
   --border-color: #e5e7eb;
   --shadow-color: rgba(15, 23, 42, 0.06);
 
