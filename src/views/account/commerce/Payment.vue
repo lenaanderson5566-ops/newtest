@@ -1501,7 +1501,7 @@ export default {
         height: 44px;
         border-radius: $border-radius-sm;
         background-color: var(--theme-color);
-        color: #fff;
+        color: var(--text-on-dark-primary);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -1806,7 +1806,7 @@ export default {
     .btn-pay,
     .btn-continue {
       background-color: var(--theme-color);
-      color: white;
+      color: var(--text-on-dark-primary);
       flex: 2;
       box-shadow: none;
 
@@ -1918,7 +1918,7 @@ export default {
 
     .success-animation {
       text-align: center;
-      color: white;
+      color: var(--text-on-dark-primary);
       padding: 30px;
       max-width: 500px;
       z-index: 1001;
@@ -1939,7 +1939,7 @@ export default {
           box-shadow: none;
 
           .check-icon {
-            color: white;
+            color: var(--text-on-dark-primary);
             animation: bounceIn 0.8s ease 0.2s both;
           }
         }
@@ -2321,7 +2321,7 @@ export default {
 
         .btn-primary {
           background-color: var(--theme-color);
-          color: white;
+          color: var(--text-on-dark-primary);
           box-shadow: none;
           transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
@@ -2477,7 +2477,7 @@ export default {
 
     .confirm-btn {
       background-color: #ff4d4f;
-      color: white;
+      color: var(--text-on-dark-primary);
 
       &:hover {
         background-color: #ff7875;

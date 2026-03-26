@@ -1139,7 +1139,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   cursor: pointer;
   border: none;
   background: rgba(var(--theme-color-rgb), 0.92);
-  color: #fff;
+  color: var(--text-on-dark-primary);
 }
 
 .modal-text {

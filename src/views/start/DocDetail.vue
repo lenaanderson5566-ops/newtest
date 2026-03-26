@@ -1480,7 +1480,7 @@ onUnmounted(() => {
 
   background: linear-gradient(135deg, var(--theme-color), var(--theme-color-dark));
 
-  color: white;
+  color: var(--text-on-dark-primary);
 
   font-weight: $font-weight-semibold;
 

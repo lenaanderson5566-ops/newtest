@@ -816,7 +816,7 @@ export default {
 
           background-color: var(--theme-color);
 
-          color: white;
+          color: var(--text-on-dark-primary);
 
           
 

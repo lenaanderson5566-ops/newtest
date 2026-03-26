@@ -1668,7 +1668,7 @@ export default {
 
           .discount-tag {
             background-color: #ff4d4f;
-            color: #fff;
+            color: var(--text-on-dark-primary);
             font-size: $font-size-sm;
             padding: 2px 4px;
             border-radius: 4px;
@@ -1778,7 +1778,7 @@ export default {
 
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       font-size: $font-size-md;
 
@@ -2140,7 +2140,7 @@ export default {
     padding: 0 24px;
     border-radius: $border-radius-sm;
     background-color: var(--theme-color);
-    color: white;
+    color: var(--text-on-dark-primary);
     font-size: $font-size-md;
     font-weight: $font-weight-medium;
     display: inline-flex;
@@ -2228,7 +2228,7 @@ export default {
 
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       font-size: $font-size-md;
 

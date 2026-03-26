@@ -939,7 +939,7 @@ export default {
 
     border: none;
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     font-weight: $font-weight-semibold;
 

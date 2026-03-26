@@ -688,7 +688,7 @@ onMounted(() => {
     &.btn-submit {
       background-color: var(--theme-color);
       border: none;
-      color: white;
+      color: var(--text-on-dark-primary);
       display: flex;
       align-items: center;
       gap: 8px;

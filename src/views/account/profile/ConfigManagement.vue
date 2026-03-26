@@ -121,7 +121,7 @@ const handleResetSecurity = async () => {
   cursor: pointer;
 
   &.danger {
-    color: #fff;
+    color: var(--text-on-dark-primary);
     background: rgba(var(--theme-color-rgb), 0.92);
     border-color: rgba(var(--theme-color-rgb), 0.92);
   }

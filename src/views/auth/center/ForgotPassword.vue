@@ -1830,7 +1830,7 @@ export default {
 
     background-color: var(--theme-color) !important;
 
-    color: white !important;
+    color: var(--text-on-dark-primary) !important;
 
     margin: 0;
 
@@ -1924,7 +1924,7 @@ export default {
 
     border: none;
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     font-weight: $font-weight-semibold;
 

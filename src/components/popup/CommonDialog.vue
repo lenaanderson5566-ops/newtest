@@ -301,7 +301,7 @@ export default {
 
       .dialog-btn-confirm {
         background-color: var(--theme-color);
-        color: white;
+        color: var(--text-on-dark-primary);
 
         &:hover {
           box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);

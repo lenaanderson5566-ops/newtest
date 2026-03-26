@@ -1092,7 +1092,7 @@ onUnmounted(() => {
 
     transition: all 0.3s ease;
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     background-color: rgba(var(--theme-color-rgb), 0.85);
 
@@ -1448,7 +1448,7 @@ onUnmounted(() => {
 
     justify-content: center;
 
-    color: #fff;
+    color: var(--text-on-dark-primary);
 
     flex-shrink: 0;
 
@@ -1629,7 +1629,7 @@ onUnmounted(() => {
 
     background-color: rgba(var(--theme-color-rgb), 0.85);
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     border: none;
 
@@ -2107,7 +2107,7 @@ onUnmounted(() => {
 
       border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       box-shadow: none;
 
@@ -2287,7 +2287,7 @@ onUnmounted(() => {
 
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       border: none;
 

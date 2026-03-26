@@ -874,7 +874,7 @@ fetchTickets();
 
     background-color: transparent;
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     border: none;
 
@@ -941,7 +941,7 @@ fetchTickets();
 
     background-color: var(--theme-color);
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     border: none;
 
@@ -1407,7 +1407,7 @@ fetchTickets();
     .message-content {
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       border-radius: 12px 0 12px 12px;
 
@@ -1416,7 +1416,7 @@ fetchTickets();
       .message-header {
         .sender-name,
         .message-time {
-          color: rgba(255, 255, 255, 0.9);
+          color: var(--text-on-dark-primary);
         }
       }
     }
@@ -1440,7 +1440,7 @@ fetchTickets();
 
   justify-content: center;
 
-  color: white;
+  color: var(--text-on-dark-primary);
 
   flex-shrink: 0;
 
@@ -1553,7 +1553,7 @@ fetchTickets();
 
     background-color: var(--theme-color);
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     border: none;
 
@@ -1830,7 +1830,7 @@ fetchTickets();
       &.active {
         background-color: var(--theme-color);
 
-        color: white;
+        color: var(--text-on-dark-primary);
 
         border-color: var(--theme-color);
 
@@ -1891,7 +1891,7 @@ fetchTickets();
     &.submit-btn {
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       border: none;
 
@@ -2129,7 +2129,7 @@ fetchTickets();
 
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       border: none;
 
@@ -2169,7 +2169,7 @@ fetchTickets();
 .confirm-close-btn.danger {
   background-color: #f44336;
 
-  color: white;
+  color: var(--text-on-dark-primary);
 
   border: none;
 

@@ -311,7 +311,7 @@
 
 .pending-order-modal .pending-order-actions .btn-confirm-cancel {
   background: #ff4d4f;
-  color: #fff;
+  color: var(--text-on-dark-primary);
   border-color: #ff4d4f;
 
   &:hover:not(:disabled) {

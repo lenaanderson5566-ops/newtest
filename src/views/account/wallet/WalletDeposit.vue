@@ -633,7 +633,7 @@ onMounted(() => {
         justify-content: center;
         gap: 10px;
         background-color: var(--theme-color);
-        color: white;
+        color: var(--text-on-dark-primary);
         border: none;
         border-radius: $border-radius-sm;
         padding: 0 30px;

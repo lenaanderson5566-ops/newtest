@@ -2419,7 +2419,7 @@ export default {
 
     &.white {
 
-      color: #ffffff;
+      color: var(--text-on-dark-primary);
 
       text-shadow: none;
 
@@ -2455,7 +2455,7 @@ export default {
 
     &.white {
 
-      color: #ffffff;
+      color: var(--text-on-dark-primary);
 
       text-shadow: none;
 
@@ -3255,7 +3255,7 @@ export default {
 
     background-color: var(--theme-color);
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     margin: 0;
 
@@ -3347,7 +3347,7 @@ export default {
 
     border: none;
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     font-weight: $font-weight-semibold;
 

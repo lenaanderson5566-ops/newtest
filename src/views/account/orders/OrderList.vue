@@ -667,7 +667,7 @@ watch(locale, () => {
   gap: 8px;
   border-radius: 8px;
   background-color: rgba(var(--theme-color-rgb), 0.85);
-  color: white;
+  color: var(--text-on-dark-primary);
   font-weight: $font-weight-medium;
   font-size: $font-size-md;
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
@@ -808,7 +808,7 @@ watch(locale, () => {
     &.btn-confirm {
       background-color: rgba(var(--theme-color-rgb), 0.88);
       border: none;
-      color: #fff;
+      color: var(--text-on-dark-primary);
       display: flex;
       align-items: center;
       gap: 0.5rem;

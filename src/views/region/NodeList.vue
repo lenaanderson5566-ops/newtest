@@ -701,7 +701,7 @@ onMounted(() => {
       justify-content: center;
       font-size: $font-size-sm;
       font-weight: $font-weight-bold;
-      color: #fff;
+      color: var(--text-on-dark-primary);
       background: radial-gradient(circle at center, rgba(var(--theme-color-rgb), 0.95), rgba(var(--theme-color-rgb), 0.35));
       box-shadow: none;
       animation: regionPulse 2.8s ease-in-out infinite;
@@ -776,7 +776,7 @@ onMounted(() => {
     }
 
     .primary {
-      color: #fff;
+      color: var(--text-on-dark-primary);
       background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
       box-shadow: none;
     }
@@ -848,7 +848,7 @@ onMounted(() => {
     padding: 0 10px;
     font-size: 0.88rem;
     font-weight: $font-weight-bold;
-    color: #fff;
+    color: var(--text-on-dark-primary);
     letter-spacing: 0.5px;
     background: linear-gradient(135deg, #d90429, #9d174d);
     box-shadow: none;
@@ -1033,7 +1033,7 @@ onMounted(() => {
 
   background-color: rgba(var(--theme-color-rgb), 0.85);
 
-  color: white;
+  color: var(--text-on-dark-primary);
 
   font-weight: $font-weight-medium;
 

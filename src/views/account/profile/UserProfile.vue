@@ -2019,7 +2019,7 @@ onMounted(() => {
 
     background-color: rgba(var(--theme-color-rgb), 0.85);
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     font-weight: $font-weight-medium;
 
@@ -2389,7 +2389,7 @@ onMounted(() => {
 
           background-color: var(--theme-color);
 
-          color: white;
+          color: var(--text-on-dark-primary);
 
           border: none;
 
@@ -2939,7 +2939,7 @@ onMounted(() => {
 
       border: none;
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       display: flex;
 

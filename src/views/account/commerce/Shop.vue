@@ -1441,7 +1441,7 @@ export default {
         align-items: center;
         justify-content: center;
         background: #2d2d2d;
-        color: #fff;
+        color: var(--text-on-dark-primary);
         font-size: $font-size-sm;
         font-weight: $font-weight-bold;
         border-radius: 12px 12px 0 0;
@@ -1485,7 +1485,7 @@ export default {
             min-height: 86px;
             padding: 14px 16px;
             border-radius: 10px;
-            color: #fff;
+            color: var(--text-on-dark-primary);
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -1530,14 +1530,14 @@ export default {
           max-width: 100%;
           padding: 0;
           line-height: 1.25;
-          color: #fff;
+          color: var(--text-on-dark-primary);
         }
 
         .desktop-subtitle {
           margin: 0;
           font-size: $font-size-md;
           font-weight: $font-weight-semibold;
-          color: rgba(255, 255, 255, 0.95);
+          color: var(--text-on-dark-primary);
         }
 
         .desktop-current-check {
@@ -1807,7 +1807,7 @@ export default {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: white;
+    color: var(--text-on-dark-primary);
     border: 1px solid transparent;
     border-radius: 10px;
     font-size: $font-size-md;
@@ -1851,7 +1851,7 @@ export default {
     }
 
     .btn-text {
-      color: #fff;
+      color: var(--text-on-dark-primary);
       font-weight: $font-weight-semibold;
     }
 
@@ -1921,7 +1921,7 @@ export default {
 
         &.active {
           .option-text {
-            color: #fff;
+            color: var(--text-on-dark-primary);
             font-weight: $font-weight-semibold;
           }
         }
@@ -1941,7 +1941,7 @@ export default {
 
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       border: none;
 
@@ -2086,7 +2086,7 @@ export default {
         align-items: center;
         justify-content: center;
         background: #2d2d2d;
-        color: #fff;
+        color: var(--text-on-dark-primary);
         font-size: $font-size-sm;
         font-weight: $font-weight-bold;
         line-height: 1.2;
@@ -2116,7 +2116,7 @@ export default {
 
         &.active {
           border-color: rgba(var(--theme-color-rgb), 0.65);
-          color: #fff;
+          color: var(--text-on-dark-primary);
         }
 
         &.active.tone-1 {
@@ -2150,7 +2150,7 @@ export default {
 
       .mobile-plan-chip.active .chip-period,
       .mobile-plan-chip.current-plan-chip.active .chip-period {
-        color: rgba(255, 255, 255, 0.9);
+        color: var(--text-on-dark-primary);
       }
 
       .chip-check {
@@ -2210,7 +2210,7 @@ export default {
         justify-content: center;
         gap: 8px;
         background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
-        color: #fff;
+        color: var(--text-on-dark-primary);
         font-weight: $font-weight-semibold;
 
         &.btn-disabled {

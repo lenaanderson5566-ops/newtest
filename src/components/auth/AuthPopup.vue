@@ -241,7 +241,7 @@ export default {
       .popup-action-btn {
         padding: 8px 20px;
         background-color: var(--theme-color);
-        color: white;
+        color: var(--text-on-dark-primary);
         border: none;
         border-radius: 8px;
         font-size: $font-size-md;

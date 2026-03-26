@@ -702,7 +702,7 @@ onMounted(() => {
 
   background-color: rgba(var(--theme-color-rgb), 0.85);
 
-  color: white;
+  color: var(--text-on-dark-primary);
 
   font-weight: $font-weight-medium;
 

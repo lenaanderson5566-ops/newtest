@@ -465,7 +465,7 @@ export default {
     user-select: none;
 
     &.white {
-      color: #ffffff;
+      color: var(--text-on-dark-primary);
       text-shadow: none;
     }
 
@@ -484,7 +484,7 @@ export default {
     z-index: 2;
 
     &.white {
-      color: #ffffff;
+      color: var(--text-on-dark-primary);
       text-shadow: none;
     }
 
@@ -730,7 +730,7 @@ export default {
   &.btn-primary {
     background-color: var(--theme-color);
     border: none;
-    color: white;
+    color: var(--text-on-dark-primary);
     font-weight: $font-weight-semibold;
 
     &:hover:not(:disabled) {
