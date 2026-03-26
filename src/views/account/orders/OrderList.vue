@@ -40,10 +40,12 @@
               </div>
               
               <div class="order-card-body">
-                <div class="info-row info-row-compact">
+                <div class="order-summary-line">
                   <span class="value">{{ formatCycle(order.period) }}</span>
+                  <span class="separator">·</span>
                   <span class="value amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</span>
-                  <span class="value">{{ formatDate(order.created_at) }}</span>
+                  <span class="separator">·</span>
+                  <span class="value time">{{ formatDate(order.created_at) }}</span>
                 </div>
               </div>
               
@@ -993,21 +995,41 @@ watch(locale, () => {
     }
   }
 
-  .info-row-compact {
-    border-bottom: none;
+  .order-summary-line {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding: 0.2rem 0;
-    gap: 10px;
+    font-size: 0.85rem;
+
+    .separator {
+      color: var(--secondary-text-color);
+      flex: 0 0 auto;
+    }
 
     .value {
       margin-left: 0;
       text-align: left;
-      max-width: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+      flex: 0 1 auto;
     }
 
-    .value:last-child {
-      margin-left: auto;
+    .value.amount {
+      font-weight: 600;
+      color: var(--order-tone-strong);
+    }
+
+    .value.time {
       color: var(--secondary-text-color);
       font-size: 0.82rem;
+      margin-left: auto;
+      flex: 0 1 45%;
+      text-align: right;
     }
   }
 }
