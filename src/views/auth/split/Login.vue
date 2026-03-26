@@ -458,7 +458,7 @@ export default {
     position: absolute;
     top: 30px;
     left: 30px;
-    font-size: 1.5rem;
+    font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
     z-index: 2;
     cursor: pointer;
@@ -479,7 +479,7 @@ export default {
     position: absolute;
     bottom: 30px;
     left: 30px;
-    font-size: 1.5rem;
+    font-size: $font-size-2xl;
     font-weight: $font-weight-semibold;
     z-index: 2;
 
@@ -558,7 +558,7 @@ export default {
   }
 
   .auth-title {
-    font-size: 1.75rem;
+    font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
     margin-bottom: 0.5rem;
     color: var(--primary-text-color);
@@ -569,7 +569,7 @@ export default {
   }
 
   .auth-subtitle {
-    font-size: 1rem;
+    font-size: $font-size-md;
     color: var(--secondary-text-color);
     margin-bottom: 1.5rem;
 
@@ -703,13 +703,13 @@ export default {
 
     .checkbox-label {
       color: var(--secondary-text-color);
-      font-size: 0.875rem;
+      font-size: $font-size-sm;
     }
   }
 
   .forgot-password {
     color: var(--theme-color);
-    font-size: 0.875rem;
+    font-size: $font-size-sm;
     text-decoration: none;
     transition: color 0.3s ease, opacity 0.3s ease;
 
@@ -751,7 +751,7 @@ export default {
 .error-message {
   display: block;
   color: #ff4d4f;
-  font-size: 0.8rem;
+  font-size: $font-size-xs;
   margin-top: 0.3rem;
 }
 
@@ -904,7 +904,7 @@ export default {
 
   p {
     color: var(--secondary-text-color);
-    font-size: 1rem;
+    font-size: $font-size-md;
   }
 }
 

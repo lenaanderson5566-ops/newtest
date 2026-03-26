@@ -1981,7 +1981,7 @@ onMounted(() => {
 
     color: var(--text-muted);
 
-    font-size: 1.1rem;
+    font-size: $font-size-lg;
 
   }
 

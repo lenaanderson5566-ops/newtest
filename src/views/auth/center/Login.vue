@@ -885,7 +885,7 @@ export default {
 
       color: var(--secondary-text-color);
 
-      font-size: 0.875rem;
+      font-size: $font-size-sm;
 
     }
 
@@ -897,7 +897,7 @@ export default {
 
     color: var(--theme-color);
 
-    font-size: 0.875rem;
+    font-size: $font-size-sm;
 
     text-decoration: none;
 
@@ -981,7 +981,7 @@ export default {
 
   color: #ff4d4f;
 
-  font-size: 0.8rem;
+  font-size: $font-size-xs;
 
   margin-top: 0.3rem;
 

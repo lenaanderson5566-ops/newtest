@@ -878,7 +878,7 @@ fetchTickets();
 
     border: none;
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     font-weight: $font-weight-medium;
 
@@ -927,7 +927,7 @@ fetchTickets();
   p {
     margin: 1.25rem 0;
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     line-height: 1.5;
   }
@@ -945,7 +945,7 @@ fetchTickets();
 
     border: none;
 
-    font-size: 0.95rem;
+    font-size: $font-size-sm;
 
     font-weight: $font-weight-medium;
 
@@ -1030,13 +1030,13 @@ fetchTickets();
 
       margin-right: 1rem;
 
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       line-height: 1.4;
     }
 
     .ticket-status {
-      font-size: 0.8rem;
+      font-size: $font-size-xs;
 
       padding: 0.35rem 0.75rem;
 
@@ -1065,7 +1065,7 @@ fetchTickets();
 
     justify-content: space-between;
 
-    font-size: 0.85rem;
+    font-size: $font-size-sm;
 
     color: var(--text-muted);
 
@@ -1172,7 +1172,7 @@ fetchTickets();
     h2 {
       margin: 0;
 
-      font-size: 1.1rem;
+      font-size: $font-size-lg;
 
       margin-bottom: 0.5rem;
 
@@ -1231,7 +1231,7 @@ fetchTickets();
 
   border-radius: 6px;
 
-  font-size: 0.85rem;
+  font-size: $font-size-sm;
 
   font-weight: $font-weight-medium;
 }
@@ -1313,7 +1313,7 @@ fetchTickets();
     p {
       margin: 1.25rem 0;
 
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       line-height: 1.5;
 
@@ -1356,7 +1356,7 @@ fetchTickets();
   }
 
   p {
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     line-height: 1.5;
   }
@@ -1463,7 +1463,7 @@ fetchTickets();
 
     margin-bottom: 0.5rem;
 
-    font-size: 0.85rem;
+    font-size: $font-size-sm;
 
     .sender-name {
       font-weight: $font-weight-semibold;
@@ -1475,7 +1475,7 @@ fetchTickets();
   }
 
   .message-text {
-    font-size: 0.95rem;
+    font-size: $font-size-sm;
 
     line-height: 1.6;
 
@@ -1521,7 +1521,7 @@ fetchTickets();
 
     color: var(--text-primary);
 
-    font-size: 0.95rem;
+    font-size: $font-size-sm;
 
     resize: none;
 
@@ -1557,7 +1557,7 @@ fetchTickets();
 
     border: none;
 
-    font-size: 0.95rem;
+    font-size: $font-size-sm;
 
     font-weight: $font-weight-medium;
 
@@ -1618,7 +1618,7 @@ fetchTickets();
 
   color: var(--text-muted);
 
-  font-size: 1rem;
+  font-size: $font-size-md;
 
   margin-bottom: 80px;
 
@@ -1697,7 +1697,7 @@ fetchTickets();
   h3 {
     margin: 0;
 
-    font-size: 1.25rem;
+    font-size: $font-size-xl;
 
     font-weight: $font-weight-semibold;
 
@@ -1741,7 +1741,7 @@ fetchTickets();
   p {
     color: var(--text-primary);
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     line-height: 1.6;
 
@@ -1760,7 +1760,7 @@ fetchTickets();
 
       color: var(--text-primary);
 
-      font-size: 1rem;
+      font-size: $font-size-md;
     }
 
     input,
@@ -1777,7 +1777,7 @@ fetchTickets();
 
       color: var(--text-primary);
 
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       transition: all 0.3s ease;
 
@@ -1825,7 +1825,7 @@ fetchTickets();
 
       font-weight: $font-weight-medium;
 
-      font-size: 0.95rem;
+      font-size: $font-size-sm;
 
       &.active {
         background-color: var(--theme-color);
@@ -1866,7 +1866,7 @@ fetchTickets();
 
     border-radius: 10px;
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     font-weight: $font-weight-medium;
 
@@ -2105,7 +2105,7 @@ fetchTickets();
     h2 {
       margin: 1.25rem 0;
 
-      font-size: 1.5rem;
+      font-size: $font-size-2xl;
 
       color: var(--text-primary);
 
@@ -2117,7 +2117,7 @@ fetchTickets();
 
       margin-bottom: 2rem;
 
-      font-size: 1.05rem;
+      font-size: $font-size-md;
 
       line-height: 1.6;
     }
@@ -2133,7 +2133,7 @@ fetchTickets();
 
       border: none;
 
-      font-size: 1.05rem;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-medium;
 
@@ -2237,7 +2237,7 @@ fetchTickets();
 }
 
 .upload-tip {
-  font-size: 0.95rem;
+  font-size: $font-size-sm;
 
   margin-bottom: 4px;
 }
@@ -2247,7 +2247,7 @@ fetchTickets();
 
   font-weight: $font-weight-medium;
 
-  font-size: 1rem;
+  font-size: $font-size-md;
 
   transition: color 0.2s;
 }
@@ -2255,7 +2255,7 @@ fetchTickets();
 .upload-desc {
   display: block;
 
-  font-size: 0.92rem;
+  font-size: $font-size-sm;
 
   color: var(--secondary-text-color);
 

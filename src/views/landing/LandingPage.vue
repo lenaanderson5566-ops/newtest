@@ -558,7 +558,7 @@ export default {
 
 .landing-text {
 
-  font-size: 1.5rem;
+  font-size: $font-size-2xl;
 
   font-weight: $font-weight-normal;
 
@@ -574,7 +574,7 @@ export default {
 
   @media (max-width: 768px) {
 
-    font-size: 1.25rem;
+    font-size: $font-size-xl;
 
   }
 
@@ -582,7 +582,7 @@ export default {
 
   @media (max-width: 480px) {
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
   }
 
@@ -648,7 +648,7 @@ export default {
 
 .scroll-text {
 
-  font-size: 0.875rem;
+  font-size: $font-size-sm;
 
   color: var(--secondary-text-color);
 

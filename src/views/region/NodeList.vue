@@ -846,7 +846,7 @@ onMounted(() => {
     justify-content: center;
     margin-right: 14px;
     padding: 0 10px;
-    font-size: 0.88rem;
+    font-size: $font-size-sm;
     font-weight: $font-weight-bold;
     color: var(--text-on-dark-primary);
     letter-spacing: 0.5px;
@@ -870,7 +870,7 @@ onMounted(() => {
 
     .node-name {
 
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-semibold;
 
@@ -898,7 +898,7 @@ onMounted(() => {
 
     .node-host {
 
-      font-size: 0.8rem;
+      font-size: $font-size-xs;
 
       color: var(--text-color-light, var(--secondary-text-color));
 
@@ -991,7 +991,7 @@ onMounted(() => {
 
     color: var(--text-color-light, var(--secondary-text-color));
 
-    font-size: 1.1rem;
+    font-size: $font-size-lg;
 
   }
 

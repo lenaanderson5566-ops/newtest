@@ -2405,7 +2405,7 @@ export default {
 
     left: 30px;
 
-    font-size: 1.5rem;
+    font-size: $font-size-2xl;
 
     font-weight: $font-weight-bold;
 
@@ -2445,7 +2445,7 @@ export default {
 
     left: 30px;
 
-    font-size: 1.5rem;
+    font-size: $font-size-2xl;
 
     font-weight: $font-weight-semibold;
 
@@ -2619,7 +2619,7 @@ export default {
 
   .auth-title {
 
-    font-size: 1.75rem;
+    font-size: $font-size-2xl;
 
     font-weight: $font-weight-bold;
 
@@ -2641,7 +2641,7 @@ export default {
 
   .auth-subtitle {
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     color: var(--secondary-text-color);
 
@@ -2701,7 +2701,7 @@ export default {
 
     color: var(--secondary-text-color);
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
   }
 
@@ -3249,7 +3249,7 @@ export default {
 
     white-space: nowrap;
 
-    font-size: 0.875rem;
+    font-size: $font-size-sm;
 
     border: none;
 
@@ -3435,7 +3435,7 @@ export default {
 
     cursor: pointer;
 
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
 
     user-select: none;
 
@@ -3529,7 +3529,7 @@ export default {
 
       color: var(--secondary-text-color);
 
-      font-size: 0.875rem;
+      font-size: $font-size-sm;
 
       line-height: 1.5;
 
@@ -3579,7 +3579,7 @@ export default {
 
   color: var(--error-color, #ff4d4f);
 
-  font-size: 0.8rem;
+  font-size: $font-size-xs;
 
   margin-top: 0.3rem;
 
@@ -3625,7 +3625,7 @@ export default {
 
     .auth-title {
 
-      font-size: 1.5rem;
+      font-size: $font-size-2xl;
 
     }
 

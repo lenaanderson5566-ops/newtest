@@ -402,7 +402,7 @@ onMounted(() => {
         border-radius: $border-radius-sm;
         border: 1px solid var(--border-color);
         background: var(--card-background);
-        font-size: 0.95rem;
+        font-size: $font-size-sm;
       }
 
       .wallet-currency {
@@ -413,12 +413,12 @@ onMounted(() => {
       .wallet-amount {
         color: var(--secondary-text-color);
         font-variant-numeric: tabular-nums;
-        font-size: 1.05rem;
+        font-size: $font-size-md;
         font-weight: $font-weight-semibold;
       }
       
       .balance-label {
-        font-size: 1.1rem;
+        font-size: $font-size-lg;
         color: var(--secondary-text-color);
       }
     }
@@ -483,7 +483,7 @@ onMounted(() => {
       }
       
       span {
-        font-size: 0.9rem;
+        font-size: $font-size-sm;
       }
     }
     
@@ -566,7 +566,7 @@ onMounted(() => {
       
       label {
         display: block;
-        font-size: 0.95rem;
+        font-size: $font-size-sm;
         color: var(--secondary-text-color);
         margin-bottom: 10px;
         font-weight: $font-weight-medium;
@@ -583,7 +583,7 @@ onMounted(() => {
           left: 15px;
           color: var(--text-primary);
           font-weight: $font-weight-semibold;
-          font-size: 1.2rem;
+          font-size: $font-size-lg;
         }
         
         input {
@@ -593,7 +593,7 @@ onMounted(() => {
           border-radius: $border-radius-sm;
           background-color: var(--input-bg, rgba(0, 0, 0, 0.02));
           padding: 0 15px 0 35px;
-          font-size: 1.2rem;
+          font-size: $font-size-lg;
           color: var(--text-primary);
           transition: all 0.3s ease;
           
@@ -617,7 +617,7 @@ onMounted(() => {
         display: block;
         margin-top: 8px;
         color: var(--danger-color, #ff4757);
-        font-size: 0.85rem;
+        font-size: $font-size-sm;
       }
     }
     
@@ -638,7 +638,7 @@ onMounted(() => {
         border-radius: $border-radius-sm;
         padding: 0 30px;
         height: 50px;
-        font-size: 1.1rem;
+        font-size: $font-size-lg;
         font-weight: $font-weight-semibold;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -758,7 +758,7 @@ onMounted(() => {
           min-width: 0;
           width: 100%;
           height: 44px;
-          font-size: 1rem;
+          font-size: $font-size-md;
           padding: 0 18px;
         }
       }

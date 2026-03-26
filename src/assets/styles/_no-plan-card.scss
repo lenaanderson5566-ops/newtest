@@ -77,7 +77,7 @@
 
 .no-plan-title {
   color: #ff9800;
-  font-size: 1.2rem;
+  font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   margin-bottom: 16px;
   line-height: 1.4;
@@ -154,7 +154,7 @@
     transform: none;
   }
   .no-plan-title {
-    font-size: 1.1rem;
+    font-size: $font-size-lg;
     margin-bottom: 12px;
   }
   .no-plan-actions {

@@ -1154,7 +1154,7 @@ onUnmounted(() => {
   .ticket-subject {
     margin: 0;
 
-    font-size: 0.95rem;
+    font-size: $font-size-sm;
 
     margin-bottom: 0.5rem;
 
@@ -1167,7 +1167,7 @@ onUnmounted(() => {
     align-items: center;
 
     .ticket-time {
-      font-size: 0.8rem;
+      font-size: $font-size-xs;
 
       color: var(--text-muted);
 
@@ -1194,7 +1194,7 @@ onUnmounted(() => {
 
   border-radius: 4px;
 
-  font-size: 0.75rem;
+  font-size: $font-size-xs;
 
   font-weight: $font-weight-medium;
 }
@@ -1256,7 +1256,7 @@ onUnmounted(() => {
 
       margin-bottom: 0.5rem;
 
-      font-size: 1.2rem;
+      font-size: $font-size-lg;
     }
 
     .ticket-detail-meta {
@@ -1266,7 +1266,7 @@ onUnmounted(() => {
 
       gap: 0.5rem;
 
-      font-size: 0.85rem;
+      font-size: $font-size-sm;
 
       color: var(--text-muted);
 
@@ -1367,7 +1367,7 @@ onUnmounted(() => {
 
       border-radius: 12px;
 
-      font-size: 0.75rem;
+      font-size: $font-size-xs;
 
       margin: 0 0.75rem;
 
@@ -1513,7 +1513,7 @@ onUnmounted(() => {
       margin-bottom: 0.4rem;
 
       .message-sender {
-        font-size: 0.85rem;
+        font-size: $font-size-sm;
 
         font-weight: $font-weight-medium;
 
@@ -1521,7 +1521,7 @@ onUnmounted(() => {
       }
 
       .message-time {
-        font-size: 0.7rem;
+        font-size: $font-size-xs;
 
         color: var(--text-muted);
 
@@ -1530,7 +1530,7 @@ onUnmounted(() => {
     }
 
     .message-text {
-      font-size: 0.97rem;
+      font-size: $font-size-sm;
 
       line-height: 1.5;
 
@@ -1547,7 +1547,7 @@ onUnmounted(() => {
 
     bottom: -1.1rem;
 
-    font-size: 0.7rem;
+    font-size: $font-size-xs;
 
     color: var(--text-muted);
 
@@ -1584,7 +1584,7 @@ onUnmounted(() => {
 
     color: var(--text-primary);
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     line-height: 1.5;
 
@@ -1716,7 +1716,7 @@ onUnmounted(() => {
   }
 
   p {
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     text-align: center;
 
@@ -1746,7 +1746,7 @@ onUnmounted(() => {
   }
 
   p {
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     text-align: center;
   }
@@ -1875,7 +1875,7 @@ onUnmounted(() => {
   h3 {
     margin: 0;
 
-    font-size: 1.25rem;
+    font-size: $font-size-xl;
 
     font-weight: $font-weight-semibold;
 
@@ -1928,7 +1928,7 @@ onUnmounted(() => {
 
       font-weight: $font-weight-medium;
 
-      font-size: 0.95rem;
+      font-size: $font-size-sm;
     }
 
     input,
@@ -1945,7 +1945,7 @@ onUnmounted(() => {
 
       color: var(--text-primary);
 
-      font-size: 0.95rem;
+      font-size: $font-size-sm;
 
       transition: all 0.2s ease;
 
@@ -2000,7 +2000,7 @@ onUnmounted(() => {
 
         background-color: var(--bg-secondary);
 
-        font-size: 0.9rem;
+        font-size: $font-size-sm;
 
         .tag-icon {
           color: var(--text-muted);
@@ -2206,7 +2206,7 @@ onUnmounted(() => {
 
     color: var(--text-muted);
 
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
   }
 }
 
@@ -2263,7 +2263,7 @@ onUnmounted(() => {
     h2 {
       margin: 1.25rem 0;
 
-      font-size: 1.5rem;
+      font-size: $font-size-2xl;
 
       color: var(--text-primary);
 
@@ -2275,7 +2275,7 @@ onUnmounted(() => {
 
       margin-bottom: 2rem;
 
-      font-size: 1.05rem;
+      font-size: $font-size-md;
 
       line-height: 1.6;
     }
@@ -2291,7 +2291,7 @@ onUnmounted(() => {
 
       border: none;
 
-      font-size: 1.05rem;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-medium;
 
@@ -2362,23 +2362,23 @@ onUnmounted(() => {
     margin-bottom: 8px;
   }
   .upload-tip {
-    font-size: 1rem;
+    font-size: $font-size-md;
     margin-bottom: 4px;
     .upload-tip-text {
       color: var(--secondary-text-color);
       font-weight: $font-weight-medium;
-      font-size: 1.08rem;
+      font-size: $font-size-md;
       transition: color 0.2s;
     }
     .upload-desc {
       display: block;
-      font-size: 0.92rem;
+      font-size: $font-size-sm;
       color: var(--secondary-text-color);
       margin-top: 2px;
     }
     .upload-method {
       display: block;
-      font-size: 0.9rem;
+      font-size: $font-size-sm;
       color: #2196f3;
       margin-top: 2px;
       a {
@@ -2449,12 +2449,12 @@ onUnmounted(() => {
 
   .ticket-subject-info {
     h2 {
-      font-size: 1.06rem;
+      font-size: $font-size-md;
       margin-bottom: 0.35rem;
     }
 
     .ticket-detail-meta {
-      font-size: 0.78rem;
+      font-size: $font-size-xs;
     }
   }
 }
@@ -2472,14 +2472,14 @@ onUnmounted(() => {
   padding: 10px;
 
   textarea {
-    font-size: 0.92rem;
+    font-size: $font-size-sm;
     min-height: 78px;
     line-height: 1.45;
   }
 }
 
 .message-item .message-content .message-text {
-  font-size: 0.82rem;
+  font-size: $font-size-xs;
   line-height: 1.4;
 }
 
@@ -2488,7 +2488,7 @@ onUnmounted(() => {
 .message-item .message-content .message-text code,
 .message-item .message-content .message-text pre,
 .message-item .message-content .message-text strong {
-  font-size: 0.82rem;
+  font-size: $font-size-xs;
 }
 
 .message-item .message-content .message-text h1,
@@ -2497,7 +2497,7 @@ onUnmounted(() => {
 .message-item .message-content .message-text h4,
 .message-item .message-content .message-text h5,
 .message-item .message-content .message-text h6 {
-  font-size: 0.84rem;
+  font-size: $font-size-xs;
   line-height: 1.35;
   margin: 0.35rem 0;
 }

@@ -195,7 +195,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: $font-size-xl;
   
   .icon {
     width: 24px;
@@ -225,7 +225,7 @@ export default {
 
 .toast-content {
   flex: 1;
-  font-size: 0.95rem;
+  font-size: $font-size-sm;
   font-weight: $font-weight-medium;
 }
 
@@ -236,7 +236,7 @@ export default {
   .close-btn {
     background: none;
     border: none;
-    font-size: 1.25rem;
+    font-size: $font-size-xl;
     line-height: 1;
     color: var(--secondary-text-color);
     cursor: pointer;

@@ -327,7 +327,7 @@ onMounted(() => {
 
   .docs-title {
 
-    font-size: 1.75rem;
+    font-size: $font-size-2xl;
 
     font-weight: $font-weight-bold;
 
@@ -397,7 +397,7 @@ onMounted(() => {
 
     color: var(--text-primary);
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     transition: all 0.3s ease;
 
@@ -494,7 +494,7 @@ onMounted(() => {
 
   .category-title {
 
-    font-size: 1.3rem;
+    font-size: $font-size-xl;
 
     font-weight: $font-weight-semibold;
 
@@ -568,7 +568,7 @@ onMounted(() => {
 
     .doc-title {
 
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-semibold;
 
@@ -596,7 +596,7 @@ onMounted(() => {
 
     .doc-date {
 
-      font-size: 0.8rem;
+      font-size: $font-size-xs;
 
       color: var(--text-muted);
 
@@ -660,7 +660,7 @@ onMounted(() => {
 
     color: var(--text-muted);
 
-    font-size: 1.1rem;
+    font-size: $font-size-lg;
 
   }
 
@@ -808,7 +808,7 @@ onMounted(() => {
 
   .hint-text {
 
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
 
     margin: 0;
 
