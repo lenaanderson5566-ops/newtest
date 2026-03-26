@@ -27,63 +27,23 @@
           </label>
         </div>
 
-        <!-- 移动端卡片视图 -->
-        <div class="order-cards" v-if="isMobileView">
-          <transition-group v-if="filteredOrders.length" name="page-switch">
-            <div v-for="order in filteredOrders" :key="order.trade_no" class="order-card">
-              <div class="order-card-header">
-                <div class="status-wrapper">
-                  <span class="status-badge" :class="getStatusClass(order.status)">
-                    {{ getStatusText(order.status) }}
-                  </span>
-                </div>
-              </div>
-              
-              <div class="order-card-body">
-                <div class="order-summary-line">
-                  {{ formatCycle(order.period) }} · {{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }} · {{ formatDate(order.created_at) }}
-                </div>
-              </div>
-              
-              <div class="order-card-footer">
-                <button 
-                  class="action-button view-button" 
-                  @click="viewOrderDetail(order.trade_no)" 
-                >
-                  <IconEye :size="16" />
-                  <span>{{ headerTexts.viewDetail }}</span>
-                </button>
-                <button 
-                  class="action-button cancel-button" 
-                  @click="showCancelConfirm(order.trade_no)" 
-                  :disabled="order.status !== 0"
-                  :class="{ 'disabled': order.status !== 0 }"
-                >
-                  <IconX :size="16" />
-                  <span>{{ headerTexts.cancel }}</span>
-                </button>
-              </div>
-            </div>
-          </transition-group>
-          <div v-else class="orders-empty-inline">{{ headerTexts.noFilteredOrders }}</div>
-        </div>
-
-        <!-- 桌面端表格视图 -->
-        <div class="order-table-container" v-else>
+        <div class="order-table-container">
           <table v-if="filteredOrders.length" class="order-table">
             <thead>
               <tr>
-                <th width="20%">{{ headerTexts.createdAt }}</th>
+                <th width="18%">{{ headerTexts.createdAt }}</th>
+                <th width="20%">{{ headerTexts.subscriptionName }}</th>
                 <th width="14%">{{ headerTexts.cycle }}</th>
-                <th width="16%">{{ headerTexts.totalAmount }}</th>
-                <th width="16%">{{ headerTexts.statusLabel }}</th>
-                <th width="34%">{{ headerTexts.actions }}</th>
+                <th width="14%">{{ headerTexts.totalAmount }}</th>
+                <th width="14%">{{ headerTexts.statusLabel }}</th>
+                <th width="20%">{{ headerTexts.actions }}</th>
               </tr>
             </thead>
             <tbody>
               <transition-group name="page-switch">
                 <tr v-for="order in filteredOrders" :key="order.trade_no">
                   <td>{{ formatDate(order.created_at) }}</td>
+                  <td>{{ getSubscriptionName(order) }}</td>
                   <td>{{ formatCycle(order.period) }}</td>
                   <td class="amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</td>
                   <td>
@@ -102,8 +62,7 @@
                     <button 
                       class="action-button cancel-button" 
                       @click="showCancelConfirm(order.trade_no)" 
-                      :disabled="order.status !== 0"
-                      :class="{ 'disabled': order.status !== 0 }"
+                      v-if="Number(order.status) === 0"
                     >
                       <IconX :size="16" />
                       <span>{{ headerTexts.cancel }}</span>
@@ -180,7 +139,6 @@ const orders = ref([]);
 const showConfirmModal = ref(false);
 const currentTradeNo = ref('');
 const canceling = ref(false);
-const isMobileView = ref(false);
 const showCancelledOrders = ref(false);
 const goBackToAccount = () => {
   if (window.history.length > 1) {
@@ -189,14 +147,6 @@ const goBackToAccount = () => {
   }
   router.push('/profile');
 };
-
-const checkMobileView = () => {
-  isMobileView.value = window.innerWidth < 768;
-};
-
-window.addEventListener('resize', checkMobileView);
-
-
 
 const fetchOrders = async () => {
   loading.value = true;
@@ -256,6 +206,10 @@ const formatAmount = (amount, orderCurrency) => {
   if (amount === null || amount === undefined) return '--';
   const currency = orderCurrency ? `${orderCurrency}`.toUpperCase() : '--';
   return `${currency} ${(amount / 100).toFixed(2)}`;
+};
+
+const getSubscriptionName = (order) => {
+  return order?.plan?.name || order?.plan_name || order?.subject || '--';
 };
 
 const statusTextMap = computed(() => {
@@ -356,6 +310,7 @@ const headerTexts = computed(() => {
   return {
     createdAt: t('orders.createdAt', '创建时间'),
     cycle: t('orders.cycle', '周期'),
+    subscriptionName: t('orders.subscriptionName', '订阅名称'),
     totalAmount: t('orders.totalAmount', '金额'),
     statusLabel: t('orders.statusLabel', '状态') || '状态',
     actions: t('orders.actions', '操作'),
@@ -374,7 +329,6 @@ const headerTexts = computed(() => {
 
 onMounted(() => {
   fetchOrders();
-  checkMobileView();
 });
 
 watch(locale, () => {
@@ -854,22 +808,21 @@ watch(locale, () => {
 
 
 @media (max-width: 768px) {
-  .back-label {
-    display: none;
-  }
-
   .order-table {
     th, td {
-      padding: 0.75rem 0.5rem;
+      padding: 0.55rem 0.45rem;
+      font-size: 0.8rem;
     }
     
     .actions {
+      gap: 0.35rem;
+
       .action-button {
-        padding: 0.3rem 0.45rem;
-        font-size: 0.75rem;
-        height: 30px;
-        min-width: 64px;
-        flex: 0 0 64px;
+        padding: 0.24rem 0.4rem;
+        font-size: 0.74rem;
+        height: 28px;
+        min-width: 58px;
+        flex: 0 0 58px;
       }
     }
   }
@@ -898,127 +851,6 @@ watch(locale, () => {
 @media (max-width: 768px) {
   .orders-container {
     padding-bottom: calc(2px + 56px);
-  }
-
-
-
-}
-
-
-.order-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-
-.order-card {
-  background-color: #fff;
-  border-radius: $border-radius-sm;
-  box-shadow: none;
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-  overflow: hidden;
-  
-  &:hover {
-    box-shadow: none;
-    border-color: rgba(var(--theme-color-rgb), 0.3);
-  }
-}
-
-.order-card-header {
-  padding: 0.58rem 0.72rem;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(var(--theme-color-rgb), 0.03);
-  
-  .order-number {
-    display: flex;
-    flex-direction: column;
-    
-    .label {
-      font-size: 0.8rem;
-      color: rgba(var(--theme-color-rgb), 0.68);
-      margin-bottom: 0.25rem;
-    }
-    
-    .value {
-      font-size: 0.9rem;
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 180px;
-    }
-  }
-}
-
-.order-card-body {
-  padding: 0.42rem 0.72rem;
-
-  .order-summary-line {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0.16rem 0;
-    font-size: 0.85rem;
-    line-height: 1.2;
-    color: var(--text-color);
-  }
-}
-
-.order-card-footer {
-  padding: 0.5rem 0.72rem;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  background-color: rgba(var(--theme-color-rgb), 0.02);
-  
-  .action-button {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    justify-content: center;
-    padding: 0.35rem 0.5rem;
-    height: 34px;
-    min-width: 72px;
-    flex: 0 0 72px;
-    white-space: nowrap;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-    
-    &.view-button {
-      background-color: rgba(var(--theme-color-rgb), 0.1);
-      color: var(--theme-color);
-      
-      &:hover:not(.disabled) {
-        background-color: rgba(var(--theme-color-rgb), 0.2);
-        transform: translateY(-2px);
-      }
-    }
-    
-    &.cancel-button {
-      background-color: rgba(var(--theme-color-rgb), 0.06);
-      color: var(--order-tone-strong);
-      
-      &:hover:not(.disabled) {
-        background-color: rgba(var(--theme-color-rgb), 0.12);
-        transform: translateY(-2px);
-      }
-    }
-    
-    &.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
   }
 }
 
