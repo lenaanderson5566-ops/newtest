@@ -224,7 +224,7 @@ const statusTextMap = computed(() => {
 });
 
 const filteredOrders = computed(() => {
-  const allowedStatuses = showCancelledOrders.value ? [0, 2, 3] : [0, 3];
+  const allowedStatuses = showCancelledOrders.value ? [0, 1, 2, 3, 4] : [0, 1, 3, 4];
   return orders.value.filter((order) => allowedStatuses.includes(Number(order.status)));
 });
 
