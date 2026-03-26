@@ -1763,7 +1763,7 @@ export default {
           }
 
           &.disabled {
-            color: #ccc;
+            color: var(--tertiary-text-color);
           }
         }
 

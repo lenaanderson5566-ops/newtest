@@ -2221,7 +2221,7 @@ export default {
 
     .ip-address-secondary {
       font-size: $font-size-sm;
-      color: rgba(100, 116, 139, 0.75);
+      color: var(--secondary-text-color);
       letter-spacing: 0.2px;
     }
 
@@ -2261,7 +2261,7 @@ export default {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    color: rgba(148, 163, 184, 0.95);
+    color: var(--tertiary-text-color);
     cursor: help;
 
     .info-tooltip-content {

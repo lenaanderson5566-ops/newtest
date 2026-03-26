@@ -2429,7 +2429,7 @@ export default {
 
     &.black {
 
-      color: #000000;
+      color: var(--text-primary);
 
       text-shadow: none;
 
@@ -2465,7 +2465,7 @@ export default {
 
     &.black {
 
-      color: #000000;
+      color: var(--text-primary);
 
       text-shadow: none;
 
