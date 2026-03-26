@@ -289,7 +289,7 @@ onMounted(() => {
 
     .platform-title {
       font-size: $font-size-base;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
       }
 
     .platform-options {
@@ -308,7 +308,7 @@ onMounted(() => {
       align-items: center;
       gap: 8px;
       font-size: $font-size-base;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       &:hover {
         border-color: rgba(var(--theme-color-rgb), 0.45);

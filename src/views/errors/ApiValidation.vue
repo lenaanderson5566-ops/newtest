@@ -430,7 +430,7 @@ export default {
 
         font-size: $font-size-lg;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         color: var(--text-color);
 
@@ -445,7 +445,7 @@ export default {
     .status-title {
       font-size: $font-size-lg;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       color: var(--text-color);
 
@@ -455,7 +455,7 @@ export default {
     .status-progress {
       font-size: $font-size-base;
 
-      font-weight: 400;
+      font-weight: $font-weight-normal;
 
       color: var(--secondary-text-color);
     }

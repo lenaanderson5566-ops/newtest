@@ -1190,7 +1190,7 @@ export default {
       .card-title {
         font-size: $font-size-lg;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         margin: 0;
       }
@@ -1278,7 +1278,7 @@ export default {
       h4 {
         font-size: $font-size-base;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         margin: 0 0 6px 0;
 
@@ -1329,7 +1329,7 @@ export default {
     .section-title {
       font-size: $font-size-lg;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin-bottom: 15px;
 
@@ -1404,7 +1404,7 @@ export default {
       .card-title {
         font-size: $font-size-lg;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         margin: 0;
 
@@ -1424,7 +1424,7 @@ export default {
 
         font-size: $font-size-sm;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         backdrop-filter: blur(8px);
 
@@ -1656,7 +1656,7 @@ export default {
         .period-type {
           font-size: $font-size-base !important;
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
 
           margin-bottom: 8px !important;
 
@@ -1685,7 +1685,7 @@ export default {
           .currency {
             font-size: $font-size-base !important;
 
-            font-weight: 500;
+            font-weight: $font-weight-medium;
 
             color: var(--text-color);
           }
@@ -1693,7 +1693,7 @@ export default {
           .amount {
             font-size: $font-size-lg !important;
 
-            font-weight: 700;
+            font-weight: $font-weight-bold;
 
             color: var(--text-color);
           }
@@ -1782,7 +1782,7 @@ export default {
 
       font-size: $font-size-base;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       display: flex;
 
@@ -1899,7 +1899,7 @@ export default {
     .coupon-discount-value {
       color: #22c55e;
       font-size: $font-size-sm;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
       white-space: nowrap;
     }
   }
@@ -1971,14 +1971,14 @@ export default {
         text-align: right;
         font-size: $font-size-base;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         color: var(--text-color);
 
         &.discount {
           color: #f44336;
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
         }
       }
 
@@ -1996,7 +1996,7 @@ export default {
         .summary-label {
           font-size: $font-size-base;
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
 
           color: var(--text-color);
         }
@@ -2006,7 +2006,7 @@ export default {
           text-align: left;
           font-size: $font-size-lg;
 
-          font-weight: 800;
+          font-weight: $font-weight-bold;
 
           color: var(--theme-color);
 
@@ -2142,7 +2142,7 @@ export default {
     background-color: var(--theme-color);
     color: white;
     font-size: $font-size-base;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2194,7 +2194,7 @@ export default {
 
       font-size: $font-size-base;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       display: flex;
 
@@ -2232,7 +2232,7 @@ export default {
 
       font-size: $font-size-base;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       display: flex;
 

@@ -953,7 +953,7 @@ onUnmounted(() => {
     .card-title {
       font-size: $font-size-lg;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0;
     }
@@ -1086,7 +1086,7 @@ onUnmounted(() => {
 
     font-size: $font-size-base;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
@@ -1196,7 +1196,7 @@ onUnmounted(() => {
 
   font-size: 0.75rem;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 }
 
 .status-open {
@@ -1515,7 +1515,7 @@ onUnmounted(() => {
       .message-sender {
         font-size: 0.85rem;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         margin-bottom: 3px;
       }
@@ -1639,7 +1639,7 @@ onUnmounted(() => {
 
     white-space: nowrap;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     box-shadow: none;
 
@@ -1877,7 +1877,7 @@ onUnmounted(() => {
 
     font-size: 1.25rem;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     color: var(--text-color);
   }
@@ -1926,7 +1926,7 @@ onUnmounted(() => {
 
       color: var(--text-color);
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       font-size: 0.95rem;
     }
@@ -2068,7 +2068,7 @@ onUnmounted(() => {
 
     border-radius: 8px;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     font-size: $font-size-base;
 
@@ -2267,7 +2267,7 @@ onUnmounted(() => {
 
       color: var(--text-color);
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
 
     p {
@@ -2293,7 +2293,7 @@ onUnmounted(() => {
 
       font-size: 1.05rem;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       cursor: pointer;
 
@@ -2366,7 +2366,7 @@ onUnmounted(() => {
     margin-bottom: 4px;
     .upload-tip-text {
       color: var(--secondary-text-color);
-      font-weight: 500;
+      font-weight: $font-weight-medium;
       font-size: 1.08rem;
       transition: color 0.2s;
     }
@@ -2503,7 +2503,7 @@ onUnmounted(() => {
 }
 
 .message-item .message-content .message-text strong {
-  font-weight: 550;
+  font-weight: $font-weight-medium;
 }
 
 @media (max-width: 1320px) {

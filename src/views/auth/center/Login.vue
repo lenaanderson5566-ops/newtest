@@ -941,7 +941,7 @@ export default {
 
     color: white;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
 
 

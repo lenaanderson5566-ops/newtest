@@ -853,7 +853,7 @@ watchEffect(() => {
 
     font-size: $font-size-lg;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     color: var(--text-color);
 
@@ -957,7 +957,7 @@ watchEffect(() => {
 
     .info-label {
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       color: var(--text-muted);
 
@@ -971,7 +971,7 @@ watchEffect(() => {
 
       color: var(--text-color);
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       flex: 1; 
 
@@ -1347,7 +1347,7 @@ watchEffect(() => {
 
   font-size: $font-size-base;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   cursor: pointer;
 

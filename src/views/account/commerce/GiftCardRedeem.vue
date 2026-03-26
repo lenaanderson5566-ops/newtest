@@ -190,6 +190,6 @@ const goBack = () => {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
 }
 </style>

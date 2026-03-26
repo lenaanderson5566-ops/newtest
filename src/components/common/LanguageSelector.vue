@@ -191,7 +191,7 @@ export default {
     align-items: center;
     gap: 6px;
     font-size: $font-size-base;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     line-height: 1;
   }
 
@@ -231,7 +231,7 @@ export default {
   &.active {
     background-color: rgba(var(--theme-color-rgb), 0.18);
     color: var(--theme-color);
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
   }
 }
 

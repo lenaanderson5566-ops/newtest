@@ -66,6 +66,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .toast-container {
   position: fixed;
   top: 20px;
@@ -225,7 +226,7 @@ export default {
 .toast-content {
   flex: 1;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 }
 
 .toast-close {

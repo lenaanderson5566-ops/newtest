@@ -1676,7 +1676,7 @@ onMounted(() => {
 
       font-size: $font-size-lg;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0;
 
@@ -2021,7 +2021,7 @@ onMounted(() => {
 
     color: white;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     font-size: $font-size-base;
 
@@ -2095,7 +2095,7 @@ onMounted(() => {
 
       font-size: $font-size-base;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0;
 
@@ -2155,7 +2155,7 @@ onMounted(() => {
 
           font-size: $font-size-base;
 
-          font-weight: 500;
+          font-weight: $font-weight-medium;
 
           color: var(--text-color);
 
@@ -2219,7 +2219,7 @@ onMounted(() => {
 
           font-size: $font-size-base;
 
-          font-weight: 500;
+          font-weight: $font-weight-medium;
 
           color: var(--text-color);
 
@@ -2275,7 +2275,7 @@ onMounted(() => {
 
         font-size: $font-size-base;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         cursor: pointer;
 
@@ -2395,7 +2395,7 @@ onMounted(() => {
 
           font-size: $font-size-base;
 
-          font-weight: 500;
+          font-weight: $font-weight-medium;
 
           cursor: pointer;
 
@@ -2737,7 +2737,7 @@ onMounted(() => {
 
     font-size: $font-size-lg;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     color: var(--text-color);
 
@@ -2823,7 +2823,7 @@ onMounted(() => {
 
       font-size: $font-size-base;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       color: var(--text-color);
 
@@ -2905,7 +2905,7 @@ onMounted(() => {
 
     font-size: $font-size-base;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
@@ -3129,7 +3129,7 @@ onMounted(() => {
 
         font-size: $font-size-base;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         color: var(--text-color);
 
@@ -3463,7 +3463,7 @@ onMounted(() => {
 
   font-size: $font-size-base;
 
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
 
   color: var(--theme-color);
 
@@ -3495,7 +3495,7 @@ onMounted(() => {
 
     text-decoration: none;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
   }
 
@@ -3625,7 +3625,7 @@ onMounted(() => {
 
   font-size: $font-size-base;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   cursor: pointer;
 

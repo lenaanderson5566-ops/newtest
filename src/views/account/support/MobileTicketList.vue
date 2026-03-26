@@ -815,7 +815,7 @@ fetchTickets();
     .card-title {
       font-size: $font-size-lg;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0;
     }
@@ -880,7 +880,7 @@ fetchTickets();
 
     font-size: 1rem;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
@@ -947,7 +947,7 @@ fetchTickets();
 
     font-size: 0.95rem;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
@@ -1022,7 +1022,7 @@ fetchTickets();
     margin-bottom: 0.75rem;
 
     .ticket-subject {
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       color: var(--text-color);
 
@@ -1042,7 +1042,7 @@ fetchTickets();
 
       border-radius: 6px;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       white-space: nowrap;
 
@@ -1182,7 +1182,7 @@ fetchTickets();
 
       text-overflow: ellipsis;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       color: var(--text-color);
     }
@@ -1233,7 +1233,7 @@ fetchTickets();
 
   font-size: 0.85rem;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 }
 
 .status-badge {
@@ -1466,7 +1466,7 @@ fetchTickets();
     font-size: 0.85rem;
 
     .sender-name {
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
 
     .message-time {
@@ -1559,7 +1559,7 @@ fetchTickets();
 
     font-size: 0.95rem;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
@@ -1699,7 +1699,7 @@ fetchTickets();
 
     font-size: 1.25rem;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     color: var(--text-color);
   }
@@ -1756,7 +1756,7 @@ fetchTickets();
 
       margin-bottom: 0.75rem;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       color: var(--text-color);
 
@@ -1823,7 +1823,7 @@ fetchTickets();
 
       transition: all 0.3s ease;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       font-size: 0.95rem;
 
@@ -1868,7 +1868,7 @@ fetchTickets();
 
     font-size: 1rem;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
@@ -2109,7 +2109,7 @@ fetchTickets();
 
       color: var(--text-color);
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
 
     p {
@@ -2135,7 +2135,7 @@ fetchTickets();
 
       font-size: 1.05rem;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       cursor: pointer;
 
@@ -2245,7 +2245,7 @@ fetchTickets();
 .upload-tip-text {
   color: var(--secondary-text-color);
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   font-size: 1rem;
 

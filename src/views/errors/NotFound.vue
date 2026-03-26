@@ -192,7 +192,7 @@ export default {
 
   font-size: $font-size-base;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   padding: 8px 16px;
 
@@ -240,7 +240,7 @@ export default {
 
   font-size: $font-size-lg;
 
-  font-weight: 900;
+  font-weight: $font-weight-bold;
 
   color: var(--theme-color);
 
@@ -268,7 +268,7 @@ export default {
 
   font-size: $font-size-lg;
 
-  font-weight: 700;
+  font-weight: $font-weight-bold;
 
   color: var(--text-color);
 
@@ -314,7 +314,7 @@ export default {
 
   font-size: $font-size-base;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   cursor: pointer;
 

@@ -459,7 +459,7 @@ export default {
     top: 30px;
     left: 30px;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     z-index: 2;
     cursor: pointer;
     user-select: none;
@@ -480,7 +480,7 @@ export default {
     bottom: 30px;
     left: 30px;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     z-index: 2;
 
     &.white {
@@ -559,7 +559,7 @@ export default {
 
   .auth-title {
     font-size: 1.75rem;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin-bottom: 0.5rem;
     color: var(--primary-text-color);
 
@@ -731,7 +731,7 @@ export default {
     background-color: var(--theme-color);
     border: none;
     color: white;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     &:hover:not(:disabled) {
       background-color: var(--primary-color-hover);

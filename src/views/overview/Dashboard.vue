@@ -1410,7 +1410,7 @@ export default {
 
       .card-title {
         font-size: var(--dashboard-title-size);
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         margin: 0;
         color: var(--theme-text-primary);
       }
@@ -1541,7 +1541,7 @@ export default {
         &.total-main-card {
           .usage-card-title {
             color: var(--quota-label-color);
-            font-weight: 650;
+            font-weight: $font-weight-semibold;
           }
         }
 
@@ -1567,7 +1567,7 @@ export default {
             border-radius: var(--dashboard-radius);
             padding: 9px 12px;
             font-size: $font-size-sm;
-            font-weight: 600;
+            font-weight: $font-weight-semibold;
             color: var(--plan-expired-strip-text);
             background: var(--plan-expired-strip-bg);
             border: 1px solid var(--plan-expired-strip-border);
@@ -1613,7 +1613,7 @@ export default {
           .plan-name-main {
             font-size: $font-size-lg;
             line-height: 1.2;
-            font-weight: 700;
+            font-weight: $font-weight-bold;
             color: var(--heading-color);
           }
 
@@ -1663,7 +1663,7 @@ export default {
           .plan-summary-value {
             font-size: $font-size-base;
             color: var(--theme-text-primary);
-            font-weight: 600;
+            font-weight: $font-weight-semibold;
             text-align: right;
             word-break: break-word;
           }
@@ -1674,7 +1674,7 @@ export default {
             border-radius: 999px;
             padding: 2px 8px;
             font-size: $font-size-sm;
-            font-weight: 600;
+            font-weight: $font-weight-semibold;
 
             &.is-active {
               color: var(--status-active-text);
@@ -1710,7 +1710,7 @@ export default {
               border-radius: var(--dashboard-button-radius);
               padding: 10px 14px;
               font-size: $font-size-base;
-              font-weight: 600;
+              font-weight: $font-weight-semibold;
               letter-spacing: 0.2px;
 
               @media (max-width: 576px) {
@@ -1811,7 +1811,7 @@ export default {
           text-orientation: mixed;
           font-size: var(--dashboard-value-size);
           line-height: 1;
-          font-weight: 700;
+          font-weight: $font-weight-bold;
           color: var(--theme-text-primary);
 
           &.compact {
@@ -1822,7 +1822,7 @@ export default {
         .usage-percent-label {
           font-size: var(--dashboard-kpi-size);
           color: var(--dashboard-subtitle-color);
-          font-weight: 500;
+          font-weight: $font-weight-medium;
         }
 
         .section-progress-track {
@@ -1906,7 +1906,7 @@ export default {
           .usage-summary-line {
             grid-column: 1 / -1;
             font-size: $font-size-sm;
-            font-weight: 600;
+            font-weight: $font-weight-semibold;
             color: var(--neutral-strong);
           }
 
@@ -1932,7 +1932,7 @@ export default {
             text-orientation: mixed;
             font-size: $font-size-base;
             color: var(--quota-value-color);
-            font-weight: 600;
+            font-weight: $font-weight-semibold;
             line-height: 1.2;
           }
 
@@ -2079,7 +2079,7 @@ export default {
     margin: 0;
     font-size: var(--dashboard-title-size);
     line-height: 1.3;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     letter-spacing: 0.02em;
     color: var(--theme-text-primary);
   }
@@ -2106,7 +2106,7 @@ export default {
 
       .usage-percent {
         line-height: 1;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         color: var(--theme-text-primary);
         font-size: $font-size-lg;
 
@@ -2118,7 +2118,7 @@ export default {
       .usage-percent-label {
         font-size: var(--dashboard-kpi-size);
         color: var(--quota-label-color);
-        font-weight: 500;
+        font-weight: $font-weight-medium;
       }
     }
 
@@ -2134,7 +2134,7 @@ export default {
       .traffic-up,
       .traffic-down {
         color: var(--secondary-text-color);
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
       }
     }
   }
@@ -2184,7 +2184,7 @@ export default {
     .ip-region-primary {
       font-size: $font-size-lg;
       line-height: 1.15;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       letter-spacing: -0.01em;
       color: var(--theme-text-primary);
 
@@ -2234,7 +2234,7 @@ export default {
       justify-content: center;
       padding: 0 8px;
       font-size: $font-size-sm;
-      font-weight: 800;
+      font-weight: $font-weight-bold;
       color: var(--theme-white);
       letter-spacing: 0.4px;
       background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
@@ -2275,7 +2275,7 @@ export default {
       color: #e2e8f0;
       font-size: $font-size-sm;
       line-height: 1.4;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
       box-shadow: none;
       opacity: 0;
       visibility: hidden;
@@ -2361,7 +2361,7 @@ export default {
       color: var(--warning-color);
       font-size: $font-size-sm;
       line-height: 1.35;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
     }
 
     .banner-icon {
@@ -2374,7 +2374,7 @@ export default {
       height: 30px;
       padding: 0 12px;
       font-size: $font-size-sm;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
       flex-shrink: 0;
     }
   }
@@ -2680,7 +2680,7 @@ export default {
       margin: 0;
       color: var(--text-color);
       font-size: $font-size-lg;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
 
     .close-button {
@@ -2752,14 +2752,14 @@ export default {
     strong {
       color: var(--text-color);
       font-size: $font-size-base;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
   }
 
   .item-price {
     color: var(--theme-color);
     font-size: $font-size-lg;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
   }
 
   .item-content {

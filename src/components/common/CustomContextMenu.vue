@@ -228,7 +228,7 @@ export default {
 
 .menu-text {
   font-size: $font-size-base;
-  font-weight: 500;
+  font-weight: $font-weight-medium;
   color: var(--text-color);
 }
 

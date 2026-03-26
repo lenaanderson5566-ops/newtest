@@ -873,7 +873,7 @@ onUnmounted(() => {
       border-radius: 20px;
       padding: 8px 16px;
       font-size: $font-size-base;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
       cursor: pointer;
       transition: all 0.3s ease;
       color: var(--text-color);
@@ -888,7 +888,7 @@ onUnmounted(() => {
         background-color: rgba(var(--theme-color-rgb), 0.15);
         color: var(--theme-color);
         border-color: var(--theme-color);
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
       }
     }
   }
@@ -938,7 +938,7 @@ onUnmounted(() => {
 
         font-size: $font-size-lg;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         margin: 0;
 
@@ -964,7 +964,7 @@ onUnmounted(() => {
 
     .formula-title {
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin-bottom: 8px;
 
@@ -1070,7 +1070,7 @@ onUnmounted(() => {
 
     cursor: pointer;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     transition: background-color 0.2s;
 
@@ -1122,7 +1122,7 @@ onUnmounted(() => {
 
       th {
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         color: var(--secondary-text-color);
 

@@ -594,13 +594,13 @@ onMounted(async () => {
   background: transparent;
   color: var(--secondary-text-color);
   font-size: $font-size-base;
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
   cursor: pointer;
   white-space: nowrap;
 
   &.active {
     color: var(--text-color);
-    font-weight: 700;
+    font-weight: $font-weight-bold;
   }
 
   &.active::after {
@@ -725,7 +725,7 @@ onMounted(async () => {
     h3 {
       margin: 0;
       font-size: $font-size-base;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       color: #f8fbff;
     }
 
@@ -751,7 +751,7 @@ onMounted(async () => {
     height: 24px;
     border-radius: 999px;
     font-size: $font-size-sm;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     box-shadow: none;
 
     &.is-bronze { background: linear-gradient(135deg, #b27241, #d39d63); }
@@ -764,7 +764,7 @@ onMounted(async () => {
 
   .tier-level {
     font-size: $font-size-sm;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     padding: 4px 10px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.18);
@@ -846,7 +846,7 @@ onMounted(async () => {
 .section-title {
   margin: 0;
   font-size: $font-size-base;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   color: var(--text-color);
 }
 
@@ -872,7 +872,7 @@ onMounted(async () => {
 
 .plan-name {
   font-size: $font-size-lg;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   color: var(--text-color);
 }
 
@@ -928,7 +928,7 @@ onMounted(async () => {
 
 .row-title {
   font-size: $font-size-base;
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
   color: var(--text-color);
 }
 
@@ -964,13 +964,13 @@ onMounted(async () => {
 
 .tier-intro-title {
   font-size: $font-size-base;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   color: var(--text-color);
 }
 
 .tier-intro-note {
   color: var(--text-color) !important;
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
 }
 
 .nav-row {
@@ -1045,7 +1045,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   h3 {
     margin: 0;
     font-size: $font-size-lg;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     color: var(--text-color);
   }
 
@@ -1083,7 +1083,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   label {
     display: block;
     font-size: $font-size-base;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     color: var(--text-color);
     margin-bottom: 8px;
   }

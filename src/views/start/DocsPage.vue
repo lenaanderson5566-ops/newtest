@@ -329,7 +329,7 @@ onMounted(() => {
 
     font-size: 1.75rem;
 
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 
     margin-bottom: 1.5rem;
 
@@ -496,7 +496,7 @@ onMounted(() => {
 
     font-size: 1.3rem;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     margin-bottom: 1.25rem;
 
@@ -570,7 +570,7 @@ onMounted(() => {
 
       font-size: 1rem;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin-bottom: 0.35rem;
 
@@ -704,7 +704,7 @@ onMounted(() => {
 
   color: white;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   font-size: $font-size-base;
 

@@ -1086,7 +1086,7 @@ export default {
       color: var(--secondary-text-color);
       font-size: $font-size-base;
       line-height: 1.6;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
     }
 
     .welcome-top-row {
@@ -1137,7 +1137,7 @@ export default {
       .card-title {
         font-size: $font-size-lg;
 
-        font-weight: 700;
+        font-weight: $font-weight-bold;
 
         margin: 0;
 
@@ -1168,7 +1168,7 @@ export default {
     align-items: center;
     font-size: $font-size-sm;
     line-height: 1;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     color: var(--theme-color);
     background: rgba(var(--theme-color-rgb), 0.1);
     border: 1px solid rgba(var(--theme-color-rgb), 0.26);
@@ -1189,7 +1189,7 @@ export default {
 
         font-size: $font-size-sm;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         margin-left: 8px;
 
@@ -1443,7 +1443,7 @@ export default {
         background: #2d2d2d;
         color: #fff;
         font-size: $font-size-sm;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         border-radius: 12px 12px 0 0;
       }
 
@@ -1517,7 +1517,7 @@ export default {
         .card-title {
           font-size: $font-size-lg;
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
 
           margin: 0;
 
@@ -1536,7 +1536,7 @@ export default {
         .desktop-subtitle {
           margin: 0;
           font-size: $font-size-base;
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
           color: rgba(255, 255, 255, 0.95);
         }
 
@@ -1564,7 +1564,7 @@ export default {
 
           font-size: $font-size-sm;
 
-          font-weight: 500;
+          font-weight: $font-weight-medium;
 
           margin-left: 0;
 
@@ -1653,21 +1653,21 @@ export default {
 
         .currency {
           font-size: $font-size-lg;
-          font-weight: 500;
+          font-weight: $font-weight-medium;
           color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
         }
 
         .amount {
           font-size: $font-size-lg;
           line-height: 0.95;
-          font-weight: 700;
+          font-weight: $font-weight-bold;
           color: var(--text-color);
           letter-spacing: -0.8px;
         }
 
         .unit-line {
           font-size: $font-size-sm;
-          font-weight: 500;
+          font-weight: $font-weight-medium;
           color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
         }
       }
@@ -1696,34 +1696,34 @@ export default {
         color: var(--text-color);
 
         .period-name {
-          font-weight: 700;
+          font-weight: $font-weight-bold;
 
           color: var(--theme-color);
         }
 
         .discount-label {
-          font-weight: 500;
+          font-weight: $font-weight-medium;
 
           &::first-line,
           &:first-child {
             color: var(--theme-color);
 
-            font-weight: 700;
+            font-weight: $font-weight-bold;
           }
         }
 
         .discount-value {
-          font-weight: 700;
+          font-weight: $font-weight-bold;
 
           color: var(--theme-color);
         }
 
         .saving-text {
-          font-weight: 400;
+          font-weight: $font-weight-normal;
         }
 
         .saving-amount {
-          font-weight: 700;
+          font-weight: $font-weight-bold;
 
           color: var(--theme-color);
         }
@@ -1811,7 +1811,7 @@ export default {
     border: 1px solid transparent;
     border-radius: 10px;
     font-size: $font-size-base;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     cursor: pointer;
     transition: all 0.25s ease;
     padding: 0 16px;
@@ -1852,7 +1852,7 @@ export default {
 
     .btn-text {
       color: #fff;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
 
     &:focus-visible {
@@ -1922,14 +1922,14 @@ export default {
         &.active {
           .option-text {
             color: #fff;
-            font-weight: 600;
+            font-weight: $font-weight-semibold;
           }
         }
 
         .option-text {
           font-size: $font-size-sm;
           color: var(--secondary-text-color);
-          font-weight: 500;
+          font-weight: $font-weight-medium;
           white-space: nowrap;
         }
       }
@@ -1949,7 +1949,7 @@ export default {
 
       font-size: $font-size-base;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       cursor: pointer;
 
@@ -2014,7 +2014,7 @@ export default {
   background: transparent;
   color: var(--text-color);
   font-size: $font-size-base;
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -2088,7 +2088,7 @@ export default {
         background: #2d2d2d;
         color: #fff;
         font-size: $font-size-sm;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         line-height: 1.2;
         white-space: nowrap;
         overflow: hidden;
@@ -2140,7 +2140,7 @@ export default {
 
       .chip-name {
         font-size: $font-size-sm;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
       }
 
       .chip-period {
@@ -2194,7 +2194,7 @@ export default {
 
       .mobile-value {
         font-size: $font-size-sm;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         text-align: right;
       }
 
@@ -2211,7 +2211,7 @@ export default {
         gap: 8px;
         background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
         color: #fff;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         &.btn-disabled {
           background: var(--button-disabled-bg);

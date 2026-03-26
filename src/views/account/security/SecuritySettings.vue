@@ -397,7 +397,7 @@ onMounted(() => {
   background: transparent;
   color: var(--text-color);
   font-size: $font-size-base;
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -594,7 +594,7 @@ onMounted(() => {
   h3 {
     margin: 0;
     font-size: $font-size-lg;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     color: var(--text-color);
   }
 
@@ -630,7 +630,7 @@ onMounted(() => {
     label {
       display: block;
       font-size: $font-size-base;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
       color: var(--text-color);
       margin-bottom: 8px;
     }
@@ -671,7 +671,7 @@ onMounted(() => {
     padding: 8px 16px;
     border-radius: 8px;
     font-size: $font-size-base;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     cursor: pointer;
     transition: all 0.3s ease;
 

@@ -1222,7 +1222,7 @@ onUnmounted(() => {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .doc-detail-container {
 
   padding: 0;
@@ -1266,7 +1266,7 @@ onUnmounted(() => {
 
   color: var(--theme-color);
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   cursor: pointer;
 
@@ -1438,7 +1438,7 @@ onUnmounted(() => {
 
     font-size: 1.4rem;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     margin-bottom: 0.75rem;
 
@@ -1482,7 +1482,7 @@ onUnmounted(() => {
 
   color: white;
 
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
 
   font-size: 1rem;
 
@@ -1594,7 +1594,7 @@ onUnmounted(() => {
 
     font-size: 1.6rem;
 
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 
     margin-bottom: 1rem;
 
@@ -1638,7 +1638,7 @@ onUnmounted(() => {
 
       border-radius: 4px;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       transition: all 0.3s ease;
 
@@ -1684,7 +1684,7 @@ onUnmounted(() => {
 
     margin-bottom: 1.2rem;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     line-height: 1.4;
 
@@ -1762,7 +1762,7 @@ onUnmounted(() => {
 
     color: var(--text-muted);
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
   }
 
@@ -1976,7 +1976,7 @@ onUnmounted(() => {
 
     transition: color 0.2s ease;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     
 
@@ -2118,7 +2118,7 @@ onUnmounted(() => {
 
     th {
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       color: var(--primary-text-color);
 
@@ -2172,7 +2172,7 @@ onUnmounted(() => {
 
   :deep(strong) {
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     color: var(--primary-text-color);
 
@@ -2270,7 +2270,7 @@ onUnmounted(() => {
 
       border-radius: 20px;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
     }
 
@@ -2314,7 +2314,7 @@ onUnmounted(() => {
 
   transition: all 0.2s ease !important;
 
-  font-weight: 500 !important;
+  font-weight: $font-weight-medium;
 
   margin: 8px 4px !important;
 

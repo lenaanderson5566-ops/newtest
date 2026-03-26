@@ -362,7 +362,7 @@ watch(locale, () => {
   background: transparent;
   color: var(--text-color);
   font-size: $font-size-base;
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -467,7 +467,7 @@ watch(locale, () => {
   
   th {
     background-color: rgba(var(--theme-color-rgb), 0.05);
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     font-size: 0.9rem;
     color: var(--text-color);
     position: sticky;
@@ -497,7 +497,7 @@ watch(locale, () => {
   }
   
   .amount {
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     color: var(--order-tone-strong);
   }
   
@@ -508,7 +508,7 @@ watch(locale, () => {
     padding: 0.24rem 0.56rem;
     border-radius: 999px; 
     font-size: 0.82rem;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     
     &.status-pending {
       background-color: rgba(var(--theme-color-rgb), 0.08);
@@ -558,7 +558,7 @@ watch(locale, () => {
       white-space: nowrap;
       border-radius: 6px;
       font-size: 0.82rem;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
       cursor: pointer;
       transition: all 0.3s ease;
       border: none;
@@ -668,7 +668,7 @@ watch(locale, () => {
   border-radius: 8px;
   background-color: rgba(var(--theme-color-rgb), 0.85);
   color: white;
-  font-weight: 500;
+  font-weight: $font-weight-medium;
   font-size: $font-size-base;
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
   box-shadow: none;
@@ -748,7 +748,7 @@ watch(locale, () => {
   h3 {
     margin: 0;
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     color: var(--text-color);
   }
   
@@ -791,7 +791,7 @@ watch(locale, () => {
     padding: 0.6rem 1.25rem;
     border-radius: 8px;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     cursor: pointer;
     transition: all 0.3s ease;
     

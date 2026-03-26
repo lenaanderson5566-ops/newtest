@@ -392,7 +392,7 @@ onMounted(() => {
 
       font-size: $font-size-lg;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0;
 
@@ -493,7 +493,7 @@ onMounted(() => {
       background: rgba(var(--theme-color-rgb), 0.12);
     }
 
-    .import-title { font-size: $font-size-lg; font-weight: 600; }
+    .import-title { font-size: $font-size-lg; font-weight: $font-weight-semibold; }
     .import-desc { color: var(--secondary-text-color); font-size: $font-size-base; }
 
     .platform-selector {
@@ -523,7 +523,7 @@ onMounted(() => {
     .platform-title {
       font-size: $font-size-base;
       margin: 8px 0 12px;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
 
     .platform-options {
@@ -538,7 +538,7 @@ onMounted(() => {
       padding: 22px 14px;
       background: #f5f7fb;
       font-size: $font-size-base;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
       text-align: left;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -636,7 +636,7 @@ onMounted(() => {
     h2 {
       margin: 0;
       font-size: $font-size-lg;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       letter-spacing: 0.2px;
     }
 
@@ -700,7 +700,7 @@ onMounted(() => {
       align-items: center;
       justify-content: center;
       font-size: $font-size-sm;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       color: #fff;
       background: radial-gradient(circle at center, rgba(var(--theme-color-rgb), 0.95), rgba(var(--theme-color-rgb), 0.35));
       box-shadow: none;
@@ -753,7 +753,7 @@ onMounted(() => {
         border-radius: 999px;
         padding: 6px 12px;
         font-size: $font-size-sm;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         float: right;
       }
     }
@@ -770,7 +770,7 @@ onMounted(() => {
       padding: 10px 18px;
       border-radius: $border-radius-sm;
       font-size: $font-size-base;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       cursor: pointer;
       border: 1px solid transparent;
     }
@@ -847,7 +847,7 @@ onMounted(() => {
     margin-right: 14px;
     padding: 0 10px;
     font-size: 0.88rem;
-    font-weight: 800;
+    font-weight: $font-weight-bold;
     color: #fff;
     letter-spacing: 0.5px;
     background: linear-gradient(135deg, #d90429, #9d174d);
@@ -872,7 +872,7 @@ onMounted(() => {
 
       font-size: 1rem;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0 0 0.35rem;
 
@@ -937,7 +937,7 @@ onMounted(() => {
         border-radius: 999px;
         background-color: rgba(190, 24, 93, 0.12);
         color: #be185d;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         display: inline-flex;
         align-items: center;
       }
@@ -1035,7 +1035,7 @@ onMounted(() => {
 
   color: white;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   font-size: $font-size-base;
 

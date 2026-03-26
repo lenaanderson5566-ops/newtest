@@ -175,7 +175,7 @@ export default {
       .popup-title {
         margin: 0;
         font-size: $font-size-lg;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         color: var(--text-color);
       }
 
@@ -219,7 +219,7 @@ export default {
 
       :deep(strong) {
         color: var(--theme-color);
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
       }
 
       :deep(a) {
@@ -245,7 +245,7 @@ export default {
         border: none;
         border-radius: 8px;
         font-size: $font-size-base;
-        font-weight: 500;
+        font-weight: $font-weight-medium;
         cursor: pointer;
         transition: all 0.3s ease;
         min-width: 120px;

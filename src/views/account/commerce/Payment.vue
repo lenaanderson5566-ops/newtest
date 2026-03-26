@@ -1272,7 +1272,7 @@ export default {
 
       .card-title {
         font-size: $font-size-lg;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         margin: 0;
       }
     }
@@ -1329,7 +1329,7 @@ export default {
 
     .section-title {
       font-size: $font-size-base;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
       margin-bottom: 16px;
       color: var(--text-color);
       display: flex;
@@ -1382,7 +1382,7 @@ export default {
 
     .overview-plan-name {
       font-size: $font-size-lg;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       color: var(--text-color);
       line-height: 1.2;
     }
@@ -1483,12 +1483,12 @@ export default {
 
         .info-label {
           color: var(--text-color);
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
         }
 
         .info-value.final {
           color: var(--theme-color);
-          font-weight: 700;
+          font-weight: $font-weight-bold;
         }
       }
     }
@@ -1622,7 +1622,7 @@ export default {
         gap: 6px;
 
         .method-name {
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
           color: var(--text-color);
           line-height: 1.2;
         }
@@ -1751,7 +1751,7 @@ export default {
       gap: 8px;
       border-radius: $border-radius-sm;
       font-size: $font-size-base;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
       padding: 0 24px;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -2154,7 +2154,7 @@ export default {
         background-color: transparent;
         color: var(--text-color);
         font-size: $font-size-lg;
-        font-weight: 500;
+        font-weight: $font-weight-medium;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -2206,7 +2206,7 @@ export default {
 
         h3 {
           font-size: $font-size-lg;
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
           margin: 0 0 12px;
           color: var(--text-color);
         }
@@ -2269,7 +2269,7 @@ export default {
           border-radius: $border-radius-sm;
           border: none;
           font-size: $font-size-base;
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -2429,7 +2429,7 @@ export default {
 
     h3 {
       font-size: $font-size-lg;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
       margin: 0 0 12px;
       color: var(--text-color);
     }
@@ -2452,7 +2452,7 @@ export default {
       padding: 10px 0;
       border-radius: $border-radius-sm;
       font-size: $font-size-base;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -2519,7 +2519,7 @@ export default {
   border-radius: 999px;
   padding: 6px 12px;
   font-size: $font-size-sm;
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
   border: 1px solid transparent;
   transition: all 0.3s ease;
 

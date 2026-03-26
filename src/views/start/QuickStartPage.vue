@@ -402,7 +402,7 @@ onMounted(fetchUserStatus);
   .status-main {
     margin: 0;
     font-size: $font-size-base;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     color: var(--text-color);
   }
 
@@ -429,7 +429,7 @@ onMounted(fetchUserStatus);
     h2 {
       margin: 0;
       font-size: $font-size-lg;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
   }
 
@@ -442,7 +442,7 @@ onMounted(fetchUserStatus);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     font-size: $font-size-base;
   }
 }
@@ -526,7 +526,7 @@ onMounted(fetchUserStatus);
     flex: 0 1 auto;
     min-width: 0;
     max-width: 100%;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -540,7 +540,7 @@ onMounted(fetchUserStatus);
   .recommend-inline {
     color: #f08c2e;
     font-size: $font-size-sm;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     line-height: 1;
     background: rgba(240, 140, 46, 0.14);
     border-radius: 999px;

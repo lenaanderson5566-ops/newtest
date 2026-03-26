@@ -2407,7 +2407,7 @@ export default {
 
     font-size: 1.5rem;
 
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 
     z-index: 2;
 
@@ -2447,7 +2447,7 @@ export default {
 
     font-size: 1.5rem;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     z-index: 2;
 
@@ -2621,7 +2621,7 @@ export default {
 
     font-size: 1.75rem;
 
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 
     margin-bottom: 0.5rem;
 
@@ -2741,7 +2741,7 @@ export default {
 
   font-size: $font-size-sm;
 
-  font-weight: normal;
+  font-weight: $font-weight-normal;
 
   vertical-align: baseline;
 
@@ -2905,7 +2905,7 @@ export default {
 
       padding: 0 4px;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
     }
 
@@ -3349,7 +3349,7 @@ export default {
 
     color: white;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
 
 
@@ -4076,7 +4076,7 @@ export default {
 
         font-size: $font-size-lg;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         color: var(--primary-text-color);
 

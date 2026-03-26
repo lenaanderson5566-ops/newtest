@@ -151,7 +151,7 @@ export default {
     .nav-item {
       padding: 8px 10px;
       border-radius: $border-radius-sm;
-      font-weight: 550;
+      font-weight: $font-weight-medium;
       font-size: $font-size-base;
       color: var(--secondary-text-color);
       text-decoration: none;
@@ -255,7 +255,7 @@ export default {
         }
 
         .nav-text {
-          font-weight: 550;
+          font-weight: $font-weight-medium;
           line-height: 1.2;
           max-width: none;
           opacity: 1;

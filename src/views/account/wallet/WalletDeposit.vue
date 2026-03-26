@@ -309,7 +309,7 @@ onMounted(() => {
     background: transparent;
     color: var(--text-color);
     font-size: $font-size-base;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -352,7 +352,7 @@ onMounted(() => {
       
       .card-title {
         font-size: $font-size-lg;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         margin: 0;
         color: var(--text-color);
       }
@@ -406,7 +406,7 @@ onMounted(() => {
       }
 
       .wallet-currency {
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         color: var(--text-color);
       }
 
@@ -414,7 +414,7 @@ onMounted(() => {
         color: var(--secondary-text-color);
         font-variant-numeric: tabular-nums;
         font-size: 1.05rem;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
       }
       
       .balance-label {
@@ -546,14 +546,14 @@ onMounted(() => {
             
             .currency {
               font-size: $font-size-base;
-              font-weight: 600;
+              font-weight: $font-weight-semibold;
               color: var(--text-color);
               margin-right: 2px;
             }
             
             .amount {
               font-size: $font-size-lg;
-              font-weight: 700;
+              font-weight: $font-weight-bold;
               color: var(--text-color);
             }
           }
@@ -569,7 +569,7 @@ onMounted(() => {
         font-size: 0.95rem;
         color: var(--secondary-text-color);
         margin-bottom: 10px;
-        font-weight: 500;
+        font-weight: $font-weight-medium;
       }
       
       .input-container {
@@ -582,7 +582,7 @@ onMounted(() => {
           position: absolute;
           left: 15px;
           color: var(--text-color);
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
           font-size: 1.2rem;
         }
         
@@ -639,7 +639,7 @@ onMounted(() => {
         padding: 0 30px;
         height: 50px;
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         cursor: pointer;
         transition: all 0.3s ease;
         min-width: 200px;

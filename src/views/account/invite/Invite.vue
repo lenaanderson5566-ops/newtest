@@ -752,7 +752,8 @@ export default {
         <html>
           <head>
             <title>${t('invite.share.scanTitle')}</title>
-            <style>
+            <style lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
               :root { --font-size-sm: 14px; --font-size-base: 16px; --font-size-lg: 20px; }
               body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
               img { max-width: 100%; height: auto; margin-bottom: 20px; }
@@ -817,7 +818,7 @@ export default {
 
         .stats-value {
           font-size: var(--font-size-lg);
-          font-weight: 700;
+          font-weight: $font-weight-bold;
           margin-bottom: 0;
           line-height: 1.05;
         }
@@ -847,7 +848,7 @@ export default {
         left: 12px;
         top: 12px;
         font-size: var(--font-size-sm);
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         color: rgba(var(--theme-color-rgb), 0.78);
       }
 
@@ -930,7 +931,7 @@ export default {
 
   .kpi-value {
     font-size: var(--font-size-lg);
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     line-height: 1.1;
   }
 
@@ -1567,7 +1568,7 @@ export default {
 .card-title {
   margin: 0;
   font-size: $font-size-base;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
 }
 
 .balance-container {
@@ -1577,7 +1578,7 @@ export default {
 
 .balance-value {
   font-size: $font-size-lg;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   color: var(--theme-color);
 }
 
@@ -1620,7 +1621,7 @@ export default {
 .kpi-value {
   margin-top: 4px;
   font-size: $font-size-base;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
 }
 
 .invite-codes-wrapper {
@@ -1669,7 +1670,7 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
 }
 
 .invite-code-display {
@@ -1685,7 +1686,7 @@ export default {
   border-radius: 6px;
   border: 1px solid var(--border-color);
   text-align: center;
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
 }
 
 .invite-card-footer {

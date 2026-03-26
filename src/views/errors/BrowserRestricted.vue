@@ -508,7 +508,7 @@ export default {
 
       font-size: $font-size-lg;
 
-      font-weight: 700;
+      font-weight: $font-weight-bold;
 
       color: var(--theme-color);
 
@@ -522,7 +522,7 @@ export default {
 
       font-size: $font-size-base;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       color: var(--secondary-text-color);
 
@@ -622,7 +622,7 @@ export default {
 
         font-size: $font-size-base;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         color: var(--text-color);
 
@@ -750,7 +750,7 @@ export default {
 
         font-size: $font-size-lg;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         margin-bottom: 15px;
 
@@ -796,7 +796,7 @@ export default {
 
         font-size: $font-size-base;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         text-decoration: none;
 
@@ -866,7 +866,7 @@ export default {
 
           font-size: $font-size-lg;
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
 
           margin-bottom: 15px;
 
@@ -950,7 +950,7 @@ export default {
 
         summary {
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
 
           cursor: pointer;
 

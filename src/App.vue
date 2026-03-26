@@ -323,7 +323,7 @@ export default {
 
 .site-logo {
   font-size: $font-size-base;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   color: var(--theme-color);
   letter-spacing: -0.5px;
   display: flex;

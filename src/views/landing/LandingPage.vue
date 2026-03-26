@@ -514,7 +514,7 @@ export default {
 
   font-size: $font-size-lg;
 
-  font-weight: 700;
+  font-weight: $font-weight-bold;
 
   margin-bottom: 20px;
 
@@ -560,7 +560,7 @@ export default {
 
   font-size: 1.5rem;
 
-  font-weight: 400;
+  font-weight: $font-weight-normal;
 
   line-height: 1.5;
 

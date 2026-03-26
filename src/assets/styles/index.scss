@@ -145,7 +145,7 @@
 .payment-container .section-wrapper .info-value {
   flex: 1;
   color: var(--text-color);
-  font-weight: 500;
+  font-weight: $font-weight-medium;
   font-size: $font-size-base;
 }
 
@@ -155,7 +155,7 @@
 
 .payment-container .section-wrapper .info-row.highlight-row .amount {
   font-size: $font-size-lg;
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
   color: var(--theme-color);
 }
 
@@ -181,7 +181,7 @@
 
 .payment-container .section-wrapper .info-row.final-row .final {
   font-size: $font-size-lg;
-  font-weight: 800;
+  font-weight: $font-weight-bold;
   letter-spacing: 0.4px;
   color: var(--theme-color);
   line-height: 1.15;
@@ -263,7 +263,7 @@
 .pending-order-modal .pending-order-dialog h3 {
   margin: 0;
   font-size: $font-size-lg;
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
   color: var(--text-color);
 }
 
@@ -288,7 +288,7 @@
   border: 1px solid var(--border-color);
   font-size: $font-size-base;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: $font-weight-medium;
   transition: all 0.3s ease;
 }
 
