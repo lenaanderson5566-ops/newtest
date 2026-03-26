@@ -147,7 +147,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .not-found-container {
 
   display: flex;
@@ -190,9 +190,9 @@ export default {
 
   color: var(--theme-color);
 
-  font-size: 16px;
+  font-size: $font-size-md;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   padding: 8px 16px;
 
@@ -238,9 +238,9 @@ export default {
 
 .error-code {
 
-  font-size: 120px;
+  font-size: $font-size-xl;
 
-  font-weight: 900;
+  font-weight: $font-weight-bold;
 
   color: var(--theme-color);
 
@@ -266,11 +266,11 @@ export default {
 
 .error-title {
 
-  font-size: 28px;
+  font-size: $font-size-xl;
 
-  font-weight: 700;
+  font-weight: $font-weight-bold;
 
-  color: var(--text-color);
+  color: var(--text-primary);
 
   margin: 10px 0 20px;
 
@@ -280,7 +280,7 @@ export default {
 
 .error-description {
 
-  font-size: 18px;
+  font-size: $font-size-xl;
 
   line-height: 1.6;
 
@@ -304,7 +304,7 @@ export default {
 
   background-color: var(--theme-color);
 
-  color: white;
+  color: var(--text-on-dark-primary);
 
   border: none;
 
@@ -312,9 +312,9 @@ export default {
 
   padding: 12px 24px;
 
-  font-size: 16px;
+  font-size: $font-size-md;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   cursor: pointer;
 
@@ -348,7 +348,7 @@ export default {
 
   .error-code {
 
-    font-size: 100px;
+    font-size: $font-size-xl;
 
   }
 
@@ -356,7 +356,7 @@ export default {
 
   .error-title {
 
-    font-size: 24px;
+    font-size: $font-size-xl;
 
   }
 
@@ -364,7 +364,7 @@ export default {
 
   .error-description {
 
-    font-size: 16px;
+    font-size: $font-size-md;
 
   }
 

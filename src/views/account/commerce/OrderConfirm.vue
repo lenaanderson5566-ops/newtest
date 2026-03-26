@@ -1188,9 +1188,9 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 18px;
+        font-size: $font-size-xl;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         margin: 0;
       }
@@ -1202,7 +1202,7 @@ export default {
 
         color: var(--secondary-text-color);
 
-        font-size: 14px;
+        font-size: $font-size-md;
 
         line-height: 1.6;
       }
@@ -1276,9 +1276,9 @@ export default {
       min-width: 0;
 
       h4 {
-        font-size: 15px;
+        font-size: $font-size-md;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         margin: 0 0 6px 0;
 
@@ -1288,7 +1288,7 @@ export default {
       }
 
       p {
-        font-size: 14px;
+        font-size: $font-size-md;
 
         margin: 0;
 
@@ -1327,13 +1327,13 @@ export default {
     margin-bottom: 25px;
 
     .section-title {
-      font-size: 18px;
+      font-size: $font-size-xl;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin-bottom: 15px;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       position: relative;
 
@@ -1402,15 +1402,15 @@ export default {
       margin-bottom: 20px;
 
       .card-title {
-        font-size: 20px;
+        font-size: $font-size-xl;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         margin: 0;
 
         letter-spacing: 0.3px;
 
-        color: var(--text-color);
+        color: var(--text-primary);
       }
 
       .card-badge {
@@ -1422,9 +1422,9 @@ export default {
 
         border-radius: $border-radius-sm;
 
-        font-size: 12px;
+        font-size: $font-size-sm;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         backdrop-filter: blur(8px);
 
@@ -1495,9 +1495,9 @@ export default {
           }
 
           span {
-            font-size: 14px;
+            font-size: $font-size-md;
 
-            color: var(--text-color);
+            color: var(--text-primary);
 
             line-height: 1.5;
 
@@ -1508,11 +1508,11 @@ export default {
         }
 
         .html-content {
-          font-size: 14px;
+          font-size: $font-size-md;
 
           line-height: 1.6;
 
-          color: var(--text-color);
+          color: var(--text-primary);
         }
       }
     }
@@ -1654,13 +1654,13 @@ export default {
         }
 
         .period-type {
-          font-size: 14px !important;
+          font-size: $font-size-md !important;
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
 
           margin-bottom: 8px !important;
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
           letter-spacing: 0.2px;
 
@@ -1668,8 +1668,8 @@ export default {
 
           .discount-tag {
             background-color: #ff4d4f;
-            color: #fff;
-            font-size: 12px;
+            color: var(--text-on-dark-primary);
+            font-size: $font-size-sm;
             padding: 2px 4px;
             border-radius: 4px;
             margin-left: 5px;
@@ -1683,25 +1683,25 @@ export default {
           text-align: center;
 
           .currency {
-            font-size: 14px !important;
+            font-size: $font-size-md !important;
 
-            font-weight: 500;
+            font-weight: $font-weight-medium;
 
-            color: var(--text-color);
+            color: var(--text-primary);
           }
 
           .amount {
-            font-size: 24px !important;
+            font-size: $font-size-xl !important;
 
-            font-weight: 700;
+            font-weight: $font-weight-bold;
 
-            color: var(--text-color);
+            color: var(--text-primary);
           }
 
           .original-price {
             text-decoration: line-through;
             color: var(--secondary-text-color);
-            font-size: 12px;
+            font-size: $font-size-sm;
             margin-left: 5px;
           }
         }
@@ -1737,9 +1737,9 @@ export default {
 
       background-color: var(--input-bg-color);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
-      font-size: 14px;
+      font-size: $font-size-md;
 
       outline: none;
 
@@ -1778,11 +1778,11 @@ export default {
 
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
-      font-size: 14px;
+      font-size: $font-size-md;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       display: flex;
 
@@ -1842,7 +1842,7 @@ export default {
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--secondary-text-color);
-      font-size: 14px;
+      font-size: $font-size-md;
       display: inline-flex;
       align-items: center;
       line-height: 1;
@@ -1857,14 +1857,14 @@ export default {
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--secondary-text-color);
-      font-size: 14px;
+      font-size: $font-size-md;
       cursor: pointer;
       line-height: 1;
       white-space: nowrap;
 
       &:hover {
         background: rgba(148, 163, 184, 0.14);
-        color: var(--text-color);
+        color: var(--text-primary);
       }
     }
   }
@@ -1898,15 +1898,15 @@ export default {
 
     .coupon-discount-value {
       color: #22c55e;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
       white-space: nowrap;
     }
   }
 
   .coupon-feedback {
     margin-top: 8px;
-    font-size: 12px;
+    font-size: $font-size-sm;
     line-height: 1.4;
 
     &.error {
@@ -1951,14 +1951,14 @@ export default {
       .summary-label {
         flex: 1;
         min-width: 0;
-        font-size: 14px;
+        font-size: $font-size-md;
 
         color: var(--secondary-text-color);
 
         letter-spacing: 0.2px;
 
         .coupon-name {
-          font-size: 12px;
+          font-size: $font-size-sm;
 
           opacity: 0.8;
 
@@ -1969,16 +1969,16 @@ export default {
       .summary-value {
         min-width: 120px;
         text-align: right;
-        font-size: 14px;
+        font-size: $font-size-md;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
-        color: var(--text-color);
+        color: var(--text-primary);
 
         &.discount {
           color: #f44336;
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
         }
       }
 
@@ -1994,19 +1994,19 @@ export default {
         gap: 6px;
 
         .summary-label {
-          font-size: 16px;
+          font-size: $font-size-md;
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
 
-          color: var(--text-color);
+          color: var(--text-primary);
         }
 
         .summary-value {
           min-width: 0;
           text-align: left;
-          font-size: 32px;
+          font-size: $font-size-xl;
 
-          font-weight: 800;
+          font-weight: $font-weight-bold;
 
           color: var(--theme-color);
 
@@ -2027,7 +2027,7 @@ export default {
   .coupon-verify-section,
   .order-summary-section {
     .section-title {
-      color: var(--text-color);
+      color: var(--text-primary);
     }
   }
 
@@ -2037,7 +2037,7 @@ export default {
     border: 1px solid var(--border-color);
     border-radius: $border-radius-sm;
     box-shadow: none;
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .right-column .order-summary-section .order-summary {
@@ -2081,7 +2081,7 @@ export default {
   }
 
   .order-summary-section .coupon-code-label {
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .order-summary-section .btn-remove-text {
@@ -2099,7 +2099,7 @@ export default {
   .coupon-verify-section .coupon-field {
     background: var(--input-bg-color);
     border-color: var(--border-color);
-    color: var(--text-color);
+    color: var(--text-primary);
 
     &::placeholder {
       color: var(--secondary-text-color);
@@ -2113,7 +2113,7 @@ export default {
 
   .order-summary-section .summary-row .summary-label,
   .order-summary-section .summary-row .summary-value {
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .order-summary-section .summary-row .summary-value.discount {
@@ -2122,7 +2122,7 @@ export default {
 
   .order-summary-section .summary-row.total .summary-label,
   .order-summary-section .summary-row.total .summary-value {
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .order-summary-section .summary-divider {
@@ -2140,9 +2140,9 @@ export default {
     padding: 0 24px;
     border-radius: $border-radius-sm;
     background-color: var(--theme-color);
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
+    color: var(--text-on-dark-primary);
+    font-size: $font-size-md;
+    font-weight: $font-weight-medium;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2190,11 +2190,11 @@ export default {
 
       background-color: transparent;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
-      font-size: 14px;
+      font-size: $font-size-md;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       display: flex;
 
@@ -2228,11 +2228,11 @@ export default {
 
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
-      font-size: 14px;
+      font-size: $font-size-md;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       display: flex;
 
@@ -2456,11 +2456,11 @@ export default {
       padding: 15px;
 
       .card-header .card-title {
-        font-size: 16px;
+        font-size: $font-size-md;
       }
 
       .card-body p {
-        font-size: 13px;
+        font-size: $font-size-sm;
       }
     }
 
@@ -2503,7 +2503,7 @@ export default {
 
         justify-content: center;
 
-        font-size: 13px;
+        font-size: $font-size-sm;
 
         height: 44px;
 
@@ -2523,18 +2523,18 @@ export default {
           min-height: 80px !important;
 
           .period-type {
-            font-size: 13px !important;
+            font-size: $font-size-sm !important;
 
             margin-bottom: 6px !important;
           }
 
           .period-price {
             .currency {
-              font-size: 13px !important;
+              font-size: $font-size-sm !important;
             }
 
             .amount {
-              font-size: 20px !important;
+              font-size: $font-size-xl !important;
             }
           }
         }
@@ -2546,7 +2546,7 @@ export default {
 @media (max-width: 480px) {
   .order-confirm-container {
     .section-title {
-      font-size: 16px;
+      font-size: $font-size-md;
 
       margin-bottom: 12px;
     }

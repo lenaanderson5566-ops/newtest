@@ -14,22 +14,22 @@
 }
 
 html {
-  font-size: 14px;
+  font-size: $font-size-md;
   scroll-behavior: smooth;
 }
 
 /* 响应式字体大小 */
 @media (max-width: map.get($breakpoints, sm)) {
   html {
-    font-size: 13px;
+    font-size: $font-size-sm;
   }
 }
 
 body {
   font-family: $font-family-base;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   line-height: 1.5;
-  color: var(--text-color);
+  color: var(--text-primary);
   background-color: var(--background-color);
   overflow-x: hidden;
   transition: color 0.3s ease, background-color 0.3s ease;

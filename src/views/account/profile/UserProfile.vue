@@ -1581,7 +1581,7 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .profile-container {
 
   padding: 0;
@@ -1674,9 +1674,9 @@ onMounted(() => {
 
     .card-title {
 
-      font-size: 18px;
+      font-size: $font-size-xl;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0;
 
@@ -2019,11 +2019,11 @@ onMounted(() => {
 
     background-color: rgba(var(--theme-color-rgb), 0.85);
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
-    font-size: 14px;
+    font-size: $font-size-md;
 
     border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
@@ -2093,13 +2093,13 @@ onMounted(() => {
 
     h3 {
 
-      font-size: 16px;
+      font-size: $font-size-md;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
     }
 
@@ -2141,7 +2141,7 @@ onMounted(() => {
 
         .info-label {
 
-          font-size: 14px;
+          font-size: $font-size-md;
 
           color: var(--text-muted);
 
@@ -2153,11 +2153,11 @@ onMounted(() => {
 
         .info-value {
 
-          font-size: 16px;
+          font-size: $font-size-md;
 
-          font-weight: 500;
+          font-weight: $font-weight-medium;
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
 
 
@@ -2217,11 +2217,11 @@ onMounted(() => {
 
           display: block;
 
-          font-size: 15px;
+          font-size: $font-size-md;
 
-          font-weight: 500;
+          font-weight: $font-weight-medium;
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
           margin-bottom: 4px;
 
@@ -2231,7 +2231,7 @@ onMounted(() => {
 
         .setting-description {
 
-          font-size: 13px;
+          font-size: $font-size-sm;
 
           color: var(--text-muted);
 
@@ -2273,9 +2273,9 @@ onMounted(() => {
 
         border: 1px solid rgba(var(--theme-color-rgb), 0.2);
 
-        font-size: 14px;
+        font-size: $font-size-md;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         cursor: pointer;
 
@@ -2351,9 +2351,9 @@ onMounted(() => {
 
           background-color: var(--bg-secondary);
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
-          font-size: 15px;
+          font-size: $font-size-md;
 
           transition: all 0.3s ease;
 
@@ -2389,13 +2389,13 @@ onMounted(() => {
 
           background-color: var(--theme-color);
 
-          color: white;
+          color: var(--text-on-dark-primary);
 
           border: none;
 
-          font-size: 14px;
+          font-size: $font-size-md;
 
-          font-weight: 500;
+          font-weight: $font-weight-medium;
 
           cursor: pointer;
 
@@ -2735,11 +2735,11 @@ onMounted(() => {
 
     margin: 0;
 
-    font-size: 18px;
+    font-size: $font-size-xl;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
   }
 
@@ -2791,9 +2791,9 @@ onMounted(() => {
 
   p {
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
-    font-size: 15px;
+    font-size: $font-size-md;
 
     line-height: 1.6;
 
@@ -2821,11 +2821,11 @@ onMounted(() => {
 
       display: block;
 
-      font-size: 14px;
+      font-size: $font-size-md;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       margin-bottom: 8px;
 
@@ -2845,9 +2845,9 @@ onMounted(() => {
 
       background-color: var(--bg-secondary);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
-      font-size: 15px;
+      font-size: $font-size-md;
 
       transition: all 0.3s ease;
 
@@ -2873,7 +2873,7 @@ onMounted(() => {
 
       color: #f44336;
 
-      font-size: 13px;
+      font-size: $font-size-sm;
 
     }
 
@@ -2903,9 +2903,9 @@ onMounted(() => {
 
     border-radius: 8px;
 
-    font-size: 14px;
+    font-size: $font-size-md;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
@@ -2919,7 +2919,7 @@ onMounted(() => {
 
       border: 1px solid var(--border-color);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
 
 
@@ -2939,7 +2939,7 @@ onMounted(() => {
 
       border: none;
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       display: flex;
 
@@ -3127,11 +3127,11 @@ onMounted(() => {
 
       .device-name {
 
-        font-size: 15px;
+        font-size: $font-size-md;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
-        color: var(--text-color);
+        color: var(--text-primary);
 
         margin-bottom: 4px;
 
@@ -3147,7 +3147,7 @@ onMounted(() => {
 
         gap: 8px;
 
-        font-size: 13px;
+        font-size: $font-size-sm;
 
         color: var(--text-muted);
 
@@ -3321,7 +3321,7 @@ onMounted(() => {
 
     border-radius: 8px;
 
-    font-size: 14px;
+    font-size: $font-size-md;
 
     cursor: pointer;
 
@@ -3403,7 +3403,7 @@ onMounted(() => {
 
     border-radius: 8px;
 
-    font-size: 14px;
+    font-size: $font-size-md;
 
     cursor: pointer;
 
@@ -3461,9 +3461,9 @@ onMounted(() => {
 
 .step-number {
 
-  font-size: 16px;
+  font-size: $font-size-md;
 
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
 
   color: var(--theme-color);
 
@@ -3479,9 +3479,9 @@ onMounted(() => {
 
     margin: 0 0 8px;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
-    font-size: 14px;
+    font-size: $font-size-md;
 
     line-height: 1.5;
 
@@ -3495,7 +3495,7 @@ onMounted(() => {
 
     text-decoration: none;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
   }
 
@@ -3533,9 +3533,9 @@ onMounted(() => {
 
     font-family: monospace;
 
-    font-size: 14px;
+    font-size: $font-size-md;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     white-space: pre-wrap;
 
@@ -3623,9 +3623,9 @@ onMounted(() => {
 
   padding: 12px 16px;
 
-  font-size: 14px;
+  font-size: $font-size-md;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   cursor: pointer;
 

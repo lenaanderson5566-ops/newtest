@@ -214,9 +214,9 @@ export default {
 
       .dialog-title {
         margin: 0;
-        font-size: 18px;
-        font-weight: 600;
-        color: var(--text-color);
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        color: var(--text-primary);
       }
 
       .dialog-close-btn {
@@ -234,7 +234,7 @@ export default {
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
-          color: var(--text-color);
+          color: var(--text-primary);
           transform: rotate(90deg);
         }
       }
@@ -249,12 +249,12 @@ export default {
       :deep(p) {
         margin: 12px 0;
         line-height: 1.6;
-        color: var(--text-color);
+        color: var(--text-primary);
       }
 
       :deep(strong) {
         color: var(--theme-color);
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
       }
 
       :deep(a) {
@@ -278,8 +278,8 @@ export default {
         padding: 8px 20px;
         border: none;
         border-radius: 8px;
-        font-size: 14px;
-        font-weight: 500;
+        font-size: $font-size-md;
+        font-weight: $font-weight-medium;
         cursor: pointer;
         transition: all 0.3s ease;
         min-width: 80px;
@@ -291,7 +291,7 @@ export default {
 
       .dialog-btn-cancel {
         background-color: var(--border-color);
-        color: var(--text-color);
+        color: var(--text-primary);
 
         &:hover {
           background-color: var(--secondary-text-color);
@@ -301,7 +301,7 @@ export default {
 
       .dialog-btn-confirm {
         background-color: var(--theme-color);
-        color: white;
+        color: var(--text-on-dark-primary);
 
         &:hover {
           box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
@@ -347,7 +347,7 @@ export default {
         padding: 15px;
 
         .dialog-title {
-          font-size: 16px;
+          font-size: $font-size-md;
         }
       }
 

@@ -151,8 +151,8 @@ export default {
     .nav-item {
       padding: 8px 10px;
       border-radius: $border-radius-sm;
-      font-weight: 500;
-      font-size: 13px;
+      font-weight: $font-weight-medium;
+      font-size: $font-size-md;
       color: var(--secondary-text-color);
       text-decoration: none;
       text-align: left;
@@ -187,7 +187,7 @@ export default {
       }
 
       &.active {
-        color: var(--text-color);
+        color: var(--text-primary);
         background: rgba(var(--theme-color-rgb), 0.12);
         box-shadow: inset 2px 0 0 rgba(var(--theme-color-rgb), 0.65);
 
@@ -197,7 +197,7 @@ export default {
       }
 
       &:hover {
-        color: var(--text-color);
+        color: var(--text-primary);
         background: rgba(var(--theme-color-rgb), 0.08);
       }
 
@@ -236,7 +236,7 @@ export default {
         min-width: 0;
         padding: 6px 8px;
         justify-content: center;
-        font-size: 13px;
+        font-size: $font-size-md;
         flex-direction: row;
         gap: 6px;
         height: 50px;
@@ -255,7 +255,7 @@ export default {
         }
 
         .nav-text {
-          font-weight: 500;
+          font-weight: $font-weight-medium;
           line-height: 1.2;
           max-width: none;
           opacity: 1;
@@ -290,7 +290,7 @@ export default {
         flex: 1 1 0;
         min-width: 0;
         padding: 5px 6px;
-        font-size: 11px;
+        font-size: $font-size-sm;
         height: 46px;
 
         .nav-icon {

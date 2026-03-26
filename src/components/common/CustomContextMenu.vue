@@ -155,6 +155,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .custom-context-menu {
   position: fixed;
   z-index: 1000;
@@ -221,14 +222,14 @@ export default {
   border-radius: 8px;
   margin-right: 12px;
   background-color: rgba(var(--theme-color-rgb), 0.08);
-  color: var(--text-color);
+  color: var(--text-primary);
   transition: all 0.3s ease;
 }
 
 .menu-text {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-color);
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: var(--text-primary);
 }
 
 

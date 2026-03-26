@@ -329,7 +329,7 @@ onMounted(() => {
 
     font-size: 1.75rem;
 
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 
     margin-bottom: 1.5rem;
 
@@ -395,7 +395,7 @@ onMounted(() => {
 
     background-color: var(--input-bg);
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     font-size: 1rem;
 
@@ -496,7 +496,7 @@ onMounted(() => {
 
     font-size: 1.3rem;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     margin-bottom: 1.25rem;
 
@@ -504,7 +504,7 @@ onMounted(() => {
 
     border-bottom: 1px solid rgba(var(--theme-color-rgb), 0.1);
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
   }
 
@@ -570,11 +570,11 @@ onMounted(() => {
 
       font-size: 1rem;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin-bottom: 0.35rem;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       line-height: 1.4;
 
@@ -702,11 +702,11 @@ onMounted(() => {
 
   background-color: rgba(var(--theme-color-rgb), 0.85);
 
-  color: white;
+  color: var(--text-on-dark-primary);
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
-  font-size: 14px;
+  font-size: $font-size-md;
 
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 

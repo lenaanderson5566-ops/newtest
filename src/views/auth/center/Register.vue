@@ -2139,7 +2139,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .top-toolbar {
 
   position: fixed;
@@ -2210,7 +2210,7 @@ export default {
 
   margin-left: 4px;
 
-  font-size: 16px;
+  font-size: $font-size-md;
 
   vertical-align: middle;
 
@@ -2224,9 +2224,9 @@ export default {
 
   margin-left: 4px;
 
-  font-size: 12px;
+  font-size: $font-size-sm;
 
-  font-weight: normal;
+  font-weight: $font-weight-normal;
 
   vertical-align: baseline;
 
@@ -2290,7 +2290,7 @@ export default {
 
       height: 45px;
 
-      font-size: 14px;
+      font-size: $font-size-md;
 
       letter-spacing: 0.2px;
 
@@ -2322,7 +2322,7 @@ export default {
 
     color: var(--secondary-text-color);
 
-    font-size: 14px;
+    font-size: $font-size-md;
 
     background-color: transparent;
 
@@ -2386,11 +2386,11 @@ export default {
 
       color: var(--primary-text-color);
 
-      font-size: 14px;
+      font-size: $font-size-md;
 
       padding: 0 4px;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
     }
 
@@ -2500,7 +2500,7 @@ export default {
 
         color: var(--primary-text-color);
 
-        font-size: 14px;
+        font-size: $font-size-md;
 
         display: flex;
 
@@ -2740,7 +2740,7 @@ export default {
 
     background-color: var(--theme-color);
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     margin: 0;
 
@@ -2832,9 +2832,9 @@ export default {
 
     border: none;
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
 
 
@@ -3209,7 +3209,7 @@ export default {
 
   line-height: normal !important;
 
-  color: var(--text-color) !important;
+  color: var(--text-primary) !important;
 
   border: 1px solid var(--border-color) !important;
 
@@ -3541,9 +3541,9 @@ export default {
 
         margin: 0;
 
-        font-size: 18px;
+        font-size: $font-size-xl;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         color: var(--primary-text-color);
 
@@ -3559,7 +3559,7 @@ export default {
 
         cursor: pointer;
 
-        font-size: 24px;
+        font-size: $font-size-xl;
 
         line-height: 1;
 

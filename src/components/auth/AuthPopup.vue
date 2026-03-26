@@ -174,9 +174,9 @@ export default {
 
       .popup-title {
         margin: 0;
-        font-size: 18px;
-        font-weight: 600;
-        color: var(--text-color);
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        color: var(--text-primary);
       }
 
       .popup-close-btn {
@@ -194,7 +194,7 @@ export default {
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
-          color: var(--text-color);
+          color: var(--text-primary);
           transform: rotate(90deg);
         }
 
@@ -214,12 +214,12 @@ export default {
       :deep(p) {
         margin: 12px 0;
         line-height: 1.6;
-        color: var(--text-color);
+        color: var(--text-primary);
       }
 
       :deep(strong) {
         color: var(--theme-color);
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
       }
 
       :deep(a) {
@@ -241,11 +241,11 @@ export default {
       .popup-action-btn {
         padding: 8px 20px;
         background-color: var(--theme-color);
-        color: white;
+        color: var(--text-on-dark-primary);
         border: none;
         border-radius: 8px;
-        font-size: 14px;
-        font-weight: 500;
+        font-size: $font-size-md;
+        font-weight: $font-weight-medium;
         cursor: pointer;
         transition: all 0.3s ease;
         min-width: 120px;
@@ -331,7 +331,7 @@ export default {
         padding: 15px;
 
         .popup-title {
-          font-size: 16px;
+          font-size: $font-size-md;
         }
       }
 

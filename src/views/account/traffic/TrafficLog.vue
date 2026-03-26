@@ -446,7 +446,7 @@ const initChart = () => {
 
       textStyle: {
 
-        color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || '#333333'
+        color: getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim() || '#333333'
 
       }
 
@@ -480,7 +480,7 @@ const initChart = () => {
 
         interval: 'auto',
 
-        color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || '#333333'
+        color: getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim() || '#333333'
 
       },
 
@@ -516,7 +516,7 @@ const initChart = () => {
 
         padding: [0, 0, 0, 10],
 
-        color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || '#333333'
+        color: getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim() || '#333333'
 
       },
 
@@ -524,7 +524,7 @@ const initChart = () => {
 
         formatter: (value) => `${value} ${t('trafficLog.unitGb')}`,
 
-        color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || '#333333'
+        color: getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim() || '#333333'
 
       },
 
@@ -807,7 +807,7 @@ onUnmounted(() => {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .trafficlog-container {
 
   padding: 0;
@@ -872,11 +872,11 @@ onUnmounted(() => {
       border: 1px solid var(--border-color);
       border-radius: 20px;
       padding: 8px 16px;
-      font-size: 14px;
-      font-weight: 500;
+      font-size: $font-size-md;
+      font-weight: $font-weight-medium;
       cursor: pointer;
       transition: all 0.3s ease;
-      color: var(--text-color);
+      color: var(--text-primary);
 
       &:hover {
         background-color: rgba(var(--theme-color-rgb), 0.1);
@@ -888,7 +888,7 @@ onUnmounted(() => {
         background-color: rgba(var(--theme-color-rgb), 0.15);
         color: var(--theme-color);
         border-color: var(--theme-color);
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
       }
     }
   }
@@ -936,9 +936,9 @@ onUnmounted(() => {
 
       .card-title {
 
-        font-size: 18px;
+        font-size: $font-size-xl;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         margin: 0;
 
@@ -964,7 +964,7 @@ onUnmounted(() => {
 
     .formula-title {
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin-bottom: 8px;
 
@@ -1062,7 +1062,7 @@ onUnmounted(() => {
 
     background-color: var(--theme-color);
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     border: none;
 
@@ -1070,7 +1070,7 @@ onUnmounted(() => {
 
     cursor: pointer;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     transition: background-color 0.2s;
 
@@ -1122,7 +1122,7 @@ onUnmounted(() => {
 
       th {
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         color: var(--secondary-text-color);
 

@@ -286,7 +286,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .landing-page {
 
   position: relative;
@@ -309,7 +309,7 @@ export default {
 
   background-color: var(--background-color);
 
-  color: var(--text-color);
+  color: var(--text-primary);
 
   transition: background-color 0.3s ease, color 0.3s ease;
 
@@ -512,9 +512,9 @@ export default {
 
 .site-title {
 
-  font-size: 48px;
+  font-size: $font-size-xl;
 
-  font-weight: 700;
+  font-weight: $font-weight-bold;
 
   margin-bottom: 20px;
 
@@ -560,13 +560,13 @@ export default {
 
   font-size: 1.5rem;
 
-  font-weight: 400;
+  font-weight: $font-weight-normal;
 
   line-height: 1.5;
 
   margin-bottom: 2rem;
 
-  color: var(--text-color);
+  color: var(--text-primary);
 
   opacity: 0.9;
 

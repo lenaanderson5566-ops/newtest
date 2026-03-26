@@ -172,7 +172,7 @@ export default {
   border-radius: $border-radius-sm;
   background: transparent;
   border: 1px solid transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 
@@ -190,14 +190,14 @@ export default {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
     line-height: 1;
   }
 
   .language-icon {
     color: var(--theme-color);
-    font-size: 14px;
+    font-size: $font-size-md;
     line-height: 1;
   }
 }
@@ -222,7 +222,7 @@ export default {
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
-  font-size: 14px;
+  font-size: $font-size-md;
 
   &:hover {
     background-color: rgba(var(--theme-color-rgb), 0.1);
@@ -231,7 +231,7 @@ export default {
   &.active {
     background-color: rgba(var(--theme-color-rgb), 0.18);
     color: var(--theme-color);
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
   }
 }
 

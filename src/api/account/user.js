@@ -116,4 +116,11 @@ export function getUserSubscribe() {
     url: '/user/getSubscribe',
     method: 'get'
   });
-} 
+}
+
+export function getRecentLoginRecords() {
+  return request({
+    url: '/user/log/login/recent',
+    method: 'get'
+  });
+}

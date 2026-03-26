@@ -146,7 +146,7 @@ export default {
   .icon {
     width: 22px;
     height: 22px;
-    color: white;
+    color: var(--text-on-dark-primary);
     filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;

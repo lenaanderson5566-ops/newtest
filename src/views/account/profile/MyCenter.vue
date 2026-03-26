@@ -14,12 +14,10 @@
       </div>
 
       <div v-show="activeSection === 'overview'" class="overview-panels">
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.summaryTitle') }}</h3>
+        <p class="section-subtitle">{{ $t('myCenter.summaryDesc') }}</p>
         <section class="summary-panel section-block dashboard-like-card">
           <div class="summary-top">
-            <div>
-              <h2>{{ $t('myCenter.summaryTitle') }}</h2>
-              <p class="summary-desc">{{ $t('myCenter.summaryDesc') }}</p>
-            </div>
             <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">{{ $t('myCenter.topUp') }}</button>
           </div>
 
@@ -53,17 +51,35 @@
           </div>
         </section>
 
+        <section class="section-block dashboard-like-card recent-login-panel">
+          <div class="recent-login-header">
+            <div class="row-title">{{ $t('myCenter.recentLoginTitle') }}</div>
+            <p>{{ $t('myCenter.recentLoginDesc') }}</p>
+          </div>
+          <div class="recent-login-list">
+            <div v-if="recentLoginLoading" class="recent-login-state">{{ $t('myCenter.loadingRecentLogin') }}</div>
+            <div v-else-if="!recentLoginRecords.length" class="recent-login-state">{{ $t('myCenter.recentLoginEmpty') }}</div>
+            <div v-else v-for="(record, index) in recentLoginRecords" :key="`${record.login_at || 'na'}-${record.ip || 'ip'}-${index}`" class="recent-login-item">
+              <div class="recent-login-main">
+                <strong>{{ formatLoginTime(record.login_at) }}</strong>
+                <span>{{ formatLoginLocation(record) }}</span>
+              </div>
+              <span class="recent-login-ip">{{ record.ip || '-' }}</span>
+            </div>
+          </div>
+        </section>
+
       </div>
 
       <div v-show="activeSection === 'subscription'" class="section-group">
         <h3 class="section-title section-title-outside">{{ $t('myCenter.subscriptionPlanTitle') }}</h3>
         <p class="section-subtitle">{{ $t('myCenter.planDetails') }}</p>
-        <section class="section-block dashboard-like-card">
+        <section class="section-block dashboard-like-card dashboard-like-card--accent">
           <div class="settings-list">
             <div class="settings-row plan-overview-row">
               <div class="row-main">
                 <div class="plan-name">{{ subscriptionText }}</div>
-                <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
+                <p class="plan-desc">{{ $t('myCenter.planExpireAtLabel', { date: subscriptionExpireText }) }}</p>
               </div>
             </div>
             <button class="nav-row" @click="go('/shop')">
@@ -230,20 +246,20 @@
         <section class="section-block dashboard-like-card">
           <div class="tier-intro-list">
             <div class="tier-intro-card">
-              <div class="tier-intro-title">积分规则介绍</div>
-              <p>每充值 1 美元可获得 100 积分，积分可用于提升会员等级并解锁对应权益。</p>
+              <div class="tier-intro-title">{{ $t('myCenter.tierRulesTitle') }}</div>
+              <p>{{ $t('myCenter.tierRulesDesc') }}</p>
             </div>
             <div class="tier-intro-card">
-              <div class="tier-intro-title">积分等级介绍</div>
-              <p>当前等级：{{ tierMemberDisplay }}（Lv.{{ userTier.level || 0 }}），当前积分：{{ formatTierNumber(userTier.points) }}。</p>
-              <p v-if="userTier.nextTierKey">距离 {{ nextTierNameDisplay }} 还需 {{ formatTierNumber(userTier.pointsToNextTier) }} 积分。</p>
-              <p v-else>您已达到最高等级，继续累计积分可保持高等级权益。</p>
-              <p class="tier-intro-note">建议持续订阅并保持活跃充值，积分将自动累计并用于等级成长。</p>
+              <div class="tier-intro-title">{{ $t('myCenter.tierLevelTitle') }}</div>
+              <p>{{ $t('myCenter.tierLevelCurrent', { tier: tierMemberDisplay, level: userTier.level || 0, points: formatTierNumber(userTier.points) }) }}</p>
+              <p v-if="userTier.nextTierKey">{{ $t('myCenter.tierLevelToNext', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}</p>
+              <p v-else>{{ $t('myCenter.tierLevelMax') }}</p>
+              <p class="tier-intro-note">{{ $t('myCenter.tierLevelHint') }}</p>
             </div>
             <div class="tier-intro-card tier-intro-card--muted">
-              <div class="tier-intro-title">权益说明</div>
-              <p>不同等级可获得差异化服务权益，等级越高可享受的资源与优先支持越丰富。</p>
-              <p>系统会根据最新积分自动刷新等级展示，无需手动操作。</p>
+              <div class="tier-intro-title">{{ $t('myCenter.tierBenefitsTitle') }}</div>
+              <p>{{ $t('myCenter.tierBenefitsDesc1') }}</p>
+              <p>{{ $t('myCenter.tierBenefitsDesc2') }}</p>
             </div>
           </div>
         </section>
@@ -312,7 +328,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { IconAlertCircle, IconBell, IconChevronRight, IconClock, IconDevices, IconGift, IconLock, IconReceipt, IconRefresh, IconX } from '@tabler/icons-vue';
 import { useI18n } from 'vue-i18n';
-import { changePassword as apiChangePassword, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
+import { changePassword as apiChangePassword, getRecentLoginRecords, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
 import { formatDate } from '@/utils/formatters';
 import { useToast } from '@/composables/useToast';
@@ -332,6 +348,8 @@ const showPasswordModal = ref(false);
 const showResetModal = ref(false);
 const updatingPassword = ref(false);
 const resettingSecurity = ref(false);
+const recentLoginLoading = ref(false);
+const recentLoginRecords = ref([]);
 const passwordForm = ref({
   oldPassword: '',
   newPassword: '',
@@ -399,6 +417,13 @@ const subscriptionExpireText = computed(() => {
 });
 
 const formatBalance = (balance) => ((Number(balance || 0) / 100).toFixed(2));
+const formatLoginTime = (timestamp) => (timestamp ? formatDate(Number(timestamp), true) : '-');
+const formatLoginLocation = (record = {}) => {
+  const city = `${record.city || ''}`.trim();
+  const country = `${record.country || ''}`.trim();
+  if (city && country) return `${city}, ${country}`;
+  return city || country || '-';
+};
 const go = (path) => router.push(path);
 const handleSectionClick = (sectionKey) => {
   if (sectionKey === 'invite') {
@@ -438,10 +463,10 @@ const submitPasswordChange = async () => {
       old_password: passwordForm.value.oldPassword,
       new_password: passwordForm.value.newPassword
     });
-    showToast('密码修改成功', 'success');
+    showToast(t('profile.passwordChanged'), 'success');
     closePasswordModal();
   } catch (error) {
-    showToast('密码修改失败，请稍后重试', 'error');
+    showToast(t('profile.passwordError'), 'error');
   } finally {
     updatingPassword.value = false;
   }
@@ -459,10 +484,10 @@ const submitSecurityReset = async () => {
   try {
     resettingSecurity.value = true;
     await apiResetSecurity();
-    showToast('重置成功，请重新导入订阅', 'success');
+    showToast(t('profile.resetSuccess'), 'success');
     closeResetModal();
   } catch (error) {
-    showToast('重置失败，请稍后重试', 'error');
+    showToast(t('profile.resetError'), 'error');
   } finally {
     resettingSecurity.value = false;
   }
@@ -511,10 +536,12 @@ const updateAutoRenewalSetting = async () => {
 };
 
 onMounted(async () => {
-  const [userResp, subscribeResp, configResp] = await Promise.allSettled([
+  recentLoginLoading.value = true;
+  const [userResp, subscribeResp, configResp, recentLoginResp] = await Promise.allSettled([
     getUserInfo(),
     getUserSubscribe(),
-    getUserConfig()
+    getUserConfig(),
+    getRecentLoginRecords()
   ]);
 
   if (userResp.status === 'fulfilled') {
@@ -525,6 +552,12 @@ onMounted(async () => {
   if (configResp.status === 'fulfilled' && configResp.value?.data?.currency_symbol) {
     currencySymbol.value = configResp.value.data.currency_symbol;
   }
+  if (recentLoginResp?.status === 'fulfilled') {
+    recentLoginRecords.value = Array.isArray(recentLoginResp.value?.data) ? recentLoginResp.value.data : [];
+  } else {
+    recentLoginRecords.value = [];
+  }
+  recentLoginLoading.value = false;
 });
 </script>
 
@@ -560,14 +593,14 @@ onMounted(async () => {
   border: none;
   background: transparent;
   color: var(--secondary-text-color);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
   cursor: pointer;
   white-space: nowrap;
 
   &.active {
-    color: var(--text-color);
-    font-weight: 700;
+    color: var(--text-primary);
+    font-weight: $font-weight-bold;
   }
 
   &.active::after {
@@ -583,7 +616,7 @@ onMounted(async () => {
 }
 
 .section-block {
-  border-radius: 16px;
+  border-radius: $border-radius-sm;
   background-color: #fff;
   border: 1px solid rgba(15, 23, 42, 0.15);
   box-shadow: none;
@@ -598,19 +631,69 @@ onMounted(async () => {
 .dashboard-like-card {
   position: relative;
   overflow: hidden;
+}
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.92), rgba(var(--theme-color-rgb), 0.35));
-    pointer-events: none;
-  }
+.dashboard-like-card--accent::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.92), rgba(var(--theme-color-rgb), 0.35));
+  pointer-events: none;
 }
 
 .summary-panel { padding: 1rem; }
+
+.recent-login-panel {
+  padding: 1rem;
+}
+
+.recent-login-header p {
+  margin: 4px 0 0;
+  font-size: $font-size-sm;
+  color: var(--secondary-text-color);
+}
+
+.recent-login-list {
+  margin-top: 12px;
+  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+}
+
+.recent-login-state {
+  padding: 14px 2px 4px;
+  color: var(--secondary-text-color);
+  font-size: $font-size-sm;
+}
+
+.recent-login-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.recent-login-item + .recent-login-item {
+  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+}
+
+.recent-login-main {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.recent-login-main strong {
+  font-size: $font-size-sm;
+  color: var(--text-primary);
+}
+
+.recent-login-main span,
+.recent-login-ip {
+  font-size: $font-size-sm;
+  color: var(--secondary-text-color);
+}
 
 
 .overview-panels {
@@ -641,14 +724,14 @@ onMounted(async () => {
 
     h3 {
       margin: 0;
-      font-size: 16px;
-      font-weight: 700;
+      font-size: $font-size-md;
+      font-weight: $font-weight-bold;
       color: #f8fbff;
     }
 
     p {
       margin: 0;
-      font-size: 14px;
+      font-size: $font-size-md;
       color: rgba(232, 237, 255, 0.9);
     }
   }
@@ -667,8 +750,8 @@ onMounted(async () => {
     width: 24px;
     height: 24px;
     border-radius: 999px;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
     box-shadow: none;
 
     &.is-bronze { background: linear-gradient(135deg, #b27241, #d39d63); }
@@ -680,8 +763,8 @@ onMounted(async () => {
   }
 
   .tier-level {
-    font-size: 13px;
-    font-weight: 700;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
     padding: 4px 10px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.18);
@@ -689,7 +772,7 @@ onMounted(async () => {
 
   .tier-progress-meta,
   .tier-next {
-    font-size: 13px;
+    font-size: $font-size-sm;
     color: rgba(239, 243, 255, 0.92);
   }
 
@@ -712,22 +795,9 @@ onMounted(async () => {
 .summary-top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 0.75rem;
   margin-bottom: 0.8rem;
-
-  h2 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-  }
-}
-
-.summary-desc {
-  margin: 3px 0 0;
-  font-size: 13px;
-  color: var(--secondary-text-color);
 }
 
 .summary-grid {
@@ -756,13 +826,13 @@ onMounted(async () => {
   .label {
     display: block;
     margin-bottom: 6px;
-    font-size: 12px;
+    font-size: $font-size-sm;
     color: var(--secondary-text-color);
   }
 
   strong {
-    font-size: 14px;
-    color: var(--text-color);
+    font-size: $font-size-md;
+    color: var(--text-primary);
     word-break: break-word;
   }
 
@@ -775,9 +845,9 @@ onMounted(async () => {
 
 .section-title {
   margin: 0;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-color);
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+  color: var(--text-primary);
 }
 
 .section-group {
@@ -792,12 +862,8 @@ onMounted(async () => {
 .section-subtitle {
   margin: 0;
   padding: 0 2px;
-  font-size: 13px;
+  font-size: $font-size-sm;
   color: var(--secondary-text-color);
-}
-
-.section-block > .section-title {
-  padding: 14px 16px 10px;
 }
 
 .plan-overview-row {
@@ -805,14 +871,14 @@ onMounted(async () => {
 }
 
 .plan-name {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--text-color);
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: var(--text-primary);
 }
 
 .plan-desc {
   margin: 8px 0 0;
-  font-size: 14px;
+  font-size: $font-size-md;
   color: var(--secondary-text-color);
 }
 
@@ -834,7 +900,7 @@ onMounted(async () => {
 }
 
 .balance-amount {
-  font-size: 18px !important;
+  font-size: $font-size-xl !important;
   line-height: 1.2;
 }
 
@@ -861,14 +927,14 @@ onMounted(async () => {
 .row-main { min-width: 0; }
 
 .row-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-color);
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: var(--text-primary);
 }
 
 .row-main p {
   margin: 3px 0 0;
-  font-size: 12px;
+  font-size: $font-size-sm;
   color: var(--secondary-text-color);
 }
 
@@ -886,7 +952,7 @@ onMounted(async () => {
 
   p {
     margin: 6px 0 0;
-    font-size: 13px;
+    font-size: $font-size-sm;
     line-height: 1.6;
     color: var(--secondary-text-color);
   }
@@ -897,14 +963,14 @@ onMounted(async () => {
 }
 
 .tier-intro-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-color);
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+  color: var(--text-primary);
 }
 
 .tier-intro-note {
-  color: var(--text-color) !important;
-  font-weight: 600;
+  color: var(--text-primary) !important;
+  font-weight: $font-weight-semibold;
 }
 
 .nav-row {
@@ -912,7 +978,7 @@ onMounted(async () => {
   border: none;
   background: transparent;
   text-align: left;
-  color: var(--text-color);
+  color: var(--text-primary);
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 
@@ -978,9 +1044,9 @@ input:checked + .slider:before { transform: translateX(18px); }
 
   h3 {
     margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text-color);
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
   }
 
   .modal-close,
@@ -1016,9 +1082,9 @@ input:checked + .slider:before { transform: translateX(18px); }
 
   label {
     display: block;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-color);
+    font-size: $font-size-md;
+    font-weight: $font-weight-medium;
+    color: var(--text-primary);
     margin-bottom: 8px;
   }
 
@@ -1028,8 +1094,8 @@ input:checked + .slider:before { transform: translateX(18px); }
     border: 1px solid var(--border-color);
     border-radius: 8px;
     background-color: var(--bg-secondary);
-    color: var(--text-color);
-    font-size: 15px;
+    color: var(--text-primary);
+    font-size: $font-size-md;
     transition: all 0.3s ease;
 
     &:focus {
@@ -1043,7 +1109,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .error-text {
   margin-top: 6px;
   color: #f44336;
-  font-size: 13px;
+  font-size: $font-size-sm;
 }
 
 .modal-footer {
@@ -1058,22 +1124,22 @@ input:checked + .slider:before { transform: translateX(18px); }
 .action-btn {
   padding: 8px 16px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: $font-size-md;
   cursor: pointer;
   border: 1px solid var(--border-color);
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .btn-submit,
 .action-btn.danger {
   padding: 8px 16px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: $font-size-md;
   cursor: pointer;
   border: none;
   background: rgba(var(--theme-color-rgb), 0.92);
-  color: #fff;
+  color: var(--text-on-dark-primary);
 }
 
 .modal-text {
@@ -1129,14 +1195,14 @@ input:checked + .slider:before { transform: translateX(18px); }
 
   .top-nav-item {
     padding: 14px 12px 12px;
-    font-size: 15px;
+    font-size: $font-size-md;
   }
 
   .overview-panels { gap: 0.75rem; }
   .summary-panel { padding: 14px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
-  .section-block > .section-title { padding: 14px 14px 8px; font-size: 18px; }
+  .section-block > .section-title { padding: 14px 14px 8px; font-size: $font-size-xl; }
   .settings-row,
   .nav-row { min-height: 62px; padding: 12px 14px; }
 }

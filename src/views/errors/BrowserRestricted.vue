@@ -443,7 +443,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .browser-restricted-container {
 
   display: flex;
@@ -506,9 +506,9 @@ export default {
 
     .title {
 
-      font-size: 24px;
+      font-size: $font-size-xl;
 
-      font-weight: 700;
+      font-weight: $font-weight-bold;
 
       color: var(--theme-color);
 
@@ -520,9 +520,9 @@ export default {
 
     .subtitle {
 
-      font-size: 16px;
+      font-size: $font-size-md;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       color: var(--secondary-text-color);
 
@@ -560,7 +560,7 @@ export default {
 
     .description {
 
-      font-size: 16px;
+      font-size: $font-size-md;
 
       line-height: 1.6;
 
@@ -568,7 +568,7 @@ export default {
 
       margin-bottom: 25px;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
     }
 
@@ -592,9 +592,9 @@ export default {
 
         margin: 0;
 
-        font-size: 15px;
+        font-size: $font-size-md;
 
-        color: var(--text-color);
+        color: var(--text-primary);
 
       }
 
@@ -620,11 +620,11 @@ export default {
 
         margin: 0 0 8px 0;
 
-        font-size: 15px;
+        font-size: $font-size-md;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
-        color: var(--text-color);
+        color: var(--text-primary);
 
       }
 
@@ -650,7 +650,7 @@ export default {
 
           flex: 1;
 
-          font-size: 14px;
+          font-size: $font-size-md;
 
           overflow: hidden;
 
@@ -718,7 +718,7 @@ export default {
 
         margin: 8px 0 0 0;
 
-        font-size: 14px;
+        font-size: $font-size-md;
 
         color: var(--theme-color);
 
@@ -748,15 +748,15 @@ export default {
 
       .recommend-title {
 
-        font-size: 18px;
+        font-size: $font-size-xl;
 
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
 
         margin-bottom: 15px;
 
         text-align: center;
 
-        color: var(--text-color);
+        color: var(--text-primary);
 
       }
 
@@ -794,9 +794,9 @@ export default {
 
         border-radius: 10px;
 
-        font-size: 15px;
+        font-size: $font-size-md;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         text-decoration: none;
 
@@ -816,7 +816,7 @@ export default {
 
           background-color: var(--theme-color);
 
-          color: white;
+          color: var(--text-on-dark-primary);
 
           
 
@@ -864,15 +864,15 @@ export default {
 
         .supported-title {
 
-          font-size: 18px;
+          font-size: $font-size-xl;
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
 
           margin-bottom: 15px;
 
           text-align: center;
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
         }
 
@@ -904,9 +904,9 @@ export default {
 
             background-color: rgba(var(--theme-color-rgb), 0.05);
 
-            color: var(--text-color);
+            color: var(--text-primary);
 
-            font-size: 14px;
+            font-size: $font-size-md;
 
             
 
@@ -950,7 +950,7 @@ export default {
 
         summary {
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
 
           cursor: pointer;
 
@@ -968,11 +968,11 @@ export default {
 
           margin-top: 10px;
 
-          font-size: 14px;
+          font-size: $font-size-md;
 
           line-height: 1.6;
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
         }
 
@@ -1018,7 +1018,7 @@ export default {
 
       .title {
 
-        font-size: 20px;
+        font-size: $font-size-xl;
 
       }
 
@@ -1026,7 +1026,7 @@ export default {
 
       .subtitle {
 
-        font-size: 14px;
+        font-size: $font-size-md;
 
       }
 
@@ -1042,7 +1042,7 @@ export default {
 
       .description {
 
-        font-size: 14px;
+        font-size: $font-size-md;
 
       }
 
@@ -1056,7 +1056,7 @@ export default {
 
         .url-title {
 
-          font-size: 14px;
+          font-size: $font-size-md;
 
         }
 
@@ -1070,7 +1070,7 @@ export default {
 
           .current-url {
 
-            font-size: 12px;
+            font-size: $font-size-sm;
 
           }
 
@@ -1090,7 +1090,7 @@ export default {
 
         .copy-status {
 
-          font-size: 12px;
+          font-size: $font-size-sm;
 
         }
 
@@ -1102,7 +1102,7 @@ export default {
 
         .recommend-title {
 
-          font-size: 16px;
+          font-size: $font-size-md;
 
         }
 
@@ -1140,7 +1140,7 @@ export default {
 
               padding: 6px 12px;
 
-              font-size: 13px;
+              font-size: $font-size-sm;
 
             }
 

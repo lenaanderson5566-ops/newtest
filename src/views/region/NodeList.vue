@@ -390,9 +390,9 @@ onMounted(() => {
 
     .card-title {
 
-      font-size: 18px;
+      font-size: $font-size-xl;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0;
 
@@ -434,14 +434,14 @@ onMounted(() => {
   .quick-btn {
     border: 1px solid var(--border-color);
     background: #fff;
-    color: var(--text-color);
+    color: var(--text-primary);
     border-radius: $border-radius-sm;
     padding: 10px 18px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
+    font-size: $font-size-md;
 
     &.active {
       border-color: rgba(var(--theme-color-rgb), 0.65);
@@ -468,7 +468,7 @@ onMounted(() => {
       align-items: center;
       margin-bottom: 12px;
 
-      h3 { margin: 0; font-size: 20px; }
+      h3 { margin: 0; font-size: $font-size-xl; }
     }
 
     .import-action {
@@ -493,8 +493,8 @@ onMounted(() => {
       background: rgba(var(--theme-color-rgb), 0.12);
     }
 
-    .import-title { font-size: 18px; font-weight: 600; }
-    .import-desc { color: var(--secondary-text-color); font-size: 14px; }
+    .import-title { font-size: $font-size-xl; font-weight: $font-weight-semibold; }
+    .import-desc { color: var(--secondary-text-color); font-size: $font-size-md; }
 
     .platform-selector {
       display: flex;
@@ -521,9 +521,9 @@ onMounted(() => {
     }
 
     .platform-title {
-      font-size: 16px;
+      font-size: $font-size-md;
       margin: 8px 0 12px;
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
 
     .platform-options {
@@ -537,8 +537,8 @@ onMounted(() => {
       border-radius: $border-radius-sm;
       padding: 22px 14px;
       background: #f5f7fb;
-      font-size: 14px;
-      font-weight: 500;
+      font-size: $font-size-md;
+      font-weight: $font-weight-medium;
       text-align: left;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -601,8 +601,8 @@ onMounted(() => {
     }
 
     .reset-modal-text {
-      color: var(--text-color);
-      font-size: 14px;
+      color: var(--text-primary);
+      font-size: $font-size-md;
       margin: 0 0 12px;
       line-height: 1.6;
     }
@@ -635,15 +635,15 @@ onMounted(() => {
 
     h2 {
       margin: 0;
-      font-size: 30px;
-      font-weight: 700;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
       letter-spacing: 0.2px;
     }
 
     p {
       margin: 8px 0 0;
       color: var(--text-color-light, var(--secondary-text-color));
-      font-size: 15px;
+      font-size: $font-size-md;
     }
   }
 
@@ -699,9 +699,9 @@ onMounted(() => {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      color: #fff;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-bold;
+      color: var(--text-on-dark-primary);
       background: radial-gradient(circle at center, rgba(var(--theme-color-rgb), 0.95), rgba(var(--theme-color-rgb), 0.35));
       box-shadow: none;
       animation: regionPulse 2.8s ease-in-out infinite;
@@ -736,13 +736,13 @@ onMounted(() => {
 
       h3 {
         margin: 0 0 6px;
-        font-size: 17px;
+        font-size: $font-size-md;
       }
 
       p {
         margin: 0;
         color: var(--text-color-light, var(--secondary-text-color));
-        font-size: 13px;
+        font-size: $font-size-sm;
       }
 
       .unlock-tip-btn {
@@ -752,8 +752,8 @@ onMounted(() => {
         color: rgba(var(--theme-color-rgb), 0.95);
         border-radius: 999px;
         padding: 6px 12px;
-        font-size: 12px;
-        font-weight: 600;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
         float: right;
       }
     }
@@ -769,14 +769,14 @@ onMounted(() => {
       min-width: 168px;
       padding: 10px 18px;
       border-radius: $border-radius-sm;
-      font-size: 14px;
-      font-weight: 700;
+      font-size: $font-size-md;
+      font-weight: $font-weight-bold;
       cursor: pointer;
       border: 1px solid transparent;
     }
 
     .primary {
-      color: #fff;
+      color: var(--text-on-dark-primary);
       background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
       box-shadow: none;
     }
@@ -847,8 +847,8 @@ onMounted(() => {
     margin-right: 14px;
     padding: 0 10px;
     font-size: 0.88rem;
-    font-weight: 800;
-    color: #fff;
+    font-weight: $font-weight-bold;
+    color: var(--text-on-dark-primary);
     letter-spacing: 0.5px;
     background: linear-gradient(135deg, #d90429, #9d174d);
     box-shadow: none;
@@ -872,11 +872,11 @@ onMounted(() => {
 
       font-size: 1rem;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0 0 0.35rem;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       line-height: 1.4;
 
@@ -932,12 +932,12 @@ onMounted(() => {
       .node-tag.feature-tag {
         height: 24px;
         line-height: 24px;
-        font-size: 12px;
+        font-size: $font-size-sm;
         padding: 0 10px;
         border-radius: 999px;
         background-color: rgba(190, 24, 93, 0.12);
         color: #be185d;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         display: inline-flex;
         align-items: center;
       }
@@ -1033,11 +1033,11 @@ onMounted(() => {
 
   background-color: rgba(var(--theme-color-rgb), 0.85);
 
-  color: white;
+  color: var(--text-on-dark-primary);
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
-  font-size: 14px;
+  font-size: $font-size-md;
 
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 

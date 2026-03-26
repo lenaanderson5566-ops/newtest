@@ -322,8 +322,8 @@ export default {
 
 
 .site-logo {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
   color: var(--theme-color);
   letter-spacing: -0.5px;
   display: flex;
@@ -367,7 +367,7 @@ export default {
     background: var(--toolbar-control-bg);
     border: 1px solid var(--toolbar-control-border);
     box-shadow: var(--toolbar-control-shadow);
-    color: var(--text-color);
+    color: var(--text-primary);
     cursor: pointer;
     transition: all 0.3s ease;
 
@@ -402,12 +402,12 @@ export default {
   :deep(.avatar-wrapper) {
     width: auto;
     min-width: var(--toolbar-control-height);
-    font-size: 14px;
+    font-size: $font-size-md;
   }
 
   :deep(.language-btn) {
     min-width: 88px;
-    font-size: 14px;
+    font-size: $font-size-md;
   }
 }
 
@@ -473,7 +473,7 @@ export default {
   }
 
   .site-logo {
-    font-size: 14px;
+    font-size: $font-size-md;
     gap: 8px;
 
     .site-logo-img {
@@ -508,14 +508,14 @@ export default {
       .card-title,
       h2,
       h3 {
-        font-size: 16px !important;
+        font-size: $font-size-md !important;
         line-height: 1.3 !important;
       }
     }
 
     .card-body {
       padding: 10px 12px !important;
-      font-size: 14px !important;
+      font-size: $font-size-md !important;
       line-height: 1.45 !important;
     }
 

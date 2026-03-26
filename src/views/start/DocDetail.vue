@@ -1222,7 +1222,7 @@ onUnmounted(() => {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .doc-detail-container {
 
   padding: 0;
@@ -1266,7 +1266,7 @@ onUnmounted(() => {
 
   color: var(--theme-color);
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   cursor: pointer;
 
@@ -1438,11 +1438,11 @@ onUnmounted(() => {
 
     font-size: 1.4rem;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     margin-bottom: 0.75rem;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
   }
 
@@ -1480,9 +1480,9 @@ onUnmounted(() => {
 
   background: linear-gradient(135deg, var(--theme-color), var(--theme-color-dark));
 
-  color: white;
+  color: var(--text-on-dark-primary);
 
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
 
   font-size: 1rem;
 
@@ -1594,11 +1594,11 @@ onUnmounted(() => {
 
     font-size: 1.6rem;
 
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 
     margin-bottom: 1rem;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     line-height: 1.3;
 
@@ -1638,7 +1638,7 @@ onUnmounted(() => {
 
       border-radius: 4px;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       transition: all 0.3s ease;
 
@@ -1670,7 +1670,7 @@ onUnmounted(() => {
 
 .doc-body {
 
-  color: var(--text-color);
+  color: var(--text-primary);
 
   font-size: 1rem;
 
@@ -1684,7 +1684,7 @@ onUnmounted(() => {
 
     margin-bottom: 1.2rem;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     line-height: 1.4;
 
@@ -1762,7 +1762,7 @@ onUnmounted(() => {
 
     color: var(--text-muted);
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
   }
 
@@ -1950,7 +1950,7 @@ onUnmounted(() => {
 
       padding: 0;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       border: none;
 
@@ -1976,7 +1976,7 @@ onUnmounted(() => {
 
     transition: color 0.2s ease;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     
 
@@ -2118,7 +2118,7 @@ onUnmounted(() => {
 
     th {
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       color: var(--primary-text-color);
 
@@ -2172,7 +2172,7 @@ onUnmounted(() => {
 
   :deep(strong) {
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
     color: var(--primary-text-color);
 
@@ -2270,7 +2270,7 @@ onUnmounted(() => {
 
       border-radius: 20px;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
     }
 
@@ -2285,6 +2285,7 @@ onUnmounted(() => {
 <!-- 全局样式，不受scoped限制 -->
 
 <style lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
 @use '@/assets/styles/no-plan-card' as *;
 
 
@@ -2301,7 +2302,7 @@ onUnmounted(() => {
 
   border-radius: 6px !important;
 
-  font-size: 14px !important;
+  font-size: $font-size-md !important;
 
   background-color: rgba(var(--theme-color-rgb), 0.1) !important;
 
@@ -2313,7 +2314,7 @@ onUnmounted(() => {
 
   transition: all 0.2s ease !important;
 
-  font-weight: 500 !important;
+  font-weight: $font-weight-medium;
 
   margin: 8px 4px !important;
 

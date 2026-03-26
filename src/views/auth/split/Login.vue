@@ -401,6 +401,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .login-view-container {
   width: 100%;
   height: 100%;
@@ -458,13 +459,13 @@ export default {
     top: 30px;
     left: 30px;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     z-index: 2;
     cursor: pointer;
     user-select: none;
 
     &.white {
-      color: #ffffff;
+      color: var(--text-on-dark-primary);
       text-shadow: none;
     }
 
@@ -479,11 +480,11 @@ export default {
     bottom: 30px;
     left: 30px;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     z-index: 2;
 
     &.white {
-      color: #ffffff;
+      color: var(--text-on-dark-primary);
       text-shadow: none;
     }
 
@@ -558,7 +559,7 @@ export default {
 
   .auth-title {
     font-size: 1.75rem;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin-bottom: 0.5rem;
     color: var(--primary-text-color);
 
@@ -581,7 +582,7 @@ export default {
 .required {
   color: #ff4d4f;
   margin-left: 4px;
-  font-size: 16px;
+  font-size: $font-size-md;
   vertical-align: middle;
 }
 
@@ -729,8 +730,8 @@ export default {
   &.btn-primary {
     background-color: var(--theme-color);
     border: none;
-    color: white;
-    font-weight: 600;
+    color: var(--text-on-dark-primary);
+    font-weight: $font-weight-semibold;
 
     &:hover:not(:disabled) {
       background-color: var(--primary-color-hover);
@@ -811,7 +812,7 @@ export default {
   align-items: center !important;
   justify-content: center !important;
   line-height: normal !important;
-  color: var(--text-color);
+  color: var(--text-primary);
   border: 1px solid var(--border-color);
   background-color: transparent;
   transition: all 0.3s ease;

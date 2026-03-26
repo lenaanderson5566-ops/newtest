@@ -383,6 +383,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .security-container {
   padding: 0;
 }
@@ -394,9 +395,9 @@ onMounted(() => {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
-  font-size: 16px;
-  font-weight: 600;
+  color: var(--text-primary);
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -406,7 +407,7 @@ onMounted(() => {
 }
 
 .back-label {
-  font-size: 14px;
+  font-size: $font-size-md;
   color: var(--secondary-text-color);
 }
 
@@ -490,7 +491,7 @@ onMounted(() => {
   align-items: center;
   padding: 2px 8px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: $font-size-sm;
   color: var(--theme-color);
   background: rgba(var(--theme-color-rgb), 0.12);
   border: 1px solid rgba(var(--theme-color-rgb), 0.28);
@@ -510,7 +511,7 @@ onMounted(() => {
 .device-meta {
   display: flex;
   gap: 12px;
-  font-size: 12px;
+  font-size: $font-size-sm;
   color: var(--text-secondary);
 }
 
@@ -592,9 +593,9 @@ onMounted(() => {
 
   h3 {
     margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text-color);
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
   }
 
   .modal-close {
@@ -628,9 +629,9 @@ onMounted(() => {
 
     label {
       display: block;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-color);
+      font-size: $font-size-md;
+      font-weight: $font-weight-medium;
+      color: var(--text-primary);
       margin-bottom: 8px;
     }
 
@@ -640,8 +641,8 @@ onMounted(() => {
       border: 1px solid var(--border-color);
       border-radius: 8px;
       background-color: var(--bg-secondary);
-      color: var(--text-color);
-      font-size: 15px;
+      color: var(--text-primary);
+      font-size: $font-size-md;
       transition: all 0.3s ease;
 
       &:focus {
@@ -654,7 +655,7 @@ onMounted(() => {
     .error-text {
       margin-top: 6px;
       color: #f44336;
-      font-size: 13px;
+      font-size: $font-size-sm;
     }
   }
 }
@@ -669,15 +670,15 @@ onMounted(() => {
   button {
     padding: 8px 16px;
     border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: $font-size-md;
+    font-weight: $font-weight-medium;
     cursor: pointer;
     transition: all 0.3s ease;
 
     &.btn-cancel {
       background-color: transparent;
       border: 1px solid var(--border-color);
-      color: var(--text-color);
+      color: var(--text-primary);
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);
@@ -687,7 +688,7 @@ onMounted(() => {
     &.btn-submit {
       background-color: var(--theme-color);
       border: none;
-      color: white;
+      color: var(--text-on-dark-primary);
       display: flex;
       align-items: center;
       gap: 8px;

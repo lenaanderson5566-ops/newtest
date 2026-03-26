@@ -911,6 +911,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .ticket-container {
   padding: 0;
 
@@ -950,9 +951,9 @@ onUnmounted(() => {
     margin-bottom: 15px;
 
     .card-title {
-      font-size: 18px;
+      font-size: $font-size-xl;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0;
     }
@@ -1024,9 +1025,9 @@ onUnmounted(() => {
 
       background-color: var(--bg-secondary);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
-      font-size: 14px;
+      font-size: $font-size-md;
 
       transition: all 0.3s ease;
 
@@ -1083,15 +1084,15 @@ onUnmounted(() => {
 
     border-radius: 8px;
 
-    font-size: 14px;
+    font-size: $font-size-md;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
     transition: all 0.3s ease;
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     background-color: rgba(var(--theme-color-rgb), 0.85);
 
@@ -1157,7 +1158,7 @@ onUnmounted(() => {
 
     margin-bottom: 0.5rem;
 
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .ticket-meta {
@@ -1195,7 +1196,7 @@ onUnmounted(() => {
 
   font-size: 0.75rem;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 }
 
 .status-open {
@@ -1447,7 +1448,7 @@ onUnmounted(() => {
 
     justify-content: center;
 
-    color: #fff;
+    color: var(--text-on-dark-primary);
 
     flex-shrink: 0;
 
@@ -1514,7 +1515,7 @@ onUnmounted(() => {
       .message-sender {
         font-size: 0.85rem;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         margin-bottom: 3px;
       }
@@ -1537,7 +1538,7 @@ onUnmounted(() => {
 
       word-break: break-word;
 
-      color: var(--text-color);
+      color: var(--text-primary);
     }
   }
 
@@ -1581,7 +1582,7 @@ onUnmounted(() => {
 
     background-color: var(--bg-secondary);
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     font-size: 1rem;
 
@@ -1628,7 +1629,7 @@ onUnmounted(() => {
 
     background-color: rgba(var(--theme-color-rgb), 0.85);
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     border: none;
 
@@ -1638,7 +1639,7 @@ onUnmounted(() => {
 
     white-space: nowrap;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     box-shadow: none;
 
@@ -1876,9 +1877,9 @@ onUnmounted(() => {
 
     font-size: 1.25rem;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .modal-close {
@@ -1905,7 +1906,7 @@ onUnmounted(() => {
     transition: all 0.2s ease;
 
     &:hover {
-      color: var(--text-color);
+      color: var(--text-primary);
 
       background-color: rgba(0, 0, 0, 0.05);
     }
@@ -1923,9 +1924,9 @@ onUnmounted(() => {
 
       margin-bottom: 0.75rem;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       font-size: 0.95rem;
     }
@@ -1942,7 +1943,7 @@ onUnmounted(() => {
 
       background-color: var(--bg-secondary);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-size: 0.95rem;
 
@@ -2067,9 +2068,9 @@ onUnmounted(() => {
 
     border-radius: 8px;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
-    font-size: 14px;
+    font-size: $font-size-md;
 
     cursor: pointer;
 
@@ -2088,7 +2089,7 @@ onUnmounted(() => {
 
       border: 1px solid var(--border-color);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);
@@ -2106,7 +2107,7 @@ onUnmounted(() => {
 
       border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       box-shadow: none;
 
@@ -2264,9 +2265,9 @@ onUnmounted(() => {
 
       font-size: 1.5rem;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
 
     p {
@@ -2286,13 +2287,13 @@ onUnmounted(() => {
 
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       border: none;
 
       font-size: 1.05rem;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       cursor: pointer;
 
@@ -2365,7 +2366,7 @@ onUnmounted(() => {
     margin-bottom: 4px;
     .upload-tip-text {
       color: var(--secondary-text-color);
-      font-weight: 500;
+      font-weight: $font-weight-medium;
       font-size: 1.08rem;
       transition: color 0.2s;
     }
@@ -2502,7 +2503,7 @@ onUnmounted(() => {
 }
 
 .message-item .message-content .message-text strong {
-  font-weight: 550;
+  font-weight: $font-weight-medium;
 }
 
 @media (max-width: 1320px) {

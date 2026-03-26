@@ -767,6 +767,7 @@ fetchTickets();
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .mobile-ticket-container {
   height: 100%;
 
@@ -812,9 +813,9 @@ fetchTickets();
     margin-bottom: 15px;
 
     .card-title {
-      font-size: 18px;
+      font-size: $font-size-xl;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
       margin: 0;
     }
@@ -873,13 +874,13 @@ fetchTickets();
 
     background-color: transparent;
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     border: none;
 
     font-size: 1rem;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
@@ -940,13 +941,13 @@ fetchTickets();
 
     background-color: var(--theme-color);
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     border: none;
 
     font-size: 0.95rem;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
@@ -1021,9 +1022,9 @@ fetchTickets();
     margin-bottom: 0.75rem;
 
     .ticket-subject {
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       flex: 1;
 
@@ -1041,7 +1042,7 @@ fetchTickets();
 
       border-radius: 6px;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       white-space: nowrap;
 
@@ -1138,7 +1139,7 @@ fetchTickets();
 
     border: none;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     padding: 0.5rem;
 
@@ -1181,9 +1182,9 @@ fetchTickets();
 
       text-overflow: ellipsis;
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
 
-      color: var(--text-color);
+      color: var(--text-primary);
     }
 
     .meta-info {
@@ -1232,7 +1233,7 @@ fetchTickets();
 
   font-size: 0.85rem;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 }
 
 .status-badge {
@@ -1297,7 +1298,7 @@ fetchTickets();
 
     text-align: center;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     margin: 1rem 0;
 
@@ -1406,7 +1407,7 @@ fetchTickets();
     .message-content {
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       border-radius: 12px 0 12px 12px;
 
@@ -1415,7 +1416,7 @@ fetchTickets();
       .message-header {
         .sender-name,
         .message-time {
-          color: rgba(255, 255, 255, 0.9);
+          color: var(--text-on-dark-primary);
         }
       }
     }
@@ -1439,7 +1440,7 @@ fetchTickets();
 
   justify-content: center;
 
-  color: white;
+  color: var(--text-on-dark-primary);
 
   flex-shrink: 0;
 
@@ -1465,7 +1466,7 @@ fetchTickets();
     font-size: 0.85rem;
 
     .sender-name {
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
 
     .message-time {
@@ -1518,7 +1519,7 @@ fetchTickets();
 
     background-color: var(--bg-secondary);
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     font-size: 0.95rem;
 
@@ -1552,13 +1553,13 @@ fetchTickets();
 
     background-color: var(--theme-color);
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
     border: none;
 
     font-size: 0.95rem;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
@@ -1698,9 +1699,9 @@ fetchTickets();
 
     font-size: 1.25rem;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .close-btn {
@@ -1738,7 +1739,7 @@ fetchTickets();
   background-color: var(--bg-color);
 
   p {
-    color: var(--text-color);
+    color: var(--text-primary);
 
     font-size: 1rem;
 
@@ -1755,9 +1756,9 @@ fetchTickets();
 
       margin-bottom: 0.75rem;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-size: 1rem;
     }
@@ -1774,7 +1775,7 @@ fetchTickets();
 
       background-color: var(--card-bg);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-size: 1rem;
 
@@ -1816,20 +1817,20 @@ fetchTickets();
 
       background-color: var(--card-bg);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       cursor: pointer;
 
       transition: all 0.3s ease;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       font-size: 0.95rem;
 
       &.active {
         background-color: var(--theme-color);
 
-        color: white;
+        color: var(--text-on-dark-primary);
 
         border-color: var(--theme-color);
 
@@ -1867,7 +1868,7 @@ fetchTickets();
 
     font-size: 1rem;
 
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 
     cursor: pointer;
 
@@ -1878,7 +1879,7 @@ fetchTickets();
 
       border: 1px solid var(--border-color);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       &:hover {
         background-color: var(--bg-secondary);
@@ -1890,7 +1891,7 @@ fetchTickets();
     &.submit-btn {
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       border: none;
 
@@ -2106,9 +2107,9 @@ fetchTickets();
 
       font-size: 1.5rem;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
     }
 
     p {
@@ -2128,13 +2129,13 @@ fetchTickets();
 
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       border: none;
 
       font-size: 1.05rem;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       cursor: pointer;
 
@@ -2168,7 +2169,7 @@ fetchTickets();
 .confirm-close-btn.danger {
   background-color: #f44336;
 
-  color: white;
+  color: var(--text-on-dark-primary);
 
   border: none;
 
@@ -2244,7 +2245,7 @@ fetchTickets();
 .upload-tip-text {
   color: var(--secondary-text-color);
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   font-size: 1rem;
 

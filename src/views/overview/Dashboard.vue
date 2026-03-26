@@ -170,14 +170,14 @@
             :class="{ 'card-animate': !loading.userStats }"
             :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
-            <div class="usage-card-title today-card-title">今日流量</div>
+            <div class="usage-card-title today-card-title">{{ $t('dashboard.todayTrafficTitle') }}</div>
             <div class="today-traffic-total-main">
               <span class="usage-percent compact">{{ todayTrafficStats.totalGb }} GB</span>
-              <span class="usage-percent-label">已使用</span>
+              <span class="usage-percent-label">{{ $t('dashboard.todayTrafficUsed') }}</span>
             </div>
             <div class="today-traffic-breakdown">
-              <span class="traffic-up">上行 {{ todayTrafficStats.uploadGb }} GB</span>
-              <span class="traffic-down">下行 {{ todayTrafficStats.downloadGb }} GB</span>
+              <span class="traffic-up">{{ $t('dashboard.todayTrafficUpload') }} {{ todayTrafficStats.uploadGb }} GB</span>
+              <span class="traffic-down">{{ $t('dashboard.todayTrafficDownload') }} {{ todayTrafficStats.downloadGb }} GB</span>
             </div>
           </div>
 
@@ -1042,7 +1042,7 @@ export default {
       }
       const rootStyles = getComputedStyle(document.documentElement);
       const textColor =
-        rootStyles.getPropertyValue('--text-color').trim() ||
+        rootStyles.getPropertyValue('--text-primary').trim() ||
         `rgb(${rootStyles.getPropertyValue('--text-color-rgb').trim() || '51, 51, 51'})`;
       const borderColor = rootStyles.getPropertyValue('--border-color').trim() || '#e8e8e8';
       const themeColor = rootStyles.getPropertyValue('--theme-color').trim() || '#6753f6';
@@ -1061,10 +1061,11 @@ export default {
         },
         legend: {
           data: [t('trafficLog.uploadTraffic'), t('trafficLog.downloadTraffic'), t('trafficLog.totalTraffic')],
-          bottom: 8,
+          top: 8,
+          right: 8,
           textStyle: { color: textColor }
         },
-        grid: { left: '5%', right: '3%', bottom: '34px', top: '34px', containLabel: true },
+        grid: { left: '5%', right: '3%', bottom: '16px', top: '46px', containLabel: true },
         xAxis: {
           type: 'category',
           boundaryGap: false,
@@ -1340,13 +1341,13 @@ export default {
   --theme-text-primary: #111827;
   --theme-text-secondary: var(--secondary-text-color);
   --theme-text-subtle: #9ca3af;
-  --theme-text-emphasis: var(--text-color);
+  --theme-text-emphasis: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
   --theme-border-soft: #e5e7eb;
   --theme-white: #ffffff;
   --quota-label-color: var(--secondary-text-color);
-  --quota-value-color: var(--text-color);
+  --quota-value-color: var(--text-primary);
   --quota-progress-start: #60a5fa;
   --quota-progress-end: #3b82f6;
   --quota-muted-fill: #cbd5e1;
@@ -1409,7 +1410,7 @@ export default {
 
       .card-title {
         font-size: var(--dashboard-title-size);
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         margin: 0;
         color: var(--theme-text-primary);
       }
@@ -1474,12 +1475,12 @@ export default {
         }
 
         .stats-value {
-          font-size: 16px;
+          font-size: $font-size-md;
           margin-bottom: 2px;
         }
 
         .stats-label {
-          font-size: 12px;
+          font-size: $font-size-sm;
         }
 
         .usage-card-title {
@@ -1540,7 +1541,7 @@ export default {
         &.total-main-card {
           .usage-card-title {
             color: var(--quota-label-color);
-            font-weight: 650;
+            font-weight: $font-weight-semibold;
           }
         }
 
@@ -1565,8 +1566,8 @@ export default {
           .expired-status-strip {
             border-radius: var(--dashboard-radius);
             padding: 9px 12px;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: $font-size-sm;
+            font-weight: $font-weight-semibold;
             color: var(--plan-expired-strip-text);
             background: var(--plan-expired-strip-bg);
             border: 1px solid var(--plan-expired-strip-border);
@@ -1610,9 +1611,9 @@ export default {
           }
 
           .plan-name-main {
-            font-size: 24px;
+            font-size: $font-size-xl;
             line-height: 1.2;
-            font-weight: 700;
+            font-weight: $font-weight-bold;
             color: var(--heading-color);
           }
 
@@ -1622,7 +1623,7 @@ export default {
             justify-content: space-between;
             gap: 8px;
             flex-wrap: wrap;
-            font-size: 13px;
+            font-size: $font-size-sm;
             color: var(--plan-meta-text);
           }
 
@@ -1641,7 +1642,7 @@ export default {
           }
 
           .plan-summary-label {
-            font-size: 12px;
+            font-size: $font-size-sm;
             color: var(--theme-text-secondary);
 
             &.with-tooltip {
@@ -1660,9 +1661,9 @@ export default {
           }
 
           .plan-summary-value {
-            font-size: 14px;
+            font-size: $font-size-md;
             color: var(--theme-text-primary);
-            font-weight: 600;
+            font-weight: $font-weight-semibold;
             text-align: right;
             word-break: break-word;
           }
@@ -1672,8 +1673,8 @@ export default {
             align-items: center;
             border-radius: 999px;
             padding: 2px 8px;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: $font-size-sm;
+            font-weight: $font-weight-semibold;
 
             &.is-active {
               color: var(--status-active-text);
@@ -1693,7 +1694,7 @@ export default {
 
           .plan-summary-desc {
             margin: 4px 0 0;
-            font-size: 12px;
+            font-size: $font-size-sm;
             color: rgba(248, 250, 252, 0.72);
           }
 
@@ -1708,20 +1709,20 @@ export default {
               flex: 1;
               border-radius: var(--dashboard-button-radius);
               padding: 10px 14px;
-              font-size: 14px;
-              font-weight: 600;
+              font-size: $font-size-md;
+              font-weight: $font-weight-semibold;
               letter-spacing: 0.2px;
 
               @media (max-width: 576px) {
                 padding: 9px 10px;
-                font-size: 13px;
+                font-size: $font-size-sm;
               }
             }
           }
 
           .plan-action-helper-text {
             margin-top: 10px;
-            font-size: 12px;
+            font-size: $font-size-sm;
             color: var(--secondary-text-color);
             text-align: center;
           }
@@ -1810,18 +1811,18 @@ export default {
           text-orientation: mixed;
           font-size: var(--dashboard-value-size);
           line-height: 1;
-          font-weight: 700;
+          font-weight: $font-weight-bold;
           color: var(--theme-text-primary);
 
           &.compact {
-            font-size: 32px;
+            font-size: $font-size-xl;
           }
         }
 
         .usage-percent-label {
           font-size: var(--dashboard-kpi-size);
           color: var(--dashboard-subtitle-color);
-          font-weight: 500;
+          font-weight: $font-weight-medium;
         }
 
         .section-progress-track {
@@ -1841,10 +1842,10 @@ export default {
 
       &.quota-traffic-card {
         .usage-percent {
-          font-size: 30px;
+          font-size: $font-size-xl;
 
           &.compact {
-            font-size: 26px;
+            font-size: $font-size-xl;
           }
         }
       }
@@ -1904,8 +1905,8 @@ export default {
 
           .usage-summary-line {
             grid-column: 1 / -1;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: $font-size-sm;
+            font-weight: $font-weight-semibold;
             color: var(--neutral-strong);
           }
 
@@ -1921,7 +1922,7 @@ export default {
           .usage-kpi-label {
             writing-mode: horizontal-tb;
             text-orientation: mixed;
-            font-size: 12px;
+            font-size: $font-size-sm;
             color: var(--dashboard-subtitle-color);
             line-height: 1;
           }
@@ -1929,15 +1930,15 @@ export default {
           .usage-kpi-value {
             writing-mode: horizontal-tb;
             text-orientation: mixed;
-            font-size: 15px;
+            font-size: $font-size-md;
             color: var(--quota-value-color);
-            font-weight: 600;
+            font-weight: $font-weight-semibold;
             line-height: 1.2;
           }
 
           .usage-reset-hint {
             width: 100%;
-            font-size: 12px;
+            font-size: $font-size-sm;
             color: var(--theme-text-secondary);
           }
 
@@ -1957,12 +1958,12 @@ export default {
           .today-traffic-total-main {
             .usage-percent {
               &.compact {
-                font-size: 30px;
+                font-size: $font-size-xl;
               }
             }
 
             .usage-percent-label {
-              font-size: 12px;
+              font-size: $font-size-sm;
             }
           }
         }
@@ -1991,15 +1992,15 @@ export default {
           }
 
           .usage-percent {
-            font-size: 36px;
+            font-size: $font-size-xl;
 
             &.compact {
-              font-size: 30px;
+              font-size: $font-size-xl;
             }
           }
 
           .usage-percent-label {
-            font-size: 12px;
+            font-size: $font-size-sm;
           }
 
           &.traffic-board-subscription {
@@ -2018,11 +2019,11 @@ export default {
             }
 
             .usage-kpi-label {
-              font-size: 12px;
+              font-size: $font-size-sm;
             }
 
             .usage-kpi-value {
-              font-size: 14px;
+              font-size: $font-size-md;
             }
 
             .usage-reset-hint {
@@ -2078,7 +2079,7 @@ export default {
     margin: 0;
     font-size: var(--dashboard-title-size);
     line-height: 1.3;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     letter-spacing: 0.02em;
     color: var(--theme-text-primary);
   }
@@ -2105,19 +2106,19 @@ export default {
 
       .usage-percent {
         line-height: 1;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         color: var(--theme-text-primary);
-        font-size: 30px;
+        font-size: $font-size-xl;
 
         &.compact {
-          font-size: 26px;
+          font-size: $font-size-xl;
         }
       }
 
       .usage-percent-label {
         font-size: var(--dashboard-kpi-size);
         color: var(--quota-label-color);
-        font-weight: 500;
+        font-weight: $font-weight-medium;
       }
     }
 
@@ -2126,12 +2127,15 @@ export default {
       align-items: center;
       flex-wrap: wrap;
       gap: 10px;
-      font-size: 12px;
+      font-size: $font-size-sm;
       line-height: 1.45;
       color: var(--theme-text-secondary);
 
-      .traffic-up { color: #059669; font-weight: 600; }
-      .traffic-down { color: #dc2626; font-weight: 600; }
+      .traffic-up,
+      .traffic-down {
+        color: var(--secondary-text-color);
+        font-weight: $font-weight-semibold;
+      }
     }
   }
 
@@ -2143,7 +2147,7 @@ export default {
 
     .ip-location-state {
       color: var(--theme-text-secondary);
-      font-size: 13px;
+      font-size: $font-size-sm;
 
       &.error {
         color: #dc2626;
@@ -2178,14 +2182,14 @@ export default {
     }
 
     .ip-region-primary {
-      font-size: 24px;
+      font-size: $font-size-xl;
       line-height: 1.15;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       letter-spacing: -0.01em;
       color: var(--theme-text-primary);
 
       @media (max-width: 680px) {
-        font-size: 20px;
+        font-size: $font-size-xl;
       }
     }
 
@@ -2199,7 +2203,7 @@ export default {
     .ip-refresh-btn {
       border-radius: 999px;
       padding: 4px 10px;
-      font-size: 12px;
+      font-size: $font-size-sm;
       line-height: 1;
       display: inline-flex;
       align-items: center;
@@ -2216,7 +2220,7 @@ export default {
     }
 
     .ip-address-secondary {
-      font-size: 11px;
+      font-size: $font-size-sm;
       color: rgba(100, 116, 139, 0.75);
       letter-spacing: 0.2px;
     }
@@ -2229,8 +2233,8 @@ export default {
       align-items: center;
       justify-content: center;
       padding: 0 8px;
-      font-size: 10px;
-      font-weight: 800;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-bold;
       color: var(--theme-white);
       letter-spacing: 0.4px;
       background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
@@ -2243,7 +2247,7 @@ export default {
 
     .ip-region {
       color: var(--theme-text-secondary);
-      font-size: 13px;
+      font-size: $font-size-sm;
     }
   }
 
@@ -2269,9 +2273,9 @@ export default {
       border-radius: 6px;
       background: rgba(15, 23, 42, 0.96);
       color: #e2e8f0;
-      font-size: 12px;
+      font-size: $font-size-sm;
       line-height: 1.4;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
       box-shadow: none;
       opacity: 0;
       visibility: hidden;
@@ -2319,7 +2323,7 @@ export default {
       align-items: center;
       justify-content: center;
       color: var(--theme-text-secondary);
-      font-size: 14px;
+      font-size: $font-size-md;
     }
 
     .usage-trend-chart {
@@ -2355,9 +2359,9 @@ export default {
       gap: 8px;
       min-width: 0;
       color: var(--warning-color);
-      font-size: 13px;
+      font-size: $font-size-sm;
       line-height: 1.35;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
     }
 
     .banner-icon {
@@ -2369,8 +2373,8 @@ export default {
       border-radius: 8px;
       height: 30px;
       padding: 0 12px;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
       flex-shrink: 0;
     }
   }
@@ -2417,7 +2421,7 @@ export default {
       .today-traffic-total-main {
         .usage-percent {
           &.compact {
-            font-size: 22px;
+            font-size: $font-size-xl;
           }
         }
       }
@@ -2439,15 +2443,15 @@ export default {
       gap: 5px;
 
       .usage-percent {
-        font-size: 24px;
+        font-size: $font-size-xl;
 
         &.compact {
-          font-size: 22px;
+          font-size: $font-size-xl;
         }
       }
 
       .usage-percent-label {
-        font-size: 12px;
+        font-size: $font-size-sm;
       }
 
       .usage-kpis {
@@ -2585,6 +2589,7 @@ export default {
 
 <!-- 全局样式，不受scoped限制 -->
 <style lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
 @use '@/assets/styles/no-plan-card' as *;
 
 /* 统计卡片状态样式（全局） */
@@ -2673,9 +2678,9 @@ export default {
 
     h3 {
       margin: 0;
-      color: var(--text-color);
-      font-size: 18px;
-      font-weight: 600;
+      color: var(--text-primary);
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
     }
 
     .close-button {
@@ -2688,7 +2693,7 @@ export default {
       cursor: pointer;
 
       &:hover {
-        color: var(--text-color);
+        color: var(--text-primary);
       }
     }
   }
@@ -2714,7 +2719,7 @@ export default {
   .traffic-package-desc {
     margin: 0 0 14px;
     color: var(--secondary-text-color);
-    font-size: 14px;
+    font-size: $font-size-md;
     line-height: 1.5;
   }
 
@@ -2745,22 +2750,22 @@ export default {
     gap: 10px;
 
     strong {
-      color: var(--text-color);
-      font-size: 15px;
-      font-weight: 600;
+      color: var(--text-primary);
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
     }
   }
 
   .item-price {
     color: var(--theme-color);
-    font-size: 24px;
-    font-weight: 700;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
   }
 
   .item-content {
     min-height: 32px;
     color: var(--secondary-text-color);
-    font-size: 13px;
+    font-size: $font-size-sm;
     line-height: 1.45;
   }
 

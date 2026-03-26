@@ -851,11 +851,11 @@ watchEffect(() => {
 
     margin: 0;
 
-    font-size: 18px;
+    font-size: $font-size-xl;
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
   }
 
@@ -891,7 +891,7 @@ watchEffect(() => {
 
       background-color: rgba(0, 0, 0, 0.05);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       transform: rotate(90deg);
 
@@ -957,7 +957,7 @@ watchEffect(() => {
 
     .info-label {
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       color: var(--text-muted);
 
@@ -969,9 +969,9 @@ watchEffect(() => {
 
     .info-value {
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       flex: 1; 
 
@@ -1013,9 +1013,9 @@ watchEffect(() => {
 
       margin: 0;
 
-      font-size: 16px;
+      font-size: $font-size-md;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
     }
 
@@ -1047,7 +1047,7 @@ watchEffect(() => {
 
         color: var(--text-muted);
 
-        font-size: 12px;
+        font-size: $font-size-sm;
 
         cursor: pointer;
 
@@ -1101,7 +1101,7 @@ watchEffect(() => {
 
       font-family: monospace; 
 
-      font-size: 13px;
+      font-size: $font-size-sm;
 
       overflow-x: hidden;
 
@@ -1113,7 +1113,7 @@ watchEffect(() => {
 
       word-break: break-all;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       margin-bottom: 36px; 
 
@@ -1143,7 +1143,7 @@ watchEffect(() => {
 
       padding: 8px 12px;
 
-      font-size: 13px;
+      font-size: $font-size-sm;
 
       cursor: pointer;
 
@@ -1223,7 +1223,7 @@ watchEffect(() => {
 
         color: var(--text-muted);
 
-        font-size: 14px;
+        font-size: $font-size-md;
 
         margin: 0;
 
@@ -1277,7 +1277,7 @@ watchEffect(() => {
 
         padding: 6px 10px;
 
-        font-size: 12px;
+        font-size: $font-size-sm;
 
         cursor: pointer;
 
@@ -1345,9 +1345,9 @@ watchEffect(() => {
 
   padding: 10px 16px;
 
-  font-size: 14px;
+  font-size: $font-size-md;
 
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 
   cursor: pointer;
 
@@ -1435,7 +1435,7 @@ watchEffect(() => {
 
     .info-label {
 
-      font-size: 14px;
+      font-size: $font-size-md;
 
       flex: 0 0 40%; 
 
@@ -1445,7 +1445,7 @@ watchEffect(() => {
 
     .info-value {
 
-      font-size: 14px;
+      font-size: $font-size-md;
 
       flex: 1; 
 
@@ -1493,7 +1493,7 @@ watchEffect(() => {
 
       .link-text {
 
-        font-size: 12px; 
+        font-size: $font-size-sm; 
 
         margin-bottom: 40px; 
 

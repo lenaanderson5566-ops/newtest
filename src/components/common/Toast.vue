@@ -66,6 +66,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .toast-container {
   position: fixed;
   top: 20px;
@@ -92,7 +93,7 @@ export default {
   min-width: 300px;
   max-width: 380px;
   background-color: var(--card-background);
-  color: var(--text-color);
+  color: var(--text-primary);
   border-radius: 12px;
   padding: 14px 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -225,7 +226,7 @@ export default {
 .toast-content {
   flex: 1;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 }
 
 .toast-close {

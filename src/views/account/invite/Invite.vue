@@ -752,10 +752,12 @@ export default {
         <html>
           <head>
             <title>${t('invite.share.scanTitle')}</title>
-            <style>
+            <style lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
+              :root { --font-size-sm: 14px; --font-size-base: 16px; --font-size-lg: 20px; }
               body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
               img { max-width: 100%; height: auto; margin-bottom: 20px; }
-              h2 { color: var(--text-color, #2f3640); }
+              h2 { color: var(--text-primary, #2f3640); }
               p { color: var(--secondary-text-color, #5f6b7a); }
             
 
@@ -776,7 +778,7 @@ export default {
     }
 
     .card-title {
-      font-size: 17px;
+      font-size: var(--font-size-base);
       line-height: 1.25;
     }
 
@@ -815,14 +817,14 @@ export default {
         gap: 6px;
 
         .stats-value {
-          font-size: 26px;
-          font-weight: 700;
+          font-size: var(--font-size-lg);
+          font-weight: $font-weight-bold;
           margin-bottom: 0;
           line-height: 1.05;
         }
 
         .stats-label {
-          font-size: 13px;
+          font-size: var(--font-size-sm);
           line-height: 1.35;
         }
       }
@@ -845,8 +847,8 @@ export default {
         position: absolute;
         left: 12px;
         top: 12px;
-        font-size: 11px;
-        font-weight: 700;
+        font-size: var(--font-size-sm);
+        font-weight: $font-weight-bold;
         color: rgba(var(--theme-color-rgb), 0.78);
       }
 
@@ -863,12 +865,12 @@ export default {
 
       .rule-content {
         h3 {
-          font-size: 14px;
+          font-size: var(--font-size-base);
           margin-bottom: 3px;
         }
 
         p {
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           line-height: 1.35;
         }
       }
@@ -922,14 +924,14 @@ export default {
   }
 
   .kpi-label {
-    font-size: 12px;
+    font-size: var(--font-size-sm);
     color: var(--secondary-text-color);
     margin-bottom: 6px;
   }
 
   .kpi-value {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: var(--font-size-lg);
+    font-weight: $font-weight-bold;
     line-height: 1.1;
   }
 
@@ -955,7 +957,7 @@ export default {
   }
 
   .invite-code-display {
-    font-size: 20px;
+    font-size: var(--font-size-lg);
     padding: 8px 12px;
   }
 }
@@ -1565,8 +1567,8 @@ export default {
 
 .card-title {
   margin: 0;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
 }
 
 .balance-container {
@@ -1575,8 +1577,8 @@ export default {
 }
 
 .balance-value {
-  font-size: 28px;
-  font-weight: 700;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
   color: var(--theme-color);
 }
 
@@ -1612,14 +1614,14 @@ export default {
 }
 
 .kpi-label {
-  font-size: 11px;
+  font-size: $font-size-sm;
   color: var(--secondary-text-color);
 }
 
 .kpi-value {
   margin-top: 4px;
-  font-size: 17px;
-  font-weight: 700;
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
 }
 
 .invite-codes-wrapper {
@@ -1668,7 +1670,7 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
 }
 
 .invite-code-display {
@@ -1684,12 +1686,12 @@ export default {
   border-radius: 6px;
   border: 1px solid var(--border-color);
   text-align: center;
-  font-weight: 600;
+  font-weight: $font-weight-semibold;
 }
 
 .invite-card-footer {
   margin-top: 10px;
-  font-size: 12px;
+  font-size: $font-size-sm;
   color: var(--secondary-text-color);
 }
 
@@ -1731,7 +1733,7 @@ export default {
   height: 38px;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .share-buttons {
@@ -1747,7 +1749,7 @@ export default {
 .records-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: $font-size-sm;
 }
 
 .records-table th,
@@ -1782,7 +1784,7 @@ export default {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
   display: inline-flex;
   align-items: center;
   padding: 0;

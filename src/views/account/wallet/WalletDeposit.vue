@@ -307,9 +307,9 @@ onMounted(() => {
     width: fit-content;
     border: none;
     background: transparent;
-    color: var(--text-color);
-    font-size: 16px;
-    font-weight: 600;
+    color: var(--text-primary);
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -319,7 +319,7 @@ onMounted(() => {
   }
 
   .back-label {
-    font-size: 14px;
+    font-size: $font-size-md;
     color: var(--secondary-text-color);
   }
   
@@ -351,10 +351,10 @@ onMounted(() => {
       margin-bottom: 15px;
       
       .card-title {
-        font-size: 18px;
-        font-weight: 600;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
         margin: 0;
-        color: var(--text-color);
+        color: var(--text-primary);
       }
     }
   }
@@ -365,7 +365,7 @@ onMounted(() => {
     .card-body {
       p {
         color: var(--secondary-text-color);
-        font-size: 14px;
+        font-size: $font-size-md;
         line-height: 1.6;
         margin: 0;
       }
@@ -406,15 +406,15 @@ onMounted(() => {
       }
 
       .wallet-currency {
-        font-weight: 700;
-        color: var(--text-color);
+        font-weight: $font-weight-bold;
+        color: var(--text-primary);
       }
 
       .wallet-amount {
         color: var(--secondary-text-color);
         font-variant-numeric: tabular-nums;
         font-size: 1.05rem;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
       }
       
       .balance-label {
@@ -545,16 +545,16 @@ onMounted(() => {
             justify-content: center;
             
             .currency {
-              font-size: 14px;
-              font-weight: 600;
-              color: var(--text-color);
+              font-size: $font-size-md;
+              font-weight: $font-weight-semibold;
+              color: var(--text-primary);
               margin-right: 2px;
             }
             
             .amount {
-              font-size: 18px;
-              font-weight: 700;
-              color: var(--text-color);
+              font-size: $font-size-xl;
+              font-weight: $font-weight-bold;
+              color: var(--text-primary);
             }
           }
         }
@@ -569,7 +569,7 @@ onMounted(() => {
         font-size: 0.95rem;
         color: var(--secondary-text-color);
         margin-bottom: 10px;
-        font-weight: 500;
+        font-weight: $font-weight-medium;
       }
       
       .input-container {
@@ -581,8 +581,8 @@ onMounted(() => {
         .currency-symbol {
           position: absolute;
           left: 15px;
-          color: var(--text-color);
-          font-weight: 600;
+          color: var(--text-primary);
+          font-weight: $font-weight-semibold;
           font-size: 1.2rem;
         }
         
@@ -594,7 +594,7 @@ onMounted(() => {
           background-color: var(--input-bg, rgba(0, 0, 0, 0.02));
           padding: 0 15px 0 35px;
           font-size: 1.2rem;
-          color: var(--text-color);
+          color: var(--text-primary);
           transition: all 0.3s ease;
           
           &:hover {
@@ -633,13 +633,13 @@ onMounted(() => {
         justify-content: center;
         gap: 10px;
         background-color: var(--theme-color);
-        color: white;
+        color: var(--text-on-dark-primary);
         border: none;
         border-radius: $border-radius-sm;
         padding: 0 30px;
         height: 50px;
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         cursor: pointer;
         transition: all 0.3s ease;
         min-width: 200px;

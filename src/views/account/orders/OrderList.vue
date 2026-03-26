@@ -20,72 +20,30 @@
       
       <!-- 订单列表 -->
       <div v-else-if="orders.length > 0" class="orders-content">
-        <!-- 移动端卡片视图 -->
-        <div class="order-cards" v-if="isMobileView">
-          <transition-group name="page-switch">
-            <div v-for="order in orders" :key="order.trade_no" class="order-card">
-              <div class="order-card-header">
-                <div class="status-wrapper">
-                  <span class="status-badge" :class="getStatusClass(order.status)">
-                    {{ getStatusText(order.status) }}
-                  </span>
-                </div>
-              </div>
-              
-              <div class="order-card-body">
-                <div class="info-row">
-                  <span class="label">{{ headerTexts.createdAt }}:</span>
-                  <span class="value">{{ formatDate(order.created_at) }}</span>
-                </div>
-                <div class="info-row">
-                  <span class="label">{{ headerTexts.cycle }}:</span>
-                  <span class="value">{{ formatCycle(order.period) }}</span>
-                </div>
-                <div class="info-row">
-                  <span class="label">{{ headerTexts.totalAmount }}:</span>
-                  <span class="value amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</span>
-                </div>
-              </div>
-              
-              <div class="order-card-footer">
-                <button 
-                  class="action-button view-button" 
-                  @click="viewOrderDetail(order.trade_no)" 
-                >
-                  <IconEye :size="16" />
-                  <span>{{ headerTexts.viewDetail }}</span>
-                </button>
-                <button 
-                  class="action-button cancel-button" 
-                  @click="showCancelConfirm(order.trade_no)" 
-                  :disabled="order.status !== 0"
-                  :class="{ 'disabled': order.status !== 0 }"
-                >
-                  <IconX :size="16" />
-                  <span>{{ headerTexts.cancel }}</span>
-                </button>
-              </div>
-            </div>
-          </transition-group>
+        <div class="orders-filter-bar">
+          <label class="filter-switch">
+            <input v-model="showCancelledOrders" type="checkbox" class="switch-input" />
+            <span class="switch-slider" />
+            <span>{{ headerTexts.showCancelled }}</span>
+          </label>
         </div>
 
-        <!-- 桌面端表格视图 -->
-        <div class="order-table-container" v-else>
-          <table class="order-table">
+        <div class="order-table-container">
+          <table v-if="filteredOrders.length" class="order-table">
             <thead>
               <tr>
-                <th width="20%">{{ headerTexts.createdAt }}</th>
-                <th width="14%">{{ headerTexts.cycle }}</th>
-                <th width="16%">{{ headerTexts.totalAmount }}</th>
+                <th width="24%">{{ headerTexts.createdAt }}</th>
+                <th width="20%">{{ headerTexts.subscriptionCycle }}</th>
+                <th width="20%">{{ headerTexts.totalAmount }}</th>
                 <th width="16%">{{ headerTexts.statusLabel }}</th>
-                <th width="34%">{{ headerTexts.actions }}</th>
+                <th width="20%">{{ headerTexts.actions }}</th>
               </tr>
             </thead>
             <tbody>
               <transition-group name="page-switch">
-                <tr v-for="order in orders" :key="order.trade_no">
+                <tr v-for="order in filteredOrders" :key="order.trade_no">
                   <td>{{ formatDate(order.created_at) }}</td>
-                  <td>{{ formatCycle(order.period) }}</td>
+                  <td>{{ getSubscriptionName(order) }}·{{ formatCycle(order.period) }}</td>
                   <td class="amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</td>
                   <td>
                     <span class="status-badge" :class="getStatusClass(order.status)">
@@ -103,8 +61,7 @@
                     <button 
                       class="action-button cancel-button" 
                       @click="showCancelConfirm(order.trade_no)" 
-                      :disabled="order.status !== 0"
-                      :class="{ 'disabled': order.status !== 0 }"
+                      v-if="Number(order.status) === 0"
                     >
                       <IconX :size="16" />
                       <span>{{ headerTexts.cancel }}</span>
@@ -114,6 +71,7 @@
               </transition-group>
             </tbody>
           </table>
+          <div v-else class="orders-empty-inline">{{ headerTexts.noFilteredOrders }}</div>
         </div>
       </div>
       
@@ -180,7 +138,7 @@ const orders = ref([]);
 const showConfirmModal = ref(false);
 const currentTradeNo = ref('');
 const canceling = ref(false);
-const isMobileView = ref(false);
+const showCancelledOrders = ref(false);
 const goBackToAccount = () => {
   if (window.history.length > 1) {
     router.back();
@@ -188,14 +146,6 @@ const goBackToAccount = () => {
   }
   router.push('/profile');
 };
-
-const checkMobileView = () => {
-  isMobileView.value = window.innerWidth < 768;
-};
-
-window.addEventListener('resize', checkMobileView);
-
-
 
 const fetchOrders = async () => {
   loading.value = true;
@@ -227,9 +177,7 @@ const formatDate = (timestamp) => {
   return date.toLocaleString(locale.value === 'zh-CN' ? 'zh-CN' : 'en-US', {
     year: 'numeric',
     month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
+    day: '2-digit'
   });
 };
 
@@ -257,6 +205,10 @@ const formatAmount = (amount, orderCurrency) => {
   return `${currency} ${(amount / 100).toFixed(2)}`;
 };
 
+const getSubscriptionName = (order) => {
+  return order?.plan?.name || order?.plan_name || order?.subject || '--';
+};
+
 const statusTextMap = computed(() => {
   return {
     0: t('orders.status.pending', '待支付'),
@@ -266,6 +218,11 @@ const statusTextMap = computed(() => {
     4: t('orders.status.discounted', '已折抵'),
     unknown: t('orders.status.unknown', '未知状态')
   };
+});
+
+const filteredOrders = computed(() => {
+  const allowedStatuses = showCancelledOrders.value ? [0, 1, 2, 3, 4] : [0, 1, 3, 4];
+  return orders.value.filter((order) => allowedStatuses.includes(Number(order.status)));
 });
 
 const getStatusText = (status) => {
@@ -350,6 +307,8 @@ const headerTexts = computed(() => {
   return {
     createdAt: t('orders.createdAt', '创建时间'),
     cycle: t('orders.cycle', '周期'),
+    subscriptionCycle: t('orders.subscriptionCycle', '订阅/周期'),
+    subscriptionName: t('orders.subscriptionName', '订阅名称'),
     totalAmount: t('orders.totalAmount', '金额'),
     statusLabel: t('orders.statusLabel', '状态') || '状态',
     actions: t('orders.actions', '操作'),
@@ -359,14 +318,15 @@ const headerTexts = computed(() => {
     goShopping: t('orders.goShopping', '去购买订阅'),
     loading: t('orders.loading', '正在加载订单...'),
     cancelConfirmTitle: t('orders.cancelConfirmTitle', '确认取消订单'),
-    cancelConfirmText: t('orders.cancelConfirmText', '您确定要取消此订单吗？此操作无法撤销。')
+    cancelConfirmText: t('orders.cancelConfirmText', '您确定要取消此订单吗？此操作无法撤销。'),
+    showCancelled: t('orders.showCancelled', '显示已取消订单'),
+    noFilteredOrders: t('orders.noFilteredOrders', '当前筛选条件下暂无订单')
   };
 });
 
 
 onMounted(() => {
   fetchOrders();
-  checkMobileView();
 });
 
 watch(locale, () => {
@@ -400,9 +360,9 @@ watch(locale, () => {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
-  font-size: 16px;
-  font-weight: 600;
+  color: var(--text-primary);
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -411,56 +371,68 @@ watch(locale, () => {
   margin-bottom: 8px;
 }
 
-.back-label {
-  font-size: 14px;
-  color: var(--secondary-text-color);
-}
-
-
-.dashboard-card {
-  background-color: #fff;
-  border-radius: $border-radius-sm;
-  box-shadow: none;
-  padding: 20px;
-  margin-bottom: 24px;
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-  position: relative;
-  
-  &:hover {
-    box-shadow: none;
-    border-color: rgba(var(--theme-color-rgb), 0.3);
-  }
-  
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    
-    .card-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin: 0;
-    }
-  }
-  
-  .card-body {
-    p {
-      color: rgba(var(--theme-color-rgb), 0.68);
-      margin: 0;
-      line-height: 1.5;
-    }
-  }
-}
-
-.welcome-card {
-  margin-bottom: 24px;
-}
-
-
 .orders-content {
   width: 100%;
+}
+
+.orders-filter-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.filter-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: $font-size-sm;
+  color: var(--secondary-text-color);
+
+  .switch-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .switch-slider {
+    position: relative;
+    width: 32px;
+    height: 18px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: rgba(var(--theme-color-rgb), 0.08);
+    transition: all 0.2s ease;
+    flex: 0 0 auto;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+      transition: transform 0.2s ease;
+    }
+  }
+
+  .switch-input:checked + .switch-slider {
+    background: rgba(var(--theme-color-rgb), 0.7);
+    border-color: rgba(var(--theme-color-rgb), 0.4);
+  }
+
+  .switch-input:checked + .switch-slider::after {
+    transform: translateX(14px);
+  }
+}
+
+.orders-empty-inline {
+  padding: 18px 14px;
+  color: var(--secondary-text-color);
+  text-align: center;
 }
 
 .order-table-container {
@@ -484,19 +456,20 @@ watch(locale, () => {
   table-layout: fixed; 
   
   th, td {
-    padding: 1rem;
+    padding: 0.48rem 0.42rem;
     text-align: left;
     white-space: nowrap;
     word-break: normal;
     overflow: hidden;
     text-overflow: ellipsis;
+    vertical-align: middle;
   }
   
   th {
     background-color: rgba(var(--theme-color-rgb), 0.05);
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     font-size: 0.9rem;
-    color: var(--text-color);
+    color: var(--text-primary);
     position: sticky;
     top: 0;
     z-index: 10;
@@ -512,7 +485,7 @@ watch(locale, () => {
   
   tbody tr {
     border-bottom: 1px solid var(--border-color);
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease;
     
     &:hover {
       background-color: rgba(var(--theme-color-rgb), 0.05);
@@ -524,16 +497,18 @@ watch(locale, () => {
   }
   
   .amount {
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     color: var(--order-tone-strong);
   }
   
   .status-badge {
-    display: inline-block;
-    padding: 0.35rem 0.75rem;
-    border-radius: 5px; 
-    font-size: 0.85rem;
-    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.24rem 0.56rem;
+    border-radius: 999px; 
+    font-size: 0.82rem;
+    font-weight: $font-weight-medium;
     
     &.status-pending {
       background-color: rgba(var(--theme-color-rgb), 0.08);
@@ -576,14 +551,14 @@ watch(locale, () => {
       align-items: center;
       gap: 0.25rem;
       justify-content: center;
-      padding: 0.35rem 0.65rem;
-      height: 34px;
-      min-width: 72px;
-      flex: 0 0 72px;
+      padding: 0.3rem 0.48rem;
+      height: 30px;
+      min-width: 56px;
+      flex: 0 0 56px;
       white-space: nowrap;
       border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 500;
+      font-size: 0.82rem;
+      font-weight: $font-weight-medium;
       cursor: pointer;
       transition: all 0.3s ease;
       border: none;
@@ -613,6 +588,45 @@ watch(locale, () => {
         cursor: not-allowed;
         pointer-events: none;
       }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .order-table {
+    width: 100%;
+    table-layout: auto;
+
+    th:nth-child(1), td:nth-child(1) { width: 92px; }
+    th:nth-child(3), td:nth-child(3) { width: 86px; }
+    th:nth-child(4), td:nth-child(4) { width: 72px; text-align: center; }
+    th:nth-child(5), td:nth-child(5) { width: 44px; text-align: center; }
+
+    th, td {
+      padding: 0.28rem 0.22rem;
+      line-height: 1.15;
+    }
+
+    .actions {
+      gap: 0.18rem;
+      justify-content: center;
+
+      .action-button {
+        min-width: 24px;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        flex: 0 0 24px;
+      }
+
+      .action-button span {
+        display: none;
+      }
+    }
+
+    .status-badge {
+      padding: 0.16rem 0.24rem;
+      line-height: 1.05;
     }
   }
 }
@@ -653,9 +667,9 @@ watch(locale, () => {
   gap: 8px;
   border-radius: 8px;
   background-color: rgba(var(--theme-color-rgb), 0.85);
-  color: white;
-  font-weight: 500;
-  font-size: 14px;
+  color: var(--text-on-dark-primary);
+  font-weight: $font-weight-medium;
+  font-size: $font-size-md;
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
   box-shadow: none;
   cursor: pointer;
@@ -734,8 +748,8 @@ watch(locale, () => {
   h3 {
     margin: 0;
     font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-color);
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
   }
   
   .modal-close {
@@ -762,7 +776,7 @@ watch(locale, () => {
   
   p {
     margin: 0 0 1.5rem;
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 }
 
@@ -777,14 +791,14 @@ watch(locale, () => {
     padding: 0.6rem 1.25rem;
     border-radius: 8px;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     cursor: pointer;
     transition: all 0.3s ease;
     
     &.btn-cancel {
       background-color: transparent;
       border: 1px solid var(--border-color);
-      color: var(--text-color);
+      color: var(--text-primary);
       
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);
@@ -794,7 +808,7 @@ watch(locale, () => {
     &.btn-confirm {
       background-color: rgba(var(--theme-color-rgb), 0.88);
       border: none;
-      color: #fff;
+      color: var(--text-on-dark-primary);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -825,31 +839,6 @@ watch(locale, () => {
 }
 
 
-@media (max-width: 768px) {
-  .back-label {
-    display: none;
-  }
-
-  .order-table {
-    th, td {
-      padding: 0.75rem 0.5rem;
-    }
-    
-    .actions {
-      .action-button {
-        padding: 0.3rem 0.45rem;
-        font-size: 0.75rem;
-        height: 30px;
-        min-width: 64px;
-        flex: 0 0 64px;
-      }
-    }
-  }
-}
-
-
-
-
 .page-switch-enter-active,
 .page-switch-leave-active {
   transition: all 0.3s ease;
@@ -870,150 +859,6 @@ watch(locale, () => {
 @media (max-width: 768px) {
   .orders-container {
     padding-bottom: calc(2px + 56px);
-  }
-
-
-
-}
-
-
-.order-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-}
-
-.order-card {
-  background-color: #fff;
-  border-radius: $border-radius-sm;
-  box-shadow: none;
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-  overflow: hidden;
-  
-  &:hover {
-    box-shadow: none;
-    border-color: rgba(var(--theme-color-rgb), 0.3);
-  }
-}
-
-.order-card-header {
-  padding: 0.75rem 0.85rem;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(var(--theme-color-rgb), 0.03);
-  
-  .order-number {
-    display: flex;
-    flex-direction: column;
-    
-    .label {
-      font-size: 0.8rem;
-      color: rgba(var(--theme-color-rgb), 0.68);
-      margin-bottom: 0.25rem;
-    }
-    
-    .value {
-      font-size: 0.9rem;
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 180px;
-    }
-  }
-}
-
-.order-card-body {
-  padding: 0.55rem 0.85rem;
-  
-  .info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: nowrap;
-    padding: 0.35rem 0;
-    border-bottom: 1px solid rgba(var(--border-color-rgb), 0.5);
-    
-    &:last-child {
-      border-bottom: none;
-    }
-    
-    .label {
-      color: rgba(var(--theme-color-rgb), 0.68);
-      font-size: 0.9rem;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    
-    .value {
-      font-size: 0.9rem;
-      text-align: right;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-left: 10px;
-      
-      &.amount {
-        font-weight: 600;
-        color: var(--order-tone-strong);
-      }
-    }
-  }
-}
-
-.order-card-footer {
-  padding: 0.6rem 0.85rem;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  background-color: rgba(var(--theme-color-rgb), 0.02);
-  
-  .action-button {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    justify-content: center;
-    padding: 0.35rem 0.5rem;
-    height: 34px;
-    min-width: 72px;
-    flex: 0 0 72px;
-    white-space: nowrap;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-    
-    &.view-button {
-      background-color: rgba(var(--theme-color-rgb), 0.1);
-      color: var(--theme-color);
-      
-      &:hover:not(.disabled) {
-        background-color: rgba(var(--theme-color-rgb), 0.2);
-        transform: translateY(-2px);
-      }
-    }
-    
-    &.cancel-button {
-      background-color: rgba(var(--theme-color-rgb), 0.06);
-      color: var(--order-tone-strong);
-      
-      &:hover:not(.disabled) {
-        background-color: rgba(var(--theme-color-rgb), 0.12);
-        transform: translateY(-2px);
-      }
-    }
-    
-    &.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
   }
 }
 

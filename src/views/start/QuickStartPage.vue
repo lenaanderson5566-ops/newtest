@@ -9,10 +9,10 @@
       <section class="step-card">
         <header class="step-header">
           <div class="step-index">1</div>
-          <h2>选择系统</h2>
+          <h2>{{ $t('quickStartPage.step1Title') }}</h2>
         </header>
         <div class="step-body">
-          <p class="step-tip">选择你当前使用的设备系统</p>
+          <p class="step-tip">{{ $t('quickStartPage.step1Tip') }}</p>
           <div class="system-grid">
             <button
               v-for="platform in quickStartPlatforms"
@@ -32,10 +32,10 @@
       <section class="step-card">
         <header class="step-header">
           <div class="step-index">2</div>
-          <h2>下载并导入</h2>
+          <h2>{{ $t('quickStartPage.step2Title') }}</h2>
         </header>
         <div class="step-body">
-          <p class="step-tip">下载推荐客户端并完成订阅导入</p>
+          <p class="step-tip">{{ $t('quickStartPage.step2Tip') }}</p>
           <div class="client-grid" v-if="selectedPlatformClients.length">
             <button
               v-for="client in selectedPlatformClients"
@@ -54,7 +54,7 @@
               <IconApps v-else :size="20" class="fallback-icon-large" :class="{ grayscale: !client.recommended }" />
               <div class="client-text">
                 <span class="client-name">{{ client.name }}</span>
-                <small v-if="client.recommended" class="recommend-inline">推荐</small>
+                <small v-if="client.recommended" class="recommend-inline">{{ $t('quickStartPage.recommended') }}</small>
               </div>
               <IconCheck v-if="selectedClient?.name === client.name" :size="16" class="client-selected-mark" />
             </button>
@@ -62,14 +62,14 @@
 
           <div class="action-row" v-if="subscriptionUrl">
             <button class="action-btn primary" @click="downloadSelectedClient">{{ downloadButtonText }}</button>
-            <button class="action-btn" @click="quickImportSelectedClient">一键导入</button>
-            <button class="action-btn" @click="copySubscriptionUrl">复制订阅</button>
+            <button class="action-btn" @click="quickImportSelectedClient">{{ $t('quickStartPage.quickImport') }}</button>
+            <button class="action-btn" @click="copySubscriptionUrl">{{ $t('quickStartPage.copySubscription') }}</button>
             <button
               v-if="selectedPlatform === 'ios' || selectedPlatform === 'android'"
               class="action-btn"
               @click="openQrCodeModal"
             >
-              扫码导入
+              {{ $t('quickStartPage.qrImport') }}
             </button>
           </div>
 
@@ -79,11 +79,11 @@
       <section class="step-card">
         <header class="step-header">
           <div class="step-index">3</div>
-          <h2>开始连接</h2>
+          <h2>{{ $t('quickStartPage.step3Title') }}</h2>
         </header>
         <div class="step-body">
-          <p class="connect-text">打开客户端 → → 选择节点 → 点击连接</p>
-          <button class="help-btn" @click="router.push('/docs')">需要帮助？查看详细教程 →</button>
+          <p class="connect-text">{{ $t('quickStartPage.connectHint') }}</p>
+          <button class="help-btn" @click="router.push('/docs')">{{ $t('quickStartPage.helpCta') }}</button>
         </div>
       </section>
 
@@ -91,7 +91,7 @@
         <div v-if="showQrCode" class="qrcode-modal-overlay" @click="showQrCode = false">
           <div class="qrcode-modal" @click.stop>
             <div class="qrcode-header">
-              <h3>扫描二维码添加配置</h3>
+              <h3>{{ $t('quickStartPage.qrModalTitle') }}</h3>
               <button class="close-btn" @click="showQrCode = false">✕</button>
             </div>
             <img :src="qrCodeUrl" alt="QR Code" />
@@ -105,6 +105,7 @@
 <script setup>
 import { computed, inject, onMounted, reactive, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { IconBrandApple, IconBrandAndroid, IconBrandFinder, IconBrandWindows, IconApps, IconCheck } from '@tabler/icons-vue';
 import { CLIENT_CONFIG } from '@/utils/baseConfig';
 import { getSubscribe } from '@/api/overview/dashboard';
@@ -125,6 +126,7 @@ import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
 import loonIconImg from '@/assets/images/client-img-ios/loon.png';
 
 const router = useRouter();
+const { t } = useI18n();
 const $toast = inject('$toast');
 const { showToast } = useToast();
 const clientConfig = reactive(CLIENT_CONFIG);
@@ -172,15 +174,15 @@ const clientIconMap = Object.freeze({
 });
 
 const statusStripText = computed(() => {
-  if (userStatus.value === USER_STATUS.NEW) return '尚未开通服务 · 请先购买订阅';
-  if (userStatus.value === USER_STATUS.EXPIRED) return '订阅已到期 · 请及时续费';
-  return '服务已开通 · 可开始连接';
+  if (userStatus.value === USER_STATUS.NEW) return t('quickStartPage.status.newTitle');
+  if (userStatus.value === USER_STATUS.EXPIRED) return t('quickStartPage.status.expiredTitle');
+  return t('quickStartPage.status.activeTitle');
 });
 
 const statusStripDesc = computed(() => {
-  if (userStatus.value === USER_STATUS.NEW) return '完成订阅后即可下载客户端并导入订阅使用。';
-  if (userStatus.value === USER_STATUS.EXPIRED) return '续费后下载客户端并导入订阅即可恢复使用。';
-  return '下载客户端并导入订阅后即可使用。';
+  if (userStatus.value === USER_STATUS.NEW) return t('quickStartPage.status.newDesc');
+  if (userStatus.value === USER_STATUS.EXPIRED) return t('quickStartPage.status.expiredDesc');
+  return t('quickStartPage.status.activeDesc');
 });
 
 const resolveClientIcon = (iconKey) => clientIconMap[iconKey] || '';
@@ -194,7 +196,7 @@ const getPlatformClients = (platform) => {
 
 const selectedPlatformClients = computed(() => getPlatformClients(selectedPlatform.value));
 const selectedClient = computed(() => selectedPlatformClients.value.find((item) => item.name === selectedClientName.value) || null);
-const downloadButtonText = computed(() => `下载${selectedClient.value?.name || '客户端'}`);
+const downloadButtonText = computed(() => t('quickStartPage.downloadClient', { name: selectedClient.value?.name || t('quickStartPage.clientFallbackName') }));
 
 watch(quickStartPlatforms, (next) => {
   if (!next.length) return;
@@ -265,7 +267,7 @@ const resolveClientType = (client) => {
 };
 
 const buildClientSchemeUrl = (clientType, subscribeUrl) => {
-  const siteName = '订阅';
+  const siteName = t('quickStartPage.subscriptionTag');
   switch (clientType) {
     case 'shadowrocket':
       return `shadowrocket://add/sub://${normalizeBase64(subscribeUrl)}?remark=${encodeURIComponent(siteName)}`;
@@ -303,7 +305,7 @@ const buildClientSchemeUrl = (clientType, subscribeUrl) => {
 
 const quickImportSelectedClient = async () => {
   if (!subscriptionUrl.value) {
-    toast.warning('当前暂无订阅链接');
+    toast.warning(t('quickStartPage.noSubscriptionUrl'));
     return;
   }
 
@@ -317,12 +319,12 @@ const quickImportSelectedClient = async () => {
   }
 
   window.open(schemeUrl, '_blank');
-  toast.success('已尝试唤起客户端，订阅地址已复制到剪贴板');
+  toast.success(t('quickStartPage.quickImportTriggered'));
 };
 
 const openQrCodeModal = async () => {
   if (!subscriptionUrl.value) {
-    toast.warning('当前暂无订阅链接');
+    toast.warning(t('quickStartPage.noSubscriptionUrl'));
     return;
   }
 
@@ -331,22 +333,22 @@ const openQrCodeModal = async () => {
     showQrCode.value = true;
   } catch (err) {
     console.error('Generate QRCode failed:', err);
-    toast.error('二维码生成失败');
+    toast.error(t('quickStartPage.qrGenerateFailed'));
   }
 };
 
 const copySubscriptionUrl = async () => {
   if (!subscriptionUrl.value) {
-    toast.warning('当前暂无订阅链接');
+    toast.warning(t('quickStartPage.noSubscriptionUrl'));
     return;
   }
 
   try {
     await navigator.clipboard.writeText(subscriptionUrl.value);
-    toast.success('订阅链接已复制');
+    toast.success(t('quickStartPage.subscriptionCopied'));
   } catch (err) {
     console.error('Copy subscription failed:', err);
-    toast.error('复制失败，请稍后重试');
+    toast.error(t('quickStartPage.copyFailed'));
   }
 };
 
@@ -399,14 +401,14 @@ onMounted(fetchUserStatus);
 
   .status-main {
     margin: 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-color);
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
   }
 
   .status-sub {
     margin: 4px 0 0;
-    font-size: 13px;
+    font-size: $font-size-sm;
     color: var(--secondary-text-color);
   }
 }
@@ -426,14 +428,8 @@ onMounted(fetchUserStatus);
 
     h2 {
       margin: 0;
-      font-size: 20px;
-      font-weight: 600;
-    }
-
-    .actions {
-      margin-left: auto;
-      display: flex;
-      gap: 8px;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
     }
   }
 
@@ -442,12 +438,12 @@ onMounted(fetchUserStatus);
     height: 30px;
     border-radius: 50%;
     background: #4177e9;
-    color: #fff;
+    color: var(--text-on-dark-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-md;
   }
 }
 
@@ -455,7 +451,7 @@ onMounted(fetchUserStatus);
 .connect-text {
   margin: 0;
   color: var(--secondary-text-color);
-  font-size: 14px;
+  font-size: $font-size-md;
 }
 
 .system-grid {
@@ -482,7 +478,7 @@ onMounted(fetchUserStatus);
     border-color: rgba(var(--theme-color-rgb), 0.5);
   }
 
-  strong { font-size: 15px; }
+  strong { font-size: $font-size-md; }
 
   &.active {
     border-color: rgba(var(--theme-color-rgb), 0.85);
@@ -530,7 +526,7 @@ onMounted(fetchUserStatus);
     flex: 0 1 auto;
     min-width: 0;
     max-width: 100%;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -543,8 +539,8 @@ onMounted(fetchUserStatus);
 
   .recommend-inline {
     color: #f08c2e;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
     line-height: 1;
     background: rgba(240, 140, 46, 0.14);
     border-radius: 999px;
@@ -592,7 +588,7 @@ onMounted(fetchUserStatus);
 
   &.primary {
     background: #3f72e8;
-    color: #fff;
+    color: var(--text-on-dark-primary);
   }
 }
 
@@ -627,7 +623,7 @@ onMounted(fetchUserStatus);
     border: none;
     background: transparent;
     cursor: pointer;
-    font-size: 18px;
+    font-size: $font-size-xl;
   }
 
   img {

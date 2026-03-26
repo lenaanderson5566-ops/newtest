@@ -197,13 +197,13 @@ export default {
       width: 18px;
       height: 18px;
       margin-right: 10px;
-      color: var(--text-color);
+      color: var(--text-primary);
       transition: color 0.3s ease;
     }
     
     span {
-      font-size: 14px;
-      color: var(--text-color);
+      font-size: $font-size-md;
+      color: var(--text-primary);
       transition: color 0.3s ease;
     }
     

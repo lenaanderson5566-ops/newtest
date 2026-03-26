@@ -1625,7 +1625,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .top-toolbar {
 
   position: fixed;
@@ -1650,7 +1650,7 @@ export default {
 
   margin-left: 4px;
 
-  font-size: 16px;
+  font-size: $font-size-md;
 
   vertical-align: middle;
 
@@ -1830,7 +1830,7 @@ export default {
 
     background-color: var(--theme-color) !important;
 
-    color: white !important;
+    color: var(--text-on-dark-primary) !important;
 
     margin: 0;
 
@@ -1924,9 +1924,9 @@ export default {
 
     border: none;
 
-    color: white;
+    color: var(--text-on-dark-primary);
 
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
 
 
 
@@ -2250,7 +2250,7 @@ export default {
 
   line-height: normal !important;
 
-  color: var(--text-color) !important;
+  color: var(--text-primary) !important;
 
   border: 1px solid var(--border-color) !important;
 

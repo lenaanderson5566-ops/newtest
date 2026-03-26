@@ -1056,6 +1056,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .shop-container {
   --shop-card-radius: var(--radius-lg);
 
@@ -1083,9 +1084,9 @@ export default {
 
     .card-body p {
       color: var(--secondary-text-color);
-      font-size: 14px;
+      font-size: $font-size-md;
       line-height: 1.6;
-      font-weight: 500;
+      font-weight: $font-weight-medium;
     }
 
     .welcome-top-row {
@@ -1134,9 +1135,9 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 18px;
+        font-size: $font-size-xl;
 
-        font-weight: 700;
+        font-weight: $font-weight-bold;
 
         margin: 0;
 
@@ -1165,9 +1166,9 @@ export default {
   .current-plan-badge {
     display: inline-flex;
     align-items: center;
-    font-size: 12px;
+    font-size: $font-size-sm;
     line-height: 1;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     color: var(--theme-color);
     background: rgba(var(--theme-color-rgb), 0.1);
     border: 1px solid rgba(var(--theme-color-rgb), 0.26);
@@ -1186,9 +1187,9 @@ export default {
 
         border-radius: 20px;
 
-        font-size: 12px;
+        font-size: $font-size-sm;
 
-        font-weight: 500;
+        font-weight: $font-weight-medium;
 
         margin-left: 8px;
 
@@ -1440,9 +1441,9 @@ export default {
         align-items: center;
         justify-content: center;
         background: #2d2d2d;
-        color: #fff;
-        font-size: 12px;
-        font-weight: 700;
+        color: var(--text-on-dark-primary);
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
         border-radius: 12px 12px 0 0;
       }
 
@@ -1484,7 +1485,7 @@ export default {
             min-height: 86px;
             padding: 14px 16px;
             border-radius: 10px;
-            color: #fff;
+            color: var(--text-on-dark-primary);
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -1514,9 +1515,9 @@ export default {
         }
 
         .card-title {
-          font-size: 20px;
+          font-size: $font-size-xl;
 
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
 
           margin: 0;
 
@@ -1529,14 +1530,14 @@ export default {
           max-width: 100%;
           padding: 0;
           line-height: 1.25;
-          color: #fff;
+          color: var(--text-on-dark-primary);
         }
 
         .desktop-subtitle {
           margin: 0;
-          font-size: 14px;
-          font-weight: 600;
-          color: rgba(255, 255, 255, 0.95);
+          font-size: $font-size-md;
+          font-weight: $font-weight-semibold;
+          color: var(--text-on-dark-primary);
         }
 
         .desktop-current-check {
@@ -1561,9 +1562,9 @@ export default {
 
           border-radius: 20px;
 
-          font-size: 12px;
+          font-size: $font-size-sm;
 
-          font-weight: 500;
+          font-weight: $font-weight-medium;
 
           margin-left: 0;
 
@@ -1651,23 +1652,23 @@ export default {
         }
 
         .currency {
-          font-size: 22px;
-          font-weight: 500;
-          color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
+          font-size: $font-size-xl;
+          font-weight: $font-weight-medium;
+          color: color-mix(in srgb, var(--text-primary) 72%, var(--secondary-text-color) 28%);
         }
 
         .amount {
-          font-size: 42px;
+          font-size: $font-size-xl;
           line-height: 0.95;
-          font-weight: 700;
-          color: var(--text-color);
+          font-weight: $font-weight-bold;
+          color: var(--text-primary);
           letter-spacing: -0.8px;
         }
 
         .unit-line {
-          font-size: 13px;
-          font-weight: 500;
-          color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
+          font-size: $font-size-sm;
+          font-weight: $font-weight-medium;
+          color: color-mix(in srgb, var(--text-primary) 72%, var(--secondary-text-color) 28%);
         }
       }
     }
@@ -1688,41 +1689,41 @@ export default {
       border-radius: 8px;
 
       .discount-info {
-        font-size: 14px;
+        font-size: $font-size-md;
 
         text-align: center;
 
-        color: var(--text-color);
+        color: var(--text-primary);
 
         .period-name {
-          font-weight: 700;
+          font-weight: $font-weight-bold;
 
           color: var(--theme-color);
         }
 
         .discount-label {
-          font-weight: 500;
+          font-weight: $font-weight-medium;
 
           &::first-line,
           &:first-child {
             color: var(--theme-color);
 
-            font-weight: 700;
+            font-weight: $font-weight-bold;
           }
         }
 
         .discount-value {
-          font-weight: 700;
+          font-weight: $font-weight-bold;
 
           color: var(--theme-color);
         }
 
         .saving-text {
-          font-weight: 400;
+          font-weight: $font-weight-normal;
         }
 
         .saving-amount {
-          font-weight: 700;
+          font-weight: $font-weight-bold;
 
           color: var(--theme-color);
         }
@@ -1767,9 +1768,9 @@ export default {
         }
 
         span {
-          font-size: 14px;
+          font-size: $font-size-md;
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
           line-height: 1.5; // 添加行高改善可读性
 
@@ -1786,11 +1787,11 @@ export default {
       }
 
       .html-content {
-        font-size: 14px;
+        font-size: $font-size-md;
 
         line-height: 1.6;
 
-        color: var(--text-color);
+        color: var(--text-primary);
       }
     }
   }
@@ -1806,11 +1807,11 @@ export default {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: white;
+    color: var(--text-on-dark-primary);
     border: 1px solid transparent;
     border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
     cursor: pointer;
     transition: all 0.25s ease;
     padding: 0 16px;
@@ -1850,8 +1851,8 @@ export default {
     }
 
     .btn-text {
-      color: #fff;
-      font-weight: 600;
+      color: var(--text-on-dark-primary);
+      font-weight: $font-weight-semibold;
     }
 
     &:focus-visible {
@@ -1920,15 +1921,15 @@ export default {
 
         &.active {
           .option-text {
-            color: #fff;
-            font-weight: 600;
+            color: var(--text-on-dark-primary);
+            font-weight: $font-weight-semibold;
           }
         }
 
         .option-text {
-          font-size: 12px;
+          font-size: $font-size-sm;
           color: var(--secondary-text-color);
-          font-weight: 500;
+          font-weight: $font-weight-medium;
           white-space: nowrap;
         }
       }
@@ -1940,15 +1941,15 @@ export default {
 
       background-color: var(--theme-color);
 
-      color: white;
+      color: var(--text-on-dark-primary);
 
       border: none;
 
       border-radius: 8px;
 
-      font-size: 14px;
+      font-size: $font-size-md;
 
-      font-weight: 500;
+      font-weight: $font-weight-medium;
 
       cursor: pointer;
 
@@ -2011,9 +2012,9 @@ export default {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
-  font-size: 16px;
-  font-weight: 600;
+  color: var(--text-primary);
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -2023,7 +2024,7 @@ export default {
 }
 
 .back-label {
-  font-size: 14px;
+  font-size: $font-size-md;
   color: var(--secondary-text-color);
 }
 
@@ -2085,9 +2086,9 @@ export default {
         align-items: center;
         justify-content: center;
         background: #2d2d2d;
-        color: #fff;
-        font-size: 13px;
-        font-weight: 700;
+        color: var(--text-on-dark-primary);
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
         line-height: 1.2;
         white-space: nowrap;
         overflow: hidden;
@@ -2105,7 +2106,7 @@ export default {
         flex-direction: column;
         gap: 4px;
         text-align: left;
-        color: var(--text-color);
+        color: var(--text-primary);
         position: relative;
         min-height: 116px;
         overflow: hidden;
@@ -2115,7 +2116,7 @@ export default {
 
         &.active {
           border-color: rgba(var(--theme-color-rgb), 0.65);
-          color: #fff;
+          color: var(--text-on-dark-primary);
         }
 
         &.active.tone-1 {
@@ -2138,18 +2139,18 @@ export default {
       }
 
       .chip-name {
-        font-size: 13px;
-        font-weight: 700;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
       }
 
       .chip-period {
-        font-size: 12px;
+        font-size: $font-size-sm;
         color: var(--secondary-text-color);
       }
 
       .mobile-plan-chip.active .chip-period,
       .mobile-plan-chip.current-plan-chip.active .chip-period {
-        color: rgba(255, 255, 255, 0.9);
+        color: var(--text-on-dark-primary);
       }
 
       .chip-check {
@@ -2187,13 +2188,13 @@ export default {
       }
 
       .mobile-label {
-        font-size: 13px;
+        font-size: $font-size-sm;
         color: var(--secondary-text-color);
       }
 
       .mobile-value {
-        font-size: 13px;
-        font-weight: 600;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
         text-align: right;
       }
 
@@ -2209,8 +2210,8 @@ export default {
         justify-content: center;
         gap: 8px;
         background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
-        color: #fff;
-        font-weight: 600;
+        color: var(--text-on-dark-primary);
+        font-weight: $font-weight-semibold;
 
         &.btn-disabled {
           background: var(--button-disabled-bg);
@@ -2258,7 +2259,7 @@ export default {
       padding: 0 9px;
 
       .option-text {
-        font-size: 12px;
+        font-size: $font-size-sm;
       }
     }
   }

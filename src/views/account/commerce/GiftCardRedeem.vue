@@ -114,6 +114,7 @@ const goBack = () => {
 </script>
 
 <style scoped lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
 .gift-card-page {
   .gift-card-inner {
     gap: 12px;
@@ -124,7 +125,7 @@ const goBack = () => {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
   display: inline-flex;
   align-items: center;
   cursor: pointer;
@@ -144,7 +145,7 @@ const goBack = () => {
 
   h2 {
     margin: 0;
-    font-size: 20px;
+    font-size: $font-size-xl;
   }
 }
 
@@ -173,7 +174,7 @@ const goBack = () => {
 .rule-card {
   h3 {
     margin: 0 0 8px;
-    font-size: 16px;
+    font-size: $font-size-md;
   }
 
   ul {
@@ -189,6 +190,6 @@ const goBack = () => {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
 }
 </style>

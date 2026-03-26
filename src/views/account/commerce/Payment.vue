@@ -1271,8 +1271,8 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 18px;
-        font-weight: 600;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
         margin: 0;
       }
     }
@@ -1328,10 +1328,10 @@ export default {
     }
 
     .section-title {
-      font-size: 16px;
-      font-weight: 600;
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
       margin-bottom: 16px;
-      color: var(--text-color);
+      color: var(--text-primary);
       display: flex;
       align-items: center;
 
@@ -1381,15 +1381,15 @@ export default {
     }
 
     .overview-plan-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-color);
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      color: var(--text-primary);
       line-height: 1.2;
     }
 
     .overview-plan-meta {
       margin-top: 8px;
-      font-size: 14px;
+      font-size: $font-size-md;
       color: var(--secondary-text-color);
       line-height: 1.3;
     }
@@ -1414,7 +1414,7 @@ export default {
       width: 14px;
       height: 14px;
       border: 2px solid rgba(0, 0, 0, 0.2);
-      border-top-color: var(--text-color);
+      border-top-color: var(--text-primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
@@ -1429,9 +1429,9 @@ export default {
 
     .section-title {
       margin-bottom: 0;
-      font-size: 15px;
+      font-size: $font-size-md;
       padding: 10px 12px 8px;
-      color: var(--text-color);
+      color: var(--text-primary);
 
       &::after {
         background-color: var(--border-color);
@@ -1455,7 +1455,7 @@ export default {
     box-shadow: none;
 
     .section-title {
-      color: var(--text-color);
+      color: var(--text-primary);
 
       &::after {
         background-color: var(--border-color);
@@ -1465,7 +1465,7 @@ export default {
     .order-info {
       .info-label,
       .info-value {
-        color: var(--text-color);
+        color: var(--text-primary);
       }
 
       .info-value.discount {
@@ -1482,13 +1482,13 @@ export default {
         margin-top: 8px;
 
         .info-label {
-          color: var(--text-color);
-          font-weight: 600;
+          color: var(--text-primary);
+          font-weight: $font-weight-semibold;
         }
 
         .info-value.final {
           color: var(--theme-color);
-          font-weight: 700;
+          font-weight: $font-weight-bold;
         }
       }
     }
@@ -1501,7 +1501,7 @@ export default {
         height: 44px;
         border-radius: $border-radius-sm;
         background-color: var(--theme-color);
-        color: #fff;
+        color: var(--text-on-dark-primary);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -1622,13 +1622,13 @@ export default {
         gap: 6px;
 
         .method-name {
-          font-weight: 600;
-          color: var(--text-color);
+          font-weight: $font-weight-semibold;
+          color: var(--text-primary);
           line-height: 1.2;
         }
 
         .method-fee {
-          font-size: 11px;
+          font-size: $font-size-sm;
           color: var(--secondary-text-color);
           white-space: nowrap;
         }
@@ -1638,7 +1638,7 @@ export default {
     .payment-security-note {
       padding: 6px 12px 8px;
       border-top: 1px solid var(--border-color);
-      font-size: 12px;
+      font-size: $font-size-sm;
       color: var(--secondary-text-color);
       line-height: 1.4;
       background: #fff;
@@ -1673,12 +1673,12 @@ export default {
       h3 {
         margin: 0 0 8px;
         color: #4caf50;
-        font-size: 16px;
+        font-size: $font-size-md;
       }
 
       p {
         margin: 0;
-        color: var(--text-color);
+        color: var(--text-primary);
       }
     }
   }
@@ -1750,8 +1750,8 @@ export default {
       justify-content: center;
       gap: 8px;
       border-radius: $border-radius-sm;
-      font-size: 14px;
-      font-weight: 500;
+      font-size: $font-size-md;
+      font-weight: $font-weight-medium;
       padding: 0 24px;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -1780,7 +1780,7 @@ export default {
 
     .btn-back {
       background-color: transparent;
-      color: var(--text-color);
+      color: var(--text-primary);
       flex: 1;
       border: 1px solid var(--border-color);
       box-shadow: none;
@@ -1806,7 +1806,7 @@ export default {
     .btn-pay,
     .btn-continue {
       background-color: var(--theme-color);
-      color: white;
+      color: var(--text-on-dark-primary);
       flex: 2;
       box-shadow: none;
 
@@ -1819,7 +1819,7 @@ export default {
 
     .btn-check {
       background-color: var(--hover-color);
-      color: var(--text-color);
+      color: var(--text-primary);
       flex: 1;
       border: 1px solid var(--border-color);
       box-shadow: none;
@@ -1918,7 +1918,7 @@ export default {
 
     .success-animation {
       text-align: center;
-      color: white;
+      color: var(--text-on-dark-primary);
       padding: 30px;
       max-width: 500px;
       z-index: 1001;
@@ -1939,20 +1939,20 @@ export default {
           box-shadow: none;
 
           .check-icon {
-            color: white;
+            color: var(--text-on-dark-primary);
             animation: bounceIn 0.8s ease 0.2s both;
           }
         }
       }
 
       h2 {
-        font-size: 28px;
+        font-size: $font-size-xl;
         margin-bottom: 16px;
         animation: slideUp 0.5s ease 0.4s both;
       }
 
       p {
-        font-size: 16px;
+        font-size: $font-size-md;
         opacity: 0.8;
         animation: slideUp 0.5s ease 0.6s both;
       }
@@ -2152,9 +2152,9 @@ export default {
         padding: 0;
         border-radius: $border-radius-sm;
         background-color: transparent;
-        color: var(--text-color);
-        font-size: 22px;
-        font-weight: 500;
+        color: var(--text-primary);
+        font-size: $font-size-xl;
+        font-weight: $font-weight-medium;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -2205,14 +2205,14 @@ export default {
         }
 
         h3 {
-          font-size: 20px;
-          font-weight: 600;
+          font-size: $font-size-xl;
+          font-weight: $font-weight-semibold;
           margin: 0 0 12px;
-          color: var(--text-color);
+          color: var(--text-primary);
         }
 
         p {
-          font-size: 15px;
+          font-size: $font-size-md;
           line-height: 1.6;
           margin: 0 0 24px;
           color: var(--secondary-text-color);
@@ -2245,7 +2245,7 @@ export default {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
+            font-size: $font-size-md;
             color: var(--theme-color);
             cursor: pointer;
             transition: all 0.2s ease;
@@ -2268,8 +2268,8 @@ export default {
           height: 46px;
           border-radius: $border-radius-sm;
           border: none;
-          font-size: 15px;
-          font-weight: 600;
+          font-size: $font-size-md;
+          font-weight: $font-weight-semibold;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -2302,7 +2302,7 @@ export default {
         .btn-secondary {
           background-color: transparent;
           border: 1px solid var(--border-color);
-          color: var(--text-color);
+          color: var(--text-primary);
           box-shadow: none;
           transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
@@ -2321,7 +2321,7 @@ export default {
 
         .btn-primary {
           background-color: var(--theme-color);
-          color: white;
+          color: var(--text-on-dark-primary);
           box-shadow: none;
           transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
@@ -2428,14 +2428,14 @@ export default {
     text-align: center;
 
     h3 {
-      font-size: 18px;
-      font-weight: 600;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
       margin: 0 0 12px;
-      color: var(--text-color);
+      color: var(--text-primary);
     }
 
     p {
-      font-size: 14px;
+      font-size: $font-size-md;
       line-height: 1.5;
       margin: 0;
       color: var(--secondary-text-color);
@@ -2451,8 +2451,8 @@ export default {
       flex: 1;
       padding: 10px 0;
       border-radius: $border-radius-sm;
-      font-size: 14px;
-      font-weight: 500;
+      font-size: $font-size-md;
+      font-weight: $font-weight-medium;
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -2460,7 +2460,7 @@ export default {
     .cancel-btn {
       background-color: transparent;
       border: 1px solid var(--border-color);
-      color: var(--text-color);
+      color: var(--text-primary);
       box-shadow: none;
 
       &:hover {
@@ -2477,7 +2477,7 @@ export default {
 
     .confirm-btn {
       background-color: #ff4d4f;
-      color: white;
+      color: var(--text-on-dark-primary);
 
       &:hover {
         background-color: #ff7875;
@@ -2518,8 +2518,8 @@ export default {
   gap: 6px;
   border-radius: 999px;
   padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
   border: 1px solid transparent;
   transition: all 0.3s ease;
 
