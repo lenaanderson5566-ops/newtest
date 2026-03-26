@@ -170,14 +170,14 @@
             :class="{ 'card-animate': !loading.userStats }"
             :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
-            <div class="usage-card-title today-card-title">今日流量</div>
+            <div class="usage-card-title today-card-title">{{ $t('dashboard.todayTrafficTitle') }}</div>
             <div class="today-traffic-total-main">
               <span class="usage-percent compact">{{ todayTrafficStats.totalGb }} GB</span>
-              <span class="usage-percent-label">已使用</span>
+              <span class="usage-percent-label">{{ $t('dashboard.todayTrafficUsed') }}</span>
             </div>
             <div class="today-traffic-breakdown">
-              <span class="traffic-up">上行 {{ todayTrafficStats.uploadGb }} GB</span>
-              <span class="traffic-down">下行 {{ todayTrafficStats.downloadGb }} GB</span>
+              <span class="traffic-up">{{ $t('dashboard.todayTrafficUpload') }} {{ todayTrafficStats.uploadGb }} GB</span>
+              <span class="traffic-down">{{ $t('dashboard.todayTrafficDownload') }} {{ todayTrafficStats.downloadGb }} GB</span>
             </div>
           </div>
 
@@ -2130,8 +2130,11 @@ export default {
       line-height: 1.45;
       color: var(--theme-text-secondary);
 
-      .traffic-up { color: #059669; font-weight: 600; }
-      .traffic-down { color: #dc2626; font-weight: 600; }
+      .traffic-up,
+      .traffic-down {
+        color: var(--secondary-text-color);
+        font-weight: 600;
+      }
     }
   }
 
