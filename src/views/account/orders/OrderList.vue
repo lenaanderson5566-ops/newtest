@@ -502,6 +502,7 @@ watch(locale, () => {
 
 .order-table {
   width: 100%;
+  min-width: 860px;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed; 
@@ -846,30 +847,6 @@ watch(locale, () => {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
-
-
-@media (max-width: 768px) {
-  .order-table {
-    th, td {
-      padding: 0.55rem 0.45rem;
-      font-size: 0.8rem;
-    }
-    
-    .actions {
-      gap: 0.35rem;
-
-      .action-button {
-        padding: 0.24rem 0.4rem;
-        font-size: 0.74rem;
-        height: 28px;
-        min-width: 58px;
-        flex: 0 0 58px;
-      }
-    }
-  }
-}
-
-
 
 
 .page-switch-enter-active,
