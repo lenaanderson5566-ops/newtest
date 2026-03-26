@@ -963,6 +963,36 @@ profile: {
       }
     }
   },
+  quickStartPage: {
+    step1Title: '시스템 선택',
+    step1Tip: '현재 사용 중인 기기 운영체제를 선택하세요',
+    step2Title: '다운로드 및 가져오기',
+    step2Tip: '추천 클라이언트를 다운로드하고 구독을 가져오세요',
+    recommended: '추천',
+    quickImport: '원클릭 가져오기',
+    copySubscription: '구독 복사',
+    qrImport: 'QR 가져오기',
+    step3Title: '연결 시작',
+    connectHint: '클라이언트 열기 → 노드 선택 → 연결 클릭',
+    helpCta: '도움이 필요하신가요? 자세한 가이드 보기 →',
+    qrModalTitle: 'QR 코드를 스캔해 구성 추가',
+    downloadClient: '{name} 다운로드',
+    clientFallbackName: '클라이언트',
+    subscriptionTag: '구독',
+    noSubscriptionUrl: '현재 구독 링크가 없습니다',
+    quickImportTriggered: '클라이언트 실행을 시도했으며 구독 주소를 클립보드에 복사했습니다',
+    qrGenerateFailed: 'QR 코드 생성에 실패했습니다',
+    subscriptionCopied: '구독 링크를 복사했습니다',
+    copyFailed: '복사에 실패했습니다. 잠시 후 다시 시도하세요',
+    status: {
+      newTitle: '서비스 미개통 · 먼저 구독을 구매하세요',
+      expiredTitle: '구독 만료 · 제때 갱신하세요',
+      activeTitle: '서비스 활성화 · 연결을 시작할 수 있습니다',
+      newDesc: '구독 구매 후 클라이언트를 다운로드하고 구독을 가져오면 사용할 수 있습니다.',
+      expiredDesc: '갱신 후 클라이언트를 다운로드하고 구독을 가져오면 다시 사용할 수 있습니다.',
+      activeDesc: '클라이언트를 다운로드하고 구독을 가져오면 바로 사용할 수 있습니다.'
+    }
+  },
   docs: {
     title: '문서 센터',
     searchPlaceholder: '문서 검색...',

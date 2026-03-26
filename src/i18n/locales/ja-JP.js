@@ -962,6 +962,36 @@ profile: {
       }
     }
   },
+  quickStartPage: {
+    step1Title: 'システムを選択',
+    step1Tip: '現在使用しているデバイスのOSを選択してください',
+    step2Title: 'ダウンロードとインポート',
+    step2Tip: '推奨クライアントをダウンロードしてサブスクリプションをインポートします',
+    recommended: 'おすすめ',
+    quickImport: 'ワンクリック導入',
+    copySubscription: 'サブスクURLをコピー',
+    qrImport: 'QRでインポート',
+    step3Title: '接続開始',
+    connectHint: 'クライアントを開く → ノードを選ぶ → 接続をクリック',
+    helpCta: 'お困りですか？ 詳細ガイドを見る →',
+    qrModalTitle: 'QRコードをスキャンして設定を追加',
+    downloadClient: '{name}をダウンロード',
+    clientFallbackName: 'クライアント',
+    subscriptionTag: 'サブスク',
+    noSubscriptionUrl: '現在、サブスクリプションURLがありません',
+    quickImportTriggered: 'クライアント起動を試行し、サブスクリプションURLをクリップボードにコピーしました',
+    qrGenerateFailed: 'QRコードの生成に失敗しました',
+    subscriptionCopied: 'サブスクリプションURLをコピーしました',
+    copyFailed: 'コピーに失敗しました。しばらくしてから再試行してください',
+    status: {
+      newTitle: 'サービス未開通 · 先にサブスクリプションを購入してください',
+      expiredTitle: 'サブスクリプション期限切れ · 早めに更新してください',
+      activeTitle: 'サービス利用可能 · 接続を開始できます',
+      newDesc: 'サブスク購入後、クライアントをダウンロードしてインポートすると利用できます。',
+      expiredDesc: '更新後、クライアントをダウンロードしてインポートすると再利用できます。',
+      activeDesc: 'クライアントをダウンロードしてサブスクをインポートすると利用できます。'
+    }
+  },
   docs: {
     title: 'ドキュメントセンター',
     searchPlaceholder: 'ドキュメント検索...',

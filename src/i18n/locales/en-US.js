@@ -980,6 +980,36 @@ profile: {
             }
         }
     },
+    quickStartPage: {
+        step1Title: 'Choose System',
+        step1Tip: 'Choose the operating system of your current device',
+        step2Title: 'Download & Import',
+        step2Tip: 'Download a recommended client and import your subscription',
+        recommended: 'Recommended',
+        quickImport: 'Quick Import',
+        copySubscription: 'Copy Subscription',
+        qrImport: 'Import via QR',
+        step3Title: 'Start Connecting',
+        connectHint: 'Open client → Choose node → Click connect',
+        helpCta: 'Need help? View detailed guide →',
+        qrModalTitle: 'Scan QR code to add configuration',
+        downloadClient: 'Download {name}',
+        clientFallbackName: 'Client',
+        subscriptionTag: 'Subscription',
+        noSubscriptionUrl: 'No subscription URL available right now',
+        quickImportTriggered: 'Tried to open the client and copied the subscription URL to clipboard',
+        qrGenerateFailed: 'Failed to generate QR code',
+        subscriptionCopied: 'Subscription URL copied',
+        copyFailed: 'Copy failed, please try again later',
+        status: {
+            newTitle: 'Service not activated · Please purchase a subscription first',
+            expiredTitle: 'Subscription expired · Please renew in time',
+            activeTitle: 'Service active · Ready to connect',
+            newDesc: 'After subscribing, download a client and import your subscription to start using.',
+            expiredDesc: 'After renewing, download a client and import your subscription to resume service.',
+            activeDesc: 'Download a client and import your subscription to start using.'
+        }
+    },
     docs: {
         title: 'Client Center',
         searchPlaceholder: 'Search documentation...',

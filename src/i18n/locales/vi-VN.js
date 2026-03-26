@@ -955,6 +955,36 @@ profile: {
             }
         }
     },
+    quickStartPage: {
+        step1Title: 'Chọn hệ điều hành',
+        step1Tip: 'Chọn hệ điều hành của thiết bị bạn đang dùng',
+        step2Title: 'Tải xuống và nhập',
+        step2Tip: 'Tải ứng dụng đề xuất và hoàn tất nhập thuê bao',
+        recommended: 'Đề xuất',
+        quickImport: 'Nhập nhanh',
+        copySubscription: 'Sao chép thuê bao',
+        qrImport: 'Nhập bằng QR',
+        step3Title: 'Bắt đầu kết nối',
+        connectHint: 'Mở ứng dụng → Chọn node → Nhấn kết nối',
+        helpCta: 'Cần trợ giúp? Xem hướng dẫn chi tiết →',
+        qrModalTitle: 'Quét mã QR để thêm cấu hình',
+        downloadClient: 'Tải {name}',
+        clientFallbackName: 'ứng dụng',
+        subscriptionTag: 'Thuê bao',
+        noSubscriptionUrl: 'Hiện chưa có liên kết thuê bao',
+        quickImportTriggered: 'Đã thử mở ứng dụng và sao chép liên kết thuê bao vào clipboard',
+        qrGenerateFailed: 'Tạo mã QR thất bại',
+        subscriptionCopied: 'Đã sao chép liên kết thuê bao',
+        copyFailed: 'Sao chép thất bại, vui lòng thử lại sau',
+        status: {
+            newTitle: 'Dịch vụ chưa kích hoạt · Vui lòng mua thuê bao trước',
+            expiredTitle: 'Thuê bao đã hết hạn · Vui lòng gia hạn kịp thời',
+            activeTitle: 'Dịch vụ đã kích hoạt · Có thể bắt đầu kết nối',
+            newDesc: 'Sau khi mua thuê bao, tải ứng dụng và nhập thuê bao để bắt đầu sử dụng.',
+            expiredDesc: 'Sau khi gia hạn, tải ứng dụng và nhập thuê bao để khôi phục sử dụng.',
+            activeDesc: 'Tải ứng dụng và nhập thuê bao là có thể sử dụng ngay.'
+        }
+    },
     docs: {
         title: 'Trung tâm Tài liệu',
         searchPlaceholder: 'Tìm kiếm tài liệu...',

@@ -961,6 +961,36 @@ profile: {
       }
     }
   },
+  quickStartPage: {
+    step1Title: '選擇系統',
+    step1Tip: '選擇你目前使用的裝置系統',
+    step2Title: '下載並匯入',
+    step2Tip: '下載推薦客戶端並完成訂閱匯入',
+    recommended: '推薦',
+    quickImport: '一鍵匯入',
+    copySubscription: '複製訂閱',
+    qrImport: '掃碼匯入',
+    step3Title: '開始連線',
+    connectHint: '打開客戶端 → 選擇節點 → 點擊連線',
+    helpCta: '需要幫助？查看詳細教學 →',
+    qrModalTitle: '掃描二維碼新增配置',
+    downloadClient: '下載{name}',
+    clientFallbackName: '客戶端',
+    subscriptionTag: '訂閱',
+    noSubscriptionUrl: '目前暫無訂閱連結',
+    quickImportTriggered: '已嘗試喚起客戶端，訂閱地址已複製到剪貼簿',
+    qrGenerateFailed: '二維碼生成失敗',
+    subscriptionCopied: '訂閱連結已複製',
+    copyFailed: '複製失敗，請稍後再試',
+    status: {
+      newTitle: '尚未開通服務 · 請先購買訂閱',
+      expiredTitle: '訂閱已到期 · 請及時續費',
+      activeTitle: '服務已開通 · 可開始連線',
+      newDesc: '完成訂閱後即可下載客戶端並匯入訂閱使用。',
+      expiredDesc: '續費後下載客戶端並匯入訂閱即可恢復使用。',
+      activeDesc: '下載客戶端並匯入訂閱後即可使用。'
+    }
+  },
   docs: {
     title: '文件中心',
     searchPlaceholder: '搜尋文件...',

@@ -981,6 +981,36 @@ profile: {
             }
         }
     },
+    quickStartPage: {
+        step1Title: '选择系统',
+        step1Tip: '选择你当前使用的设备系统',
+        step2Title: '下载并导入',
+        step2Tip: '下载推荐客户端并完成订阅导入',
+        recommended: '推荐',
+        quickImport: '一键导入',
+        copySubscription: '复制订阅',
+        qrImport: '扫码导入',
+        step3Title: '开始连接',
+        connectHint: '打开客户端 → 选择节点 → 点击连接',
+        helpCta: '需要帮助？查看详细教程 →',
+        qrModalTitle: '扫描二维码添加配置',
+        downloadClient: '下载{name}',
+        clientFallbackName: '客户端',
+        subscriptionTag: '订阅',
+        noSubscriptionUrl: '当前暂无订阅链接',
+        quickImportTriggered: '已尝试唤起客户端，订阅地址已复制到剪贴板',
+        qrGenerateFailed: '二维码生成失败',
+        subscriptionCopied: '订阅链接已复制',
+        copyFailed: '复制失败，请稍后重试',
+        status: {
+            newTitle: '尚未开通服务 · 请先购买订阅',
+            expiredTitle: '订阅已到期 · 请及时续费',
+            activeTitle: '服务已开通 · 可开始连接',
+            newDesc: '完成订阅后即可下载客户端并导入订阅使用。',
+            expiredDesc: '续费后下载客户端并导入订阅即可恢复使用。',
+            activeDesc: '下载客户端并导入订阅后即可使用。'
+        }
+    },
     docs: {
         title: '客户端中心',
         searchPlaceholder: '搜索文档...',
