@@ -286,7 +286,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .landing-page {
 
   position: relative;
@@ -512,7 +512,7 @@ export default {
 
 .site-title {
 
-  font-size: 48px;
+  font-size: $font-size-lg;
 
   font-weight: 700;
 

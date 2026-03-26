@@ -593,7 +593,7 @@ onMounted(async () => {
   border: none;
   background: transparent;
   color: var(--secondary-text-color);
-  font-size: 14px;
+  font-size: $font-size-base;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
@@ -651,7 +651,7 @@ onMounted(async () => {
 
 .recent-login-header p {
   margin: 4px 0 0;
-  font-size: 12px;
+  font-size: $font-size-sm;
   color: var(--secondary-text-color);
 }
 
@@ -663,7 +663,7 @@ onMounted(async () => {
 .recent-login-state {
   padding: 14px 2px 4px;
   color: var(--secondary-text-color);
-  font-size: 13px;
+  font-size: $font-size-sm;
 }
 
 .recent-login-item {
@@ -685,13 +685,13 @@ onMounted(async () => {
 }
 
 .recent-login-main strong {
-  font-size: 13px;
+  font-size: $font-size-sm;
   color: var(--text-color);
 }
 
 .recent-login-main span,
 .recent-login-ip {
-  font-size: 12px;
+  font-size: $font-size-sm;
   color: var(--secondary-text-color);
 }
 
@@ -724,14 +724,14 @@ onMounted(async () => {
 
     h3 {
       margin: 0;
-      font-size: 16px;
+      font-size: $font-size-base;
       font-weight: 700;
       color: #f8fbff;
     }
 
     p {
       margin: 0;
-      font-size: 14px;
+      font-size: $font-size-base;
       color: rgba(232, 237, 255, 0.9);
     }
   }
@@ -750,7 +750,7 @@ onMounted(async () => {
     width: 24px;
     height: 24px;
     border-radius: 999px;
-    font-size: 13px;
+    font-size: $font-size-sm;
     font-weight: 700;
     box-shadow: none;
 
@@ -763,7 +763,7 @@ onMounted(async () => {
   }
 
   .tier-level {
-    font-size: 13px;
+    font-size: $font-size-sm;
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 999px;
@@ -772,7 +772,7 @@ onMounted(async () => {
 
   .tier-progress-meta,
   .tier-next {
-    font-size: 13px;
+    font-size: $font-size-sm;
     color: rgba(239, 243, 255, 0.92);
   }
 
@@ -826,12 +826,12 @@ onMounted(async () => {
   .label {
     display: block;
     margin-bottom: 6px;
-    font-size: 12px;
+    font-size: $font-size-sm;
     color: var(--secondary-text-color);
   }
 
   strong {
-    font-size: 14px;
+    font-size: $font-size-base;
     color: var(--text-color);
     word-break: break-word;
   }
@@ -845,7 +845,7 @@ onMounted(async () => {
 
 .section-title {
   margin: 0;
-  font-size: 16px;
+  font-size: $font-size-base;
   font-weight: 700;
   color: var(--text-color);
 }
@@ -862,7 +862,7 @@ onMounted(async () => {
 .section-subtitle {
   margin: 0;
   padding: 0 2px;
-  font-size: 13px;
+  font-size: $font-size-sm;
   color: var(--secondary-text-color);
 }
 
@@ -871,14 +871,14 @@ onMounted(async () => {
 }
 
 .plan-name {
-  font-size: 24px;
+  font-size: $font-size-lg;
   font-weight: 700;
   color: var(--text-color);
 }
 
 .plan-desc {
   margin: 8px 0 0;
-  font-size: 14px;
+  font-size: $font-size-base;
   color: var(--secondary-text-color);
 }
 
@@ -900,7 +900,7 @@ onMounted(async () => {
 }
 
 .balance-amount {
-  font-size: 18px !important;
+  font-size: $font-size-lg !important;
   line-height: 1.2;
 }
 
@@ -927,14 +927,14 @@ onMounted(async () => {
 .row-main { min-width: 0; }
 
 .row-title {
-  font-size: 14px;
+  font-size: $font-size-base;
   font-weight: 600;
   color: var(--text-color);
 }
 
 .row-main p {
   margin: 3px 0 0;
-  font-size: 12px;
+  font-size: $font-size-sm;
   color: var(--secondary-text-color);
 }
 
@@ -952,7 +952,7 @@ onMounted(async () => {
 
   p {
     margin: 6px 0 0;
-    font-size: 13px;
+    font-size: $font-size-sm;
     line-height: 1.6;
     color: var(--secondary-text-color);
   }
@@ -963,7 +963,7 @@ onMounted(async () => {
 }
 
 .tier-intro-title {
-  font-size: 14px;
+  font-size: $font-size-base;
   font-weight: 700;
   color: var(--text-color);
 }
@@ -1044,7 +1044,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
   h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: $font-size-lg;
     font-weight: 600;
     color: var(--text-color);
   }
@@ -1082,7 +1082,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
   label {
     display: block;
-    font-size: 14px;
+    font-size: $font-size-base;
     font-weight: 500;
     color: var(--text-color);
     margin-bottom: 8px;
@@ -1095,7 +1095,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     border-radius: 8px;
     background-color: var(--bg-secondary);
     color: var(--text-color);
-    font-size: 15px;
+    font-size: $font-size-base;
     transition: all 0.3s ease;
 
     &:focus {
@@ -1109,7 +1109,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .error-text {
   margin-top: 6px;
   color: #f44336;
-  font-size: 13px;
+  font-size: $font-size-sm;
 }
 
 .modal-footer {
@@ -1124,7 +1124,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .action-btn {
   padding: 8px 16px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: $font-size-base;
   cursor: pointer;
   border: 1px solid var(--border-color);
   background: transparent;
@@ -1135,7 +1135,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .action-btn.danger {
   padding: 8px 16px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: $font-size-base;
   cursor: pointer;
   border: none;
   background: rgba(var(--theme-color-rgb), 0.92);
@@ -1195,14 +1195,14 @@ input:checked + .slider:before { transform: translateX(18px); }
 
   .top-nav-item {
     padding: 14px 12px 12px;
-    font-size: 15px;
+    font-size: $font-size-base;
   }
 
   .overview-panels { gap: 0.75rem; }
   .summary-panel { padding: 14px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
-  .section-block > .section-title { padding: 14px 14px 8px; font-size: 18px; }
+  .section-block > .section-title { padding: 14px 14px 8px; font-size: $font-size-lg; }
   .settings-row,
   .nav-row { min-height: 62px; padding: 12px 14px; }
 }

@@ -1804,9 +1804,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
-
-
+@use "@/assets/styles/base/variables.scss" as *;
 .forgot-password-view-container {
 
   width: 100%;
@@ -2191,7 +2189,7 @@ export default {
 
   margin-left: 4px;
 
-  font-size: 16px;
+  font-size: $font-size-base;
 
   vertical-align: middle;
 

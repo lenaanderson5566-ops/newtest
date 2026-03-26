@@ -1056,6 +1056,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .shop-container {
   --shop-card-radius: var(--radius-lg);
 
@@ -1083,7 +1084,7 @@ export default {
 
     .card-body p {
       color: var(--secondary-text-color);
-      font-size: 14px;
+      font-size: $font-size-base;
       line-height: 1.6;
       font-weight: 500;
     }
@@ -1134,7 +1135,7 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 18px;
+        font-size: $font-size-lg;
 
         font-weight: 700;
 
@@ -1165,7 +1166,7 @@ export default {
   .current-plan-badge {
     display: inline-flex;
     align-items: center;
-    font-size: 12px;
+    font-size: $font-size-sm;
     line-height: 1;
     font-weight: 600;
     color: var(--theme-color);
@@ -1186,7 +1187,7 @@ export default {
 
         border-radius: 20px;
 
-        font-size: 12px;
+        font-size: $font-size-sm;
 
         font-weight: 500;
 
@@ -1441,7 +1442,7 @@ export default {
         justify-content: center;
         background: #2d2d2d;
         color: #fff;
-        font-size: 12px;
+        font-size: $font-size-sm;
         font-weight: 700;
         border-radius: 12px 12px 0 0;
       }
@@ -1514,7 +1515,7 @@ export default {
         }
 
         .card-title {
-          font-size: 20px;
+          font-size: $font-size-lg;
 
           font-weight: 600;
 
@@ -1534,7 +1535,7 @@ export default {
 
         .desktop-subtitle {
           margin: 0;
-          font-size: 14px;
+          font-size: $font-size-base;
           font-weight: 600;
           color: rgba(255, 255, 255, 0.95);
         }
@@ -1561,7 +1562,7 @@ export default {
 
           border-radius: 20px;
 
-          font-size: 12px;
+          font-size: $font-size-sm;
 
           font-weight: 500;
 
@@ -1651,13 +1652,13 @@ export default {
         }
 
         .currency {
-          font-size: 22px;
+          font-size: $font-size-lg;
           font-weight: 500;
           color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
         }
 
         .amount {
-          font-size: 42px;
+          font-size: $font-size-lg;
           line-height: 0.95;
           font-weight: 700;
           color: var(--text-color);
@@ -1665,7 +1666,7 @@ export default {
         }
 
         .unit-line {
-          font-size: 13px;
+          font-size: $font-size-sm;
           font-weight: 500;
           color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
         }
@@ -1688,7 +1689,7 @@ export default {
       border-radius: 8px;
 
       .discount-info {
-        font-size: 14px;
+        font-size: $font-size-base;
 
         text-align: center;
 
@@ -1767,7 +1768,7 @@ export default {
         }
 
         span {
-          font-size: 14px;
+          font-size: $font-size-base;
 
           color: var(--text-color);
 
@@ -1786,7 +1787,7 @@ export default {
       }
 
       .html-content {
-        font-size: 14px;
+        font-size: $font-size-base;
 
         line-height: 1.6;
 
@@ -1809,7 +1810,7 @@ export default {
     color: white;
     border: 1px solid transparent;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: $font-size-base;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.25s ease;
@@ -1926,7 +1927,7 @@ export default {
         }
 
         .option-text {
-          font-size: 12px;
+          font-size: $font-size-sm;
           color: var(--secondary-text-color);
           font-weight: 500;
           white-space: nowrap;
@@ -1946,7 +1947,7 @@ export default {
 
       border-radius: 8px;
 
-      font-size: 14px;
+      font-size: $font-size-base;
 
       font-weight: 500;
 
@@ -2012,7 +2013,7 @@ export default {
   border: none;
   background: transparent;
   color: var(--text-color);
-  font-size: 16px;
+  font-size: $font-size-base;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
@@ -2023,7 +2024,7 @@ export default {
 }
 
 .back-label {
-  font-size: 14px;
+  font-size: $font-size-base;
   color: var(--secondary-text-color);
 }
 
@@ -2086,7 +2087,7 @@ export default {
         justify-content: center;
         background: #2d2d2d;
         color: #fff;
-        font-size: 13px;
+        font-size: $font-size-sm;
         font-weight: 700;
         line-height: 1.2;
         white-space: nowrap;
@@ -2138,12 +2139,12 @@ export default {
       }
 
       .chip-name {
-        font-size: 13px;
+        font-size: $font-size-sm;
         font-weight: 700;
       }
 
       .chip-period {
-        font-size: 12px;
+        font-size: $font-size-sm;
         color: var(--secondary-text-color);
       }
 
@@ -2187,12 +2188,12 @@ export default {
       }
 
       .mobile-label {
-        font-size: 13px;
+        font-size: $font-size-sm;
         color: var(--secondary-text-color);
       }
 
       .mobile-value {
-        font-size: 13px;
+        font-size: $font-size-sm;
         font-weight: 600;
         text-align: right;
       }
@@ -2258,7 +2259,7 @@ export default {
       padding: 0 9px;
 
       .option-text {
-        font-size: 12px;
+        font-size: $font-size-sm;
       }
     }
   }

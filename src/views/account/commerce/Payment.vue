@@ -1271,7 +1271,7 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 18px;
+        font-size: $font-size-lg;
         font-weight: 600;
         margin: 0;
       }
@@ -1328,7 +1328,7 @@ export default {
     }
 
     .section-title {
-      font-size: 16px;
+      font-size: $font-size-base;
       font-weight: 600;
       margin-bottom: 16px;
       color: var(--text-color);
@@ -1381,7 +1381,7 @@ export default {
     }
 
     .overview-plan-name {
-      font-size: 18px;
+      font-size: $font-size-lg;
       font-weight: 700;
       color: var(--text-color);
       line-height: 1.2;
@@ -1389,7 +1389,7 @@ export default {
 
     .overview-plan-meta {
       margin-top: 8px;
-      font-size: 14px;
+      font-size: $font-size-base;
       color: var(--secondary-text-color);
       line-height: 1.3;
     }
@@ -1429,7 +1429,7 @@ export default {
 
     .section-title {
       margin-bottom: 0;
-      font-size: 15px;
+      font-size: $font-size-base;
       padding: 10px 12px 8px;
       color: var(--text-color);
 
@@ -1628,7 +1628,7 @@ export default {
         }
 
         .method-fee {
-          font-size: 11px;
+          font-size: $font-size-sm;
           color: var(--secondary-text-color);
           white-space: nowrap;
         }
@@ -1638,7 +1638,7 @@ export default {
     .payment-security-note {
       padding: 6px 12px 8px;
       border-top: 1px solid var(--border-color);
-      font-size: 12px;
+      font-size: $font-size-sm;
       color: var(--secondary-text-color);
       line-height: 1.4;
       background: #fff;
@@ -1673,7 +1673,7 @@ export default {
       h3 {
         margin: 0 0 8px;
         color: #4caf50;
-        font-size: 16px;
+        font-size: $font-size-base;
       }
 
       p {
@@ -1750,7 +1750,7 @@ export default {
       justify-content: center;
       gap: 8px;
       border-radius: $border-radius-sm;
-      font-size: 14px;
+      font-size: $font-size-base;
       font-weight: 500;
       padding: 0 24px;
       cursor: pointer;
@@ -1946,13 +1946,13 @@ export default {
       }
 
       h2 {
-        font-size: 28px;
+        font-size: $font-size-lg;
         margin-bottom: 16px;
         animation: slideUp 0.5s ease 0.4s both;
       }
 
       p {
-        font-size: 16px;
+        font-size: $font-size-base;
         opacity: 0.8;
         animation: slideUp 0.5s ease 0.6s both;
       }
@@ -2153,7 +2153,7 @@ export default {
         border-radius: $border-radius-sm;
         background-color: transparent;
         color: var(--text-color);
-        font-size: 22px;
+        font-size: $font-size-lg;
         font-weight: 500;
         display: flex;
         align-items: center;
@@ -2205,14 +2205,14 @@ export default {
         }
 
         h3 {
-          font-size: 20px;
+          font-size: $font-size-lg;
           font-weight: 600;
           margin: 0 0 12px;
           color: var(--text-color);
         }
 
         p {
-          font-size: 15px;
+          font-size: $font-size-base;
           line-height: 1.6;
           margin: 0 0 24px;
           color: var(--secondary-text-color);
@@ -2245,7 +2245,7 @@ export default {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
+            font-size: $font-size-base;
             color: var(--theme-color);
             cursor: pointer;
             transition: all 0.2s ease;
@@ -2268,7 +2268,7 @@ export default {
           height: 46px;
           border-radius: $border-radius-sm;
           border: none;
-          font-size: 15px;
+          font-size: $font-size-base;
           font-weight: 600;
           display: flex;
           align-items: center;
@@ -2428,14 +2428,14 @@ export default {
     text-align: center;
 
     h3 {
-      font-size: 18px;
+      font-size: $font-size-lg;
       font-weight: 600;
       margin: 0 0 12px;
       color: var(--text-color);
     }
 
     p {
-      font-size: 14px;
+      font-size: $font-size-base;
       line-height: 1.5;
       margin: 0;
       color: var(--secondary-text-color);
@@ -2451,7 +2451,7 @@ export default {
       flex: 1;
       padding: 10px 0;
       border-radius: $border-radius-sm;
-      font-size: 14px;
+      font-size: $font-size-base;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -2518,7 +2518,7 @@ export default {
   gap: 6px;
   border-radius: 999px;
   padding: 6px 12px;
-  font-size: 13px;
+  font-size: $font-size-sm;
   font-weight: 600;
   border: 1px solid transparent;
   transition: all 0.3s ease;

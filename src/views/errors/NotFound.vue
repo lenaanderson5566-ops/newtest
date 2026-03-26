@@ -147,7 +147,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .not-found-container {
 
   display: flex;
@@ -190,7 +190,7 @@ export default {
 
   color: var(--theme-color);
 
-  font-size: 16px;
+  font-size: $font-size-base;
 
   font-weight: 500;
 
@@ -238,7 +238,7 @@ export default {
 
 .error-code {
 
-  font-size: 120px;
+  font-size: $font-size-lg;
 
   font-weight: 900;
 
@@ -266,7 +266,7 @@ export default {
 
 .error-title {
 
-  font-size: 28px;
+  font-size: $font-size-lg;
 
   font-weight: 700;
 
@@ -280,7 +280,7 @@ export default {
 
 .error-description {
 
-  font-size: 18px;
+  font-size: $font-size-lg;
 
   line-height: 1.6;
 
@@ -312,7 +312,7 @@ export default {
 
   padding: 12px 24px;
 
-  font-size: 16px;
+  font-size: $font-size-base;
 
   font-weight: 500;
 
@@ -348,7 +348,7 @@ export default {
 
   .error-code {
 
-    font-size: 100px;
+    font-size: $font-size-lg;
 
   }
 
@@ -356,7 +356,7 @@ export default {
 
   .error-title {
 
-    font-size: 24px;
+    font-size: $font-size-lg;
 
   }
 
@@ -364,7 +364,7 @@ export default {
 
   .error-description {
 
-    font-size: 16px;
+    font-size: $font-size-base;
 
   }
 

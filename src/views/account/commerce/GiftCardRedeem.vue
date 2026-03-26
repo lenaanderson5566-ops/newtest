@@ -114,6 +114,7 @@ const goBack = () => {
 </script>
 
 <style scoped lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
 .gift-card-page {
   .gift-card-inner {
     gap: 12px;
@@ -144,7 +145,7 @@ const goBack = () => {
 
   h2 {
     margin: 0;
-    font-size: 20px;
+    font-size: $font-size-lg;
   }
 }
 
@@ -173,7 +174,7 @@ const goBack = () => {
 .rule-card {
   h3 {
     margin: 0 0 8px;
-    font-size: 16px;
+    font-size: $font-size-base;
   }
 
   ul {

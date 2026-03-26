@@ -306,6 +306,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .api-validation-page {
   width: 100%;
 
@@ -427,7 +428,7 @@ export default {
       .progress-text {
         position: absolute;
 
-        font-size: 32px;
+        font-size: $font-size-lg;
 
         font-weight: 600;
 
@@ -442,7 +443,7 @@ export default {
     text-align: center;
 
     .status-title {
-      font-size: 18px;
+      font-size: $font-size-lg;
 
       font-weight: 500;
 
@@ -452,7 +453,7 @@ export default {
     }
 
     .status-progress {
-      font-size: 16px;
+      font-size: $font-size-base;
 
       font-weight: 400;
 

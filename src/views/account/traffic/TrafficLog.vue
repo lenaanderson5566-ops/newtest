@@ -807,7 +807,7 @@ onUnmounted(() => {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .trafficlog-container {
 
   padding: 0;
@@ -872,7 +872,7 @@ onUnmounted(() => {
       border: 1px solid var(--border-color);
       border-radius: 20px;
       padding: 8px 16px;
-      font-size: 14px;
+      font-size: $font-size-base;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -936,7 +936,7 @@ onUnmounted(() => {
 
       .card-title {
 
-        font-size: 18px;
+        font-size: $font-size-lg;
 
         font-weight: 600;
 

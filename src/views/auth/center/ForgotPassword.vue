@@ -1625,7 +1625,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .top-toolbar {
 
   position: fixed;
@@ -1650,7 +1650,7 @@ export default {
 
   margin-left: 4px;
 
-  font-size: 16px;
+  font-size: $font-size-base;
 
   vertical-align: middle;
 

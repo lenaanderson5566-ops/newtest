@@ -1581,7 +1581,7 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
-
+@use "@/assets/styles/base/variables.scss" as *;
 .profile-container {
 
   padding: 0;
@@ -1674,7 +1674,7 @@ onMounted(() => {
 
     .card-title {
 
-      font-size: 18px;
+      font-size: $font-size-lg;
 
       font-weight: 600;
 
@@ -2023,7 +2023,7 @@ onMounted(() => {
 
     font-weight: 500;
 
-    font-size: 14px;
+    font-size: $font-size-base;
 
     border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
@@ -2093,7 +2093,7 @@ onMounted(() => {
 
     h3 {
 
-      font-size: 16px;
+      font-size: $font-size-base;
 
       font-weight: 600;
 
@@ -2141,7 +2141,7 @@ onMounted(() => {
 
         .info-label {
 
-          font-size: 14px;
+          font-size: $font-size-base;
 
           color: var(--text-muted);
 
@@ -2153,7 +2153,7 @@ onMounted(() => {
 
         .info-value {
 
-          font-size: 16px;
+          font-size: $font-size-base;
 
           font-weight: 500;
 
@@ -2217,7 +2217,7 @@ onMounted(() => {
 
           display: block;
 
-          font-size: 15px;
+          font-size: $font-size-base;
 
           font-weight: 500;
 
@@ -2231,7 +2231,7 @@ onMounted(() => {
 
         .setting-description {
 
-          font-size: 13px;
+          font-size: $font-size-sm;
 
           color: var(--text-muted);
 
@@ -2273,7 +2273,7 @@ onMounted(() => {
 
         border: 1px solid rgba(var(--theme-color-rgb), 0.2);
 
-        font-size: 14px;
+        font-size: $font-size-base;
 
         font-weight: 500;
 
@@ -2353,7 +2353,7 @@ onMounted(() => {
 
           color: var(--text-color);
 
-          font-size: 15px;
+          font-size: $font-size-base;
 
           transition: all 0.3s ease;
 
@@ -2393,7 +2393,7 @@ onMounted(() => {
 
           border: none;
 
-          font-size: 14px;
+          font-size: $font-size-base;
 
           font-weight: 500;
 
@@ -2735,7 +2735,7 @@ onMounted(() => {
 
     margin: 0;
 
-    font-size: 18px;
+    font-size: $font-size-lg;
 
     font-weight: 600;
 
@@ -2793,7 +2793,7 @@ onMounted(() => {
 
     color: var(--text-color);
 
-    font-size: 15px;
+    font-size: $font-size-base;
 
     line-height: 1.6;
 
@@ -2821,7 +2821,7 @@ onMounted(() => {
 
       display: block;
 
-      font-size: 14px;
+      font-size: $font-size-base;
 
       font-weight: 500;
 
@@ -2847,7 +2847,7 @@ onMounted(() => {
 
       color: var(--text-color);
 
-      font-size: 15px;
+      font-size: $font-size-base;
 
       transition: all 0.3s ease;
 
@@ -2873,7 +2873,7 @@ onMounted(() => {
 
       color: #f44336;
 
-      font-size: 13px;
+      font-size: $font-size-sm;
 
     }
 
@@ -2903,7 +2903,7 @@ onMounted(() => {
 
     border-radius: 8px;
 
-    font-size: 14px;
+    font-size: $font-size-base;
 
     font-weight: 500;
 
@@ -3127,7 +3127,7 @@ onMounted(() => {
 
       .device-name {
 
-        font-size: 15px;
+        font-size: $font-size-base;
 
         font-weight: 500;
 
@@ -3147,7 +3147,7 @@ onMounted(() => {
 
         gap: 8px;
 
-        font-size: 13px;
+        font-size: $font-size-sm;
 
         color: var(--text-muted);
 
@@ -3321,7 +3321,7 @@ onMounted(() => {
 
     border-radius: 8px;
 
-    font-size: 14px;
+    font-size: $font-size-base;
 
     cursor: pointer;
 
@@ -3403,7 +3403,7 @@ onMounted(() => {
 
     border-radius: 8px;
 
-    font-size: 14px;
+    font-size: $font-size-base;
 
     cursor: pointer;
 
@@ -3461,7 +3461,7 @@ onMounted(() => {
 
 .step-number {
 
-  font-size: 16px;
+  font-size: $font-size-base;
 
   font-weight: 600;
 
@@ -3481,7 +3481,7 @@ onMounted(() => {
 
     color: var(--text-color);
 
-    font-size: 14px;
+    font-size: $font-size-base;
 
     line-height: 1.5;
 
@@ -3533,7 +3533,7 @@ onMounted(() => {
 
     font-family: monospace;
 
-    font-size: 14px;
+    font-size: $font-size-base;
 
     color: var(--text-color);
 
@@ -3623,7 +3623,7 @@ onMounted(() => {
 
   padding: 12px 16px;
 
-  font-size: 14px;
+  font-size: $font-size-base;
 
   font-weight: 500;
 

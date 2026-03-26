@@ -2292,9 +2292,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
-
-
+@use "@/assets/styles/base/variables.scss" as *;
 .register-view-container {
 
   width: 100%;
@@ -2727,7 +2725,7 @@ export default {
 
   margin-left: 4px;
 
-  font-size: 16px;
+  font-size: $font-size-base;
 
   vertical-align: middle;
 
@@ -2741,7 +2739,7 @@ export default {
 
   margin-left: 4px;
 
-  font-size: 12px;
+  font-size: $font-size-sm;
 
   font-weight: normal;
 
@@ -2807,7 +2805,7 @@ export default {
 
       height: 45px;
 
-      font-size: 14px;
+      font-size: $font-size-base;
 
       letter-spacing: 0.2px;
 
@@ -2839,7 +2837,7 @@ export default {
 
     color: var(--secondary-text-color);
 
-    font-size: 14px;
+    font-size: $font-size-base;
 
     background-color: transparent;
 
@@ -2903,7 +2901,7 @@ export default {
 
       color: var(--primary-text-color);
 
-      font-size: 14px;
+      font-size: $font-size-base;
 
       padding: 0 4px;
 
@@ -3017,7 +3015,7 @@ export default {
 
         color: var(--primary-text-color);
 
-        font-size: 14px;
+        font-size: $font-size-base;
 
         display: flex;
 
@@ -4076,7 +4074,7 @@ export default {
 
         margin: 0;
 
-        font-size: 18px;
+        font-size: $font-size-lg;
 
         font-weight: 600;
 
@@ -4094,7 +4092,7 @@ export default {
 
         cursor: pointer;
 
-        font-size: 24px;
+        font-size: $font-size-lg;
 
         line-height: 1;
 

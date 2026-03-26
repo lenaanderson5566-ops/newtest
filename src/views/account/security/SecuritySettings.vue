@@ -383,6 +383,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .security-container {
   padding: 0;
 }
@@ -395,7 +396,7 @@ onMounted(() => {
   border: none;
   background: transparent;
   color: var(--text-color);
-  font-size: 16px;
+  font-size: $font-size-base;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
@@ -406,7 +407,7 @@ onMounted(() => {
 }
 
 .back-label {
-  font-size: 14px;
+  font-size: $font-size-base;
   color: var(--secondary-text-color);
 }
 
@@ -490,7 +491,7 @@ onMounted(() => {
   align-items: center;
   padding: 2px 8px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: $font-size-sm;
   color: var(--theme-color);
   background: rgba(var(--theme-color-rgb), 0.12);
   border: 1px solid rgba(var(--theme-color-rgb), 0.28);
@@ -510,7 +511,7 @@ onMounted(() => {
 .device-meta {
   display: flex;
   gap: 12px;
-  font-size: 12px;
+  font-size: $font-size-sm;
   color: var(--text-secondary);
 }
 
@@ -592,7 +593,7 @@ onMounted(() => {
 
   h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: $font-size-lg;
     font-weight: 600;
     color: var(--text-color);
   }
@@ -628,7 +629,7 @@ onMounted(() => {
 
     label {
       display: block;
-      font-size: 14px;
+      font-size: $font-size-base;
       font-weight: 500;
       color: var(--text-color);
       margin-bottom: 8px;
@@ -641,7 +642,7 @@ onMounted(() => {
       border-radius: 8px;
       background-color: var(--bg-secondary);
       color: var(--text-color);
-      font-size: 15px;
+      font-size: $font-size-base;
       transition: all 0.3s ease;
 
       &:focus {
@@ -654,7 +655,7 @@ onMounted(() => {
     .error-text {
       margin-top: 6px;
       color: #f44336;
-      font-size: 13px;
+      font-size: $font-size-sm;
     }
   }
 }
@@ -669,7 +670,7 @@ onMounted(() => {
   button {
     padding: 8px 16px;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: $font-size-base;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;

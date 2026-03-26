@@ -390,7 +390,7 @@ onMounted(() => {
 
     .card-title {
 
-      font-size: 18px;
+      font-size: $font-size-lg;
 
       font-weight: 600;
 
@@ -441,7 +441,7 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
+    font-size: $font-size-base;
 
     &.active {
       border-color: rgba(var(--theme-color-rgb), 0.65);
@@ -468,7 +468,7 @@ onMounted(() => {
       align-items: center;
       margin-bottom: 12px;
 
-      h3 { margin: 0; font-size: 20px; }
+      h3 { margin: 0; font-size: $font-size-lg; }
     }
 
     .import-action {
@@ -493,8 +493,8 @@ onMounted(() => {
       background: rgba(var(--theme-color-rgb), 0.12);
     }
 
-    .import-title { font-size: 18px; font-weight: 600; }
-    .import-desc { color: var(--secondary-text-color); font-size: 14px; }
+    .import-title { font-size: $font-size-lg; font-weight: 600; }
+    .import-desc { color: var(--secondary-text-color); font-size: $font-size-base; }
 
     .platform-selector {
       display: flex;
@@ -521,7 +521,7 @@ onMounted(() => {
     }
 
     .platform-title {
-      font-size: 16px;
+      font-size: $font-size-base;
       margin: 8px 0 12px;
       font-weight: 600;
     }
@@ -537,7 +537,7 @@ onMounted(() => {
       border-radius: $border-radius-sm;
       padding: 22px 14px;
       background: #f5f7fb;
-      font-size: 14px;
+      font-size: $font-size-base;
       font-weight: 500;
       text-align: left;
       cursor: pointer;
@@ -602,7 +602,7 @@ onMounted(() => {
 
     .reset-modal-text {
       color: var(--text-color);
-      font-size: 14px;
+      font-size: $font-size-base;
       margin: 0 0 12px;
       line-height: 1.6;
     }
@@ -635,7 +635,7 @@ onMounted(() => {
 
     h2 {
       margin: 0;
-      font-size: 30px;
+      font-size: $font-size-lg;
       font-weight: 700;
       letter-spacing: 0.2px;
     }
@@ -643,7 +643,7 @@ onMounted(() => {
     p {
       margin: 8px 0 0;
       color: var(--text-color-light, var(--secondary-text-color));
-      font-size: 15px;
+      font-size: $font-size-base;
     }
   }
 
@@ -699,7 +699,7 @@ onMounted(() => {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: $font-size-sm;
       font-weight: 700;
       color: #fff;
       background: radial-gradient(circle at center, rgba(var(--theme-color-rgb), 0.95), rgba(var(--theme-color-rgb), 0.35));
@@ -736,13 +736,13 @@ onMounted(() => {
 
       h3 {
         margin: 0 0 6px;
-        font-size: 17px;
+        font-size: $font-size-base;
       }
 
       p {
         margin: 0;
         color: var(--text-color-light, var(--secondary-text-color));
-        font-size: 13px;
+        font-size: $font-size-sm;
       }
 
       .unlock-tip-btn {
@@ -752,7 +752,7 @@ onMounted(() => {
         color: rgba(var(--theme-color-rgb), 0.95);
         border-radius: 999px;
         padding: 6px 12px;
-        font-size: 12px;
+        font-size: $font-size-sm;
         font-weight: 600;
         float: right;
       }
@@ -769,7 +769,7 @@ onMounted(() => {
       min-width: 168px;
       padding: 10px 18px;
       border-radius: $border-radius-sm;
-      font-size: 14px;
+      font-size: $font-size-base;
       font-weight: 700;
       cursor: pointer;
       border: 1px solid transparent;
@@ -932,7 +932,7 @@ onMounted(() => {
       .node-tag.feature-tag {
         height: 24px;
         line-height: 24px;
-        font-size: 12px;
+        font-size: $font-size-sm;
         padding: 0 10px;
         border-radius: 999px;
         background-color: rgba(190, 24, 93, 0.12);
@@ -1037,7 +1037,7 @@ onMounted(() => {
 
   font-weight: 500;
 
-  font-size: 14px;
+  font-size: $font-size-base;
 
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 

@@ -361,7 +361,7 @@ watch(locale, () => {
   border: none;
   background: transparent;
   color: var(--text-color);
-  font-size: 16px;
+  font-size: $font-size-base;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
@@ -385,7 +385,7 @@ watch(locale, () => {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 13px;
+  font-size: $font-size-sm;
   color: var(--secondary-text-color);
 
   .switch-input {
@@ -669,7 +669,7 @@ watch(locale, () => {
   background-color: rgba(var(--theme-color-rgb), 0.85);
   color: white;
   font-weight: 500;
-  font-size: 14px;
+  font-size: $font-size-base;
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
   box-shadow: none;
   cursor: pointer;

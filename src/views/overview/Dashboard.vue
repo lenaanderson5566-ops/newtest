@@ -1475,12 +1475,12 @@ export default {
         }
 
         .stats-value {
-          font-size: 16px;
+          font-size: $font-size-base;
           margin-bottom: 2px;
         }
 
         .stats-label {
-          font-size: 12px;
+          font-size: $font-size-sm;
         }
 
         .usage-card-title {
@@ -1566,7 +1566,7 @@ export default {
           .expired-status-strip {
             border-radius: var(--dashboard-radius);
             padding: 9px 12px;
-            font-size: 13px;
+            font-size: $font-size-sm;
             font-weight: 600;
             color: var(--plan-expired-strip-text);
             background: var(--plan-expired-strip-bg);
@@ -1611,7 +1611,7 @@ export default {
           }
 
           .plan-name-main {
-            font-size: 24px;
+            font-size: $font-size-lg;
             line-height: 1.2;
             font-weight: 700;
             color: var(--heading-color);
@@ -1623,7 +1623,7 @@ export default {
             justify-content: space-between;
             gap: 8px;
             flex-wrap: wrap;
-            font-size: 13px;
+            font-size: $font-size-sm;
             color: var(--plan-meta-text);
           }
 
@@ -1642,7 +1642,7 @@ export default {
           }
 
           .plan-summary-label {
-            font-size: 12px;
+            font-size: $font-size-sm;
             color: var(--theme-text-secondary);
 
             &.with-tooltip {
@@ -1661,7 +1661,7 @@ export default {
           }
 
           .plan-summary-value {
-            font-size: 14px;
+            font-size: $font-size-base;
             color: var(--theme-text-primary);
             font-weight: 600;
             text-align: right;
@@ -1673,7 +1673,7 @@ export default {
             align-items: center;
             border-radius: 999px;
             padding: 2px 8px;
-            font-size: 12px;
+            font-size: $font-size-sm;
             font-weight: 600;
 
             &.is-active {
@@ -1694,7 +1694,7 @@ export default {
 
           .plan-summary-desc {
             margin: 4px 0 0;
-            font-size: 12px;
+            font-size: $font-size-sm;
             color: rgba(248, 250, 252, 0.72);
           }
 
@@ -1709,20 +1709,20 @@ export default {
               flex: 1;
               border-radius: var(--dashboard-button-radius);
               padding: 10px 14px;
-              font-size: 14px;
+              font-size: $font-size-base;
               font-weight: 600;
               letter-spacing: 0.2px;
 
               @media (max-width: 576px) {
                 padding: 9px 10px;
-                font-size: 13px;
+                font-size: $font-size-sm;
               }
             }
           }
 
           .plan-action-helper-text {
             margin-top: 10px;
-            font-size: 12px;
+            font-size: $font-size-sm;
             color: var(--secondary-text-color);
             text-align: center;
           }
@@ -1815,7 +1815,7 @@ export default {
           color: var(--theme-text-primary);
 
           &.compact {
-            font-size: 32px;
+            font-size: $font-size-lg;
           }
         }
 
@@ -1842,10 +1842,10 @@ export default {
 
       &.quota-traffic-card {
         .usage-percent {
-          font-size: 30px;
+          font-size: $font-size-lg;
 
           &.compact {
-            font-size: 26px;
+            font-size: $font-size-lg;
           }
         }
       }
@@ -1905,7 +1905,7 @@ export default {
 
           .usage-summary-line {
             grid-column: 1 / -1;
-            font-size: 13px;
+            font-size: $font-size-sm;
             font-weight: 600;
             color: var(--neutral-strong);
           }
@@ -1922,7 +1922,7 @@ export default {
           .usage-kpi-label {
             writing-mode: horizontal-tb;
             text-orientation: mixed;
-            font-size: 12px;
+            font-size: $font-size-sm;
             color: var(--dashboard-subtitle-color);
             line-height: 1;
           }
@@ -1930,7 +1930,7 @@ export default {
           .usage-kpi-value {
             writing-mode: horizontal-tb;
             text-orientation: mixed;
-            font-size: 15px;
+            font-size: $font-size-base;
             color: var(--quota-value-color);
             font-weight: 600;
             line-height: 1.2;
@@ -1938,7 +1938,7 @@ export default {
 
           .usage-reset-hint {
             width: 100%;
-            font-size: 12px;
+            font-size: $font-size-sm;
             color: var(--theme-text-secondary);
           }
 
@@ -1958,12 +1958,12 @@ export default {
           .today-traffic-total-main {
             .usage-percent {
               &.compact {
-                font-size: 30px;
+                font-size: $font-size-lg;
               }
             }
 
             .usage-percent-label {
-              font-size: 12px;
+              font-size: $font-size-sm;
             }
           }
         }
@@ -1992,15 +1992,15 @@ export default {
           }
 
           .usage-percent {
-            font-size: 36px;
+            font-size: $font-size-lg;
 
             &.compact {
-              font-size: 30px;
+              font-size: $font-size-lg;
             }
           }
 
           .usage-percent-label {
-            font-size: 12px;
+            font-size: $font-size-sm;
           }
 
           &.traffic-board-subscription {
@@ -2019,11 +2019,11 @@ export default {
             }
 
             .usage-kpi-label {
-              font-size: 12px;
+              font-size: $font-size-sm;
             }
 
             .usage-kpi-value {
-              font-size: 14px;
+              font-size: $font-size-base;
             }
 
             .usage-reset-hint {
@@ -2108,10 +2108,10 @@ export default {
         line-height: 1;
         font-weight: 700;
         color: var(--theme-text-primary);
-        font-size: 30px;
+        font-size: $font-size-lg;
 
         &.compact {
-          font-size: 26px;
+          font-size: $font-size-lg;
         }
       }
 
@@ -2127,7 +2127,7 @@ export default {
       align-items: center;
       flex-wrap: wrap;
       gap: 10px;
-      font-size: 12px;
+      font-size: $font-size-sm;
       line-height: 1.45;
       color: var(--theme-text-secondary);
 
@@ -2147,7 +2147,7 @@ export default {
 
     .ip-location-state {
       color: var(--theme-text-secondary);
-      font-size: 13px;
+      font-size: $font-size-sm;
 
       &.error {
         color: #dc2626;
@@ -2182,14 +2182,14 @@ export default {
     }
 
     .ip-region-primary {
-      font-size: 24px;
+      font-size: $font-size-lg;
       line-height: 1.15;
       font-weight: 700;
       letter-spacing: -0.01em;
       color: var(--theme-text-primary);
 
       @media (max-width: 680px) {
-        font-size: 20px;
+        font-size: $font-size-lg;
       }
     }
 
@@ -2203,7 +2203,7 @@ export default {
     .ip-refresh-btn {
       border-radius: 999px;
       padding: 4px 10px;
-      font-size: 12px;
+      font-size: $font-size-sm;
       line-height: 1;
       display: inline-flex;
       align-items: center;
@@ -2220,7 +2220,7 @@ export default {
     }
 
     .ip-address-secondary {
-      font-size: 11px;
+      font-size: $font-size-sm;
       color: rgba(100, 116, 139, 0.75);
       letter-spacing: 0.2px;
     }
@@ -2233,7 +2233,7 @@ export default {
       align-items: center;
       justify-content: center;
       padding: 0 8px;
-      font-size: 10px;
+      font-size: $font-size-sm;
       font-weight: 800;
       color: var(--theme-white);
       letter-spacing: 0.4px;
@@ -2247,7 +2247,7 @@ export default {
 
     .ip-region {
       color: var(--theme-text-secondary);
-      font-size: 13px;
+      font-size: $font-size-sm;
     }
   }
 
@@ -2273,7 +2273,7 @@ export default {
       border-radius: 6px;
       background: rgba(15, 23, 42, 0.96);
       color: #e2e8f0;
-      font-size: 12px;
+      font-size: $font-size-sm;
       line-height: 1.4;
       font-weight: 500;
       box-shadow: none;
@@ -2323,7 +2323,7 @@ export default {
       align-items: center;
       justify-content: center;
       color: var(--theme-text-secondary);
-      font-size: 14px;
+      font-size: $font-size-base;
     }
 
     .usage-trend-chart {
@@ -2359,7 +2359,7 @@ export default {
       gap: 8px;
       min-width: 0;
       color: var(--warning-color);
-      font-size: 13px;
+      font-size: $font-size-sm;
       line-height: 1.35;
       font-weight: 500;
     }
@@ -2373,7 +2373,7 @@ export default {
       border-radius: 8px;
       height: 30px;
       padding: 0 12px;
-      font-size: 13px;
+      font-size: $font-size-sm;
       font-weight: 600;
       flex-shrink: 0;
     }
@@ -2421,7 +2421,7 @@ export default {
       .today-traffic-total-main {
         .usage-percent {
           &.compact {
-            font-size: 22px;
+            font-size: $font-size-lg;
           }
         }
       }
@@ -2443,15 +2443,15 @@ export default {
       gap: 5px;
 
       .usage-percent {
-        font-size: 24px;
+        font-size: $font-size-lg;
 
         &.compact {
-          font-size: 22px;
+          font-size: $font-size-lg;
         }
       }
 
       .usage-percent-label {
-        font-size: 12px;
+        font-size: $font-size-sm;
       }
 
       .usage-kpis {
@@ -2589,6 +2589,7 @@ export default {
 
 <!-- 全局样式，不受scoped限制 -->
 <style lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
 @use '@/assets/styles/no-plan-card' as *;
 
 /* 统计卡片状态样式（全局） */
@@ -2678,7 +2679,7 @@ export default {
     h3 {
       margin: 0;
       color: var(--text-color);
-      font-size: 18px;
+      font-size: $font-size-lg;
       font-weight: 600;
     }
 
@@ -2718,7 +2719,7 @@ export default {
   .traffic-package-desc {
     margin: 0 0 14px;
     color: var(--secondary-text-color);
-    font-size: 14px;
+    font-size: $font-size-base;
     line-height: 1.5;
   }
 
@@ -2750,21 +2751,21 @@ export default {
 
     strong {
       color: var(--text-color);
-      font-size: 15px;
+      font-size: $font-size-base;
       font-weight: 600;
     }
   }
 
   .item-price {
     color: var(--theme-color);
-    font-size: 24px;
+    font-size: $font-size-lg;
     font-weight: 700;
   }
 
   .item-content {
     min-height: 32px;
     color: var(--secondary-text-color);
-    font-size: 13px;
+    font-size: $font-size-sm;
     line-height: 1.45;
   }
 

@@ -706,7 +706,7 @@ onMounted(() => {
 
   font-weight: 500;
 
-  font-size: 14px;
+  font-size: $font-size-base;
 
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 

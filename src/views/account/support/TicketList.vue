@@ -911,6 +911,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .ticket-container {
   padding: 0;
 
@@ -950,7 +951,7 @@ onUnmounted(() => {
     margin-bottom: 15px;
 
     .card-title {
-      font-size: 18px;
+      font-size: $font-size-lg;
 
       font-weight: 600;
 
@@ -1026,7 +1027,7 @@ onUnmounted(() => {
 
       color: var(--text-color);
 
-      font-size: 14px;
+      font-size: $font-size-base;
 
       transition: all 0.3s ease;
 
@@ -1083,7 +1084,7 @@ onUnmounted(() => {
 
     border-radius: 8px;
 
-    font-size: 14px;
+    font-size: $font-size-base;
 
     font-weight: 500;
 
@@ -2069,7 +2070,7 @@ onUnmounted(() => {
 
     font-weight: 500;
 
-    font-size: 14px;
+    font-size: $font-size-base;
 
     cursor: pointer;
 

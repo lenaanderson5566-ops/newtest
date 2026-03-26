@@ -753,6 +753,7 @@ export default {
           <head>
             <title>${t('invite.share.scanTitle')}</title>
             <style>
+              :root { --font-size-sm: 14px; --font-size-base: 16px; --font-size-lg: 20px; }
               body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
               img { max-width: 100%; height: auto; margin-bottom: 20px; }
               h2 { color: var(--text-color, #2f3640); }
@@ -776,7 +777,7 @@ export default {
     }
 
     .card-title {
-      font-size: 17px;
+      font-size: var(--font-size-base);
       line-height: 1.25;
     }
 
@@ -815,14 +816,14 @@ export default {
         gap: 6px;
 
         .stats-value {
-          font-size: 26px;
+          font-size: var(--font-size-lg);
           font-weight: 700;
           margin-bottom: 0;
           line-height: 1.05;
         }
 
         .stats-label {
-          font-size: 13px;
+          font-size: var(--font-size-sm);
           line-height: 1.35;
         }
       }
@@ -845,7 +846,7 @@ export default {
         position: absolute;
         left: 12px;
         top: 12px;
-        font-size: 11px;
+        font-size: var(--font-size-sm);
         font-weight: 700;
         color: rgba(var(--theme-color-rgb), 0.78);
       }
@@ -863,12 +864,12 @@ export default {
 
       .rule-content {
         h3 {
-          font-size: 14px;
+          font-size: var(--font-size-base);
           margin-bottom: 3px;
         }
 
         p {
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           line-height: 1.35;
         }
       }
@@ -922,13 +923,13 @@ export default {
   }
 
   .kpi-label {
-    font-size: 12px;
+    font-size: var(--font-size-sm);
     color: var(--secondary-text-color);
     margin-bottom: 6px;
   }
 
   .kpi-value {
-    font-size: 20px;
+    font-size: var(--font-size-lg);
     font-weight: 700;
     line-height: 1.1;
   }
@@ -955,7 +956,7 @@ export default {
   }
 
   .invite-code-display {
-    font-size: 20px;
+    font-size: var(--font-size-lg);
     padding: 8px 12px;
   }
 }
@@ -1565,7 +1566,7 @@ export default {
 
 .card-title {
   margin: 0;
-  font-size: 16px;
+  font-size: $font-size-base;
   font-weight: 700;
 }
 
@@ -1575,7 +1576,7 @@ export default {
 }
 
 .balance-value {
-  font-size: 28px;
+  font-size: $font-size-lg;
   font-weight: 700;
   color: var(--theme-color);
 }
@@ -1612,13 +1613,13 @@ export default {
 }
 
 .kpi-label {
-  font-size: 11px;
+  font-size: $font-size-sm;
   color: var(--secondary-text-color);
 }
 
 .kpi-value {
   margin-top: 4px;
-  font-size: 17px;
+  font-size: $font-size-base;
   font-weight: 700;
 }
 
@@ -1689,7 +1690,7 @@ export default {
 
 .invite-card-footer {
   margin-top: 10px;
-  font-size: 12px;
+  font-size: $font-size-sm;
   color: var(--secondary-text-color);
 }
 
@@ -1747,7 +1748,7 @@ export default {
 .records-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: $font-size-sm;
 }
 
 .records-table th,

@@ -767,6 +767,7 @@ fetchTickets();
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .mobile-ticket-container {
   height: 100%;
 
@@ -812,7 +813,7 @@ fetchTickets();
     margin-bottom: 15px;
 
     .card-title {
-      font-size: 18px;
+      font-size: $font-size-lg;
 
       font-weight: 600;
 

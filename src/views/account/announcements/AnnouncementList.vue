@@ -87,12 +87,12 @@ export default {
 
     h3 {
       margin: 0;
-      font-size: 18px;
+      font-size: $font-size-lg;
       color: var(--text-color);
     }
 
     time {
-      font-size: 12px;
+      font-size: $font-size-sm;
       color: var(--secondary-text-color);
       white-space: nowrap;
     }

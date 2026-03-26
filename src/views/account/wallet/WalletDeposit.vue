@@ -308,7 +308,7 @@ onMounted(() => {
     border: none;
     background: transparent;
     color: var(--text-color);
-    font-size: 16px;
+    font-size: $font-size-base;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
@@ -319,7 +319,7 @@ onMounted(() => {
   }
 
   .back-label {
-    font-size: 14px;
+    font-size: $font-size-base;
     color: var(--secondary-text-color);
   }
   
@@ -351,7 +351,7 @@ onMounted(() => {
       margin-bottom: 15px;
       
       .card-title {
-        font-size: 18px;
+        font-size: $font-size-lg;
         font-weight: 600;
         margin: 0;
         color: var(--text-color);
@@ -365,7 +365,7 @@ onMounted(() => {
     .card-body {
       p {
         color: var(--secondary-text-color);
-        font-size: 14px;
+        font-size: $font-size-base;
         line-height: 1.6;
         margin: 0;
       }
@@ -545,14 +545,14 @@ onMounted(() => {
             justify-content: center;
             
             .currency {
-              font-size: 14px;
+              font-size: $font-size-base;
               font-weight: 600;
               color: var(--text-color);
               margin-right: 2px;
             }
             
             .amount {
-              font-size: 18px;
+              font-size: $font-size-lg;
               font-weight: 700;
               color: var(--text-color);
             }

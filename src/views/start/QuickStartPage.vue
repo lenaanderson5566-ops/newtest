@@ -401,14 +401,14 @@ onMounted(fetchUserStatus);
 
   .status-main {
     margin: 0;
-    font-size: 14px;
+    font-size: $font-size-base;
     font-weight: 600;
     color: var(--text-color);
   }
 
   .status-sub {
     margin: 4px 0 0;
-    font-size: 13px;
+    font-size: $font-size-sm;
     color: var(--secondary-text-color);
   }
 }
@@ -428,7 +428,7 @@ onMounted(fetchUserStatus);
 
     h2 {
       margin: 0;
-      font-size: 20px;
+      font-size: $font-size-lg;
       font-weight: 600;
     }
   }
@@ -443,7 +443,7 @@ onMounted(fetchUserStatus);
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: 14px;
+    font-size: $font-size-base;
   }
 }
 
@@ -451,7 +451,7 @@ onMounted(fetchUserStatus);
 .connect-text {
   margin: 0;
   color: var(--secondary-text-color);
-  font-size: 14px;
+  font-size: $font-size-base;
 }
 
 .system-grid {
@@ -478,7 +478,7 @@ onMounted(fetchUserStatus);
     border-color: rgba(var(--theme-color-rgb), 0.5);
   }
 
-  strong { font-size: 15px; }
+  strong { font-size: $font-size-base; }
 
   &.active {
     border-color: rgba(var(--theme-color-rgb), 0.85);
@@ -539,7 +539,7 @@ onMounted(fetchUserStatus);
 
   .recommend-inline {
     color: #f08c2e;
-    font-size: 11px;
+    font-size: $font-size-sm;
     font-weight: 600;
     line-height: 1;
     background: rgba(240, 140, 46, 0.14);
@@ -623,7 +623,7 @@ onMounted(fetchUserStatus);
     border: none;
     background: transparent;
     cursor: pointer;
-    font-size: 18px;
+    font-size: $font-size-lg;
   }
 
   img {

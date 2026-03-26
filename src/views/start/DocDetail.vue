@@ -2285,6 +2285,7 @@ onUnmounted(() => {
 <!-- 全局样式，不受scoped限制 -->
 
 <style lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
 @use '@/assets/styles/no-plan-card' as *;
 
 
@@ -2301,7 +2302,7 @@ onUnmounted(() => {
 
   border-radius: 6px !important;
 
-  font-size: 14px !important;
+  font-size: $font-size-base !important;
 
   background-color: rgba(var(--theme-color-rgb), 0.1) !important;
 

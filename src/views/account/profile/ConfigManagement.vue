@@ -76,6 +76,7 @@ const handleResetSecurity = async () => {
 </script>
 
 <style scoped lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
 .config-management {
   padding-bottom: 2px;
 }
@@ -85,7 +86,7 @@ const handleResetSecurity = async () => {
   border: none;
   background: transparent;
   color: var(--text-color);
-  font-size: 16px;
+  font-size: $font-size-base;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
@@ -96,7 +97,7 @@ const handleResetSecurity = async () => {
 }
 
 .back-label {
-  font-size: 14px;
+  font-size: $font-size-base;
   color: var(--secondary-text-color);
 }
 
@@ -152,7 +153,7 @@ const handleResetSecurity = async () => {
 
   h3 {
     margin: 0;
-    font-size: 16px;
+    font-size: $font-size-base;
   }
 }
 

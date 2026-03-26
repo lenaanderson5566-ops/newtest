@@ -1188,7 +1188,7 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: 18px;
+        font-size: $font-size-lg;
 
         font-weight: 600;
 
@@ -1202,7 +1202,7 @@ export default {
 
         color: var(--secondary-text-color);
 
-        font-size: 14px;
+        font-size: $font-size-base;
 
         line-height: 1.6;
       }
@@ -1276,7 +1276,7 @@ export default {
       min-width: 0;
 
       h4 {
-        font-size: 15px;
+        font-size: $font-size-base;
 
         font-weight: 600;
 
@@ -1288,7 +1288,7 @@ export default {
       }
 
       p {
-        font-size: 14px;
+        font-size: $font-size-base;
 
         margin: 0;
 
@@ -1327,7 +1327,7 @@ export default {
     margin-bottom: 25px;
 
     .section-title {
-      font-size: 18px;
+      font-size: $font-size-lg;
 
       font-weight: 600;
 
@@ -1402,7 +1402,7 @@ export default {
       margin-bottom: 20px;
 
       .card-title {
-        font-size: 20px;
+        font-size: $font-size-lg;
 
         font-weight: 600;
 
@@ -1422,7 +1422,7 @@ export default {
 
         border-radius: $border-radius-sm;
 
-        font-size: 12px;
+        font-size: $font-size-sm;
 
         font-weight: 500;
 
@@ -1495,7 +1495,7 @@ export default {
           }
 
           span {
-            font-size: 14px;
+            font-size: $font-size-base;
 
             color: var(--text-color);
 
@@ -1508,7 +1508,7 @@ export default {
         }
 
         .html-content {
-          font-size: 14px;
+          font-size: $font-size-base;
 
           line-height: 1.6;
 
@@ -1654,7 +1654,7 @@ export default {
         }
 
         .period-type {
-          font-size: 14px !important;
+          font-size: $font-size-base !important;
 
           font-weight: 600;
 
@@ -1669,7 +1669,7 @@ export default {
           .discount-tag {
             background-color: #ff4d4f;
             color: #fff;
-            font-size: 12px;
+            font-size: $font-size-sm;
             padding: 2px 4px;
             border-radius: 4px;
             margin-left: 5px;
@@ -1683,7 +1683,7 @@ export default {
           text-align: center;
 
           .currency {
-            font-size: 14px !important;
+            font-size: $font-size-base !important;
 
             font-weight: 500;
 
@@ -1691,7 +1691,7 @@ export default {
           }
 
           .amount {
-            font-size: 24px !important;
+            font-size: $font-size-lg !important;
 
             font-weight: 700;
 
@@ -1701,7 +1701,7 @@ export default {
           .original-price {
             text-decoration: line-through;
             color: var(--secondary-text-color);
-            font-size: 12px;
+            font-size: $font-size-sm;
             margin-left: 5px;
           }
         }
@@ -1739,7 +1739,7 @@ export default {
 
       color: var(--text-color);
 
-      font-size: 14px;
+      font-size: $font-size-base;
 
       outline: none;
 
@@ -1780,7 +1780,7 @@ export default {
 
       color: white;
 
-      font-size: 14px;
+      font-size: $font-size-base;
 
       font-weight: 500;
 
@@ -1842,7 +1842,7 @@ export default {
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--secondary-text-color);
-      font-size: 14px;
+      font-size: $font-size-base;
       display: inline-flex;
       align-items: center;
       line-height: 1;
@@ -1857,7 +1857,7 @@ export default {
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--secondary-text-color);
-      font-size: 14px;
+      font-size: $font-size-base;
       cursor: pointer;
       line-height: 1;
       white-space: nowrap;
@@ -1898,7 +1898,7 @@ export default {
 
     .coupon-discount-value {
       color: #22c55e;
-      font-size: 12px;
+      font-size: $font-size-sm;
       font-weight: 600;
       white-space: nowrap;
     }
@@ -1906,7 +1906,7 @@ export default {
 
   .coupon-feedback {
     margin-top: 8px;
-    font-size: 12px;
+    font-size: $font-size-sm;
     line-height: 1.4;
 
     &.error {
@@ -1951,14 +1951,14 @@ export default {
       .summary-label {
         flex: 1;
         min-width: 0;
-        font-size: 14px;
+        font-size: $font-size-base;
 
         color: var(--secondary-text-color);
 
         letter-spacing: 0.2px;
 
         .coupon-name {
-          font-size: 12px;
+          font-size: $font-size-sm;
 
           opacity: 0.8;
 
@@ -1969,7 +1969,7 @@ export default {
       .summary-value {
         min-width: 120px;
         text-align: right;
-        font-size: 14px;
+        font-size: $font-size-base;
 
         font-weight: 500;
 
@@ -1994,7 +1994,7 @@ export default {
         gap: 6px;
 
         .summary-label {
-          font-size: 16px;
+          font-size: $font-size-base;
 
           font-weight: 600;
 
@@ -2004,7 +2004,7 @@ export default {
         .summary-value {
           min-width: 0;
           text-align: left;
-          font-size: 32px;
+          font-size: $font-size-lg;
 
           font-weight: 800;
 
@@ -2141,7 +2141,7 @@ export default {
     border-radius: $border-radius-sm;
     background-color: var(--theme-color);
     color: white;
-    font-size: 14px;
+    font-size: $font-size-base;
     font-weight: 500;
     display: inline-flex;
     align-items: center;
@@ -2192,7 +2192,7 @@ export default {
 
       color: var(--text-color);
 
-      font-size: 14px;
+      font-size: $font-size-base;
 
       font-weight: 500;
 
@@ -2230,7 +2230,7 @@ export default {
 
       color: white;
 
-      font-size: 14px;
+      font-size: $font-size-base;
 
       font-weight: 500;
 
@@ -2456,11 +2456,11 @@ export default {
       padding: 15px;
 
       .card-header .card-title {
-        font-size: 16px;
+        font-size: $font-size-base;
       }
 
       .card-body p {
-        font-size: 13px;
+        font-size: $font-size-sm;
       }
     }
 
@@ -2503,7 +2503,7 @@ export default {
 
         justify-content: center;
 
-        font-size: 13px;
+        font-size: $font-size-sm;
 
         height: 44px;
 
@@ -2523,18 +2523,18 @@ export default {
           min-height: 80px !important;
 
           .period-type {
-            font-size: 13px !important;
+            font-size: $font-size-sm !important;
 
             margin-bottom: 6px !important;
           }
 
           .period-price {
             .currency {
-              font-size: 13px !important;
+              font-size: $font-size-sm !important;
             }
 
             .amount {
-              font-size: 20px !important;
+              font-size: $font-size-lg !important;
             }
           }
         }
@@ -2546,7 +2546,7 @@ export default {
 @media (max-width: 480px) {
   .order-confirm-container {
     .section-title {
-      font-size: 16px;
+      font-size: $font-size-base;
 
       margin-bottom: 12px;
     }
