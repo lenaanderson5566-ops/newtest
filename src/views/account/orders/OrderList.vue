@@ -32,9 +32,8 @@
           <table v-if="filteredOrders.length" class="order-table">
             <thead>
               <tr>
-                <th width="18%">{{ headerTexts.createdAt }}</th>
-                <th width="20%">{{ headerTexts.subscriptionName }}</th>
-                <th width="14%">{{ headerTexts.cycle }}</th>
+                <th width="22%">{{ headerTexts.createdAt }}</th>
+                <th width="30%">{{ headerTexts.subscriptionCycle }}</th>
                 <th width="14%">{{ headerTexts.totalAmount }}</th>
                 <th width="14%">{{ headerTexts.statusLabel }}</th>
                 <th width="20%">{{ headerTexts.actions }}</th>
@@ -44,8 +43,7 @@
               <transition-group name="page-switch">
                 <tr v-for="order in filteredOrders" :key="order.trade_no">
                   <td>{{ formatDate(order.created_at) }}</td>
-                  <td>{{ getSubscriptionName(order) }}</td>
-                  <td>{{ formatCycle(order.period) }}</td>
+                  <td>{{ getSubscriptionName(order) }} · {{ formatCycle(order.period) }}</td>
                   <td class="amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</td>
                   <td>
                     <span class="status-badge" :class="getStatusClass(order.status)">
@@ -311,6 +309,7 @@ const headerTexts = computed(() => {
   return {
     createdAt: t('orders.createdAt', '创建时间'),
     cycle: t('orders.cycle', '周期'),
+    subscriptionCycle: t('orders.subscriptionCycle', '订阅/周期'),
     subscriptionName: t('orders.subscriptionName', '订阅名称'),
     totalAmount: t('orders.totalAmount', '金额'),
     statusLabel: t('orders.statusLabel', '状态') || '状态',
@@ -502,7 +501,7 @@ watch(locale, () => {
 
 .order-table {
   width: 100%;
-  min-width: 860px;
+  min-width: 760px;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed; 
