@@ -33,7 +33,7 @@
   padding-top: 0;
   background-color: var(--background-color);
   background-image: none;
-  color: var(--text-color);
+  color: var(--text-primary);
   font-size: var(--view-font-size-base);
   line-height: var(--view-line-height-base);
 }
@@ -44,7 +44,7 @@
 .app-content-wrapper .page-shell h3,
 .app-content-wrapper .page-shell h4,
 .app-content-wrapper .page-shell .card-title {
-  color: var(--text-color);
+  color: var(--text-primary);
   line-height: 1.3;
 }
 
@@ -144,7 +144,7 @@
 
 .payment-container .section-wrapper .info-value {
   flex: 1;
-  color: var(--text-color);
+  color: var(--text-primary);
   font-weight: $font-weight-medium;
   font-size: $font-size-md;
 }
@@ -234,7 +234,7 @@
   width: 90%;
   max-width: 320px;
   background-color: var(--card-background);
-  color: var(--text-color);
+  color: var(--text-primary);
   border-radius: $border-radius-sm;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -264,7 +264,7 @@
   margin: 0;
   font-size: $font-size-xl;
   font-weight: $font-weight-semibold;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .pending-order-modal .pending-order-dialog p {
@@ -294,7 +294,7 @@
 
 .pending-order-modal .pending-order-actions .btn-return-orders {
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
   box-shadow: none;
 
   &:hover {

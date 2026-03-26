@@ -812,7 +812,7 @@ export default {
   align-items: center !important;
   justify-content: center !important;
   line-height: normal !important;
-  color: var(--text-color);
+  color: var(--text-primary);
   border: 1px solid var(--border-color);
   background-color: transparent;
   transition: all 0.3s ease;

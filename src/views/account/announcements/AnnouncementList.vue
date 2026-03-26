@@ -88,7 +88,7 @@ export default {
     h3 {
       margin: 0;
       font-size: $font-size-xl;
-      color: var(--text-color);
+      color: var(--text-primary);
     }
 
     time {

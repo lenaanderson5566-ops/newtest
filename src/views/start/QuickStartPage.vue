@@ -403,7 +403,7 @@ onMounted(fetchUserStatus);
     margin: 0;
     font-size: $font-size-md;
     font-weight: $font-weight-semibold;
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .status-sub {

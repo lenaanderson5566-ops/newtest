@@ -1042,7 +1042,7 @@ export default {
       }
       const rootStyles = getComputedStyle(document.documentElement);
       const textColor =
-        rootStyles.getPropertyValue('--text-color').trim() ||
+        rootStyles.getPropertyValue('--text-primary').trim() ||
         `rgb(${rootStyles.getPropertyValue('--text-color-rgb').trim() || '51, 51, 51'})`;
       const borderColor = rootStyles.getPropertyValue('--border-color').trim() || '#e8e8e8';
       const themeColor = rootStyles.getPropertyValue('--theme-color').trim() || '#6753f6';
@@ -1341,13 +1341,13 @@ export default {
   --theme-text-primary: #111827;
   --theme-text-secondary: var(--secondary-text-color);
   --theme-text-subtle: #9ca3af;
-  --theme-text-emphasis: var(--text-color);
+  --theme-text-emphasis: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
   --theme-border-soft: #e5e7eb;
   --theme-white: #ffffff;
   --quota-label-color: var(--secondary-text-color);
-  --quota-value-color: var(--text-color);
+  --quota-value-color: var(--text-primary);
   --quota-progress-start: #60a5fa;
   --quota-progress-end: #3b82f6;
   --quota-muted-fill: #cbd5e1;
@@ -2678,7 +2678,7 @@ export default {
 
     h3 {
       margin: 0;
-      color: var(--text-color);
+      color: var(--text-primary);
       font-size: $font-size-xl;
       font-weight: $font-weight-semibold;
     }
@@ -2693,7 +2693,7 @@ export default {
       cursor: pointer;
 
       &:hover {
-        color: var(--text-color);
+        color: var(--text-primary);
       }
     }
   }
@@ -2750,7 +2750,7 @@ export default {
     gap: 10px;
 
     strong {
-      color: var(--text-color);
+      color: var(--text-primary);
       font-size: $font-size-md;
       font-weight: $font-weight-semibold;
     }

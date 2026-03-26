@@ -1442,7 +1442,7 @@ onUnmounted(() => {
 
     margin-bottom: 0.75rem;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
   }
 
@@ -1598,7 +1598,7 @@ onUnmounted(() => {
 
     margin-bottom: 1rem;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     line-height: 1.3;
 
@@ -1670,7 +1670,7 @@ onUnmounted(() => {
 
 .doc-body {
 
-  color: var(--text-color);
+  color: var(--text-primary);
 
   font-size: 1rem;
 
@@ -1950,7 +1950,7 @@ onUnmounted(() => {
 
       padding: 0;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       border: none;
 

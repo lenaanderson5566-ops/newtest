@@ -599,7 +599,7 @@ onMounted(async () => {
   white-space: nowrap;
 
   &.active {
-    color: var(--text-color);
+    color: var(--text-primary);
     font-weight: $font-weight-bold;
   }
 
@@ -686,7 +686,7 @@ onMounted(async () => {
 
 .recent-login-main strong {
   font-size: $font-size-sm;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .recent-login-main span,
@@ -832,7 +832,7 @@ onMounted(async () => {
 
   strong {
     font-size: $font-size-md;
-    color: var(--text-color);
+    color: var(--text-primary);
     word-break: break-word;
   }
 
@@ -847,7 +847,7 @@ onMounted(async () => {
   margin: 0;
   font-size: $font-size-md;
   font-weight: $font-weight-bold;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .section-group {
@@ -873,7 +873,7 @@ onMounted(async () => {
 .plan-name {
   font-size: $font-size-xl;
   font-weight: $font-weight-bold;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .plan-desc {
@@ -929,7 +929,7 @@ onMounted(async () => {
 .row-title {
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .row-main p {
@@ -965,11 +965,11 @@ onMounted(async () => {
 .tier-intro-title {
   font-size: $font-size-md;
   font-weight: $font-weight-bold;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .tier-intro-note {
-  color: var(--text-color) !important;
+  color: var(--text-primary) !important;
   font-weight: $font-weight-semibold;
 }
 
@@ -978,7 +978,7 @@ onMounted(async () => {
   border: none;
   background: transparent;
   text-align: left;
-  color: var(--text-color);
+  color: var(--text-primary);
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 
@@ -1046,7 +1046,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     margin: 0;
     font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .modal-close,
@@ -1084,7 +1084,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     display: block;
     font-size: $font-size-md;
     font-weight: $font-weight-medium;
-    color: var(--text-color);
+    color: var(--text-primary);
     margin-bottom: 8px;
   }
 
@@ -1094,7 +1094,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     border: 1px solid var(--border-color);
     border-radius: 8px;
     background-color: var(--bg-secondary);
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: $font-size-md;
     transition: all 0.3s ease;
 
@@ -1128,7 +1128,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   cursor: pointer;
   border: 1px solid var(--border-color);
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .btn-submit,

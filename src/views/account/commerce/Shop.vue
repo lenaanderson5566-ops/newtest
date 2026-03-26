@@ -1654,21 +1654,21 @@ export default {
         .currency {
           font-size: $font-size-xl;
           font-weight: $font-weight-medium;
-          color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
+          color: color-mix(in srgb, var(--text-primary) 72%, var(--secondary-text-color) 28%);
         }
 
         .amount {
           font-size: $font-size-xl;
           line-height: 0.95;
           font-weight: $font-weight-bold;
-          color: var(--text-color);
+          color: var(--text-primary);
           letter-spacing: -0.8px;
         }
 
         .unit-line {
           font-size: $font-size-sm;
           font-weight: $font-weight-medium;
-          color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
+          color: color-mix(in srgb, var(--text-primary) 72%, var(--secondary-text-color) 28%);
         }
       }
     }
@@ -1693,7 +1693,7 @@ export default {
 
         text-align: center;
 
-        color: var(--text-color);
+        color: var(--text-primary);
 
         .period-name {
           font-weight: $font-weight-bold;
@@ -1770,7 +1770,7 @@ export default {
         span {
           font-size: $font-size-md;
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
           line-height: 1.5; // 添加行高改善可读性
 
@@ -1791,7 +1791,7 @@ export default {
 
         line-height: 1.6;
 
-        color: var(--text-color);
+        color: var(--text-primary);
       }
     }
   }
@@ -2012,7 +2012,7 @@ export default {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   display: inline-flex;
@@ -2106,7 +2106,7 @@ export default {
         flex-direction: column;
         gap: 4px;
         text-align: left;
-        color: var(--text-color);
+        color: var(--text-primary);
         position: relative;
         min-height: 116px;
         overflow: hidden;

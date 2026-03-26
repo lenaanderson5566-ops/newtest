@@ -395,7 +395,7 @@ onMounted(() => {
 
     background-color: var(--input-bg);
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     font-size: 1rem;
 
@@ -504,7 +504,7 @@ onMounted(() => {
 
     border-bottom: 1px solid rgba(var(--theme-color-rgb), 0.1);
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
   }
 
@@ -574,7 +574,7 @@ onMounted(() => {
 
       margin-bottom: 0.35rem;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       line-height: 1.4;
 

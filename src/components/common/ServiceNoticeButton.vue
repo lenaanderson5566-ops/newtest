@@ -47,7 +47,7 @@ const goToAnnouncements = () => {
   border-radius: $border-radius-sm;
   border: 1px solid transparent;
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 

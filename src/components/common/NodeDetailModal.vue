@@ -855,7 +855,7 @@ watchEffect(() => {
 
     font-weight: $font-weight-semibold;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
   }
 
@@ -891,7 +891,7 @@ watchEffect(() => {
 
       background-color: rgba(0, 0, 0, 0.05);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       transform: rotate(90deg);
 
@@ -969,7 +969,7 @@ watchEffect(() => {
 
     .info-value {
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-weight: $font-weight-medium;
 
@@ -1015,7 +1015,7 @@ watchEffect(() => {
 
       font-size: $font-size-md;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
     }
 
@@ -1113,7 +1113,7 @@ watchEffect(() => {
 
       word-break: break-all;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       margin-bottom: 36px; 
 

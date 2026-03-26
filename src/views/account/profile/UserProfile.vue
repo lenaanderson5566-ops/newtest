@@ -2099,7 +2099,7 @@ onMounted(() => {
 
       margin: 0;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
     }
 
@@ -2157,7 +2157,7 @@ onMounted(() => {
 
           font-weight: $font-weight-medium;
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
 
 
@@ -2221,7 +2221,7 @@ onMounted(() => {
 
           font-weight: $font-weight-medium;
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
           margin-bottom: 4px;
 
@@ -2351,7 +2351,7 @@ onMounted(() => {
 
           background-color: var(--bg-secondary);
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
           font-size: $font-size-md;
 
@@ -2739,7 +2739,7 @@ onMounted(() => {
 
     font-weight: $font-weight-semibold;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
   }
 
@@ -2791,7 +2791,7 @@ onMounted(() => {
 
   p {
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     font-size: $font-size-md;
 
@@ -2825,7 +2825,7 @@ onMounted(() => {
 
       font-weight: $font-weight-medium;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       margin-bottom: 8px;
 
@@ -2845,7 +2845,7 @@ onMounted(() => {
 
       background-color: var(--bg-secondary);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-size: $font-size-md;
 
@@ -2919,7 +2919,7 @@ onMounted(() => {
 
       border: 1px solid var(--border-color);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
 
 
@@ -3131,7 +3131,7 @@ onMounted(() => {
 
         font-weight: $font-weight-medium;
 
-        color: var(--text-color);
+        color: var(--text-primary);
 
         margin-bottom: 4px;
 
@@ -3479,7 +3479,7 @@ onMounted(() => {
 
     margin: 0 0 8px;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     font-size: $font-size-md;
 
@@ -3535,7 +3535,7 @@ onMounted(() => {
 
     font-size: $font-size-md;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     white-space: pre-wrap;
 

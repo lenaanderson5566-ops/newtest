@@ -432,7 +432,7 @@ export default {
 
         font-weight: $font-weight-semibold;
 
-        color: var(--text-color);
+        color: var(--text-primary);
 
         text-shadow: none;
       }
@@ -447,7 +447,7 @@ export default {
 
       font-weight: $font-weight-medium;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       margin-bottom: 10px;
     }
@@ -498,7 +498,7 @@ export default {
     }
 
     .progress-text {
-      color: var(--text-color, rgba(255, 255, 255, 0.95));
+      color: var(--text-primary, rgba(255, 255, 255, 0.95));
 
       text-shadow: none;
     }

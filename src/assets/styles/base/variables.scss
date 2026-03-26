@@ -4,33 +4,31 @@
 
 // 给CSS变量设置初始值
 :root {
-  // 背景颜色
   --background-color: #f5f7fa;
   --card-background: #ffffff;
   --card-background-rgb: 255, 255, 255;
-  
-  // 文本颜色
-  --text-color: #2f3640;
-  --text-color-rgb: 47, 54, 64;
-  --secondary-text-color: #5f6b7a;
-  
-  // 边框和阴影
-  --border-color: #dde3ea;
-  --shadow-color: rgba(15, 23, 42, 0.08);
-  
-  // 功能色
+
+  --text-primary: #111827;
+  --text-color: #1f2937;
+  --secondary-text-color: #6b7280;
+  --tertiary-text-color: #9aa4b2;
+  --text-color-rgb: 31, 41, 55;
+
+  --border-color: #e5e7eb;
+  --shadow-color: rgba(15, 23, 42, 0.06);
+
   --success-color: #2f8f57;
   --success-background: #edf7f1;
   --success-color-rgb: 47, 143, 87;
-  
+
   --warning-color: #b7791f;
   --warning-background: #fff6e8;
   --warning-color-rgb: 183, 121, 31;
-  
+
   --error-color: #c24b4b;
   --error-background: #fdf0f0;
   --error-color-rgb: 194, 75, 75;
-  
+
   --info-color: #3b67b3;
   --info-background: #edf3ff;
   --info-color-rgb: 59, 103, 179;

@@ -172,7 +172,7 @@ export default {
   border-radius: $border-radius-sm;
   background: transparent;
   border: 1px solid transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 

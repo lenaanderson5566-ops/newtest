@@ -434,7 +434,7 @@ onMounted(() => {
   .quick-btn {
     border: 1px solid var(--border-color);
     background: #fff;
-    color: var(--text-color);
+    color: var(--text-primary);
     border-radius: $border-radius-sm;
     padding: 10px 18px;
     cursor: pointer;
@@ -601,7 +601,7 @@ onMounted(() => {
     }
 
     .reset-modal-text {
-      color: var(--text-color);
+      color: var(--text-primary);
       font-size: $font-size-md;
       margin: 0 0 12px;
       line-height: 1.6;
@@ -876,7 +876,7 @@ onMounted(() => {
 
       margin: 0 0 0.35rem;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       line-height: 1.4;
 

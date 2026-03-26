@@ -395,7 +395,7 @@ onMounted(() => {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   display: inline-flex;
@@ -595,7 +595,7 @@ onMounted(() => {
     margin: 0;
     font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .modal-close {
@@ -631,7 +631,7 @@ onMounted(() => {
       display: block;
       font-size: $font-size-md;
       font-weight: $font-weight-medium;
-      color: var(--text-color);
+      color: var(--text-primary);
       margin-bottom: 8px;
     }
 
@@ -641,7 +641,7 @@ onMounted(() => {
       border: 1px solid var(--border-color);
       border-radius: 8px;
       background-color: var(--bg-secondary);
-      color: var(--text-color);
+      color: var(--text-primary);
       font-size: $font-size-md;
       transition: all 0.3s ease;
 
@@ -678,7 +678,7 @@ onMounted(() => {
     &.btn-cancel {
       background-color: transparent;
       border: 1px solid var(--border-color);
-      color: var(--text-color);
+      color: var(--text-primary);
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);

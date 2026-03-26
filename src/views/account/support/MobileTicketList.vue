@@ -1024,7 +1024,7 @@ fetchTickets();
     .ticket-subject {
       font-weight: $font-weight-semibold;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       flex: 1;
 
@@ -1139,7 +1139,7 @@ fetchTickets();
 
     border: none;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     padding: 0.5rem;
 
@@ -1184,7 +1184,7 @@ fetchTickets();
 
       font-weight: $font-weight-semibold;
 
-      color: var(--text-color);
+      color: var(--text-primary);
     }
 
     .meta-info {
@@ -1298,7 +1298,7 @@ fetchTickets();
 
     text-align: center;
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     margin: 1rem 0;
 
@@ -1519,7 +1519,7 @@ fetchTickets();
 
     background-color: var(--bg-secondary);
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     font-size: 0.95rem;
 
@@ -1701,7 +1701,7 @@ fetchTickets();
 
     font-weight: $font-weight-semibold;
 
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .close-btn {
@@ -1739,7 +1739,7 @@ fetchTickets();
   background-color: var(--bg-color);
 
   p {
-    color: var(--text-color);
+    color: var(--text-primary);
 
     font-size: 1rem;
 
@@ -1758,7 +1758,7 @@ fetchTickets();
 
       font-weight: $font-weight-medium;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-size: 1rem;
     }
@@ -1775,7 +1775,7 @@ fetchTickets();
 
       background-color: var(--card-bg);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-size: 1rem;
 
@@ -1817,7 +1817,7 @@ fetchTickets();
 
       background-color: var(--card-bg);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       cursor: pointer;
 
@@ -1879,7 +1879,7 @@ fetchTickets();
 
       border: 1px solid var(--border-color);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       &:hover {
         background-color: var(--bg-secondary);
@@ -2107,7 +2107,7 @@ fetchTickets();
 
       font-size: 1.5rem;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-weight: $font-weight-semibold;
     }

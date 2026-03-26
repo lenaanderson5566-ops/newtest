@@ -757,7 +757,7 @@ export default {
               :root { --font-size-sm: 14px; --font-size-base: 16px; --font-size-lg: 20px; }
               body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
               img { max-width: 100%; height: auto; margin-bottom: 20px; }
-              h2 { color: var(--text-color, #2f3640); }
+              h2 { color: var(--text-primary, #2f3640); }
               p { color: var(--secondary-text-color, #5f6b7a); }
             
 
@@ -1733,7 +1733,7 @@ export default {
   height: 38px;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .share-buttons {
@@ -1784,7 +1784,7 @@ export default {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
   display: inline-flex;
   align-items: center;
   padding: 0;

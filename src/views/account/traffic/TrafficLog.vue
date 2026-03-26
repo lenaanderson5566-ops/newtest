@@ -446,7 +446,7 @@ const initChart = () => {
 
       textStyle: {
 
-        color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || '#333333'
+        color: getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim() || '#333333'
 
       }
 
@@ -480,7 +480,7 @@ const initChart = () => {
 
         interval: 'auto',
 
-        color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || '#333333'
+        color: getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim() || '#333333'
 
       },
 
@@ -516,7 +516,7 @@ const initChart = () => {
 
         padding: [0, 0, 0, 10],
 
-        color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || '#333333'
+        color: getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim() || '#333333'
 
       },
 
@@ -524,7 +524,7 @@ const initChart = () => {
 
         formatter: (value) => `${value} ${t('trafficLog.unitGb')}`,
 
-        color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || '#333333'
+        color: getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim() || '#333333'
 
       },
 
@@ -876,7 +876,7 @@ onUnmounted(() => {
       font-weight: $font-weight-medium;
       cursor: pointer;
       transition: all 0.3s ease;
-      color: var(--text-color);
+      color: var(--text-primary);
 
       &:hover {
         background-color: rgba(var(--theme-color-rgb), 0.1);

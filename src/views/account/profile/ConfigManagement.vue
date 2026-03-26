@@ -85,7 +85,7 @@ const handleResetSecurity = async () => {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-primary);
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   display: inline-flex;

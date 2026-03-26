@@ -1333,7 +1333,7 @@ export default {
 
       margin-bottom: 15px;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       position: relative;
 
@@ -1410,7 +1410,7 @@ export default {
 
         letter-spacing: 0.3px;
 
-        color: var(--text-color);
+        color: var(--text-primary);
       }
 
       .card-badge {
@@ -1497,7 +1497,7 @@ export default {
           span {
             font-size: $font-size-md;
 
-            color: var(--text-color);
+            color: var(--text-primary);
 
             line-height: 1.5;
 
@@ -1512,7 +1512,7 @@ export default {
 
           line-height: 1.6;
 
-          color: var(--text-color);
+          color: var(--text-primary);
         }
       }
     }
@@ -1660,7 +1660,7 @@ export default {
 
           margin-bottom: 8px !important;
 
-          color: var(--text-color);
+          color: var(--text-primary);
 
           letter-spacing: 0.2px;
 
@@ -1687,7 +1687,7 @@ export default {
 
             font-weight: $font-weight-medium;
 
-            color: var(--text-color);
+            color: var(--text-primary);
           }
 
           .amount {
@@ -1695,7 +1695,7 @@ export default {
 
             font-weight: $font-weight-bold;
 
-            color: var(--text-color);
+            color: var(--text-primary);
           }
 
           .original-price {
@@ -1737,7 +1737,7 @@ export default {
 
       background-color: var(--input-bg-color);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-size: $font-size-md;
 
@@ -1864,7 +1864,7 @@ export default {
 
       &:hover {
         background: rgba(148, 163, 184, 0.14);
-        color: var(--text-color);
+        color: var(--text-primary);
       }
     }
   }
@@ -1973,7 +1973,7 @@ export default {
 
         font-weight: $font-weight-medium;
 
-        color: var(--text-color);
+        color: var(--text-primary);
 
         &.discount {
           color: #f44336;
@@ -1998,7 +1998,7 @@ export default {
 
           font-weight: $font-weight-semibold;
 
-          color: var(--text-color);
+          color: var(--text-primary);
         }
 
         .summary-value {
@@ -2027,7 +2027,7 @@ export default {
   .coupon-verify-section,
   .order-summary-section {
     .section-title {
-      color: var(--text-color);
+      color: var(--text-primary);
     }
   }
 
@@ -2037,7 +2037,7 @@ export default {
     border: 1px solid var(--border-color);
     border-radius: $border-radius-sm;
     box-shadow: none;
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .right-column .order-summary-section .order-summary {
@@ -2081,7 +2081,7 @@ export default {
   }
 
   .order-summary-section .coupon-code-label {
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .order-summary-section .btn-remove-text {
@@ -2099,7 +2099,7 @@ export default {
   .coupon-verify-section .coupon-field {
     background: var(--input-bg-color);
     border-color: var(--border-color);
-    color: var(--text-color);
+    color: var(--text-primary);
 
     &::placeholder {
       color: var(--secondary-text-color);
@@ -2113,7 +2113,7 @@ export default {
 
   .order-summary-section .summary-row .summary-label,
   .order-summary-section .summary-row .summary-value {
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .order-summary-section .summary-row .summary-value.discount {
@@ -2122,7 +2122,7 @@ export default {
 
   .order-summary-section .summary-row.total .summary-label,
   .order-summary-section .summary-row.total .summary-value {
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .order-summary-section .summary-divider {
@@ -2190,7 +2190,7 @@ export default {
 
       background-color: transparent;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-size: $font-size-md;
 

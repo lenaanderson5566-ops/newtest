@@ -176,7 +176,7 @@ export default {
         margin: 0;
         font-size: $font-size-xl;
         font-weight: $font-weight-semibold;
-        color: var(--text-color);
+        color: var(--text-primary);
       }
 
       .popup-close-btn {
@@ -194,7 +194,7 @@ export default {
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
-          color: var(--text-color);
+          color: var(--text-primary);
           transform: rotate(90deg);
         }
 
@@ -214,7 +214,7 @@ export default {
       :deep(p) {
         margin: 12px 0;
         line-height: 1.6;
-        color: var(--text-color);
+        color: var(--text-primary);
       }
 
       :deep(strong) {

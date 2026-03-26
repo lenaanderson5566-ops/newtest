@@ -1094,7 +1094,7 @@ export default {
 
   line-height: normal !important;
 
-  color: var(--text-color);
+  color: var(--text-primary);
 
   border: 1px solid var(--border-color);
 

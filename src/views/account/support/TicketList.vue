@@ -1025,7 +1025,7 @@ onUnmounted(() => {
 
       background-color: var(--bg-secondary);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-size: $font-size-md;
 
@@ -1158,7 +1158,7 @@ onUnmounted(() => {
 
     margin-bottom: 0.5rem;
 
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .ticket-meta {
@@ -1538,7 +1538,7 @@ onUnmounted(() => {
 
       word-break: break-word;
 
-      color: var(--text-color);
+      color: var(--text-primary);
     }
   }
 
@@ -1582,7 +1582,7 @@ onUnmounted(() => {
 
     background-color: var(--bg-secondary);
 
-    color: var(--text-color);
+    color: var(--text-primary);
 
     font-size: 1rem;
 
@@ -1879,7 +1879,7 @@ onUnmounted(() => {
 
     font-weight: $font-weight-semibold;
 
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .modal-close {
@@ -1906,7 +1906,7 @@ onUnmounted(() => {
     transition: all 0.2s ease;
 
     &:hover {
-      color: var(--text-color);
+      color: var(--text-primary);
 
       background-color: rgba(0, 0, 0, 0.05);
     }
@@ -1924,7 +1924,7 @@ onUnmounted(() => {
 
       margin-bottom: 0.75rem;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-weight: $font-weight-medium;
 
@@ -1943,7 +1943,7 @@ onUnmounted(() => {
 
       background-color: var(--bg-secondary);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-size: 0.95rem;
 
@@ -2089,7 +2089,7 @@ onUnmounted(() => {
 
       border: 1px solid var(--border-color);
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);
@@ -2265,7 +2265,7 @@ onUnmounted(() => {
 
       font-size: 1.5rem;
 
-      color: var(--text-color);
+      color: var(--text-primary);
 
       font-weight: $font-weight-semibold;
     }
