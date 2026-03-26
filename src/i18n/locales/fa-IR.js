@@ -393,6 +393,8 @@ export default {
     goShopping: 'به فروشگاه بروید',
     cancelConfirmTitle: 'تایید لغو سفارش',
     cancelConfirmText: 'آیا مطمئن هستید که می خواهید سفارش را لغو کنید؟ این عمل برگشت ناپذیر است',
+    showCancelled: 'نمایش سفارش‌های لغوشده',
+    noFilteredOrders: 'سفارشی با فیلتر فعلی یافت نشد',
     cancelSuccess: 'سفارش لغو شد',
     cancelFailed: 'لغو سفارش شکست خورد',
     welcome: {

@@ -393,6 +393,8 @@ export default {
     goShopping: '구독 구매하러 가기',
     cancelConfirmTitle: '주문 취소 확인',
     cancelConfirmText: '이 주문을 취소하시겠습니까? 이 작업은 되돌릴 수 없습니다.',
+    showCancelled: '취소된 주문 표시',
+    noFilteredOrders: '현재 필터 조건에 맞는 주문이 없습니다',
     cancelSuccess: '주문이 취소되었습니다',
     cancelFailed: '주문 취소 실패',
     welcome: {

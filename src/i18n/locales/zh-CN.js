@@ -396,6 +396,8 @@ export default {
         goShopping: '去购买订阅',
         cancelConfirmTitle: '确认取消订单',
         cancelConfirmText: '您确定要取消此订单吗？此操作无法撤销。',
+        showCancelled: '显示已取消订单',
+        noFilteredOrders: '当前筛选条件下暂无订单',
         cancelSuccess: '订单已取消',
         cancelFailed: '取消订单失败',
         welcome: {

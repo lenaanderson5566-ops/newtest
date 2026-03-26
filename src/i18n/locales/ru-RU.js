@@ -393,6 +393,8 @@ export default {
     goShopping: 'Перейти к покупкам',
     cancelConfirmTitle: 'Подтвердить отмену заказа',
     cancelConfirmText: 'Вы уверены, что хотите отменить заказ? Это действие необратимо.',
+    showCancelled: 'Показывать отменённые заказы',
+    noFilteredOrders: 'Нет заказов по текущему фильтру',
     cancelSuccess: 'Заказ отменен',
     cancelFailed: 'Ошибка отмены заказа',
     welcome: {

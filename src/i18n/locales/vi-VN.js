@@ -399,6 +399,8 @@ export default {
         goShopping: 'Đi mua gói đăng ký',
         cancelConfirmTitle: 'Xác nhận hủy đơn hàng',
         cancelConfirmText: 'Bạn có chắc chắn muốn hủy đơn hàng này không? Thao tác này không thể hoàn tác.',
+        showCancelled: 'Hiển thị đơn đã hủy',
+        noFilteredOrders: 'Không có đơn hàng phù hợp với bộ lọc hiện tại',
         cancelSuccess: 'Đã hủy đơn hàng',
         cancelFailed: 'Hủy đơn hàng thất bại',
         welcome: {

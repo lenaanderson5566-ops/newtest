@@ -395,6 +395,8 @@ export default {
         goShopping: 'Go Purchase Subscriptions',
         cancelConfirmTitle: 'Confirm Order Cancellation',
         cancelConfirmText: 'Are you sure you want to cancel this order? This action cannot be undone.',
+        showCancelled: 'Show cancelled orders',
+        noFilteredOrders: 'No orders match the current filter',
         cancelSuccess: 'Order cancelled',
         cancelFailed: 'Failed to cancel order',
         welcome: {

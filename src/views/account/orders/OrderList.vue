@@ -20,10 +20,17 @@
       
       <!-- 订单列表 -->
       <div v-else-if="orders.length > 0" class="orders-content">
+        <div class="orders-filter-bar">
+          <label class="filter-check">
+            <input v-model="showCancelledOrders" type="checkbox" />
+            <span>{{ headerTexts.showCancelled }}</span>
+          </label>
+        </div>
+
         <!-- 移动端卡片视图 -->
         <div class="order-cards" v-if="isMobileView">
-          <transition-group name="page-switch">
-            <div v-for="order in orders" :key="order.trade_no" class="order-card">
+          <transition-group v-if="filteredOrders.length" name="page-switch">
+            <div v-for="order in filteredOrders" :key="order.trade_no" class="order-card">
               <div class="order-card-header">
                 <div class="status-wrapper">
                   <span class="status-badge" :class="getStatusClass(order.status)">
@@ -67,11 +74,12 @@
               </div>
             </div>
           </transition-group>
+          <div v-else class="orders-empty-inline">{{ headerTexts.noFilteredOrders }}</div>
         </div>
 
         <!-- 桌面端表格视图 -->
         <div class="order-table-container" v-else>
-          <table class="order-table">
+          <table v-if="filteredOrders.length" class="order-table">
             <thead>
               <tr>
                 <th width="20%">{{ headerTexts.createdAt }}</th>
@@ -83,7 +91,7 @@
             </thead>
             <tbody>
               <transition-group name="page-switch">
-                <tr v-for="order in orders" :key="order.trade_no">
+                <tr v-for="order in filteredOrders" :key="order.trade_no">
                   <td>{{ formatDate(order.created_at) }}</td>
                   <td>{{ formatCycle(order.period) }}</td>
                   <td class="amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</td>
@@ -114,6 +122,7 @@
               </transition-group>
             </tbody>
           </table>
+          <div v-else class="orders-empty-inline">{{ headerTexts.noFilteredOrders }}</div>
         </div>
       </div>
       
@@ -181,6 +190,7 @@ const showConfirmModal = ref(false);
 const currentTradeNo = ref('');
 const canceling = ref(false);
 const isMobileView = ref(false);
+const showCancelledOrders = ref(false);
 const goBackToAccount = () => {
   if (window.history.length > 1) {
     router.back();
@@ -266,6 +276,11 @@ const statusTextMap = computed(() => {
     4: t('orders.status.discounted', '已折抵'),
     unknown: t('orders.status.unknown', '未知状态')
   };
+});
+
+const filteredOrders = computed(() => {
+  const allowedStatuses = showCancelledOrders.value ? [0, 2, 3] : [0, 3];
+  return orders.value.filter((order) => allowedStatuses.includes(Number(order.status)));
 });
 
 const getStatusText = (status) => {
@@ -359,7 +374,9 @@ const headerTexts = computed(() => {
     goShopping: t('orders.goShopping', '去购买订阅'),
     loading: t('orders.loading', '正在加载订单...'),
     cancelConfirmTitle: t('orders.cancelConfirmTitle', '确认取消订单'),
-    cancelConfirmText: t('orders.cancelConfirmText', '您确定要取消此订单吗？此操作无法撤销。')
+    cancelConfirmText: t('orders.cancelConfirmText', '您确定要取消此订单吗？此操作无法撤销。'),
+    showCancelled: t('orders.showCancelled', '显示已取消订单'),
+    noFilteredOrders: t('orders.noFilteredOrders', '当前筛选条件下暂无订单')
   };
 });
 
@@ -461,6 +478,26 @@ watch(locale, () => {
 
 .orders-content {
   width: 100%;
+}
+
+.orders-filter-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.filter-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--secondary-text-color);
+}
+
+.orders-empty-inline {
+  padding: 18px 14px;
+  color: var(--secondary-text-color);
+  text-align: center;
 }
 
 .order-table-container {

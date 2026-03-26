@@ -393,6 +393,8 @@ export default {
     goShopping: '去購買訂閱',
     cancelConfirmTitle: '確認取消訂單',
     cancelConfirmText: '您確定要取消此訂單？此操作無法復原。',
+    showCancelled: '顯示已取消訂單',
+    noFilteredOrders: '目前篩選條件下暫無訂單',
     cancelSuccess: '訂單已取消',
     cancelFailed: '取消訂單失敗',
     welcome: {

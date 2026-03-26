@@ -393,6 +393,8 @@ export default {
     goShopping: 'サブスクリプション購入へ',
     cancelConfirmTitle: '注文キャンセル確認',
     cancelConfirmText: 'この注文をキャンセルしますか？この操作は元に戻せません。',
+    showCancelled: 'キャンセル済み注文を表示',
+    noFilteredOrders: '現在のフィルター条件に一致する注文はありません',
     cancelSuccess: '注文キャンセル済み',
     cancelFailed: '注文キャンセル失敗',
     welcome: {
