@@ -14,14 +14,14 @@
 }
 
 html {
-  font-size: 14px;
+  font-size: $font-size-base;
   scroll-behavior: smooth;
 }
 
 /* 响应式字体大小 */
 @media (max-width: map.get($breakpoints, sm)) {
   html {
-    font-size: 13px;
+    font-size: $font-size-sm;
   }
 }
 

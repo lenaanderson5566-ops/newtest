@@ -64,6 +64,7 @@ const variantClass = computed(() => `info-card--${props.variant}`);
 </script>
 
 <style scoped lang="scss">
+@use "@/assets/styles/base/variables.scss" as *;
 .info-card {
   --info-card-padding: var(--space-4);
   --info-card-radius: var(--radius-lg);
@@ -102,7 +103,7 @@ const variantClass = computed(() => `info-card--${props.variant}`);
 
 .info-card-title {
   margin: 0;
-  font-size: 18px;
+  font-size: $font-size-lg;
   font-weight: 700;
   color: var(--text-color);
 }
@@ -115,13 +116,13 @@ const variantClass = computed(() => `info-card--${props.variant}`);
 .info-card-meta {
   margin: 0;
   color: var(--secondary-text-color);
-  font-size: 14px;
+  font-size: $font-size-base;
   line-height: 1.45;
 }
 
 .info-card-meta {
   margin-top: var(--space-1);
-  font-size: 12px;
+  font-size: $font-size-sm;
 }
 
 .info-card-action,

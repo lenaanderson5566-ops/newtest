@@ -851,7 +851,7 @@ watchEffect(() => {
 
     margin: 0;
 
-    font-size: 18px;
+    font-size: $font-size-lg;
 
     font-weight: 600;
 
@@ -1013,7 +1013,7 @@ watchEffect(() => {
 
       margin: 0;
 
-      font-size: 16px;
+      font-size: $font-size-base;
 
       color: var(--text-color);
 
@@ -1047,7 +1047,7 @@ watchEffect(() => {
 
         color: var(--text-muted);
 
-        font-size: 12px;
+        font-size: $font-size-sm;
 
         cursor: pointer;
 
@@ -1101,7 +1101,7 @@ watchEffect(() => {
 
       font-family: monospace; 
 
-      font-size: 13px;
+      font-size: $font-size-sm;
 
       overflow-x: hidden;
 
@@ -1143,7 +1143,7 @@ watchEffect(() => {
 
       padding: 8px 12px;
 
-      font-size: 13px;
+      font-size: $font-size-sm;
 
       cursor: pointer;
 
@@ -1223,7 +1223,7 @@ watchEffect(() => {
 
         color: var(--text-muted);
 
-        font-size: 14px;
+        font-size: $font-size-base;
 
         margin: 0;
 
@@ -1277,7 +1277,7 @@ watchEffect(() => {
 
         padding: 6px 10px;
 
-        font-size: 12px;
+        font-size: $font-size-sm;
 
         cursor: pointer;
 
@@ -1345,7 +1345,7 @@ watchEffect(() => {
 
   padding: 10px 16px;
 
-  font-size: 14px;
+  font-size: $font-size-base;
 
   font-weight: 500;
 
@@ -1435,7 +1435,7 @@ watchEffect(() => {
 
     .info-label {
 
-      font-size: 14px;
+      font-size: $font-size-base;
 
       flex: 0 0 40%; 
 
@@ -1445,7 +1445,7 @@ watchEffect(() => {
 
     .info-value {
 
-      font-size: 14px;
+      font-size: $font-size-base;
 
       flex: 1; 
 
@@ -1493,7 +1493,7 @@ watchEffect(() => {
 
       .link-text {
 
-        font-size: 12px; 
+        font-size: $font-size-sm; 
 
         margin-bottom: 40px; 
 

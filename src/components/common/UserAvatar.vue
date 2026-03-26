@@ -202,7 +202,7 @@ export default {
     }
     
     span {
-      font-size: 14px;
+      font-size: $font-size-base;
       color: var(--text-color);
       transition: color 0.3s ease;
     }

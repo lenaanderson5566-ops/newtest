@@ -322,7 +322,7 @@ export default {
 
 
 .site-logo {
-  font-size: 16px;
+  font-size: $font-size-base;
   font-weight: 700;
   color: var(--theme-color);
   letter-spacing: -0.5px;
@@ -402,12 +402,12 @@ export default {
   :deep(.avatar-wrapper) {
     width: auto;
     min-width: var(--toolbar-control-height);
-    font-size: 14px;
+    font-size: $font-size-base;
   }
 
   :deep(.language-btn) {
     min-width: 88px;
-    font-size: 14px;
+    font-size: $font-size-base;
   }
 }
 
@@ -473,7 +473,7 @@ export default {
   }
 
   .site-logo {
-    font-size: 14px;
+    font-size: $font-size-base;
     gap: 8px;
 
     .site-logo-img {
@@ -508,14 +508,14 @@ export default {
       .card-title,
       h2,
       h3 {
-        font-size: 16px !important;
+        font-size: $font-size-base !important;
         line-height: 1.3 !important;
       }
     }
 
     .card-body {
       padding: 10px 12px !important;
-      font-size: 14px !important;
+      font-size: $font-size-base !important;
       line-height: 1.45 !important;
     }
 

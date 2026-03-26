@@ -190,14 +190,14 @@ export default {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 14px;
+    font-size: $font-size-base;
     font-weight: 600;
     line-height: 1;
   }
 
   .language-icon {
     color: var(--theme-color);
-    font-size: 14px;
+    font-size: $font-size-base;
     line-height: 1;
   }
 }
@@ -222,7 +222,7 @@ export default {
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
-  font-size: 14px;
+  font-size: $font-size-base;
 
   &:hover {
     background-color: rgba(var(--theme-color-rgb), 0.1);

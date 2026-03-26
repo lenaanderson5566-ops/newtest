@@ -152,7 +152,7 @@ export default {
       padding: 8px 10px;
       border-radius: $border-radius-sm;
       font-weight: 550;
-      font-size: 14px;
+      font-size: $font-size-base;
       color: var(--secondary-text-color);
       text-decoration: none;
       text-align: left;
@@ -236,7 +236,7 @@ export default {
         min-width: 0;
         padding: 6px 8px;
         justify-content: center;
-        font-size: 14px;
+        font-size: $font-size-base;
         flex-direction: row;
         gap: 6px;
         height: 50px;
@@ -290,7 +290,7 @@ export default {
         flex: 1 1 0;
         min-width: 0;
         padding: 5px 6px;
-        font-size: 12px;
+        font-size: $font-size-sm;
         height: 46px;
 
         .nav-icon {

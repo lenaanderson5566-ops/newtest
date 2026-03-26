@@ -251,6 +251,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/base/variables.scss" as *;
 .import-config-card {
   margin-top: 24px;
   .card-body {
@@ -274,7 +275,7 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 14px;
+    font-size: $font-size-base;
 
     &.active {
       border-color: rgba(var(--theme-color-rgb), 0.75);
@@ -287,7 +288,7 @@ onMounted(() => {
     margin-top: 14px;
 
     .platform-title {
-      font-size: 14px;
+      font-size: $font-size-base;
       font-weight: 600;
       }
 
@@ -306,7 +307,7 @@ onMounted(() => {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 14px;
+      font-size: $font-size-base;
       font-weight: 600;
 
       &:hover {
@@ -330,7 +331,7 @@ onMounted(() => {
       border: 1px dashed var(--border-color);
       border-radius: 10px;
       color: var(--secondary-text-color);
-      font-size: 13px;
+      font-size: $font-size-sm;
       text-align: center;
     }
   }
