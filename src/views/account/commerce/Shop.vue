@@ -2139,7 +2139,7 @@ export default {
       }
 
       .chip-name {
-        font-size: $font-size-sm;
+        font-size: $font-size-md;
         font-weight: $font-weight-bold;
       }
 
