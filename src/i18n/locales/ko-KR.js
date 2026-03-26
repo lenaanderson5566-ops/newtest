@@ -501,7 +501,7 @@ export default {
         planExpireAtLabel: '만료일: {date}',
         paymentInfo: '결제 정보',
         accountDetails: '계정 상세',
-        accessPrivacy: '접근 및 개인정보',
+        accessPrivacy: '접근 및 개인정보 보호',
         changeSubscription: '구독 변경',
         billRecords: '청구 내역',
         redeemGiftCard: '기프트카드 교환',

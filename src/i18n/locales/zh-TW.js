@@ -499,7 +499,7 @@ export default {
         planExpireAtLabel: '到期時間：{date}',
         paymentInfo: '付款資訊',
         accountDetails: '帳號詳情',
-        accessPrivacy: '存取與隱私',
+        accessPrivacy: '存取與隱私權',
         changeSubscription: '更改訂閱',
         billRecords: '帳單紀錄',
         redeemGiftCard: '兌換禮品卡',

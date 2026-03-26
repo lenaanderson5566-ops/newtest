@@ -500,7 +500,7 @@ export default {
         planExpireAtLabel: 'Срок действия: {date}',
         paymentInfo: 'Платежная информация',
         accountDetails: 'Данные аккаунта',
-        accessPrivacy: 'Доступ и приватность',
+        accessPrivacy: 'Доступ и конфиденциальность',
         changeSubscription: 'Изменить подписку',
         billRecords: 'История счетов',
         redeemGiftCard: 'Активировать подарочную карту',
