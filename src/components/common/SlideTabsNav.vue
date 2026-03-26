@@ -151,8 +151,8 @@ export default {
     .nav-item {
       padding: 8px 10px;
       border-radius: $border-radius-sm;
-      font-weight: 500;
-      font-size: 13px;
+      font-weight: 550;
+      font-size: 14px;
       color: var(--secondary-text-color);
       text-decoration: none;
       text-align: left;
@@ -236,7 +236,7 @@ export default {
         min-width: 0;
         padding: 6px 8px;
         justify-content: center;
-        font-size: 13px;
+        font-size: 14px;
         flex-direction: row;
         gap: 6px;
         height: 50px;
@@ -255,7 +255,7 @@ export default {
         }
 
         .nav-text {
-          font-weight: 500;
+          font-weight: 550;
           line-height: 1.2;
           max-width: none;
           opacity: 1;
@@ -290,7 +290,7 @@ export default {
         flex: 1 1 0;
         min-width: 0;
         padding: 5px 6px;
-        font-size: 11px;
+        font-size: 12px;
         height: 46px;
 
         .nav-icon {
