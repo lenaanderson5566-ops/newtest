@@ -872,7 +872,7 @@ onUnmounted(() => {
       border: 1px solid var(--border-color);
       border-radius: 20px;
       padding: 8px 16px;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-medium;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -936,7 +936,7 @@ onUnmounted(() => {
 
       .card-title {
 
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
 
         font-weight: $font-weight-semibold;
 

@@ -86,7 +86,7 @@ const handleResetSecurity = async () => {
   border: none;
   background: transparent;
   color: var(--text-color);
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   display: inline-flex;
   align-items: center;
@@ -97,7 +97,7 @@ const handleResetSecurity = async () => {
 }
 
 .back-label {
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   color: var(--secondary-text-color);
 }
 
@@ -153,7 +153,7 @@ const handleResetSecurity = async () => {
 
   h3 {
     margin: 0;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
   }
 }
 

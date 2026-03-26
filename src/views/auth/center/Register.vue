@@ -2210,7 +2210,7 @@ export default {
 
   margin-left: 4px;
 
-  font-size: $font-size-base;
+  font-size: $font-size-md;
 
   vertical-align: middle;
 
@@ -2290,7 +2290,7 @@ export default {
 
       height: 45px;
 
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       letter-spacing: 0.2px;
 
@@ -2322,7 +2322,7 @@ export default {
 
     color: var(--secondary-text-color);
 
-    font-size: $font-size-base;
+    font-size: $font-size-md;
 
     background-color: transparent;
 
@@ -2386,7 +2386,7 @@ export default {
 
       color: var(--primary-text-color);
 
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       padding: 0 4px;
 
@@ -2500,7 +2500,7 @@ export default {
 
         color: var(--primary-text-color);
 
-        font-size: $font-size-base;
+        font-size: $font-size-md;
 
         display: flex;
 
@@ -3541,7 +3541,7 @@ export default {
 
         margin: 0;
 
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
 
         font-weight: $font-weight-semibold;
 
@@ -3559,7 +3559,7 @@ export default {
 
         cursor: pointer;
 
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
 
         line-height: 1;
 

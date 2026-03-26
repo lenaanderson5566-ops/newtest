@@ -396,7 +396,7 @@ onMounted(() => {
   border: none;
   background: transparent;
   color: var(--text-color);
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   display: inline-flex;
   align-items: center;
@@ -407,7 +407,7 @@ onMounted(() => {
 }
 
 .back-label {
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   color: var(--secondary-text-color);
 }
 
@@ -593,7 +593,7 @@ onMounted(() => {
 
   h3 {
     margin: 0;
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
     color: var(--text-color);
   }
@@ -629,7 +629,7 @@ onMounted(() => {
 
     label {
       display: block;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-medium;
       color: var(--text-color);
       margin-bottom: 8px;
@@ -642,7 +642,7 @@ onMounted(() => {
       border-radius: 8px;
       background-color: var(--bg-secondary);
       color: var(--text-color);
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       transition: all 0.3s ease;
 
       &:focus {
@@ -670,7 +670,7 @@ onMounted(() => {
   button {
     padding: 8px 16px;
     border-radius: 8px;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
     font-weight: $font-weight-medium;
     cursor: pointer;
     transition: all 0.3s ease;

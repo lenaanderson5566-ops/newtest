@@ -593,7 +593,7 @@ onMounted(async () => {
   border: none;
   background: transparent;
   color: var(--secondary-text-color);
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   cursor: pointer;
   white-space: nowrap;
@@ -724,14 +724,14 @@ onMounted(async () => {
 
     h3 {
       margin: 0;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-bold;
       color: #f8fbff;
     }
 
     p {
       margin: 0;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       color: rgba(232, 237, 255, 0.9);
     }
   }
@@ -831,7 +831,7 @@ onMounted(async () => {
   }
 
   strong {
-    font-size: $font-size-base;
+    font-size: $font-size-md;
     color: var(--text-color);
     word-break: break-word;
   }
@@ -845,7 +845,7 @@ onMounted(async () => {
 
 .section-title {
   margin: 0;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   font-weight: $font-weight-bold;
   color: var(--text-color);
 }
@@ -871,14 +871,14 @@ onMounted(async () => {
 }
 
 .plan-name {
-  font-size: $font-size-lg;
+  font-size: $font-size-xl;
   font-weight: $font-weight-bold;
   color: var(--text-color);
 }
 
 .plan-desc {
   margin: 8px 0 0;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   color: var(--secondary-text-color);
 }
 
@@ -900,7 +900,7 @@ onMounted(async () => {
 }
 
 .balance-amount {
-  font-size: $font-size-lg !important;
+  font-size: $font-size-xl !important;
   line-height: 1.2;
 }
 
@@ -927,7 +927,7 @@ onMounted(async () => {
 .row-main { min-width: 0; }
 
 .row-title {
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   color: var(--text-color);
 }
@@ -963,7 +963,7 @@ onMounted(async () => {
 }
 
 .tier-intro-title {
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   font-weight: $font-weight-bold;
   color: var(--text-color);
 }
@@ -1044,7 +1044,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
   h3 {
     margin: 0;
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
     color: var(--text-color);
   }
@@ -1082,7 +1082,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
   label {
     display: block;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
     font-weight: $font-weight-medium;
     color: var(--text-color);
     margin-bottom: 8px;
@@ -1095,7 +1095,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     border-radius: 8px;
     background-color: var(--bg-secondary);
     color: var(--text-color);
-    font-size: $font-size-base;
+    font-size: $font-size-md;
     transition: all 0.3s ease;
 
     &:focus {
@@ -1124,7 +1124,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .action-btn {
   padding: 8px 16px;
   border-radius: 8px;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   cursor: pointer;
   border: 1px solid var(--border-color);
   background: transparent;
@@ -1135,7 +1135,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .action-btn.danger {
   padding: 8px 16px;
   border-radius: 8px;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   cursor: pointer;
   border: none;
   background: rgba(var(--theme-color-rgb), 0.92);
@@ -1195,14 +1195,14 @@ input:checked + .slider:before { transform: translateX(18px); }
 
   .top-nav-item {
     padding: 14px 12px 12px;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
   }
 
   .overview-panels { gap: 0.75rem; }
   .summary-panel { padding: 14px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
-  .section-block > .section-title { padding: 14px 14px 8px; font-size: $font-size-lg; }
+  .section-block > .section-title { padding: 14px 14px 8px; font-size: $font-size-xl; }
   .settings-row,
   .nav-row { min-height: 62px; padding: 12px 14px; }
 }

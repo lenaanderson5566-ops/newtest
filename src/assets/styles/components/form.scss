@@ -27,7 +27,7 @@
   display: block;
   width: 100%;
   padding: 0.75rem 1rem;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   line-height: 1.5;
   color: var(--text-color);
   background-color: var(--card-background);
@@ -79,7 +79,7 @@
   vertical-align: middle;
   user-select: none;
   padding: 0.75rem 1.5rem;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   line-height: 1.5;
   border-radius: $border-radius;
   transition: all 0.3s ease;

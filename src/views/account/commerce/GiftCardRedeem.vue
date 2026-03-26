@@ -145,7 +145,7 @@ const goBack = () => {
 
   h2 {
     margin: 0;
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
   }
 }
 
@@ -174,7 +174,7 @@ const goBack = () => {
 .rule-card {
   h3 {
     margin: 0 0 8px;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
   }
 
   ul {

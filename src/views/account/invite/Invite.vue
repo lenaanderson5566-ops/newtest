@@ -1567,7 +1567,7 @@ export default {
 
 .card-title {
   margin: 0;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   font-weight: $font-weight-bold;
 }
 
@@ -1577,7 +1577,7 @@ export default {
 }
 
 .balance-value {
-  font-size: $font-size-lg;
+  font-size: $font-size-xl;
   font-weight: $font-weight-bold;
   color: var(--theme-color);
 }
@@ -1620,7 +1620,7 @@ export default {
 
 .kpi-value {
   margin-top: 4px;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   font-weight: $font-weight-bold;
 }
 

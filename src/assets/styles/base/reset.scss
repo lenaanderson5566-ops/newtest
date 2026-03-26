@@ -14,7 +14,7 @@
 }
 
 html {
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   scroll-behavior: smooth;
 }
 
@@ -27,7 +27,7 @@ html {
 
 body {
   font-family: $font-family-base;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   line-height: 1.5;
   color: var(--text-color);
   background-color: var(--background-color);

@@ -512,7 +512,7 @@ export default {
 
 .site-title {
 
-  font-size: $font-size-lg;
+  font-size: $font-size-xl;
 
   font-weight: $font-weight-bold;
 

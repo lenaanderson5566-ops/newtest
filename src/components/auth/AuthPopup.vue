@@ -174,7 +174,7 @@ export default {
 
       .popup-title {
         margin: 0;
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
         font-weight: $font-weight-semibold;
         color: var(--text-color);
       }
@@ -244,7 +244,7 @@ export default {
         color: white;
         border: none;
         border-radius: 8px;
-        font-size: $font-size-base;
+        font-size: $font-size-md;
         font-weight: $font-weight-medium;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -331,7 +331,7 @@ export default {
         padding: 15px;
 
         .popup-title {
-          font-size: $font-size-base;
+          font-size: $font-size-md;
         }
       }
 

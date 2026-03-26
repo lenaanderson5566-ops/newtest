@@ -428,7 +428,7 @@ export default {
       .progress-text {
         position: absolute;
 
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
 
         font-weight: $font-weight-semibold;
 
@@ -443,7 +443,7 @@ export default {
     text-align: center;
 
     .status-title {
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
 
       font-weight: $font-weight-medium;
 
@@ -453,7 +453,7 @@ export default {
     }
 
     .status-progress {
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-normal;
 

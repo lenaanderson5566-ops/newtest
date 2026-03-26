@@ -401,7 +401,7 @@ onMounted(fetchUserStatus);
 
   .status-main {
     margin: 0;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
     font-weight: $font-weight-semibold;
     color: var(--text-color);
   }
@@ -428,7 +428,7 @@ onMounted(fetchUserStatus);
 
     h2 {
       margin: 0;
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
       font-weight: $font-weight-semibold;
     }
   }
@@ -443,7 +443,7 @@ onMounted(fetchUserStatus);
     align-items: center;
     justify-content: center;
     font-weight: $font-weight-semibold;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
   }
 }
 
@@ -451,7 +451,7 @@ onMounted(fetchUserStatus);
 .connect-text {
   margin: 0;
   color: var(--secondary-text-color);
-  font-size: $font-size-base;
+  font-size: $font-size-md;
 }
 
 .system-grid {
@@ -478,7 +478,7 @@ onMounted(fetchUserStatus);
     border-color: rgba(var(--theme-color-rgb), 0.5);
   }
 
-  strong { font-size: $font-size-base; }
+  strong { font-size: $font-size-md; }
 
   &.active {
     border-color: rgba(var(--theme-color-rgb), 0.85);
@@ -623,7 +623,7 @@ onMounted(fetchUserStatus);
     border: none;
     background: transparent;
     cursor: pointer;
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
   }
 
   img {

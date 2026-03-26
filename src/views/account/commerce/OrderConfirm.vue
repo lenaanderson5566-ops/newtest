@@ -1188,7 +1188,7 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
 
         font-weight: $font-weight-semibold;
 
@@ -1202,7 +1202,7 @@ export default {
 
         color: var(--secondary-text-color);
 
-        font-size: $font-size-base;
+        font-size: $font-size-md;
 
         line-height: 1.6;
       }
@@ -1276,7 +1276,7 @@ export default {
       min-width: 0;
 
       h4 {
-        font-size: $font-size-base;
+        font-size: $font-size-md;
 
         font-weight: $font-weight-semibold;
 
@@ -1288,7 +1288,7 @@ export default {
       }
 
       p {
-        font-size: $font-size-base;
+        font-size: $font-size-md;
 
         margin: 0;
 
@@ -1327,7 +1327,7 @@ export default {
     margin-bottom: 25px;
 
     .section-title {
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
 
       font-weight: $font-weight-semibold;
 
@@ -1402,7 +1402,7 @@ export default {
       margin-bottom: 20px;
 
       .card-title {
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
 
         font-weight: $font-weight-semibold;
 
@@ -1495,7 +1495,7 @@ export default {
           }
 
           span {
-            font-size: $font-size-base;
+            font-size: $font-size-md;
 
             color: var(--text-color);
 
@@ -1508,7 +1508,7 @@ export default {
         }
 
         .html-content {
-          font-size: $font-size-base;
+          font-size: $font-size-md;
 
           line-height: 1.6;
 
@@ -1654,7 +1654,7 @@ export default {
         }
 
         .period-type {
-          font-size: $font-size-base !important;
+          font-size: $font-size-md !important;
 
           font-weight: $font-weight-semibold;
 
@@ -1683,7 +1683,7 @@ export default {
           text-align: center;
 
           .currency {
-            font-size: $font-size-base !important;
+            font-size: $font-size-md !important;
 
             font-weight: $font-weight-medium;
 
@@ -1691,7 +1691,7 @@ export default {
           }
 
           .amount {
-            font-size: $font-size-lg !important;
+            font-size: $font-size-xl !important;
 
             font-weight: $font-weight-bold;
 
@@ -1739,7 +1739,7 @@ export default {
 
       color: var(--text-color);
 
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       outline: none;
 
@@ -1780,7 +1780,7 @@ export default {
 
       color: white;
 
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-medium;
 
@@ -1842,7 +1842,7 @@ export default {
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--secondary-text-color);
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       display: inline-flex;
       align-items: center;
       line-height: 1;
@@ -1857,7 +1857,7 @@ export default {
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--secondary-text-color);
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       cursor: pointer;
       line-height: 1;
       white-space: nowrap;
@@ -1951,7 +1951,7 @@ export default {
       .summary-label {
         flex: 1;
         min-width: 0;
-        font-size: $font-size-base;
+        font-size: $font-size-md;
 
         color: var(--secondary-text-color);
 
@@ -1969,7 +1969,7 @@ export default {
       .summary-value {
         min-width: 120px;
         text-align: right;
-        font-size: $font-size-base;
+        font-size: $font-size-md;
 
         font-weight: $font-weight-medium;
 
@@ -1994,7 +1994,7 @@ export default {
         gap: 6px;
 
         .summary-label {
-          font-size: $font-size-base;
+          font-size: $font-size-md;
 
           font-weight: $font-weight-semibold;
 
@@ -2004,7 +2004,7 @@ export default {
         .summary-value {
           min-width: 0;
           text-align: left;
-          font-size: $font-size-lg;
+          font-size: $font-size-xl;
 
           font-weight: $font-weight-bold;
 
@@ -2141,7 +2141,7 @@ export default {
     border-radius: $border-radius-sm;
     background-color: var(--theme-color);
     color: white;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
     font-weight: $font-weight-medium;
     display: inline-flex;
     align-items: center;
@@ -2192,7 +2192,7 @@ export default {
 
       color: var(--text-color);
 
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-medium;
 
@@ -2230,7 +2230,7 @@ export default {
 
       color: white;
 
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-medium;
 
@@ -2456,7 +2456,7 @@ export default {
       padding: 15px;
 
       .card-header .card-title {
-        font-size: $font-size-base;
+        font-size: $font-size-md;
       }
 
       .card-body p {
@@ -2534,7 +2534,7 @@ export default {
             }
 
             .amount {
-              font-size: $font-size-lg !important;
+              font-size: $font-size-xl !important;
             }
           }
         }
@@ -2546,7 +2546,7 @@ export default {
 @media (max-width: 480px) {
   .order-confirm-container {
     .section-title {
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       margin-bottom: 12px;
     }

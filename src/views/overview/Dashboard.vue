@@ -1475,7 +1475,7 @@ export default {
         }
 
         .stats-value {
-          font-size: $font-size-base;
+          font-size: $font-size-md;
           margin-bottom: 2px;
         }
 
@@ -1611,7 +1611,7 @@ export default {
           }
 
           .plan-name-main {
-            font-size: $font-size-lg;
+            font-size: $font-size-xl;
             line-height: 1.2;
             font-weight: $font-weight-bold;
             color: var(--heading-color);
@@ -1661,7 +1661,7 @@ export default {
           }
 
           .plan-summary-value {
-            font-size: $font-size-base;
+            font-size: $font-size-md;
             color: var(--theme-text-primary);
             font-weight: $font-weight-semibold;
             text-align: right;
@@ -1709,7 +1709,7 @@ export default {
               flex: 1;
               border-radius: var(--dashboard-button-radius);
               padding: 10px 14px;
-              font-size: $font-size-base;
+              font-size: $font-size-md;
               font-weight: $font-weight-semibold;
               letter-spacing: 0.2px;
 
@@ -1815,7 +1815,7 @@ export default {
           color: var(--theme-text-primary);
 
           &.compact {
-            font-size: $font-size-lg;
+            font-size: $font-size-xl;
           }
         }
 
@@ -1842,10 +1842,10 @@ export default {
 
       &.quota-traffic-card {
         .usage-percent {
-          font-size: $font-size-lg;
+          font-size: $font-size-xl;
 
           &.compact {
-            font-size: $font-size-lg;
+            font-size: $font-size-xl;
           }
         }
       }
@@ -1930,7 +1930,7 @@ export default {
           .usage-kpi-value {
             writing-mode: horizontal-tb;
             text-orientation: mixed;
-            font-size: $font-size-base;
+            font-size: $font-size-md;
             color: var(--quota-value-color);
             font-weight: $font-weight-semibold;
             line-height: 1.2;
@@ -1958,7 +1958,7 @@ export default {
           .today-traffic-total-main {
             .usage-percent {
               &.compact {
-                font-size: $font-size-lg;
+                font-size: $font-size-xl;
               }
             }
 
@@ -1992,10 +1992,10 @@ export default {
           }
 
           .usage-percent {
-            font-size: $font-size-lg;
+            font-size: $font-size-xl;
 
             &.compact {
-              font-size: $font-size-lg;
+              font-size: $font-size-xl;
             }
           }
 
@@ -2023,7 +2023,7 @@ export default {
             }
 
             .usage-kpi-value {
-              font-size: $font-size-base;
+              font-size: $font-size-md;
             }
 
             .usage-reset-hint {
@@ -2108,10 +2108,10 @@ export default {
         line-height: 1;
         font-weight: $font-weight-bold;
         color: var(--theme-text-primary);
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
 
         &.compact {
-          font-size: $font-size-lg;
+          font-size: $font-size-xl;
         }
       }
 
@@ -2182,14 +2182,14 @@ export default {
     }
 
     .ip-region-primary {
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
       line-height: 1.15;
       font-weight: $font-weight-bold;
       letter-spacing: -0.01em;
       color: var(--theme-text-primary);
 
       @media (max-width: 680px) {
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
       }
     }
 
@@ -2323,7 +2323,7 @@ export default {
       align-items: center;
       justify-content: center;
       color: var(--theme-text-secondary);
-      font-size: $font-size-base;
+      font-size: $font-size-md;
     }
 
     .usage-trend-chart {
@@ -2421,7 +2421,7 @@ export default {
       .today-traffic-total-main {
         .usage-percent {
           &.compact {
-            font-size: $font-size-lg;
+            font-size: $font-size-xl;
           }
         }
       }
@@ -2443,10 +2443,10 @@ export default {
       gap: 5px;
 
       .usage-percent {
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
 
         &.compact {
-          font-size: $font-size-lg;
+          font-size: $font-size-xl;
         }
       }
 
@@ -2679,7 +2679,7 @@ export default {
     h3 {
       margin: 0;
       color: var(--text-color);
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
       font-weight: $font-weight-semibold;
     }
 
@@ -2719,7 +2719,7 @@ export default {
   .traffic-package-desc {
     margin: 0 0 14px;
     color: var(--secondary-text-color);
-    font-size: $font-size-base;
+    font-size: $font-size-md;
     line-height: 1.5;
   }
 
@@ -2751,14 +2751,14 @@ export default {
 
     strong {
       color: var(--text-color);
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-semibold;
     }
   }
 
   .item-price {
     color: var(--theme-color);
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
     font-weight: $font-weight-bold;
   }
 

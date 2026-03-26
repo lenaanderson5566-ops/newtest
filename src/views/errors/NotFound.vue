@@ -190,7 +190,7 @@ export default {
 
   color: var(--theme-color);
 
-  font-size: $font-size-base;
+  font-size: $font-size-md;
 
   font-weight: $font-weight-medium;
 
@@ -238,7 +238,7 @@ export default {
 
 .error-code {
 
-  font-size: $font-size-lg;
+  font-size: $font-size-xl;
 
   font-weight: $font-weight-bold;
 
@@ -266,7 +266,7 @@ export default {
 
 .error-title {
 
-  font-size: $font-size-lg;
+  font-size: $font-size-xl;
 
   font-weight: $font-weight-bold;
 
@@ -280,7 +280,7 @@ export default {
 
 .error-description {
 
-  font-size: $font-size-lg;
+  font-size: $font-size-xl;
 
   line-height: 1.6;
 
@@ -312,7 +312,7 @@ export default {
 
   padding: 12px 24px;
 
-  font-size: $font-size-base;
+  font-size: $font-size-md;
 
   font-weight: $font-weight-medium;
 
@@ -348,7 +348,7 @@ export default {
 
   .error-code {
 
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
 
   }
 
@@ -356,7 +356,7 @@ export default {
 
   .error-title {
 
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
 
   }
 
@@ -364,7 +364,7 @@ export default {
 
   .error-description {
 
-    font-size: $font-size-base;
+    font-size: $font-size-md;
 
   }
 

@@ -1084,7 +1084,7 @@ export default {
 
     .card-body p {
       color: var(--secondary-text-color);
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       line-height: 1.6;
       font-weight: $font-weight-medium;
     }
@@ -1135,7 +1135,7 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
 
         font-weight: $font-weight-bold;
 
@@ -1515,7 +1515,7 @@ export default {
         }
 
         .card-title {
-          font-size: $font-size-lg;
+          font-size: $font-size-xl;
 
           font-weight: $font-weight-semibold;
 
@@ -1535,7 +1535,7 @@ export default {
 
         .desktop-subtitle {
           margin: 0;
-          font-size: $font-size-base;
+          font-size: $font-size-md;
           font-weight: $font-weight-semibold;
           color: rgba(255, 255, 255, 0.95);
         }
@@ -1652,13 +1652,13 @@ export default {
         }
 
         .currency {
-          font-size: $font-size-lg;
+          font-size: $font-size-xl;
           font-weight: $font-weight-medium;
           color: color-mix(in srgb, var(--text-color) 72%, var(--secondary-text-color) 28%);
         }
 
         .amount {
-          font-size: $font-size-lg;
+          font-size: $font-size-xl;
           line-height: 0.95;
           font-weight: $font-weight-bold;
           color: var(--text-color);
@@ -1689,7 +1689,7 @@ export default {
       border-radius: 8px;
 
       .discount-info {
-        font-size: $font-size-base;
+        font-size: $font-size-md;
 
         text-align: center;
 
@@ -1768,7 +1768,7 @@ export default {
         }
 
         span {
-          font-size: $font-size-base;
+          font-size: $font-size-md;
 
           color: var(--text-color);
 
@@ -1787,7 +1787,7 @@ export default {
       }
 
       .html-content {
-        font-size: $font-size-base;
+        font-size: $font-size-md;
 
         line-height: 1.6;
 
@@ -1810,7 +1810,7 @@ export default {
     color: white;
     border: 1px solid transparent;
     border-radius: 10px;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
     font-weight: $font-weight-semibold;
     cursor: pointer;
     transition: all 0.25s ease;
@@ -1947,7 +1947,7 @@ export default {
 
       border-radius: 8px;
 
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-medium;
 
@@ -2013,7 +2013,7 @@ export default {
   border: none;
   background: transparent;
   color: var(--text-color);
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   display: inline-flex;
   align-items: center;
@@ -2024,7 +2024,7 @@ export default {
 }
 
 .back-label {
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   color: var(--secondary-text-color);
 }
 

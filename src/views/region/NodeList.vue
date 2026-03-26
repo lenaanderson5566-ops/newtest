@@ -390,7 +390,7 @@ onMounted(() => {
 
     .card-title {
 
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
 
       font-weight: $font-weight-semibold;
 
@@ -441,7 +441,7 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
 
     &.active {
       border-color: rgba(var(--theme-color-rgb), 0.65);
@@ -468,7 +468,7 @@ onMounted(() => {
       align-items: center;
       margin-bottom: 12px;
 
-      h3 { margin: 0; font-size: $font-size-lg; }
+      h3 { margin: 0; font-size: $font-size-xl; }
     }
 
     .import-action {
@@ -493,8 +493,8 @@ onMounted(() => {
       background: rgba(var(--theme-color-rgb), 0.12);
     }
 
-    .import-title { font-size: $font-size-lg; font-weight: $font-weight-semibold; }
-    .import-desc { color: var(--secondary-text-color); font-size: $font-size-base; }
+    .import-title { font-size: $font-size-xl; font-weight: $font-weight-semibold; }
+    .import-desc { color: var(--secondary-text-color); font-size: $font-size-md; }
 
     .platform-selector {
       display: flex;
@@ -521,7 +521,7 @@ onMounted(() => {
     }
 
     .platform-title {
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       margin: 8px 0 12px;
       font-weight: $font-weight-semibold;
     }
@@ -537,7 +537,7 @@ onMounted(() => {
       border-radius: $border-radius-sm;
       padding: 22px 14px;
       background: #f5f7fb;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-medium;
       text-align: left;
       cursor: pointer;
@@ -602,7 +602,7 @@ onMounted(() => {
 
     .reset-modal-text {
       color: var(--text-color);
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       margin: 0 0 12px;
       line-height: 1.6;
     }
@@ -635,7 +635,7 @@ onMounted(() => {
 
     h2 {
       margin: 0;
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
       font-weight: $font-weight-bold;
       letter-spacing: 0.2px;
     }
@@ -643,7 +643,7 @@ onMounted(() => {
     p {
       margin: 8px 0 0;
       color: var(--text-color-light, var(--secondary-text-color));
-      font-size: $font-size-base;
+      font-size: $font-size-md;
     }
   }
 
@@ -736,7 +736,7 @@ onMounted(() => {
 
       h3 {
         margin: 0 0 6px;
-        font-size: $font-size-base;
+        font-size: $font-size-md;
       }
 
       p {
@@ -769,7 +769,7 @@ onMounted(() => {
       min-width: 168px;
       padding: 10px 18px;
       border-radius: $border-radius-sm;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-bold;
       cursor: pointer;
       border: 1px solid transparent;
@@ -1037,7 +1037,7 @@ onMounted(() => {
 
   font-weight: $font-weight-medium;
 
-  font-size: $font-size-base;
+  font-size: $font-size-md;
 
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 

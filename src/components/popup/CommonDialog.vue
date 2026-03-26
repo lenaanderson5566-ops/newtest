@@ -214,7 +214,7 @@ export default {
 
       .dialog-title {
         margin: 0;
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
         font-weight: $font-weight-semibold;
         color: var(--text-color);
       }
@@ -278,7 +278,7 @@ export default {
         padding: 8px 20px;
         border: none;
         border-radius: 8px;
-        font-size: $font-size-base;
+        font-size: $font-size-md;
         font-weight: $font-weight-medium;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -347,7 +347,7 @@ export default {
         padding: 15px;
 
         .dialog-title {
-          font-size: $font-size-base;
+          font-size: $font-size-md;
         }
       }
 

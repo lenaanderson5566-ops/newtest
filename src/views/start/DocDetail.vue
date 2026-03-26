@@ -2302,7 +2302,7 @@ onUnmounted(() => {
 
   border-radius: 6px !important;
 
-  font-size: $font-size-base !important;
+  font-size: $font-size-md !important;
 
   background-color: rgba(var(--theme-color-rgb), 0.1) !important;
 

@@ -851,7 +851,7 @@ watchEffect(() => {
 
     margin: 0;
 
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
 
     font-weight: $font-weight-semibold;
 
@@ -1013,7 +1013,7 @@ watchEffect(() => {
 
       margin: 0;
 
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       color: var(--text-color);
 
@@ -1223,7 +1223,7 @@ watchEffect(() => {
 
         color: var(--text-muted);
 
-        font-size: $font-size-base;
+        font-size: $font-size-md;
 
         margin: 0;
 
@@ -1345,7 +1345,7 @@ watchEffect(() => {
 
   padding: 10px 16px;
 
-  font-size: $font-size-base;
+  font-size: $font-size-md;
 
   font-weight: $font-weight-medium;
 
@@ -1435,7 +1435,7 @@ watchEffect(() => {
 
     .info-label {
 
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       flex: 0 0 40%; 
 
@@ -1445,7 +1445,7 @@ watchEffect(() => {
 
     .info-value {
 
-      font-size: $font-size-base;
+      font-size: $font-size-md;
 
       flex: 1; 
 

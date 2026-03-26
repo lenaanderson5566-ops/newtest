@@ -361,7 +361,7 @@ watch(locale, () => {
   border: none;
   background: transparent;
   color: var(--text-color);
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   display: inline-flex;
   align-items: center;
@@ -669,7 +669,7 @@ watch(locale, () => {
   background-color: rgba(var(--theme-color-rgb), 0.85);
   color: white;
   font-weight: $font-weight-medium;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
   box-shadow: none;
   cursor: pointer;

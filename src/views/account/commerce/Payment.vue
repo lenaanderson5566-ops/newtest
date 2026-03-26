@@ -1271,7 +1271,7 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
         font-weight: $font-weight-semibold;
         margin: 0;
       }
@@ -1328,7 +1328,7 @@ export default {
     }
 
     .section-title {
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-semibold;
       margin-bottom: 16px;
       color: var(--text-color);
@@ -1381,7 +1381,7 @@ export default {
     }
 
     .overview-plan-name {
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
       font-weight: $font-weight-bold;
       color: var(--text-color);
       line-height: 1.2;
@@ -1389,7 +1389,7 @@ export default {
 
     .overview-plan-meta {
       margin-top: 8px;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       color: var(--secondary-text-color);
       line-height: 1.3;
     }
@@ -1429,7 +1429,7 @@ export default {
 
     .section-title {
       margin-bottom: 0;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       padding: 10px 12px 8px;
       color: var(--text-color);
 
@@ -1673,7 +1673,7 @@ export default {
       h3 {
         margin: 0 0 8px;
         color: #4caf50;
-        font-size: $font-size-base;
+        font-size: $font-size-md;
       }
 
       p {
@@ -1750,7 +1750,7 @@ export default {
       justify-content: center;
       gap: 8px;
       border-radius: $border-radius-sm;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-medium;
       padding: 0 24px;
       cursor: pointer;
@@ -1946,13 +1946,13 @@ export default {
       }
 
       h2 {
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
         margin-bottom: 16px;
         animation: slideUp 0.5s ease 0.4s both;
       }
 
       p {
-        font-size: $font-size-base;
+        font-size: $font-size-md;
         opacity: 0.8;
         animation: slideUp 0.5s ease 0.6s both;
       }
@@ -2153,7 +2153,7 @@ export default {
         border-radius: $border-radius-sm;
         background-color: transparent;
         color: var(--text-color);
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
         font-weight: $font-weight-medium;
         display: flex;
         align-items: center;
@@ -2205,14 +2205,14 @@ export default {
         }
 
         h3 {
-          font-size: $font-size-lg;
+          font-size: $font-size-xl;
           font-weight: $font-weight-semibold;
           margin: 0 0 12px;
           color: var(--text-color);
         }
 
         p {
-          font-size: $font-size-base;
+          font-size: $font-size-md;
           line-height: 1.6;
           margin: 0 0 24px;
           color: var(--secondary-text-color);
@@ -2245,7 +2245,7 @@ export default {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: $font-size-base;
+            font-size: $font-size-md;
             color: var(--theme-color);
             cursor: pointer;
             transition: all 0.2s ease;
@@ -2268,7 +2268,7 @@ export default {
           height: 46px;
           border-radius: $border-radius-sm;
           border: none;
-          font-size: $font-size-base;
+          font-size: $font-size-md;
           font-weight: $font-weight-semibold;
           display: flex;
           align-items: center;
@@ -2428,14 +2428,14 @@ export default {
     text-align: center;
 
     h3 {
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
       font-weight: $font-weight-semibold;
       margin: 0 0 12px;
       color: var(--text-color);
     }
 
     p {
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       line-height: 1.5;
       margin: 0;
       color: var(--secondary-text-color);
@@ -2451,7 +2451,7 @@ export default {
       flex: 1;
       padding: 10px 0;
       border-radius: $border-radius-sm;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-medium;
       cursor: pointer;
       transition: all 0.3s ease;

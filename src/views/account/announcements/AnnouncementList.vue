@@ -87,7 +87,7 @@ export default {
 
     h3 {
       margin: 0;
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
       color: var(--text-color);
     }
 

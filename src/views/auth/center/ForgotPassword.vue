@@ -1650,7 +1650,7 @@ export default {
 
   margin-left: 4px;
 
-  font-size: $font-size-base;
+  font-size: $font-size-md;
 
   vertical-align: middle;
 

@@ -275,7 +275,7 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
 
     &.active {
       border-color: rgba(var(--theme-color-rgb), 0.75);
@@ -288,7 +288,7 @@ onMounted(() => {
     margin-top: 14px;
 
     .platform-title {
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-semibold;
       }
 
@@ -307,7 +307,7 @@ onMounted(() => {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-semibold;
 
       &:hover {

@@ -813,7 +813,7 @@ fetchTickets();
     margin-bottom: 15px;
 
     .card-title {
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
 
       font-weight: $font-weight-semibold;
 
