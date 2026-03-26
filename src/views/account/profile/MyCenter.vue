@@ -81,7 +81,7 @@
             <div class="settings-row plan-overview-row">
               <div class="row-main">
                 <div class="plan-name">{{ subscriptionText }}</div>
-                <p class="plan-desc">到期时间：{{ subscriptionExpireText }}</p>
+                <p class="plan-desc">{{ $t('myCenter.planExpireAtLabel', { date: subscriptionExpireText }) }}</p>
               </div>
             </div>
             <button class="nav-row" @click="go('/shop')">
@@ -248,20 +248,20 @@
         <section class="section-block dashboard-like-card">
           <div class="tier-intro-list">
             <div class="tier-intro-card">
-              <div class="tier-intro-title">积分规则介绍</div>
-              <p>每充值 1 美元可获得 100 积分，积分可用于提升会员等级并解锁对应权益。</p>
+              <div class="tier-intro-title">{{ $t('myCenter.tierRulesTitle') }}</div>
+              <p>{{ $t('myCenter.tierRulesDesc') }}</p>
             </div>
             <div class="tier-intro-card">
-              <div class="tier-intro-title">积分等级介绍</div>
-              <p>当前等级：{{ tierMemberDisplay }}（Lv.{{ userTier.level || 0 }}），当前积分：{{ formatTierNumber(userTier.points) }}。</p>
-              <p v-if="userTier.nextTierKey">距离 {{ nextTierNameDisplay }} 还需 {{ formatTierNumber(userTier.pointsToNextTier) }} 积分。</p>
-              <p v-else>您已达到最高等级，继续累计积分可保持高等级权益。</p>
-              <p class="tier-intro-note">建议持续订阅并保持活跃充值，积分将自动累计并用于等级成长。</p>
+              <div class="tier-intro-title">{{ $t('myCenter.tierLevelTitle') }}</div>
+              <p>{{ $t('myCenter.tierLevelCurrent', { tier: tierMemberDisplay, level: userTier.level || 0, points: formatTierNumber(userTier.points) }) }}</p>
+              <p v-if="userTier.nextTierKey">{{ $t('myCenter.tierLevelToNext', { tier: nextTierNameDisplay, points: formatTierNumber(userTier.pointsToNextTier) }) }}</p>
+              <p v-else>{{ $t('myCenter.tierLevelMax') }}</p>
+              <p class="tier-intro-note">{{ $t('myCenter.tierLevelHint') }}</p>
             </div>
             <div class="tier-intro-card tier-intro-card--muted">
-              <div class="tier-intro-title">权益说明</div>
-              <p>不同等级可获得差异化服务权益，等级越高可享受的资源与优先支持越丰富。</p>
-              <p>系统会根据最新积分自动刷新等级展示，无需手动操作。</p>
+              <div class="tier-intro-title">{{ $t('myCenter.tierBenefitsTitle') }}</div>
+              <p>{{ $t('myCenter.tierBenefitsDesc1') }}</p>
+              <p>{{ $t('myCenter.tierBenefitsDesc2') }}</p>
             </div>
           </div>
         </section>
@@ -465,10 +465,10 @@ const submitPasswordChange = async () => {
       old_password: passwordForm.value.oldPassword,
       new_password: passwordForm.value.newPassword
     });
-    showToast('密码修改成功', 'success');
+    showToast(t('profile.passwordChanged'), 'success');
     closePasswordModal();
   } catch (error) {
-    showToast('密码修改失败，请稍后重试', 'error');
+    showToast(t('profile.passwordError'), 'error');
   } finally {
     updatingPassword.value = false;
   }
@@ -486,10 +486,10 @@ const submitSecurityReset = async () => {
   try {
     resettingSecurity.value = true;
     await apiResetSecurity();
-    showToast('重置成功，请重新导入订阅', 'success');
+    showToast(t('profile.resetSuccess'), 'success');
     closeResetModal();
   } catch (error) {
-    showToast('重置失败，请稍后重试', 'error');
+    showToast(t('profile.resetError'), 'error');
   } finally {
     resettingSecurity.value = false;
   }

@@ -496,6 +496,7 @@ export default {
         tabInvite: 'Invite',
 
         planDetails: 'Plan Details',
+        planExpireAtLabel: 'Expires on: {date}',
         paymentInfo: 'Payment Info',
         accountDetails: 'Account Details',
         accessPrivacy: 'Access & Privacy',
@@ -544,7 +545,17 @@ export default {
         noSubscription: 'No active subscription',
         notActivated: 'Not Activated',
         settingsUpdated: 'Notification settings updated',
-        settingsUpdateFailed: 'Update failed, please try again later'
+        settingsUpdateFailed: 'Update failed, please try again later',
+        tierRulesTitle: 'Points Rules',
+        tierRulesDesc: 'You earn 100 points for every $1 recharge. Points help you level up and unlock tier benefits.',
+        tierLevelTitle: 'Tier Level Guide',
+        tierLevelCurrent: 'Current tier: {tier} (Lv.{level}), points: {points}.',
+        tierLevelToNext: '{points} more points needed to reach {tier}.',
+        tierLevelMax: 'You are already at the highest tier. Keep earning points to maintain top-tier benefits.',
+        tierLevelHint: 'Keep your subscription active and recharge regularly. Points are accumulated automatically.',
+        tierBenefitsTitle: 'Benefits Notes',
+        tierBenefitsDesc1: 'Different tiers provide different service benefits. Higher tiers include more resources and priority support.',
+        tierBenefitsDesc2: 'Your displayed tier updates automatically based on your latest points.'
     },
 profile: {
         title: 'Account',

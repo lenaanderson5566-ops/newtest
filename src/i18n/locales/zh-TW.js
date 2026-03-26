@@ -492,6 +492,7 @@ export default {
     tabInvite: '邀請返利',
 
         planDetails: '方案詳情',
+        planExpireAtLabel: '到期時間：{date}',
         paymentInfo: '支付資訊',
         accountDetails: '帳號詳情',
         accessPrivacy: '存取與隱私',
@@ -529,7 +530,17 @@ export default {
     noSubscription: '暫無有效訂閱',
     notActivated: '未開通',
     settingsUpdated: '通知設定已更新',
-    settingsUpdateFailed: '更新失敗，請稍後再試'
+    settingsUpdateFailed: '更新失敗，請稍後再試',
+    tierRulesTitle: '積分規則介紹',
+    tierRulesDesc: '每儲值 1 美元可獲得 100 積分，積分可用於提升會員等級並解鎖對應權益。',
+    tierLevelTitle: '積分等級介紹',
+    tierLevelCurrent: '目前等級：{tier}（Lv.{level}），目前積分：{points}。',
+    tierLevelToNext: '距離 {tier} 還需 {points} 積分。',
+    tierLevelMax: '您已達到最高等級，持續累積積分可維持高等級權益。',
+    tierLevelHint: '建議持續訂閱並保持活躍儲值，積分將自動累積並用於等級成長。',
+    tierBenefitsTitle: '權益說明',
+    tierBenefitsDesc1: '不同等級可獲得差異化服務權益，等級越高可享受的資源與優先支援越豐富。',
+    tierBenefitsDesc2: '系統會根據最新積分自動更新等級展示，無需手動操作。'
   },
 profile: {
     title: '帳號',

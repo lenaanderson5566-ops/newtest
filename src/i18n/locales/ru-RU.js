@@ -492,7 +492,8 @@ export default {
     tabLevelBenefits: 'Преимущества уровня',
     tabInvite: 'Реферальные бонусы',
 
-        planDetails: 'Plan Details',
+        planDetails: 'Детали тарифа',
+        planExpireAtLabel: 'Срок действия: {date}',
         paymentInfo: 'Payment Info',
         accountDetails: 'Account Details',
         accessPrivacy: 'Access & Privacy',
@@ -530,7 +531,17 @@ export default {
     noSubscription: 'Нет активной подписки',
     notActivated: 'Не активировано',
     settingsUpdated: 'Настройки уведомлений обновлены',
-    settingsUpdateFailed: 'Не удалось обновить, попробуйте позже'
+    settingsUpdateFailed: 'Не удалось обновить, попробуйте позже',
+    tierRulesTitle: 'Правила начисления баллов',
+    tierRulesDesc: 'За каждое пополнение на 1$ вы получаете 100 баллов. Баллы повышают уровень и открывают привилегии.',
+    tierLevelTitle: 'Информация об уровнях',
+    tierLevelCurrent: 'Текущий уровень: {tier} (Lv.{level}), текущие баллы: {points}.',
+    tierLevelToNext: 'До уровня {tier} осталось {points} баллов.',
+    tierLevelMax: 'Вы уже достигли максимального уровня. Продолжайте накапливать баллы для сохранения привилегий.',
+    tierLevelHint: 'Поддерживайте активную подписку и пополнения — баллы начисляются автоматически.',
+    tierBenefitsTitle: 'Описание привилегий',
+    tierBenefitsDesc1: 'На разных уровнях доступны разные преимущества. Чем выше уровень, тем больше ресурсов и приоритетнее поддержка.',
+    tierBenefitsDesc2: 'Система автоматически обновляет отображаемый уровень по последним баллам.'
   },
 profile: {
     title: 'Аккаунт',

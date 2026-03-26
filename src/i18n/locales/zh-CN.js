@@ -496,6 +496,7 @@ export default {
         tabInvite: '邀请返利',
 
         planDetails: '计划详情',
+        planExpireAtLabel: '到期时间：{date}',
         paymentInfo: '支付信息',
         accountDetails: '账号详情',
         accessPrivacy: '访问与隐私',
@@ -544,7 +545,17 @@ export default {
         noSubscription: '暂无有效订阅',
         notActivated: '未开通',
         settingsUpdated: '通知设置已更新',
-        settingsUpdateFailed: '更新失败，请稍后重试'
+        settingsUpdateFailed: '更新失败，请稍后重试',
+        tierRulesTitle: '积分规则介绍',
+        tierRulesDesc: '每充值 1 美元可获得 100 积分，积分可用于提升会员等级并解锁对应权益。',
+        tierLevelTitle: '积分等级介绍',
+        tierLevelCurrent: '当前等级：{tier}（Lv.{level}），当前积分：{points}。',
+        tierLevelToNext: '距离 {tier} 还需 {points} 积分。',
+        tierLevelMax: '您已达到最高等级，继续累计积分可保持高等级权益。',
+        tierLevelHint: '建议持续订阅并保持活跃充值，积分将自动累计并用于等级成长。',
+        tierBenefitsTitle: '权益说明',
+        tierBenefitsDesc1: '不同等级可获得差异化服务权益，等级越高可享受的资源与优先支持越丰富。',
+        tierBenefitsDesc2: '系统会根据最新积分自动刷新等级展示，无需手动操作。'
     },
 profile: {
         title: '账号',

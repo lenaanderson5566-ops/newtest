@@ -485,7 +485,8 @@ export default {
         tabLevelBenefits: 'Quyền lợi cấp bậc',
         tabInvite: 'Mời nhận thưởng',
 
-        planDetails: 'Plan Details',
+        planDetails: 'Chi tiết gói',
+        planExpireAtLabel: 'Ngày hết hạn: {date}',
         paymentInfo: 'Payment Info',
         accountDetails: 'Account Details',
         accessPrivacy: 'Access & Privacy',
@@ -523,8 +524,18 @@ export default {
         noSubscription: 'Chưa có gói đăng ký hợp lệ',
         notActivated: 'Chưa kích hoạt',
         settingsUpdated: 'Đã cập nhật cài đặt thông báo',
-        settingsUpdateFailed: 'Cập nhật thất bại, vui lòng thử lại sau'
-    },
+        settingsUpdateFailed: 'Cập nhật thất bại, vui lòng thử lại sau',
+        tierRulesTitle: 'Quy tắc điểm',
+        tierRulesDesc: 'Mỗi lần nạp 1 USD bạn nhận 100 điểm. Điểm dùng để tăng hạng thành viên và mở khóa quyền lợi.',
+        tierLevelTitle: 'Giới thiệu cấp bậc',
+        tierLevelCurrent: 'Hạng hiện tại: {tier} (Lv.{level}), điểm hiện tại: {points}.',
+        tierLevelToNext: 'Cần thêm {points} điểm để đạt {tier}.',
+        tierLevelMax: 'Bạn đã ở hạng cao nhất. Tiếp tục tích lũy điểm để duy trì quyền lợi cao cấp.',
+        tierLevelHint: 'Duy trì đăng ký và nạp tiền thường xuyên, điểm sẽ được cộng tự động.',
+        tierBenefitsTitle: 'Mô tả quyền lợi',
+        tierBenefitsDesc1: 'Mỗi hạng có quyền lợi dịch vụ khác nhau. Hạng càng cao, tài nguyên và mức ưu tiên hỗ trợ càng nhiều.',
+        tierBenefitsDesc2: 'Hệ thống sẽ tự động cập nhật hiển thị hạng theo điểm mới nhất.'
+  },
 profile: {
         title: 'Tài khoản',
         basicInfo: 'Thông tin cơ bản',

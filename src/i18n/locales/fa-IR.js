@@ -492,7 +492,8 @@ export default {
     tabLevelBenefits: 'مزایای سطح',
     tabInvite: 'دعوت و پاداش',
 
-        planDetails: 'Plan Details',
+        planDetails: 'جزئیات پلن',
+        planExpireAtLabel: 'تاریخ انقضا: {date}',
         paymentInfo: 'Payment Info',
         accountDetails: 'Account Details',
         accessPrivacy: 'Access & Privacy',
@@ -530,7 +531,17 @@ export default {
     noSubscription: 'اشتراک فعالی وجود ندارد',
     notActivated: 'فعال نشده',
     settingsUpdated: 'تنظیمات اعلان به‌روزرسانی شد',
-    settingsUpdateFailed: 'به‌روزرسانی ناموفق بود، لطفا بعدا دوباره تلاش کنید'
+    settingsUpdateFailed: 'به‌روزرسانی ناموفق بود، لطفا بعدا دوباره تلاش کنید',
+    tierRulesTitle: 'قوانین امتیاز',
+    tierRulesDesc: 'به ازای هر 1 دلار شارژ، 100 امتیاز دریافت می‌کنید. امتیازها برای ارتقای سطح و فعال‌سازی مزایا استفاده می‌شوند.',
+    tierLevelTitle: 'راهنمای سطح',
+    tierLevelCurrent: 'سطح فعلی: {tier} (Lv.{level})، امتیاز فعلی: {points}.',
+    tierLevelToNext: 'برای رسیدن به {tier} به {points} امتیاز دیگر نیاز دارید.',
+    tierLevelMax: 'شما در بالاترین سطح هستید. با ادامه جمع‌آوری امتیاز، مزایای سطح بالا را حفظ کنید.',
+    tierLevelHint: 'اشتراک خود را فعال نگه دارید و منظم شارژ کنید؛ امتیازها به‌صورت خودکار جمع می‌شوند.',
+    tierBenefitsTitle: 'توضیحات مزایا',
+    tierBenefitsDesc1: 'هر سطح مزایای متفاوتی ارائه می‌دهد. هرچه سطح بالاتر باشد، منابع بیشتر و پشتیبانی اولویت‌دارتر دریافت می‌کنید.',
+    tierBenefitsDesc2: 'نمایش سطح شما بر اساس آخرین امتیازها به‌صورت خودکار به‌روزرسانی می‌شود.'
   },
 profile: {
     title: 'حساب',

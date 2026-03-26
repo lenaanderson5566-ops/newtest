@@ -492,7 +492,8 @@ export default {
     tabLevelBenefits: 'ランク特典',
     tabInvite: '招待報酬',
 
-        planDetails: 'Plan Details',
+        planDetails: 'プラン詳細',
+        planExpireAtLabel: '有効期限：{date}',
         paymentInfo: 'Payment Info',
         accountDetails: 'Account Details',
         accessPrivacy: 'Access & Privacy',
@@ -530,7 +531,17 @@ export default {
     noSubscription: '有効なサブスクはありません',
     notActivated: '未開通',
     settingsUpdated: '通知設定を更新しました',
-    settingsUpdateFailed: '更新に失敗しました。後でもう一度お試しください'
+    settingsUpdateFailed: '更新に失敗しました。後でもう一度お試しください',
+    tierRulesTitle: 'ポイントルール',
+    tierRulesDesc: '1ドルのチャージごとに100ポイントを獲得できます。ポイントは会員ランクの昇格と特典解放に使用されます。',
+    tierLevelTitle: 'ランクガイド',
+    tierLevelCurrent: '現在のランク：{tier}（Lv.{level}）、現在のポイント：{points}。',
+    tierLevelToNext: '{tier} まであと {points} ポイント必要です。',
+    tierLevelMax: 'すでに最高ランクです。引き続きポイントを貯めることで特典を維持できます。',
+    tierLevelHint: '継続的な契約とチャージで、ポイントは自動的に累積されます。',
+    tierBenefitsTitle: '特典について',
+    tierBenefitsDesc1: 'ランクに応じて提供される特典が異なります。上位ランクほど、より多くのリソースと優先サポートを利用できます。',
+    tierBenefitsDesc2: 'ランク表示は最新ポイントに基づき自動更新されます。'
   },
 profile: {
     title: 'アカウント',

@@ -493,7 +493,8 @@ export default {
     tabLevelBenefits: '등급 혜택',
     tabInvite: '초대 리워드',
 
-        planDetails: 'Plan Details',
+        planDetails: '요금제 상세',
+        planExpireAtLabel: '만료일: {date}',
         paymentInfo: 'Payment Info',
         accountDetails: 'Account Details',
         accessPrivacy: 'Access & Privacy',
@@ -531,7 +532,17 @@ export default {
     noSubscription: '활성 구독이 없습니다',
     notActivated: '미개통',
     settingsUpdated: '알림 설정이 업데이트되었습니다',
-    settingsUpdateFailed: '업데이트에 실패했습니다. 잠시 후 다시 시도하세요'
+    settingsUpdateFailed: '업데이트에 실패했습니다. 잠시 후 다시 시도하세요',
+    tierRulesTitle: '포인트 규칙',
+    tierRulesDesc: '1달러 충전할 때마다 100포인트를 획득합니다. 포인트는 회원 등급 상승 및 혜택 해금에 사용됩니다.',
+    tierLevelTitle: '등급 안내',
+    tierLevelCurrent: '현재 등급: {tier} (Lv.{level}), 현재 포인트: {points}.',
+    tierLevelToNext: '{tier} 등급까지 {points}포인트가 더 필요합니다.',
+    tierLevelMax: '이미 최고 등급입니다. 계속 포인트를 쌓아 상위 혜택을 유지하세요.',
+    tierLevelHint: '구독을 유지하고 정기적으로 충전하면 포인트가 자동으로 누적됩니다.',
+    tierBenefitsTitle: '혜택 안내',
+    tierBenefitsDesc1: '등급별로 제공되는 서비스 혜택이 다릅니다. 등급이 높을수록 더 많은 리소스와 우선 지원을 받을 수 있습니다.',
+    tierBenefitsDesc2: '등급 표시는 최신 포인트 기준으로 자동 갱신됩니다.'
   },
 profile: {
     title: '계정',
