@@ -33,10 +33,10 @@
             <thead>
               <tr>
                 <th width="24%">{{ headerTexts.createdAt }}</th>
-                <th width="30%">{{ headerTexts.subscriptionCycle }}</th>
-                <th width="16%">{{ headerTexts.totalAmount }}</th>
-                <th width="15%">{{ headerTexts.statusLabel }}</th>
-                <th width="15%">{{ headerTexts.actions }}</th>
+                <th width="20%">{{ headerTexts.subscriptionCycle }}</th>
+                <th width="20%">{{ headerTexts.totalAmount }}</th>
+                <th width="16%">{{ headerTexts.statusLabel }}</th>
+                <th width="20%">{{ headerTexts.actions }}</th>
               </tr>
             </thead>
             <tbody>
