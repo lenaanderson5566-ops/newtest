@@ -866,10 +866,6 @@ onMounted(async () => {
   color: var(--secondary-text-color);
 }
 
-.section-block > .section-title {
-  padding: 14px 16px 10px;
-}
-
 .plan-overview-row {
   align-items: flex-start;
 }

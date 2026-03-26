@@ -431,12 +431,6 @@ onMounted(fetchUserStatus);
       font-size: 20px;
       font-weight: 600;
     }
-
-    .actions {
-      margin-left: auto;
-      display: flex;
-      gap: 8px;
-    }
   }
 
   .step-index {
