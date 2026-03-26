@@ -1061,10 +1061,11 @@ export default {
         },
         legend: {
           data: [t('trafficLog.uploadTraffic'), t('trafficLog.downloadTraffic'), t('trafficLog.totalTraffic')],
-          bottom: 8,
+          top: 8,
+          right: 8,
           textStyle: { color: textColor }
         },
-        grid: { left: '5%', right: '3%', bottom: '34px', top: '34px', containLabel: true },
+        grid: { left: '5%', right: '3%', bottom: '16px', top: '46px', containLabel: true },
         xAxis: {
           type: 'category',
           boundaryGap: false,

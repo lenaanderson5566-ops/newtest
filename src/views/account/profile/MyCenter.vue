@@ -616,7 +616,7 @@ onMounted(async () => {
 }
 
 .section-block {
-  border-radius: 16px;
+  border-radius: $border-radius-sm;
   background-color: #fff;
   border: 1px solid rgba(15, 23, 42, 0.15);
   box-shadow: none;
