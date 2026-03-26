@@ -14,12 +14,10 @@
       </div>
 
       <div v-show="activeSection === 'overview'" class="overview-panels">
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.summaryTitle') }}</h3>
+        <p class="section-subtitle">{{ $t('myCenter.summaryDesc') }}</p>
         <section class="summary-panel section-block dashboard-like-card">
           <div class="summary-top">
-            <div>
-              <h2>{{ $t('myCenter.summaryTitle') }}</h2>
-              <p class="summary-desc">{{ $t('myCenter.summaryDesc') }}</p>
-            </div>
             <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">{{ $t('myCenter.topUp') }}</button>
           </div>
 
@@ -797,22 +795,9 @@ onMounted(async () => {
 .summary-top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 0.75rem;
   margin-bottom: 0.8rem;
-
-  h2 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-  }
-}
-
-.summary-desc {
-  margin: 3px 0 0;
-  font-size: 13px;
-  color: var(--secondary-text-color);
 }
 
 .summary-grid {
