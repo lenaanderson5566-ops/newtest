@@ -712,7 +712,7 @@ onMounted(async () => {
   padding: 1rem;
   background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.25), transparent 35%),
     linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%);
-  color: #e8edff;
+  color: var(--text-on-dark-primary);
   border-color: rgba(161, 181, 255, 0.3);
 
   .tier-header {
@@ -726,13 +726,13 @@ onMounted(async () => {
       margin: 0;
       font-size: $font-size-md;
       font-weight: $font-weight-bold;
-      color: #f8fbff;
+      color: var(--text-on-dark-primary);
     }
 
     p {
       margin: 0;
       font-size: $font-size-md;
-      color: rgba(232, 237, 255, 0.9);
+      color: var(--text-on-dark-primary);
     }
   }
 
@@ -773,7 +773,7 @@ onMounted(async () => {
   .tier-progress-meta,
   .tier-next {
     font-size: $font-size-sm;
-    color: rgba(239, 243, 255, 0.92);
+    color: var(--text-on-dark-primary);
   }
 
   .tier-progress-track {

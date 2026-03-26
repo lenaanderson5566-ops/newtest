@@ -2071,7 +2071,7 @@ export default {
     color: var(--right-card-text);
 
     &::placeholder {
-      color: rgba(248, 250, 252, 0.55);
+      color: var(--text-on-dark-primary);
     }
   }
 
@@ -2091,7 +2091,7 @@ export default {
   }
 
   .order-summary-section .coupon-applied-tag {
-    color: rgba(248, 250, 252, 0.82);
+    color: var(--text-on-dark-primary);
     border-color: var(--right-card-border);
     background: rgba(148, 163, 184, 0.08);
   }

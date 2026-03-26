@@ -1695,7 +1695,7 @@ export default {
           .plan-summary-desc {
             margin: 4px 0 0;
             font-size: $font-size-sm;
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-on-dark-primary);
           }
 
 
@@ -2272,7 +2272,7 @@ export default {
       padding: 8px 10px;
       border-radius: 6px;
       background: rgba(15, 23, 42, 0.96);
-      color: #e2e8f0;
+      color: var(--text-on-dark-primary);
       font-size: $font-size-sm;
       line-height: 1.4;
       font-weight: $font-weight-medium;
