@@ -360,7 +360,7 @@ watch(locale, () => {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--secondary-text-color);
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   display: inline-flex;
@@ -469,7 +469,7 @@ watch(locale, () => {
     background-color: rgba(var(--theme-color-rgb), 0.05);
     font-weight: $font-weight-semibold;
     font-size: 0.9rem;
-    color: var(--text-color);
+    color: var(--secondary-text-color);
     position: sticky;
     top: 0;
     z-index: 10;
@@ -749,7 +749,7 @@ watch(locale, () => {
     margin: 0;
     font-size: 1.25rem;
     font-weight: $font-weight-semibold;
-    color: var(--text-color);
+    color: var(--secondary-text-color);
   }
   
   .modal-close {
@@ -776,7 +776,7 @@ watch(locale, () => {
   
   p {
     margin: 0 0 1.5rem;
-    color: var(--text-color);
+    color: var(--secondary-text-color);
   }
 }
 
@@ -798,7 +798,7 @@ watch(locale, () => {
     &.btn-cancel {
       background-color: transparent;
       border: 1px solid var(--border-color);
-      color: var(--text-color);
+      color: var(--secondary-text-color);
       
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);
@@ -808,7 +808,7 @@ watch(locale, () => {
     &.btn-confirm {
       background-color: rgba(var(--theme-color-rgb), 0.88);
       border: none;
-      color: #fff;
+      color: var(--secondary-text-color);
       display: flex;
       align-items: center;
       gap: 0.5rem;

@@ -1441,7 +1441,7 @@ export default {
         align-items: center;
         justify-content: center;
         background: #2d2d2d;
-        color: #fff;
+        color: var(--secondary-text-color);
         font-size: $font-size-sm;
         font-weight: $font-weight-bold;
         border-radius: 12px 12px 0 0;
@@ -1485,7 +1485,7 @@ export default {
             min-height: 86px;
             padding: 14px 16px;
             border-radius: 10px;
-            color: #fff;
+            color: var(--secondary-text-color);
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -1530,14 +1530,14 @@ export default {
           max-width: 100%;
           padding: 0;
           line-height: 1.25;
-          color: #fff;
+          color: var(--secondary-text-color);
         }
 
         .desktop-subtitle {
           margin: 0;
           font-size: $font-size-md;
           font-weight: $font-weight-semibold;
-          color: rgba(255, 255, 255, 0.95);
+          color: var(--secondary-text-color);
         }
 
         .desktop-current-check {
@@ -1661,7 +1661,7 @@ export default {
           font-size: $font-size-xl;
           line-height: 0.95;
           font-weight: $font-weight-bold;
-          color: var(--text-color);
+          color: var(--secondary-text-color);
           letter-spacing: -0.8px;
         }
 
@@ -1693,7 +1693,7 @@ export default {
 
         text-align: center;
 
-        color: var(--text-color);
+        color: var(--secondary-text-color);
 
         .period-name {
           font-weight: $font-weight-bold;
@@ -1763,14 +1763,14 @@ export default {
           }
 
           &.disabled {
-            color: #ccc;
+            color: var(--secondary-text-color);
           }
         }
 
         span {
           font-size: $font-size-md;
 
-          color: var(--text-color);
+          color: var(--secondary-text-color);
 
           line-height: 1.5; // 添加行高改善可读性
 
@@ -1791,7 +1791,7 @@ export default {
 
         line-height: 1.6;
 
-        color: var(--text-color);
+        color: var(--secondary-text-color);
       }
     }
   }
@@ -1851,7 +1851,7 @@ export default {
     }
 
     .btn-text {
-      color: #fff;
+      color: var(--secondary-text-color);
       font-weight: $font-weight-semibold;
     }
 
@@ -1921,7 +1921,7 @@ export default {
 
         &.active {
           .option-text {
-            color: #fff;
+            color: var(--secondary-text-color);
             font-weight: $font-weight-semibold;
           }
         }
@@ -2012,7 +2012,7 @@ export default {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--secondary-text-color);
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   display: inline-flex;
@@ -2086,7 +2086,7 @@ export default {
         align-items: center;
         justify-content: center;
         background: #2d2d2d;
-        color: #fff;
+        color: var(--secondary-text-color);
         font-size: $font-size-sm;
         font-weight: $font-weight-bold;
         line-height: 1.2;
@@ -2106,7 +2106,7 @@ export default {
         flex-direction: column;
         gap: 4px;
         text-align: left;
-        color: var(--text-color);
+        color: var(--secondary-text-color);
         position: relative;
         min-height: 116px;
         overflow: hidden;
@@ -2116,7 +2116,7 @@ export default {
 
         &.active {
           border-color: rgba(var(--theme-color-rgb), 0.65);
-          color: #fff;
+          color: var(--secondary-text-color);
         }
 
         &.active.tone-1 {
@@ -2150,7 +2150,7 @@ export default {
 
       .mobile-plan-chip.active .chip-period,
       .mobile-plan-chip.current-plan-chip.active .chip-period {
-        color: rgba(255, 255, 255, 0.9);
+        color: var(--secondary-text-color);
       }
 
       .chip-check {
@@ -2210,7 +2210,7 @@ export default {
         justify-content: center;
         gap: 8px;
         background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
-        color: #fff;
+        color: var(--secondary-text-color);
         font-weight: $font-weight-semibold;
 
         &.btn-disabled {

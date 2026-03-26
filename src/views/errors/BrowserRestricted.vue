@@ -568,7 +568,7 @@ export default {
 
       margin-bottom: 25px;
 
-      color: var(--text-color);
+      color: var(--secondary-text-color);
 
     }
 
@@ -594,7 +594,7 @@ export default {
 
         font-size: $font-size-md;
 
-        color: var(--text-color);
+        color: var(--secondary-text-color);
 
       }
 
@@ -624,7 +624,7 @@ export default {
 
         font-weight: $font-weight-semibold;
 
-        color: var(--text-color);
+        color: var(--secondary-text-color);
 
       }
 
@@ -756,7 +756,7 @@ export default {
 
         text-align: center;
 
-        color: var(--text-color);
+        color: var(--secondary-text-color);
 
       }
 
@@ -872,7 +872,7 @@ export default {
 
           text-align: center;
 
-          color: var(--text-color);
+          color: var(--secondary-text-color);
 
         }
 
@@ -904,7 +904,7 @@ export default {
 
             background-color: rgba(var(--theme-color-rgb), 0.05);
 
-            color: var(--text-color);
+            color: var(--secondary-text-color);
 
             font-size: $font-size-md;
 
@@ -972,7 +972,7 @@ export default {
 
           line-height: 1.6;
 
-          color: var(--text-color);
+          color: var(--secondary-text-color);
 
         }
 

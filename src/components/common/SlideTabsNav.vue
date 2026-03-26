@@ -187,7 +187,7 @@ export default {
       }
 
       &.active {
-        color: var(--text-color);
+        color: var(--secondary-text-color);
         background: rgba(var(--theme-color-rgb), 0.12);
         box-shadow: inset 2px 0 0 rgba(var(--theme-color-rgb), 0.65);
 
@@ -197,7 +197,7 @@ export default {
       }
 
       &:hover {
-        color: var(--text-color);
+        color: var(--secondary-text-color);
         background: rgba(var(--theme-color-rgb), 0.08);
       }
 

@@ -1331,7 +1331,7 @@ export default {
       font-size: $font-size-md;
       font-weight: $font-weight-semibold;
       margin-bottom: 16px;
-      color: var(--text-color);
+      color: var(--secondary-text-color);
       display: flex;
       align-items: center;
 
@@ -1383,7 +1383,7 @@ export default {
     .overview-plan-name {
       font-size: $font-size-xl;
       font-weight: $font-weight-bold;
-      color: var(--text-color);
+      color: var(--secondary-text-color);
       line-height: 1.2;
     }
 
@@ -1431,7 +1431,7 @@ export default {
       margin-bottom: 0;
       font-size: $font-size-md;
       padding: 10px 12px 8px;
-      color: var(--text-color);
+      color: var(--secondary-text-color);
 
       &::after {
         background-color: var(--border-color);
@@ -1455,7 +1455,7 @@ export default {
     box-shadow: none;
 
     .section-title {
-      color: var(--text-color);
+      color: var(--secondary-text-color);
 
       &::after {
         background-color: var(--border-color);
@@ -1465,7 +1465,7 @@ export default {
     .order-info {
       .info-label,
       .info-value {
-        color: var(--text-color);
+        color: var(--secondary-text-color);
       }
 
       .info-value.discount {
@@ -1482,7 +1482,7 @@ export default {
         margin-top: 8px;
 
         .info-label {
-          color: var(--text-color);
+          color: var(--secondary-text-color);
           font-weight: $font-weight-semibold;
         }
 
@@ -1501,7 +1501,7 @@ export default {
         height: 44px;
         border-radius: $border-radius-sm;
         background-color: var(--theme-color);
-        color: #fff;
+        color: var(--secondary-text-color);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -1623,7 +1623,7 @@ export default {
 
         .method-name {
           font-weight: $font-weight-semibold;
-          color: var(--text-color);
+          color: var(--secondary-text-color);
           line-height: 1.2;
         }
 
@@ -1678,7 +1678,7 @@ export default {
 
       p {
         margin: 0;
-        color: var(--text-color);
+        color: var(--secondary-text-color);
       }
     }
   }
@@ -1780,7 +1780,7 @@ export default {
 
     .btn-back {
       background-color: transparent;
-      color: var(--text-color);
+      color: var(--secondary-text-color);
       flex: 1;
       border: 1px solid var(--border-color);
       box-shadow: none;
@@ -1819,7 +1819,7 @@ export default {
 
     .btn-check {
       background-color: var(--hover-color);
-      color: var(--text-color);
+      color: var(--secondary-text-color);
       flex: 1;
       border: 1px solid var(--border-color);
       box-shadow: none;
@@ -2152,7 +2152,7 @@ export default {
         padding: 0;
         border-radius: $border-radius-sm;
         background-color: transparent;
-        color: var(--text-color);
+        color: var(--secondary-text-color);
         font-size: $font-size-xl;
         font-weight: $font-weight-medium;
         display: flex;
@@ -2208,7 +2208,7 @@ export default {
           font-size: $font-size-xl;
           font-weight: $font-weight-semibold;
           margin: 0 0 12px;
-          color: var(--text-color);
+          color: var(--secondary-text-color);
         }
 
         p {
@@ -2302,7 +2302,7 @@ export default {
         .btn-secondary {
           background-color: transparent;
           border: 1px solid var(--border-color);
-          color: var(--text-color);
+          color: var(--secondary-text-color);
           box-shadow: none;
           transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
@@ -2431,7 +2431,7 @@ export default {
       font-size: $font-size-xl;
       font-weight: $font-weight-semibold;
       margin: 0 0 12px;
-      color: var(--text-color);
+      color: var(--secondary-text-color);
     }
 
     p {
@@ -2460,7 +2460,7 @@ export default {
     .cancel-btn {
       background-color: transparent;
       border: 1px solid var(--border-color);
-      color: var(--text-color);
+      color: var(--secondary-text-color);
       box-shadow: none;
 
       &:hover {

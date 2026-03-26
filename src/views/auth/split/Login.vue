@@ -465,12 +465,12 @@ export default {
     user-select: none;
 
     &.white {
-      color: #ffffff;
+      color: var(--secondary-text-color);
       text-shadow: none;
     }
 
     &.black {
-      color: #000000;
+      color: var(--secondary-text-color);
       text-shadow: none;
     }
   }
@@ -484,12 +484,12 @@ export default {
     z-index: 2;
 
     &.white {
-      color: #ffffff;
+      color: var(--secondary-text-color);
       text-shadow: none;
     }
 
     &.black {
-      color: #000000;
+      color: var(--secondary-text-color);
       text-shadow: none;
     }
   }
@@ -561,7 +561,7 @@ export default {
     font-size: 1.75rem;
     font-weight: $font-weight-bold;
     margin-bottom: 0.5rem;
-    color: var(--primary-text-color);
+    color: var(--secondary-text-color);
 
     @media (min-width: 993px) {
       text-align: left;
@@ -625,7 +625,7 @@ export default {
     border: 1px solid var(--input-border-color, transparent);
     background-color: var(--input-bg-color, #f9f9f9);
     transition: all 0.3s ease;
-    color: var(--primary-text-color);
+    color: var(--secondary-text-color);
 
     &[type="password"],
     &[type="text"] {
@@ -812,7 +812,7 @@ export default {
   align-items: center !important;
   justify-content: center !important;
   line-height: normal !important;
-  color: var(--text-color);
+  color: var(--secondary-text-color);
   border: 1px solid var(--border-color);
   background-color: transparent;
   transition: all 0.3s ease;

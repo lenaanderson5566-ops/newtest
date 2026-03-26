@@ -1326,7 +1326,7 @@ onUnmounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     font-size: 1.1rem;
 
@@ -1442,7 +1442,7 @@ onUnmounted(() => {
 
     margin-bottom: 0.75rem;
 
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 
   }
 
@@ -1450,7 +1450,7 @@ onUnmounted(() => {
 
   .error-message {
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     font-size: 1rem;
 
@@ -1598,7 +1598,7 @@ onUnmounted(() => {
 
     margin-bottom: 1rem;
 
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 
     line-height: 1.3;
 
@@ -1624,7 +1624,7 @@ onUnmounted(() => {
 
     font-size: 0.9rem;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     
 
@@ -1670,7 +1670,7 @@ onUnmounted(() => {
 
 .doc-body {
 
-  color: var(--text-color);
+  color: var(--secondary-text-color);
 
   font-size: 1rem;
 
@@ -1688,7 +1688,7 @@ onUnmounted(() => {
 
     line-height: 1.4;
 
-    color: var(--primary-text-color);
+    color: var(--secondary-text-color);
 
     position: relative;
 
@@ -1740,7 +1740,7 @@ onUnmounted(() => {
 
     font-size: 1.25rem;
 
-    color: var(--primary-text-color);
+    color: var(--secondary-text-color);
 
   }
 
@@ -1750,7 +1750,7 @@ onUnmounted(() => {
 
     font-size: 1.1rem;
 
-    color: var(--primary-text-color);
+    color: var(--secondary-text-color);
 
   }
 
@@ -1760,7 +1760,7 @@ onUnmounted(() => {
 
     font-size: 1rem;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     font-weight: $font-weight-medium;
 
@@ -1950,7 +1950,7 @@ onUnmounted(() => {
 
       padding: 0;
 
-      color: var(--text-color);
+      color: var(--secondary-text-color);
 
       border: none;
 
@@ -2002,7 +2002,7 @@ onUnmounted(() => {
 
     margin-bottom: 1.8rem;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     font-style: italic;
 
@@ -2120,7 +2120,7 @@ onUnmounted(() => {
 
       font-weight: $font-weight-semibold;
 
-      color: var(--primary-text-color);
+      color: var(--secondary-text-color);
 
     }
 
@@ -2174,7 +2174,7 @@ onUnmounted(() => {
 
     font-weight: $font-weight-semibold;
 
-    color: var(--primary-text-color);
+    color: var(--secondary-text-color);
 
   }
 
@@ -2210,7 +2210,7 @@ onUnmounted(() => {
 
     font-size: 0.9rem;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
   }
 

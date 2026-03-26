@@ -729,7 +729,7 @@ export default {
 
     transition: all 0.3s ease;
 
-    color: var(--primary-text-color);
+    color: var(--secondary-text-color);
 
 
 
@@ -1094,7 +1094,7 @@ export default {
 
   line-height: normal !important;
 
-  color: var(--text-color);
+  color: var(--secondary-text-color);
 
   border: 1px solid var(--border-color);
 

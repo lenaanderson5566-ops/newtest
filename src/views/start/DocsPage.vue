@@ -375,7 +375,7 @@ onMounted(() => {
 
     left: 1rem;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     transition: color 0.3s ease;
 
@@ -395,7 +395,7 @@ onMounted(() => {
 
     background-color: var(--input-bg);
 
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 
     font-size: 1rem;
 
@@ -425,7 +425,7 @@ onMounted(() => {
 
     &::placeholder {
 
-      color: var(--text-muted);
+      color: var(--secondary-text-color);
 
     }
 
@@ -443,7 +443,7 @@ onMounted(() => {
 
     border: none;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     cursor: pointer;
 
@@ -504,7 +504,7 @@ onMounted(() => {
 
     border-bottom: 1px solid rgba(var(--theme-color-rgb), 0.1);
 
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 
   }
 
@@ -574,7 +574,7 @@ onMounted(() => {
 
       margin-bottom: 0.35rem;
 
-      color: var(--text-color);
+      color: var(--secondary-text-color);
 
       line-height: 1.4;
 
@@ -598,7 +598,7 @@ onMounted(() => {
 
       font-size: 0.8rem;
 
-      color: var(--text-muted);
+      color: var(--secondary-text-color);
 
     }
 
@@ -608,7 +608,7 @@ onMounted(() => {
 
   .doc-action {
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     margin-left: 1rem;
 
@@ -658,7 +658,7 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     font-size: 1.1rem;
 
@@ -670,7 +670,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     opacity: 0.7;
 

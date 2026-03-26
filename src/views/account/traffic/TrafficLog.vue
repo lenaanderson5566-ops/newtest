@@ -876,7 +876,7 @@ onUnmounted(() => {
       font-weight: $font-weight-medium;
       cursor: pointer;
       transition: all 0.3s ease;
-      color: var(--text-color);
+      color: var(--secondary-text-color);
 
       &:hover {
         background-color: rgba(var(--theme-color-rgb), 0.1);

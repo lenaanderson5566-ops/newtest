@@ -125,7 +125,7 @@ const goBack = () => {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--secondary-text-color);
   display: inline-flex;
   align-items: center;
   cursor: pointer;

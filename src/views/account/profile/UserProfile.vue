@@ -1690,7 +1690,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--text-muted);
+      color: var(--secondary-text-color);
 
       margin: 0;
 
@@ -1979,7 +1979,7 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     font-size: 1.1rem;
 
@@ -1989,7 +1989,7 @@ onMounted(() => {
 
   .error-icon {
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     opacity: 0.7;
 
@@ -2099,7 +2099,7 @@ onMounted(() => {
 
       margin: 0;
 
-      color: var(--text-color);
+      color: var(--secondary-text-color);
 
     }
 
@@ -2143,7 +2143,7 @@ onMounted(() => {
 
           font-size: $font-size-md;
 
-          color: var(--text-muted);
+          color: var(--secondary-text-color);
 
           margin-bottom: 6px;
 
@@ -2157,7 +2157,7 @@ onMounted(() => {
 
           font-weight: $font-weight-medium;
 
-          color: var(--text-color);
+          color: var(--secondary-text-color);
 
 
 
@@ -2221,7 +2221,7 @@ onMounted(() => {
 
           font-weight: $font-weight-medium;
 
-          color: var(--text-color);
+          color: var(--secondary-text-color);
 
           margin-bottom: 4px;
 
@@ -2233,7 +2233,7 @@ onMounted(() => {
 
           font-size: $font-size-sm;
 
-          color: var(--text-muted);
+          color: var(--secondary-text-color);
 
         }
 
@@ -2351,7 +2351,7 @@ onMounted(() => {
 
           background-color: var(--bg-secondary);
 
-          color: var(--text-color);
+          color: var(--secondary-text-color);
 
           font-size: $font-size-md;
 
@@ -2739,7 +2739,7 @@ onMounted(() => {
 
     font-weight: $font-weight-semibold;
 
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 
   }
 
@@ -2751,7 +2751,7 @@ onMounted(() => {
 
     border: none;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     cursor: pointer;
 
@@ -2791,7 +2791,7 @@ onMounted(() => {
 
   p {
 
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 
     font-size: $font-size-md;
 
@@ -2825,7 +2825,7 @@ onMounted(() => {
 
       font-weight: $font-weight-medium;
 
-      color: var(--text-color);
+      color: var(--secondary-text-color);
 
       margin-bottom: 8px;
 
@@ -2845,7 +2845,7 @@ onMounted(() => {
 
       background-color: var(--bg-secondary);
 
-      color: var(--text-color);
+      color: var(--secondary-text-color);
 
       font-size: $font-size-md;
 
@@ -2919,7 +2919,7 @@ onMounted(() => {
 
       border: 1px solid var(--border-color);
 
-      color: var(--text-color);
+      color: var(--secondary-text-color);
 
 
 
@@ -3131,7 +3131,7 @@ onMounted(() => {
 
         font-weight: $font-weight-medium;
 
-        color: var(--text-color);
+        color: var(--secondary-text-color);
 
         margin-bottom: 4px;
 
@@ -3149,7 +3149,7 @@ onMounted(() => {
 
         font-size: $font-size-sm;
 
-        color: var(--text-muted);
+        color: var(--secondary-text-color);
 
 
 
@@ -3293,7 +3293,7 @@ onMounted(() => {
 
     margin: 12px 0;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
   }
 
@@ -3301,7 +3301,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     opacity: 0.7;
 
@@ -3385,7 +3385,7 @@ onMounted(() => {
 
     margin: 12px 0;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
   }
 
@@ -3479,7 +3479,7 @@ onMounted(() => {
 
     margin: 0 0 8px;
 
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 
     font-size: $font-size-md;
 
@@ -3535,7 +3535,7 @@ onMounted(() => {
 
     font-size: $font-size-md;
 
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 
     white-space: pre-wrap;
 
@@ -3561,7 +3561,7 @@ onMounted(() => {
 
     border-radius: 4px;
 
-    color: var(--text-muted);
+    color: var(--secondary-text-color);
 
     cursor: pointer;
 

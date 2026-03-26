@@ -270,7 +270,7 @@ export default {
 
   font-weight: $font-weight-bold;
 
-  color: var(--text-color);
+  color: var(--secondary-text-color);
 
   margin: 10px 0 20px;
 

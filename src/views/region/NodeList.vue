@@ -434,7 +434,7 @@ onMounted(() => {
   .quick-btn {
     border: 1px solid var(--border-color);
     background: #fff;
-    color: var(--text-color);
+    color: var(--secondary-text-color);
     border-radius: $border-radius-sm;
     padding: 10px 18px;
     cursor: pointer;
@@ -601,7 +601,7 @@ onMounted(() => {
     }
 
     .reset-modal-text {
-      color: var(--text-color);
+      color: var(--secondary-text-color);
       font-size: $font-size-md;
       margin: 0 0 12px;
       line-height: 1.6;
@@ -701,7 +701,7 @@ onMounted(() => {
       justify-content: center;
       font-size: $font-size-sm;
       font-weight: $font-weight-bold;
-      color: #fff;
+      color: var(--secondary-text-color);
       background: radial-gradient(circle at center, rgba(var(--theme-color-rgb), 0.95), rgba(var(--theme-color-rgb), 0.35));
       box-shadow: none;
       animation: regionPulse 2.8s ease-in-out infinite;
@@ -776,7 +776,7 @@ onMounted(() => {
     }
 
     .primary {
-      color: #fff;
+      color: var(--secondary-text-color);
       background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
       box-shadow: none;
     }
@@ -848,7 +848,7 @@ onMounted(() => {
     padding: 0 10px;
     font-size: 0.88rem;
     font-weight: $font-weight-bold;
-    color: #fff;
+    color: var(--secondary-text-color);
     letter-spacing: 0.5px;
     background: linear-gradient(135deg, #d90429, #9d174d);
     box-shadow: none;
@@ -876,7 +876,7 @@ onMounted(() => {
 
       margin: 0 0 0.35rem;
 
-      color: var(--text-color);
+      color: var(--secondary-text-color);
 
       line-height: 1.4;
 

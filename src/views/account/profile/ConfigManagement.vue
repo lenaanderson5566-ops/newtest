@@ -85,7 +85,7 @@ const handleResetSecurity = async () => {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-color);
+  color: var(--secondary-text-color);
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   display: inline-flex;
@@ -121,7 +121,7 @@ const handleResetSecurity = async () => {
   cursor: pointer;
 
   &.danger {
-    color: #fff;
+    color: var(--secondary-text-color);
     background: rgba(var(--theme-color-rgb), 0.92);
     border-color: rgba(var(--theme-color-rgb), 0.92);
   }
