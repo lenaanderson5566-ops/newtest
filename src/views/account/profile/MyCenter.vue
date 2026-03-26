@@ -76,7 +76,7 @@
       <div v-show="activeSection === 'subscription'" class="section-group">
         <h3 class="section-title section-title-outside">{{ $t('myCenter.subscriptionPlanTitle') }}</h3>
         <p class="section-subtitle">{{ $t('myCenter.planDetails') }}</p>
-        <section class="section-block dashboard-like-card">
+        <section class="section-block dashboard-like-card dashboard-like-card--accent">
           <div class="settings-list">
             <div class="settings-row plan-overview-row">
               <div class="row-main">
@@ -633,16 +633,16 @@ onMounted(async () => {
 .dashboard-like-card {
   position: relative;
   overflow: hidden;
+}
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.92), rgba(var(--theme-color-rgb), 0.35));
-    pointer-events: none;
-  }
+.dashboard-like-card--accent::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.92), rgba(var(--theme-color-rgb), 0.35));
+  pointer-events: none;
 }
 
 .summary-panel { padding: 1rem; }
