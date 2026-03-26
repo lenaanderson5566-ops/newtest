@@ -32,18 +32,18 @@
           <table v-if="filteredOrders.length" class="order-table">
             <thead>
               <tr>
-                <th width="22%">{{ headerTexts.createdAt }}</th>
+                <th width="24%">{{ headerTexts.createdAt }}</th>
                 <th width="30%">{{ headerTexts.subscriptionCycle }}</th>
-                <th width="14%">{{ headerTexts.totalAmount }}</th>
-                <th width="14%">{{ headerTexts.statusLabel }}</th>
-                <th width="20%">{{ headerTexts.actions }}</th>
+                <th width="16%">{{ headerTexts.totalAmount }}</th>
+                <th width="15%">{{ headerTexts.statusLabel }}</th>
+                <th width="15%">{{ headerTexts.actions }}</th>
               </tr>
             </thead>
             <tbody>
               <transition-group name="page-switch">
                 <tr v-for="order in filteredOrders" :key="order.trade_no">
                   <td>{{ formatDate(order.created_at) }}</td>
-                  <td>{{ getSubscriptionName(order) }} · {{ formatCycle(order.period) }}</td>
+                  <td>{{ getSubscriptionName(order) }}·{{ formatCycle(order.period) }}</td>
                   <td class="amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</td>
                   <td>
                     <span class="status-badge" :class="getStatusClass(order.status)">
@@ -501,13 +501,12 @@ watch(locale, () => {
 
 .order-table {
   width: 100%;
-  min-width: 760px;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed; 
   
   th, td {
-    padding: 0.68rem 0.8rem;
+    padding: 0.5rem 0.45rem;
     text-align: left;
     white-space: nowrap;
     word-break: normal;
@@ -601,8 +600,8 @@ watch(locale, () => {
       justify-content: center;
       padding: 0.35rem 0.65rem;
       height: 34px;
-      min-width: 72px;
-      flex: 0 0 72px;
+      min-width: 62px;
+      flex: 0 0 62px;
       white-space: nowrap;
       border-radius: 6px;
       font-size: 0.85rem;
@@ -636,6 +635,39 @@ watch(locale, () => {
         cursor: not-allowed;
         pointer-events: none;
       }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .order-table {
+    width: 100%;
+    table-layout: fixed;
+
+    th, td {
+      padding: 0.42rem 0.32rem;
+      font-size: 0.78rem;
+    }
+
+    .actions {
+      gap: 0.25rem;
+
+      .action-button {
+        min-width: 28px;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        flex: 0 0 28px;
+      }
+
+      .action-button span {
+        display: none;
+      }
+    }
+
+    .status-badge {
+      padding: 0.25rem 0.35rem;
+      font-size: 0.74rem;
     }
   }
 }
