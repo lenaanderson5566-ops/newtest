@@ -595,7 +595,12 @@ watch(locale, () => {
 @media (max-width: 768px) {
   .order-table {
     width: 100%;
-    table-layout: fixed;
+    table-layout: auto;
+
+    th:nth-child(1), td:nth-child(1) { width: 92px; }
+    th:nth-child(3), td:nth-child(3) { width: 86px; }
+    th:nth-child(4), td:nth-child(4) { width: 72px; text-align: center; }
+    th:nth-child(5), td:nth-child(5) { width: 44px; text-align: center; }
 
     th, td {
       padding: 0.28rem 0.22rem;
@@ -604,6 +609,7 @@ watch(locale, () => {
 
     .actions {
       gap: 0.18rem;
+      justify-content: center;
 
       .action-button {
         min-width: 24px;
