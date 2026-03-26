@@ -512,7 +512,7 @@ onMounted(() => {
   display: flex;
   gap: 12px;
   font-size: $font-size-sm;
-  color: var(--text-secondary);
+  color: var(--secondary-text-color);
 }
 
 .device-empty,
@@ -601,7 +601,7 @@ onMounted(() => {
   .modal-close {
     background: none;
     border: none;
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
     cursor: pointer;
     padding: 4px;
     display: flex;

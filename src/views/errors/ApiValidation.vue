@@ -498,7 +498,7 @@ export default {
     }
 
     .progress-text {
-      color: var(--text-primary, rgba(255, 255, 255, 0.95));
+      color: var(--text-primary);
 
       text-shadow: none;
     }

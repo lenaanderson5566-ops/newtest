@@ -561,7 +561,7 @@ export default {
     font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
     margin-bottom: 0.5rem;
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
     @media (min-width: 993px) {
       text-align: left;
@@ -625,7 +625,7 @@ export default {
     border: 1px solid var(--input-border-color, transparent);
     background-color: var(--input-bg-color, #f9f9f9);
     transition: all 0.3s ease;
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
     &[type="password"],
     &[type="text"] {

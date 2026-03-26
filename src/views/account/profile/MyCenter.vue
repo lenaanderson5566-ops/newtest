@@ -1053,7 +1053,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   .close-btn {
     background: none;
     border: none;
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
     cursor: pointer;
     padding: 4px;
     display: flex;

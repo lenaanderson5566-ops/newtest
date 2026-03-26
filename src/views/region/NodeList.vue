@@ -406,7 +406,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--text-color-light, var(--secondary-text-color));
+      color: var(--secondary-text-color);
 
       margin: 0;
 
@@ -642,7 +642,7 @@ onMounted(() => {
 
     p {
       margin: 8px 0 0;
-      color: var(--text-color-light, var(--secondary-text-color));
+      color: var(--secondary-text-color);
       font-size: $font-size-md;
     }
   }
@@ -741,7 +741,7 @@ onMounted(() => {
 
       p {
         margin: 0;
-        color: var(--text-color-light, var(--secondary-text-color));
+        color: var(--secondary-text-color);
         font-size: $font-size-sm;
       }
 
@@ -900,7 +900,7 @@ onMounted(() => {
 
       font-size: $font-size-xs;
 
-      color: var(--text-color-light, var(--secondary-text-color));
+      color: var(--secondary-text-color);
 
       margin: 0;
 
@@ -989,7 +989,7 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-color-light, var(--secondary-text-color));
+    color: var(--secondary-text-color);
 
     font-size: $font-size-lg;
 
@@ -1001,7 +1001,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-color-light, var(--secondary-text-color));
+    color: var(--secondary-text-color);
 
     opacity: 0.7;
 

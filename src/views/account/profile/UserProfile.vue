@@ -1690,7 +1690,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
 
       margin: 0;
 
@@ -1979,7 +1979,7 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
     font-size: $font-size-lg;
 
@@ -1989,7 +1989,7 @@ onMounted(() => {
 
   .error-icon {
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
     opacity: 0.7;
 
@@ -2143,7 +2143,7 @@ onMounted(() => {
 
           font-size: $font-size-md;
 
-          color: var(--text-muted);
+          color: var(--tertiary-text-color);
 
           margin-bottom: 6px;
 
@@ -2233,7 +2233,7 @@ onMounted(() => {
 
           font-size: $font-size-sm;
 
-          color: var(--text-muted);
+          color: var(--tertiary-text-color);
 
         }
 
@@ -2751,7 +2751,7 @@ onMounted(() => {
 
     border: none;
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
     cursor: pointer;
 
@@ -3149,7 +3149,7 @@ onMounted(() => {
 
         font-size: $font-size-sm;
 
-        color: var(--text-muted);
+        color: var(--tertiary-text-color);
 
 
 
@@ -3293,7 +3293,7 @@ onMounted(() => {
 
     margin: 12px 0;
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
   }
 
@@ -3301,7 +3301,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
     opacity: 0.7;
 
@@ -3385,7 +3385,7 @@ onMounted(() => {
 
     margin: 12px 0;
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
   }
 
@@ -3561,7 +3561,7 @@ onMounted(() => {
 
     border-radius: 4px;
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
     cursor: pointer;
 

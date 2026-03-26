@@ -823,7 +823,7 @@ fetchTickets();
 
   .card-body {
     p {
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
 
       margin: 0;
 
@@ -914,7 +914,7 @@ fetchTickets();
 
   text-align: center;
 
-  color: var(--text-muted);
+  color: var(--tertiary-text-color);
 
   margin: 1rem 0;
 
@@ -1067,7 +1067,7 @@ fetchTickets();
 
     font-size: $font-size-sm;
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
     padding-top: 0.5rem;
 
@@ -1317,7 +1317,7 @@ fetchTickets();
 
       line-height: 1.5;
 
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
     }
   }
 }
@@ -1333,7 +1333,7 @@ fetchTickets();
 
   justify-content: center;
 
-  color: var(--text-muted);
+  color: var(--tertiary-text-color);
 
   padding: 2.5rem;
 
@@ -1470,7 +1470,7 @@ fetchTickets();
     }
 
     .message-time {
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
     }
   }
 
@@ -1616,7 +1616,7 @@ fetchTickets();
 
   gap: 0.75rem;
 
-  color: var(--text-muted);
+  color: var(--tertiary-text-color);
 
   font-size: $font-size-md;
 
@@ -1709,7 +1709,7 @@ fetchTickets();
 
     border: none;
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
     cursor: pointer;
 
@@ -1790,7 +1790,7 @@ fetchTickets();
       }
 
       &::placeholder {
-        color: var(--text-muted);
+        color: var(--tertiary-text-color);
       }
     }
 
@@ -1884,7 +1884,7 @@ fetchTickets();
       &:hover {
         background-color: var(--bg-secondary);
 
-        border-color: var(--text-muted);
+        border-color: var(--tertiary-text-color);
       }
     }
 
@@ -2113,7 +2113,7 @@ fetchTickets();
     }
 
     p {
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
 
       margin-bottom: 2rem;
 

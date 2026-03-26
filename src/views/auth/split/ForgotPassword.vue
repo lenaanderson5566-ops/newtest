@@ -2099,7 +2099,7 @@ export default {
 
     margin-bottom: 0.5rem;
 
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
 
 
@@ -2275,7 +2275,7 @@ export default {
 
     transition: all 0.3s ease;
 
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
 
 
@@ -2599,7 +2599,7 @@ export default {
 
         font-size: $font-size-xl;
 
-        color: var(--primary-text-color);
+        color: var(--text-primary);
 
       }
 

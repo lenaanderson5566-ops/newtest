@@ -1338,7 +1338,7 @@ export default {
   --saas-card-bg: #ffffff;
   --saas-card-shadow: none;
 
-  --theme-text-primary: #111827;
+  --theme-text-primary: var(--text-primary);
   --theme-text-secondary: var(--secondary-text-color);
   --theme-text-subtle: #9ca3af;
   --theme-text-emphasis: var(--text-primary);
@@ -1412,7 +1412,7 @@ export default {
         font-size: var(--dashboard-title-size);
         font-weight: $font-weight-semibold;
         margin: 0;
-        color: var(--theme-text-primary);
+        color: var(--text-primary);
       }
 
       .card-actions {
@@ -1550,7 +1550,7 @@ export default {
           border-color: var(--quota-expired-border);
 
           .usage-card-title {
-            color: var(--theme-text-secondary);
+            color: var(--secondary-text-color);
           }
         }
 
@@ -1643,7 +1643,7 @@ export default {
 
           .plan-summary-label {
             font-size: $font-size-sm;
-            color: var(--theme-text-secondary);
+            color: var(--secondary-text-color);
 
             &.with-tooltip {
               display: inline-flex;
@@ -1662,7 +1662,7 @@ export default {
 
           .plan-summary-value {
             font-size: $font-size-md;
-            color: var(--theme-text-primary);
+            color: var(--text-primary);
             font-weight: $font-weight-semibold;
             text-align: right;
             word-break: break-word;
@@ -1812,7 +1812,7 @@ export default {
           font-size: var(--dashboard-value-size);
           line-height: 1;
           font-weight: $font-weight-bold;
-          color: var(--theme-text-primary);
+          color: var(--text-primary);
 
           &.compact {
             font-size: $font-size-xl;
@@ -1866,7 +1866,7 @@ export default {
         .usage-reset-hint,
         .usage-kpi-value,
         .usage-kpi-label {
-          color: var(--theme-text-primary);
+          color: var(--text-primary);
         }
 
         .usage-kpi {
@@ -1890,7 +1890,7 @@ export default {
         box-shadow: none;
 
         .usage-card-title {
-          color: var(--theme-text-primary);
+          color: var(--text-primary);
         }
       }
 
@@ -1939,7 +1939,7 @@ export default {
           .usage-reset-hint {
             width: 100%;
             font-size: $font-size-sm;
-            color: var(--theme-text-secondary);
+            color: var(--secondary-text-color);
           }
 
           @media (max-width: 576px) {
@@ -2081,12 +2081,12 @@ export default {
     line-height: 1.3;
     font-weight: $font-weight-semibold;
     letter-spacing: 0.02em;
-    color: var(--theme-text-primary);
+    color: var(--text-primary);
   }
 
 
   .stats-grid .stats-card.today-traffic-card {
-    color: var(--theme-text-primary);
+    color: var(--text-primary);
     background: var(--saas-card-bg);
     z-index: 2;
     align-items: flex-start;
@@ -2107,7 +2107,7 @@ export default {
       .usage-percent {
         line-height: 1;
         font-weight: $font-weight-bold;
-        color: var(--theme-text-primary);
+        color: var(--text-primary);
         font-size: $font-size-xl;
 
         &.compact {
@@ -2129,7 +2129,7 @@ export default {
       gap: 10px;
       font-size: $font-size-sm;
       line-height: 1.45;
-      color: var(--theme-text-secondary);
+      color: var(--secondary-text-color);
 
       .traffic-up,
       .traffic-down {
@@ -2146,7 +2146,7 @@ export default {
     }
 
     .ip-location-state {
-      color: var(--theme-text-secondary);
+      color: var(--secondary-text-color);
       font-size: $font-size-sm;
 
       &.error {
@@ -2159,7 +2159,7 @@ export default {
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      color: var(--theme-text-primary);
+      color: var(--text-primary);
 
       @media (max-width: 920px) {
         align-items: flex-start;
@@ -2186,7 +2186,7 @@ export default {
       line-height: 1.15;
       font-weight: $font-weight-bold;
       letter-spacing: -0.01em;
-      color: var(--theme-text-primary);
+      color: var(--text-primary);
 
       @media (max-width: 680px) {
         font-size: $font-size-xl;
@@ -2246,7 +2246,7 @@ export default {
     }
 
     .ip-region {
-      color: var(--theme-text-secondary);
+      color: var(--secondary-text-color);
       font-size: $font-size-sm;
     }
   }
@@ -2322,7 +2322,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--theme-text-secondary);
+      color: var(--secondary-text-color);
       font-size: $font-size-md;
     }
 

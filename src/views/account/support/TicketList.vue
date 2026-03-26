@@ -961,7 +961,7 @@ onUnmounted(() => {
 
   .card-body {
     p {
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
 
       margin: 0;
 
@@ -1042,7 +1042,7 @@ onUnmounted(() => {
       }
 
       &::placeholder {
-        color: var(--text-muted);
+        color: var(--tertiary-text-color);
 
         opacity: 0.7;
       }
@@ -1057,7 +1057,7 @@ onUnmounted(() => {
 
       transform: translateY(-50%);
 
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
 
       transition: color 0.3s ease;
     }
@@ -1169,7 +1169,7 @@ onUnmounted(() => {
     .ticket-time {
       font-size: $font-size-xs;
 
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
 
       margin-right: auto;
     }
@@ -1268,7 +1268,7 @@ onUnmounted(() => {
 
       font-size: $font-size-sm;
 
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
 
       .ticket-time {
         margin-left: 0.5rem;
@@ -1371,7 +1371,7 @@ onUnmounted(() => {
 
       margin: 0 0.75rem;
 
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
     }
   }
 }
@@ -1523,7 +1523,7 @@ onUnmounted(() => {
       .message-time {
         font-size: $font-size-xs;
 
-        color: var(--text-muted);
+        color: var(--tertiary-text-color);
 
         align-self: flex-end;
       }
@@ -1549,7 +1549,7 @@ onUnmounted(() => {
 
     font-size: $font-size-xs;
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
     opacity: 0.8;
   }
@@ -1605,7 +1605,7 @@ onUnmounted(() => {
     }
 
     &::placeholder {
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
 
       opacity: 0.7;
     }
@@ -1699,7 +1699,7 @@ onUnmounted(() => {
 
   justify-content: center;
 
-  color: var(--text-muted);
+  color: var(--tertiary-text-color);
 
   height: 100%;
 
@@ -1711,7 +1711,7 @@ onUnmounted(() => {
 
     opacity: 0.6;
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
   }
 
@@ -1735,7 +1735,7 @@ onUnmounted(() => {
 
   justify-content: center;
 
-  color: var(--text-muted);
+  color: var(--tertiary-text-color);
 
   padding: 2rem;
 
@@ -1897,7 +1897,7 @@ onUnmounted(() => {
 
     border: none;
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
     cursor: pointer;
 
@@ -1960,7 +1960,7 @@ onUnmounted(() => {
       }
 
       &::placeholder {
-        color: var(--text-muted);
+        color: var(--tertiary-text-color);
 
         opacity: 0.7;
       }
@@ -2003,7 +2003,7 @@ onUnmounted(() => {
         font-size: $font-size-sm;
 
         .tag-icon {
-          color: var(--text-muted);
+          color: var(--tertiary-text-color);
         }
 
         &:hover:not(.active) {
@@ -2204,7 +2204,7 @@ onUnmounted(() => {
   p {
     margin-top: 1rem;
 
-    color: var(--text-muted);
+    color: var(--tertiary-text-color);
 
     font-size: $font-size-sm;
   }
@@ -2271,7 +2271,7 @@ onUnmounted(() => {
     }
 
     p {
-      color: var(--text-muted);
+      color: var(--tertiary-text-color);
 
       margin-bottom: 2rem;
 
