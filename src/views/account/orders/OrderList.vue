@@ -21,8 +21,9 @@
       <!-- 订单列表 -->
       <div v-else-if="orders.length > 0" class="orders-content">
         <div class="orders-filter-bar">
-          <label class="filter-check">
-            <input v-model="showCancelledOrders" type="checkbox" />
+          <label class="filter-switch">
+            <input v-model="showCancelledOrders" type="checkbox" class="switch-input" />
+            <span class="switch-slider" />
             <span>{{ headerTexts.showCancelled }}</span>
           </label>
         </div>
@@ -431,12 +432,52 @@ watch(locale, () => {
   margin-bottom: 10px;
 }
 
-.filter-check {
+.filter-switch {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.45rem;
   font-size: 13px;
   color: var(--secondary-text-color);
+
+  .switch-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .switch-slider {
+    position: relative;
+    width: 32px;
+    height: 18px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: rgba(var(--theme-color-rgb), 0.08);
+    transition: all 0.2s ease;
+    flex: 0 0 auto;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+      transition: transform 0.2s ease;
+    }
+  }
+
+  .switch-input:checked + .switch-slider {
+    background: rgba(var(--theme-color-rgb), 0.7);
+    border-color: rgba(var(--theme-color-rgb), 0.4);
+  }
+
+  .switch-input:checked + .switch-slider::after {
+    transform: translateX(14px);
+  }
 }
 
 .orders-empty-inline {
