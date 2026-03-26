@@ -53,6 +53,24 @@
           </div>
         </section>
 
+        <section class="section-block dashboard-like-card recent-login-panel">
+          <div class="recent-login-header">
+            <div class="row-title">{{ $t('myCenter.recentLoginTitle') }}</div>
+            <p>{{ $t('myCenter.recentLoginDesc') }}</p>
+          </div>
+          <div class="recent-login-list">
+            <div v-if="recentLoginLoading" class="recent-login-state">{{ $t('myCenter.loadingRecentLogin') }}</div>
+            <div v-else-if="!recentLoginRecords.length" class="recent-login-state">{{ $t('myCenter.recentLoginEmpty') }}</div>
+            <div v-else v-for="(record, index) in recentLoginRecords" :key="`${record.login_at || 'na'}-${record.ip || 'ip'}-${index}`" class="recent-login-item">
+              <div class="recent-login-main">
+                <strong>{{ formatLoginTime(record.login_at) }}</strong>
+                <span>{{ formatLoginLocation(record) }}</span>
+              </div>
+              <span class="recent-login-ip">{{ record.ip || '-' }}</span>
+            </div>
+          </div>
+        </section>
+
       </div>
 
       <div v-show="activeSection === 'subscription'" class="section-group">
@@ -312,7 +330,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { IconAlertCircle, IconBell, IconChevronRight, IconClock, IconDevices, IconGift, IconLock, IconReceipt, IconRefresh, IconX } from '@tabler/icons-vue';
 import { useI18n } from 'vue-i18n';
-import { changePassword as apiChangePassword, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
+import { changePassword as apiChangePassword, getRecentLoginRecords, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
 import { formatDate } from '@/utils/formatters';
 import { useToast } from '@/composables/useToast';
@@ -332,6 +350,8 @@ const showPasswordModal = ref(false);
 const showResetModal = ref(false);
 const updatingPassword = ref(false);
 const resettingSecurity = ref(false);
+const recentLoginLoading = ref(false);
+const recentLoginRecords = ref([]);
 const passwordForm = ref({
   oldPassword: '',
   newPassword: '',
@@ -399,6 +419,13 @@ const subscriptionExpireText = computed(() => {
 });
 
 const formatBalance = (balance) => ((Number(balance || 0) / 100).toFixed(2));
+const formatLoginTime = (timestamp) => (timestamp ? formatDate(Number(timestamp), true) : '-');
+const formatLoginLocation = (record = {}) => {
+  const city = `${record.city || ''}`.trim();
+  const country = `${record.country || ''}`.trim();
+  if (city && country) return `${city}, ${country}`;
+  return city || country || '-';
+};
 const go = (path) => router.push(path);
 const handleSectionClick = (sectionKey) => {
   if (sectionKey === 'invite') {
@@ -511,10 +538,12 @@ const updateAutoRenewalSetting = async () => {
 };
 
 onMounted(async () => {
-  const [userResp, subscribeResp, configResp] = await Promise.allSettled([
+  recentLoginLoading.value = true;
+  const [userResp, subscribeResp, configResp, recentLoginResp] = await Promise.allSettled([
     getUserInfo(),
     getUserSubscribe(),
-    getUserConfig()
+    getUserConfig(),
+    getRecentLoginRecords()
   ]);
 
   if (userResp.status === 'fulfilled') {
@@ -525,6 +554,12 @@ onMounted(async () => {
   if (configResp.status === 'fulfilled' && configResp.value?.data?.currency_symbol) {
     currencySymbol.value = configResp.value.data.currency_symbol;
   }
+  if (recentLoginResp?.status === 'fulfilled') {
+    recentLoginRecords.value = Array.isArray(recentLoginResp.value?.data) ? recentLoginResp.value.data : [];
+  } else {
+    recentLoginRecords.value = [];
+  }
+  recentLoginLoading.value = false;
 });
 </script>
 
@@ -611,6 +646,56 @@ onMounted(async () => {
 }
 
 .summary-panel { padding: 1rem; }
+
+.recent-login-panel {
+  padding: 1rem;
+}
+
+.recent-login-header p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--secondary-text-color);
+}
+
+.recent-login-list {
+  margin-top: 12px;
+  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+}
+
+.recent-login-state {
+  padding: 14px 2px 4px;
+  color: var(--secondary-text-color);
+  font-size: 13px;
+}
+
+.recent-login-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.recent-login-item + .recent-login-item {
+  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+}
+
+.recent-login-main {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.recent-login-main strong {
+  font-size: 13px;
+  color: var(--text-color);
+}
+
+.recent-login-main span,
+.recent-login-ip {
+  font-size: 12px;
+  color: var(--secondary-text-color);
+}
 
 
 .overview-panels {
