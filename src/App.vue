@@ -367,7 +367,7 @@ export default {
     background: var(--toolbar-control-bg);
     border: 1px solid var(--toolbar-control-border);
     box-shadow: var(--toolbar-control-shadow);
-    color: var(--secondary-text-color);
+    color: var(--text-color);
     cursor: pointer;
     transition: all 0.3s ease;
 

@@ -1733,7 +1733,7 @@ export default {
   height: 38px;
   border: none;
   background: transparent;
-  color: var(--secondary-text-color);
+  color: var(--text-color);
 }
 
 .share-buttons {
@@ -1784,7 +1784,7 @@ export default {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--secondary-text-color);
+  color: var(--text-color);
   display: inline-flex;
   align-items: center;
   padding: 0;

@@ -309,7 +309,7 @@ export default {
 
   background-color: var(--background-color);
 
-  color: var(--secondary-text-color);
+  color: var(--text-color);
 
   transition: background-color 0.3s ease, color 0.3s ease;
 
@@ -566,7 +566,7 @@ export default {
 
   margin-bottom: 2rem;
 
-  color: var(--secondary-text-color);
+  color: var(--text-color);
 
   opacity: 0.9;
 

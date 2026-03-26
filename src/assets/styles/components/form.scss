@@ -19,7 +19,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: $font-weight-medium;
-  color: var(--secondary-text-color);
+  color: var(--text-color);
 }
 
 // 表单控件
@@ -29,7 +29,7 @@
   padding: 0.75rem 1rem;
   font-size: $font-size-md;
   line-height: 1.5;
-  color: var(--secondary-text-color);
+  color: var(--text-color);
   background-color: var(--card-background);
   background-clip: padding-box;
   border: none;
@@ -112,7 +112,7 @@
 
 // 次要按钮
 .btn-secondary {
-  color: var(--secondary-text-color);
+  color: var(--text-color);
   background-color: transparent;
   border: 1px solid var(--border-color);
   position: relative;

@@ -432,7 +432,7 @@ export default {
 
         font-weight: $font-weight-semibold;
 
-        color: var(--secondary-text-color);
+        color: var(--text-color);
 
         text-shadow: none;
       }
@@ -447,7 +447,7 @@ export default {
 
       font-weight: $font-weight-medium;
 
-      color: var(--secondary-text-color);
+      color: var(--text-color);
 
       margin-bottom: 10px;
     }

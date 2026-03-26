@@ -855,7 +855,7 @@ watchEffect(() => {
 
     font-weight: $font-weight-semibold;
 
-    color: var(--secondary-text-color);
+    color: var(--text-color);
 
   }
 
@@ -869,7 +869,7 @@ watchEffect(() => {
 
     cursor: pointer;
 
-    color: var(--secondary-text-color);
+    color: var(--text-muted);
 
     display: flex;
 
@@ -891,7 +891,7 @@ watchEffect(() => {
 
       background-color: rgba(0, 0, 0, 0.05);
 
-      color: var(--secondary-text-color);
+      color: var(--text-color);
 
       transform: rotate(90deg);
 
@@ -959,7 +959,7 @@ watchEffect(() => {
 
       font-weight: $font-weight-medium;
 
-      color: var(--secondary-text-color);
+      color: var(--text-muted);
 
       flex: 0 0 40%; 
 
@@ -969,7 +969,7 @@ watchEffect(() => {
 
     .info-value {
 
-      color: var(--secondary-text-color);
+      color: var(--text-color);
 
       font-weight: $font-weight-medium;
 
@@ -1015,7 +1015,7 @@ watchEffect(() => {
 
       font-size: $font-size-md;
 
-      color: var(--secondary-text-color);
+      color: var(--text-color);
 
     }
 
@@ -1045,7 +1045,7 @@ watchEffect(() => {
 
         border-radius: 4px;
 
-        color: var(--secondary-text-color);
+        color: var(--text-muted);
 
         font-size: $font-size-sm;
 
@@ -1113,7 +1113,7 @@ watchEffect(() => {
 
       word-break: break-all;
 
-      color: var(--secondary-text-color);
+      color: var(--text-color);
 
       margin-bottom: 36px; 
 
@@ -1221,7 +1221,7 @@ watchEffect(() => {
 
       p {
 
-        color: var(--secondary-text-color);
+        color: var(--text-muted);
 
         font-size: $font-size-md;
 

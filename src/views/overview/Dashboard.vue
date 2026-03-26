@@ -1695,7 +1695,7 @@ export default {
           .plan-summary-desc {
             margin: 4px 0 0;
             font-size: $font-size-sm;
-            color: var(--secondary-text-color);
+            color: rgba(248, 250, 252, 0.72);
           }
 
 
@@ -2678,7 +2678,7 @@ export default {
 
     h3 {
       margin: 0;
-      color: var(--secondary-text-color);
+      color: var(--text-color);
       font-size: $font-size-xl;
       font-weight: $font-weight-semibold;
     }
@@ -2693,7 +2693,7 @@ export default {
       cursor: pointer;
 
       &:hover {
-        color: var(--secondary-text-color);
+        color: var(--text-color);
       }
     }
   }
@@ -2750,7 +2750,7 @@ export default {
     gap: 10px;
 
     strong {
-      color: var(--secondary-text-color);
+      color: var(--text-color);
       font-size: $font-size-md;
       font-weight: $font-weight-semibold;
     }

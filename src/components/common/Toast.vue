@@ -93,7 +93,7 @@ export default {
   min-width: 300px;
   max-width: 380px;
   background-color: var(--card-background);
-  color: var(--secondary-text-color);
+  color: var(--text-color);
   border-radius: 12px;
   padding: 14px 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);

@@ -2220,7 +2220,7 @@ export default {
 
 .optional {
 
-  color: var(--secondary-text-color);
+  color: var(--text-muted, #999);
 
   margin-left: 4px;
 
@@ -2384,7 +2384,7 @@ export default {
 
       text-overflow: ellipsis;
 
-      color: var(--secondary-text-color);
+      color: var(--primary-text-color);
 
       font-size: $font-size-md;
 
@@ -2498,7 +2498,7 @@ export default {
 
         transition: all 0.2s;
 
-        color: var(--secondary-text-color);
+        color: var(--primary-text-color);
 
         font-size: $font-size-md;
 
@@ -2646,7 +2646,7 @@ export default {
 
     transition: all 0.3s ease;
 
-    color: var(--secondary-text-color);
+    color: var(--primary-text-color);
 
 
 
@@ -3209,7 +3209,7 @@ export default {
 
   line-height: normal !important;
 
-  color: var(--secondary-text-color);
+  color: var(--text-color) !important;
 
   border: 1px solid var(--border-color) !important;
 
@@ -3545,7 +3545,7 @@ export default {
 
         font-weight: $font-weight-semibold;
 
-        color: var(--secondary-text-color);
+        color: var(--primary-text-color);
 
       }
 
@@ -3583,7 +3583,7 @@ export default {
 
         &:hover {
 
-          color: var(--secondary-text-color);
+          color: var(--primary-text-color);
 
         }
 

@@ -222,14 +222,14 @@ export default {
   border-radius: 8px;
   margin-right: 12px;
   background-color: rgba(var(--theme-color-rgb), 0.08);
-  color: var(--secondary-text-color);
+  color: var(--text-color);
   transition: all 0.3s ease;
 }
 
 .menu-text {
   font-size: $font-size-md;
   font-weight: $font-weight-medium;
-  color: var(--secondary-text-color);
+  color: var(--text-color);
 }
 
 

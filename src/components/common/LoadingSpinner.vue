@@ -60,7 +60,7 @@ export default {
   
   &-text {
     margin-top: 1.5rem;
-    color: var(--secondary-text-color);
+    color: var(--text-color);
     font-size: $font-size-sm;
   }
 }

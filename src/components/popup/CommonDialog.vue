@@ -216,7 +216,7 @@ export default {
         margin: 0;
         font-size: $font-size-xl;
         font-weight: $font-weight-semibold;
-        color: var(--secondary-text-color);
+        color: var(--text-color);
       }
 
       .dialog-close-btn {
@@ -234,7 +234,7 @@ export default {
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
-          color: var(--secondary-text-color);
+          color: var(--text-color);
           transform: rotate(90deg);
         }
       }
@@ -249,7 +249,7 @@ export default {
       :deep(p) {
         margin: 12px 0;
         line-height: 1.6;
-        color: var(--secondary-text-color);
+        color: var(--text-color);
       }
 
       :deep(strong) {
@@ -291,7 +291,7 @@ export default {
 
       .dialog-btn-cancel {
         background-color: var(--border-color);
-        color: var(--secondary-text-color);
+        color: var(--text-color);
 
         &:hover {
           background-color: var(--secondary-text-color);

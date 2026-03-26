@@ -403,7 +403,7 @@ onMounted(fetchUserStatus);
     margin: 0;
     font-size: $font-size-md;
     font-weight: $font-weight-semibold;
-    color: var(--secondary-text-color);
+    color: var(--text-color);
   }
 
   .status-sub {
@@ -438,7 +438,7 @@ onMounted(fetchUserStatus);
     height: 30px;
     border-radius: 50%;
     background: #4177e9;
-    color: var(--secondary-text-color);
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -588,7 +588,7 @@ onMounted(fetchUserStatus);
 
   &.primary {
     background: #3f72e8;
-    color: var(--secondary-text-color);
+    color: #fff;
   }
 }
 
