@@ -40,17 +40,10 @@
               </div>
               
               <div class="order-card-body">
-                <div class="info-row">
-                  <span class="label">{{ headerTexts.createdAt }}:</span>
-                  <span class="value">{{ formatDate(order.created_at) }}</span>
-                </div>
-                <div class="info-row">
-                  <span class="label">{{ headerTexts.cycle }}:</span>
+                <div class="info-row info-row-compact">
                   <span class="value">{{ formatCycle(order.period) }}</span>
-                </div>
-                <div class="info-row">
-                  <span class="label">{{ headerTexts.totalAmount }}:</span>
                   <span class="value amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</span>
+                  <span class="value">{{ formatDate(order.created_at) }}</span>
                 </div>
               </div>
               
@@ -521,7 +514,7 @@ watch(locale, () => {
   table-layout: fixed; 
   
   th, td {
-    padding: 1rem;
+    padding: 0.68rem 0.8rem;
     text-align: left;
     white-space: nowrap;
     word-break: normal;
@@ -917,7 +910,7 @@ watch(locale, () => {
 .order-cards {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.55rem;
 }
 
 .order-card {
@@ -935,7 +928,7 @@ watch(locale, () => {
 }
 
 .order-card-header {
-  padding: 0.75rem 0.85rem;
+  padding: 0.58rem 0.72rem;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
@@ -964,7 +957,7 @@ watch(locale, () => {
 }
 
 .order-card-body {
-  padding: 0.55rem 0.85rem;
+  padding: 0.42rem 0.72rem;
   
   .info-row {
     display: flex;
@@ -999,10 +992,28 @@ watch(locale, () => {
       }
     }
   }
+
+  .info-row-compact {
+    border-bottom: none;
+    padding: 0.2rem 0;
+    gap: 10px;
+
+    .value {
+      margin-left: 0;
+      text-align: left;
+      max-width: none;
+    }
+
+    .value:last-child {
+      margin-left: auto;
+      color: var(--secondary-text-color);
+      font-size: 0.82rem;
+    }
+  }
 }
 
 .order-card-footer {
-  padding: 0.6rem 0.85rem;
+  padding: 0.5rem 0.72rem;
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;
