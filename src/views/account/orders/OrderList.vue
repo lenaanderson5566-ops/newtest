@@ -373,54 +373,6 @@ watch(locale, () => {
   margin-bottom: 8px;
 }
 
-.back-label {
-  font-size: 14px;
-  color: var(--secondary-text-color);
-}
-
-
-.dashboard-card {
-  background-color: #fff;
-  border-radius: $border-radius-sm;
-  box-shadow: none;
-  padding: 20px;
-  margin-bottom: 24px;
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-  position: relative;
-  
-  &:hover {
-    box-shadow: none;
-    border-color: rgba(var(--theme-color-rgb), 0.3);
-  }
-  
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    
-    .card-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin: 0;
-    }
-  }
-  
-  .card-body {
-    p {
-      color: rgba(var(--theme-color-rgb), 0.68);
-      margin: 0;
-      line-height: 1.5;
-    }
-  }
-}
-
-.welcome-card {
-  margin-bottom: 24px;
-}
-
-
 .orders-content {
   width: 100%;
 }
@@ -506,12 +458,13 @@ watch(locale, () => {
   table-layout: fixed; 
   
   th, td {
-    padding: 0.5rem 0.45rem;
+    padding: 0.48rem 0.42rem;
     text-align: left;
     white-space: nowrap;
     word-break: normal;
     overflow: hidden;
     text-overflow: ellipsis;
+    vertical-align: middle;
   }
   
   th {
@@ -534,7 +487,7 @@ watch(locale, () => {
   
   tbody tr {
     border-bottom: 1px solid var(--border-color);
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease;
     
     &:hover {
       background-color: rgba(var(--theme-color-rgb), 0.05);
@@ -551,10 +504,12 @@ watch(locale, () => {
   }
   
   .status-badge {
-    display: inline-block;
-    padding: 0.35rem 0.75rem;
-    border-radius: 5px; 
-    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.24rem 0.56rem;
+    border-radius: 999px; 
+    font-size: 0.82rem;
     font-weight: 500;
     
     &.status-pending {
@@ -598,13 +553,13 @@ watch(locale, () => {
       align-items: center;
       gap: 0.25rem;
       justify-content: center;
-      padding: 0.35rem 0.65rem;
-      height: 34px;
-      min-width: 62px;
-      flex: 0 0 62px;
+      padding: 0.3rem 0.48rem;
+      height: 30px;
+      min-width: 56px;
+      flex: 0 0 56px;
       white-space: nowrap;
       border-radius: 6px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -645,7 +600,7 @@ watch(locale, () => {
     table-layout: fixed;
 
     th, td {
-      padding: 0.32rem 0.24rem;
+      padding: 0.28rem 0.22rem;
       line-height: 1.15;
     }
 
@@ -666,7 +621,7 @@ watch(locale, () => {
     }
 
     .status-badge {
-      padding: 0.18rem 0.28rem;
+      padding: 0.16rem 0.24rem;
       line-height: 1.05;
     }
   }
