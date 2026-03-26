@@ -41,11 +41,7 @@
               
               <div class="order-card-body">
                 <div class="order-summary-line">
-                  <span class="value">{{ formatCycle(order.period) }}</span>
-                  <span class="separator">·</span>
-                  <span class="value amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</span>
-                  <span class="separator">·</span>
-                  <span class="value time">{{ formatDate(order.created_at) }}</span>
+                  {{ formatCycle(order.period) }} · {{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }} · {{ formatDate(order.created_at) }}
                 </div>
               </div>
               
@@ -960,77 +956,16 @@ watch(locale, () => {
 
 .order-card-body {
   padding: 0.42rem 0.72rem;
-  
-  .info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: nowrap;
-    padding: 0.35rem 0;
-    border-bottom: 1px solid rgba(var(--border-color-rgb), 0.5);
-    
-    &:last-child {
-      border-bottom: none;
-    }
-    
-    .label {
-      color: rgba(var(--theme-color-rgb), 0.68);
-      font-size: 0.9rem;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    
-    .value {
-      font-size: 0.9rem;
-      text-align: right;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-left: 10px;
-      
-      &.amount {
-        font-weight: 600;
-        color: var(--order-tone-strong);
-      }
-    }
-  }
 
   .order-summary-line {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
+    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 0.2rem 0;
+    padding: 0.16rem 0;
     font-size: 0.85rem;
-
-    .separator {
-      color: var(--secondary-text-color);
-      flex: 0 0 auto;
-    }
-
-    .value {
-      margin-left: 0;
-      text-align: left;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
-      flex: 0 1 auto;
-    }
-
-    .value.amount {
-      font-weight: 600;
-      color: var(--order-tone-strong);
-    }
-
-    .value.time {
-      color: var(--secondary-text-color);
-      font-size: 0.82rem;
-      margin-left: auto;
-      flex: 0 1 45%;
-      text-align: right;
-    }
+    line-height: 1.2;
+    color: var(--text-color);
   }
 }
 
