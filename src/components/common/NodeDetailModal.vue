@@ -983,7 +983,7 @@ watchEffect(() => {
 
       &.high-rate {
 
-        color: #ff6b6b;
+        color: var(--error-color);
 
       }
 

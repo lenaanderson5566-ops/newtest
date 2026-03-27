@@ -2185,7 +2185,7 @@ export default {
 
 .required {
 
-  color: #ff4d4f;
+  color: var(--error-color);
 
   margin-left: 4px;
 

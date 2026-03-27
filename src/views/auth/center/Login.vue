@@ -639,7 +639,7 @@ export default {
 
 .required {
 
-  color: #ff4d4f;
+  color: var(--error-color);
 
   margin-left: 4px;
 
@@ -979,7 +979,7 @@ export default {
 
   display: block;
 
-  color: #ff4d4f;
+  color: var(--error-color);
 
   font-size: $font-size-xs;
 

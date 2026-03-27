@@ -614,7 +614,7 @@ onMounted(() => {
 
       .quick-btn.danger {
         border-color: rgba(239, 68, 68, 0.35);
-        color: #dc2626;
+        color: var(--error-color);
         background: rgba(239, 68, 68, 0.08);
       }
     }

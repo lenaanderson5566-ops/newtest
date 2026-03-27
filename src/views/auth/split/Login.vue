@@ -580,7 +580,7 @@ export default {
 }
 
 .required {
-  color: #ff4d4f;
+  color: var(--error-color);
   margin-left: 4px;
   font-size: $font-size-md;
   vertical-align: middle;
@@ -750,7 +750,7 @@ export default {
 
 .error-message {
   display: block;
-  color: #ff4d4f;
+  color: var(--error-color);
   font-size: $font-size-xs;
   margin-top: 0.3rem;
 }

@@ -538,7 +538,7 @@ onMounted(fetchUserStatus);
   }
 
   .recommend-inline {
-    color: #f08c2e;
+    color: var(--warning-color);
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     line-height: 1;
@@ -581,7 +581,7 @@ onMounted(fetchUserStatus);
 .help-btn {
   border: 1px solid var(--border-color);
   background: #fff;
-  color: #3f72e8;
+  color: var(--info-color);
   border-radius: 8px;
   padding: 8px 14px;
   cursor: pointer;

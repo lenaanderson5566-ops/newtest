@@ -2163,7 +2163,7 @@ onMounted(() => {
 
           &.highlight {
 
-            color: #f44336;
+            color: var(--error-color);
 
           }
 
@@ -2297,7 +2297,7 @@ onMounted(() => {
 
           background-color: rgba(244, 67, 54, 0.1);
 
-          color: #f44336;
+          color: var(--error-color);
 
           border-color: rgba(244, 67, 54, 0.2);
 
@@ -2871,7 +2871,7 @@ onMounted(() => {
 
       margin-top: 6px;
 
-      color: #f44336;
+      color: var(--error-color);
 
       font-size: $font-size-sm;
 
@@ -2969,7 +2969,7 @@ onMounted(() => {
 
       &.danger {
 
-        background-color: #f44336;
+        background-color: var(--error-color);
 
 
 

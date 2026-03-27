@@ -1108,7 +1108,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 .error-text {
   margin-top: 6px;
-  color: #f44336;
+  color: var(--error-color);
   font-size: $font-size-sm;
 }
 

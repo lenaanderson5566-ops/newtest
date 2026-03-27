@@ -2150,7 +2150,7 @@ export default {
       font-size: $font-size-sm;
 
       &.error {
-        color: #dc2626;
+        color: var(--error-color);
       }
     }
 

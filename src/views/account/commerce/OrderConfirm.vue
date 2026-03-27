@@ -1243,7 +1243,7 @@ export default {
     .alert-icon {
       margin-right: 14px;
 
-      color: #ff9800;
+      color: var(--warning-color);
 
       flex-shrink: 0;
 
@@ -1282,7 +1282,7 @@ export default {
 
         margin: 0 0 6px 0;
 
-        color: #ff9800;
+        color: var(--warning-color);
 
         letter-spacing: 0.2px;
       }
@@ -1442,7 +1442,7 @@ export default {
 
           border-color: rgba(76, 175, 80, 0.1);
 
-          color: #4caf50;
+          color: var(--success-color);
         }
 
         &.stock-warning {
@@ -1450,7 +1450,7 @@ export default {
 
           border-color: rgba(255, 152, 0, 0.1);
 
-          color: #ff9800;
+          color: var(--warning-color);
         }
 
         &.stock-danger {
@@ -1458,7 +1458,7 @@ export default {
 
           border-color: rgba(244, 67, 54, 0.1);
 
-          color: #f44336;
+          color: var(--error-color);
         }
 
         .badge-icon {
@@ -1667,7 +1667,7 @@ export default {
           text-align: center;
 
           .discount-tag {
-            background-color: #ff4d4f;
+            background-color: var(--error-color);
             color: var(--text-on-dark-primary);
             font-size: $font-size-sm;
             padding: 2px 4px;
@@ -1897,7 +1897,7 @@ export default {
     }
 
     .coupon-discount-value {
-      color: #22c55e;
+      color: var(--success-color);
       font-size: $font-size-sm;
       font-weight: $font-weight-semibold;
       white-space: nowrap;
@@ -1910,7 +1910,7 @@ export default {
     line-height: 1.4;
 
     &.error {
-      color: #ef4444;
+      color: var(--error-color);
     }
   }
 
@@ -1976,7 +1976,7 @@ export default {
         color: var(--text-primary);
 
         &.discount {
-          color: #f44336;
+          color: var(--error-color);
 
           font-weight: $font-weight-semibold;
         }
@@ -2117,7 +2117,7 @@ export default {
   }
 
   .order-summary-section .summary-row .summary-value.discount {
-    color: #f44336;
+    color: var(--error-color);
   }
 
   .order-summary-section .summary-row.total .summary-label,

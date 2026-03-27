@@ -1214,7 +1214,7 @@ export default {
 
             border-color: rgba(76, 175, 80, 0.1);
 
-            color: #4caf50;
+            color: var(--success-color);
           }
 
           &.stock-warning {
@@ -1222,7 +1222,7 @@ export default {
 
             border-color: rgba(255, 152, 0, 0.1);
 
-            color: #ff9800;
+            color: var(--warning-color);
           }
 
           &.stock-danger {
@@ -1230,7 +1230,7 @@ export default {
 
             border-color: rgba(244, 67, 54, 0.1);
 
-            color: #f44336;
+            color: var(--error-color);
           }
         }
 
@@ -1589,7 +1589,7 @@ export default {
 
               border-color: rgba(76, 175, 80, 0.1);
 
-              color: #4caf50;
+              color: var(--success-color);
             }
 
             &.stock-warning {
@@ -1597,7 +1597,7 @@ export default {
 
               border-color: rgba(255, 152, 0, 0.1);
 
-              color: #ff9800;
+              color: var(--warning-color);
             }
 
             &.stock-danger {
@@ -1605,7 +1605,7 @@ export default {
 
               border-color: rgba(244, 67, 54, 0.1);
 
-              color: #f44336;
+              color: var(--error-color);
             }
           }
 

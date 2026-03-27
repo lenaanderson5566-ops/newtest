@@ -1049,7 +1049,7 @@ fetchTickets();
       &.status-0 {
         background-color: rgba(76, 175, 80, 0.1);
 
-        color: #4caf50;
+        color: var(--success-color);
       }
 
       &.status-1 {
@@ -1201,7 +1201,7 @@ fetchTickets();
 
     border: none;
 
-    color: #f44336;
+    color: var(--error-color);
 
     padding: 0.5rem;
 
@@ -1240,7 +1240,7 @@ fetchTickets();
   &.status-0 {
     background-color: rgba(76, 175, 80, 0.1);
 
-    color: #4caf50;
+    color: var(--success-color);
   }
 
   &.status-1 {
@@ -1254,19 +1254,19 @@ fetchTickets();
   &.level-0 {
     background-color: rgba(33, 150, 243, 0.1);
 
-    color: #2196f3;
+    color: var(--info-color);
   }
 
   &.level-1 {
     background-color: rgba(255, 152, 0, 0.1);
 
-    color: #ff9800;
+    color: var(--warning-color);
   }
 
   &.level-2 {
     background-color: rgba(244, 67, 54, 0.1);
 
-    color: #f44336;
+    color: var(--error-color);
   }
 }
 
@@ -1395,7 +1395,7 @@ fetchTickets();
     }
 
     .message-avatar {
-      background-color: #f44336;
+      background-color: var(--error-color);
     }
   }
 
@@ -2167,7 +2167,7 @@ fetchTickets();
 }
 
 .confirm-close-btn.danger {
-  background-color: #f44336;
+  background-color: var(--error-color);
 
   color: var(--text-on-dark-primary);
 
@@ -2281,7 +2281,7 @@ fetchTickets();
 .uploaded-image-thumb img:hover {
   box-shadow: none;
 
-  border-color: #2196f3;
+  border-color: var(--info-color);
 }
 
 @media (prefers-color-scheme: dark) {

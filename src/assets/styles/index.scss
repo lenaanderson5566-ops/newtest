@@ -150,7 +150,7 @@
 }
 
 .payment-container .section-wrapper .info-row.discount-row .discount {
-  color: #f44336;
+  color: var(--error-color);
 }
 
 .payment-container .section-wrapper .info-row.highlight-row .amount {
@@ -252,7 +252,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ff9800;
+  color: var(--warning-color);
 }
 
 .pending-order-modal .pending-order-header {
@@ -312,7 +312,7 @@
 .pending-order-modal .pending-order-actions .btn-confirm-cancel {
   background: #ff4d4f;
   color: var(--text-on-dark-primary);
-  border-color: #ff4d4f;
+  border-color: var(--error-color);
 
   &:hover:not(:disabled) {
     background: #ff7875;

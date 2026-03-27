@@ -1202,7 +1202,7 @@ onUnmounted(() => {
 .status-open {
   background-color: rgba(76, 175, 80, 0.1);
 
-  color: #4caf50;
+  color: var(--success-color);
 }
 
 .status-closed {
@@ -1214,19 +1214,19 @@ onUnmounted(() => {
 .level-low {
   background-color: rgba(33, 150, 243, 0.1);
 
-  color: #2196f3;
+  color: var(--info-color);
 }
 
 .level-medium {
   background-color: rgba(255, 152, 0, 0.1);
 
-  color: #ff9800;
+  color: var(--warning-color);
 }
 
 .level-high {
   background-color: rgba(244, 67, 54, 0.1);
 
-  color: #f44336;
+  color: var(--error-color);
 }
 
 .ticket-content {
@@ -1290,7 +1290,7 @@ onUnmounted(() => {
 
       background-color: rgba(244, 67, 54, 0.1);
 
-      color: #f44336;
+      color: var(--error-color);
 
       border: none;
 
@@ -2019,7 +2019,7 @@ onUnmounted(() => {
             border-color: rgba(33, 150, 243, 0.3);
 
             .tag-icon {
-              color: #2196f3;
+              color: var(--info-color);
             }
           }
 
@@ -2029,7 +2029,7 @@ onUnmounted(() => {
             border-color: rgba(255, 152, 0, 0.3);
 
             .tag-icon {
-              color: #ff9800;
+              color: var(--warning-color);
             }
           }
 
@@ -2039,7 +2039,7 @@ onUnmounted(() => {
             border-color: rgba(244, 67, 54, 0.3);
 
             .tag-icon {
-              color: #f44336;
+              color: var(--error-color);
             }
           }
         }
@@ -2379,10 +2379,10 @@ onUnmounted(() => {
     .upload-method {
       display: block;
       font-size: $font-size-sm;
-      color: #2196f3;
+      color: var(--info-color);
       margin-top: 2px;
       a {
-        color: #2196f3;
+        color: var(--info-color);
         text-decoration: underline;
       }
     }
