@@ -1427,7 +1427,7 @@ export default {
   .subscription-intro-section {
     border-radius: $border-radius-sm;
     border: 1px solid rgba(var(--text-color-rgb), 0.08);
-    background: rgba(var(--card-background-rgb, 255, 255, 255), 0.85);
+    background: transparent;
     padding: 14px;
     margin-bottom: 16px;
   }
@@ -1455,9 +1455,12 @@ export default {
 
     &.active {
       border-color: rgba(var(--theme-color-rgb), 0.68);
-      color: var(--text-primary);
-      background: var(--background-color);
+      color: var(--text-on-dark-primary);
     }
+
+    &.active.tone-1 { background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%); }
+    &.active.tone-2 { background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%); }
+    &.active.tone-3 { background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%); }
   }
 
   .selector-current-badge {
