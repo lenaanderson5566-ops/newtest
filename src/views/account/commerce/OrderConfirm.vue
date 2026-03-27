@@ -20,6 +20,9 @@
           </div>
 
           <div class="section-wrapper subscription-intro-section" v-else-if="plan">
+            <div class="section-title">
+              <span>选择订阅计划</span>
+            </div>
             <div class="plan-selector-grid">
               <button
                 v-for="(item, idx) in displayPlanOptions"
@@ -1439,7 +1442,7 @@ export default {
     position: relative;
     border: 1px solid var(--border-color);
     border-radius: 14px;
-    background: var(--card-background);
+    background: transparent;
     min-height: 110px;
     padding: 12px;
     text-align: left;
@@ -1452,12 +1455,9 @@ export default {
 
     &.active {
       border-color: rgba(var(--theme-color-rgb), 0.68);
-      color: var(--text-on-dark-primary);
+      color: var(--text-primary);
+      background: var(--background-color);
     }
-
-    &.active.tone-1 { background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%); }
-    &.active.tone-2 { background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%); }
-    &.active.tone-3 { background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%); }
   }
 
   .selector-current-badge {
@@ -2066,7 +2066,7 @@ export default {
       transition: border-color 0.2s ease, background-color 0.2s ease;
       border: none;
       border-top: 1px solid rgba(148, 163, 184, 0.32);
-      background-color: rgba(255, 255, 255, 0.95);
+      background-color: transparent;
 
       &:hover {
         border-color: rgba(var(--theme-color-rgb), 0.42);
