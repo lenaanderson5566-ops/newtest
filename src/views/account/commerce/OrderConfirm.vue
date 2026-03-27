@@ -253,7 +253,7 @@
 
                   <span v-else class="loader"></span>
 
-                  <span>立即支付</span>
+                  <span>{{ totalWithFee <= 0 ? $t("payment.free_activate") : "立即支付" }}</span>
                 </button>
               </div>
             </div>
