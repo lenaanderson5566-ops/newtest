@@ -91,33 +91,44 @@
             <div class="section-title">
               <span>{{ $t("payment.payment_method") }}</span>
             </div>
-            <div class="payment-method-selection">
-              <div v-if="loading.methods" class="skeleton-method-cards">
-                <div
-                  class="skeleton-method-card"
-                  v-for="i in 2"
-                  :key="'skeleton-method-' + i"
-                ></div>
-              </div>
-              <div v-else class="method-cards">
-                <button
-                  v-for="method in paymentMethods"
-                  :key="`payment-method-${method.id}`"
-                  type="button"
-                  class="method-card"
-                  :class="{ active: Number(selectedMethod) === Number(method.id) }"
-                  @click="selectPaymentMethod(method.id)"
-                >
+            <div class="payment-methods" v-if="!loading.methods">
+              <button
+                class="payment-method-item"
+                type="button"
+                v-for="method in paymentMethods"
+                :key="`payment-method-${method.id}`"
+                :class="{ active: Number(selectedMethod) === Number(method.id) }"
+                @click="selectPaymentMethod(method.id)"
+              >
+                <div class="method-check left-check">
+                  <IconCircleCheck
+                    v-if="Number(selectedMethod) === Number(method.id)"
+                    :size="22"
+                  />
+                  <IconCircle v-else :size="20" />
+                </div>
+                <div class="method-details">
                   <span class="method-name">{{ method.name }}</span>
-                  <span class="method-fee" v-if="method.handling_fee_fixed || method.handling_fee_percent">
-                    {{
-                      method.handling_fee_fixed
-                        ? `${displayCurrency} ${(Number(method.handling_fee_fixed) / 100).toFixed(2)}`
-                        : `${method.handling_fee_percent}%`
-                    }}
+                  <span
+                    class="method-fee"
+                    v-if="method.handling_fee_percent || method.handling_fee_fixed"
+                  >
+                    {{ formatMethodFee(method) }}
                   </span>
-                </button>
-              </div>
+                </div>
+                <div class="method-icon right-icon">
+                  <IconCreditCard v-if="!method.icon" :size="26" />
+                  <img v-else :src="method.icon" :alt="method.name" />
+                </div>
+              </button>
+              <div class="payment-security-note">安全支付 · 实时到账</div>
+            </div>
+            <div class="skeleton-card methods-skeleton" v-else>
+              <div
+                class="skeleton-payment-method"
+                v-for="i in 2"
+                :key="'method-' + i"
+              ></div>
             </div>
           </div>
 
@@ -317,6 +328,9 @@ import {
   IconDiscount2,
   IconArrowLeft,
   IconAlertTriangle,
+  IconCircleCheck,
+  IconCircle,
+  IconCreditCard,
 } from "@tabler/icons-vue";
 
 export default {
@@ -336,6 +350,12 @@ export default {
     IconArrowLeft,
 
     IconAlertTriangle,
+
+    IconCircleCheck,
+
+    IconCircle,
+
+    IconCreditCard,
   },
 
   setup() {
@@ -614,6 +634,19 @@ export default {
 
     const selectPaymentMethod = (methodId) => {
       selectedMethod.value = methodId;
+    };
+
+    const formatMethodFee = (method) => {
+      if (!method) return "";
+      const fixed = Number(method.handling_fee_fixed || 0);
+      const percent = Number(method.handling_fee_percent || 0);
+      if (fixed > 0) {
+        return `${t("payment.fee")}: ${displayCurrency.value} ${(fixed / 100).toFixed(2)}`;
+      }
+      if (percent > 0) {
+        return `${t("payment.fee")}: ${percent}%`;
+      }
+      return "";
     };
 
     const getPeriodMonthCount = (type) => {
@@ -1190,6 +1223,7 @@ export default {
       selectPriceType,
       selectPlanOption,
       selectPaymentMethod,
+      formatMethodFee,
       isCurrentPlanOption,
       showPeriodDiscountTag,
       getPeriodDiscountPercent,
@@ -1983,53 +2017,114 @@ export default {
     }
   }
 
-  .payment-method-selection {
-    .skeleton-method-cards {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+  .payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 
-      .skeleton-method-card {
-        height: 72px;
-        border-radius: 12px;
-        background: rgba(148, 163, 184, 0.15);
-      }
-    }
-
-    .method-cards {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .method-card {
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      background: var(--card-background);
-      padding: 14px 12px;
+    .payment-method-item {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 8px;
-      text-align: left;
+      padding: 10px 12px;
+      min-height: 38px;
+      border-radius: 0;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+      border: none;
+      border-top: 1px solid rgba(148, 163, 184, 0.32);
+      background-color: rgba(255, 255, 255, 0.95);
+
+      &:hover {
+        border-color: rgba(var(--theme-color-rgb), 0.42);
+        background-color: rgba(var(--theme-color-rgb), 0.08);
+      }
 
       &.active {
         border-color: var(--theme-color);
-        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+        background-color: rgba(var(--theme-color-rgb), 0.14);
+        box-shadow: none;
+      }
+
+      .method-check {
+        width: 22px;
+        height: 22px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--theme-color);
+        flex-shrink: 0;
+
+        &.left-check {
+          margin-right: 2px;
+        }
+      }
+
+      .method-icon {
+        width: auto;
+        min-width: 64px;
+        max-width: 42%;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        color: var(--theme-color);
+        flex-shrink: 0;
+
+        &.right-icon {
+          margin-left: auto;
+        }
+
+        img {
+          width: auto;
+          max-width: 100%;
+          max-height: 24px;
+          object-fit: contain;
+          display: block;
+        }
+      }
+
+      .method-details {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        .method-name {
+          font-weight: $font-weight-semibold;
+          color: var(--text-primary);
+          line-height: 1.2;
+        }
+
+        .method-fee {
+          font-size: $font-size-sm;
+          color: var(--text-tertiary);
+          white-space: nowrap;
+        }
       }
     }
 
-    .method-name {
-      font-size: $font-size-md;
-      color: var(--text-primary);
-      font-weight: $font-weight-semibold;
-      line-height: 1.35;
-    }
-
-    .method-fee {
+    .payment-security-note {
+      padding: 6px 12px 8px;
+      border-top: 1px solid var(--border-color);
       font-size: $font-size-sm;
       color: var(--text-tertiary);
+      line-height: 1.4;
+      background: #fff;
+    }
+  }
+
+  .methods-skeleton {
+    .skeleton-payment-method {
+      height: 42px;
+      border-radius: 6px;
+      background: rgba(148, 163, 184, 0.16);
+      margin-bottom: 8px;
+    }
+
+    .skeleton-payment-method:last-child {
+      margin-bottom: 0;
     }
   }
 
@@ -2697,10 +2792,6 @@ export default {
       }
     }
 
-    .payment-method-selection .method-cards,
-    .payment-method-selection .skeleton-method-cards {
-      grid-template-columns: 1fr;
-    }
   }
 }
 
