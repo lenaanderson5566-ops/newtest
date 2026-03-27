@@ -1652,13 +1652,13 @@ export default {
         }
 
         .currency {
-          font-size: $font-size-xl;
+          font-size: $font-size-3xl;
           font-weight: $font-weight-medium;
           color: color-mix(in srgb, var(--text-primary) 72%, var(--text-tertiary) 28%);
         }
 
         .amount {
-          font-size: $font-size-xl;
+          font-size: $font-size-3xl;
           line-height: 0.95;
           font-weight: $font-weight-bold;
           color: var(--text-primary);
@@ -1768,7 +1768,7 @@ export default {
         }
 
         span {
-          font-size: $font-size-md;
+          font-size: $font-size-sm;
 
           color: var(--text-primary);
 
@@ -1787,7 +1787,7 @@ export default {
       }
 
       .html-content {
-        font-size: $font-size-md;
+        font-size: $font-size-sm;
 
         line-height: 1.6;
 
@@ -1810,7 +1810,7 @@ export default {
     color: var(--text-on-dark-primary);
     border: 1px solid transparent;
     border-radius: 10px;
-    font-size: $font-size-md;
+    font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     cursor: pointer;
     transition: all 0.25s ease;
@@ -2139,7 +2139,7 @@ export default {
       }
 
       .chip-name {
-        font-size: $font-size-md;
+        font-size: $font-size-lg;
         font-weight: $font-weight-bold;
       }
 
