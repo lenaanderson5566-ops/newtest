@@ -461,7 +461,8 @@ export default {
 
 
 .app-content-wrapper.with-top-bar {
-  height: calc(100vh - var(--app-top-bar-height, 56px) - var(--page-content-top-gap, 8px));
+  height: 100vh;
+  box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior-y: contain;
