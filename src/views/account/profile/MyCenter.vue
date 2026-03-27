@@ -592,11 +592,15 @@ onMounted(async () => {
   padding: 12px 16px;
   border: none;
   background: transparent;
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   cursor: pointer;
   white-space: nowrap;
+
+  &:hover {
+    color: var(--text-quaternary);
+  }
 
   &.active {
     color: var(--text-primary);
