@@ -106,14 +106,26 @@
                     :class="primaryActionClass"
                     @click="handlePrimaryPlanAction"
                   >
-                    {{ primaryPlanActionLabel }}
+                    <span class="plan-action-content">
+                      <IconPackage v-if="isManageAction(primaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconCalendarPlus v-else-if="isRenewAction(primaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconShoppingBag v-else-if="isReselectAction(primaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconChevronRight v-else :size="14" class="plan-action-icon" />
+                      <span>{{ primaryPlanActionLabel }}</span>
+                    </span>
                   </button>
                   <button
                     class="plan-action-btn btn"
                     :class="secondaryActionClass"
                     @click="handleSecondaryPlanAction"
                   >
-                    {{ secondaryPlanActionLabel }}
+                    <span class="plan-action-content">
+                      <IconPackage v-if="isManageAction(secondaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconCalendarPlus v-else-if="isRenewAction(secondaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconShoppingBag v-else-if="isReselectAction(secondaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconChevronRight v-else :size="14" class="plan-action-icon" />
+                      <span>{{ secondaryPlanActionLabel }}</span>
+                    </span>
                   </button>
                 </div>
                 <div v-if="isPlanExpired" class="plan-action-helper-text">
@@ -577,6 +589,10 @@ export default {
       if (secondaryPlanActionLabel.value === t('dashboard.planAction.renew')) return 'btn-primary';
       return 'btn-secondary';
     });
+    const isManageAction = (label) => label === t('dashboard.planAction.manageSubscription');
+    const isRenewAction = (label) =>
+      [t('dashboard.planAction.renewNow'), t('dashboard.planAction.renew'), t('dashboard.planAction.restoreNow')].includes(label);
+    const isReselectAction = (label) => label === t('dashboard.planAction.reselectPlan');
 
     const handlePrimaryPlanAction = () => {
       if (subscriptionStatus.value === 'active') {
@@ -1281,6 +1297,9 @@ export default {
       subscriptionTrafficSummary,
       primaryActionClass,
       secondaryActionClass,
+      isManageAction,
+      isRenewAction,
+      isReselectAction,
       handlePrimaryPlanAction,
       handleSecondaryPlanAction,
       hasPlan,
@@ -1716,6 +1735,18 @@ export default {
               @media (max-width: 576px) {
                 padding: 9px 10px;
                 font-size: $font-size-sm;
+              }
+
+              .plan-action-content {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                width: 100%;
+              }
+
+              .plan-action-icon {
+                flex-shrink: 0;
               }
             }
           }
