@@ -22,9 +22,9 @@
   --global-card-gap: 14px;
   --page-content-max-width: 1120px;
   --page-stack-gap: var(--global-card-gap);
-  --view-font-size-base: 14px;
-  --view-font-size-small: 13px;
-  --view-font-size-title: 16px;
+  --view-font-size-base: #{$font-size-sm};
+  --view-font-size-small: #{$font-size-xs};
+  --view-font-size-title: #{$font-size-md};
   --view-line-height-base: 1.45;
 }
 
