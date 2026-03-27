@@ -1913,6 +1913,20 @@ export default {
         min-height: auto;
         height: auto;
         z-index: 8;
+        background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+
+        .usage-card-title,
+        .usage-percent,
+        .usage-percent-label {
+          color: var(--text-on-dark-primary);
+        }
+
+        .package-add-btn {
+          background: rgba(255, 255, 255, 0.2);
+          border: 1px solid rgba(255, 255, 255, 0.28);
+          color: var(--text-on-dark-primary);
+        }
       }
 
       &.traffic-board-total {
