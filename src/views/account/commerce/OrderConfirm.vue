@@ -2456,11 +2456,25 @@ export default {
       padding: 15px;
 
       .card-header .card-title {
-        font-size: $font-size-md;
+        font-size: $font-size-lg;
       }
 
       .card-body p {
         font-size: $font-size-sm;
+      }
+
+      .card-body {
+        .plan-features {
+          .feature-item {
+            span {
+              font-size: $font-size-sm;
+            }
+          }
+
+          .html-content {
+            font-size: $font-size-sm;
+          }
+        }
       }
     }
 

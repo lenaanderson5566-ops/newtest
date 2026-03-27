@@ -769,7 +769,7 @@ profile: {
         subtotal: 'Subtotal',
         discount: 'Discount',
         total: 'Total',
-        back_to_shop: 'Back to Shop',
+        back_to_shop: 'Reselect',
         place_order: 'Place Order',
         order_success: 'Order created successfully',
         order_failed: 'Failed to create order',

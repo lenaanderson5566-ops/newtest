@@ -769,7 +769,7 @@ profile: {
         subtotal: '小计',
         discount: '优惠',
         total: '总计',
-        back_to_shop: '返回套餐',
+        back_to_shop: '重新选择',
         place_order: '确认订单',
         order_success: '订单创建成功',
         order_failed: '订单创建失败',
