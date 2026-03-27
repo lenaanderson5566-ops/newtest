@@ -1439,44 +1439,47 @@ export default {
   .plan-selector-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
+    gap: 15px;
   }
 
   .plan-selector-btn {
     position: relative;
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    background: transparent;
-    min-height: 110px;
-    padding: 12px;
-    text-align: left;
+    border: 2px solid var(--border-color);
+    border-radius: $border-radius-sm;
+    background: #ffffff;
+    min-height: 90px;
+    padding: 16px 12px;
+    text-align: center;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: center;
     color: var(--text-primary);
     cursor: pointer;
-    transition: all 0.22s ease;
+    transition: all 0.3s ease;
+    box-shadow: none;
 
     &.active {
-      border-color: rgba(var(--theme-color-rgb), 0.68);
-      color: var(--text-on-dark-primary);
+      border-color: var(--theme-color);
+      transform: translateY(-3px);
+      color: var(--theme-color);
     }
 
-    &.active.tone-1 { background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%); }
-    &.active.tone-2 { background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%); }
-    &.active.tone-3 { background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%); }
+    &:hover:not(.active) {
+      transform: translateY(-3px);
+      border-color: rgba(var(--theme-color-rgb), 0.3);
+    }
   }
 
   .selector-current-badge {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    border-radius: 14px 14px 0 0;
-    background: #222;
-    color: var(--text-on-dark-primary);
-    font-size: $font-size-sm;
+    top: 8px;
+    right: 8px;
+    height: 20px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: rgba(var(--theme-color-rgb), 0.12);
+    color: var(--theme-color);
+    font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
     display: inline-flex;
     align-items: center;
@@ -1484,7 +1487,7 @@ export default {
   }
 
   .selector-name {
-    margin-top: 30px;
+    margin-top: 0;
     font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
     line-height: 1.2;
@@ -2708,22 +2711,23 @@ export default {
     }
 
     .plan-selector-grid {
-      gap: 8px;
+      gap: 12px;
     }
 
     .plan-selector-btn {
-      min-height: 96px;
-      padding: 10px;
+      min-height: 84px;
+      padding: 12px 8px;
     }
 
     .selector-current-badge {
-      height: 28px;
+      height: 18px;
+      top: 6px;
+      right: 6px;
       font-size: $font-size-xs;
     }
 
     .selector-name {
-      margin-top: 28px;
-      font-size: $font-size-lg;
+      font-size: $font-size-md;
     }
 
     .content-wrapper {
