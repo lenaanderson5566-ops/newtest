@@ -87,6 +87,40 @@
             </div>
           </div>
 
+          <div class="section-wrapper payment-methods-section" v-if="!loading.plan">
+            <div class="section-title">
+              <span>{{ $t("payment.payment_method") }}</span>
+            </div>
+            <div class="payment-method-selection">
+              <div v-if="loading.methods" class="skeleton-method-cards">
+                <div
+                  class="skeleton-method-card"
+                  v-for="i in 2"
+                  :key="'skeleton-method-' + i"
+                ></div>
+              </div>
+              <div v-else class="method-cards">
+                <button
+                  v-for="method in paymentMethods"
+                  :key="`payment-method-${method.id}`"
+                  type="button"
+                  class="method-card"
+                  :class="{ active: Number(selectedMethod) === Number(method.id) }"
+                  @click="selectPaymentMethod(method.id)"
+                >
+                  <span class="method-name">{{ method.name }}</span>
+                  <span class="method-fee" v-if="method.handling_fee_fixed || method.handling_fee_percent">
+                    {{
+                      method.handling_fee_fixed
+                        ? `${displayCurrency} ${(Number(method.handling_fee_fixed) / 100).toFixed(2)}`
+                        : `${method.handling_fee_percent}%`
+                    }}
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <!-- 周期选择骨架屏 -->
 
           <div class="section-wrapper period-section" v-else>
@@ -197,14 +231,18 @@
                   class="btn-order summary-submit-action"
                   @click="submitOrder"
                   :disabled="
-                    !selectedPriceType || loading.submitting || loading.plan
+                    !selectedPriceType ||
+                    loading.submitting ||
+                    loading.paying ||
+                    loading.plan ||
+                    !selectedMethod
                   "
                 >
-                  <IconShoppingCart v-if="!loading.submitting" :size="18" />
+                  <IconShoppingCart v-if="!loading.submitting && !loading.paying" :size="18" />
 
                   <span v-else class="loader"></span>
 
-                  <span>{{ $t("order.place_order") }}</span>
+                  <span>立即支付</span>
                 </button>
               </div>
             </div>
@@ -261,9 +299,11 @@ import {
   getCommConfig,
   fetchPlans,
   fetchPlanById,
+  getPaymentMethods,
   verifyCoupon as checkCoupon,
   submitOrder as createOrder,
   cancelOrder as cancelExistingOrder,
+  checkoutOrder,
 } from "@/api/account/shop";
 
 import { getUserInfo } from "@/api/overview/dashboard";
@@ -311,8 +351,10 @@ export default {
       plan: true,
 
       userInfo: true,
+      methods: false,
 
       submitting: false,
+      paying: false,
       cancellingExisting: false,
     });
 
@@ -367,6 +409,8 @@ export default {
     const showPendingOrderModal = ref(false);
 
     const pendingOrderTradeNo = ref("");
+    const paymentMethods = ref([]);
+    const selectedMethod = ref(null);
 
     const discountPercent = ref(0);
 
@@ -566,6 +610,10 @@ export default {
       const firstValidPriceType = Object.keys(availablePrices.value)[0];
       selectedPriceType.value = firstValidPriceType || "";
       removeCoupon({ silent: true });
+    };
+
+    const selectPaymentMethod = (methodId) => {
+      selectedMethod.value = methodId;
     };
 
     const getPeriodMonthCount = (type) => {
@@ -800,8 +848,57 @@ export default {
 
     const submitOrder = async () => {
       if (!selectedPriceType.value || loading.submitting || loading.cancellingExisting) return;
+      if (!selectedMethod.value) {
+        showToast(t("payment.select_method_first"), "warning");
+        return;
+      }
 
       await executeOrderSubmission();
+    };
+
+    const openExternalPaymentLink = (paymentLink) => {
+      if (!paymentLink) return;
+      const tempLink = document.createElement("a");
+      tempLink.href = paymentLink;
+      tempLink.target = "_blank";
+      tempLink.rel = "noopener noreferrer";
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+    };
+
+    const checkoutTradeNo = async (tradeNo) => {
+      if (!tradeNo) return;
+      loading.paying = true;
+      try {
+        const checkoutResp = await checkoutOrder(tradeNo, selectedMethod.value);
+        if (!checkoutResp?.data) {
+          showToast(checkoutResp?.message || t("payment.check_failed"), "error");
+          return;
+        }
+
+        if (checkoutResp.type === 1) {
+          openExternalPaymentLink(checkoutResp.data);
+          showToast(t("payment.payment_processing"), "info");
+          return;
+        }
+
+        showToast(t("payment.scan_qrcode"), "info");
+        router.push({
+          path: "/payment",
+          query: { trade_no: tradeNo },
+        });
+      } catch (checkoutError) {
+        console.error("Failed to checkout order:", checkoutError);
+        showToast(
+          checkoutError?.response?.message ||
+            checkoutError?.message ||
+            t("payment.check_failed"),
+          "error"
+        );
+      } finally {
+        loading.paying = false;
+      }
     };
 
     // 实际的订单提交逻辑
@@ -825,14 +922,7 @@ export default {
 
         if (response.data) {
           showToast(response.message || t("order.order_success"), "success");
-
-          router.push({
-            path: "/payment",
-
-            query: {
-              trade_no: response.data,
-            },
-          });
+          await checkoutTradeNo(response.data);
         } else {
           showToast(response.message || t("order.order_failed"), "error");
         }
@@ -848,12 +938,7 @@ export default {
             pendingOrderTradeNo.value = matchedOrder.trade_no || fallbackTradeNo || "";
 
             if (isSameOrderSpecAsCurrentSelection(matchedOrder)) {
-              router.push({
-                path: "/payment",
-                query: {
-                  trade_no: pendingOrderTradeNo.value,
-                },
-              });
+              await checkoutTradeNo(pendingOrderTradeNo.value);
               return;
             }
 
@@ -990,6 +1075,27 @@ export default {
       }
     };
 
+    const fetchAvailablePaymentMethods = async () => {
+      loading.methods = true;
+      try {
+        const response = await getPaymentMethods();
+        if (Array.isArray(response?.data)) {
+          paymentMethods.value = response.data;
+          if (!selectedMethod.value && paymentMethods.value.length > 0) {
+            selectedMethod.value = paymentMethods.value[0].id;
+          }
+        } else {
+          paymentMethods.value = [];
+        }
+      } catch (error) {
+        console.error("Failed to fetch payment methods:", error);
+        paymentMethods.value = [];
+        showToast(t("payment.failed_to_fetch_methods"), "error");
+      } finally {
+        loading.methods = false;
+      }
+    };
+
     const removeCoupon = ({ silent = false } = {}) => {
       const hadCouponState =
         couponApplied.value ||
@@ -1022,7 +1128,12 @@ export default {
       }
     );
     onMounted(async () => {
-      await Promise.all([fetchPlanData(), fetchUserInfo(), fetchConfig()]);
+      await Promise.all([
+        fetchPlanData(),
+        fetchUserInfo(),
+        fetchConfig(),
+        fetchAvailablePaymentMethods(),
+      ]);
     });
 
     return {
@@ -1051,6 +1162,8 @@ export default {
       verifying,
 
       couponInfo,
+      paymentMethods,
+      selectedMethod,
 
       originalPrice,
 
@@ -1076,6 +1189,7 @@ export default {
 
       selectPriceType,
       selectPlanOption,
+      selectPaymentMethod,
       isCurrentPlanOption,
       showPeriodDiscountTag,
       getPeriodDiscountPercent,
@@ -1869,6 +1983,56 @@ export default {
     }
   }
 
+  .payment-method-selection {
+    .skeleton-method-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+
+      .skeleton-method-card {
+        height: 72px;
+        border-radius: 12px;
+        background: rgba(148, 163, 184, 0.15);
+      }
+    }
+
+    .method-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .method-card {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      background: var(--card-background);
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.active {
+        border-color: var(--theme-color);
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+      }
+    }
+
+    .method-name {
+      font-size: $font-size-md;
+      color: var(--text-primary);
+      font-weight: $font-weight-semibold;
+      line-height: 1.35;
+    }
+
+    .method-fee {
+      font-size: $font-size-sm;
+      color: var(--text-tertiary);
+    }
+  }
+
   .order-summary {
     background-color: var(--card-bg-color);
 
@@ -2531,6 +2695,11 @@ export default {
           }
         }
       }
+    }
+
+    .payment-method-selection .method-cards,
+    .payment-method-selection .skeleton-method-cards {
+      grid-template-columns: 1fr;
     }
   }
 }
