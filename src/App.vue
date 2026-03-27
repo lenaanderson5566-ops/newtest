@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="app-root-shell">
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
     <div class="static-layout" v-if="$route.meta.requiresAuth">
-      <div class="top-fixed-bar">
+      <div class="top-fixed-bar" ref="topFixedBarRef">
         <!-- 网站名称 -->
         <div class="site-logo">
           <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
@@ -36,7 +36,10 @@
     </div>
 
     <!-- 路由视图只对内容部分应用过渡效果 -->
-    <div :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]">
+    <div
+      ref="appContentWrapperRef"
+      :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]"
+    >
       <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
         <router-view v-slot="{ Component, route }">
           <transition
@@ -74,7 +77,7 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue';
+import { onMounted, onUnmounted, ref, computed, provide, watch, nextTick } from 'vue';
 import { useAppStore } from '@/store';
 import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
@@ -118,6 +121,9 @@ export default {
     const { showToast } = useToast();
     const siteConfig = ref(SITE_CONFIG);
     const cachedRoutes = computed(() => pageCache.getCachedRoutes());
+    const topFixedBarRef = ref(null);
+    const appContentWrapperRef = ref(null);
+    let topBarResizeObserver = null;
 
     const handleRedirectParam = () => {
       let redirectParam = null;
@@ -208,6 +214,19 @@ export default {
       }
     };
 
+    const syncTopBarHeight = () => {
+      const wrapperEl = appContentWrapperRef.value;
+      if (!wrapperEl) return;
+
+      if (!route.meta.requiresAuth) {
+        wrapperEl.style.setProperty('--app-top-bar-height', '0px');
+        return;
+      }
+
+      const topBarHeight = topFixedBarRef.value?.offsetHeight || 0;
+      wrapperEl.style.setProperty('--app-top-bar-height', `${topBarHeight}px`);
+    };
+
     provide('languageChangedSignal', languageChangedSignal);
 
     const clearCache = () => {
@@ -242,12 +261,39 @@ export default {
       });
 
       handleRedirectParam();
+
+      nextTick(() => {
+        syncTopBarHeight();
+      });
+
+      window.addEventListener('resize', syncTopBarHeight);
+
+      if (typeof window !== 'undefined' && 'ResizeObserver' in window && topFixedBarRef.value) {
+        topBarResizeObserver = new ResizeObserver(() => {
+          syncTopBarHeight();
+        });
+        topBarResizeObserver.observe(topFixedBarRef.value);
+      }
+
     });
 
     onUnmounted(() => {
       window.removeEventListener('languageChanged', onLanguageChanged);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('resize', syncTopBarHeight);
+      topBarResizeObserver?.disconnect();
+      topBarResizeObserver = null;
     });
+
+    watch(
+      () => [route.fullPath, route.meta.requiresAuth],
+      () => {
+        nextTick(() => {
+          syncTopBarHeight();
+        });
+      },
+      { immediate: true }
+    );
 
     return {
       username,
@@ -255,7 +301,9 @@ export default {
       siteConfig,
       PROFILE_CONFIG,
       cachedRoutes,
-      hasUnreadNotice
+      hasUnreadNotice,
+      topFixedBarRef,
+      appContentWrapperRef
     };
   }
 };
@@ -267,6 +315,10 @@ export default {
 @use "@/assets/styles/base/reset.scss" as *;
 @use "@/assets/styles/base/animations.scss" as *;
 @use "@/assets/styles/base/scrollbar.scss" as *;
+
+.app-root-shell {
+  min-height: 100dvh;
+}
 
 
 .card,
@@ -407,7 +459,7 @@ export default {
 
   :deep(.language-btn) {
     min-width: 88px;
-    font-size: $font-size-md;
+    font-size: $font-size-sm;
   }
 }
 
@@ -421,6 +473,7 @@ export default {
 }
 .app-content-wrapper {
   width: 100%;
+  box-sizing: border-box;
   --page-edge-gap: 2px;
   --left-nav-gap: 10px;
   --left-nav-occupy: 220px;
@@ -428,7 +481,8 @@ export default {
 
   &.with-top-bar {
     --page-content-top-gap: 8px;
-    padding-top: calc(56px + env(safe-area-inset-top, 0px) + var(--page-content-top-gap, 8px));
+    --app-top-bar-height: calc(56px + env(safe-area-inset-top, 0px));
+    padding-top: calc(var(--app-top-bar-height, 56px) + var(--page-content-top-gap, 8px));
   }
 
 }
@@ -526,10 +580,6 @@ export default {
     }
   }
 
-  main, .main-content, .content-container {
-    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
-    margin-bottom: 6px !important;
-  }
 }
 
 /* 统一窄屏容器规则：仅最外层保留 2px，内层容器全部归零，最大化可用宽度 */

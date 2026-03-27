@@ -9,7 +9,7 @@
             <div class="section-title with-status">
               <span>订单摘要</span>
               <button
-                v-if="!loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
+                v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
                 class="overview-cancel-btn"
                 @click="cancelCurrentOrder"
                 :disabled="loading.cancelling"
@@ -81,6 +81,7 @@
           <div
             class="section-wrapper payment-methods-section"
             v-if="
+              !resultFromOrderConfirm &&
               !loading.order &&
               orderDetail.status === 0 &&
               orderDetail.total_amount > 0
@@ -214,7 +215,7 @@
 
             <div
               class="order-amount-actions"
-              v-if="!loading.order && orderDetail.status === 0 && !paymentSuccessful && orderDetail.total_amount > 0"
+              v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && !paymentSuccessful && orderDetail.total_amount > 0"
             >
               <button
                 class="btn-pay main-action full-width"
@@ -269,6 +270,7 @@
             <!-- 待支付订单相关按钮 -->
             <template
               v-if="
+                !resultFromOrderConfirm &&
                 !loading.order && orderDetail.status === 0 && !paymentSuccessful
               "
             >
@@ -512,6 +514,7 @@ export default {
     const router = useRouter();
 
     const fromOrderList = ref(false);
+    const resultFromOrderConfirm = ref(false);
 
     const loading = reactive({
       order: true,
@@ -1137,14 +1140,22 @@ export default {
     };
 
     onMounted(() => {
+      resultFromOrderConfirm.value = route.query.from === "order-confirm";
+
       fetchOrderDetail();
-      fetchPaymentMethods();
+      if (!resultFromOrderConfirm.value) {
+        fetchPaymentMethods();
+      }
 
       if (route.query.from === "orders") {
         fromOrderList.value = true;
       } else if (document.referrer && document.referrer.includes("/orders") || document.referrer.includes("/billing")) {
         fromOrderList.value = true;
       } else {
+        fromOrderList.value = false;
+      }
+
+      if (resultFromOrderConfirm.value) {
         fromOrderList.value = false;
       }
 
@@ -1174,8 +1185,14 @@ export default {
             }
           }
         },
-        { immediate: false }
+        { immediate: true }
       );
+
+      if (resultFromOrderConfirm.value && route.query.trade_no) {
+        setTimeout(() => {
+          performPaymentCheck(true);
+        }, 600);
+      }
     });
 
     onBeforeUnmount(() => {
@@ -1193,6 +1210,7 @@ export default {
       showSuccessAnimation,
       showConfettiAnimation,
       fromOrderList,
+      resultFromOrderConfirm,
       formatDate,
       formatAmount,
       formatPeriod,

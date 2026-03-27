@@ -78,9 +78,6 @@ export default {
 <style lang="scss" scoped>
 
 .main-board {
-
-  min-height: 100vh;
-
   position: relative;
 
   overflow-x: hidden;

@@ -567,10 +567,6 @@
 
 
 
-    <!-- 底部安全区域 -->
-
-    <div class="bottom-safe-area"></div>
-
   </div>
 
 
@@ -1603,28 +1599,6 @@ onMounted(() => {
 
 
 .profile-inner {
-
-}
-
-
-
-
-
-.bottom-safe-area {
-
-  height: 20px;
-
-  width: 100%;
-
-  margin-top: 20px;
-
-  margin-bottom: 60px;
-
-  @media (min-width: 768px) {
-
-    display: none;
-
-  }
 
 }
 

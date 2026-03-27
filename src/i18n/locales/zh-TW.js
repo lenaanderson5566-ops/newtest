@@ -259,6 +259,7 @@ export default {
     subscriptionPausedAfterExpiry: '訂閱已過期，服務已暫停',
     renewToRestoreAccess: '續費後將立即恢復節點訪問',
     expiredOnDate: '已於 {date} 到期',
+    expireSuffix: '到期',
     defaultSubscriptionName: '訂閱',
     subscriptionStatus: {
       expired: '已過期',

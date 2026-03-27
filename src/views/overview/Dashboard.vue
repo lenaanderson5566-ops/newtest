@@ -77,7 +77,10 @@
                 <div class="plan-status-hero">
                   <div class="plan-name-main">{{ userPlan.name || '-' }}</div>
                   <div class="plan-expire-meta">
-                    <span>{{ planExpireMetaText }}</span>
+                    <span class="plan-expire-text">
+                      <span>{{ planExpireMetaText }}</span>
+                      <span v-if="shouldShowExpireSuffix" class="expire-suffix">{{ $t('dashboard.expireSuffix') }}</span>
+                    </span>
                     <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
                   </div>
                 </div>
@@ -106,14 +109,26 @@
                     :class="primaryActionClass"
                     @click="handlePrimaryPlanAction"
                   >
-                    {{ primaryPlanActionLabel }}
+                    <span class="plan-action-content">
+                      <IconPackage v-if="isManageAction(primaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconCalendarPlus v-else-if="isRenewAction(primaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconShoppingBag v-else-if="isReselectAction(primaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconChevronRight v-else :size="14" class="plan-action-icon" />
+                      <span>{{ primaryPlanActionLabel }}</span>
+                    </span>
                   </button>
                   <button
                     class="plan-action-btn btn"
                     :class="secondaryActionClass"
                     @click="handleSecondaryPlanAction"
                   >
-                    {{ secondaryPlanActionLabel }}
+                    <span class="plan-action-content">
+                      <IconPackage v-if="isManageAction(secondaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconCalendarPlus v-else-if="isRenewAction(secondaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconShoppingBag v-else-if="isReselectAction(secondaryPlanActionLabel)" :size="14" class="plan-action-icon" />
+                      <IconChevronRight v-else :size="14" class="plan-action-icon" />
+                      <span>{{ secondaryPlanActionLabel }}</span>
+                    </span>
                   </button>
                 </div>
                 <div v-if="isPlanExpired" class="plan-action-helper-text">
@@ -536,11 +551,9 @@ export default {
       if (userPlan.value.isExpireDatePermanent) {
         return t('dashboard.permanent');
       }
-      if (isPlanExpired.value) {
-        return t('dashboard.expiredOnDate', {date: userPlan.value.expireDate || '-'});
-      }
       return userPlan.value.expireDate || '-';
     });
+    const shouldShowExpireSuffix = computed(() => !userPlan.value.isExpireDatePermanent);
 
     const primaryPlanActionLabel = computed(() => {
       if (isPlanExpired.value) return t('dashboard.planAction.restoreNow');
@@ -577,6 +590,10 @@ export default {
       if (secondaryPlanActionLabel.value === t('dashboard.planAction.renew')) return 'btn-primary';
       return 'btn-secondary';
     });
+    const isManageAction = (label) => label === t('dashboard.planAction.manageSubscription');
+    const isRenewAction = (label) =>
+      [t('dashboard.planAction.renewNow'), t('dashboard.planAction.renew'), t('dashboard.planAction.restoreNow')].includes(label);
+    const isReselectAction = (label) => label === t('dashboard.planAction.reselectPlan');
 
     const handlePrimaryPlanAction = () => {
       if (subscriptionStatus.value === 'active') {
@@ -1277,10 +1294,14 @@ export default {
       subscriptionStatusLabel,
       primaryPlanActionLabel,
       planExpireMetaText,
+      shouldShowExpireSuffix,
       secondaryPlanActionLabel,
       subscriptionTrafficSummary,
       primaryActionClass,
       secondaryActionClass,
+      isManageAction,
+      isRenewAction,
+      isReselectAction,
       handlePrimaryPlanAction,
       handleSecondaryPlanAction,
       hasPlan,
@@ -1625,6 +1646,16 @@ export default {
             flex-wrap: wrap;
             font-size: $font-size-sm;
             color: var(--plan-meta-text);
+
+            .plan-expire-text {
+              display: inline-flex;
+              align-items: center;
+              gap: 4px;
+            }
+
+            .expire-suffix {
+              color: var(--text-on-dark-secondary);
+            }
           }
 
           .plan-summary-section-actions {
@@ -1675,20 +1706,19 @@ export default {
             padding: 2px 8px;
             font-size: $font-size-sm;
             font-weight: $font-weight-semibold;
+            color: var(--text-on-dark-primary);
+            border: 1px solid rgba(255, 255, 255, 0.26);
 
             &.is-active {
-              color: var(--status-active-text);
-              background: var(--status-active-bg);
+              background: rgba(255, 255, 255, 0.2);
             }
 
             &.is-expiring {
-              color: var(--status-expiring-text);
-              background: var(--status-expiring-bg);
+              background: rgba(255, 255, 255, 0.2);
             }
 
             &.is-expired {
-              color: var(--status-expired-text);
-              background: var(--status-expired-bg);
+              background: rgba(255, 255, 255, 0.2);
             }
           }
 
@@ -1709,13 +1739,25 @@ export default {
               flex: 1;
               border-radius: var(--dashboard-button-radius);
               padding: 10px 14px;
-              font-size: $font-size-md;
+              font-size: $font-size-sm;
               font-weight: $font-weight-semibold;
               letter-spacing: 0.2px;
 
               @media (max-width: 576px) {
                 padding: 9px 10px;
                 font-size: $font-size-sm;
+              }
+
+              .plan-action-content {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                width: 100%;
+              }
+
+              .plan-action-icon {
+                flex-shrink: 0;
               }
             }
           }
@@ -1882,6 +1924,7 @@ export default {
         min-height: auto;
         height: auto;
         z-index: 8;
+        background: var(--saas-card-bg);
       }
 
       &.traffic-board-total {
@@ -1891,6 +1934,23 @@ export default {
 
         .usage-card-title {
           color: var(--text-primary);
+        }
+      }
+
+      &.traffic-board-total {
+        .plan-summary-card {
+          .plan-summary-section-meta {
+            background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            .plan-name-main {
+              color: var(--text-on-dark-primary);
+            }
+
+            .plan-expire-meta {
+              color: var(--text-on-dark-secondary);
+            }
+          }
         }
       }
 

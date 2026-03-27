@@ -259,6 +259,7 @@ export default {
     subscriptionPausedAfterExpiry: 'اشتراک منقضی شده و سرویس متوقف شده است',
     renewToRestoreAccess: 'پس از تمدید، دسترسی نودها بلافاصله بازیابی می‌شود',
     expiredOnDate: 'در {date} منقضی شده است',
+    expireSuffix: 'منقضی',
     defaultSubscriptionName: 'اشتراک',
     subscriptionStatus: {
       expired: 'منقضی شده',

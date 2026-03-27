@@ -265,7 +265,6 @@
         </section>
       </div>
  
-      <div class="bottom-safe-area"></div>
     </div>
 
     <transition name="modal-fade">
@@ -598,6 +597,10 @@ onMounted(async () => {
   cursor: pointer;
   white-space: nowrap;
 
+  &:hover {
+    color: var(--text-quaternary);
+  }
+
   &.active {
     color: var(--text-primary);
     font-weight: $font-weight-bold;
@@ -755,9 +758,9 @@ onMounted(async () => {
     box-shadow: none;
 
     &.is-bronze { background: linear-gradient(135deg, #b27241, #d39d63); }
-    &.is-silver { background: linear-gradient(135deg, #8ea0bf, #d4deef); color: #23324d; }
-    &.is-gold { background: linear-gradient(135deg, #f59e0b, #fcd34d); color: #5b3a00; }
-    &.is-platinum { background: linear-gradient(135deg, #5ba7c6, #a8e4ff); color: #07364a; }
+    &.is-silver { background: linear-gradient(135deg, #8ea0bf, #d4deef); color: var(--text-secondary); }
+    &.is-gold { background: linear-gradient(135deg, #f59e0b, #fcd34d); color: var(--text-secondary); }
+    &.is-platinum { background: linear-gradient(135deg, #5ba7c6, #a8e4ff); color: var(--text-secondary); }
     &.is-diamond { background: linear-gradient(135deg, #6a7bff, #9dc7ff); }
     &.is-default { background: linear-gradient(135deg, #6379d6, #91a4ff); }
   }
@@ -845,7 +848,7 @@ onMounted(async () => {
 
 .section-title {
   margin: 0;
-  font-size: $font-size-md;
+  font-size: $font-size-lg;
   font-weight: $font-weight-bold;
   color: var(--text-primary);
 }
@@ -934,7 +937,7 @@ onMounted(async () => {
 
 .row-main p {
   margin: 3px 0 0;
-  font-size: $font-size-sm;
+  font-size: $font-size-xs;
   color: var(--text-tertiary);
 }
 
@@ -1006,8 +1009,6 @@ input:checked + .slider { background-color: rgba(var(--theme-color-rgb), 1); }
 input:checked + .slider:before { transform: translateX(18px); }
 .slider.round { border-radius: 24px; }
 .slider.round:before { border-radius: 50%; }
-
-.bottom-safe-area { height: calc(env(safe-area-inset-bottom, 0px) + 10px); }
 
 .modal-overlay {
   position: fixed;

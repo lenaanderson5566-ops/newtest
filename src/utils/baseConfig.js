@@ -346,8 +346,8 @@ const DEFAULT_THEME_CONFIG = {
     shadowCardSm: "0 1px 3px rgba(15, 23, 42, 0.04), 0 6px 14px rgba(15, 23, 42, 0.04)",
     shadowCardMd: "0 4px 20px rgba(15, 23, 42, 0.08)",
     radiusSm: "8px",
-    radiusMd: "12px",
-    radiusLg: "16px",
+    radiusMd: "8px",
+    radiusLg: "8px",
     surfaceSubtle: "#f1f5f9",
     headingColor: "#0f172a",
     neutralStrong: "#334155",
@@ -365,6 +365,9 @@ const DEFAULT_THEME_CONFIG = {
     secondaryTextColor: "rgba(255, 255, 255, 0.6)",
     borderColor: "rgba(255, 255, 255, 0.1)",
     shadowColor: "rgba(0, 0, 0, 0.3)",
+    radiusSm: "8px",
+    radiusMd: "8px",
+    radiusLg: "8px",
   },
 };
 

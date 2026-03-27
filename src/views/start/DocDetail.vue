@@ -1418,7 +1418,7 @@ onUnmounted(() => {
 
     border-radius: 50%;
 
-    background: rgba(255, 76, 81, 0.1);
+    background: rgba(var(--error-color-rgb), 0.1);
 
     margin-bottom: 1.5rem;
 
@@ -1426,7 +1426,7 @@ onUnmounted(() => {
 
     .error-icon {
 
-      color: #ff4c51;
+      color: var(--error-color);
 
     }
 

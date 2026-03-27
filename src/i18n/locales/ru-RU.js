@@ -259,6 +259,7 @@ export default {
     subscriptionPausedAfterExpiry: 'Подписка истекла, сервис приостановлен',
     renewToRestoreAccess: 'После продления доступ к узлам будет восстановлен немедленно',
     expiredOnDate: 'Истекло: {date}',
+    expireSuffix: 'истекает',
     defaultSubscriptionName: 'Подписка',
     subscriptionStatus: {
       expired: 'Истекла',
