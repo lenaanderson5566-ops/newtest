@@ -294,11 +294,47 @@
       </div>
     </transition>
 
+    <transition name="modal-fade">
+      <div v-if="showPaymentModal" class="pending-order-modal payment-modal">
+        <div class="pending-order-overlay" @click="closePaymentModal"></div>
+        <div class="pending-order-dialog payment-dialog" role="dialog" aria-modal="true">
+          <div class="pending-order-header">
+            <h3>{{ $t("payment.payment_method") }}</h3>
+            <p v-if="paymentQRCode">{{ $t("payment.scan_qrcode") }}</p>
+            <p v-else-if="paymentLink">{{ $t("payment.open_in_new_tab") }}</p>
+          </div>
+          <div class="payment-qrcode-wrap" v-if="paymentQRCode">
+            <QrcodeVue :value="paymentQRCode" :size="220" level="M" />
+          </div>
+          <div class="payment-link-wrap" v-if="paymentLink">
+            <a :href="paymentLink" target="_blank" rel="noopener noreferrer">
+              {{ paymentLink }}
+            </a>
+          </div>
+          <div class="pending-order-actions">
+            <button class="btn-return-orders cancel-btn" @click="closePaymentModal">
+              {{ $t("common.cancel") }}
+            </button>
+            <button class="btn-confirm-cancel confirm-btn" @click="checkPaymentStatusNow">
+              {{ $t("payment.check_payment") }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <transition name="fade">
+      <div v-if="showPaymentSuccessPrompt" class="payment-success-toast">
+        <IconCheck :size="18" />
+        <span>{{ $t("payment.pay_success") }}</span>
+      </div>
+    </transition>
+
   </div>
 </template>
 
 <script>
-import { ref, reactive, onMounted, computed, watch } from "vue";
+import { ref, reactive, onMounted, computed, watch, onBeforeUnmount } from "vue";
 
 import { useI18n } from "vue-i18n";
 
@@ -311,6 +347,7 @@ import {
   fetchPlans,
   fetchPlanById,
   getPaymentMethods,
+  checkOrderStatus,
   verifyCoupon as checkCoupon,
   submitOrder as createOrder,
   cancelOrder as cancelExistingOrder,
@@ -319,6 +356,7 @@ import {
 
 import { getUserInfo } from "@/api/overview/dashboard";
 import { fetchOrderList } from "@/api/account/orderlist";
+import QrcodeVue from "qrcode.vue";
 
 import {
   IconCheck,
@@ -356,6 +394,7 @@ export default {
     IconCircle,
 
     IconCreditCard,
+    QrcodeVue,
   },
 
   setup() {
@@ -431,6 +470,12 @@ export default {
     const pendingOrderTradeNo = ref("");
     const paymentMethods = ref([]);
     const selectedMethod = ref(null);
+    const showPaymentModal = ref(false);
+    const paymentQRCode = ref("");
+    const paymentLink = ref("");
+    const paymentTradeNo = ref("");
+    const paymentCheckTimer = ref(null);
+    const showPaymentSuccessPrompt = ref(false);
 
     const discountPercent = ref(0);
 
@@ -844,6 +889,61 @@ export default {
       showPendingOrderModal.value = false;
     };
 
+    const closePaymentModal = () => {
+      showPaymentModal.value = false;
+      paymentQRCode.value = "";
+      paymentLink.value = "";
+    };
+
+    const handlePaymentSuccess = () => {
+      if (paymentCheckTimer.value) {
+        clearInterval(paymentCheckTimer.value);
+        paymentCheckTimer.value = null;
+      }
+      closePaymentModal();
+      showPaymentSuccessPrompt.value = true;
+      showToast(t("payment.pay_success"), "success");
+      setTimeout(() => {
+        showPaymentSuccessPrompt.value = false;
+      }, 2600);
+    };
+
+    const performPaymentCheck = async (tradeNo = paymentTradeNo.value) => {
+      if (!tradeNo) return;
+      try {
+        const response = await checkOrderStatus(tradeNo);
+        if (response.data === 1 || (response.data !== 0 && response.data !== 2)) {
+          handlePaymentSuccess();
+          return;
+        }
+        if (response.data === 2) {
+          if (paymentCheckTimer.value) {
+            clearInterval(paymentCheckTimer.value);
+            paymentCheckTimer.value = null;
+          }
+          showToast(t("payment.order_cancelled"), "warning");
+          closePaymentModal();
+        }
+      } catch (error) {
+        console.error("Failed to check payment status:", error);
+      }
+    };
+
+    const checkPaymentStatusNow = async () => {
+      await performPaymentCheck(paymentTradeNo.value);
+    };
+
+    const startPaymentCheck = (tradeNo) => {
+      if (!tradeNo) return;
+      paymentTradeNo.value = tradeNo;
+      if (paymentCheckTimer.value) {
+        clearInterval(paymentCheckTimer.value);
+      }
+      paymentCheckTimer.value = setInterval(() => {
+        performPaymentCheck(tradeNo);
+      }, 5000);
+    };
+
     const goToMyOrders = () => {
       closePendingOrderModal();
       router.push('/orders');
@@ -912,15 +1012,19 @@ export default {
 
         if (checkoutResp.type === 1) {
           openExternalPaymentLink(checkoutResp.data);
+          paymentLink.value = checkoutResp.data;
+          paymentQRCode.value = "";
+          showPaymentModal.value = true;
+          startPaymentCheck(tradeNo);
           showToast(t("payment.payment_processing"), "info");
           return;
         }
 
+        paymentQRCode.value = checkoutResp.data;
+        paymentLink.value = "";
+        showPaymentModal.value = true;
+        startPaymentCheck(tradeNo);
         showToast(t("payment.scan_qrcode"), "info");
-        router.push({
-          path: "/payment",
-          query: { trade_no: tradeNo },
-        });
       } catch (checkoutError) {
         console.error("Failed to checkout order:", checkoutError);
         showToast(
@@ -1169,6 +1273,13 @@ export default {
       ]);
     });
 
+    onBeforeUnmount(() => {
+      if (paymentCheckTimer.value) {
+        clearInterval(paymentCheckTimer.value);
+        paymentCheckTimer.value = null;
+      }
+    });
+
     return {
       plan,
       planOptions,
@@ -1247,6 +1358,12 @@ export default {
       closePendingOrderModal,
       goToMyOrders,
       confirmCancelPreviousOrder,
+      showPaymentModal,
+      paymentQRCode,
+      paymentLink,
+      closePaymentModal,
+      checkPaymentStatusNow,
+      showPaymentSuccessPrompt,
 
     };
   },
@@ -2650,6 +2767,81 @@ export default {
   to {
     transform: rotate(360deg);
   }
+}
+
+.pending-order-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pending-order-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.pending-order-dialog {
+  position: relative;
+  width: min(92vw, 460px);
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  z-index: 1;
+}
+
+.payment-dialog {
+  width: min(92vw, 520px);
+}
+
+.payment-qrcode-wrap {
+  margin: 12px 0 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.payment-link-wrap {
+  margin: 12px 0 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: rgba(var(--theme-color-rgb), 0.06);
+  word-break: break-all;
+}
+
+.payment-success-toast {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 1350;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(22, 163, 74, 0.95);
+  color: #fff;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  box-shadow: 0 12px 30px rgba(22, 163, 74, 0.25);
+}
+
+.modal-fade-enter-active,
+.modal-fade-leave-active,
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.modal-fade-enter-from,
+.modal-fade-leave-to,
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 
