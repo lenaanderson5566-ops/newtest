@@ -1425,11 +1425,10 @@ export default {
   }
 
   .subscription-intro-section {
-    border-radius: $border-radius-sm;
-    border: 1px solid rgba(var(--text-color-rgb), 0.08);
+    border: none;
     background: transparent;
-    padding: 14px;
-    margin-bottom: 16px;
+    padding: 0;
+    margin-bottom: 20px;
   }
 
   .plan-selector-grid {
@@ -1504,6 +1503,18 @@ export default {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
+  }
+
+  .section-wrapper.subscription-intro-section,
+  .section-wrapper.payment-methods-section {
+    background-color: var(--background-color) !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .subscription-intro-section .section-title,
+  .payment-methods-section .section-title {
+    background-color: var(--background-color);
   }
 
   .plan-card {
