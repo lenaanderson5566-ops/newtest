@@ -828,35 +828,9 @@ export default {
       );
     };
 
-    const toComparablePlanId = (value) => {
-      const numeric = Number(value);
-      return Number.isFinite(numeric) ? numeric : null;
-    };
-
     const isUnpaidCreatedOrder = (order) => {
       if (!order) return false;
       return order.total_amount !== null && order.payment_amount == null;
-    };
-
-    const isSameOrderSpecAsCurrentSelection = (order) => {
-      if (!order || !plan.value?.id || !selectedPriceType.value) {
-        return false;
-      }
-
-      const orderPlanId =
-        toComparablePlanId(order.plan_id) ??
-        toComparablePlanId(order.plan?.id) ??
-        toComparablePlanId(order.planId);
-      const currentPlanId = toComparablePlanId(plan.value.id);
-
-      const orderPeriod = String(order.period || "");
-      const currentPeriod = String(selectedPriceType.value || "");
-
-      return (
-        currentPlanId !== null &&
-        orderPlanId === currentPlanId &&
-        orderPeriod === currentPeriod
-      );
     };
 
     const fetchLatestPendingOrder = async (tradeNo = "") => {
@@ -1071,32 +1045,28 @@ export default {
           const fallbackTradeNo = extractPendingTradeNo(error) || (await fetchLatestPendingTradeNo());
           const matchedOrder = await fetchLatestPendingOrder(fallbackTradeNo);
 
-          if (matchedOrder && isUnpaidCreatedOrder(matchedOrder)) {
-            pendingOrderTradeNo.value = matchedOrder.trade_no || fallbackTradeNo || "";
+          const tradeNoToCancel =
+            (matchedOrder && isUnpaidCreatedOrder(matchedOrder) && matchedOrder.trade_no) ||
+            fallbackTradeNo ||
+            "";
 
-            if (isSameOrderSpecAsCurrentSelection(matchedOrder)) {
-              await checkoutTradeNo(pendingOrderTradeNo.value);
-              return;
+          if (!conflictResolved && tradeNoToCancel) {
+            loading.cancellingExisting = true;
+            try {
+              await cancelExistingOrder(tradeNoToCancel);
+              pendingOrderTradeNo.value = "";
+              await executeOrderSubmission({ conflictResolved: true });
+            } catch (cancelError) {
+              showToast(
+                cancelError?.response?.message ||
+                  cancelError?.message ||
+                  "取消订单失败",
+                "error"
+              );
+            } finally {
+              loading.cancellingExisting = false;
             }
-
-            if (!conflictResolved && pendingOrderTradeNo.value) {
-              loading.cancellingExisting = true;
-              try {
-                await cancelExistingOrder(pendingOrderTradeNo.value);
-                pendingOrderTradeNo.value = "";
-                await executeOrderSubmission({ conflictResolved: true });
-              } catch (cancelError) {
-                showToast(
-                  cancelError?.response?.message ||
-                    cancelError?.message ||
-                    "取消订单失败",
-                  "error"
-                );
-              } finally {
-                loading.cancellingExisting = false;
-              }
-              return;
-            }
+            return;
           }
 
           pendingOrderTradeNo.value = fallbackTradeNo;
