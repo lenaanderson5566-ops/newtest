@@ -1279,7 +1279,7 @@ export default {
 
     .card-body {
       p {
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
         margin: 0;
       }
     }
@@ -1358,7 +1358,7 @@ export default {
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: transparent;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1390,7 +1390,7 @@ export default {
     .overview-plan-meta {
       margin-top: 8px;
       font-size: $font-size-md;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       line-height: 1.3;
     }
 
@@ -1473,7 +1473,7 @@ export default {
       }
 
       .info-value.fee {
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
       }
 
       .info-row.final-row {
@@ -1629,7 +1629,7 @@ export default {
 
         .method-fee {
           font-size: $font-size-sm;
-          color: var(--secondary-text-color);
+          color: var(--text-tertiary);
           white-space: nowrap;
         }
       }
@@ -1639,7 +1639,7 @@ export default {
       padding: 6px 12px 8px;
       border-top: 1px solid var(--border-color);
       font-size: $font-size-sm;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       line-height: 1.4;
       background: #fff;
     }
@@ -2215,7 +2215,7 @@ export default {
           font-size: $font-size-md;
           line-height: 1.6;
           margin: 0 0 24px;
-          color: var(--secondary-text-color);
+          color: var(--text-tertiary);
           max-width: 300px;
           margin-left: auto;
           margin-right: auto;
@@ -2438,7 +2438,7 @@ export default {
       font-size: $font-size-md;
       line-height: 1.5;
       margin: 0;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
     }
   }
 
@@ -2554,7 +2554,7 @@ export default {
   }
 
   &.status-unknown {
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     background-color: rgba(158, 158, 158, 0.12);
     border-color: rgba(158, 158, 158, 0.2);
   }

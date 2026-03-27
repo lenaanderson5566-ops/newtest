@@ -823,7 +823,7 @@ fetchTickets();
 
   .card-body {
     p {
-      color: var(--tertiary-text-color);
+      color: var(--text-quaternary);
 
       margin: 0;
 
@@ -914,7 +914,7 @@ fetchTickets();
 
   text-align: center;
 
-  color: var(--tertiary-text-color);
+  color: var(--text-quaternary);
 
   margin: 1rem 0;
 
@@ -1055,7 +1055,7 @@ fetchTickets();
       &.status-1 {
         background-color: rgba(158, 158, 158, 0.1);
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
       }
     }
   }
@@ -1067,7 +1067,7 @@ fetchTickets();
 
     font-size: $font-size-sm;
 
-    color: var(--tertiary-text-color);
+    color: var(--text-quaternary);
 
     padding-top: 0.5rem;
 
@@ -1246,7 +1246,7 @@ fetchTickets();
   &.status-1 {
     background-color: rgba(158, 158, 158, 0.1);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 }
 
@@ -1317,7 +1317,7 @@ fetchTickets();
 
       line-height: 1.5;
 
-      color: var(--tertiary-text-color);
+      color: var(--text-quaternary);
     }
   }
 }
@@ -1333,7 +1333,7 @@ fetchTickets();
 
   justify-content: center;
 
-  color: var(--tertiary-text-color);
+  color: var(--text-quaternary);
 
   padding: 2.5rem;
 
@@ -1470,7 +1470,7 @@ fetchTickets();
     }
 
     .message-time {
-      color: var(--tertiary-text-color);
+      color: var(--text-quaternary);
     }
   }
 
@@ -1616,7 +1616,7 @@ fetchTickets();
 
   gap: 0.75rem;
 
-  color: var(--tertiary-text-color);
+  color: var(--text-quaternary);
 
   font-size: $font-size-md;
 
@@ -1709,7 +1709,7 @@ fetchTickets();
 
     border: none;
 
-    color: var(--tertiary-text-color);
+    color: var(--text-quaternary);
 
     cursor: pointer;
 
@@ -1790,7 +1790,7 @@ fetchTickets();
       }
 
       &::placeholder {
-        color: var(--tertiary-text-color);
+        color: var(--text-quaternary);
       }
     }
 
@@ -1884,7 +1884,7 @@ fetchTickets();
       &:hover {
         background-color: var(--bg-secondary);
 
-        border-color: var(--tertiary-text-color);
+        border-color: var(--text-quaternary);
       }
     }
 
@@ -2113,7 +2113,7 @@ fetchTickets();
     }
 
     p {
-      color: var(--tertiary-text-color);
+      color: var(--text-quaternary);
 
       margin-bottom: 2rem;
 
@@ -2243,7 +2243,7 @@ fetchTickets();
 }
 
 .upload-tip-text {
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 
   font-weight: $font-weight-medium;
 
@@ -2257,7 +2257,7 @@ fetchTickets();
 
   font-size: $font-size-sm;
 
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 
   margin-top: 2px;
 }
@@ -2292,11 +2292,11 @@ fetchTickets();
   }
 
   .upload-tip-text {
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 
   .upload-desc {
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 }
 </style>

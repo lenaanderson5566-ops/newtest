@@ -53,7 +53,7 @@
 .app-content-wrapper .page-shell .subtitle,
 .app-content-wrapper .page-shell .description,
 .app-content-wrapper .page-shell .info-label {
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   font-size: var(--view-font-size-small);
 }
 
@@ -138,7 +138,7 @@
 
 .payment-container .section-wrapper .info-label {
   width: 120px;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   font-size: $font-size-md;
 }
 
@@ -269,7 +269,7 @@
 
 .pending-order-modal .pending-order-dialog p {
   margin: 0;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   line-height: 1.5;
   font-size: $font-size-md;
 }

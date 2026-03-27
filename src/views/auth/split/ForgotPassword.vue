@@ -2117,7 +2117,7 @@ export default {
 
     font-size: $font-size-md;
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     margin-bottom: 1.5rem;
 
@@ -2173,7 +2173,7 @@ export default {
 
   p {
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     font-size: $font-size-md;
 
@@ -2215,7 +2215,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     width: 20px;
 
@@ -2235,7 +2235,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     cursor: pointer;
 
@@ -2613,7 +2613,7 @@ export default {
 
         cursor: pointer;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         font-size: $font-size-2xl;
 
@@ -2657,7 +2657,7 @@ export default {
 
         margin-bottom: 16px;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
       }
 

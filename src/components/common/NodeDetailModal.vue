@@ -869,7 +869,7 @@ watchEffect(() => {
 
     cursor: pointer;
 
-    color: var(--tertiary-text-color);
+    color: var(--text-quaternary);
 
     display: flex;
 
@@ -959,7 +959,7 @@ watchEffect(() => {
 
       font-weight: $font-weight-medium;
 
-      color: var(--tertiary-text-color);
+      color: var(--text-quaternary);
 
       flex: 0 0 40%; 
 
@@ -1045,7 +1045,7 @@ watchEffect(() => {
 
         border-radius: 4px;
 
-        color: var(--tertiary-text-color);
+        color: var(--text-quaternary);
 
         font-size: $font-size-sm;
 
@@ -1221,7 +1221,7 @@ watchEffect(() => {
 
       p {
 
-        color: var(--tertiary-text-color);
+        color: var(--text-quaternary);
 
         font-size: $font-size-md;
 

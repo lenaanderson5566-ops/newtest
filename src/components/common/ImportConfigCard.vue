@@ -330,7 +330,7 @@ onMounted(() => {
       padding: 12px;
       border: 1px dashed var(--border-color);
       border-radius: 10px;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-sm;
       text-align: center;
     }

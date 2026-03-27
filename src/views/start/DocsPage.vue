@@ -375,7 +375,7 @@ onMounted(() => {
 
     left: 1rem;
 
-    color: var(--tertiary-text-color);
+    color: var(--text-quaternary);
 
     transition: color 0.3s ease;
 
@@ -425,7 +425,7 @@ onMounted(() => {
 
     &::placeholder {
 
-      color: var(--tertiary-text-color);
+      color: var(--text-quaternary);
 
     }
 
@@ -443,7 +443,7 @@ onMounted(() => {
 
     border: none;
 
-    color: var(--tertiary-text-color);
+    color: var(--text-quaternary);
 
     cursor: pointer;
 
@@ -598,7 +598,7 @@ onMounted(() => {
 
       font-size: $font-size-xs;
 
-      color: var(--tertiary-text-color);
+      color: var(--text-quaternary);
 
     }
 
@@ -608,7 +608,7 @@ onMounted(() => {
 
   .doc-action {
 
-    color: var(--tertiary-text-color);
+    color: var(--text-quaternary);
 
     margin-left: 1rem;
 
@@ -658,7 +658,7 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--tertiary-text-color);
+    color: var(--text-quaternary);
 
     font-size: $font-size-lg;
 
@@ -670,7 +670,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--tertiary-text-color);
+    color: var(--text-quaternary);
 
     opacity: 0.7;
 
@@ -812,7 +812,7 @@ onMounted(() => {
 
     margin: 0;
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     line-height: 1.5;
 

@@ -650,7 +650,7 @@ export default {
 
   font-size: $font-size-sm;
 
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 
   opacity: 0.8;
 

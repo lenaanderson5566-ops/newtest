@@ -570,7 +570,7 @@ export default {
 
   .auth-subtitle {
     font-size: $font-size-md;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     margin-bottom: 1.5rem;
 
     @media (min-width: 993px) {
@@ -595,7 +595,7 @@ export default {
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     width: 20px;
     height: 20px;
   }
@@ -605,7 +605,7 @@ export default {
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     cursor: pointer;
     padding: 4px;
     display: flex;
@@ -702,7 +702,7 @@ export default {
     }
 
     .checkbox-label {
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-sm;
     }
   }
@@ -903,7 +903,7 @@ export default {
   }
 
   p {
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     font-size: $font-size-md;
   }
 }

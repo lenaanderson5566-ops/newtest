@@ -98,7 +98,7 @@ const handleResetSecurity = async () => {
 
 .back-label {
   font-size: $font-size-md;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .profile-card {
@@ -110,7 +110,7 @@ const handleResetSecurity = async () => {
 
 .desc {
   margin: 0 0 12px;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .action-btn {
@@ -160,7 +160,7 @@ const handleResetSecurity = async () => {
 .modal-text {
   padding: 16px;
   margin: 0;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .modal-actions {

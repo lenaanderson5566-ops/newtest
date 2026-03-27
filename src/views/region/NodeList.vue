@@ -406,7 +406,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
 
       margin: 0;
 
@@ -494,7 +494,7 @@ onMounted(() => {
     }
 
     .import-title { font-size: $font-size-xl; font-weight: $font-weight-semibold; }
-    .import-desc { color: var(--secondary-text-color); font-size: $font-size-md; }
+    .import-desc { color: var(--text-tertiary); font-size: $font-size-md; }
 
     .platform-selector {
       display: flex;
@@ -642,7 +642,7 @@ onMounted(() => {
 
     p {
       margin: 8px 0 0;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-md;
     }
   }
@@ -741,7 +741,7 @@ onMounted(() => {
 
       p {
         margin: 0;
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
         font-size: $font-size-sm;
       }
 
@@ -900,7 +900,7 @@ onMounted(() => {
 
       font-size: $font-size-xs;
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
 
       margin: 0;
 
@@ -989,7 +989,7 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     font-size: $font-size-lg;
 
@@ -1001,7 +1001,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     opacity: 0.7;
 

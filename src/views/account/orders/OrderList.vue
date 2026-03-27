@@ -386,7 +386,7 @@ watch(locale, () => {
   align-items: center;
   gap: 0.45rem;
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 
   .switch-input {
     position: absolute;
@@ -431,7 +431,7 @@ watch(locale, () => {
 
 .orders-empty-inline {
   padding: 18px 14px;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   text-align: center;
 }
 

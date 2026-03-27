@@ -320,7 +320,7 @@ onMounted(() => {
 
   .back-label {
     font-size: $font-size-md;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
   
   .dashboard-card {
@@ -364,7 +364,7 @@ onMounted(() => {
     
     .card-body {
       p {
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
         font-size: $font-size-md;
         line-height: 1.6;
         margin: 0;
@@ -411,7 +411,7 @@ onMounted(() => {
       }
 
       .wallet-amount {
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
         font-variant-numeric: tabular-nums;
         font-size: $font-size-md;
         font-weight: $font-weight-semibold;
@@ -419,7 +419,7 @@ onMounted(() => {
       
       .balance-label {
         font-size: $font-size-lg;
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
       }
     }
     
@@ -567,7 +567,7 @@ onMounted(() => {
       label {
         display: block;
         font-size: $font-size-sm;
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
         margin-bottom: 10px;
         font-weight: $font-weight-medium;
       }

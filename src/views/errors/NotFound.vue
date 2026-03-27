@@ -284,7 +284,7 @@ export default {
 
   line-height: 1.6;
 
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 
   margin-bottom: 30px;
 

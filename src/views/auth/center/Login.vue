@@ -669,7 +669,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     width: 20px;
 
@@ -689,7 +689,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     cursor: pointer;
 
@@ -883,7 +883,7 @@ export default {
 
     .checkbox-label {
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
 
       font-size: $font-size-sm;
 

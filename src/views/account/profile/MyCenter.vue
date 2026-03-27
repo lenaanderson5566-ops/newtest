@@ -592,7 +592,7 @@ onMounted(async () => {
   padding: 12px 16px;
   border: none;
   background: transparent;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   cursor: pointer;
@@ -652,7 +652,7 @@ onMounted(async () => {
 .recent-login-header p {
   margin: 4px 0 0;
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .recent-login-list {
@@ -662,7 +662,7 @@ onMounted(async () => {
 
 .recent-login-state {
   padding: 14px 2px 4px;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   font-size: $font-size-sm;
 }
 
@@ -692,7 +692,7 @@ onMounted(async () => {
 .recent-login-main span,
 .recent-login-ip {
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 
@@ -827,7 +827,7 @@ onMounted(async () => {
     display: block;
     margin-bottom: 6px;
     font-size: $font-size-sm;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 
   strong {
@@ -863,7 +863,7 @@ onMounted(async () => {
   margin: 0;
   padding: 0 2px;
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .plan-overview-row {
@@ -879,7 +879,7 @@ onMounted(async () => {
 .plan-desc {
   margin: 8px 0 0;
   font-size: $font-size-md;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .row-main-with-icon {
@@ -935,7 +935,7 @@ onMounted(async () => {
 .row-main p {
   margin: 3px 0 0;
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .tier-intro-list {
@@ -954,7 +954,7 @@ onMounted(async () => {
     margin: 6px 0 0;
     font-size: $font-size-sm;
     line-height: 1.6;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 }
 
@@ -1053,7 +1053,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   .close-btn {
     background: none;
     border: none;
-    color: var(--tertiary-text-color);
+    color: var(--text-quaternary);
     cursor: pointer;
     padding: 4px;
     display: flex;
@@ -1145,7 +1145,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .modal-text {
   padding: 16px;
   margin: 0;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .modal-actions {

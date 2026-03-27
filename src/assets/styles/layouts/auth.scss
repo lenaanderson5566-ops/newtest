@@ -57,7 +57,7 @@
 
   .auth-subtitle {
     font-size: $font-size-md;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 }
 
@@ -75,7 +75,7 @@
     margin-top: 1rem;
 
     a {
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-sm;
 
       &:hover {
@@ -100,7 +100,7 @@
 
   .auth-divider-text {
     padding: 0 1rem;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     font-size: $font-size-sm;
   }
 }

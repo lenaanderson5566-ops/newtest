@@ -238,7 +238,7 @@ export default {
     border: none;
     font-size: $font-size-xl;
     line-height: 1;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     cursor: pointer;
     padding: 0;
     opacity: 0.6;

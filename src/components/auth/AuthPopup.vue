@@ -183,7 +183,7 @@ export default {
         background: none;
         border: none;
         cursor: pointer;
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -258,7 +258,7 @@ export default {
         &:disabled {
           opacity: 0.7;
           cursor: not-allowed;
-          background-color: var(--secondary-text-color);
+          background-color: var(--text-tertiary);
         }
       }
     }

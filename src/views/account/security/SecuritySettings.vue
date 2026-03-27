@@ -408,7 +408,7 @@ onMounted(() => {
 
 .back-label {
   font-size: $font-size-md;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .profile-card {
@@ -512,7 +512,7 @@ onMounted(() => {
   display: flex;
   gap: 12px;
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .device-empty,
@@ -601,7 +601,7 @@ onMounted(() => {
   .modal-close {
     background: none;
     border: none;
-    color: var(--tertiary-text-color);
+    color: var(--text-quaternary);
     cursor: pointer;
     padding: 4px;
     display: flex;

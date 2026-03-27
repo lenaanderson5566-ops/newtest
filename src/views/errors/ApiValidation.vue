@@ -457,7 +457,7 @@ export default {
 
       font-weight: $font-weight-normal;
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
     }
   }
 }

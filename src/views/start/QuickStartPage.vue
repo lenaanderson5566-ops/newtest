@@ -409,7 +409,7 @@ onMounted(fetchUserStatus);
   .status-sub {
     margin: 4px 0 0;
     font-size: $font-size-sm;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 }
 
@@ -450,7 +450,7 @@ onMounted(fetchUserStatus);
 .step-tip,
 .connect-text {
   margin: 0;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   font-size: $font-size-md;
 }
 

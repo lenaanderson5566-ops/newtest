@@ -2643,7 +2643,7 @@ export default {
 
     font-size: $font-size-md;
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     margin-bottom: 1.5rem;
 
@@ -2699,7 +2699,7 @@ export default {
 
   p {
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     font-size: $font-size-md;
 
@@ -2735,7 +2735,7 @@ export default {
 
 .optional {
 
-  color: var(--tertiary-text-color);
+  color: var(--text-quaternary);
 
   margin-left: 4px;
 
@@ -2835,7 +2835,7 @@ export default {
 
     padding: 0 4px;
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     font-size: $font-size-md;
 
@@ -2921,7 +2921,7 @@ export default {
 
       transition: transform 0.3s ease;
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
 
       opacity: 0.8;
 
@@ -3101,7 +3101,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     width: 20px;
 
@@ -3121,7 +3121,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     cursor: pointer;
 
@@ -3527,7 +3527,7 @@ export default {
 
     .checkbox-label {
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
 
       font-size: $font-size-sm;
 
@@ -4096,7 +4096,7 @@ export default {
 
         line-height: 1;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         padding: 0;
 
@@ -4138,7 +4138,7 @@ export default {
 
         margin-bottom: 16px;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
       }
 

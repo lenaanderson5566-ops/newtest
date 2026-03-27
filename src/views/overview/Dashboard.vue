@@ -1325,7 +1325,7 @@ export default {
   --dashboard-shadow-compact: none;
   --dashboard-border-color: rgba(148, 163, 184, 0.22);
   --dashboard-title-size: 14px;
-  --dashboard-subtitle-color: var(--secondary-text-color);
+  --dashboard-subtitle-color: var(--text-tertiary);
   --dashboard-value-size: 30px;
   --dashboard-kpi-size: 13px;
   --dashboard-gap-compact: var(--global-card-gap);
@@ -1333,27 +1333,27 @@ export default {
 
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
-  --saas-text-secondary: var(--secondary-text-color);
+  --saas-text-secondary: var(--text-tertiary);
   --saas-border-soft: #eef1f5;
   --saas-card-bg: #ffffff;
   --saas-card-shadow: none;
 
   --theme-text-primary: var(--text-primary);
-  --theme-text-secondary: var(--secondary-text-color);
+  --theme-text-secondary: var(--text-tertiary);
   --theme-text-subtle: #9ca3af;
   --theme-text-emphasis: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
   --theme-border-soft: #e5e7eb;
   --theme-white: #ffffff;
-  --quota-label-color: var(--secondary-text-color);
+  --quota-label-color: var(--text-tertiary);
   --quota-value-color: var(--text-primary);
   --quota-progress-start: #60a5fa;
   --quota-progress-end: #3b82f6;
   --quota-muted-fill: #cbd5e1;
   --quota-total-bg-end: #f8fbff;
   --quota-expired-border: #d1d5db;
-  --plan-meta-text: var(--secondary-text-color);
+  --plan-meta-text: var(--text-tertiary);
   --plan-expired-strip-text: #b91c1c;
   --plan-expired-strip-bg: rgba(248, 113, 113, 0.16);
   --plan-expired-strip-border: rgba(239, 68, 68, 0.32);
@@ -1550,7 +1550,7 @@ export default {
           border-color: var(--quota-expired-border);
 
           .usage-card-title {
-            color: var(--secondary-text-color);
+            color: var(--text-tertiary);
           }
         }
 
@@ -1643,7 +1643,7 @@ export default {
 
           .plan-summary-label {
             font-size: $font-size-sm;
-            color: var(--secondary-text-color);
+            color: var(--text-tertiary);
 
             &.with-tooltip {
               display: inline-flex;
@@ -1723,7 +1723,7 @@ export default {
           .plan-action-helper-text {
             margin-top: 10px;
             font-size: $font-size-sm;
-            color: var(--secondary-text-color);
+            color: var(--text-tertiary);
             text-align: center;
           }
 
@@ -1939,7 +1939,7 @@ export default {
           .usage-reset-hint {
             width: 100%;
             font-size: $font-size-sm;
-            color: var(--secondary-text-color);
+            color: var(--text-tertiary);
           }
 
           @media (max-width: 576px) {
@@ -2129,11 +2129,11 @@ export default {
       gap: 10px;
       font-size: $font-size-sm;
       line-height: 1.45;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
 
       .traffic-up,
       .traffic-down {
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
         font-weight: $font-weight-semibold;
       }
     }
@@ -2146,7 +2146,7 @@ export default {
     }
 
     .ip-location-state {
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-sm;
 
       &.error {
@@ -2221,7 +2221,7 @@ export default {
 
     .ip-address-secondary {
       font-size: $font-size-sm;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       letter-spacing: 0.2px;
     }
 
@@ -2246,7 +2246,7 @@ export default {
     }
 
     .ip-region {
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-sm;
     }
   }
@@ -2261,7 +2261,7 @@ export default {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    color: var(--tertiary-text-color);
+    color: var(--text-quaternary);
     cursor: help;
 
     .info-tooltip-content {
@@ -2322,7 +2322,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-md;
     }
 
@@ -2689,7 +2689,7 @@ export default {
       justify-content: center;
       border: none;
       background: transparent;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       cursor: pointer;
 
       &:hover {
@@ -2718,7 +2718,7 @@ export default {
 
   .traffic-package-desc {
     margin: 0 0 14px;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     font-size: $font-size-md;
     line-height: 1.5;
   }
@@ -2764,7 +2764,7 @@ export default {
 
   .item-content {
     min-height: 32px;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     font-size: $font-size-sm;
     line-height: 1.45;
   }

@@ -1200,7 +1200,7 @@ export default {
       p {
         margin: 0;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         font-size: $font-size-md;
 
@@ -1292,7 +1292,7 @@ export default {
 
         margin: 0;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         line-height: 1.5;
       }
@@ -1490,7 +1490,7 @@ export default {
             }
 
             &.disabled {
-              color: var(--tertiary-text-color);
+              color: var(--text-quaternary);
             }
           }
 
@@ -1502,7 +1502,7 @@ export default {
             line-height: 1.5;
 
             &.disabled-text {
-              color: var(--secondary-text-color);
+              color: var(--text-tertiary);
             }
           }
         }
@@ -1700,7 +1700,7 @@ export default {
 
           .original-price {
             text-decoration: line-through;
-            color: var(--secondary-text-color);
+            color: var(--text-tertiary);
             font-size: $font-size-sm;
             margin-left: 5px;
           }
@@ -1763,7 +1763,7 @@ export default {
       }
 
       &::placeholder {
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         opacity: 0.6;
       }
@@ -1841,7 +1841,7 @@ export default {
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-md;
       display: inline-flex;
       align-items: center;
@@ -1856,7 +1856,7 @@ export default {
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-md;
       cursor: pointer;
       line-height: 1;
@@ -1953,7 +1953,7 @@ export default {
         min-width: 0;
         font-size: $font-size-md;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         letter-spacing: 0.2px;
 
@@ -2102,7 +2102,7 @@ export default {
     color: var(--text-primary);
 
     &::placeholder {
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
     }
   }
 

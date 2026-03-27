@@ -1006,7 +1006,7 @@ onUnmounted(() => {
 
       margin-top: 16px;
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
 
     }
 
@@ -1046,7 +1046,7 @@ onUnmounted(() => {
 
   .error-icon, .empty-icon {
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     opacity: 0.7;
 
@@ -1124,7 +1124,7 @@ onUnmounted(() => {
 
         font-weight: $font-weight-semibold;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         background-color: rgba(0, 0, 0, 0.02);
 
