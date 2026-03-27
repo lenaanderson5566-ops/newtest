@@ -2676,6 +2676,15 @@ export default {
 @media (max-width: 768px) {
   .order-confirm-container {
     margin-top: 15px;
+    width: calc(100% + (var(--page-edge-gap, 2px) * 2));
+    margin-left: calc(var(--page-edge-gap, 2px) * -1);
+    margin-right: calc(var(--page-edge-gap, 2px) * -1);
+
+    :deep(.page-inner) {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      max-width: 100%;
+    }
 
     .welcome-card {
       padding: 15px;
@@ -2704,7 +2713,7 @@ export default {
     }
 
     .subscription-intro-section {
-      padding: 10px;
+      padding: 0;
     }
 
     .plan-selector-grid {
