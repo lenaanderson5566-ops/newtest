@@ -38,14 +38,7 @@
     <!-- 路由视图只对内容部分应用过渡效果 -->
     <div
       ref="appContentWrapperRef"
-      :class="[
-        'app-content-wrapper',
-        {
-          'with-left-nav': $route.meta.requiresAuth,
-          'with-top-bar': $route.meta.requiresAuth,
-          'with-bottom-nav-space': shouldReserveBottomNavSpace
-        }
-      ]"
+      :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]"
     >
       <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
         <router-view v-slot="{ Component, route }">
@@ -128,11 +121,9 @@ export default {
     const { showToast } = useToast();
     const siteConfig = ref(SITE_CONFIG);
     const cachedRoutes = computed(() => pageCache.getCachedRoutes());
-    const shouldReserveBottomNavSpace = ref(false);
     const topFixedBarRef = ref(null);
     const appContentWrapperRef = ref(null);
     let topBarResizeObserver = null;
-    let contentResizeObserver = null;
 
     const handleRedirectParam = () => {
       let redirectParam = null;
@@ -236,20 +227,6 @@ export default {
       wrapperEl.style.setProperty('--app-top-bar-height', `${topBarHeight}px`);
     };
 
-    const syncBottomNavSpace = () => {
-      if (typeof window === 'undefined' || typeof document === 'undefined') return;
-
-      const isAuthLayout = Boolean(route.meta.requiresAuth);
-      const isMobileNavMode = window.innerWidth <= 991;
-      if (!isAuthLayout || !isMobileNavMode) {
-        shouldReserveBottomNavSpace.value = false;
-        return;
-      }
-
-      const docEl = document.documentElement;
-      shouldReserveBottomNavSpace.value = docEl.scrollHeight > docEl.clientHeight + 1;
-    };
-
     provide('languageChangedSignal', languageChangedSignal);
 
     const clearCache = () => {
@@ -287,11 +264,9 @@ export default {
 
       nextTick(() => {
         syncTopBarHeight();
-        syncBottomNavSpace();
       });
 
       window.addEventListener('resize', syncTopBarHeight);
-      window.addEventListener('resize', syncBottomNavSpace);
 
       if (typeof window !== 'undefined' && 'ResizeObserver' in window && topFixedBarRef.value) {
         topBarResizeObserver = new ResizeObserver(() => {
@@ -300,24 +275,14 @@ export default {
         topBarResizeObserver.observe(topFixedBarRef.value);
       }
 
-      if (typeof window !== 'undefined' && 'ResizeObserver' in window && appContentWrapperRef.value) {
-        contentResizeObserver = new ResizeObserver(() => {
-          syncBottomNavSpace();
-        });
-        contentResizeObserver.observe(appContentWrapperRef.value);
-      }
-
     });
 
     onUnmounted(() => {
       window.removeEventListener('languageChanged', onLanguageChanged);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', syncTopBarHeight);
-      window.removeEventListener('resize', syncBottomNavSpace);
       topBarResizeObserver?.disconnect();
       topBarResizeObserver = null;
-      contentResizeObserver?.disconnect();
-      contentResizeObserver = null;
     });
 
     watch(
@@ -325,7 +290,6 @@ export default {
       () => {
         nextTick(() => {
           syncTopBarHeight();
-          syncBottomNavSpace();
         });
       },
       { immediate: true }
@@ -338,7 +302,6 @@ export default {
       PROFILE_CONFIG,
       cachedRoutes,
       hasUnreadNotice,
-      shouldReserveBottomNavSpace,
       topFixedBarRef,
       appContentWrapperRef
     };
@@ -546,8 +509,8 @@ export default {
 }
 
 @media (max-width: 991px) {
-  .app-content-wrapper.with-bottom-nav-space {
-    --mobile-bottom-nav-space: calc(86px + env(safe-area-inset-bottom, 0px));
+  .app-content-wrapper.with-left-nav {
+    --mobile-bottom-nav-space: env(safe-area-inset-bottom, 0px);
     padding-bottom: var(--mobile-bottom-nav-space);
   }
 }
