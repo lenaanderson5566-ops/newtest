@@ -1544,8 +1544,8 @@ export default {
           width: 22px;
           height: 22px;
           border-radius: 50%;
-          color: #4d4ad5;
-          background: #fff;
+          color: var(--theme-color);
+          background: var(--card-background);
           padding: 3px;
           flex-shrink: 0;
         }
@@ -2163,8 +2163,8 @@ export default {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        color: #4d4ad5;
-        background: #fff;
+        color: var(--theme-color);
+        background: var(--card-background);
       }
 
       .mobile-plan-details {

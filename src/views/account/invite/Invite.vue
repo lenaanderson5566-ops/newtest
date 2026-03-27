@@ -778,7 +778,7 @@ export default {
     }
 
     .card-title {
-      font-size: var(--font-size-base);
+      font-size: $font-size-md;
       line-height: 1.25;
     }
 
@@ -817,14 +817,14 @@ export default {
         gap: 6px;
 
         .stats-value {
-          font-size: var(--font-size-lg);
+          font-size: $font-size-xl;
           font-weight: $font-weight-bold;
           margin-bottom: 0;
           line-height: 1.05;
         }
 
         .stats-label {
-          font-size: var(--font-size-sm);
+          font-size: $font-size-sm;
           line-height: 1.35;
         }
       }
@@ -847,7 +847,7 @@ export default {
         position: absolute;
         left: 12px;
         top: 12px;
-        font-size: var(--font-size-sm);
+        font-size: $font-size-sm;
         font-weight: $font-weight-bold;
         color: rgba(var(--theme-color-rgb), 0.78);
       }
@@ -865,12 +865,12 @@ export default {
 
       .rule-content {
         h3 {
-          font-size: var(--font-size-base);
+          font-size: $font-size-md;
           margin-bottom: 3px;
         }
 
         p {
-          font-size: var(--font-size-sm);
+          font-size: $font-size-sm;
           line-height: 1.35;
         }
       }
@@ -924,13 +924,13 @@ export default {
   }
 
   .kpi-label {
-    font-size: var(--font-size-sm);
+    font-size: $font-size-sm;
     color: var(--text-tertiary);
     margin-bottom: 6px;
   }
 
   .kpi-value {
-    font-size: var(--font-size-lg);
+    font-size: $font-size-xl;
     font-weight: $font-weight-bold;
     line-height: 1.1;
   }
@@ -957,7 +957,7 @@ export default {
   }
 
   .invite-code-display {
-    font-size: var(--font-size-lg);
+    font-size: $font-size-xl;
     padding: 8px 12px;
   }
 }

@@ -755,9 +755,9 @@ onMounted(async () => {
     box-shadow: none;
 
     &.is-bronze { background: linear-gradient(135deg, #b27241, #d39d63); }
-    &.is-silver { background: linear-gradient(135deg, #8ea0bf, #d4deef); color: #23324d; }
-    &.is-gold { background: linear-gradient(135deg, #f59e0b, #fcd34d); color: #5b3a00; }
-    &.is-platinum { background: linear-gradient(135deg, #5ba7c6, #a8e4ff); color: #07364a; }
+    &.is-silver { background: linear-gradient(135deg, #8ea0bf, #d4deef); color: var(--text-secondary); }
+    &.is-gold { background: linear-gradient(135deg, #f59e0b, #fcd34d); color: var(--text-secondary); }
+    &.is-platinum { background: linear-gradient(135deg, #5ba7c6, #a8e4ff); color: var(--text-secondary); }
     &.is-diamond { background: linear-gradient(135deg, #6a7bff, #9dc7ff); }
     &.is-default { background: linear-gradient(135deg, #6379d6, #91a4ff); }
   }

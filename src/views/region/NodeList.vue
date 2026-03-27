@@ -936,7 +936,7 @@ onMounted(() => {
         padding: 0 10px;
         border-radius: 999px;
         background-color: rgba(190, 24, 93, 0.12);
-        color: #be185d;
+        color: var(--text-secondary);
         font-weight: $font-weight-semibold;
         display: inline-flex;
         align-items: center;
