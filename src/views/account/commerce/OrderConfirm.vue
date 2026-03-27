@@ -983,6 +983,7 @@ export default {
     const checkoutTradeNo = async (tradeNo) => {
       if (!tradeNo) return;
       hasNavigatedAfterSuccess.value = false;
+      paymentTradeNo.value = tradeNo;
       loading.paying = true;
       try {
         const methodForCheckout =
