@@ -21,68 +21,51 @@
         <!-- 左侧内容：订阅信息和周期选择 -->
 
         <div class="left-column">
-          <!-- 订阅信息卡片 - 骨架屏 -->
-
-          <div class="plan-card glassmorphism" v-if="loading.plan">
+          <div class="section-wrapper subscription-intro-section" v-if="loading.plan">
             <div class="skeleton-card">
               <div class="skeleton-header"></div>
-
               <div class="skeleton-body">
                 <div class="skeleton-title"></div>
-
                 <div class="skeleton-features">
-                  <div
-                    class="skeleton-feature"
-                    v-for="j in 4"
-                    :key="'feature-' + j"
-                  ></div>
+                  <div class="skeleton-feature" v-for="j in 4" :key="'feature-' + j"></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- 订阅信息卡片 - 实际内容 -->
-
-          <div class="plan-card glassmorphism" v-else-if="plan">
-            <div class="card-header">
-              <h3 class="card-title">{{ plan.name }}</h3>
-
-              <div v-if="shouldShowStockBadge(plan)" class="card-badge" :class="getStockBadgeClass(plan)">
-                <IconBox :size="16" class="badge-icon" />
-
-                <span>{{ getPlanStockText(plan) }}</span>
-              </div>
+          <div class="section-wrapper subscription-intro-section" v-else-if="plan">
+            <div class="plan-selector-grid">
+              <button
+                v-for="(item, idx) in displayPlanOptions"
+                :key="`order-plan-${item.id}`"
+                type="button"
+                class="plan-selector-btn"
+                :class="{ active: Number(plan?.id) === Number(item.id), 'is-current': isCurrentPlanOption(item), [`tone-${(idx % 3) + 1}`]: true }"
+                @click="selectPlanOption(item)"
+              >
+                <span class="selector-current-badge" v-if="isCurrentPlanOption(item)">{{ $t('shop.plan.current') }}</span>
+                <span class="selector-name">{{ item.name }}</span>
+                <span class="selector-check" v-if="Number(plan?.id) === Number(item.id)">
+                  <IconCheck :size="14" />
+                </span>
+              </button>
             </div>
 
-            <div class="card-body">
-              <!-- 订阅详细信息 -->
-
-              <div class="plan-features">
-                <!-- JSON格式内容 -->
-
-                <template v-if="isJsonContent(plan.content)">
-                  <div
-                    class="feature-item"
-                    v-for="(feature, index) in parseJsonContent(plan.content)"
-                    :key="index"
-                  >
-                    <IconCheck
-                      v-if="feature.support"
-                      class="feature-icon enabled"
-                    />
-
-                    <IconX v-else class="feature-icon disabled" />
-
-                    <span :class="{ 'disabled-text': !feature.support }">{{
-                      feature.feature
-                    }}</span>
-                  </div>
-                </template>
-
-                <!-- HTML格式内容 -->
-
-                <div v-else class="html-content" v-html="plan.content"></div>
+            <div class="selected-plan-details">
+              <div class="detail-row">
+                <span class="detail-label">价格</span>
+                <span class="detail-value">{{ formatCurrencyAmount(originalPrice) }}</span>
               </div>
+              <div class="detail-row">
+                <span class="detail-label">周期</span>
+                <span class="detail-value">{{ selectedPriceType ? formatPeriodOption(selectedPriceType) : '-' }}</span>
+              </div>
+              <template v-if="isJsonContent(plan.content)">
+                <div class="detail-row feature-row" v-for="(feature, index) in parseJsonContent(plan.content)" :key="`feature-row-${index}`">
+                  <span class="detail-label">{{ feature.feature }}</span>
+                  <span class="detail-value">{{ feature.support ? '支持' : '不支持' }}</span>
+                </div>
+              </template>
             </div>
           </div>
 
@@ -306,6 +289,7 @@ import { useRoute, useRouter } from "vue-router";
 
 import {
   getCommConfig,
+  fetchPlans,
   fetchPlanById,
   verifyCoupon as checkCoupon,
   submitOrder as createOrder,
@@ -363,6 +347,7 @@ export default {
     });
 
     const plan = ref(null);
+    const planOptions = ref([]);
 
     const userInfo = ref(null);
 
@@ -491,6 +476,11 @@ export default {
       return prices;
     });
 
+    const displayPlanOptions = computed(() => {
+      if (planOptions.value.length) return planOptions.value;
+      return plan.value ? [plan.value] : [];
+    });
+
     const bestValuePeriod = computed(() => {
       if (!plan.value) return "";
 
@@ -599,6 +589,20 @@ export default {
 
     const selectPriceType = (type) => {
       selectedPriceType.value = type;
+    };
+
+    const isCurrentPlanOption = (targetPlan) => {
+      const currentPlanId = Number(userInfo.value?.plan_id || 0);
+      if (!currentPlanId) return false;
+      return Number(targetPlan?.id) === currentPlanId;
+    };
+
+    const selectPlanOption = (targetPlan) => {
+      if (!targetPlan) return;
+      plan.value = { ...targetPlan };
+      const firstValidPriceType = Object.keys(availablePrices.value)[0];
+      selectedPriceType.value = firstValidPriceType || "";
+      removeCoupon();
     };
 
     const getPeriodMonthCount = (type) => {
@@ -938,6 +942,15 @@ export default {
         }
 
         const response = await fetchPlanById(route.query.id, locale.value);
+        try {
+          const plansResponse = await fetchPlans(locale.value);
+          if (Array.isArray(plansResponse?.data)) {
+            planOptions.value = plansResponse.data;
+          }
+        } catch (planListError) {
+          console.warn("Failed to fetch plan list for selector:", planListError);
+          planOptions.value = [];
+        }
 
         if (response.data) {
           plan.value = response.data;
@@ -1054,6 +1067,8 @@ export default {
 
     return {
       plan,
+      planOptions,
+      displayPlanOptions,
 
       userInfo,
 
@@ -1106,6 +1121,8 @@ export default {
       parseJsonContent,
 
       selectPriceType,
+      selectPlanOption,
+      isCurrentPlanOption,
       showPeriodDiscountTag,
       getPeriodDiscountPercent,
       getPeriodOriginalPrice,
@@ -1359,6 +1376,114 @@ export default {
         border-radius: 2px;
       }
     }
+  }
+
+  .subscription-intro-section {
+    border-radius: $border-radius-sm;
+    border: 1px solid rgba(var(--text-color-rgb), 0.08);
+    background: rgba(var(--card-background-rgb, 255, 255, 255), 0.85);
+    padding: 14px;
+    margin-bottom: 16px;
+  }
+
+  .plan-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .plan-selector-btn {
+    position: relative;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--card-background);
+    min-height: 110px;
+    padding: 12px;
+    text-align: left;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.22s ease;
+
+    &.active {
+      border-color: rgba(var(--theme-color-rgb), 0.68);
+      color: var(--text-on-dark-primary);
+    }
+
+    &.active.tone-1 { background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%); }
+    &.active.tone-2 { background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%); }
+    &.active.tone-3 { background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%); }
+  }
+
+  .selector-current-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    border-radius: 14px 14px 0 0;
+    background: #222;
+    color: var(--text-on-dark-primary);
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .selector-name {
+    margin-top: 30px;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    line-height: 1.2;
+  }
+
+  .selector-check {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--card-background);
+    color: var(--theme-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .selected-plan-details {
+    margin-top: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 6px 12px;
+  }
+
+  .detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .detail-label {
+    font-size: $font-size-md;
+    color: var(--text-tertiary);
+  }
+
+  .detail-value {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
+    text-align: right;
   }
 
   .section-wrapper.period-section {
@@ -2476,6 +2601,34 @@ export default {
           }
         }
       }
+    }
+
+    .subscription-intro-section {
+      padding: 10px;
+    }
+
+    .plan-selector-grid {
+      gap: 8px;
+    }
+
+    .plan-selector-btn {
+      min-height: 96px;
+      padding: 10px;
+    }
+
+    .selector-current-badge {
+      height: 28px;
+      font-size: $font-size-xs;
+    }
+
+    .selector-name {
+      margin-top: 28px;
+      font-size: $font-size-lg;
+    }
+
+    .detail-label,
+    .detail-value {
+      font-size: $font-size-sm;
     }
 
     .content-wrapper {
