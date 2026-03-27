@@ -456,22 +456,26 @@ export default {
       if (!plan.value) return {};
 
       const prices = {};
-
-      const priceTypes = [
+      const recurringTypes = [
         "month_price",
         "quarter_price",
         "half_year_price",
         "year_price",
         "two_year_price",
         "three_year_price",
-        "onetime_price",
       ];
+      const hasRecurring = recurringTypes.some((type) => plan.value[type] !== null);
 
-      priceTypes.forEach((type) => {
+      recurringTypes.forEach((type) => {
         if (plan.value[type] !== null) {
           prices[type] = plan.value[type];
         }
       });
+
+      // 与订阅计划页保持一致：有周期套餐时，不展示 onetime
+      if (!hasRecurring && plan.value.onetime_price !== null) {
+        prices.onetime_price = plan.value.onetime_price;
+      }
 
       return prices;
     });
