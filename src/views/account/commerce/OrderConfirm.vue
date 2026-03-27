@@ -52,14 +52,6 @@
             </div>
 
             <div class="selected-plan-details">
-              <div class="detail-row">
-                <span class="detail-label">价格</span>
-                <span class="detail-value">{{ formatCurrencyAmount(originalPrice) }}</span>
-              </div>
-              <div class="detail-row">
-                <span class="detail-label">周期</span>
-                <span class="detail-value">{{ selectedPriceType ? formatPeriodOption(selectedPriceType) : '-' }}</span>
-              </div>
               <template v-if="isJsonContent(plan.content)">
                 <div class="detail-row feature-row" v-for="(feature, index) in parseJsonContent(plan.content)" :key="`feature-row-${index}`">
                   <span class="detail-label">{{ feature.feature }}</span>
@@ -356,6 +348,33 @@ export default {
     const currencySymbol = ref("¥");
 
     const selectedPriceType = ref("");
+    const recurringTypes = [
+      "month_price",
+      "quarter_price",
+      "half_year_price",
+      "year_price",
+      "two_year_price",
+      "three_year_price",
+    ];
+
+    const normalizePriceValue = (targetPlan, periodType) => {
+      if (!targetPlan || !periodType) return null;
+      const rawValue = targetPlan[periodType];
+      if (rawValue === null || rawValue === undefined || rawValue === "") {
+        return null;
+      }
+      const parsed = Number(rawValue);
+      return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
+    };
+
+    const hasPeriodPrice = (targetPlan, periodType) =>
+      normalizePriceValue(targetPlan, periodType) !== null;
+
+    const hasRecurringPrice = (targetPlan) =>
+      recurringTypes.some((type) => hasPeriodPrice(targetPlan, type));
+
+    const isOnetimeOnly = (targetPlan) =>
+      hasPeriodPrice(targetPlan, "onetime_price") && !hasRecurringPrice(targetPlan);
 
     const couponCode = ref("");
 
@@ -456,33 +475,29 @@ export default {
       if (!plan.value) return {};
 
       const prices = {};
-      const recurringTypes = [
-        "month_price",
-        "quarter_price",
-        "half_year_price",
-        "year_price",
-        "two_year_price",
-        "three_year_price",
-      ];
-      const hasRecurring = recurringTypes.some((type) => plan.value[type] !== null);
 
       recurringTypes.forEach((type) => {
-        if (plan.value[type] !== null) {
-          prices[type] = plan.value[type];
+        if (hasPeriodPrice(plan.value, type)) {
+          prices[type] = normalizePriceValue(plan.value, type);
         }
       });
 
       // 与订阅计划页保持一致：有周期套餐时，不展示 onetime
-      if (!hasRecurring && plan.value.onetime_price !== null) {
-        prices.onetime_price = plan.value.onetime_price;
+      if (!hasRecurringPrice(plan.value) && hasPeriodPrice(plan.value, "onetime_price")) {
+        prices.onetime_price = normalizePriceValue(plan.value, "onetime_price");
       }
 
       return prices;
     });
 
     const displayPlanOptions = computed(() => {
-      if (planOptions.value.length) return planOptions.value;
-      return plan.value ? [plan.value] : [];
+      if (planOptions.value.length) {
+        return planOptions.value.filter((item) => !isOnetimeOnly(item));
+      }
+      if (plan.value && !isOnetimeOnly(plan.value)) {
+        return [plan.value];
+      }
+      return [];
     });
 
     const bestValuePeriod = computed(() => {
@@ -949,7 +964,7 @@ export default {
         try {
           const plansResponse = await fetchPlans(locale.value);
           if (Array.isArray(plansResponse?.data)) {
-            planOptions.value = plansResponse.data;
+            planOptions.value = plansResponse.data.filter((item) => !isOnetimeOnly(item));
           }
         } catch (planListError) {
           console.warn("Failed to fetch plan list for selector:", planListError);
@@ -959,7 +974,7 @@ export default {
         if (response.data) {
           plan.value = response.data;
 
-          if (route.query.period && plan.value[route.query.period] !== null) {
+          if (route.query.period && hasPeriodPrice(plan.value, route.query.period)) {
             selectedPriceType.value = route.query.period;
           } else {
             const firstValidPriceType = Object.keys(availablePrices.value)[0];
