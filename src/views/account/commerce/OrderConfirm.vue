@@ -1,20 +1,6 @@
 <template>
   <div class="order-confirm-container page-shell">
     <div class="order-confirm-inner page-inner page-stack">
-      <!-- 用户现有订阅提示 -->
-
-      <div class="alert-card" v-if="showExistingPlanWarning">
-        <div class="alert-icon">
-          <IconAlertTriangle :size="22" />
-        </div>
-
-        <div class="alert-content">
-          <h4>{{ $t("order.existing_plan_warning_title") }}</h4>
-
-          <p>{{ $t("order.existing_plan_warning_desc") }}</p>
-        </div>
-      </div>
-
       <!-- 内容主体 -->
 
       <div class="content-wrapper">
@@ -460,16 +446,6 @@ export default {
       if (type === "year_price") return "年付";
       return t(`shop.plan.price_options.${getPriceTypeKey(type)}`);
     };
-
-    const userHasActivePlan = computed(() => {
-      if (!userInfo.value) return false;
-
-      return (
-        userInfo.value.plan_id &&
-        userInfo.value.expired_at &&
-        userInfo.value.expired_at * 1000 > Date.now()
-      );
-    });
 
     const availablePrices = computed(() => {
       if (!plan.value) return {};
@@ -1059,17 +1035,6 @@ export default {
       showToast(t("order.coupon_removed"), "info");
     };
 
-    const showExistingPlanWarning = computed(() => {
-      if (loading.userInfo || loading.plan || !plan.value || !userInfo.value) {
-        return false;
-      }
-
-      return (
-        userHasActivePlan.value && plan.value.id !== userInfo.value.plan_id
-      );
-    });
-
-
     watch(
       () => locale.value,
       (newLanguage, oldLanguage) => {
@@ -1125,8 +1090,6 @@ export default {
 
       formatCurrencyAmount,
 
-      userHasActivePlan,
-
       availablePrices,
 
       bestValuePeriod,
@@ -1159,8 +1122,6 @@ export default {
       getStockBadgeClass,
 
       removeCoupon,
-
-      showExistingPlanWarning,
 
       showPendingOrderModal,
       closePendingOrderModal,
@@ -1241,96 +1202,6 @@ export default {
         font-size: $font-size-md;
 
         line-height: 1.6;
-      }
-    }
-  }
-
-  .alert-card {
-    background-color: rgba(255, 152, 0, 0.08);
-
-    border: 1px solid rgba(255, 152, 0, 0.2);
-
-    border-radius: $border-radius-sm;
-
-    padding: 16px;
-
-    margin-bottom: 30px;
-
-    display: flex;
-
-    align-items: center;
-
-    width: 100%;
-
-    box-shadow: none;
-
-    backdrop-filter: blur(10px);
-
-    -webkit-backdrop-filter: blur(10px);
-
-    transition: all 0.3s ease;
-
-    &:hover {
-      transform: translateY(-2px);
-
-      box-shadow: none;
-    }
-
-    .alert-icon {
-      margin-right: 14px;
-
-      color: var(--warning-color);
-
-      flex-shrink: 0;
-
-      background-color: rgba(255, 152, 0, 0.1);
-
-      width: 44px;
-
-      height: 44px;
-
-      border-radius: $border-radius-sm;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 0;
-
-      svg {
-        width: 28px;
-
-        height: 28px;
-      }
-    }
-
-    .alert-content {
-      flex: 1;
-
-      min-width: 0;
-
-      h4 {
-        font-size: $font-size-md;
-
-        font-weight: $font-weight-semibold;
-
-        margin: 0 0 6px 0;
-
-        color: var(--warning-color);
-
-        letter-spacing: 0.2px;
-      }
-
-      p {
-        font-size: $font-size-md;
-
-        margin: 0;
-
-        color: var(--text-tertiary);
-
-        line-height: 1.5;
       }
     }
   }
