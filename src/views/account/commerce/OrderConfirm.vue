@@ -466,6 +466,7 @@ export default {
     const paymentTradeNo = ref("");
     const paymentCheckTimer = ref(null);
     const showPaymentSuccessPrompt = ref(false);
+    const hasNavigatedAfterSuccess = ref(false);
 
     const discountPercent = ref(0);
 
@@ -864,12 +865,27 @@ export default {
         clearInterval(paymentCheckTimer.value);
         paymentCheckTimer.value = null;
       }
+      if (hasNavigatedAfterSuccess.value) {
+        return;
+      }
+      hasNavigatedAfterSuccess.value = true;
       closePaymentModal();
       showPaymentSuccessPrompt.value = true;
-      showToast(t("payment.pay_success"), "success");
+      showToast(t("payment.payment_successful"), "success");
       setTimeout(() => {
         showPaymentSuccessPrompt.value = false;
       }, 2600);
+      if (paymentTradeNo.value) {
+        setTimeout(() => {
+          router.push({
+            path: "/payment",
+            query: {
+              trade_no: paymentTradeNo.value,
+              from: "order-confirm",
+            },
+          });
+        }, 900);
+      }
     };
 
     const performPaymentCheck = async (tradeNo = paymentTradeNo.value) => {
@@ -966,6 +982,7 @@ export default {
 
     const checkoutTradeNo = async (tradeNo) => {
       if (!tradeNo) return;
+      hasNavigatedAfterSuccess.value = false;
       loading.paying = true;
       try {
         const methodForCheckout =
