@@ -2676,9 +2676,9 @@ export default {
 @media (max-width: 768px) {
   .order-confirm-container {
     margin-top: 15px;
-    width: calc(100% + (var(--page-edge-gap, 2px) * 2));
-    margin-left: calc(var(--page-edge-gap, 2px) * -1);
-    margin-right: calc(var(--page-edge-gap, 2px) * -1);
+    width: calc(100% + 4px);
+    margin-left: -2px;
+    margin-right: -2px;
 
     :deep(.page-inner) {
       padding-left: 0 !important;
