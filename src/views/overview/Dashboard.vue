@@ -1715,7 +1715,7 @@ export default {
 
               @media (max-width: 576px) {
                 padding: 9px 10px;
-                font-size: $font-size-xs;
+                font-size: $font-size-sm;
               }
             }
           }
