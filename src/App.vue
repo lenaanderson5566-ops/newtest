@@ -580,10 +580,6 @@ export default {
     }
   }
 
-  main, .main-content, .content-container {
-    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
-    margin-bottom: 6px !important;
-  }
 }
 
 /* 统一窄屏容器规则：仅最外层保留 2px，内层容器全部归零，最大化可用宽度 */
