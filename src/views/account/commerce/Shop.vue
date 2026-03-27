@@ -106,7 +106,7 @@
                   <span class="chip-name">{{ plan.name }}</span>
                   <span class="chip-period" v-if="getMobilePlanSubtitle(plan)">{{ getMobilePlanSubtitle(plan) }}</span>
                   <span class="chip-check" v-if="selectedPlan && Number(selectedPlan.id) === Number(plan.id)">
-                    <IconCheck :size="16" />
+                    <IconCheck :size="14" />
                   </span>
                 </button>
               </div>
@@ -2157,8 +2157,8 @@ export default {
         position: absolute;
         right: 2px;
         bottom: 2px;
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
         border-radius: 50%;
         display: inline-flex;
         align-items: center;
