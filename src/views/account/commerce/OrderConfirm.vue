@@ -1445,7 +1445,7 @@ export default {
   .plan-selector-btn {
     position: relative;
     border: 1px solid var(--border-color);
-    border-radius: 14px;
+    border-radius: $border-radius;
     background: transparent;
     min-height: 110px;
     padding: 12px;
@@ -1473,7 +1473,7 @@ export default {
     left: 0;
     right: 0;
     height: 30px;
-    border-radius: 14px 14px 0 0;
+    border-radius: $border-radius $border-radius 0 0;
     background: #222;
     color: var(--text-on-dark-primary);
     font-size: $font-size-sm;
