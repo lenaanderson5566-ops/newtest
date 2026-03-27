@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-root-shell">
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
     <div class="static-layout" v-if="$route.meta.requiresAuth">
       <div class="top-fixed-bar" ref="topFixedBarRef">
@@ -316,6 +316,10 @@ export default {
 @use "@/assets/styles/base/animations.scss" as *;
 @use "@/assets/styles/base/scrollbar.scss" as *;
 
+.app-root-shell {
+  min-height: 100dvh;
+}
+
 
 .card,
 .dashboard-card,
@@ -469,7 +473,6 @@ export default {
 }
 .app-content-wrapper {
   width: 100%;
-  min-height: 100dvh;
   box-sizing: border-box;
   --page-edge-gap: 2px;
   --left-nav-gap: 10px;
