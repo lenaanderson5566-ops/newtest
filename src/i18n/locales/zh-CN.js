@@ -522,7 +522,7 @@ export default {
         giftCardResultType4: '已清空流量',
         giftCardResultType5: '已开通套餐：{value} 天',
         giftCardResultType5NoExpire: '已开通不过期套餐',
-        securityCenterTitle: '安全中心',
+        securityCenterTitle: '安全性',
         balanceDesc: '查看余额明细与充值记录',
         orderHistory: '订单记录',
         orderDesc: '查看历史订单与支付状态',

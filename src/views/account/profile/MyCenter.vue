@@ -592,7 +592,7 @@ onMounted(async () => {
   padding: 12px 16px;
   border: none;
   background: transparent;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   cursor: pointer;
@@ -845,7 +845,7 @@ onMounted(async () => {
 
 .section-title {
   margin: 0;
-  font-size: $font-size-md;
+  font-size: $font-size-lg;
   font-weight: $font-weight-bold;
   color: var(--text-primary);
 }
@@ -927,7 +927,7 @@ onMounted(async () => {
 .row-main { min-width: 0; }
 
 .row-title {
-  font-size: $font-size-md;
+  font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   color: var(--text-primary);
 }
