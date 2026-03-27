@@ -1295,6 +1295,11 @@ export default {
 .order-confirm-container {
   padding: 0;
 
+  :deep(.page-inner) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
   display: flex;
 
   justify-content: center;
