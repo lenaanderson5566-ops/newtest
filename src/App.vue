@@ -461,12 +461,6 @@ export default {
 
 
 .app-content-wrapper.with-top-bar {
-  height: 100vh;
-  box-sizing: border-box;
-  overflow-y: auto;
-  overflow-x: hidden;
-  overscroll-behavior-y: contain;
-
   .dashboard-card.welcome-card > .card-header,
   .dashboard-card.title-card > .card-header {
     display: none !important;
