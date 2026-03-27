@@ -246,7 +246,7 @@
                     loading.submitting ||
                     loading.paying ||
                     loading.plan ||
-                    !selectedMethod
+                    (totalWithFee > 0 && !selectedMethod)
                   "
                 >
                   <IconShoppingCart v-if="!loading.submitting && !loading.paying" :size="18" />
@@ -955,7 +955,7 @@ export default {
 
     const submitOrder = async () => {
       if (!selectedPriceType.value || loading.submitting || loading.cancellingExisting) return;
-      if (!selectedMethod.value) {
+      if (totalWithFee.value > 0 && !selectedMethod.value) {
         showToast(t("payment.select_method_first"), "warning");
         return;
       }
@@ -978,9 +978,23 @@ export default {
       if (!tradeNo) return;
       loading.paying = true;
       try {
-        const checkoutResp = await checkoutOrder(tradeNo, selectedMethod.value);
+        const methodForCheckout =
+          selectedMethod.value ||
+          (paymentMethods.value.length > 0 ? paymentMethods.value[0].id : null);
+        const checkoutResp = await checkoutOrder(tradeNo, methodForCheckout);
         if (!checkoutResp?.data) {
           showToast(checkoutResp?.message || t("payment.check_failed"), "error");
+          return;
+        }
+
+        if (totalWithFee.value <= 0) {
+          showToast(t("payment.payment_processing"), "info");
+          await performPaymentCheck(tradeNo);
+          if (!showPaymentSuccessPrompt.value) {
+            setTimeout(() => {
+              performPaymentCheck(tradeNo);
+            }, 1000);
+          }
           return;
         }
 
