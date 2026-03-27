@@ -1917,34 +1917,28 @@ export default {
       }
 
       &.traffic-board-total {
-        background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
-        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: var(--saas-card-bg);
+        border: 1px solid var(--dashboard-border-color);
         box-shadow: none;
 
         .usage-card-title {
-          color: var(--text-on-dark-primary);
+          color: var(--text-primary);
         }
+      }
 
+      &.traffic-board-total {
         .plan-summary-card {
-          .plan-summary-section {
-            background: rgba(255, 255, 255, 0.16);
+          .plan-summary-section-meta {
+            background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
             border: 1px solid rgba(255, 255, 255, 0.2);
-          }
 
-          .plan-name-main,
-          .plan-summary-label,
-          .plan-summary-value,
-          .usage-summary-line.in-plan-card,
-          .usage-reset-hint.in-plan-card {
-            color: var(--text-on-dark-primary);
-          }
+            .plan-name-main {
+              color: var(--text-on-dark-primary);
+            }
 
-          .plan-expire-meta {
-            color: var(--text-on-dark-secondary);
-          }
-
-          .section-progress-track.in-plan-card {
-            background: rgba(255, 255, 255, 0.2);
+            .plan-expire-meta {
+              color: var(--text-on-dark-secondary);
+            }
           }
         }
       }
