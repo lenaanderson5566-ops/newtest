@@ -152,7 +152,7 @@ export default {
       padding: 8px 10px;
       border-radius: $border-radius-sm;
       font-weight: $font-weight-medium;
-      font-size: $font-size-md;
+      font-size: $font-size-sm;
       color: var(--text-tertiary);
       text-decoration: none;
       text-align: left;
@@ -236,7 +236,7 @@ export default {
         min-width: 0;
         padding: 6px 8px;
         justify-content: center;
-        font-size: $font-size-md;
+        font-size: $font-size-sm;
         flex-direction: row;
         gap: 6px;
         height: 50px;

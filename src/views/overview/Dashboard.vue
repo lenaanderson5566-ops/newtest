@@ -1709,13 +1709,13 @@ export default {
               flex: 1;
               border-radius: var(--dashboard-button-radius);
               padding: 10px 14px;
-              font-size: $font-size-md;
+              font-size: $font-size-sm;
               font-weight: $font-weight-semibold;
               letter-spacing: 0.2px;
 
               @media (max-width: 576px) {
                 padding: 9px 10px;
-                font-size: $font-size-sm;
+                font-size: $font-size-xs;
               }
             }
           }

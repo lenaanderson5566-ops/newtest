@@ -407,7 +407,7 @@ export default {
 
   :deep(.language-btn) {
     min-width: 88px;
-    font-size: $font-size-md;
+    font-size: $font-size-sm;
   }
 }
 
