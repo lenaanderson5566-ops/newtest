@@ -597,7 +597,7 @@ export default {
       plan.value = { ...targetPlan };
       const firstValidPriceType = Object.keys(availablePrices.value)[0];
       selectedPriceType.value = firstValidPriceType || "";
-      removeCoupon();
+      removeCoupon({ silent: true });
     };
 
     const getPeriodMonthCount = (type) => {
@@ -1022,7 +1022,13 @@ export default {
       }
     };
 
-    const removeCoupon = () => {
+    const removeCoupon = ({ silent = false } = {}) => {
+      const hadCouponState =
+        couponApplied.value ||
+        Boolean(couponCode.value) ||
+        Boolean(couponInfo.value) ||
+        discountPercent.value > 0;
+
       couponCode.value = "";
 
       couponApplied.value = false;
@@ -1032,7 +1038,9 @@ export default {
       couponInfo.value = null;
       couponErrorMessage.value = "";
 
-      showToast(t("order.coupon_removed"), "info");
+      if (!silent && hadCouponState) {
+        showToast(t("order.coupon_removed"), "info");
+      }
     };
 
     watch(
