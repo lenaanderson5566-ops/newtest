@@ -1913,29 +1913,39 @@ export default {
         min-height: auto;
         height: auto;
         z-index: 8;
-        background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-
-        .usage-card-title,
-        .usage-percent,
-        .usage-percent-label {
-          color: var(--text-on-dark-primary);
-        }
-
-        .package-add-btn {
-          background: rgba(255, 255, 255, 0.2);
-          border: 1px solid rgba(255, 255, 255, 0.28);
-          color: var(--text-on-dark-primary);
-        }
+        background: var(--saas-card-bg);
       }
 
       &.traffic-board-total {
-        background: var(--saas-card-bg);
-        border: 1px solid var(--dashboard-border-color);
+        background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
+        border: 1px solid rgba(255, 255, 255, 0.18);
         box-shadow: none;
 
         .usage-card-title {
-          color: var(--text-primary);
+          color: var(--text-on-dark-primary);
+        }
+
+        .plan-summary-card {
+          .plan-summary-section {
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+          }
+
+          .plan-name-main,
+          .plan-summary-label,
+          .plan-summary-value,
+          .usage-summary-line.in-plan-card,
+          .usage-reset-hint.in-plan-card {
+            color: var(--text-on-dark-primary);
+          }
+
+          .plan-expire-meta {
+            color: var(--text-on-dark-secondary);
+          }
+
+          .section-progress-track.in-plan-card {
+            background: rgba(255, 255, 255, 0.2);
+          }
         }
       }
 
