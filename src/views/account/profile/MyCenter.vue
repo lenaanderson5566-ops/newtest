@@ -931,14 +931,14 @@ onMounted(async () => {
 .row-main { min-width: 0; }
 
 .row-title {
-  font-size: $font-size-lg;
+  font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   color: var(--text-primary);
 }
 
 .row-main p {
   margin: 3px 0 0;
-  font-size: $font-size-sm;
+  font-size: $font-size-xs;
   color: var(--text-tertiary);
 }
 

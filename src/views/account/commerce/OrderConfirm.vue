@@ -1495,7 +1495,7 @@ export default {
           }
 
           span {
-            font-size: $font-size-md;
+            font-size: $font-size-sm;
 
             color: var(--text-primary);
 
@@ -1508,7 +1508,7 @@ export default {
         }
 
         .html-content {
-          font-size: $font-size-md;
+          font-size: $font-size-sm;
 
           line-height: 1.6;
 
