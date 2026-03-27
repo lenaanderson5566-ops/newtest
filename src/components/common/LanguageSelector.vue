@@ -235,6 +235,22 @@ export default {
   }
 }
 
+@media (max-width: 768px) {
+  .language-btn {
+    .language-btn-text {
+      font-size: $font-size-md;
+    }
+
+    .language-icon {
+      font-size: $font-size-md;
+    }
+  }
+
+  .language-item {
+    font-size: $font-size-md;
+  }
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.3s ease;
