@@ -124,7 +124,6 @@ export default {
     const topFixedBarRef = ref(null);
     const appContentWrapperRef = ref(null);
     let topBarResizeObserver = null;
-    let contentResizeObserver = null;
 
     const handleRedirectParam = () => {
       let redirectParam = null;
@@ -228,20 +227,6 @@ export default {
       wrapperEl.style.setProperty('--app-top-bar-height', `${topBarHeight}px`);
     };
 
-    const syncBodyScrollState = () => {
-      if (typeof document === 'undefined') return;
-
-      const shouldControlBodyScroll = Boolean(route.meta.requiresAuth);
-      if (!shouldControlBodyScroll) {
-        document.body.classList.remove('app-auth-no-scroll');
-        return;
-      }
-
-      const docEl = document.documentElement;
-      const hasPageOverflow = docEl.scrollHeight > docEl.clientHeight + 1;
-      document.body.classList.toggle('app-auth-no-scroll', !hasPageOverflow);
-    };
-
     provide('languageChangedSignal', languageChangedSignal);
 
     const clearCache = () => {
@@ -279,11 +264,9 @@ export default {
 
       nextTick(() => {
         syncTopBarHeight();
-        syncBodyScrollState();
       });
 
       window.addEventListener('resize', syncTopBarHeight);
-      window.addEventListener('resize', syncBodyScrollState);
 
       if (typeof window !== 'undefined' && 'ResizeObserver' in window && topFixedBarRef.value) {
         topBarResizeObserver = new ResizeObserver(() => {
@@ -292,24 +275,14 @@ export default {
         topBarResizeObserver.observe(topFixedBarRef.value);
       }
 
-      if (typeof window !== 'undefined' && 'ResizeObserver' in window && appContentWrapperRef.value) {
-        contentResizeObserver = new ResizeObserver(() => {
-          syncBodyScrollState();
-        });
-        contentResizeObserver.observe(appContentWrapperRef.value);
-      }
     });
 
     onUnmounted(() => {
       window.removeEventListener('languageChanged', onLanguageChanged);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', syncTopBarHeight);
-      window.removeEventListener('resize', syncBodyScrollState);
       topBarResizeObserver?.disconnect();
       topBarResizeObserver = null;
-      contentResizeObserver?.disconnect();
-      contentResizeObserver = null;
-      document.body.classList.remove('app-auth-no-scroll');
     });
 
     watch(
@@ -317,7 +290,6 @@ export default {
       () => {
         nextTick(() => {
           syncTopBarHeight();
-          syncBodyScrollState();
         });
       },
       { immediate: true }
@@ -343,10 +315,6 @@ export default {
 @use "@/assets/styles/base/reset.scss" as *;
 @use "@/assets/styles/base/animations.scss" as *;
 @use "@/assets/styles/base/scrollbar.scss" as *;
-
-body.app-auth-no-scroll {
-  overflow-y: hidden;
-}
 
 
 .card,
