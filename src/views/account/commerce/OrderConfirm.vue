@@ -266,28 +266,6 @@
     </div>
 
     <transition name="modal-fade">
-      <div v-if="showPendingOrderModal" class="pending-order-modal">
-        <div class="pending-order-overlay" @click="closePendingOrderModal"></div>
-        <div class="pending-order-dialog" role="dialog" aria-modal="true" aria-labelledby="pending-order-title">
-          <div class="pending-order-icon">
-            <IconAlertTriangle :size="28" />
-          </div>
-          <div class="pending-order-header">
-            <h3 id="pending-order-title">注意</h3>
-            <p>您还有未完成的订单，购买前需要先取消，确定要取消之前的订单吗？</p>
-          </div>
-          <div class="pending-order-actions">
-            <button class="btn-return-orders cancel-btn" @click="goToMyOrders">返回我的订单</button>
-            <button class="btn-confirm-cancel confirm-btn" @click="confirmCancelPreviousOrder" :disabled="loading.cancellingExisting">
-              <span v-if="!loading.cancellingExisting">确定取消</span>
-              <span v-else class="loader"></span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </transition>
-
-    <transition name="modal-fade">
       <div v-if="showPaymentModal" class="pending-order-modal payment-modal">
         <div class="pending-order-overlay" @click="closePaymentModal"></div>
         <div class="pending-order-dialog payment-dialog" role="dialog" aria-modal="true">
@@ -357,7 +335,6 @@ import {
   IconBox,
   IconShoppingCart,
   IconDiscount2,
-  IconAlertTriangle,
   IconCircleCheck,
   IconCircle,
   IconCreditCard,
@@ -376,8 +353,6 @@ export default {
     IconShoppingCart,
 
     IconDiscount2,
-
-    IconAlertTriangle,
 
     IconCircleCheck,
 
@@ -455,9 +430,6 @@ export default {
 
     const couponInfo = ref(null);
 
-    const showPendingOrderModal = ref(false);
-
-    const pendingOrderTradeNo = ref("");
     const paymentMethods = ref([]);
     const selectedMethod = ref(null);
     const showPaymentModal = ref(false);
@@ -849,11 +821,6 @@ export default {
       return pending?.trade_no || "";
     };
 
-    const closePendingOrderModal = () => {
-      if (loading.cancellingExisting) return;
-      showPendingOrderModal.value = false;
-    };
-
     const closePaymentModal = () => {
       showPaymentModal.value = false;
       paymentQRCode.value = "";
@@ -922,41 +889,6 @@ export default {
       paymentCheckTimer.value = setInterval(() => {
         performPaymentCheck(tradeNo);
       }, 5000);
-    };
-
-    const goToMyOrders = () => {
-      closePendingOrderModal();
-      router.push('/orders');
-    };
-
-    const confirmCancelPreviousOrder = async () => {
-      if (loading.cancellingExisting) {
-        return;
-      }
-
-      loading.cancellingExisting = true;
-      try {
-        let tradeNo = pendingOrderTradeNo.value;
-        if (!tradeNo) {
-          tradeNo = await fetchLatestPendingTradeNo();
-        }
-
-        if (!tradeNo) {
-          showToast('未找到可取消的未完成订单', 'warning');
-          goToMyOrders();
-          return;
-        }
-
-        const resp = await cancelExistingOrder(tradeNo);
-        showToast(resp?.message || '订单已取消', 'success');
-        showPendingOrderModal.value = false;
-        pendingOrderTradeNo.value = '';
-        await executeOrderSubmission();
-      } catch (error) {
-        showToast(error?.response?.message || error?.message || '取消订单失败', 'error');
-      } finally {
-        loading.cancellingExisting = false;
-      }
     };
 
     const submitOrder = async () => {
@@ -1073,13 +1005,12 @@ export default {
             "";
 
           if (!conflictResolved && tradeNoToCancel) {
-            loading.cancellingExisting = true;
-            try {
-              await cancelExistingOrder(tradeNoToCancel);
-              pendingOrderTradeNo.value = "";
-              await executeOrderSubmission({ conflictResolved: true });
-            } catch (cancelError) {
-              showToast(
+              loading.cancellingExisting = true;
+              try {
+                await cancelExistingOrder(tradeNoToCancel);
+                await executeOrderSubmission({ conflictResolved: true });
+              } catch (cancelError) {
+                showToast(
                 cancelError?.response?.message ||
                   cancelError?.message ||
                   "取消订单失败",
@@ -1091,8 +1022,7 @@ export default {
             return;
           }
 
-          pendingOrderTradeNo.value = fallbackTradeNo;
-          showPendingOrderModal.value = true;
+          showToast(t("order.order_failed"), "error");
           return;
         }
 
@@ -1344,10 +1274,6 @@ export default {
 
       removeCoupon,
 
-      showPendingOrderModal,
-      closePendingOrderModal,
-      goToMyOrders,
-      confirmCancelPreviousOrder,
       showPaymentModal,
       paymentQRCode,
       paymentLink,
