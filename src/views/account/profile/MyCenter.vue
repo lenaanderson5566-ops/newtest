@@ -265,7 +265,6 @@
         </section>
       </div>
  
-      <div class="bottom-safe-area"></div>
     </div>
 
     <transition name="modal-fade">
@@ -1010,8 +1009,6 @@ input:checked + .slider { background-color: rgba(var(--theme-color-rgb), 1); }
 input:checked + .slider:before { transform: translateX(18px); }
 .slider.round { border-radius: 24px; }
 .slider.round:before { border-radius: 50%; }
-
-.bottom-safe-area { height: calc(env(safe-area-inset-bottom, 0px) + 10px); }
 
 .modal-overlay {
   position: fixed;
