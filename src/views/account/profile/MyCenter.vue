@@ -17,10 +17,6 @@
         <h3 class="section-title section-title-outside">{{ $t('myCenter.summaryTitle') }}</h3>
         <p class="section-subtitle">{{ $t('myCenter.summaryDesc') }}</p>
         <section class="summary-panel section-block dashboard-like-card">
-          <div class="summary-top">
-            <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">{{ $t('myCenter.topUp') }}</button>
-          </div>
-
           <div class="summary-grid">
             <div class="summary-item">
               <span class="label">{{ $t('myCenter.email') }}</span>
@@ -795,13 +791,6 @@ onMounted(async () => {
   }
 }
 
-.summary-top {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  margin-bottom: 0.8rem;
-}
 
 .summary-grid {
   display: grid;
@@ -995,11 +984,6 @@ onMounted(async () => {
   }
 }
 
-.mini-action {
-  height: 34px;
-  padding: 0 12px;
-  border-radius: $border-radius-sm;
-}
 
 .switch { position: relative; display: inline-block; width: 42px; height: 24px; }
 .switch input { opacity: 0; width: 0; height: 0; }
