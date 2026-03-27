@@ -260,6 +260,7 @@ export default {
         subscriptionPausedAfterExpiry: '订阅已过期，服务已暂停',
         renewToRestoreAccess: '续费后将立即恢复节点访问',
         expiredOnDate: '已于 {date} 到期',
+        expireSuffix: '到期',
         defaultSubscriptionName: '订阅',
         subscriptionStatus: {
             expired: '已过期',

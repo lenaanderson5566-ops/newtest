@@ -259,6 +259,7 @@ export default {
     subscriptionPausedAfterExpiry: '구독이 만료되어 서비스가 일시 중지되었습니다',
     renewToRestoreAccess: '갱신 후 노드 접근이 즉시 복구됩니다',
     expiredOnDate: '{date}에 만료됨',
+    expireSuffix: '만료',
     defaultSubscriptionName: '구독',
     subscriptionStatus: {
       expired: '만료됨',

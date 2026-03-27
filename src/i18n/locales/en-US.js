@@ -259,6 +259,7 @@ export default {
         subscriptionPausedAfterExpiry: 'Subscription has expired and service is paused',
         renewToRestoreAccess: 'Access will be restored immediately after renewal',
         expiredOnDate: 'Expired on {date}',
+        expireSuffix: 'expires',
         defaultSubscriptionName: 'Subscription',
         subscriptionStatus: {
             expired: 'Expired',

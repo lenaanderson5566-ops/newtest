@@ -77,7 +77,10 @@
                 <div class="plan-status-hero">
                   <div class="plan-name-main">{{ userPlan.name || '-' }}</div>
                   <div class="plan-expire-meta">
-                    <span>{{ planExpireMetaText }}</span>
+                    <span class="plan-expire-text">
+                      <span>{{ planExpireMetaText }}</span>
+                      <span v-if="shouldShowExpireSuffix" class="expire-suffix">{{ $t('dashboard.expireSuffix') }}</span>
+                    </span>
                     <span class="plan-status-tag" :class="`is-${subscriptionStatus}`">{{ subscriptionStatusLabel }}</span>
                   </div>
                 </div>
@@ -548,11 +551,9 @@ export default {
       if (userPlan.value.isExpireDatePermanent) {
         return t('dashboard.permanent');
       }
-      if (isPlanExpired.value) {
-        return t('dashboard.expiredOnDate', {date: userPlan.value.expireDate || '-'});
-      }
       return userPlan.value.expireDate || '-';
     });
+    const shouldShowExpireSuffix = computed(() => !userPlan.value.isExpireDatePermanent);
 
     const primaryPlanActionLabel = computed(() => {
       if (isPlanExpired.value) return t('dashboard.planAction.restoreNow');
@@ -1293,6 +1294,7 @@ export default {
       subscriptionStatusLabel,
       primaryPlanActionLabel,
       planExpireMetaText,
+      shouldShowExpireSuffix,
       secondaryPlanActionLabel,
       subscriptionTrafficSummary,
       primaryActionClass,
@@ -1644,6 +1646,16 @@ export default {
             flex-wrap: wrap;
             font-size: $font-size-sm;
             color: var(--plan-meta-text);
+
+            .plan-expire-text {
+              display: inline-flex;
+              align-items: center;
+              gap: 4px;
+            }
+
+            .expire-suffix {
+              color: var(--text-on-dark-secondary);
+            }
           }
 
           .plan-summary-section-actions {
@@ -1694,20 +1706,19 @@ export default {
             padding: 2px 8px;
             font-size: $font-size-sm;
             font-weight: $font-weight-semibold;
+            color: var(--text-on-dark-primary);
+            border: 1px solid rgba(255, 255, 255, 0.26);
 
             &.is-active {
-              color: var(--status-active-text);
-              background: var(--status-active-bg);
+              background: rgba(255, 255, 255, 0.2);
             }
 
             &.is-expiring {
-              color: var(--status-expiring-text);
-              background: var(--status-expiring-bg);
+              background: rgba(255, 255, 255, 0.2);
             }
 
             &.is-expired {
-              color: var(--status-expired-text);
-              background: var(--status-expired-bg);
+              background: rgba(255, 255, 255, 0.2);
             }
           }
 

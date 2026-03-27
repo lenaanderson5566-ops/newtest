@@ -259,6 +259,7 @@ export default {
     subscriptionPausedAfterExpiry: 'サブスクリプションの有効期限が切れており、サービスは停止中です',
     renewToRestoreAccess: '更新後、ノードアクセスは即時復旧します',
     expiredOnDate: '{date} に期限切れ',
+    expireSuffix: '期限',
     defaultSubscriptionName: 'サブスクリプション',
     subscriptionStatus: {
       expired: '期限切れ',

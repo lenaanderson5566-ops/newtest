@@ -266,6 +266,7 @@ export default {
         subscriptionPausedAfterExpiry: 'Gói thuê bao đã hết hạn, dịch vụ đã tạm dừng',
         renewToRestoreAccess: 'Sau khi gia hạn, quyền truy cập node sẽ được khôi phục ngay',
         expiredOnDate: 'Đã hết hạn vào {date}',
+        expireSuffix: 'hết hạn',
         defaultSubscriptionName: 'Đăng ký',
         subscriptionStatus: {
             expired: 'Đã hết hạn',
