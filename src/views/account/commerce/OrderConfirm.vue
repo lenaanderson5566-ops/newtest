@@ -37,14 +37,6 @@
               </button>
             </div>
 
-            <div class="selected-plan-details">
-              <template v-if="isJsonContent(plan.content)">
-                <div class="detail-row feature-row" v-for="(feature, index) in parseJsonContent(plan.content)" :key="`feature-row-${index}`">
-                  <span class="detail-label">{{ feature.feature }}</span>
-                  <span class="detail-value">{{ feature.support ? '支持' : '不支持' }}</span>
-                </div>
-              </template>
-            </div>
           </div>
 
           <!-- 周期选择 -->
@@ -556,30 +548,6 @@ export default {
       };
 
       return keyMap[type] || "";
-    };
-
-    const isJsonContent = (content) => {
-      if (!content) return false;
-
-      try {
-        const parsed = JSON.parse(content);
-
-        return (
-          Array.isArray(parsed) &&
-          parsed.length > 0 &&
-          Object.prototype.hasOwnProperty.call(parsed[0], "feature")
-        );
-      } catch (e) {
-        return false;
-      }
-    };
-
-    const parseJsonContent = (content) => {
-      try {
-        return JSON.parse(content);
-      } catch (e) {
-        return [];
-      }
     };
 
     const selectPriceType = (type) => {
@@ -1106,10 +1074,6 @@ export default {
 
       formatPeriodOption,
 
-      isJsonContent,
-
-      parseJsonContent,
-
       selectPriceType,
       selectPlanOption,
       isCurrentPlanOption,
@@ -1350,38 +1314,6 @@ export default {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .selected-plan-details {
-    margin-top: 14px;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 6px 12px;
-  }
-
-  .detail-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border-color);
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-
-  .detail-label {
-    font-size: $font-size-md;
-    color: var(--text-tertiary);
-  }
-
-  .detail-value {
-    font-size: $font-size-md;
-    font-weight: $font-weight-semibold;
-    color: var(--text-primary);
-    text-align: right;
   }
 
   .section-wrapper.period-section {
@@ -2522,11 +2454,6 @@ export default {
     .selector-name {
       margin-top: 28px;
       font-size: $font-size-lg;
-    }
-
-    .detail-label,
-    .detail-value {
-      font-size: $font-size-sm;
     }
 
     .content-wrapper {
