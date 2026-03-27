@@ -469,6 +469,8 @@ export default {
 }
 .app-content-wrapper {
   width: 100%;
+  min-height: 100dvh;
+  box-sizing: border-box;
   --page-edge-gap: 2px;
   --left-nav-gap: 10px;
   --left-nav-occupy: 220px;
@@ -510,7 +512,7 @@ export default {
 
 @media (max-width: 991px) {
   .app-content-wrapper.with-left-nav {
-    --mobile-bottom-nav-space: env(safe-area-inset-bottom, 0px);
+    --mobile-bottom-nav-space: calc(86px + env(safe-area-inset-bottom, 0px));
     padding-bottom: var(--mobile-bottom-nav-space);
   }
 }
