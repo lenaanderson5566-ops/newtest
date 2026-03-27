@@ -261,13 +261,6 @@
 
           <!-- 操作按钮 -->
 
-          <div class="action-buttons">
-            <button class="btn-back" @click="goBack" :disabled="loading.plan">
-              <IconArrowLeft :size="18" />
-
-              <span>{{ $t("order.back_to_shop") }}</span>
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -364,7 +357,6 @@ import {
   IconBox,
   IconShoppingCart,
   IconDiscount2,
-  IconArrowLeft,
   IconAlertTriangle,
   IconCircleCheck,
   IconCircle,
@@ -384,8 +376,6 @@ export default {
     IconShoppingCart,
 
     IconDiscount2,
-
-    IconArrowLeft,
 
     IconAlertTriangle,
 
@@ -1094,10 +1084,6 @@ export default {
       }
     };
 
-    const goBack = () => {
-      router.push("/shop");
-    };
-
     const fetchPlanData = async () => {
       loading.plan = true;
 
@@ -1249,12 +1235,16 @@ export default {
       }
     );
     onMounted(async () => {
-      await Promise.all([
-        fetchPlanData(),
-        fetchUserInfo(),
-        fetchConfig(),
-        fetchAvailablePaymentMethods(),
-      ]);
+      const tasks = [fetchUserInfo(), fetchConfig(), fetchAvailablePaymentMethods()];
+      if (route.query.id) {
+        tasks.unshift(fetchPlanData());
+      }
+      await Promise.all(tasks);
+
+      if (route.query.trade_no) {
+        paymentTradeNo.value = String(route.query.trade_no);
+        await performPaymentCheck(paymentTradeNo.value);
+      }
     });
 
     onBeforeUnmount(() => {
@@ -1327,8 +1317,6 @@ export default {
       verifyCoupon,
 
       submitOrder,
-
-      goBack,
 
       shouldShowStockBadge,
 
@@ -2488,122 +2476,6 @@ export default {
     }
   }
 
-  .action-buttons {
-    display: flex;
-    justify-content: flex-start;
-
-    margin: 30px 0 40px 0;
-
-    gap: 16px;
-
-    .btn-back {
-      height: 44px;
-
-      padding: 0 20px;
-
-      border-radius: $border-radius-sm;
-
-      background-color: transparent;
-
-      color: var(--text-primary);
-
-      font-size: $font-size-md;
-
-      font-weight: $font-weight-medium;
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 8px;
-
-      border: 1px solid var(--border-color);
-
-      cursor: pointer;
-
-      transition: all 0.3s ease;
-
-      box-shadow: none;
-
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-
-        transform: translateY(-2px);
-
-        box-shadow: none;
-      }
-    }
-
-    .btn-order {
-      height: 44px;
-
-      padding: 0 24px;
-
-      border-radius: $border-radius-sm;
-
-      background-color: var(--theme-color);
-
-      color: var(--text-on-dark-primary);
-
-      font-size: $font-size-md;
-
-      font-weight: $font-weight-medium;
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 8px;
-
-      border: none;
-
-      cursor: pointer;
-
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-      box-shadow: none;
-
-      will-change: transform, box-shadow;
-
-      &:hover:not(:disabled) {
-        background-color: color-mix(
-          in srgb,
-          var(--theme-color) 85%,
-          black
-        ) !important;
-
-        transform: translateY(-2px);
-
-        box-shadow: none;
-      }
-
-      &:active:not(:disabled) {
-        transform: translateY(0);
-
-        box-shadow: none;
-      }
-
-      &:disabled {
-        opacity: 0.6;
-
-        cursor: not-allowed;
-      }
-
-      .loader {
-        width: 16px;
-
-        height: 16px;
-
-        border: 2px solid rgba(255, 255, 255, 0.3);
-
-        border-radius: 50%;
-
-        border-top-color: white;
-
-        animation: spin 1s linear infinite;
-      }
-    }
-  }
 }
 
 .skeleton-card {
@@ -2898,43 +2770,6 @@ export default {
 
       .right-column {
         max-width: none;
-      }
-    }
-
-    .action-buttons {
-      position: relative;
-
-      z-index: 1;
-
-      margin: 24px 0 30px 0;
-
-      display: flex;
-
-      flex-direction: row;
-
-      gap: 12px;
-
-      transform: none;
-
-      opacity: 1;
-
-      transition: none;
-
-      .btn-back,
-      .btn-order {
-        flex: 1;
-
-        min-width: 0;
-
-        padding: 0 10px;
-
-        justify-content: center;
-
-        font-size: $font-size-sm;
-
-        height: 44px;
-
-        will-change: transform;
       }
     }
 
