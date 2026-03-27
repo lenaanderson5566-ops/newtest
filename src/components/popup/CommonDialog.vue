@@ -223,7 +223,7 @@ export default {
         background: none;
         border: none;
         cursor: pointer;
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -294,7 +294,7 @@ export default {
         color: var(--text-primary);
 
         &:hover {
-          background-color: var(--secondary-text-color);
+          background-color: var(--text-tertiary);
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
       }

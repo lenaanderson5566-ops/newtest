@@ -1200,7 +1200,7 @@ export default {
       p {
         margin: 0;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         font-size: $font-size-md;
 
@@ -1243,7 +1243,7 @@ export default {
     .alert-icon {
       margin-right: 14px;
 
-      color: #ff9800;
+      color: var(--warning-color);
 
       flex-shrink: 0;
 
@@ -1282,7 +1282,7 @@ export default {
 
         margin: 0 0 6px 0;
 
-        color: #ff9800;
+        color: var(--warning-color);
 
         letter-spacing: 0.2px;
       }
@@ -1292,7 +1292,7 @@ export default {
 
         margin: 0;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         line-height: 1.5;
       }
@@ -1442,7 +1442,7 @@ export default {
 
           border-color: rgba(76, 175, 80, 0.1);
 
-          color: #4caf50;
+          color: var(--success-color);
         }
 
         &.stock-warning {
@@ -1450,7 +1450,7 @@ export default {
 
           border-color: rgba(255, 152, 0, 0.1);
 
-          color: #ff9800;
+          color: var(--warning-color);
         }
 
         &.stock-danger {
@@ -1458,7 +1458,7 @@ export default {
 
           border-color: rgba(244, 67, 54, 0.1);
 
-          color: #f44336;
+          color: var(--error-color);
         }
 
         .badge-icon {
@@ -1490,7 +1490,7 @@ export default {
             }
 
             &.disabled {
-              color: #ccc;
+              color: var(--text-quaternary);
             }
           }
 
@@ -1502,7 +1502,7 @@ export default {
             line-height: 1.5;
 
             &.disabled-text {
-              color: var(--secondary-text-color);
+              color: var(--text-tertiary);
             }
           }
         }
@@ -1667,7 +1667,7 @@ export default {
           text-align: center;
 
           .discount-tag {
-            background-color: #ff4d4f;
+            background-color: var(--error-color);
             color: var(--text-on-dark-primary);
             font-size: $font-size-sm;
             padding: 2px 4px;
@@ -1700,7 +1700,7 @@ export default {
 
           .original-price {
             text-decoration: line-through;
-            color: var(--secondary-text-color);
+            color: var(--text-tertiary);
             font-size: $font-size-sm;
             margin-left: 5px;
           }
@@ -1763,7 +1763,7 @@ export default {
       }
 
       &::placeholder {
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         opacity: 0.6;
       }
@@ -1841,7 +1841,7 @@ export default {
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-md;
       display: inline-flex;
       align-items: center;
@@ -1856,7 +1856,7 @@ export default {
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-md;
       cursor: pointer;
       line-height: 1;
@@ -1897,7 +1897,7 @@ export default {
     }
 
     .coupon-discount-value {
-      color: #22c55e;
+      color: var(--success-color);
       font-size: $font-size-sm;
       font-weight: $font-weight-semibold;
       white-space: nowrap;
@@ -1910,7 +1910,7 @@ export default {
     line-height: 1.4;
 
     &.error {
-      color: #ef4444;
+      color: var(--error-color);
     }
   }
 
@@ -1953,7 +1953,7 @@ export default {
         min-width: 0;
         font-size: $font-size-md;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         letter-spacing: 0.2px;
 
@@ -1976,7 +1976,7 @@ export default {
         color: var(--text-primary);
 
         &.discount {
-          color: #f44336;
+          color: var(--error-color);
 
           font-weight: $font-weight-semibold;
         }
@@ -2071,7 +2071,7 @@ export default {
     color: var(--right-card-text);
 
     &::placeholder {
-      color: rgba(248, 250, 252, 0.55);
+      color: var(--text-on-dark-primary);
     }
   }
 
@@ -2091,7 +2091,7 @@ export default {
   }
 
   .order-summary-section .coupon-applied-tag {
-    color: rgba(248, 250, 252, 0.82);
+    color: var(--text-on-dark-primary);
     border-color: var(--right-card-border);
     background: rgba(148, 163, 184, 0.08);
   }
@@ -2102,7 +2102,7 @@ export default {
     color: var(--text-primary);
 
     &::placeholder {
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
     }
   }
 
@@ -2117,7 +2117,7 @@ export default {
   }
 
   .order-summary-section .summary-row .summary-value.discount {
-    color: #f44336;
+    color: var(--error-color);
   }
 
   .order-summary-section .summary-row.total .summary-label,

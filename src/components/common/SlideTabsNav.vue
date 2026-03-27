@@ -153,7 +153,7 @@ export default {
       border-radius: $border-radius-sm;
       font-weight: $font-weight-medium;
       font-size: $font-size-md;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       text-decoration: none;
       text-align: left;
       transition: all 0.25s ease;

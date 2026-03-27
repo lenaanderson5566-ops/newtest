@@ -1690,7 +1690,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--text-muted);
+      color: var(--text-quaternary);
 
       margin: 0;
 
@@ -1979,9 +1979,9 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
-    font-size: 1.1rem;
+    font-size: $font-size-lg;
 
   }
 
@@ -1989,7 +1989,7 @@ onMounted(() => {
 
   .error-icon {
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     opacity: 0.7;
 
@@ -2143,7 +2143,7 @@ onMounted(() => {
 
           font-size: $font-size-md;
 
-          color: var(--text-muted);
+          color: var(--text-quaternary);
 
           margin-bottom: 6px;
 
@@ -2163,7 +2163,7 @@ onMounted(() => {
 
           &.highlight {
 
-            color: #f44336;
+            color: var(--error-color);
 
           }
 
@@ -2233,7 +2233,7 @@ onMounted(() => {
 
           font-size: $font-size-sm;
 
-          color: var(--text-muted);
+          color: var(--text-quaternary);
 
         }
 
@@ -2297,7 +2297,7 @@ onMounted(() => {
 
           background-color: rgba(244, 67, 54, 0.1);
 
-          color: #f44336;
+          color: var(--error-color);
 
           border-color: rgba(244, 67, 54, 0.2);
 
@@ -2751,7 +2751,7 @@ onMounted(() => {
 
     border: none;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     cursor: pointer;
 
@@ -2871,7 +2871,7 @@ onMounted(() => {
 
       margin-top: 6px;
 
-      color: #f44336;
+      color: var(--error-color);
 
       font-size: $font-size-sm;
 
@@ -2969,7 +2969,7 @@ onMounted(() => {
 
       &.danger {
 
-        background-color: #f44336;
+        background-color: var(--error-color);
 
 
 
@@ -3149,7 +3149,7 @@ onMounted(() => {
 
         font-size: $font-size-sm;
 
-        color: var(--text-muted);
+        color: var(--text-quaternary);
 
 
 
@@ -3293,7 +3293,7 @@ onMounted(() => {
 
     margin: 12px 0;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
   }
 
@@ -3301,7 +3301,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     opacity: 0.7;
 
@@ -3385,7 +3385,7 @@ onMounted(() => {
 
     margin: 12px 0;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
   }
 
@@ -3561,7 +3561,7 @@ onMounted(() => {
 
     border-radius: 4px;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     cursor: pointer;
 

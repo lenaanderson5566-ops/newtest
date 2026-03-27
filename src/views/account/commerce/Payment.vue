@@ -1279,7 +1279,7 @@ export default {
 
     .card-body {
       p {
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
         margin: 0;
       }
     }
@@ -1358,7 +1358,7 @@ export default {
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: transparent;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1390,7 +1390,7 @@ export default {
     .overview-plan-meta {
       margin-top: 8px;
       font-size: $font-size-md;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       line-height: 1.3;
     }
 
@@ -1469,11 +1469,11 @@ export default {
       }
 
       .info-value.discount {
-        color: #f44336;
+        color: var(--error-color);
       }
 
       .info-value.fee {
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
       }
 
       .info-row.final-row {
@@ -1629,7 +1629,7 @@ export default {
 
         .method-fee {
           font-size: $font-size-sm;
-          color: var(--secondary-text-color);
+          color: var(--text-tertiary);
           white-space: nowrap;
         }
       }
@@ -1639,7 +1639,7 @@ export default {
       padding: 6px 12px 8px;
       border-top: 1px solid var(--border-color);
       font-size: $font-size-sm;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       line-height: 1.4;
       background: #fff;
     }
@@ -1660,10 +1660,10 @@ export default {
 
     .notice-icon {
       margin-right: 20px;
-      color: #4caf50;
+      color: var(--success-color);
 
       &.success {
-        color: #4caf50;
+        color: var(--success-color);
       }
     }
 
@@ -1672,7 +1672,7 @@ export default {
 
       h3 {
         margin: 0 0 8px;
-        color: #4caf50;
+        color: var(--success-color);
         font-size: $font-size-md;
       }
 
@@ -2187,7 +2187,7 @@ export default {
 
           &.warning {
             background-color: rgba(255, 152, 0, 0.15);
-            color: #ff9800;
+            color: var(--warning-color);
 
             svg {
               filter: none;
@@ -2215,7 +2215,7 @@ export default {
           font-size: $font-size-md;
           line-height: 1.6;
           margin: 0 0 24px;
-          color: var(--secondary-text-color);
+          color: var(--text-tertiary);
           max-width: 300px;
           margin-left: auto;
           margin-right: auto;
@@ -2420,7 +2420,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ff9800;
+    color: var(--warning-color);
   }
 
   .cancel-modal-header {
@@ -2438,7 +2438,7 @@ export default {
       font-size: $font-size-md;
       line-height: 1.5;
       margin: 0;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
     }
   }
 
@@ -2476,7 +2476,7 @@ export default {
     }
 
     .confirm-btn {
-      background-color: #ff4d4f;
+      background-color: var(--error-color);
       color: var(--text-on-dark-primary);
 
       &:hover {
@@ -2529,32 +2529,32 @@ export default {
 
   &.status-pending,
   &.status-free-confirm {
-    color: #f57c00;
+    color: var(--warning-color);
     background-color: rgba(255, 152, 0, 0.12);
     border-color: rgba(255, 152, 0, 0.2);
   }
 
   &.status-processing {
-    color: #0d47a1;
+    color: var(--info-color);
     background-color: rgba(33, 150, 243, 0.12);
     border-color: rgba(33, 150, 243, 0.2);
   }
 
   &.status-cancelled {
-    color: #c62828;
+    color: var(--error-color);
     background-color: rgba(244, 67, 54, 0.12);
     border-color: rgba(244, 67, 54, 0.2);
   }
 
   &.status-completed,
   &.status-discounted {
-    color: #2e7d32;
+    color: var(--success-color);
     background-color: rgba(76, 175, 80, 0.12);
     border-color: rgba(76, 175, 80, 0.2);
   }
 
   &.status-unknown {
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     background-color: rgba(158, 158, 158, 0.12);
     border-color: rgba(158, 158, 158, 0.2);
   }

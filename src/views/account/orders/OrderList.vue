@@ -386,7 +386,7 @@ watch(locale, () => {
   align-items: center;
   gap: 0.45rem;
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 
   .switch-input {
     position: absolute;
@@ -431,7 +431,7 @@ watch(locale, () => {
 
 .orders-empty-inline {
   padding: 18px 14px;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   text-align: center;
 }
 
@@ -468,7 +468,7 @@ watch(locale, () => {
   th {
     background-color: rgba(var(--theme-color-rgb), 0.05);
     font-weight: $font-weight-semibold;
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
     color: var(--text-primary);
     position: sticky;
     top: 0;
@@ -507,7 +507,7 @@ watch(locale, () => {
     justify-content: center;
     padding: 0.24rem 0.56rem;
     border-radius: 999px; 
-    font-size: 0.82rem;
+    font-size: $font-size-xs;
     font-weight: $font-weight-medium;
     
     &.status-pending {
@@ -557,7 +557,7 @@ watch(locale, () => {
       flex: 0 0 56px;
       white-space: nowrap;
       border-radius: 6px;
-      font-size: 0.82rem;
+      font-size: $font-size-xs;
       font-weight: $font-weight-medium;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -645,7 +645,7 @@ watch(locale, () => {
   p {
     margin-top: 1rem;
     color: rgba(var(--theme-color-rgb), 0.68);
-    font-size: 1.1rem;
+    font-size: $font-size-lg;
   }
   
   .error-icon, 
@@ -747,7 +747,7 @@ watch(locale, () => {
   
   h3 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
     color: var(--text-primary);
   }
@@ -790,7 +790,7 @@ watch(locale, () => {
   button {
     padding: 0.6rem 1.25rem;
     border-radius: 8px;
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
     font-weight: $font-weight-medium;
     cursor: pointer;
     transition: all 0.3s ease;

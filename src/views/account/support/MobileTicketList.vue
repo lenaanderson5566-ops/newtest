@@ -823,7 +823,7 @@ fetchTickets();
 
   .card-body {
     p {
-      color: var(--text-muted);
+      color: var(--text-quaternary);
 
       margin: 0;
 
@@ -878,7 +878,7 @@ fetchTickets();
 
     border: none;
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     font-weight: $font-weight-medium;
 
@@ -914,7 +914,7 @@ fetchTickets();
 
   text-align: center;
 
-  color: var(--text-muted);
+  color: var(--text-quaternary);
 
   margin: 1rem 0;
 
@@ -927,7 +927,7 @@ fetchTickets();
   p {
     margin: 1.25rem 0;
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     line-height: 1.5;
   }
@@ -945,7 +945,7 @@ fetchTickets();
 
     border: none;
 
-    font-size: 0.95rem;
+    font-size: $font-size-sm;
 
     font-weight: $font-weight-medium;
 
@@ -1030,13 +1030,13 @@ fetchTickets();
 
       margin-right: 1rem;
 
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       line-height: 1.4;
     }
 
     .ticket-status {
-      font-size: 0.8rem;
+      font-size: $font-size-xs;
 
       padding: 0.35rem 0.75rem;
 
@@ -1049,13 +1049,13 @@ fetchTickets();
       &.status-0 {
         background-color: rgba(76, 175, 80, 0.1);
 
-        color: #4caf50;
+        color: var(--success-color);
       }
 
       &.status-1 {
         background-color: rgba(158, 158, 158, 0.1);
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
       }
     }
   }
@@ -1065,9 +1065,9 @@ fetchTickets();
 
     justify-content: space-between;
 
-    font-size: 0.85rem;
+    font-size: $font-size-sm;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     padding-top: 0.5rem;
 
@@ -1172,7 +1172,7 @@ fetchTickets();
     h2 {
       margin: 0;
 
-      font-size: 1.1rem;
+      font-size: $font-size-lg;
 
       margin-bottom: 0.5rem;
 
@@ -1201,7 +1201,7 @@ fetchTickets();
 
     border: none;
 
-    color: #f44336;
+    color: var(--error-color);
 
     padding: 0.5rem;
 
@@ -1231,7 +1231,7 @@ fetchTickets();
 
   border-radius: 6px;
 
-  font-size: 0.85rem;
+  font-size: $font-size-sm;
 
   font-weight: $font-weight-medium;
 }
@@ -1240,13 +1240,13 @@ fetchTickets();
   &.status-0 {
     background-color: rgba(76, 175, 80, 0.1);
 
-    color: #4caf50;
+    color: var(--success-color);
   }
 
   &.status-1 {
     background-color: rgba(158, 158, 158, 0.1);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 }
 
@@ -1254,19 +1254,19 @@ fetchTickets();
   &.level-0 {
     background-color: rgba(33, 150, 243, 0.1);
 
-    color: #2196f3;
+    color: var(--info-color);
   }
 
   &.level-1 {
     background-color: rgba(255, 152, 0, 0.1);
 
-    color: #ff9800;
+    color: var(--warning-color);
   }
 
   &.level-2 {
     background-color: rgba(244, 67, 54, 0.1);
 
-    color: #f44336;
+    color: var(--error-color);
   }
 }
 
@@ -1313,11 +1313,11 @@ fetchTickets();
     p {
       margin: 1.25rem 0;
 
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       line-height: 1.5;
 
-      color: var(--text-muted);
+      color: var(--text-quaternary);
     }
   }
 }
@@ -1333,7 +1333,7 @@ fetchTickets();
 
   justify-content: center;
 
-  color: var(--text-muted);
+  color: var(--text-quaternary);
 
   padding: 2.5rem;
 
@@ -1356,7 +1356,7 @@ fetchTickets();
   }
 
   p {
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     line-height: 1.5;
   }
@@ -1395,7 +1395,7 @@ fetchTickets();
     }
 
     .message-avatar {
-      background-color: #f44336;
+      background-color: var(--error-color);
     }
   }
 
@@ -1463,19 +1463,19 @@ fetchTickets();
 
     margin-bottom: 0.5rem;
 
-    font-size: 0.85rem;
+    font-size: $font-size-sm;
 
     .sender-name {
       font-weight: $font-weight-semibold;
     }
 
     .message-time {
-      color: var(--text-muted);
+      color: var(--text-quaternary);
     }
   }
 
   .message-text {
-    font-size: 0.95rem;
+    font-size: $font-size-sm;
 
     line-height: 1.6;
 
@@ -1521,7 +1521,7 @@ fetchTickets();
 
     color: var(--text-primary);
 
-    font-size: 0.95rem;
+    font-size: $font-size-sm;
 
     resize: none;
 
@@ -1557,7 +1557,7 @@ fetchTickets();
 
     border: none;
 
-    font-size: 0.95rem;
+    font-size: $font-size-sm;
 
     font-weight: $font-weight-medium;
 
@@ -1616,9 +1616,9 @@ fetchTickets();
 
   gap: 0.75rem;
 
-  color: var(--text-muted);
+  color: var(--text-quaternary);
 
-  font-size: 1rem;
+  font-size: $font-size-md;
 
   margin-bottom: 80px;
 
@@ -1697,7 +1697,7 @@ fetchTickets();
   h3 {
     margin: 0;
 
-    font-size: 1.25rem;
+    font-size: $font-size-xl;
 
     font-weight: $font-weight-semibold;
 
@@ -1709,7 +1709,7 @@ fetchTickets();
 
     border: none;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     cursor: pointer;
 
@@ -1741,7 +1741,7 @@ fetchTickets();
   p {
     color: var(--text-primary);
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     line-height: 1.6;
 
@@ -1760,7 +1760,7 @@ fetchTickets();
 
       color: var(--text-primary);
 
-      font-size: 1rem;
+      font-size: $font-size-md;
     }
 
     input,
@@ -1777,7 +1777,7 @@ fetchTickets();
 
       color: var(--text-primary);
 
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       transition: all 0.3s ease;
 
@@ -1790,7 +1790,7 @@ fetchTickets();
       }
 
       &::placeholder {
-        color: var(--text-muted);
+        color: var(--text-quaternary);
       }
     }
 
@@ -1825,7 +1825,7 @@ fetchTickets();
 
       font-weight: $font-weight-medium;
 
-      font-size: 0.95rem;
+      font-size: $font-size-sm;
 
       &.active {
         background-color: var(--theme-color);
@@ -1866,7 +1866,7 @@ fetchTickets();
 
     border-radius: 10px;
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     font-weight: $font-weight-medium;
 
@@ -1884,7 +1884,7 @@ fetchTickets();
       &:hover {
         background-color: var(--bg-secondary);
 
-        border-color: var(--text-muted);
+        border-color: var(--text-quaternary);
       }
     }
 
@@ -2105,7 +2105,7 @@ fetchTickets();
     h2 {
       margin: 1.25rem 0;
 
-      font-size: 1.5rem;
+      font-size: $font-size-2xl;
 
       color: var(--text-primary);
 
@@ -2113,11 +2113,11 @@ fetchTickets();
     }
 
     p {
-      color: var(--text-muted);
+      color: var(--text-quaternary);
 
       margin-bottom: 2rem;
 
-      font-size: 1.05rem;
+      font-size: $font-size-md;
 
       line-height: 1.6;
     }
@@ -2133,7 +2133,7 @@ fetchTickets();
 
       border: none;
 
-      font-size: 1.05rem;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-medium;
 
@@ -2167,7 +2167,7 @@ fetchTickets();
 }
 
 .confirm-close-btn.danger {
-  background-color: #f44336;
+  background-color: var(--error-color);
 
   color: var(--text-on-dark-primary);
 
@@ -2237,17 +2237,17 @@ fetchTickets();
 }
 
 .upload-tip {
-  font-size: 0.95rem;
+  font-size: $font-size-sm;
 
   margin-bottom: 4px;
 }
 
 .upload-tip-text {
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 
   font-weight: $font-weight-medium;
 
-  font-size: 1rem;
+  font-size: $font-size-md;
 
   transition: color 0.2s;
 }
@@ -2255,9 +2255,9 @@ fetchTickets();
 .upload-desc {
   display: block;
 
-  font-size: 0.92rem;
+  font-size: $font-size-sm;
 
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 
   margin-top: 2px;
 }
@@ -2281,7 +2281,7 @@ fetchTickets();
 .uploaded-image-thumb img:hover {
   box-shadow: none;
 
-  border-color: #2196f3;
+  border-color: var(--info-color);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -2292,11 +2292,11 @@ fetchTickets();
   }
 
   .upload-tip-text {
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 
   .upload-desc {
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 }
 </style>

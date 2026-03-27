@@ -6,7 +6,7 @@
 */
 
 .dashboard-card.stats-card.no-plan-card {
-  border-color: #ff9800;
+  border-color: var(--warning-color);
   box-shadow: 0 4px 10px rgba(255, 152, 0, 0.15);
   background: linear-gradient(145deg, rgba(255, 152, 0, 0.05) 0%, rgba(255, 152, 0, 0.1) 100%);
   padding: 20px;
@@ -51,7 +51,7 @@
 
 .no-plan-icon {
   background-color: rgba(255, 152, 0, 0.15);
-  color: #ff9800;
+  color: var(--warning-color);
   width: 80px;
   height: 80px;
   border-radius: 16px;
@@ -76,8 +76,8 @@
 }
 
 .no-plan-title {
-  color: #ff9800;
-  font-size: 1.2rem;
+  color: var(--warning-color);
+  font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   margin-bottom: 16px;
   line-height: 1.4;
@@ -154,7 +154,7 @@
     transform: none;
   }
   .no-plan-title {
-    font-size: 1.1rem;
+    font-size: $font-size-lg;
     margin-bottom: 12px;
   }
   .no-plan-actions {

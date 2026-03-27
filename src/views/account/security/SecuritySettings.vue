@@ -408,7 +408,7 @@ onMounted(() => {
 
 .back-label {
   font-size: $font-size-md;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .profile-card {
@@ -456,7 +456,7 @@ onMounted(() => {
 
 .action-btn-danger {
   border-color: rgba(255, 77, 79, 0.5);
-  color: #ff4d4f;
+  color: var(--error-color);
 }
 
 .logout-all-card .settings-content {
@@ -501,7 +501,7 @@ onMounted(() => {
 .remove-session-btn {
   border: 1px solid rgba(255, 77, 79, 0.5);
   background: transparent;
-  color: #ff4d4f;
+  color: var(--error-color);
   border-radius: 8px;
   padding: 6px 10px;
   cursor: pointer;
@@ -512,7 +512,7 @@ onMounted(() => {
   display: flex;
   gap: 12px;
   font-size: $font-size-sm;
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
 }
 
 .device-empty,
@@ -601,7 +601,7 @@ onMounted(() => {
   .modal-close {
     background: none;
     border: none;
-    color: var(--text-muted);
+    color: var(--text-quaternary);
     cursor: pointer;
     padding: 4px;
     display: flex;
@@ -654,7 +654,7 @@ onMounted(() => {
 
     .error-text {
       margin-top: 6px;
-      color: #f44336;
+      color: var(--error-color);
       font-size: $font-size-sm;
     }
   }

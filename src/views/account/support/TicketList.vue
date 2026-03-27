@@ -961,7 +961,7 @@ onUnmounted(() => {
 
   .card-body {
     p {
-      color: var(--text-muted);
+      color: var(--text-quaternary);
 
       margin: 0;
 
@@ -1042,7 +1042,7 @@ onUnmounted(() => {
       }
 
       &::placeholder {
-        color: var(--text-muted);
+        color: var(--text-quaternary);
 
         opacity: 0.7;
       }
@@ -1057,7 +1057,7 @@ onUnmounted(() => {
 
       transform: translateY(-50%);
 
-      color: var(--text-muted);
+      color: var(--text-quaternary);
 
       transition: color 0.3s ease;
     }
@@ -1154,7 +1154,7 @@ onUnmounted(() => {
   .ticket-subject {
     margin: 0;
 
-    font-size: 0.95rem;
+    font-size: $font-size-sm;
 
     margin-bottom: 0.5rem;
 
@@ -1167,9 +1167,9 @@ onUnmounted(() => {
     align-items: center;
 
     .ticket-time {
-      font-size: 0.8rem;
+      font-size: $font-size-xs;
 
-      color: var(--text-muted);
+      color: var(--text-quaternary);
 
       margin-right: auto;
     }
@@ -1194,7 +1194,7 @@ onUnmounted(() => {
 
   border-radius: 4px;
 
-  font-size: 0.75rem;
+  font-size: $font-size-xs;
 
   font-weight: $font-weight-medium;
 }
@@ -1202,31 +1202,31 @@ onUnmounted(() => {
 .status-open {
   background-color: rgba(76, 175, 80, 0.1);
 
-  color: #4caf50;
+  color: var(--success-color);
 }
 
 .status-closed {
   background-color: rgba(158, 158, 158, 0.1);
 
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .level-low {
   background-color: rgba(33, 150, 243, 0.1);
 
-  color: #2196f3;
+  color: var(--info-color);
 }
 
 .level-medium {
   background-color: rgba(255, 152, 0, 0.1);
 
-  color: #ff9800;
+  color: var(--warning-color);
 }
 
 .level-high {
   background-color: rgba(244, 67, 54, 0.1);
 
-  color: #f44336;
+  color: var(--error-color);
 }
 
 .ticket-content {
@@ -1256,7 +1256,7 @@ onUnmounted(() => {
 
       margin-bottom: 0.5rem;
 
-      font-size: 1.2rem;
+      font-size: $font-size-lg;
     }
 
     .ticket-detail-meta {
@@ -1266,9 +1266,9 @@ onUnmounted(() => {
 
       gap: 0.5rem;
 
-      font-size: 0.85rem;
+      font-size: $font-size-sm;
 
-      color: var(--text-muted);
+      color: var(--text-quaternary);
 
       .ticket-time {
         margin-left: 0.5rem;
@@ -1290,7 +1290,7 @@ onUnmounted(() => {
 
       background-color: rgba(244, 67, 54, 0.1);
 
-      color: #f44336;
+      color: var(--error-color);
 
       border: none;
 
@@ -1367,11 +1367,11 @@ onUnmounted(() => {
 
       border-radius: 12px;
 
-      font-size: 0.75rem;
+      font-size: $font-size-xs;
 
       margin: 0 0.75rem;
 
-      color: var(--text-muted);
+      color: var(--text-quaternary);
     }
   }
 }
@@ -1513,7 +1513,7 @@ onUnmounted(() => {
       margin-bottom: 0.4rem;
 
       .message-sender {
-        font-size: 0.85rem;
+        font-size: $font-size-sm;
 
         font-weight: $font-weight-medium;
 
@@ -1521,16 +1521,16 @@ onUnmounted(() => {
       }
 
       .message-time {
-        font-size: 0.7rem;
+        font-size: $font-size-xs;
 
-        color: var(--text-muted);
+        color: var(--text-quaternary);
 
         align-self: flex-end;
       }
     }
 
     .message-text {
-      font-size: 0.97rem;
+      font-size: $font-size-sm;
 
       line-height: 1.5;
 
@@ -1547,9 +1547,9 @@ onUnmounted(() => {
 
     bottom: -1.1rem;
 
-    font-size: 0.7rem;
+    font-size: $font-size-xs;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     opacity: 0.8;
   }
@@ -1584,7 +1584,7 @@ onUnmounted(() => {
 
     color: var(--text-primary);
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     line-height: 1.5;
 
@@ -1605,7 +1605,7 @@ onUnmounted(() => {
     }
 
     &::placeholder {
-      color: var(--text-muted);
+      color: var(--text-quaternary);
 
       opacity: 0.7;
     }
@@ -1699,7 +1699,7 @@ onUnmounted(() => {
 
   justify-content: center;
 
-  color: var(--text-muted);
+  color: var(--text-quaternary);
 
   height: 100%;
 
@@ -1711,12 +1711,12 @@ onUnmounted(() => {
 
     opacity: 0.6;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
   }
 
   p {
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     text-align: center;
 
@@ -1735,7 +1735,7 @@ onUnmounted(() => {
 
   justify-content: center;
 
-  color: var(--text-muted);
+  color: var(--text-quaternary);
 
   padding: 2rem;
 
@@ -1746,7 +1746,7 @@ onUnmounted(() => {
   }
 
   p {
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     text-align: center;
   }
@@ -1875,7 +1875,7 @@ onUnmounted(() => {
   h3 {
     margin: 0;
 
-    font-size: 1.25rem;
+    font-size: $font-size-xl;
 
     font-weight: $font-weight-semibold;
 
@@ -1897,7 +1897,7 @@ onUnmounted(() => {
 
     border: none;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     cursor: pointer;
 
@@ -1928,7 +1928,7 @@ onUnmounted(() => {
 
       font-weight: $font-weight-medium;
 
-      font-size: 0.95rem;
+      font-size: $font-size-sm;
     }
 
     input,
@@ -1945,7 +1945,7 @@ onUnmounted(() => {
 
       color: var(--text-primary);
 
-      font-size: 0.95rem;
+      font-size: $font-size-sm;
 
       transition: all 0.2s ease;
 
@@ -1960,7 +1960,7 @@ onUnmounted(() => {
       }
 
       &::placeholder {
-        color: var(--text-muted);
+        color: var(--text-quaternary);
 
         opacity: 0.7;
       }
@@ -2000,10 +2000,10 @@ onUnmounted(() => {
 
         background-color: var(--bg-secondary);
 
-        font-size: 0.9rem;
+        font-size: $font-size-sm;
 
         .tag-icon {
-          color: var(--text-muted);
+          color: var(--text-quaternary);
         }
 
         &:hover:not(.active) {
@@ -2019,7 +2019,7 @@ onUnmounted(() => {
             border-color: rgba(33, 150, 243, 0.3);
 
             .tag-icon {
-              color: #2196f3;
+              color: var(--info-color);
             }
           }
 
@@ -2029,7 +2029,7 @@ onUnmounted(() => {
             border-color: rgba(255, 152, 0, 0.3);
 
             .tag-icon {
-              color: #ff9800;
+              color: var(--warning-color);
             }
           }
 
@@ -2039,7 +2039,7 @@ onUnmounted(() => {
             border-color: rgba(244, 67, 54, 0.3);
 
             .tag-icon {
-              color: #f44336;
+              color: var(--error-color);
             }
           }
         }
@@ -2204,9 +2204,9 @@ onUnmounted(() => {
   p {
     margin-top: 1rem;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
   }
 }
 
@@ -2263,7 +2263,7 @@ onUnmounted(() => {
     h2 {
       margin: 1.25rem 0;
 
-      font-size: 1.5rem;
+      font-size: $font-size-2xl;
 
       color: var(--text-primary);
 
@@ -2271,11 +2271,11 @@ onUnmounted(() => {
     }
 
     p {
-      color: var(--text-muted);
+      color: var(--text-quaternary);
 
       margin-bottom: 2rem;
 
-      font-size: 1.05rem;
+      font-size: $font-size-md;
 
       line-height: 1.6;
     }
@@ -2291,7 +2291,7 @@ onUnmounted(() => {
 
       border: none;
 
-      font-size: 1.05rem;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-medium;
 
@@ -2362,27 +2362,27 @@ onUnmounted(() => {
     margin-bottom: 8px;
   }
   .upload-tip {
-    font-size: 1rem;
+    font-size: $font-size-md;
     margin-bottom: 4px;
     .upload-tip-text {
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-weight: $font-weight-medium;
-      font-size: 1.08rem;
+      font-size: $font-size-md;
       transition: color 0.2s;
     }
     .upload-desc {
       display: block;
-      font-size: 0.92rem;
-      color: var(--secondary-text-color);
+      font-size: $font-size-sm;
+      color: var(--text-tertiary);
       margin-top: 2px;
     }
     .upload-method {
       display: block;
-      font-size: 0.9rem;
-      color: #2196f3;
+      font-size: $font-size-sm;
+      color: var(--info-color);
       margin-top: 2px;
       a {
-        color: #2196f3;
+        color: var(--info-color);
         text-decoration: underline;
       }
     }
@@ -2449,12 +2449,12 @@ onUnmounted(() => {
 
   .ticket-subject-info {
     h2 {
-      font-size: 1.06rem;
+      font-size: $font-size-md;
       margin-bottom: 0.35rem;
     }
 
     .ticket-detail-meta {
-      font-size: 0.78rem;
+      font-size: $font-size-xs;
     }
   }
 }
@@ -2472,14 +2472,14 @@ onUnmounted(() => {
   padding: 10px;
 
   textarea {
-    font-size: 0.92rem;
+    font-size: $font-size-sm;
     min-height: 78px;
     line-height: 1.45;
   }
 }
 
 .message-item .message-content .message-text {
-  font-size: 0.82rem;
+  font-size: $font-size-xs;
   line-height: 1.4;
 }
 
@@ -2488,7 +2488,7 @@ onUnmounted(() => {
 .message-item .message-content .message-text code,
 .message-item .message-content .message-text pre,
 .message-item .message-content .message-text strong {
-  font-size: 0.82rem;
+  font-size: $font-size-xs;
 }
 
 .message-item .message-content .message-text h1,
@@ -2497,7 +2497,7 @@ onUnmounted(() => {
 .message-item .message-content .message-text h4,
 .message-item .message-content .message-text h5,
 .message-item .message-content .message-text h6 {
-  font-size: 0.84rem;
+  font-size: $font-size-xs;
   line-height: 1.35;
   margin: 0.35rem 0;
 }

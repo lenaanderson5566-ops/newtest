@@ -524,7 +524,7 @@ export default {
 
       font-weight: $font-weight-medium;
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
 
       margin: 0;
 
@@ -658,7 +658,7 @@ export default {
 
           white-space: nowrap;
 
-          color: var(--secondary-text-color);
+          color: var(--text-tertiary);
 
         }
 

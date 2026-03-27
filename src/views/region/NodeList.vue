@@ -406,7 +406,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--text-color-light, var(--secondary-text-color));
+      color: var(--text-tertiary);
 
       margin: 0;
 
@@ -494,7 +494,7 @@ onMounted(() => {
     }
 
     .import-title { font-size: $font-size-xl; font-weight: $font-weight-semibold; }
-    .import-desc { color: var(--secondary-text-color); font-size: $font-size-md; }
+    .import-desc { color: var(--text-tertiary); font-size: $font-size-md; }
 
     .platform-selector {
       display: flex;
@@ -614,7 +614,7 @@ onMounted(() => {
 
       .quick-btn.danger {
         border-color: rgba(239, 68, 68, 0.35);
-        color: #dc2626;
+        color: var(--error-color);
         background: rgba(239, 68, 68, 0.08);
       }
     }
@@ -642,7 +642,7 @@ onMounted(() => {
 
     p {
       margin: 8px 0 0;
-      color: var(--text-color-light, var(--secondary-text-color));
+      color: var(--text-tertiary);
       font-size: $font-size-md;
     }
   }
@@ -741,7 +741,7 @@ onMounted(() => {
 
       p {
         margin: 0;
-        color: var(--text-color-light, var(--secondary-text-color));
+        color: var(--text-tertiary);
         font-size: $font-size-sm;
       }
 
@@ -846,7 +846,7 @@ onMounted(() => {
     justify-content: center;
     margin-right: 14px;
     padding: 0 10px;
-    font-size: 0.88rem;
+    font-size: $font-size-sm;
     font-weight: $font-weight-bold;
     color: var(--text-on-dark-primary);
     letter-spacing: 0.5px;
@@ -870,7 +870,7 @@ onMounted(() => {
 
     .node-name {
 
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-semibold;
 
@@ -898,9 +898,9 @@ onMounted(() => {
 
     .node-host {
 
-      font-size: 0.8rem;
+      font-size: $font-size-xs;
 
-      color: var(--text-color-light, var(--secondary-text-color));
+      color: var(--text-tertiary);
 
       margin: 0;
 
@@ -989,9 +989,9 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-color-light, var(--secondary-text-color));
+    color: var(--text-tertiary);
 
-    font-size: 1.1rem;
+    font-size: $font-size-lg;
 
   }
 
@@ -1001,7 +1001,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-color-light, var(--secondary-text-color));
+    color: var(--text-tertiary);
 
     opacity: 0.7;
 

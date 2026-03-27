@@ -1917,7 +1917,7 @@ export default {
 
     left: 30px;
 
-    font-size: 1.5rem;
+    font-size: $font-size-2xl;
 
     font-weight: $font-weight-bold;
 
@@ -1941,7 +1941,7 @@ export default {
 
     &.black {
 
-      color: #000000;
+      color: var(--text-primary);
 
       text-shadow: none;
 
@@ -2093,13 +2093,13 @@ export default {
 
   .auth-title {
 
-    font-size: 1.75rem;
+    font-size: $font-size-2xl;
 
     font-weight: $font-weight-bold;
 
     margin-bottom: 0.5rem;
 
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
 
 
@@ -2115,9 +2115,9 @@ export default {
 
   .auth-subtitle {
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     margin-bottom: 1.5rem;
 
@@ -2173,9 +2173,9 @@ export default {
 
   p {
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
   }
 
@@ -2185,7 +2185,7 @@ export default {
 
 .required {
 
-  color: #ff4d4f;
+  color: var(--error-color);
 
   margin-left: 4px;
 
@@ -2215,7 +2215,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     width: 20px;
 
@@ -2235,7 +2235,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     cursor: pointer;
 
@@ -2275,7 +2275,7 @@ export default {
 
     transition: all 0.3s ease;
 
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
 
 
@@ -2363,7 +2363,7 @@ export default {
 
     white-space: nowrap;
 
-    font-size: 0.875rem;
+    font-size: $font-size-sm;
 
     border: none;
 
@@ -2597,9 +2597,9 @@ export default {
 
         margin: 0;
 
-        font-size: 1.25rem;
+        font-size: $font-size-xl;
 
-        color: var(--primary-text-color);
+        color: var(--text-primary);
 
       }
 
@@ -2613,9 +2613,9 @@ export default {
 
         cursor: pointer;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
-        font-size: 1.5rem;
+        font-size: $font-size-2xl;
 
         display: flex;
 
@@ -2657,7 +2657,7 @@ export default {
 
         margin-bottom: 16px;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
       }
 
@@ -2753,7 +2753,7 @@ export default {
 
   color: var(--theme-color);
 
-  font-size: 0.875rem;
+  font-size: $font-size-sm;
 
   text-decoration: none;
 
@@ -2971,7 +2971,7 @@ export default {
 
     .auth-title {
 
-      font-size: 1.5rem;
+      font-size: $font-size-2xl;
 
     }
 
@@ -3008,7 +3008,7 @@ export default {
 
   left: 30px;
 
-  font-size: 1.5rem;
+  font-size: $font-size-2xl;
 
   font-weight: $font-weight-semibold;
 
@@ -3028,7 +3028,7 @@ export default {
 
   &.black {
 
-    color: #000000;
+    color: var(--text-primary);
 
     text-shadow: none;
 

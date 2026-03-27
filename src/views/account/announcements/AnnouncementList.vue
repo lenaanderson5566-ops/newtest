@@ -93,13 +93,13 @@ export default {
 
     time {
       font-size: $font-size-sm;
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       white-space: nowrap;
     }
   }
 
   .announcement-content {
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     line-height: 1.6;
   }
 }
@@ -111,6 +111,6 @@ export default {
   border-radius: $border-radius-sm;
   padding: 24px;
   text-align: center;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 </style>

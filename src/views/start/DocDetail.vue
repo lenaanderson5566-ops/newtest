@@ -1326,9 +1326,9 @@ onUnmounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
-    font-size: 1.1rem;
+    font-size: $font-size-lg;
 
   }
 
@@ -1436,7 +1436,7 @@ onUnmounted(() => {
 
   .error-title {
 
-    font-size: 1.4rem;
+    font-size: $font-size-xl;
 
     font-weight: $font-weight-semibold;
 
@@ -1450,9 +1450,9 @@ onUnmounted(() => {
 
   .error-message {
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     margin-bottom: 1.5rem;
 
@@ -1484,7 +1484,7 @@ onUnmounted(() => {
 
   font-weight: $font-weight-semibold;
 
-  font-size: 1rem;
+  font-size: $font-size-md;
 
   border: none;
 
@@ -1592,7 +1592,7 @@ onUnmounted(() => {
 
   .doc-title {
 
-    font-size: 1.6rem;
+    font-size: $font-size-2xl;
 
     font-weight: $font-weight-bold;
 
@@ -1606,7 +1606,7 @@ onUnmounted(() => {
 
     @media (min-width: 768px) {
 
-      font-size: 1.8rem;
+      font-size: $font-size-2xl;
 
     }
 
@@ -1622,9 +1622,9 @@ onUnmounted(() => {
 
     gap: 1rem;
 
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     
 
@@ -1672,7 +1672,7 @@ onUnmounted(() => {
 
   color: var(--text-primary);
 
-  font-size: 1rem;
+  font-size: $font-size-md;
 
   line-height: 1.8;
 
@@ -1688,7 +1688,7 @@ onUnmounted(() => {
 
     line-height: 1.4;
 
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
     position: relative;
 
@@ -1700,7 +1700,7 @@ onUnmounted(() => {
 
   :deep(h1) {
 
-    font-size: 2.2rem;
+    font-size: $font-size-3xl;
 
     margin-top: 2.8rem;
 
@@ -1714,7 +1714,7 @@ onUnmounted(() => {
 
   :deep(h2) {
 
-    font-size: 1.8rem;
+    font-size: $font-size-2xl;
 
     padding-bottom: 0.5rem;
 
@@ -1728,7 +1728,7 @@ onUnmounted(() => {
 
   :deep(h3) {
 
-    font-size: 1.5rem;
+    font-size: $font-size-2xl;
 
     margin-top: 1.8rem;
 
@@ -1738,9 +1738,9 @@ onUnmounted(() => {
 
   :deep(h4) {
 
-    font-size: 1.25rem;
+    font-size: $font-size-xl;
 
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
   }
 
@@ -1748,9 +1748,9 @@ onUnmounted(() => {
 
   :deep(h5) {
 
-    font-size: 1.1rem;
+    font-size: $font-size-lg;
 
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
   }
 
@@ -1758,9 +1758,9 @@ onUnmounted(() => {
 
   :deep(h6) {
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     font-weight: $font-weight-medium;
 
@@ -1898,7 +1898,7 @@ onUnmounted(() => {
 
     border-radius: 4px;
 
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
 
     color: var(--theme-color);
 
@@ -1954,7 +1954,7 @@ onUnmounted(() => {
 
       border: none;
 
-      font-size: 0.9rem;
+      font-size: $font-size-sm;
 
       line-height: 1.6;
 
@@ -2002,7 +2002,7 @@ onUnmounted(() => {
 
     margin-bottom: 1.8rem;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     font-style: italic;
 
@@ -2120,7 +2120,7 @@ onUnmounted(() => {
 
       font-weight: $font-weight-semibold;
 
-      color: var(--primary-text-color);
+      color: var(--text-primary);
 
     }
 
@@ -2174,7 +2174,7 @@ onUnmounted(() => {
 
     font-weight: $font-weight-semibold;
 
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
   }
 
@@ -2208,9 +2208,9 @@ onUnmounted(() => {
 
     border-top: 1px solid var(--border-color);
 
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
   }
 
@@ -2260,7 +2260,7 @@ onUnmounted(() => {
 
       right: 1rem;
 
-      font-size: 0.8rem;
+      font-size: $font-size-xs;
 
       color: var(--theme-color);
 

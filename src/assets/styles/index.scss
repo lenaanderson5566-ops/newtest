@@ -22,9 +22,9 @@
   --global-card-gap: 14px;
   --page-content-max-width: 1120px;
   --page-stack-gap: var(--global-card-gap);
-  --view-font-size-base: 14px;
-  --view-font-size-small: 13px;
-  --view-font-size-title: 16px;
+  --view-font-size-base: #{$font-size-sm};
+  --view-font-size-small: #{$font-size-xs};
+  --view-font-size-title: #{$font-size-md};
   --view-line-height-base: 1.45;
 }
 
@@ -53,7 +53,7 @@
 .app-content-wrapper .page-shell .subtitle,
 .app-content-wrapper .page-shell .description,
 .app-content-wrapper .page-shell .info-label {
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   font-size: var(--view-font-size-small);
 }
 
@@ -138,7 +138,7 @@
 
 .payment-container .section-wrapper .info-label {
   width: 120px;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   font-size: $font-size-md;
 }
 
@@ -150,7 +150,7 @@
 }
 
 .payment-container .section-wrapper .info-row.discount-row .discount {
-  color: #f44336;
+  color: var(--error-color);
 }
 
 .payment-container .section-wrapper .info-row.highlight-row .amount {
@@ -252,7 +252,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ff9800;
+  color: var(--warning-color);
 }
 
 .pending-order-modal .pending-order-header {
@@ -269,7 +269,7 @@
 
 .pending-order-modal .pending-order-dialog p {
   margin: 0;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   line-height: 1.5;
   font-size: $font-size-md;
 }
@@ -312,7 +312,7 @@
 .pending-order-modal .pending-order-actions .btn-confirm-cancel {
   background: #ff4d4f;
   color: var(--text-on-dark-primary);
-  border-color: #ff4d4f;
+  border-color: var(--error-color);
 
   &:hover:not(:disabled) {
     background: #ff7875;

@@ -639,7 +639,7 @@ export default {
 
 .required {
 
-  color: #ff4d4f;
+  color: var(--error-color);
 
   margin-left: 4px;
 
@@ -669,7 +669,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     width: 20px;
 
@@ -689,7 +689,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     cursor: pointer;
 
@@ -729,7 +729,7 @@ export default {
 
     transition: all 0.3s ease;
 
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
 
 
@@ -883,9 +883,9 @@ export default {
 
     .checkbox-label {
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
 
-      font-size: 0.875rem;
+      font-size: $font-size-sm;
 
     }
 
@@ -897,7 +897,7 @@ export default {
 
     color: var(--theme-color);
 
-    font-size: 0.875rem;
+    font-size: $font-size-sm;
 
     text-decoration: none;
 
@@ -979,9 +979,9 @@ export default {
 
   display: block;
 
-  color: #ff4d4f;
+  color: var(--error-color);
 
-  font-size: 0.8rem;
+  font-size: $font-size-xs;
 
   margin-top: 0.3rem;
 

@@ -2220,7 +2220,7 @@ export default {
 
 .optional {
 
-  color: var(--text-muted, #999);
+  color: var(--text-quaternary);
 
   margin-left: 4px;
 
@@ -2320,7 +2320,7 @@ export default {
 
     padding: 0 4px;
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     font-size: $font-size-md;
 
@@ -2384,7 +2384,7 @@ export default {
 
       text-overflow: ellipsis;
 
-      color: var(--primary-text-color);
+      color: var(--text-primary);
 
       font-size: $font-size-md;
 
@@ -2406,7 +2406,7 @@ export default {
 
       transition: transform 0.3s ease;
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
 
       opacity: 0.8;
 
@@ -2498,7 +2498,7 @@ export default {
 
         transition: all 0.2s;
 
-        color: var(--primary-text-color);
+        color: var(--text-primary);
 
         font-size: $font-size-md;
 
@@ -2586,7 +2586,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     width: 20px;
 
@@ -2606,7 +2606,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     cursor: pointer;
 
@@ -2646,7 +2646,7 @@ export default {
 
     transition: all 0.3s ease;
 
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
 
 
@@ -2734,7 +2734,7 @@ export default {
 
     white-space: nowrap;
 
-    font-size: 0.875rem;
+    font-size: $font-size-sm;
 
     border: none;
 
@@ -2920,7 +2920,7 @@ export default {
 
     cursor: pointer;
 
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
 
     user-select: none;
 
@@ -3012,9 +3012,9 @@ export default {
 
     .checkbox-label {
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
 
-      font-size: 0.875rem;
+      font-size: $font-size-sm;
 
       line-height: 1.5;
 
@@ -3064,7 +3064,7 @@ export default {
 
   color: var(--error-color, #ff4d4f);
 
-  font-size: 0.8rem;
+  font-size: $font-size-xs;
 
   margin-top: 0.3rem;
 
@@ -3100,7 +3100,7 @@ export default {
 
     .auth-title {
 
-      font-size: 1.5rem;
+      font-size: $font-size-2xl;
 
     }
 
@@ -3545,7 +3545,7 @@ export default {
 
         font-weight: $font-weight-semibold;
 
-        color: var(--primary-text-color);
+        color: var(--text-primary);
 
       }
 
@@ -3563,7 +3563,7 @@ export default {
 
         line-height: 1;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
         padding: 0;
 
@@ -3583,7 +3583,7 @@ export default {
 
         &:hover {
 
-          color: var(--primary-text-color);
+          color: var(--text-primary);
 
         }
 
@@ -3605,7 +3605,7 @@ export default {
 
         margin-bottom: 16px;
 
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
 
       }
 

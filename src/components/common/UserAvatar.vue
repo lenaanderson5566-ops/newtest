@@ -226,7 +226,7 @@ export default {
         transition: background-color 0.5s ease;
         
         .menu-icon, span {
-          color: #f56c6c;
+          color: var(--error-color);
           transition: color 0.5s ease;
         }
       }

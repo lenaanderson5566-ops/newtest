@@ -457,7 +457,7 @@ export default {
 
       font-weight: $font-weight-normal;
 
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
     }
   }
 }
@@ -498,7 +498,7 @@ export default {
     }
 
     .progress-text {
-      color: var(--text-primary, rgba(255, 255, 255, 0.95));
+      color: var(--text-primary);
 
       text-shadow: none;
     }

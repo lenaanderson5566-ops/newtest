@@ -1083,7 +1083,7 @@ export default {
     margin-bottom: 12px;
 
     .card-body p {
-      color: var(--secondary-text-color);
+      color: var(--text-tertiary);
       font-size: $font-size-md;
       line-height: 1.6;
       font-weight: $font-weight-medium;
@@ -1214,7 +1214,7 @@ export default {
 
             border-color: rgba(76, 175, 80, 0.1);
 
-            color: #4caf50;
+            color: var(--success-color);
           }
 
           &.stock-warning {
@@ -1222,7 +1222,7 @@ export default {
 
             border-color: rgba(255, 152, 0, 0.1);
 
-            color: #ff9800;
+            color: var(--warning-color);
           }
 
           &.stock-danger {
@@ -1230,7 +1230,7 @@ export default {
 
             border-color: rgba(244, 67, 54, 0.1);
 
-            color: #f44336;
+            color: var(--error-color);
           }
         }
 
@@ -1589,7 +1589,7 @@ export default {
 
               border-color: rgba(76, 175, 80, 0.1);
 
-              color: #4caf50;
+              color: var(--success-color);
             }
 
             &.stock-warning {
@@ -1597,7 +1597,7 @@ export default {
 
               border-color: rgba(255, 152, 0, 0.1);
 
-              color: #ff9800;
+              color: var(--warning-color);
             }
 
             &.stock-danger {
@@ -1605,7 +1605,7 @@ export default {
 
               border-color: rgba(244, 67, 54, 0.1);
 
-              color: #f44336;
+              color: var(--error-color);
             }
           }
 
@@ -1654,7 +1654,7 @@ export default {
         .currency {
           font-size: $font-size-xl;
           font-weight: $font-weight-medium;
-          color: color-mix(in srgb, var(--text-primary) 72%, var(--secondary-text-color) 28%);
+          color: color-mix(in srgb, var(--text-primary) 72%, var(--text-tertiary) 28%);
         }
 
         .amount {
@@ -1668,7 +1668,7 @@ export default {
         .unit-line {
           font-size: $font-size-sm;
           font-weight: $font-weight-medium;
-          color: color-mix(in srgb, var(--text-primary) 72%, var(--secondary-text-color) 28%);
+          color: color-mix(in srgb, var(--text-primary) 72%, var(--text-tertiary) 28%);
         }
       }
     }
@@ -1763,7 +1763,7 @@ export default {
           }
 
           &.disabled {
-            color: #ccc;
+            color: var(--text-quaternary);
           }
         }
 
@@ -1781,7 +1781,7 @@ export default {
           flex: 1; // 占据剩余空间
 
           &.disabled-text {
-            color: var(--secondary-text-color);
+            color: var(--text-tertiary);
           }
         }
       }
@@ -1928,7 +1928,7 @@ export default {
 
         .option-text {
           font-size: $font-size-sm;
-          color: var(--secondary-text-color);
+          color: var(--text-tertiary);
           font-weight: $font-weight-medium;
           white-space: nowrap;
         }
@@ -2025,7 +2025,7 @@ export default {
 
 .back-label {
   font-size: $font-size-md;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 @media (max-width: 768px) {
@@ -2139,13 +2139,13 @@ export default {
       }
 
       .chip-name {
-        font-size: $font-size-sm;
+        font-size: $font-size-md;
         font-weight: $font-weight-bold;
       }
 
       .chip-period {
         font-size: $font-size-sm;
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
       }
 
       .mobile-plan-chip.active .chip-period,
@@ -2189,7 +2189,7 @@ export default {
 
       .mobile-label {
         font-size: $font-size-sm;
-        color: var(--secondary-text-color);
+        color: var(--text-tertiary);
       }
 
       .mobile-value {

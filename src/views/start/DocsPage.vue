@@ -327,7 +327,7 @@ onMounted(() => {
 
   .docs-title {
 
-    font-size: 1.75rem;
+    font-size: $font-size-2xl;
 
     font-weight: $font-weight-bold;
 
@@ -375,7 +375,7 @@ onMounted(() => {
 
     left: 1rem;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     transition: color 0.3s ease;
 
@@ -397,7 +397,7 @@ onMounted(() => {
 
     color: var(--text-primary);
 
-    font-size: 1rem;
+    font-size: $font-size-md;
 
     transition: all 0.3s ease;
 
@@ -425,7 +425,7 @@ onMounted(() => {
 
     &::placeholder {
 
-      color: var(--text-muted);
+      color: var(--text-quaternary);
 
     }
 
@@ -443,7 +443,7 @@ onMounted(() => {
 
     border: none;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     cursor: pointer;
 
@@ -494,7 +494,7 @@ onMounted(() => {
 
   .category-title {
 
-    font-size: 1.3rem;
+    font-size: $font-size-xl;
 
     font-weight: $font-weight-semibold;
 
@@ -568,7 +568,7 @@ onMounted(() => {
 
     .doc-title {
 
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       font-weight: $font-weight-semibold;
 
@@ -596,9 +596,9 @@ onMounted(() => {
 
     .doc-date {
 
-      font-size: 0.8rem;
+      font-size: $font-size-xs;
 
-      color: var(--text-muted);
+      color: var(--text-quaternary);
 
     }
 
@@ -608,7 +608,7 @@ onMounted(() => {
 
   .doc-action {
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     margin-left: 1rem;
 
@@ -658,9 +658,9 @@ onMounted(() => {
 
     margin-top: 1rem;
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
-    font-size: 1.1rem;
+    font-size: $font-size-lg;
 
   }
 
@@ -670,7 +670,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-muted);
+    color: var(--text-quaternary);
 
     opacity: 0.7;
 
@@ -808,11 +808,11 @@ onMounted(() => {
 
   .hint-text {
 
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
 
     margin: 0;
 
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
 
     line-height: 1.5;
 

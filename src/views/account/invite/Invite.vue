@@ -757,8 +757,8 @@ export default {
               :root { --font-size-sm: 14px; --font-size-base: 16px; --font-size-lg: 20px; }
               body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
               img { max-width: 100%; height: auto; margin-bottom: 20px; }
-              h2 { color: var(--text-primary, #2f3640); }
-              p { color: var(--secondary-text-color, #5f6b7a); }
+              h2 { color: var(--text-primary); }
+              p { color: var(--text-tertiary); }
             
 
 /* Compact dashboard layout overrides for Billing / Referral */
@@ -925,7 +925,7 @@ export default {
 
   .kpi-label {
     font-size: var(--font-size-sm);
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     margin-bottom: 6px;
   }
 
@@ -1615,7 +1615,7 @@ export default {
 
 .kpi-label {
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .kpi-value {
@@ -1644,7 +1644,7 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .invite-cards-wrapper {
@@ -1692,7 +1692,7 @@ export default {
 .invite-card-footer {
   margin-top: 10px;
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .invite-cards-indicators {

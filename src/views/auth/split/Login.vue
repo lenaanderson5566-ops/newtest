@@ -458,7 +458,7 @@ export default {
     position: absolute;
     top: 30px;
     left: 30px;
-    font-size: 1.5rem;
+    font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
     z-index: 2;
     cursor: pointer;
@@ -470,7 +470,7 @@ export default {
     }
 
     &.black {
-      color: #000000;
+      color: var(--text-primary);
       text-shadow: none;
     }
   }
@@ -479,7 +479,7 @@ export default {
     position: absolute;
     bottom: 30px;
     left: 30px;
-    font-size: 1.5rem;
+    font-size: $font-size-2xl;
     font-weight: $font-weight-semibold;
     z-index: 2;
 
@@ -489,7 +489,7 @@ export default {
     }
 
     &.black {
-      color: #000000;
+      color: var(--text-primary);
       text-shadow: none;
     }
   }
@@ -558,10 +558,10 @@ export default {
   }
 
   .auth-title {
-    font-size: 1.75rem;
+    font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
     margin-bottom: 0.5rem;
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
     @media (min-width: 993px) {
       text-align: left;
@@ -569,8 +569,8 @@ export default {
   }
 
   .auth-subtitle {
-    font-size: 1rem;
-    color: var(--secondary-text-color);
+    font-size: $font-size-md;
+    color: var(--text-tertiary);
     margin-bottom: 1.5rem;
 
     @media (min-width: 993px) {
@@ -580,7 +580,7 @@ export default {
 }
 
 .required {
-  color: #ff4d4f;
+  color: var(--error-color);
   margin-left: 4px;
   font-size: $font-size-md;
   vertical-align: middle;
@@ -595,7 +595,7 @@ export default {
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     width: 20px;
     height: 20px;
   }
@@ -605,7 +605,7 @@ export default {
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
     cursor: pointer;
     padding: 4px;
     display: flex;
@@ -625,7 +625,7 @@ export default {
     border: 1px solid var(--input-border-color, transparent);
     background-color: var(--input-bg-color, #f9f9f9);
     transition: all 0.3s ease;
-    color: var(--primary-text-color);
+    color: var(--text-primary);
 
     &[type="password"],
     &[type="text"] {
@@ -702,14 +702,14 @@ export default {
     }
 
     .checkbox-label {
-      color: var(--secondary-text-color);
-      font-size: 0.875rem;
+      color: var(--text-tertiary);
+      font-size: $font-size-sm;
     }
   }
 
   .forgot-password {
     color: var(--theme-color);
-    font-size: 0.875rem;
+    font-size: $font-size-sm;
     text-decoration: none;
     transition: color 0.3s ease, opacity 0.3s ease;
 
@@ -750,8 +750,8 @@ export default {
 
 .error-message {
   display: block;
-  color: #ff4d4f;
-  font-size: 0.8rem;
+  color: var(--error-color);
+  font-size: $font-size-xs;
   margin-top: 0.3rem;
 }
 
@@ -903,8 +903,8 @@ export default {
   }
 
   p {
-    color: var(--secondary-text-color);
-    font-size: 1rem;
+    color: var(--text-tertiary);
+    font-size: $font-size-md;
   }
 }
 

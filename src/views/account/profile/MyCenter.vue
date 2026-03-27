@@ -592,7 +592,7 @@ onMounted(async () => {
   padding: 12px 16px;
   border: none;
   background: transparent;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   cursor: pointer;
@@ -652,7 +652,7 @@ onMounted(async () => {
 .recent-login-header p {
   margin: 4px 0 0;
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .recent-login-list {
@@ -662,7 +662,7 @@ onMounted(async () => {
 
 .recent-login-state {
   padding: 14px 2px 4px;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
   font-size: $font-size-sm;
 }
 
@@ -692,7 +692,7 @@ onMounted(async () => {
 .recent-login-main span,
 .recent-login-ip {
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 
@@ -712,7 +712,7 @@ onMounted(async () => {
   padding: 1rem;
   background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.25), transparent 35%),
     linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%);
-  color: #e8edff;
+  color: var(--text-on-dark-primary);
   border-color: rgba(161, 181, 255, 0.3);
 
   .tier-header {
@@ -726,13 +726,13 @@ onMounted(async () => {
       margin: 0;
       font-size: $font-size-md;
       font-weight: $font-weight-bold;
-      color: #f8fbff;
+      color: var(--text-on-dark-primary);
     }
 
     p {
       margin: 0;
       font-size: $font-size-md;
-      color: rgba(232, 237, 255, 0.9);
+      color: var(--text-on-dark-primary);
     }
   }
 
@@ -773,7 +773,7 @@ onMounted(async () => {
   .tier-progress-meta,
   .tier-next {
     font-size: $font-size-sm;
-    color: rgba(239, 243, 255, 0.92);
+    color: var(--text-on-dark-primary);
   }
 
   .tier-progress-track {
@@ -827,7 +827,7 @@ onMounted(async () => {
     display: block;
     margin-bottom: 6px;
     font-size: $font-size-sm;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 
   strong {
@@ -863,7 +863,7 @@ onMounted(async () => {
   margin: 0;
   padding: 0 2px;
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .plan-overview-row {
@@ -879,7 +879,7 @@ onMounted(async () => {
 .plan-desc {
   margin: 8px 0 0;
   font-size: $font-size-md;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .row-main-with-icon {
@@ -935,7 +935,7 @@ onMounted(async () => {
 .row-main p {
   margin: 3px 0 0;
   font-size: $font-size-sm;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .tier-intro-list {
@@ -954,7 +954,7 @@ onMounted(async () => {
     margin: 6px 0 0;
     font-size: $font-size-sm;
     line-height: 1.6;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 }
 
@@ -1053,7 +1053,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   .close-btn {
     background: none;
     border: none;
-    color: var(--text-muted);
+    color: var(--text-quaternary);
     cursor: pointer;
     padding: 4px;
     display: flex;
@@ -1108,7 +1108,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 .error-text {
   margin-top: 6px;
-  color: #f44336;
+  color: var(--error-color);
   font-size: $font-size-sm;
 }
 
@@ -1145,7 +1145,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .modal-text {
   padding: 16px;
   margin: 0;
-  color: var(--secondary-text-color);
+  color: var(--text-tertiary);
 }
 
 .modal-actions {

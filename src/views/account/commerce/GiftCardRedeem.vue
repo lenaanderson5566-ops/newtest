@@ -182,7 +182,7 @@ const goBack = () => {
     padding-left: 18px;
     display: grid;
     gap: 6px;
-    color: var(--secondary-text-color);
+    color: var(--text-tertiary);
   }
 }
 
