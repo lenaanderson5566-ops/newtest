@@ -1336,6 +1336,8 @@ export default {
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
 
+$bp-md-up: $bp-md + 1px;
+
 .dashboard-container {
   display: flex;
   justify-content: center;
@@ -1455,8 +1457,7 @@ export default {
     gap: var(--dashboard-gap-compact);
     margin-bottom: var(--dashboard-section-margin);
 
-    > .stats-card.traffic-board-total,
-    > .stats-card.traffic-board-subscription {
+    > .stats-card.traffic-board-total {
       grid-column: 1 / -1;
     }
 
@@ -1466,6 +1467,27 @@ export default {
 
     > .stats-card.today-traffic-card {
       grid-column: 2 / 3;
+    }
+
+    @media (min-width: #{$bp-md-up}) {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: stretch;
+
+      > .stats-card.traffic-board-total {
+        grid-column: 1 / 2;
+        grid-row: 1 / 3;
+      }
+
+      > .stats-card.traffic-board-package {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+      }
+
+      > .stats-card.today-traffic-card {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+      }
     }
 
     > .stats-card {
