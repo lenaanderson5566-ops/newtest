@@ -485,9 +485,9 @@ export default {
     const summaryOriginalPrice = computed(() => {
       if (isContinuePaymentMode.value) {
         const directAmount = Number(
+          lockedOrderDetail.value?.plan?.[lockedOrderDetail.value?.period] ??
           lockedOrderDetail.value?.plan_amount ??
           lockedOrderDetail.value?.original_amount ??
-          lockedOrderDetail.value?.plan?.[lockedOrderDetail.value?.period] ??
           0
         );
         if (Number.isFinite(directAmount) && directAmount >= 0) {
