@@ -1926,13 +1926,6 @@ export default {
         .usage-card-main.package-main {
           min-width: 0;
         }
-
-        .usage-percent {
-          min-width: 0;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
       }
 
       &.traffic-board-total {
@@ -2043,6 +2036,12 @@ export default {
     border: 1px solid var(--dashboard-border-color);
     border-radius: var(--dashboard-radius);
     box-shadow: none;
+  }
+
+  .stats-grid .stats-card.traffic-board-package,
+  .stats-grid .stats-card.today-traffic-card {
+    min-width: 0;
+    justify-self: stretch;
   }
 
   /* 概览卡片左上角标题统一样式 */
@@ -2393,7 +2392,6 @@ export default {
 
     .stats-card.today-traffic-card {
       grid-area: today;
-      width: 100%;
 
       .today-traffic-total-main {
         .usage-percent {
@@ -2406,7 +2404,6 @@ export default {
 
     .stats-card.traffic-board-package {
       grid-area: package;
-      width: 100%;
     }
 
     .stats-card.traffic-board-subscription {
@@ -2458,12 +2455,10 @@ export default {
 
     .stats-card.traffic-board-package {
       grid-area: package;
-      width: 100%;
     }
 
     .stats-card.today-traffic-card {
       grid-area: today;
-      width: 100%;
     }
 
     .stats-card.traffic-board-subscription {
