@@ -243,6 +243,14 @@
                   </div>
                 </div>
 
+                <div class="summary-row" v-if="surplusDeductionAmount > 0">
+                  <div class="summary-label">原订阅抵折</div>
+
+                  <div class="summary-value discount">
+                    -{{ formatCurrencyAmount(surplusDeductionAmount) }}
+                  </div>
+                </div>
+
                 <div class="summary-row" v-if="balanceDeductionAmount > 0">
                   <div class="summary-label">余额抵扣</div>
 
@@ -269,6 +277,7 @@
                     loading.submitting ||
                     loading.paying ||
                     loading.plan ||
+                    loading.preview ||
                     loading.lockedOrder ||
                     !isLockedOrderReady ||
                     (totalWithFee > 0 && !selectedMethod)
@@ -346,6 +355,7 @@ import {
   checkOrderStatus,
   verifyCoupon as checkCoupon,
   submitOrder as createOrder,
+  previewOrder as fetchOrderPreview,
   checkoutOrder,
   getOrderDetail,
 } from "@/api/account/shop";
@@ -402,6 +412,7 @@ export default {
       userInfo: true,
       methods: false,
       lockedOrder: false,
+      preview: false,
 
       submitting: false,
       paying: false,
@@ -466,6 +477,8 @@ export default {
     const hasNavigatedAfterSuccess = ref(false);
     const lockedPendingOrder = ref(null);
     const lockedOrderDetail = ref(null);
+    const orderPreview = ref(null);
+    const previewRequestSerial = ref(0);
     const currentSubscribedPlanId = ref(null);
     const isCurrentSubscriptionExpired = ref(false);
     const isSelectionLocked = computed(() => Boolean(lockedPendingOrder.value));
@@ -476,6 +489,24 @@ export default {
       () => !isContinuePaymentMode.value || Boolean(lockedOrderDetail.value)
     );
     const showCouponInputSection = computed(() => !isContinuePaymentMode.value);
+    const hasAnyWalletBalance = computed(() => {
+      const wallets = Array.isArray(userInfo.value?.wallets) ? userInfo.value.wallets : [];
+      const hasWalletBalance = wallets.some((wallet) => Number(wallet?.balance || 0) > 0);
+      if (hasWalletBalance) {
+        return true;
+      }
+      return Number(userInfo.value?.balance || 0) > 0;
+    });
+    const hasValidSubscription = computed(() =>
+      Boolean(currentSubscribedPlanId.value) && !isCurrentSubscriptionExpired.value
+    );
+    const shouldUseServerPreview = computed(
+      () =>
+        !isContinuePaymentMode.value &&
+        Boolean(plan.value?.id) &&
+        Boolean(selectedPriceType.value) &&
+        (hasValidSubscription.value || hasAnyWalletBalance.value)
+    );
 
     const discountPercent = ref(0);
 
@@ -494,12 +525,22 @@ export default {
         }
         return 0;
       }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const previewTotal = Number(orderPreview.value?.total_amount || 0);
+        const previewBalance = Math.max(0, Number(orderPreview.value?.balance_amount || 0));
+        const previewSurplus = Math.max(0, Number(orderPreview.value?.surplus_amount || 0));
+        return Math.max(0, previewTotal + previewBalance + previewSurplus);
+      }
       return originalPrice.value;
     });
 
     const couponDiscountAmount = computed(() => {
       if (isContinuePaymentMode.value) {
         const amount = Number(lockedOrderDetail.value?.coupon_discount_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const amount = Number(orderPreview.value?.coupon_discount_amount || 0);
         return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
       }
       if (!couponApplied.value || !couponInfo.value) return 0;
@@ -536,6 +577,10 @@ export default {
         const amount = Number(lockedOrderDetail.value?.user_discount_amount || 0);
         return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
       }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const amount = Number(orderPreview.value?.user_discount_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
       if (originalPrice.value <= 0 || userDiscountPercent.value <= 0) {
         return 0;
       }
@@ -557,11 +602,33 @@ export default {
         const amount = Number(lockedOrderDetail.value?.total_amount || 0);
         return Number.isFinite(amount) ? Math.max(0, amount) : 0;
       }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const amount = Number(orderPreview.value?.total_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, amount) : 0;
+      }
       return Math.max(0, originalPrice.value - totalDiscountAmount.value);
+    });
+    const surplusDeductionAmount = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.surplus_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const amount = Number(orderPreview.value?.surplus_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
+      return 0;
     });
     const balanceDeductionAmount = computed(() => {
       if (isContinuePaymentMode.value) {
         const amount = Number(lockedOrderDetail.value?.balance_amount || 0);
+        if (!Number.isFinite(amount)) {
+          return 0;
+        }
+        return Math.max(0, Math.abs(amount));
+      }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const amount = Number(orderPreview.value?.balance_amount || 0);
         if (!Number.isFinite(amount)) {
           return 0;
         }
@@ -580,6 +647,43 @@ export default {
       }
       return Math.max(0, finalPrice.value - balanceDeductionAmount.value);
     });
+
+    const refreshOrderPreview = async () => {
+      if (!shouldUseServerPreview.value) {
+        orderPreview.value = null;
+        return;
+      }
+      const requestId = previewRequestSerial.value + 1;
+      previewRequestSerial.value = requestId;
+      loading.preview = true;
+      try {
+        const payload = {
+          plan_id: Number(plan.value?.id),
+          period: selectedPriceType.value,
+        };
+        if (couponApplied.value && couponCode.value) {
+          payload.coupon_code = couponCode.value;
+        }
+        const response = await fetchOrderPreview(payload);
+        if (requestId !== previewRequestSerial.value) {
+          return;
+        }
+        orderPreview.value = response?.data || null;
+      } catch (error) {
+        if (requestId !== previewRequestSerial.value) {
+          return;
+        }
+        orderPreview.value = null;
+        showToast(
+          error?.response?.message || error?.message || "订单预览加载失败，已切换为本地估算金额",
+          "warning"
+        );
+      } finally {
+        if (requestId === previewRequestSerial.value) {
+          loading.preview = false;
+        }
+      }
+    };
 
     const displayCurrency = computed(() => {
       return `${currency.value || 'USD'}`.toUpperCase();
@@ -1280,6 +1384,26 @@ export default {
         fetchPlanData();
       }
     );
+
+    watch(
+      [
+        () => plan.value?.id,
+        () => selectedPriceType.value,
+        () => couponApplied.value,
+        () => couponCode.value,
+        () => isContinuePaymentMode.value,
+        () => currentSubscribedPlanId.value,
+        () => isCurrentSubscriptionExpired.value,
+        () => userInfo.value?.balance,
+        () =>
+          Array.isArray(userInfo.value?.wallets)
+            ? userInfo.value.wallets.map((wallet) => Number(wallet?.balance || 0)).join(",")
+            : "",
+      ],
+      async () => {
+        await refreshOrderPreview();
+      }
+    );
     onMounted(async () => {
       const tasks = [
         fetchUserInfo(),
@@ -1353,6 +1477,7 @@ export default {
       totalDiscountAmount,
 
       finalPrice,
+      surplusDeductionAmount,
 
       balanceDeductionAmount,
 
