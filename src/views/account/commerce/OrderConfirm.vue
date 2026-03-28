@@ -1768,7 +1768,8 @@ export default {
     border: none;
     background: transparent;
     padding: 0;
-    margin-bottom: 0;
+    margin-top: map.get($spacers, 2);
+    margin-bottom: map.get($spacers, 2);
   }
 
   .plan-selector-grid {
@@ -1848,36 +1849,32 @@ export default {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    margin-top: map.get($spacers, 2) !important;
+    margin-bottom: map.get($spacers, 2) !important;
   }
 
   .section-wrapper.subscription-intro-section {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    margin-top: map.get($spacers, 2) !important;
+    margin-bottom: map.get($spacers, 2) !important;
   }
 
   .section-wrapper.payment-methods-section {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    margin-top: map.get($spacers, 2) !important;
+    margin-bottom: map.get($spacers, 2) !important;
   }
 
   .subscription-intro-section .section-title,
   .period-section .section-title,
   .payment-methods-section .section-title {
     background-color: var(--background-color);
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  .payment-methods-section .section-title {
-    margin-bottom: 0;
+    margin-top: map.get($spacers, 2);
+    margin-bottom: map.get($spacers, 2);
   }
 
   .plan-card {
@@ -2665,7 +2662,7 @@ export default {
       margin: 16px 0;
 
       &.strong {
-        margin: 10px 0 10px;
+        margin: 6px 0 10px;
       }
 
       &.compact {
@@ -2820,7 +2817,7 @@ export default {
   .order-summary .summary-submit-action {
     width: 100%;
     margin-top: 10px;
-    height: 44px;
+    height: 40px;
     padding: 0 24px;
     border-radius: $border-radius-sm;
     background-color: var(--theme-color);
