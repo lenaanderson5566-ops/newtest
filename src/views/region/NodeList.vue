@@ -87,14 +87,14 @@
             <div class="node-country" :class="countryBadgeClass(getCountryTag(line.tags))">{{ formatCountryTag(getCountryTag(line.tags) || '--') }}</div>
 
             <div class="node-info">
-              <h3 class="node-name">{{ line.name }}</h3>
+              <h3 class="node-name">{{ formatNodeName(line.name) }}</h3>
+              <div class="node-feature-tags" v-if="getFeatureTags(line.tags).length > 0">
+                <span v-for="(tag, index) in getFeatureTags(line.tags)" :key="index" class="node-tag feature-tag">{{ tag }}</span>
+              </div>
               <p class="node-host" v-if="showNodeDetails">{{ line.host }}:{{ line.port }}</p>
             </div>
 
             <div class="node-actions">
-              <div class="node-feature-tags" v-if="getFeatureTags(line.tags).length > 0">
-                <span v-for="(tag, index) in getFeatureTags(line.tags)" :key="index" class="node-tag feature-tag">{{ tag }}</span>
-              </div>
               <span
                 class="node-status-dot"
                 :class="{ online: line.is_online === 1 }"
@@ -198,13 +198,21 @@ const fetchUserInfo = async () => {
 };
 
 const COUNTRY_TAG_REGEX = /^(?:[A-Za-z]{2}|(?:usa|uk|uae))$/i;
+const EMOJI_REGEX = /[\p{Extended_Pictographic}\uFE0F\u200D]/gu;
+
+const stripEmoji = (value) => String(value || '')
+  .replace(EMOJI_REGEX, '')
+  .replace(/\s{2,}/g, ' ')
+  .trim();
 
 const normalizeNodeTags = (tags) => {
   if (!Array.isArray(tags)) return [];
   return tags
-    .map((tag) => String(tag || '').trim())
+    .map((tag) => stripEmoji(tag))
     .filter(Boolean);
 };
+
+const formatNodeName = (name) => stripEmoji(name) || '--';
 
 const getCountryTag = (tags) => {
   const normalized = normalizeNodeTags(tags);
@@ -838,18 +846,18 @@ onMounted(() => {
 
   }
   .node-country {
-    min-width: 72px;
-    height: 34px;
+    min-width: 52px;
+    height: 24px;
     border-radius: 999px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-right: 14px;
-    padding: 0 10px;
-    font-size: $font-size-sm;
+    margin-right: 10px;
+    padding: 0 8px;
+    font-size: $font-size-xs;
     font-weight: $font-weight-bold;
     color: var(--text-on-dark-primary);
-    letter-spacing: 0.5px;
+    letter-spacing: 0.2px;
     background: linear-gradient(135deg, #d90429, #9d174d);
     box-shadow: none;
 
@@ -874,7 +882,7 @@ onMounted(() => {
 
       font-weight: $font-weight-semibold;
 
-      margin: 0 0 0.35rem;
+      margin: 0 0 4px;
 
       color: var(--text-primary);
 
@@ -906,6 +914,27 @@ onMounted(() => {
 
     }
 
+    .node-feature-tags {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin: 0 0 4px;
+
+      .node-tag.feature-tag {
+        height: 18px;
+        line-height: 18px;
+        font-size: 11px;
+        padding: 0 6px;
+        border-radius: 999px;
+        background-color: rgba(190, 24, 93, 0.1);
+        color: var(--text-secondary);
+        font-weight: $font-weight-medium;
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
   }
 
   
@@ -916,32 +945,11 @@ onMounted(() => {
 
     align-items: center;
 
-    gap: 8px;
+    gap: 6px;
 
-    margin-left: 12px;
-    min-width: 140px;
+    margin-left: 8px;
+    min-width: 24px;
     justify-content: flex-end;
-
-    .node-feature-tags {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-
-      .node-tag.feature-tag {
-        height: 24px;
-        line-height: 24px;
-        font-size: $font-size-sm;
-        padding: 0 10px;
-        border-radius: 999px;
-        background-color: rgba(190, 24, 93, 0.12);
-        color: var(--text-secondary);
-        font-weight: $font-weight-semibold;
-        display: inline-flex;
-        align-items: center;
-      }
-    }
 
     .node-status-dot {
       width: 10px;
@@ -1114,7 +1122,7 @@ onMounted(() => {
   }
 
   .node-actions {
-    min-width: 110px;
+    min-width: 24px;
   }
 
 }
