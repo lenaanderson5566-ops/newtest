@@ -2356,23 +2356,6 @@ export default {
     padding: 0;
     padding-bottom: 74px;
   }
-
-  .stats-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-
-    > .stats-card.traffic-board-total,
-    > .stats-card.traffic-board-subscription {
-      flex: 0 0 100%;
-    }
-
-    > .stats-card.traffic-board-package,
-    > .stats-card.today-traffic-card {
-      flex: 0 0 calc((100% - 10px) / 2);
-      min-width: 0;
-    }
-  }
 }
 
 @media (max-width: 768px) {
@@ -2407,12 +2390,6 @@ export default {
 
     .stats-card.traffic-board-package {
       grid-area: package;
-    }
-
-    .stats-card.traffic-board-package,
-    .stats-card.today-traffic-card {
-      min-width: 0;
-      width: auto;
     }
 
     .stats-card.traffic-board-subscription {
@@ -2468,12 +2445,6 @@ export default {
 
     .stats-card.today-traffic-card {
       grid-area: today;
-    }
-
-    .stats-card.traffic-board-package,
-    .stats-card.today-traffic-card {
-      min-width: 0;
-      width: auto;
     }
 
     .stats-card.traffic-board-subscription {
