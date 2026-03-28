@@ -29,6 +29,7 @@
                   <span class="option-text">{{ getFilterDisplayLabel(filter) }}</span>
                 </button>
               </div>
+              <span v-if="maxYearlyDiscountPercent > 0" class="max-saving-tip">（最多节省 {{ maxYearlyDiscountPercent }}%）</span>
             </div>
           </div>
         </div>
@@ -216,39 +217,6 @@
                 <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
               </button>
 
-              <!-- 周期折扣计算 -->
-
-              <div
-                class="discount-calculation"
-                v-if="
-                  SHOP_CONFIG.enableDiscountCalculation &&
-                  calculateDiscount(plan).showDiscount
-                "
-              >
-                <div class="discount-info">
-                  <span class="period-name">{{
-                    calculateDiscount(plan).periodName
-                  }}</span>
-
-                  <span class="discount-label"
-                    >&nbsp;{{ $t("shop.plan.discount.relative") }}
-                  </span>
-
-                  <span class="discount-value"
-                    >&nbsp;{{ calculateDiscount(plan).discountPercentage }}%</span
-                  >
-
-                  <span class="saving-text"
-                    >，{{ $t("shop.plan.discount.savings") }}
-                  </span>
-
-                  <span class="saving-amount"
-                    >&nbsp;{{ currencySymbol
-                    }}{{ calculateDiscount(plan).savingsAmount }}</span
-                  >
-                </div>
-              </div>
-
               <!-- 订阅特性 -->
 
               <div class="plan-features">
@@ -408,6 +376,20 @@ export default {
         return [monthFilter, yearFilter];
       }
       return filters.value;
+    });
+
+    const maxYearlyDiscountPercent = computed(() => {
+      let maxDiscount = 0;
+      plans.value.forEach((plan) => {
+        const monthPrice = normalizePriceValue(plan, "month_price");
+        const yearPrice = normalizePriceValue(plan, "year_price");
+        if (!monthPrice || !yearPrice) return;
+        const monthlyTotalYear = monthPrice * 12;
+        if (monthlyTotalYear <= 0 || yearPrice >= monthlyTotalYear) return;
+        const discount = ((monthlyTotalYear - yearPrice) / monthlyTotalYear) * 100;
+        maxDiscount = Math.max(maxDiscount, discount);
+      });
+      return Math.max(0, Math.round(maxDiscount));
     });
 
     const filterHighlightStyle = computed(() => {
@@ -904,85 +886,6 @@ export default {
       }
     });
 
-    const calculateDiscount = (plan) => {
-      if (!plan.month_price) {
-        return {
-          showDiscount: false,
-          periodName: "",
-          discountPercentage: 0,
-          savingsAmount: 0,
-        };
-      }
-
-      const monthlyPrice = plan.month_price / 100;
-
-      const availablePeriods = [
-        {
-          type: "three_year_price",
-          price: plan.three_year_price ? plan.three_year_price / 100 : null,
-          months: 36,
-          name: t("shop.plan.price_options.three_year"),
-        },
-
-        {
-          type: "two_year_price",
-          price: plan.two_year_price ? plan.two_year_price / 100 : null,
-          months: 24,
-          name: t("shop.plan.price_options.two_year"),
-        },
-
-        {
-          type: "year_price",
-          price: plan.year_price ? plan.year_price / 100 : null,
-          months: 12,
-          name: t("shop.plan.price_options.year"),
-        },
-
-        {
-          type: "half_year_price",
-          price: plan.half_year_price ? plan.half_year_price / 100 : null,
-          months: 6,
-          name: t("shop.plan.price_options.half_year"),
-        },
-
-        {
-          type: "quarter_price",
-          price: plan.quarter_price ? plan.quarter_price / 100 : null,
-          months: 3,
-          name: t("shop.plan.price_options.quarter"),
-        },
-      ].filter((period) => period.price !== null);
-
-      if (availablePeriods.length === 0) {
-        return {
-          showDiscount: false,
-          periodName: "",
-          discountPercentage: 0,
-          savingsAmount: 0,
-        };
-      }
-
-      const selectedPeriod = availablePeriods[0];
-
-      const totalMonthlyPrice = monthlyPrice * selectedPeriod.months;
-
-      const discountPercentage =
-        ((totalMonthlyPrice - selectedPeriod.price) / totalMonthlyPrice) * 100;
-
-      const savingsAmount = (totalMonthlyPrice - selectedPeriod.price).toFixed(
-        2
-      );
-
-      return {
-        showDiscount: discountPercentage > 1,
-
-        periodName: selectedPeriod.name,
-
-        discountPercentage: discountPercentage.toFixed(0),
-        savingsAmount: savingsAmount,
-      };
-    };
-
     return {
       plans,
 
@@ -1036,6 +939,7 @@ export default {
       currentLanguage,
       displayedFilters,
       filterHighlightStyle,
+      maxYearlyDiscountPercent,
       currentPlanBadgeLabel,
 
       selectPlanPriceType,
@@ -1046,8 +950,6 @@ export default {
       normalizePriceValue,
 
       SHOP_CONFIG,
-
-      calculateDiscount,
       isCurrentPlan,
       goBackToAccount,
     };
@@ -1679,57 +1581,6 @@ export default {
       margin-bottom: 8px;
     }
 
-    .discount-calculation {
-      margin: 5px 0 15px 0;
-
-      padding: 8px 12px;
-
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-
-      border-radius: 8px;
-
-      .discount-info {
-        font-size: $font-size-md;
-
-        text-align: center;
-
-        color: var(--text-primary);
-
-        .period-name {
-          font-weight: $font-weight-bold;
-
-          color: var(--theme-color);
-        }
-
-        .discount-label {
-          font-weight: $font-weight-medium;
-
-          &::first-line,
-          &:first-child {
-            color: var(--theme-color);
-
-            font-weight: $font-weight-bold;
-          }
-        }
-
-        .discount-value {
-          font-weight: $font-weight-bold;
-
-          color: var(--theme-color);
-        }
-
-        .saving-text {
-          font-weight: $font-weight-normal;
-        }
-
-        .saving-amount {
-          font-weight: $font-weight-bold;
-
-          color: var(--theme-color);
-        }
-      }
-    }
-
     .plan-features {
       width: 100%;
       margin: 14px 0 8px 0;
@@ -1874,6 +1725,9 @@ export default {
     flex-shrink: 0;
     width: fit-content;
     margin-left: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 
     .filter-toggle-wrapper {
       position: relative;
@@ -1960,6 +1814,14 @@ export default {
 
         transform: translateY(-2px);
       }
+    }
+
+    .max-saving-tip {
+      color: var(--theme-color);
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+      white-space: nowrap;
+      line-height: 1;
     }
   }
 
@@ -2234,6 +2096,7 @@ export default {
   .shop-container .filter-toggle-container {
     width: fit-content;
     margin-left: auto;
+    gap: 6px;
 
     .filter-toggle-wrapper {
       border: 1px solid var(--border-color);
@@ -2241,6 +2104,10 @@ export default {
       background: var(--surface-subtle);
 
       width: fit-content;
+    }
+
+    .max-saving-tip {
+      font-size: $font-size-lg;
     }
   }
 }
@@ -2262,6 +2129,10 @@ export default {
         font-size: $font-size-sm;
       }
     }
+  }
+
+  .shop-container .filter-toggle-container .max-saving-tip {
+    font-size: $font-size-md;
   }
 }
 </style>
