@@ -1465,6 +1465,7 @@ export default {
 
     .stats-card {
       position: relative;
+      min-width: 0;
       z-index: 1;
       background-color: var(--saas-card-bg);
       border-radius: var(--dashboard-radius);
