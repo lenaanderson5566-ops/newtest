@@ -1462,11 +1462,13 @@ export default {
 
     > .stats-card.traffic-board-package {
       grid-column: 1 / 2;
-      min-width: 0;
     }
 
     > .stats-card.today-traffic-card {
       grid-column: 2 / 3;
+    }
+
+    > .stats-card {
       min-width: 0;
     }
 
@@ -2372,9 +2374,6 @@ export default {
   }
 
   .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-
     .stats-card.today-traffic-card {
       .today-traffic-total-main {
         .usage-percent {
