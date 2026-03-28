@@ -1247,7 +1247,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .payment-container {
   padding: 0;
@@ -1268,8 +1270,8 @@ export default {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
     box-shadow: none;
-    padding: 20px;
-    margin-bottom: 24px;
+    padding: map.get($spacers, 3);
+    margin-bottom: map.get($spacers, 3);
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     position: relative;
@@ -1286,8 +1288,7 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: $font-size-xl;
-        font-weight: $font-weight-semibold;
+        @extend %typo-section-title;
         margin: 0;
       }
     }
@@ -1343,8 +1344,7 @@ export default {
     }
 
     .section-title {
-      font-size: $font-size-md;
-      font-weight: $font-weight-semibold;
+      @extend %typo-item-title;
       margin-bottom: 16px;
       color: var(--text-primary);
       display: flex;
@@ -1396,16 +1396,13 @@ export default {
     }
 
     .overview-plan-name {
-      font-size: $font-size-xl;
-      font-weight: $font-weight-bold;
-      color: var(--text-primary);
+      @extend %typo-section-title;
       line-height: 1.2;
     }
 
     .overview-plan-meta {
       margin-top: 8px;
-      font-size: $font-size-md;
-      color: var(--text-tertiary);
+      @extend %typo-body-text;
       line-height: 1.3;
     }
 

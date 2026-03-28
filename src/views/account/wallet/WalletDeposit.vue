@@ -291,7 +291,9 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .deposit-container {
   padding: 0;
@@ -308,8 +310,7 @@ onMounted(() => {
     border: none;
     background: transparent;
     color: var(--text-primary);
-    font-size: $font-size-md;
-    font-weight: $font-weight-semibold;
+    @extend %typo-item-title;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -319,16 +320,15 @@ onMounted(() => {
   }
 
   .back-label {
-    font-size: $font-size-md;
-    color: var(--text-tertiary);
+    @extend %typo-body-text;
   }
   
   .dashboard-card {
     background-color: var(--card-bg);
     border-radius: $border-radius-sm;
     box-shadow: none;
-    padding: 20px;
-    margin-bottom: 24px;
+    padding: map.get($spacers, 3);
+    margin-bottom: map.get($spacers, 3);
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     
@@ -351,8 +351,7 @@ onMounted(() => {
       margin-bottom: 15px;
       
       .card-title {
-        font-size: $font-size-xl;
-        font-weight: $font-weight-semibold;
+        @extend %typo-section-title;
         margin: 0;
         color: var(--text-primary);
       }
@@ -365,7 +364,7 @@ onMounted(() => {
     .card-body {
       p {
         color: var(--text-tertiary);
-        font-size: $font-size-md;
+        @extend %typo-body-text;
         line-height: 1.6;
         margin: 0;
       }
@@ -402,24 +401,20 @@ onMounted(() => {
         border-radius: $border-radius-sm;
         border: 1px solid var(--border-color);
         background: var(--card-background);
-        font-size: $font-size-sm;
+        @extend %typo-label-text;
       }
 
       .wallet-currency {
-        font-weight: $font-weight-bold;
-        color: var(--text-primary);
+        @extend %typo-item-title;
       }
 
       .wallet-amount {
-        color: var(--text-tertiary);
+        @extend %typo-label-text;
         font-variant-numeric: tabular-nums;
-        font-size: $font-size-md;
-        font-weight: $font-weight-semibold;
       }
       
       .balance-label {
-        font-size: $font-size-lg;
-        color: var(--text-tertiary);
+        @extend %typo-body-text;
       }
     }
     

@@ -276,7 +276,9 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .docs-container {
 
@@ -326,10 +328,7 @@ onMounted(() => {
   
 
   .docs-title {
-
-    font-size: $font-size-2xl;
-
-    font-weight: $font-weight-bold;
+    @extend %typo-page-title;
 
     margin-bottom: 1.5rem;
 
@@ -397,7 +396,7 @@ onMounted(() => {
 
     color: var(--text-primary);
 
-    font-size: $font-size-md;
+    @extend %typo-item-title;
 
     transition: all 0.3s ease;
 
