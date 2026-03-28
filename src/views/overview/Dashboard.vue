@@ -1460,8 +1460,7 @@ export default {
     }
 
     @media (min-width: 1200px) {
-      grid-template-columns: minmax(0, 1.86fr) minmax(0, 1fr);
-      grid-auto-rows: minmax(124px, auto);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .stats-card {
@@ -1743,11 +1742,6 @@ export default {
               font-weight: $font-weight-semibold;
               letter-spacing: 0.2px;
 
-              @media (max-width: 576px) {
-                padding: 9px 10px;
-                font-size: $font-size-sm;
-              }
-
               .plan-action-content {
                 display: inline-flex;
                 align-items: center;
@@ -2002,101 +1996,6 @@ export default {
             color: var(--text-tertiary);
           }
 
-          @media (max-width: 576px) {
-            .usage-kpis {
-              grid-template-columns: 1fr;
-            }
-          }
-        }
-      }
-
-      @media (min-width: 1200px) {
-        &.today-traffic-card {
-          grid-column: 2;
-          grid-row: 1;
-
-          .today-traffic-total-main {
-            .usage-percent {
-              &.compact {
-                font-size: $font-size-xl;
-              }
-            }
-
-            .usage-percent-label {
-              font-size: $font-size-sm;
-            }
-          }
-        }
-
-        &.traffic-board-card.total-main-card {
-          grid-column: 1;
-          grid-row: 1 / span 2;
-          min-height: 100%;
-        }
-
-        &.traffic-board-card:not(.total-main-card) {
-          grid-column: 2;
-          min-height: 152px;
-          padding: var(--dashboard-card-padding);
-          gap: 8px;
-
-          &.traffic-board-package {
-            grid-row: 2;
-            min-height: auto;
-            height: auto;
-          }
-
-          &.traffic-board-subscription {
-            grid-column: 1 / -1;
-            grid-row: 3;
-          }
-
-          .usage-percent {
-            font-size: $font-size-xl;
-
-            &.compact {
-              font-size: $font-size-xl;
-            }
-          }
-
-          .usage-percent-label {
-            font-size: $font-size-sm;
-          }
-
-          &.traffic-board-subscription {
-            .section-progress-track {
-              height: 8px;
-            }
-
-            .usage-kpis {
-              display: flex;
-              gap: 16px;
-            }
-
-            .usage-kpi {
-              flex: 1;
-              background: rgba(241, 245, 249, 0.9);
-            }
-
-            .usage-kpi-label {
-              font-size: $font-size-sm;
-            }
-
-            .usage-kpi-value {
-              font-size: $font-size-md;
-            }
-
-            .usage-reset-hint {
-              display: none;
-            }
-
-            .usage-summary-line,
-            .usage-reset-hint {
-              &.persist-visible {
-                display: block;
-              }
-            }
-          }
         }
       }
 
