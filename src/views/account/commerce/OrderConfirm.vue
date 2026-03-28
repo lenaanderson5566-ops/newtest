@@ -1870,7 +1870,7 @@ export default {
 
     box-shadow: none;
 
-    padding: map.get($spacers, 1);
+    padding: map.get($spacers, 2);
 
     margin-bottom: 25px;
 
@@ -2521,7 +2521,7 @@ export default {
 
     box-shadow: none;
 
-    padding: map.get($spacers, 1);
+    padding: map.get($spacers, 2);
 
     margin-bottom: 20px;
 
