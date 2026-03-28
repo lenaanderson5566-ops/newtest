@@ -173,7 +173,7 @@
 
           <div class="section-wrapper order-summary-section">
             <div class="order-summary glassmorphism">
-              <div class="coupon-merge-block">
+              <div v-if="showCouponInputSection" class="coupon-merge-block">
                 <div class="coupon-input">
                   <input
                     type="text"
@@ -228,7 +228,7 @@
                 </div>
 
                 <div class="summary-row" v-if="couponDiscountAmount > 0">
-                  <div class="summary-label">优惠券 · {{ couponCode }}</div>
+                  <div class="summary-label">优惠券 · {{ couponLabelCode }}</div>
 
                   <div class="summary-value discount">
                     -{{ formatCurrencyAmount(couponDiscountAmount) }}
@@ -473,6 +473,20 @@ export default {
     const isLockedOrderReady = computed(
       () => !isContinuePaymentMode.value || Boolean(lockedOrderDetail.value)
     );
+    const lockedCouponCode = computed(() => {
+      return String(
+        lockedOrderDetail.value?.coupon_code ||
+        lockedOrderDetail.value?.coupon?.code ||
+        ""
+      ).trim();
+    });
+    const couponLabelCode = computed(() => {
+      if (isContinuePaymentMode.value) {
+        return lockedCouponCode.value || "已应用";
+      }
+      return couponCode.value;
+    });
+    const showCouponInputSection = computed(() => !isContinuePaymentMode.value);
 
     const discountPercent = ref(0);
 
@@ -1295,6 +1309,8 @@ export default {
       isSelectionLocked,
       isContinuePaymentMode,
       isLockedOrderReady,
+      couponLabelCode,
+      showCouponInputSection,
       payActionLabel,
 
       couponCode,
