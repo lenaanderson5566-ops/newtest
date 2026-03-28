@@ -2067,8 +2067,6 @@ $space-2: map.get($spacers, 2);
 
   /* 概览卡片左上角标题统一样式（今日流量 / 订阅流量 / 流量额度包 / 用量记录） */
   .stats-grid .stats-card.today-traffic-card .usage-card-title,
-  .stats-grid .stats-card.traffic-board-subscription .usage-card-title,
-  .stats-grid .stats-card.traffic-board-package .usage-card-title,
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
     @extend %typo-card-title;

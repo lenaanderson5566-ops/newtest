@@ -389,9 +389,6 @@ onMounted(() => {
   padding: 0;
 }
 
-.security-inner {
-}
-
 .account-back-btn {
   width: fit-content;
   border: none;

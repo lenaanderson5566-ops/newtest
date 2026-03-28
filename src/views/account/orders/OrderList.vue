@@ -354,9 +354,6 @@ watch(locale, () => {
   }
 }
 
-.orders-inner {
-}
-
 .account-back-btn {
   width: fit-content;
   border: none;

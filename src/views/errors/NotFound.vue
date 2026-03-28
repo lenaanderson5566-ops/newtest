@@ -340,13 +340,6 @@ export default {
 
   
 
-  .error-title {
-    @extend %typo-section-title;
-
-  }
-
-  
-
   .error-description {
 
     font-size: $font-size-md;

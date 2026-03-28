@@ -53,9 +53,6 @@ watch(
   background: transparent;
 }
 
-.billing-inner {
-}
-
 .billing-panel {
   border-radius: var(--radius-lg);
   margin-top: 0;
