@@ -137,7 +137,6 @@
                   <img v-else :src="method.icon" :alt="method.name" />
                 </div>
               </button>
-              <div class="payment-security-note">安全支付 · 实时到账</div>
             </div>
             <div class="skeleton-card methods-skeleton" v-else>
               <div
@@ -301,14 +300,6 @@
                   <span v-else class="loader"></span>
 
                   <span>{{ payActionLabel }}</span>
-                </button>
-                <button
-                  v-if="isContinuePaymentMode"
-                  class="btn-return-orders summary-check-action"
-                  @click="checkPaymentStatusNow"
-                  :disabled="loading.paying || loading.submitting || loading.lockedOrder"
-                >
-                  检查支付状态
                 </button>
               </div>
             </div>
@@ -1775,7 +1766,7 @@ export default {
     border: none;
     background: transparent;
     padding: 0;
-    margin-bottom: 20px;
+    margin-bottom: map.get($spacers, 1);
   }
 
   .plan-selector-grid {
@@ -1788,7 +1779,7 @@ export default {
     position: relative;
     border: 1px solid var(--border-color);
     border-radius: $border-radius;
-    background: transparent;
+    background: var(--card-background);
     min-height: 110px;
     padding: 12px;
     text-align: left;
@@ -1855,6 +1846,7 @@ export default {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
+    margin-bottom: map.get($spacers, 1) !important;
   }
 
   .section-wrapper.subscription-intro-section,
@@ -1862,6 +1854,7 @@ export default {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
+    margin-bottom: map.get($spacers, 1) !important;
   }
 
   .subscription-intro-section .section-title,
@@ -2505,14 +2498,6 @@ export default {
       }
     }
 
-    .payment-security-note {
-      padding: 6px 12px 8px;
-      border-top: 1px solid var(--border-color);
-      font-size: $font-size-sm;
-      color: var(--text-tertiary);
-      line-height: 1.4;
-      background: #fff;
-    }
   }
 
   .methods-skeleton {
@@ -2685,12 +2670,6 @@ export default {
         color: var(--text-on-dark-primary);
         line-height: 1.1;
       }
-    }
-
-    .summary-check-action {
-      width: 100%;
-      margin-top: 8px;
-      height: 38px;
     }
 
   }
