@@ -557,10 +557,11 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 
-$bp-md: map-get($breakpoints, md);
-$bp-xl: map-get($breakpoints, xl);
+$bp-md: map.get($breakpoints, md);
+$bp-xl: map.get($breakpoints, xl);
 
 .my-center {
   padding: 0 0 2px;

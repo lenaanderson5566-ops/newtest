@@ -1334,11 +1334,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 
-$bp-md: map-get($breakpoints, md);
-$bp-lg: map-get($breakpoints, lg);
-$bp-xl: map-get($breakpoints, xl);
+$bp-md: map.get($breakpoints, md);
+$bp-lg: map.get($breakpoints, lg);
+$bp-xl: map.get($breakpoints, xl);
 
 .dashboard-container {
   display: flex;
