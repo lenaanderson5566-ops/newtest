@@ -1315,7 +1315,7 @@ export default {
       border: 1px solid var(--border-color);
       box-shadow: none;
 
-      background-color: var(--card-bg-color);
+      background-color: #fff;
 
       border-radius: 16px;
 
@@ -1972,7 +1972,7 @@ export default {
         box-sizing: border-box;
         width: 100%;
         border: 1px solid var(--border-color);
-        background: var(--card-bg-color);
+        background: #fff;
         border-radius: 12px;
         padding: 0;
         display: flex;

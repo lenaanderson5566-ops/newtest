@@ -1871,7 +1871,7 @@ export default {
   .coupon-input {
     display: flex;
 
-    gap: 12px;
+    gap: 8px;
 
     margin-bottom: 20px;
 
@@ -1882,9 +1882,9 @@ export default {
     .coupon-field {
       flex: 1;
 
-      height: 48px;
+      height: 40px;
 
-      padding: 0 18px;
+      padding: 0 14px;
 
       border-radius: $border-radius-sm;
 
@@ -1894,7 +1894,7 @@ export default {
 
       color: var(--text-primary);
 
-      font-size: $font-size-md;
+      font-size: $font-size-sm;
 
       outline: none;
 
@@ -1925,17 +1925,16 @@ export default {
     }
 
     .btn-verify {
-      height: 48px;
+      height: 40px;
 
-      padding: 0 24px;
+      padding: 0 14px;
 
       border-radius: $border-radius-sm;
 
-      background-color: var(--theme-color);
-
-      color: var(--text-on-dark-primary);
-
-      font-size: $font-size-md;
+      background: rgba(148, 163, 184, 0.08);
+      border: 1px solid var(--border-color);
+      color: var(--text-tertiary);
+      font-size: $font-size-sm;
 
       font-weight: $font-weight-medium;
 
@@ -1944,8 +1943,6 @@ export default {
       align-items: center;
 
       gap: 8px;
-
-      border: none;
 
       cursor: pointer;
 
@@ -1958,11 +1955,8 @@ export default {
       flex-shrink: 0;
 
       &:hover:not(:disabled) {
-        background-color: color-mix(
-          in srgb,
-          var(--theme-color) 85%,
-          black
-        ) !important;
+        background: rgba(148, 163, 184, 0.14);
+        color: var(--text-primary);
 
         transform: translateY(-2px);
 
@@ -1980,24 +1974,24 @@ export default {
 
         height: 16px;
 
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        border: 2px solid rgba(148, 163, 184, 0.35);
 
         border-radius: 50%;
 
-        border-top-color: white;
+        border-top-color: var(--text-tertiary);
 
         animation: spin 1s linear infinite;
       }
     }
 
     .coupon-applied-tag {
-      height: 48px;
-      padding: 0 16px;
+      height: 40px;
+      padding: 0 12px;
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--text-tertiary);
-      font-size: $font-size-md;
+      font-size: $font-size-sm;
       display: inline-flex;
       align-items: center;
       line-height: 1;
@@ -2006,13 +2000,13 @@ export default {
     }
 
     .btn-remove-text {
-      height: 48px;
-      padding: 0 16px;
+      height: 40px;
+      padding: 0 12px;
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--text-tertiary);
-      font-size: $font-size-md;
+      font-size: $font-size-sm;
       cursor: pointer;
       line-height: 1;
       white-space: nowrap;
@@ -2270,7 +2264,7 @@ export default {
         .summary-value {
           min-width: 0;
           text-align: left;
-          font-size: $font-size-xl;
+          font-size: $font-size-2xl;
 
           font-weight: $font-weight-bold;
 

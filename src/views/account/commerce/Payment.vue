@@ -179,14 +179,10 @@
               </div>
               <div
                 class="info-row"
-                v-if="
-                  orderDetail.balance_amount !== null &&
-                  orderDetail.balance_amount !== undefined &&
-                  orderDetail.balance_amount > 0
-                "
+                v-if="balanceDeductionAmount > 0"
               >
-                <div class="info-label">余额抵扣</div>
-                <div class="info-value discount">-{{ formatAmount(orderDetail.balance_amount) }}</div>
+                <div class="info-label">{{ $t("payment.balance_amount") }}</div>
+                <div class="info-value discount">-{{ formatAmount(balanceDeductionAmount) }}</div>
               </div>
               <div
                 class="info-row"
@@ -541,6 +537,15 @@ export default {
     const userDiscountAmount = computed(() => Number(orderDetail.value?.user_discount_amount || 0));
     const discountAmount = computed(() => Number(orderDetail.value?.discount_amount || 0));
     const surplusAmount = computed(() => Number(orderDetail.value?.surplus_amount || 0));
+    const balanceDeductionAmount = computed(() => {
+      const rawValue =
+        orderDetail.value?.balance_amount ??
+        orderDetail.value?.balance_discount_amount ??
+        0;
+      const amount = Number(rawValue || 0);
+      if (!Number.isFinite(amount)) return 0;
+      return Math.max(0, Math.abs(amount));
+    });
     const discountBreakdownVisible = computed(() => {
       return (
         couponDiscountAmount.value > 0 ||
@@ -1238,6 +1243,7 @@ export default {
       userDiscountAmount,
       discountAmount,
       surplusAmount,
+      balanceDeductionAmount,
       discountBreakdownVisible,
       window: window,
       detectBrowser,
