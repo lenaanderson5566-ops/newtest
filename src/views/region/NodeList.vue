@@ -922,7 +922,7 @@ onMounted(() => {
       .node-tag.feature-tag {
         height: 18px;
         line-height: 18px;
-        font-size: 11px;
+        font-size: $font-size-xs;
         padding: 0 6px;
         border-radius: 999px;
         background-color: rgba(190, 24, 93, 0.1);

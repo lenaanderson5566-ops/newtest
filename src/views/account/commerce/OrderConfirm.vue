@@ -2170,7 +2170,7 @@ export default {
         }
 
         .period-type {
-          font-size: $font-size-md !important;
+          font-size: $font-size-md;
 
           font-weight: $font-weight-semibold;
 
@@ -2199,7 +2199,7 @@ export default {
           text-align: center;
 
           .currency {
-            font-size: $font-size-md !important;
+            font-size: $font-size-md;
 
             font-weight: $font-weight-medium;
 
@@ -2207,7 +2207,7 @@ export default {
           }
 
           .amount {
-            font-size: $font-size-xl !important;
+            font-size: $font-size-xl;
 
             font-weight: $font-weight-bold;
 
@@ -3165,18 +3165,18 @@ export default {
           min-height: 80px !important;
 
           .period-type {
-            font-size: $font-size-sm !important;
+            font-size: $font-size-sm;
 
             margin-bottom: 6px !important;
           }
 
           .period-price {
             .currency {
-              font-size: $font-size-sm !important;
+              font-size: $font-size-sm;
             }
 
             .amount {
-              font-size: $font-size-xl !important;
+              font-size: $font-size-xl;
             }
           }
         }
