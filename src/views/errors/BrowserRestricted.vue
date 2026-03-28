@@ -444,6 +444,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .browser-restricted-container {
 
   display: flex;
@@ -505,11 +506,7 @@ export default {
     
 
     .title {
-
-      font-size: $font-size-xl;
-
-      font-weight: $font-weight-bold;
-
+      @extend %typo-section-title;
       color: var(--theme-color);
 
       margin-bottom: 10px;
@@ -519,12 +516,9 @@ export default {
     
 
     .subtitle {
-
+      @extend %typo-body-text;
       font-size: $font-size-md;
-
       font-weight: $font-weight-medium;
-
-      color: var(--text-tertiary);
 
       margin: 0;
 
@@ -559,7 +553,7 @@ export default {
     
 
     .description {
-
+      @extend %typo-body-text;
       font-size: $font-size-md;
 
       line-height: 1.6;
@@ -619,12 +613,7 @@ export default {
       .url-title {
 
         margin: 0 0 8px 0;
-
-        font-size: $font-size-md;
-
-        font-weight: $font-weight-semibold;
-
-        color: var(--text-primary);
+        @extend %typo-item-title;
 
       }
 
@@ -747,16 +736,11 @@ export default {
       
 
       .recommend-title {
-
-        font-size: $font-size-xl;
-
-        font-weight: $font-weight-semibold;
+        @extend %typo-section-title;
 
         margin-bottom: 15px;
 
         text-align: center;
-
-        color: var(--text-primary);
 
       }
 
@@ -863,16 +847,11 @@ export default {
         
 
         .supported-title {
-
-          font-size: $font-size-xl;
-
-          font-weight: $font-weight-semibold;
+          @extend %typo-section-title;
 
           margin-bottom: 15px;
 
           text-align: center;
-
-          color: var(--text-primary);
 
         }
 

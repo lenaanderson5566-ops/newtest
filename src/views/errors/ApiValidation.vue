@@ -307,6 +307,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .api-validation-page {
   width: 100%;
 
@@ -427,12 +428,7 @@ export default {
 
       .progress-text {
         position: absolute;
-
-        font-size: $font-size-xl;
-
-        font-weight: $font-weight-semibold;
-
-        color: var(--text-primary);
+        @extend %typo-section-title;
 
         text-shadow: none;
       }
@@ -443,21 +439,15 @@ export default {
     text-align: center;
 
     .status-title {
-      font-size: $font-size-xl;
-
+      @extend %typo-section-title;
       font-weight: $font-weight-medium;
-
-      color: var(--text-primary);
 
       margin-bottom: 10px;
     }
 
     .status-progress {
+      @extend %typo-body-text;
       font-size: $font-size-md;
-
-      font-weight: $font-weight-normal;
-
-      color: var(--text-tertiary);
     }
   }
 }
