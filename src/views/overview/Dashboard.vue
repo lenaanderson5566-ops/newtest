@@ -2367,18 +2367,24 @@ export default {
 
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'total total'
+      'package today'
+      'subscription subscription';
     gap: 10px;
 
     .stats-card.traffic-board-total {
       order: 1;
       grid-column: 1 / -1;
       grid-row: 1;
+      grid-area: total;
     }
 
     .stats-card.today-traffic-card {
       order: 3;
       grid-column: 2;
       grid-row: 2;
+      grid-area: today;
 
       .today-traffic-total-main {
         .usage-percent {
@@ -2393,11 +2399,13 @@ export default {
       order: 2;
       grid-column: 1;
       grid-row: 2;
+      grid-area: package;
     }
 
     .stats-card.traffic-board-subscription {
       order: 4;
       grid-column: 1 / -1;
+      grid-area: subscription;
     }
 
     .stats-card.quota-traffic-card {
@@ -2434,20 +2442,32 @@ export default {
 @media (min-width: 769px) {
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'total total'
+      'package today'
+      'subscription subscription';
 
     .stats-card.traffic-board-total {
       grid-column: 1 / -1;
       grid-row: auto;
+      grid-area: total;
     }
 
     .stats-card.traffic-board-package {
       grid-column: 1;
       grid-row: auto;
+      grid-area: package;
     }
 
     .stats-card.today-traffic-card {
       grid-column: 2;
       grid-row: auto;
+      grid-area: today;
+    }
+
+    .stats-card.traffic-board-subscription {
+      grid-column: 1 / -1;
+      grid-area: subscription;
     }
   }
 }
