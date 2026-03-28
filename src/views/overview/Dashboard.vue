@@ -2374,7 +2374,7 @@ export default {
     }
 
     .stats-card.today-traffic-card {
-      order: 2;
+      order: 3;
       grid-column: auto;
 
       .today-traffic-total-main {
@@ -2387,7 +2387,7 @@ export default {
     }
 
     .stats-card.traffic-board-package {
-      order: 3;
+      order: 2;
       grid-column: auto;
     }
 
@@ -2427,9 +2427,24 @@ export default {
 
 }
 
-@media (min-width: 769px) and (max-width: 1199px) {
+@media (min-width: 769px) {
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    .stats-card.traffic-board-total {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+
+    .stats-card.traffic-board-package {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .stats-card.today-traffic-card {
+      grid-column: 2;
+      grid-row: 2;
+    }
   }
 }
 
