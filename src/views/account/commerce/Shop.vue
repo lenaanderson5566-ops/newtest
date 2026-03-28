@@ -99,7 +99,6 @@
                   'current-plan-chip': isCurrentPlan(plan),
                 }"
               >
-                <span class="chip-current-header" v-if="isCurrentPlan(plan)">{{ currentPlanBadgeLabel }}</span>
                 <button
                   type="button"
                   class="mobile-plan-chip"
@@ -110,8 +109,11 @@
                   }"
                   @click="onSelectPlan(plan)"
                 >
-                  <span class="chip-name">{{ plan.name }}</span>
-                  <span class="chip-period" v-if="getMobilePlanSubtitle(plan)">{{ getMobilePlanSubtitle(plan) }}</span>
+                  <span class="chip-current-header" v-if="isCurrentPlan(plan)">{{ currentPlanBadgeLabel }}</span>
+                  <span class="chip-main">
+                    <span class="chip-name">{{ plan.name }}</span>
+                    <span class="chip-period" v-if="getMobilePlanSubtitle(plan)">{{ getMobilePlanSubtitle(plan) }}</span>
+                  </span>
                   <span class="chip-check" v-if="selectedPlan && Number(selectedPlan.id) === Number(plan.id)">
                     <IconCheck :size="14" />
                   </span>
@@ -1942,7 +1944,7 @@ export default {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
         align-items: stretch;
-        padding-top: 34px;
+        padding-top: 0;
       }
 
       .mobile-plan-chip-wrap {
@@ -1958,18 +1960,18 @@ export default {
       .chip-current-header {
         box-sizing: border-box;
         position: absolute;
-        top: -34px;
+        top: 0;
         left: 0;
         right: 0;
-        height: 34px;
+        height: 28px;
         padding: 0 8px;
         border-radius: 12px 12px 0 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #2d2d2d;
+        background: #1f1f1f;
         color: var(--text-on-dark-primary);
-        font-size: $font-size-sm;
+        font-size: $font-size-xs;
         font-weight: $font-weight-bold;
         line-height: 1.2;
         white-space: nowrap;
@@ -1990,9 +1992,9 @@ export default {
         text-align: left;
         color: var(--text-primary);
         position: relative;
-        min-height: 116px;
+        min-height: 96px;
         overflow: hidden;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: flex-start;
         padding: 10px;
 
@@ -2014,15 +2016,23 @@ export default {
         }
 
         &.current-plan-chip {
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
+          padding-top: 34px;
         }
 
+      }
+
+      .chip-main {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
       }
 
       .chip-name {
         font-size: $font-size-lg;
         font-weight: $font-weight-bold;
+        line-height: 1.2;
       }
 
       .chip-period {
