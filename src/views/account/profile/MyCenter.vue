@@ -559,6 +559,10 @@ onMounted(async () => {
 <style scoped lang="scss">
 @use "@/assets/styles/base/variables.scss" as *;
 
+$bp-md: map-get($breakpoints, md);
+$bp-xl: map-get($breakpoints, xl);
+$bp-overview-panels-single-column: $bp-xl - 100px; // 1100px
+
 .my-center {
   padding: 0 0 2px;
   background: #f5f5f7;
@@ -1153,7 +1157,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: #{$bp-overview-panels-single-column}) {
   .overview-panels {
     grid-template-columns: 1fr;
   }
@@ -1161,7 +1165,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .my-center {
     background: #f3f3f5;
   }

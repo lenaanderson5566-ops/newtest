@@ -1336,6 +1336,12 @@ export default {
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
 
+$bp-md: map-get($breakpoints, md);
+$bp-lg: map-get($breakpoints, lg);
+$bp-xl: map-get($breakpoints, xl);
+$bp-ip-location-stack: $bp-lg - 72px; // 920px
+$bp-ip-region-compact: $bp-md - 88px; // 680px
+
 .dashboard-container {
   display: flex;
   justify-content: center;
@@ -1401,7 +1407,7 @@ export default {
       grid-column: 1 / -1;
     }
 
-    @media (max-width: 992px) {
+    @media (max-width: #{$bp-lg}) {
       > .pending-order-banner,
       > .stats-grid,
       > .usage-trend-card {
@@ -2129,7 +2135,7 @@ export default {
       gap: 12px;
       color: var(--text-primary);
 
-      @media (max-width: 920px) {
+      @media (max-width: #{$bp-ip-location-stack}) {
         align-items: flex-start;
         flex-direction: column;
       }
@@ -2156,7 +2162,7 @@ export default {
       letter-spacing: -0.01em;
       color: var(--text-primary);
 
-      @media (max-width: 680px) {
+      @media (max-width: #{$bp-ip-region-compact}) {
         font-size: $font-size-xl;
       }
     }
@@ -2360,14 +2366,14 @@ export default {
 
 
 
-@media (max-width: 1200px) {
+@media (max-width: #{$bp-xl}) {
   .dashboard-container {
     padding: 0;
     padding-bottom: 74px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .dashboard-container {
     padding-bottom: 74px;
     --dashboard-card-padding: 12px;
