@@ -29,7 +29,13 @@
                   <span class="option-text">{{ getFilterDisplayLabel(filter) }}</span>
                 </button>
               </div>
-              <span v-if="maxYearlyDiscountPercent > 0" class="max-saving-tip">（最多节省 {{ maxYearlyDiscountPercent }}%）</span>
+              <span
+                v-if="maxYearlyDiscountPercent > 0"
+                class="max-saving-tip"
+                :class="{ 'active-year': selectedFilter === 'year_price' }"
+              >
+                （最多节省 {{ maxYearlyDiscountPercent }}%）
+              </span>
             </div>
           </div>
         </div>
@@ -1817,11 +1823,16 @@ export default {
     }
 
     .max-saving-tip {
-      color: var(--theme-color);
-      font-size: $font-size-xl;
+      color: var(--text-tertiary);
+      font-size: $font-size-lg;
       font-weight: $font-weight-semibold;
       white-space: nowrap;
       line-height: 1;
+      transition: color 0.2s ease;
+
+      &.active-year {
+        color: var(--theme-color);
+      }
     }
   }
 
@@ -2132,7 +2143,7 @@ export default {
   }
 
   .shop-container .filter-toggle-container .max-saving-tip {
-    font-size: $font-size-md;
+    font-size: $font-size-sm;
   }
 }
 </style>
