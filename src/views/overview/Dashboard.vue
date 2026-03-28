@@ -1082,13 +1082,13 @@ export default {
           right: 8,
           textStyle: { color: textColor }
         },
-        grid: { left: '5%', right: '3%', bottom: '8px', top: '40px', containLabel: true },
+        grid: { left: '4%', right: '2%', bottom: '2px', top: '30px', containLabel: true },
         xAxis: {
           type: 'category',
           boundaryGap: false,
           data: trafficTrendData.value.map((i) => i.date),
           axisLabel: {
-            rotate: 28,
+            rotate: 20,
             color: textColor,
             interval: (index) => {
               const total = trafficTrendData.value.length;
@@ -2305,13 +2305,18 @@ $space-2: map.get($spacers, 2);
 
   /* 流量趋势图卡片 */
   .usage-trend-card {
+    padding: 10px;
+
+    .card-header {
+      margin-bottom: 4px;
+    }
+
     .card-body {
-      padding-top: 6px;
-      padding-bottom: 6px;
+      padding: 0;
     }
 
     .trend-state {
-      min-height: 96px;
+      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2321,7 +2326,7 @@ $space-2: map.get($spacers, 2);
 
     .usage-trend-chart {
       width: 100%;
-      height: 176px;
+      height: 132px;
     }
   }
   /* 待支付横幅卡片 */
@@ -2440,17 +2445,22 @@ $space-2: map.get($spacers, 2);
   }
 
   .usage-trend-card {
+    padding: 8px;
+
+    .card-header {
+      margin-bottom: 2px;
+    }
+
     .card-body {
-      padding-top: 4px;
-      padding-bottom: 4px;
+      padding: 0;
     }
 
     .trend-state {
-      min-height: 88px;
+      min-height: 68px;
     }
 
     .usage-trend-chart {
-      height: 152px;
+      height: 112px;
     }
   }
 
