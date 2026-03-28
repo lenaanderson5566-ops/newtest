@@ -198,7 +198,7 @@ const fetchUserInfo = async () => {
 };
 
 const COUNTRY_TAG_REGEX = /^(?:[A-Za-z]{2}|(?:usa|uk|uae))$/i;
-const EMOJI_REGEX = /[\p{Extended_Pictographic}\uFE0F\u200D]/gu;
+const EMOJI_REGEX = /(?:[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}]|[\u2600-\u27BF]|\uFE0F|\u200D)/gu;
 
 const stripEmoji = (value) => String(value || '')
   .replace(EMOJI_REGEX, '')
