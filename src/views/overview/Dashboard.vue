@@ -1465,7 +1465,6 @@ export default {
 
     .stats-card {
       position: relative;
-      min-width: 0;
       z-index: 1;
       background-color: var(--saas-card-bg);
       border-radius: var(--dashboard-radius);
@@ -1481,7 +1480,6 @@ export default {
       /* 流量额度包卡片（订阅流量 / 叠加包 / 总览）样式 */
       &.traffic-board-card {
         width: 100%;
-        min-width: 0;
         min-height: clamp(156px, 16vw, 208px);
         overflow: visible;
         writing-mode: horizontal-tb;
@@ -1918,14 +1916,8 @@ export default {
       &.traffic-board-package {
         min-height: auto;
         height: auto;
-        min-width: 0;
-        width: 100%;
         z-index: 8;
         background: var(--saas-card-bg);
-
-        .usage-card-main.package-main {
-          min-width: 0;
-        }
       }
 
       &.traffic-board-total {
@@ -2036,12 +2028,6 @@ export default {
     border: 1px solid var(--dashboard-border-color);
     border-radius: var(--dashboard-radius);
     box-shadow: none;
-  }
-
-  .stats-grid .stats-card.traffic-board-package,
-  .stats-grid .stats-card.today-traffic-card {
-    min-width: 0;
-    justify-self: stretch;
   }
 
   /* 概览卡片左上角标题统一样式 */
@@ -2406,6 +2392,11 @@ export default {
       grid-area: package;
     }
 
+    .stats-card.traffic-board-package,
+    .stats-card.today-traffic-card {
+      min-width: 0;
+    }
+
     .stats-card.traffic-board-subscription {
       grid-area: subscription;
     }
@@ -2459,6 +2450,11 @@ export default {
 
     .stats-card.today-traffic-card {
       grid-area: today;
+    }
+
+    .stats-card.traffic-board-package,
+    .stats-card.today-traffic-card {
+      min-width: 0;
     }
 
     .stats-card.traffic-board-subscription {
