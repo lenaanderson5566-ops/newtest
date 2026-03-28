@@ -29,6 +29,7 @@
                 v-if="isSelectionLocked"
                 type="button"
                 class="btn-unlock-selection"
+                :disabled="loading.lockedOrder"
                 @click="unlockSelection"
               >
                 重新选择
@@ -385,6 +386,7 @@ import {
   verifyCoupon as checkCoupon,
   submitOrder as createOrder,
   previewOrder as fetchOrderPreview,
+  cancelOrder as cancelOrderByTradeNo,
   checkoutOrder,
   getOrderDetail,
 } from "@/api/account/shop";
@@ -897,11 +899,30 @@ export default {
       selectedMethod.value = methodId;
     };
 
-    const unlockSelection = () => {
+    const unlockSelection = async () => {
       if (!isSelectionLocked.value) return;
-      lockedPendingOrder.value = null;
-      lockedOrderDetail.value = null;
-      showToast("已解除锁定，可重新选择订阅规格与周期", "info");
+      const tradeNo = String(lockedPendingOrder.value?.trade_no || "");
+      loading.lockedOrder = true;
+      try {
+        if (tradeNo) {
+          await cancelOrderByTradeNo(tradeNo);
+        }
+        lockedPendingOrder.value = null;
+        lockedOrderDetail.value = null;
+        if (route.query.trade_no) {
+          const nextQuery = { ...route.query };
+          delete nextQuery.trade_no;
+          await router.replace({ query: nextQuery });
+        }
+        showToast("已取消原待支付订单，可重新选择订阅规格与周期", "success");
+      } catch (error) {
+        showToast(
+          error?.response?.message || error?.message || "取消原订单失败，请稍后重试",
+          "error"
+        );
+      } finally {
+        loading.lockedOrder = false;
+      }
     };
 
     const formatMethodFee = (method) => {
