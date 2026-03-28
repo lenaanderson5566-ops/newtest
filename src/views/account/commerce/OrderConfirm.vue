@@ -484,10 +484,41 @@ export default {
     });
     const summaryOriginalPrice = computed(() => {
       if (isContinuePaymentMode.value) {
-        const amount = Number(
+        const explicitAmount = Number(
           lockedOrderDetail.value?.plan_amount ?? lockedOrderDetail.value?.original_amount ?? 0
         );
-        return Number.isFinite(amount) && amount > 0 ? amount : 0;
+        if (Number.isFinite(explicitAmount) && explicitAmount > 0) {
+          return explicitAmount;
+        }
+
+        const totalAmount = Number(lockedOrderDetail.value?.total_amount || 0);
+        const couponAmount = Math.max(
+          0,
+          Math.abs(Number(lockedOrderDetail.value?.coupon_discount_amount || 0))
+        );
+        const userAmount = Math.max(
+          0,
+          Math.abs(Number(lockedOrderDetail.value?.user_discount_amount || 0))
+        );
+        const balanceAmount = Math.max(
+          0,
+          Math.abs(Number(lockedOrderDetail.value?.balance_amount || 0))
+        );
+        const discountAmount = Math.max(
+          0,
+          Math.abs(Number(lockedOrderDetail.value?.discount_amount || 0))
+        );
+
+        if (Number.isFinite(totalAmount) && totalAmount >= 0) {
+          if (couponAmount > 0 || userAmount > 0) {
+            return totalAmount + couponAmount + userAmount + balanceAmount;
+          }
+          if (discountAmount > 0) {
+            return totalAmount + discountAmount + balanceAmount;
+          }
+          return totalAmount + balanceAmount;
+        }
+        return 0;
       }
       return originalPrice.value;
     });
