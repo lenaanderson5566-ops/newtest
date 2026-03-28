@@ -2388,17 +2388,12 @@ export default {
     gap: 10px;
 
     .stats-card.traffic-board-total {
-      order: 1;
-      grid-column: 1 / -1;
-      grid-row: 1;
       grid-area: total;
     }
 
     .stats-card.today-traffic-card {
-      order: 3;
-      grid-column: 2;
-      grid-row: 2;
       grid-area: today;
+      width: 100%;
 
       .today-traffic-total-main {
         .usage-percent {
@@ -2410,15 +2405,11 @@ export default {
     }
 
     .stats-card.traffic-board-package {
-      order: 2;
-      grid-column: 1;
-      grid-row: 2;
       grid-area: package;
+      width: 100%;
     }
 
     .stats-card.traffic-board-subscription {
-      order: 4;
-      grid-column: 1 / -1;
       grid-area: subscription;
     }
 
@@ -2462,25 +2453,20 @@ export default {
       'subscription subscription';
 
     .stats-card.traffic-board-total {
-      grid-column: 1 / -1;
-      grid-row: auto;
       grid-area: total;
     }
 
     .stats-card.traffic-board-package {
-      grid-column: 1;
-      grid-row: auto;
       grid-area: package;
+      width: 100%;
     }
 
     .stats-card.today-traffic-card {
-      grid-column: 2;
-      grid-row: auto;
       grid-area: today;
+      width: 100%;
     }
 
     .stats-card.traffic-board-subscription {
-      grid-column: 1 / -1;
       grid-area: subscription;
     }
   }
