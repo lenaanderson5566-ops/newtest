@@ -1,6 +1,7 @@
 /**
  * 全局样式变量
  */
+@use "sass:map";
 
 // 给CSS变量设置初始值
 :root {
@@ -48,6 +49,12 @@ $breakpoints: (
   lg: 992px,
   xl: 1200px
 );
+
+$bp-xs: map.get($breakpoints, xs);
+$bp-sm: map.get($breakpoints, sm);
+$bp-md: map.get($breakpoints, md);
+$bp-lg: map.get($breakpoints, lg);
+$bp-xl: map.get($breakpoints, xl);
 
 // 间距变量
 $spacer: 1rem;

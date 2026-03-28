@@ -987,7 +987,7 @@ export default {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .account-container {
     .dashboard-card {
       padding: 20px;

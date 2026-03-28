@@ -320,6 +320,15 @@ export default {
   min-height: 100dvh;
 }
 
+/* 隐藏左下角版本号（若存在于运行时注入/主题组件中） */
+.app-root-shell .site-version,
+.app-root-shell .app-version,
+.app-root-shell .version-text,
+.app-root-shell .version-badge,
+.app-root-shell [data-version] {
+  display: none !important;
+}
+
 
 .card,
 .dashboard-card,

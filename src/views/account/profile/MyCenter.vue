@@ -17,10 +17,6 @@
         <h3 class="section-title section-title-outside">{{ $t('myCenter.summaryTitle') }}</h3>
         <p class="section-subtitle">{{ $t('myCenter.summaryDesc') }}</p>
         <section class="summary-panel section-block dashboard-like-card">
-          <div class="summary-top">
-            <button class="btn btn-secondary mini-action" @click="go('/billing?tab=wallet')">{{ $t('myCenter.topUp') }}</button>
-          </div>
-
           <div class="summary-grid">
             <div class="summary-item">
               <span class="label">{{ $t('myCenter.email') }}</span>
@@ -561,7 +557,11 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
+
+$space-2: map.get($spacers, 2);
 
 .my-center {
   padding: 0 0 2px;
@@ -570,7 +570,7 @@ onMounted(async () => {
 
 .my-center-inner {
   display: grid;
-  gap: 1rem;
+  gap: #{$space-2};
 }
 
 .top-nav-wrap {
@@ -592,8 +592,7 @@ onMounted(async () => {
   border: none;
   background: transparent;
   color: var(--text-tertiary);
-  font-size: $font-size-md;
-  font-weight: $font-weight-semibold;
+  @extend %typo-item-title;
   cursor: pointer;
   white-space: nowrap;
 
@@ -620,7 +619,7 @@ onMounted(async () => {
 
 .section-block {
   border-radius: $border-radius-sm;
-  background-color: #fff;
+  background-color: var(--card-background);
   border: 1px solid rgba(15, 23, 42, 0.15);
   box-shadow: none;
   transition: box-shadow 0.22s ease, border-color 0.22s ease;
@@ -646,16 +645,15 @@ onMounted(async () => {
   pointer-events: none;
 }
 
-.summary-panel { padding: 1rem; }
+.summary-panel { padding: map.get($spacers, 3); }
 
 .recent-login-panel {
-  padding: 1rem;
+  padding: map.get($spacers, 3);
 }
 
 .recent-login-header p {
   margin: 4px 0 0;
-  font-size: $font-size-sm;
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 }
 
 .recent-login-list {
@@ -665,15 +663,14 @@ onMounted(async () => {
 
 .recent-login-state {
   padding: 14px 2px 4px;
-  color: var(--text-tertiary);
-  font-size: $font-size-sm;
+  @extend %typo-meta-text;
 }
 
 .recent-login-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: #{$space-2};
   padding: 10px 0;
 }
 
@@ -688,26 +685,24 @@ onMounted(async () => {
 }
 
 .recent-login-main strong {
-  font-size: $font-size-sm;
-  color: var(--text-primary);
+  @extend %typo-item-title;
 }
 
 .recent-login-main span,
 .recent-login-ip {
-  font-size: $font-size-sm;
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 }
 
 
 .overview-panels {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1rem;
+  gap: #{$space-2};
 }
 
 .benefits-stack {
   display: grid;
-  gap: 1rem;
+  gap: #{$space-2};
 }
 
 
@@ -722,8 +717,8 @@ onMounted(async () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
+    gap: #{$space-2};
+    margin-bottom: #{$space-2};
 
     h3 {
       margin: 0;
@@ -795,18 +790,11 @@ onMounted(async () => {
   }
 }
 
-.summary-top {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  margin-bottom: 0.8rem;
-}
 
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  gap: #{$space-2};
 }
 
 .summary-actions {
@@ -848,14 +836,12 @@ onMounted(async () => {
 
 .section-title {
   margin: 0;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-bold;
-  color: var(--text-primary);
+  @extend %typo-section-title;
 }
 
 .section-group {
   display: grid;
-  gap: 10px;
+  gap: #{$space-2};
 }
 
 .section-title-outside {
@@ -865,8 +851,7 @@ onMounted(async () => {
 .section-subtitle {
   margin: 0;
   padding: 0 2px;
-  font-size: $font-size-sm;
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 }
 
 .plan-overview-row {
@@ -874,21 +859,18 @@ onMounted(async () => {
 }
 
 .plan-name {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  color: var(--text-primary);
+  @extend %typo-section-title;
 }
 
 .plan-desc {
   margin: 8px 0 0;
-  font-size: $font-size-md;
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 }
 
 .row-main-with-icon {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: #{$space-2};
 }
 
 .row-leading-icon {
@@ -903,7 +885,7 @@ onMounted(async () => {
 }
 
 .balance-amount {
-  font-size: $font-size-xl !important;
+  @extend %typo-metric-md;
   line-height: 1.2;
 }
 
@@ -919,7 +901,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: #{$space-2};
 }
 
 .settings-row + .settings-row,
@@ -943,7 +925,7 @@ onMounted(async () => {
 
 .tier-intro-list {
   display: grid;
-  gap: 10px;
+  gap: #{$space-2};
   padding: 12px;
 }
 
@@ -995,11 +977,6 @@ onMounted(async () => {
   }
 }
 
-.mini-action {
-  height: 34px;
-  padding: 0 12px;
-  border-radius: $border-radius-sm;
-}
 
 .switch { position: relative; display: inline-block; width: 42px; height: 24px; }
 .switch input { opacity: 0; width: 0; height: 0; }
@@ -1075,7 +1052,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 }
 
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: #{$space-2};
 
   &:last-child {
     margin-bottom: 0;
@@ -1118,7 +1095,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  gap: #{$space-2};
 }
 
 .btn-cancel,
@@ -1152,7 +1129,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .modal-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: #{$space-2};
   padding: 0 16px 16px;
 }
 
@@ -1169,7 +1146,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: #{$bp-xl}) {
   .overview-panels {
     grid-template-columns: 1fr;
   }
@@ -1177,12 +1154,12 @@ input:checked + .slider:before { transform: translateX(18px); }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .my-center {
     background: #f3f3f5;
   }
 
-  .my-center-inner { max-width: 100%; gap: 0.9rem; }
+  .my-center-inner { max-width: 100%; gap: #{$space-2}; }
 
   .top-nav-wrap {
     border-radius: 0;
@@ -1199,7 +1176,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     font-size: $font-size-md;
   }
 
-  .overview-panels { gap: 0.75rem; }
+  .overview-panels { gap: #{$space-2}; }
   .summary-panel { padding: 14px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }

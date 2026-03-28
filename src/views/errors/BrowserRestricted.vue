@@ -988,7 +988,7 @@ export default {
 
 
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
 
   .browser-restricted-container {
 

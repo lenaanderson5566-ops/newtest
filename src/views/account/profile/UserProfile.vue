@@ -1577,7 +1577,9 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .profile-container {
 
   padding: 0;
@@ -1586,7 +1588,7 @@ onMounted(() => {
 
 
 
-  @media (min-width: 768px) {
+  @media (min-width: #{$bp-md}) {
 
     padding: 0;
 
@@ -1610,13 +1612,13 @@ onMounted(() => {
 
   background-color: var(--card-bg);
 
-  border-radius: 12px;
+  border-radius: $border-radius-sm;
 
   box-shadow: none;
 
-  padding: 20px;
+  padding: map.get($spacers, 3);
 
-  margin-bottom: 24px;
+  margin-bottom: map.get($spacers, 3);
 
   border: 1px solid var(--border-color);
 
@@ -1647,10 +1649,7 @@ onMounted(() => {
 
 
     .card-title {
-
-      font-size: $font-size-xl;
-
-      font-weight: $font-weight-semibold;
+      @extend %typo-section-title;
 
       margin: 0;
 
@@ -1664,7 +1663,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--text-quaternary);
+      @extend %typo-meta-text;
 
       margin: 0;
 
@@ -1694,7 +1693,7 @@ onMounted(() => {
 
     background-color: var(--card-bg);
 
-    border-radius: 12px;
+    border-radius: $border-radius-sm;
 
     box-shadow: none;
 
@@ -2097,7 +2096,7 @@ onMounted(() => {
 
 
 
-      @media (min-width: 768px) {
+      @media (min-width: #{$bp-md}) {
 
         grid-template-columns: repeat(2, 1fr);
 
@@ -2303,7 +2302,7 @@ onMounted(() => {
 
 
 
-        @media (max-width: 576px) {
+        @media (max-width: #{$bp-sm}) {
 
           flex-direction: column;
 
@@ -2377,7 +2376,7 @@ onMounted(() => {
 
 
 
-          @media (max-width: 576px) {
+          @media (max-width: #{$bp-sm}) {
 
             width: 100%;
 
@@ -3011,7 +3010,7 @@ onMounted(() => {
 
 
 
-@media (max-width: 576px) {
+@media (max-width: #{$bp-sm}) {
 
   .profile-container {
 

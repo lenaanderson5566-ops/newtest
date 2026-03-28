@@ -29,6 +29,13 @@
                   <span class="option-text">{{ getFilterDisplayLabel(filter) }}</span>
                 </button>
               </div>
+              <span
+                v-if="maxYearlyDiscountPercent > 0"
+                class="max-saving-tip"
+                :class="{ 'active-year': selectedFilter === 'year_price' }"
+              >
+                （最多节省 {{ maxYearlyDiscountPercent }}%）
+              </span>
             </div>
           </div>
         </div>
@@ -92,7 +99,6 @@
                   'current-plan-chip': isCurrentPlan(plan),
                 }"
               >
-                <span class="chip-current-header" v-if="isCurrentPlan(plan)">{{ currentPlanBadgeLabel }}</span>
                 <button
                   type="button"
                   class="mobile-plan-chip"
@@ -103,8 +109,11 @@
                   }"
                   @click="onSelectPlan(plan)"
                 >
-                  <span class="chip-name">{{ plan.name }}</span>
-                  <span class="chip-period" v-if="getMobilePlanSubtitle(plan)">{{ getMobilePlanSubtitle(plan) }}</span>
+                  <span class="chip-current-header" v-if="isCurrentPlan(plan)">{{ currentPlanBadgeLabel }}</span>
+                  <span class="chip-main">
+                    <span class="chip-name">{{ plan.name }}</span>
+                    <span class="chip-period" v-if="getMobilePlanSubtitle(plan)">{{ getMobilePlanSubtitle(plan) }}</span>
+                  </span>
                   <span class="chip-check" v-if="selectedPlan && Number(selectedPlan.id) === Number(plan.id)">
                     <IconCheck :size="14" />
                   </span>
@@ -215,39 +224,6 @@
                 <IconShoppingCart class="btn-icon" />
                 <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
               </button>
-
-              <!-- 周期折扣计算 -->
-
-              <div
-                class="discount-calculation"
-                v-if="
-                  SHOP_CONFIG.enableDiscountCalculation &&
-                  calculateDiscount(plan).showDiscount
-                "
-              >
-                <div class="discount-info">
-                  <span class="period-name">{{
-                    calculateDiscount(plan).periodName
-                  }}</span>
-
-                  <span class="discount-label"
-                    >&nbsp;{{ $t("shop.plan.discount.relative") }}
-                  </span>
-
-                  <span class="discount-value"
-                    >&nbsp;{{ calculateDiscount(plan).discountPercentage }}%</span
-                  >
-
-                  <span class="saving-text"
-                    >，{{ $t("shop.plan.discount.savings") }}
-                  </span>
-
-                  <span class="saving-amount"
-                    >&nbsp;{{ currencySymbol
-                    }}{{ calculateDiscount(plan).savingsAmount }}</span
-                  >
-                </div>
-              </div>
 
               <!-- 订阅特性 -->
 
@@ -377,6 +353,7 @@ export default {
 
     const selectedPriceType = reactive({});
     const currentPlanId = ref(null);
+    const isCurrentSubscriptionExpired = ref(false);
 
     const paymentMethods = ref([]);
 
@@ -410,6 +387,20 @@ export default {
       return filters.value;
     });
 
+    const maxYearlyDiscountPercent = computed(() => {
+      let maxDiscount = 0;
+      plans.value.forEach((plan) => {
+        const monthPrice = normalizePriceValue(plan, "month_price");
+        const yearPrice = normalizePriceValue(plan, "year_price");
+        if (!monthPrice || !yearPrice) return;
+        const monthlyTotalYear = monthPrice * 12;
+        if (monthlyTotalYear <= 0 || yearPrice >= monthlyTotalYear) return;
+        const discount = ((monthlyTotalYear - yearPrice) / monthlyTotalYear) * 100;
+        maxDiscount = Math.max(maxDiscount, discount);
+      });
+      return Math.max(0, Math.round(maxDiscount));
+    });
+
     const filterHighlightStyle = computed(() => {
       const count = displayedFilters.value.length;
       if (!count) return {};
@@ -420,7 +411,9 @@ export default {
       };
     });
 
-    const currentPlanBadgeLabel = computed(() => t("shop.plan.current"));
+    const currentPlanBadgeLabel = computed(() =>
+      isCurrentSubscriptionExpired.value ? "您最近的订阅" : t("shop.plan.current")
+    );
 
     const setFilter = (filter) => {
       selectedFilter.value = filter;
@@ -443,9 +436,15 @@ export default {
         const response = await getSubscribe();
         const subscribe = response?.data || {};
         currentPlanId.value = subscribe.plan_id || subscribe.plan?.id || null;
+        const expiredAt = Number(subscribe?.expired_at || 0);
+        isCurrentSubscriptionExpired.value =
+          Number.isFinite(expiredAt) && expiredAt > 0
+            ? expiredAt * 1000 <= Date.now()
+            : false;
       } catch (error) {
         console.error('Failed to fetch current subscription:', error);
         currentPlanId.value = null;
+        isCurrentSubscriptionExpired.value = false;
       }
     };
 
@@ -904,85 +903,6 @@ export default {
       }
     });
 
-    const calculateDiscount = (plan) => {
-      if (!plan.month_price) {
-        return {
-          showDiscount: false,
-          periodName: "",
-          discountPercentage: 0,
-          savingsAmount: 0,
-        };
-      }
-
-      const monthlyPrice = plan.month_price / 100;
-
-      const availablePeriods = [
-        {
-          type: "three_year_price",
-          price: plan.three_year_price ? plan.three_year_price / 100 : null,
-          months: 36,
-          name: t("shop.plan.price_options.three_year"),
-        },
-
-        {
-          type: "two_year_price",
-          price: plan.two_year_price ? plan.two_year_price / 100 : null,
-          months: 24,
-          name: t("shop.plan.price_options.two_year"),
-        },
-
-        {
-          type: "year_price",
-          price: plan.year_price ? plan.year_price / 100 : null,
-          months: 12,
-          name: t("shop.plan.price_options.year"),
-        },
-
-        {
-          type: "half_year_price",
-          price: plan.half_year_price ? plan.half_year_price / 100 : null,
-          months: 6,
-          name: t("shop.plan.price_options.half_year"),
-        },
-
-        {
-          type: "quarter_price",
-          price: plan.quarter_price ? plan.quarter_price / 100 : null,
-          months: 3,
-          name: t("shop.plan.price_options.quarter"),
-        },
-      ].filter((period) => period.price !== null);
-
-      if (availablePeriods.length === 0) {
-        return {
-          showDiscount: false,
-          periodName: "",
-          discountPercentage: 0,
-          savingsAmount: 0,
-        };
-      }
-
-      const selectedPeriod = availablePeriods[0];
-
-      const totalMonthlyPrice = monthlyPrice * selectedPeriod.months;
-
-      const discountPercentage =
-        ((totalMonthlyPrice - selectedPeriod.price) / totalMonthlyPrice) * 100;
-
-      const savingsAmount = (totalMonthlyPrice - selectedPeriod.price).toFixed(
-        2
-      );
-
-      return {
-        showDiscount: discountPercentage > 1,
-
-        periodName: selectedPeriod.name,
-
-        discountPercentage: discountPercentage.toFixed(0),
-        savingsAmount: savingsAmount,
-      };
-    };
-
     return {
       plans,
 
@@ -1036,6 +956,7 @@ export default {
       currentLanguage,
       displayedFilters,
       filterHighlightStyle,
+      maxYearlyDiscountPercent,
       currentPlanBadgeLabel,
 
       selectPlanPriceType,
@@ -1046,8 +967,6 @@ export default {
       normalizePriceValue,
 
       SHOP_CONFIG,
-
-      calculateDiscount,
       isCurrentPlan,
       goBackToAccount,
     };
@@ -1056,9 +975,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .shop-container {
-  --shop-card-radius: var(--radius-lg);
+  --shop-card-radius: #{$border-radius-sm};
 
   padding: 0;
 
@@ -1078,15 +999,13 @@ export default {
     box-shadow: none;
     background: transparent;
     background-color: transparent;
-    padding: 20px;
+    padding: map.get($spacers, 3);
 
     margin-bottom: 12px;
 
     .card-body p {
-      color: var(--text-tertiary);
-      font-size: $font-size-md;
+      @extend %typo-body-text;
       line-height: 1.6;
-      font-weight: $font-weight-medium;
     }
 
     .welcome-top-row {
@@ -1104,12 +1023,11 @@ export default {
 
   .dashboard-card {
     background-color: var(--card-bg-color);
-
-    border-radius: 12px;
+    border-radius: $border-radius-sm;
 
     box-shadow: none;
 
-    padding: 20px;
+    padding: map.get($spacers, 3);
 
     margin-bottom: 24px;
 
@@ -1135,9 +1053,7 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: $font-size-xl;
-
-        font-weight: $font-weight-bold;
+        @extend %typo-section-title;
 
         margin: 0;
 
@@ -1166,9 +1082,8 @@ export default {
   .current-plan-badge {
     display: inline-flex;
     align-items: center;
-    font-size: $font-size-sm;
+    @extend %typo-label-text;
     line-height: 1;
-    font-weight: $font-weight-semibold;
     color: var(--theme-color);
     background: rgba(var(--theme-color-rgb), 0.1);
     border: 1px solid rgba(var(--theme-color-rgb), 0.26);
@@ -1384,11 +1299,11 @@ export default {
 
     margin-bottom: 24px;
 
-    @media (max-width: 1200px) {
+    @media (max-width: #{$bp-xl}) {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: #{$bp-md}) {
       grid-template-columns: 1fr;
     }
 
@@ -1407,7 +1322,7 @@ export default {
       border: 1px solid var(--border-color);
       box-shadow: none;
 
-      background-color: var(--card-bg-color);
+      background-color: #fff;
 
       border-radius: 16px;
 
@@ -1679,57 +1594,6 @@ export default {
       margin-bottom: 8px;
     }
 
-    .discount-calculation {
-      margin: 5px 0 15px 0;
-
-      padding: 8px 12px;
-
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-
-      border-radius: 8px;
-
-      .discount-info {
-        font-size: $font-size-md;
-
-        text-align: center;
-
-        color: var(--text-primary);
-
-        .period-name {
-          font-weight: $font-weight-bold;
-
-          color: var(--theme-color);
-        }
-
-        .discount-label {
-          font-weight: $font-weight-medium;
-
-          &::first-line,
-          &:first-child {
-            color: var(--theme-color);
-
-            font-weight: $font-weight-bold;
-          }
-        }
-
-        .discount-value {
-          font-weight: $font-weight-bold;
-
-          color: var(--theme-color);
-        }
-
-        .saving-text {
-          font-weight: $font-weight-normal;
-        }
-
-        .saving-amount {
-          font-weight: $font-weight-bold;
-
-          color: var(--theme-color);
-        }
-      }
-    }
-
     .plan-features {
       width: 100%;
       margin: 14px 0 8px 0;
@@ -1874,6 +1738,9 @@ export default {
     flex-shrink: 0;
     width: fit-content;
     margin-left: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 
     .filter-toggle-wrapper {
       position: relative;
@@ -1961,6 +1828,19 @@ export default {
         transform: translateY(-2px);
       }
     }
+
+    .max-saving-tip {
+      color: var(--text-tertiary);
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      white-space: nowrap;
+      line-height: 1;
+      transition: color 0.2s ease;
+
+      &.active-year {
+        color: var(--theme-color);
+      }
+    }
   }
 
   .animate-card {
@@ -2028,7 +1908,7 @@ export default {
   color: var(--text-tertiary);
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .back-label {
     display: none;
   }
@@ -2060,7 +1940,7 @@ export default {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
         align-items: stretch;
-        padding-top: 34px;
+        padding-top: 0;
       }
 
       .mobile-plan-chip-wrap {
@@ -2076,18 +1956,18 @@ export default {
       .chip-current-header {
         box-sizing: border-box;
         position: absolute;
-        top: -34px;
+        top: 0;
         left: 0;
         right: 0;
-        height: 34px;
+        height: 28px;
         padding: 0 8px;
         border-radius: 12px 12px 0 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #2d2d2d;
+        background: #1f1f1f;
         color: var(--text-on-dark-primary);
-        font-size: $font-size-sm;
+        font-size: $font-size-xs;
         font-weight: $font-weight-bold;
         line-height: 1.2;
         white-space: nowrap;
@@ -2099,7 +1979,7 @@ export default {
         box-sizing: border-box;
         width: 100%;
         border: 1px solid var(--border-color);
-        background: var(--card-bg-color);
+        background: #fff;
         border-radius: 12px;
         padding: 0;
         display: flex;
@@ -2108,9 +1988,9 @@ export default {
         text-align: left;
         color: var(--text-primary);
         position: relative;
-        min-height: 116px;
+        min-height: 96px;
         overflow: hidden;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: flex-start;
         padding: 10px;
 
@@ -2132,15 +2012,23 @@ export default {
         }
 
         &.current-plan-chip {
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
+          padding-top: 34px;
         }
 
+      }
+
+      .chip-main {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
       }
 
       .chip-name {
         font-size: $font-size-lg;
         font-weight: $font-weight-bold;
+        line-height: 1.2;
       }
 
       .chip-period {
@@ -2234,6 +2122,7 @@ export default {
   .shop-container .filter-toggle-container {
     width: fit-content;
     margin-left: auto;
+    gap: 6px;
 
     .filter-toggle-wrapper {
       border: 1px solid var(--border-color);
@@ -2242,10 +2131,14 @@ export default {
 
       width: fit-content;
     }
+
+    .max-saving-tip {
+      font-size: $font-size-sm;
+    }
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: #{$bp-xs}) {
   .shop-container .plans-wrapper .mobile-plan-selector {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2259,9 +2152,13 @@ export default {
       padding: 0 9px;
 
       .option-text {
-        font-size: $font-size-sm;
+        font-size: $font-size-xs;
       }
     }
+  }
+
+  .shop-container .filter-toggle-container .max-saving-tip {
+    font-size: $font-size-xs;
   }
 }
 </style>

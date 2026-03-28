@@ -1082,13 +1082,13 @@ export default {
           right: 8,
           textStyle: { color: textColor }
         },
-        grid: { left: '5%', right: '3%', bottom: '16px', top: '46px', containLabel: true },
+        grid: { left: '4%', right: '2%', bottom: '2px', top: '30px', containLabel: true },
         xAxis: {
           type: 'category',
           boundaryGap: false,
           data: trafficTrendData.value.map((i) => i.date),
           axisLabel: {
-            rotate: 38,
+            rotate: 20,
             color: textColor,
             interval: (index) => {
               const total = trafficTrendData.value.length;
@@ -1334,7 +1334,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
+
+$bp-md-up: $bp-md + 1px;
+$space-2: map.get($spacers, 2);
 
 .dashboard-container {
   display: flex;
@@ -1401,7 +1406,7 @@ export default {
       grid-column: 1 / -1;
     }
 
-    @media (max-width: 992px) {
+    @media (max-width: #{$bp-lg}) {
       > .pending-order-banner,
       > .stats-grid,
       > .usage-trend-card {
@@ -1427,18 +1432,16 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: #{$space-2};
 
       .card-title {
-        font-size: var(--dashboard-title-size);
-        font-weight: $font-weight-semibold;
+        @extend %typo-card-title;
         margin: 0;
-        color: var(--text-primary);
       }
 
       .card-actions {
         display: flex;
-        gap: 10px;
+        gap: #{$space-2};
       }
     }
   }
@@ -1451,17 +1454,48 @@ export default {
   .stats-grid {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--dashboard-gap-compact);
+    grid-auto-flow: row dense;
     margin-bottom: var(--dashboard-section-margin);
 
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    > .stats-card.traffic-board-total {
+      grid-column: 1 / -1;
     }
 
-    @media (min-width: 1200px) {
-      grid-template-columns: minmax(0, 1.86fr) minmax(0, 1fr);
-      grid-auto-rows: minmax(124px, auto);
+    > .stats-card.traffic-board-package {
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+    }
+
+    > .stats-card.today-traffic-card {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+    }
+
+    @media (min-width: #{$bp-md-up}) {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: stretch;
+
+      > .stats-card.traffic-board-total {
+        grid-column: 1 / 2;
+        grid-row: 1 / 3;
+      }
+
+      > .stats-card.traffic-board-package {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+      }
+
+      > .stats-card.today-traffic-card {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+      }
+    }
+
+    > .stats-card {
+      min-width: 0;
     }
 
     .stats-card {
@@ -1472,7 +1506,7 @@ export default {
       box-shadow: none;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: #{$space-2};
       padding: var(--dashboard-card-padding);
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
@@ -1481,7 +1515,6 @@ export default {
       /* 流量额度包卡片（订阅流量 / 叠加包 / 总览）样式 */
       &.traffic-board-card {
         width: 100%;
-        min-width: 0;
         min-height: clamp(156px, 16vw, 208px);
         overflow: visible;
         writing-mode: horizontal-tb;
@@ -1489,7 +1522,7 @@ export default {
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        gap: 10px;
+        gap: #{$space-2};
 
         .stats-info {
           width: 100%;
@@ -1580,7 +1613,7 @@ export default {
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: #{$space-2};
           margin-top: 6px;
           overflow: visible;
 
@@ -1668,7 +1701,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            gap: #{$space-2};
             padding: 2px 0;
           }
 
@@ -1731,7 +1764,7 @@ export default {
 
           .plan-summary-actions {
             display: flex;
-            gap: 10px;
+            gap: #{$space-2};
             margin-top: 0;
 
 
@@ -1742,11 +1775,6 @@ export default {
               font-size: $font-size-sm;
               font-weight: $font-weight-semibold;
               letter-spacing: 0.2px;
-
-              @media (max-width: 576px) {
-                padding: 9px 10px;
-                font-size: $font-size-sm;
-              }
 
               .plan-action-content {
                 display: inline-flex;
@@ -2002,101 +2030,6 @@ export default {
             color: var(--text-tertiary);
           }
 
-          @media (max-width: 576px) {
-            .usage-kpis {
-              grid-template-columns: 1fr;
-            }
-          }
-        }
-      }
-
-      @media (min-width: 1200px) {
-        &.today-traffic-card {
-          grid-column: 2;
-          grid-row: 1;
-
-          .today-traffic-total-main {
-            .usage-percent {
-              &.compact {
-                font-size: $font-size-xl;
-              }
-            }
-
-            .usage-percent-label {
-              font-size: $font-size-sm;
-            }
-          }
-        }
-
-        &.traffic-board-card.total-main-card {
-          grid-column: 1;
-          grid-row: 1 / span 2;
-          min-height: 100%;
-        }
-
-        &.traffic-board-card:not(.total-main-card) {
-          grid-column: 2;
-          min-height: 152px;
-          padding: var(--dashboard-card-padding);
-          gap: 8px;
-
-          &.traffic-board-package {
-            grid-row: 2;
-            min-height: auto;
-            height: auto;
-          }
-
-          &.traffic-board-subscription {
-            grid-column: 1 / -1;
-            grid-row: 3;
-          }
-
-          .usage-percent {
-            font-size: $font-size-xl;
-
-            &.compact {
-              font-size: $font-size-xl;
-            }
-          }
-
-          .usage-percent-label {
-            font-size: $font-size-sm;
-          }
-
-          &.traffic-board-subscription {
-            .section-progress-track {
-              height: 8px;
-            }
-
-            .usage-kpis {
-              display: flex;
-              gap: 16px;
-            }
-
-            .usage-kpi {
-              flex: 1;
-              background: rgba(241, 245, 249, 0.9);
-            }
-
-            .usage-kpi-label {
-              font-size: $font-size-sm;
-            }
-
-            .usage-kpi-value {
-              font-size: $font-size-md;
-            }
-
-            .usage-reset-hint {
-              display: none;
-            }
-
-            .usage-summary-line,
-            .usage-reset-hint {
-              &.persist-visible {
-                display: block;
-              }
-            }
-          }
         }
       }
 
@@ -2137,22 +2070,21 @@ export default {
   .overview-card--traffic-quota .usage-card-title,
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
-    font-size: var(--dashboard-title-size);
+    @extend %typo-card-title;
     line-height: 1.3;
-    font-weight: $font-weight-semibold;
     letter-spacing: 0.02em;
-    color: var(--text-primary);
   }
 
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
     background: var(--saas-card-bg);
+    min-width: 0;
     z-index: 2;
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 10px;
+    gap: #{$space-2};
 
     .today-card-title {
       margin-bottom: 2px;
@@ -2166,19 +2098,15 @@ export default {
 
       .usage-percent {
         line-height: 1;
-        font-weight: $font-weight-bold;
-        color: var(--text-primary);
-        font-size: $font-size-xl;
+        @extend %typo-metric-md;
 
         &.compact {
-          font-size: $font-size-xl;
+          @extend %typo-metric-md;
         }
       }
 
       .usage-percent-label {
-        font-size: var(--dashboard-kpi-size);
-        color: var(--quota-label-color);
-        font-weight: $font-weight-medium;
+        @extend %typo-label-text;
       }
     }
 
@@ -2186,7 +2114,7 @@ export default {
       display: inline-flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: #{$space-2};
       font-size: $font-size-sm;
       line-height: 1.45;
       color: var(--text-tertiary);
@@ -2198,119 +2126,6 @@ export default {
       }
     }
   }
-
-  /* IP 位置卡片（横幅） */
-  .ip-location-summary-card {
-    .ip-location-summary-body {
-      padding: 10px 12px;
-    }
-
-    .ip-location-state {
-      color: var(--text-tertiary);
-      font-size: $font-size-sm;
-
-      &.error {
-        color: var(--error-color);
-      }
-    }
-
-    .ip-location-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      color: var(--text-primary);
-
-      @media (max-width: 920px) {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
-
-    .ip-banner-main {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .ip-main-line {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .ip-region-primary {
-      font-size: $font-size-xl;
-      line-height: 1.15;
-      font-weight: $font-weight-bold;
-      letter-spacing: -0.01em;
-      color: var(--text-primary);
-
-      @media (max-width: 680px) {
-        font-size: $font-size-xl;
-      }
-    }
-
-    .ip-sub-line {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .ip-refresh-btn {
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: $font-size-sm;
-      line-height: 1;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-
-      &:disabled {
-        opacity: 0.7;
-      }
-
-      .spinning {
-        animation: spin 0.9s linear infinite;
-      }
-    }
-
-    .ip-address-secondary {
-      font-size: $font-size-sm;
-      color: var(--text-tertiary);
-      letter-spacing: 0.2px;
-    }
-
-    .region-code-badge {
-      min-width: 40px;
-      height: 22px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 8px;
-      font-size: $font-size-sm;
-      font-weight: $font-weight-bold;
-      color: var(--theme-white);
-      letter-spacing: 0.4px;
-      background: linear-gradient(135deg, var(--neutral-strong), #1e293b);
-      box-shadow: none;
-
-      &.is-red { background: linear-gradient(135deg, #e11d48, #9f1239); }
-      &.is-pink { background: linear-gradient(135deg, #be185d, #831843); }
-      &.is-blue { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); }
-    }
-
-    .ip-region {
-      color: var(--text-tertiary);
-      font-size: $font-size-sm;
-    }
-  }
-
 
   .info-tooltip {
     position: relative;
@@ -2373,22 +2188,27 @@ export default {
 
   /* 流量趋势图卡片 */
   .usage-trend-card {
+    padding: 10px;
+
+    .card-header {
+      margin-bottom: 4px;
+    }
+
     .card-body {
-      padding-top: 6px;
+      padding: 0;
     }
 
     .trend-state {
-      min-height: 116px;
+      min-height: 90px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-tertiary);
-      font-size: $font-size-md;
+      @extend %typo-body-text;
     }
 
     .usage-trend-chart {
       width: 100%;
-      height: 208px;
+      height: 156px;
     }
   }
   /* 待支付横幅卡片 */
@@ -2403,7 +2223,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: #{$space-2};
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 
@@ -2452,32 +2272,21 @@ export default {
 
 
 
-@media (max-width: 1200px) {
+@media (max-width: #{$bp-xl}) {
   .dashboard-container {
     padding: 0;
     padding-bottom: 74px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .dashboard-container {
     padding-bottom: 74px;
     --dashboard-card-padding: 12px;
   }
 
   .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-
-    .stats-card.traffic-board-total {
-      order: 1;
-      grid-column: 1 / -1;
-    }
-
     .stats-card.today-traffic-card {
-      order: 2;
-      grid-column: 1 / -1;
-
       .today-traffic-total-main {
         .usage-percent {
           &.compact {
@@ -2487,16 +2296,8 @@ export default {
       }
     }
 
-    .stats-card.traffic-board-package {
-      order: 3;
-    }
-
-    .stats-card.traffic-board-subscription {
-      order: 4;
-    }
-
     .stats-card.quota-traffic-card {
-      grid-column: 1 / -1;
+      min-width: 0;
       min-height: auto;
       height: auto;
       padding: 10px;
@@ -2525,12 +2326,26 @@ export default {
     }
   }
 
-}
+  .usage-trend-card {
+    padding: 8px;
 
-@media (min-width: 769px) and (max-width: 1199px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    .card-header {
+      margin-bottom: 2px;
+    }
+
+    .card-body {
+      padding: 0;
+    }
+
+    .trend-state {
+      min-height: 68px;
+    }
+
+    .usage-trend-chart {
+      height: 112px;
+    }
   }
+
 }
 
 
@@ -2587,7 +2402,7 @@ export default {
   background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
   border-radius: 4px;
   width: 80%;
-  margin-bottom: 10px;
+  margin-bottom: #{$space-2};
   position: relative;
 }
 
@@ -2649,8 +2464,11 @@ export default {
 
 <!-- 全局样式，不受scoped限制 -->
 <style lang="scss">
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 @use '@/assets/styles/no-plan-card' as *;
+
+$space-2: map.get($spacers, 2);
 
 /* 统计卡片状态样式（全局） */
 .dashboard-container .stats-card {
@@ -2769,7 +2587,7 @@ export default {
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: #{$space-2};
 
     .btn {
       min-width: 88px;
@@ -2786,13 +2604,13 @@ export default {
   .traffic-package-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: #{$space-2};
   }
 
   .traffic-package-item {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: #{$space-2};
     padding: 14px;
     border: 1px solid var(--border-color);
     border-radius: var(--dashboard-radius);
@@ -2807,7 +2625,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: #{$space-2};
 
     strong {
       color: var(--text-primary);

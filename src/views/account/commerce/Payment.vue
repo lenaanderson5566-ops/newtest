@@ -179,14 +179,10 @@
               </div>
               <div
                 class="info-row"
-                v-if="
-                  orderDetail.balance_amount !== null &&
-                  orderDetail.balance_amount !== undefined &&
-                  orderDetail.balance_amount > 0
-                "
+                v-if="balanceDeductionAmount > 0"
               >
-                <div class="info-label">余额抵扣</div>
-                <div class="info-value discount">-{{ formatAmount(orderDetail.balance_amount) }}</div>
+                <div class="info-label">{{ $t("payment.balance_amount") }}</div>
+                <div class="info-value discount">-{{ formatAmount(balanceDeductionAmount) }}</div>
               </div>
               <div
                 class="info-row"
@@ -298,7 +294,7 @@
                 >
                   <IconCreditCard v-if="!loading.checking" :size="18" />
                   <div v-else class="loader"></div>
-                  <span>{{ $t("payment.free_activate") }}</span>
+                  <span>立即开通</span>
                 </button>
               </div>
 
@@ -541,6 +537,11 @@ export default {
     const userDiscountAmount = computed(() => Number(orderDetail.value?.user_discount_amount || 0));
     const discountAmount = computed(() => Number(orderDetail.value?.discount_amount || 0));
     const surplusAmount = computed(() => Number(orderDetail.value?.surplus_amount || 0));
+    const balanceDeductionAmount = computed(() => {
+      const amount = Number(orderDetail.value?.balance_amount || 0);
+      if (!Number.isFinite(amount)) return 0;
+      return Math.max(0, Math.abs(amount));
+    });
     const discountBreakdownVisible = computed(() => {
       return (
         couponDiscountAmount.value > 0 ||
@@ -672,7 +673,7 @@ export default {
 
           if (
             orderDetail.value.status === 0 &&
-            orderDetail.value.total_amount === 0
+            (orderDetail.value.total_amount === 0 || resultFromOrderConfirm.value)
           ) {
             startPaymentCheck();
           }
@@ -1188,11 +1189,6 @@ export default {
         { immediate: true }
       );
 
-      if (resultFromOrderConfirm.value && route.query.trade_no) {
-        setTimeout(() => {
-          performPaymentCheck(true);
-        }, 600);
-      }
     });
 
     onBeforeUnmount(() => {
@@ -1238,6 +1234,7 @@ export default {
       userDiscountAmount,
       discountAmount,
       surplusAmount,
+      balanceDeductionAmount,
       discountBreakdownVisible,
       window: window,
       detectBrowser,
@@ -1250,7 +1247,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .payment-container {
   padding: 0;
@@ -1271,8 +1270,8 @@ export default {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
     box-shadow: none;
-    padding: 20px;
-    margin-bottom: 24px;
+    padding: map.get($spacers, 3);
+    margin-bottom: map.get($spacers, 3);
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     position: relative;
@@ -1289,8 +1288,7 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: $font-size-xl;
-        font-weight: $font-weight-semibold;
+        @extend %typo-section-title;
         margin: 0;
       }
     }
@@ -1307,7 +1305,7 @@ export default {
     display: flex;
     gap: 25px;
 
-    @media (max-width: 768px) {
+    @media (max-width: #{$bp-md}) {
       flex-direction: column;
     }
 
@@ -1346,8 +1344,7 @@ export default {
     }
 
     .section-title {
-      font-size: $font-size-md;
-      font-weight: $font-weight-semibold;
+      @extend %typo-item-title;
       margin-bottom: 16px;
       color: var(--text-primary);
       display: flex;
@@ -1399,16 +1396,13 @@ export default {
     }
 
     .overview-plan-name {
-      font-size: $font-size-xl;
-      font-weight: $font-weight-bold;
-      color: var(--text-primary);
+      @extend %typo-section-title;
       line-height: 1.2;
     }
 
     .overview-plan-meta {
       margin-top: 8px;
-      font-size: $font-size-md;
-      color: var(--text-tertiary);
+      @extend %typo-body-text;
       line-height: 1.3;
     }
 
@@ -1713,7 +1707,7 @@ export default {
       gap: 15px;
       width: 100%;
 
-      @media (max-width: 480px) {
+      @media (max-width: #{$bp-xs}) {
         flex-direction: column;
         gap: 10px;
 
@@ -1782,7 +1776,7 @@ export default {
         box-shadow: none !important;
       }
 
-      @media (max-width: 480px) {
+      @media (max-width: #{$bp-xs}) {
         width: 100%;
         height: 48px;
         min-height: 48px;
@@ -2089,7 +2083,7 @@ export default {
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: #{$bp-md}) {
     .content-wrapper {
       flex-direction: column;
     }
@@ -2100,10 +2094,10 @@ export default {
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: #{$bp-md}) {
     padding-bottom: 100px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: #{$bp-xs}) {
     padding-bottom: 120px;
 
     .right-column {

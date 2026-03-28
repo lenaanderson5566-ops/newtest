@@ -21,7 +21,19 @@
 
           <div class="section-wrapper subscription-intro-section" v-else-if="plan">
             <div class="section-title">
-              <span>选择订阅计划</span>
+              <span>
+                选择订阅计划
+                <em v-if="isSelectionLocked" class="locked-tip">（当前未支付订单已锁定）</em>
+              </span>
+              <button
+                v-if="isSelectionLocked"
+                type="button"
+                class="btn-unlock-selection"
+                :disabled="loading.lockedOrder"
+                @click="unlockSelection"
+              >
+                重新选择
+              </button>
             </div>
             <div class="plan-selector-grid">
               <button
@@ -29,10 +41,11 @@
                 :key="`order-plan-${item.id}`"
                 type="button"
                 class="plan-selector-btn"
-                :class="{ active: Number(plan?.id) === Number(item.id), 'is-current': isCurrentPlanOption(item), [`tone-${(idx % 3) + 1}`]: true }"
+                :class="{ active: Number(plan?.id) === Number(item.id), 'is-current': isCurrentPlanOption(item), 'is-locked': isSelectionLocked, [`tone-${(idx % 3) + 1}`]: true }"
+                :disabled="isSelectionLocked"
                 @click="selectPlanOption(item)"
               >
-                <span class="selector-current-badge" v-if="isCurrentPlanOption(item)">{{ $t('shop.plan.current') }}</span>
+                <span class="selector-current-badge" v-if="isCurrentPlanOption(item)">{{ currentPlanBadgeLabel }}</span>
                 <span class="selector-name">{{ item.name }}</span>
                 <span class="selector-check" v-if="Number(plan?.id) === Number(item.id)">
                   <IconCheck :size="14" />
@@ -57,7 +70,7 @@
                   v-for="(price, type) in availablePrices"
                   :key="type"
                   class="period-card"
-                  :class="{ active: selectedPriceType === type }"
+                  :class="{ active: selectedPriceType === type, 'is-locked': isSelectionLocked }"
                   @click="selectPriceType(type)"
                 >
                   <div class="period-card-inner">
@@ -124,7 +137,6 @@
                   <img v-else :src="method.icon" :alt="method.name" />
                 </div>
               </button>
-              <div class="payment-security-note">安全支付 · 实时到账</div>
             </div>
             <div class="skeleton-card methods-skeleton" v-else>
               <div
@@ -161,28 +173,41 @@
 
           <div class="section-wrapper order-summary-section">
             <div class="order-summary glassmorphism">
-              <div class="coupon-merge-block">
-                <div class="coupon-input">
-                  <input
-                    type="text"
-                    v-model="couponCode"
-                    :disabled="loading.plan || couponApplied"
-                    :placeholder="$t('order.enter_coupon')"
-                    class="coupon-field"
-                    :class="{ applied: couponApplied }"
-                    spellcheck="false"
-                    autocapitalize="off"
-                    autocomplete="off"
-                  />
-                  <button v-if="!couponApplied" class="btn-verify" @click="verifyCoupon"
-                    :disabled="!couponCode || verifying || loading.plan">
-                    <IconDiscount2 v-if="!verifying" />
-                    <span v-else class="loader"></span>
-                    <span>{{ $t("order.verify_coupon") }}</span>
-                  </button>
-                  <span v-if="couponApplied" class="coupon-applied-tag">✓ 已应用</span>
-                  <button v-if="couponApplied" class="btn-remove-text" @click="removeCoupon">移除</button>
-                </div>
+              <div class="summary-header-block">
+                <div class="summary-title">订单摘要</div>
+              </div>
+
+              <div v-if="showCouponInputSection" class="coupon-merge-block compact">
+                <template v-if="!couponApplied">
+                  <div class="coupon-input">
+                    <input
+                      type="text"
+                      v-model="couponCode"
+                      :disabled="loading.plan"
+                      :placeholder="$t('order.enter_coupon')"
+                      class="coupon-field"
+                      spellcheck="false"
+                      autocapitalize="off"
+                      autocomplete="off"
+                    />
+                    <button
+                      class="btn-verify"
+                      @click="verifyCoupon"
+                      :disabled="!couponCode || verifying || loading.plan"
+                    >
+                      <IconDiscount2 v-if="!verifying" />
+                      <span v-else class="loader"></span>
+                      <span>{{ $t("order.verify_coupon") }}</span>
+                    </button>
+                  </div>
+                </template>
+                <template v-else>
+                  <div class="coupon-applied-inline">
+                    <span class="coupon-code-text">优惠码：{{ couponCode }}</span>
+                    <span class="coupon-applied-tag">已应用</span>
+                    <button class="btn-remove-text" @click="removeCoupon">移除</button>
+                  </div>
+                </template>
                 <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
               </div>
 
@@ -207,48 +232,67 @@
               <!-- 实际内容 -->
 
               <div v-else>
-                <div class="summary-row">
-                  <div class="summary-label">订阅价格</div>
+                <div class="summary-amounts">
+                  <div class="summary-row">
+                    <div class="summary-label">{{ selectedOrderDisplay }}</div>
+                    <div class="summary-value">{{ formatCurrencyAmount(summaryOriginalPrice) }}</div>
+                  </div>
 
-                  <div class="summary-value">
-                    {{ formatCurrencyAmount(originalPrice) }}
+                  <div class="summary-row" v-if="totalDiscountDisplayAmount > 0">
+                    <div class="summary-label summary-label-with-action">
+                      <span>总优惠</span>
+                      <button
+                        v-if="hasDiscountDetails"
+                        type="button"
+                        class="btn-remove-text summary-detail-toggle inline"
+                        @click="showDiscountDetails = !showDiscountDetails"
+                      >
+                        {{ showDiscountDetails ? "收起明细" : "查看明细" }}
+                      </button>
+                    </div>
+                    <div class="summary-value discount">-{{ formatCurrencyAmount(totalDiscountDisplayAmount) }}</div>
+                  </div>
+
+                  <template v-if="showDiscountDetails">
+                    <div class="summary-row" v-if="couponDiscountAmount > 0">
+                      <div class="summary-label">优惠券</div>
+                      <div class="summary-value discount">-{{ formatCurrencyAmount(couponDiscountAmount) }}</div>
+                    </div>
+                    <div class="summary-row" v-if="userDiscountAmount > 0">
+                      <div class="summary-label">会员折扣</div>
+                      <div class="summary-value discount">-{{ formatCurrencyAmount(userDiscountAmount) }}</div>
+                    </div>
+                    <div class="summary-row" v-if="surplusDeductionAmount > 0">
+                      <div class="summary-label">当前套餐抵扣</div>
+                      <div class="summary-value discount">-{{ formatCurrencyAmount(surplusDeductionAmount) }}</div>
+                    </div>
+                  </template>
+
+                  <div class="summary-divider compact" v-if="balanceDeductionAmount > 0"></div>
+                  <div class="summary-row" v-if="balanceDeductionAmount > 0">
+                    <div class="summary-label">余额支付</div>
+                    <div class="summary-value discount">-{{ formatCurrencyAmount(balanceDeductionAmount) }}</div>
                   </div>
                 </div>
 
-                <div class="summary-row" v-if="couponDiscountAmount > 0">
-                  <div class="summary-label">优惠券 · {{ couponCode }}</div>
+                <div class="summary-divider strong"></div>
 
-                  <div class="summary-value discount">
-                    -{{ formatCurrencyAmount(couponDiscountAmount) }}
-                  </div>
-                </div>
-
-                <div class="summary-row" v-if="userDiscountAmount > 0">
-                  <div class="summary-label">会员折扣</div>
-
-                  <div class="summary-value discount">
-                    -{{ formatCurrencyAmount(userDiscountAmount) }}
-                  </div>
-                </div>
-
-                <div class="summary-divider"></div>
-
-                <div class="summary-row total">
-                  <div class="summary-label">应付金额</div>
-
-                  <div class="summary-value">
-                    {{ formatCurrencyAmount(totalWithFee) }}
-                  </div>
+                <div class="payable-block">
+                  <div class="payable-label">应付金额</div>
+                  <div class="payable-value">{{ formatCurrencyAmount(totalWithFee) }}</div>
                 </div>
 
                 <button
                   class="btn-order summary-submit-action"
                   @click="submitOrder"
                   :disabled="
-                    !selectedPriceType ||
+                    (!isContinuePaymentMode && !selectedPriceType) ||
                     loading.submitting ||
                     loading.paying ||
                     loading.plan ||
+                    loading.preview ||
+                    loading.lockedOrder ||
+                    !isLockedOrderReady ||
                     (totalWithFee > 0 && !selectedMethod)
                   "
                 >
@@ -256,7 +300,7 @@
 
                   <span v-else class="loader"></span>
 
-                  <span>{{ totalWithFee <= 0 ? $t("payment.free_activate") : "立即支付" }}</span>
+                  <span>{{ payActionLabel }}</span>
                 </button>
               </div>
             </div>
@@ -324,11 +368,13 @@ import {
   checkOrderStatus,
   verifyCoupon as checkCoupon,
   submitOrder as createOrder,
-  cancelOrder as cancelExistingOrder,
+  previewOrder as fetchOrderPreview,
+  cancelOrder as cancelOrderByTradeNo,
   checkoutOrder,
+  getOrderDetail,
 } from "@/api/account/shop";
 
-import { getUserInfo } from "@/api/overview/dashboard";
+import { getUserInfo, getSubscribe } from "@/api/overview/dashboard";
 import { fetchOrderList } from "@/api/account/orderlist";
 import QrcodeVue from "qrcode.vue";
 
@@ -379,10 +425,11 @@ export default {
 
       userInfo: true,
       methods: false,
+      lockedOrder: false,
+      preview: false,
 
       submitting: false,
       paying: false,
-      cancellingExisting: false,
     });
 
     const plan = ref(null);
@@ -442,6 +489,39 @@ export default {
     const paymentCheckTimer = ref(null);
     const showPaymentSuccessPrompt = ref(false);
     const hasNavigatedAfterSuccess = ref(false);
+    const showDiscountDetails = ref(false);
+    const lockedPendingOrder = ref(null);
+    const lockedOrderDetail = ref(null);
+    const orderPreview = ref(null);
+    const previewRequestSerial = ref(0);
+    const currentSubscribedPlanId = ref(null);
+    const isCurrentSubscriptionExpired = ref(false);
+    const isSelectionLocked = computed(() => Boolean(lockedPendingOrder.value));
+    const isContinuePaymentMode = computed(
+      () => Boolean(isSelectionLocked.value && lockedPendingOrder.value?.trade_no)
+    );
+    const isLockedOrderReady = computed(
+      () => !isContinuePaymentMode.value || Boolean(lockedOrderDetail.value)
+    );
+    const showCouponInputSection = computed(() => !isContinuePaymentMode.value);
+    const hasAnyWalletBalance = computed(() => {
+      const wallets = Array.isArray(userInfo.value?.wallets) ? userInfo.value.wallets : [];
+      const hasWalletBalance = wallets.some((wallet) => Number(wallet?.balance || 0) > 0);
+      if (hasWalletBalance) {
+        return true;
+      }
+      return Number(userInfo.value?.balance || 0) > 0;
+    });
+    const hasValidSubscription = computed(() =>
+      Boolean(currentSubscribedPlanId.value) && !isCurrentSubscriptionExpired.value
+    );
+    const shouldUseServerPreview = computed(
+      () =>
+        !isContinuePaymentMode.value &&
+        Boolean(plan.value?.id) &&
+        Boolean(selectedPriceType.value) &&
+        (hasValidSubscription.value || hasAnyWalletBalance.value)
+    );
 
     const discountPercent = ref(0);
 
@@ -450,8 +530,34 @@ export default {
 
       return plan.value[selectedPriceType.value] || 0;
     });
+    const summaryOriginalPrice = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const directAmount = Number(
+          lockedOrderDetail.value?.plan?.[lockedOrderDetail.value?.period] ?? 0
+        );
+        if (Number.isFinite(directAmount) && directAmount >= 0) {
+          return directAmount;
+        }
+        return 0;
+      }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const previewTotal = Number(orderPreview.value?.total_amount || 0);
+        const previewBalance = Math.max(0, Number(orderPreview.value?.balance_amount || 0));
+        const previewSurplus = Math.max(0, Number(orderPreview.value?.surplus_amount || 0));
+        return Math.max(0, previewTotal + previewBalance + previewSurplus);
+      }
+      return originalPrice.value;
+    });
 
     const couponDiscountAmount = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.coupon_discount_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const amount = Number(orderPreview.value?.coupon_discount_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
       if (!couponApplied.value || !couponInfo.value) return 0;
 
       if (typeof couponInfo.value.coupon_discount_amount === 'number') {
@@ -482,6 +588,14 @@ export default {
     });
 
     const userDiscountAmount = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.user_discount_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const amount = Number(orderPreview.value?.user_discount_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
       if (originalPrice.value <= 0 || userDiscountPercent.value <= 0) {
         return 0;
       }
@@ -490,14 +604,101 @@ export default {
     });
 
     const totalDiscountAmount = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.discount_amount);
+        if (Number.isFinite(amount)) {
+          return Math.max(0, Math.abs(amount));
+        }
+      }
       return Math.max(0, couponDiscountAmount.value + userDiscountAmount.value);
     });
-
     const finalPrice = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.total_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, amount) : 0;
+      }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const amount = Number(orderPreview.value?.total_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, amount) : 0;
+      }
       return Math.max(0, originalPrice.value - totalDiscountAmount.value);
     });
+    const surplusDeductionAmount = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.surplus_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const amount = Number(orderPreview.value?.surplus_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
+      return 0;
+    });
+    const balanceDeductionAmount = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.balance_amount || 0);
+        if (!Number.isFinite(amount)) {
+          return 0;
+        }
+        return Math.max(0, Math.abs(amount));
+      }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const amount = Number(orderPreview.value?.balance_amount || 0);
+        if (!Number.isFinite(amount)) {
+          return 0;
+        }
+        return Math.max(0, Math.abs(amount));
+      }
+      const userBalance = Number(userInfo.value?.balance || 0);
+      if (!Number.isFinite(userBalance) || userBalance <= 0) {
+        return 0;
+      }
+      return Math.min(userBalance, finalPrice.value);
+    });
+    const totalWithFee = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.total_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, amount) : 0;
+      }
+      return Math.max(0, finalPrice.value - balanceDeductionAmount.value);
+    });
 
-    const totalWithFee = computed(() => finalPrice.value);
+    const refreshOrderPreview = async () => {
+      if (!shouldUseServerPreview.value) {
+        orderPreview.value = null;
+        return;
+      }
+      const requestId = previewRequestSerial.value + 1;
+      previewRequestSerial.value = requestId;
+      loading.preview = true;
+      try {
+        const payload = {
+          plan_id: Number(plan.value?.id),
+          period: selectedPriceType.value,
+        };
+        if (couponApplied.value && couponCode.value) {
+          payload.coupon_code = couponCode.value;
+        }
+        const response = await fetchOrderPreview(payload);
+        if (requestId !== previewRequestSerial.value) {
+          return;
+        }
+        orderPreview.value = response?.data || null;
+      } catch (error) {
+        if (requestId !== previewRequestSerial.value) {
+          return;
+        }
+        orderPreview.value = null;
+        showToast(
+          error?.response?.message || error?.message || "订单预览加载失败，已切换为本地估算金额",
+          "warning"
+        );
+      } finally {
+        if (requestId === previewRequestSerial.value) {
+          loading.preview = false;
+        }
+      }
+    };
 
     const displayCurrency = computed(() => {
       return `${currency.value || 'USD'}`.toUpperCase();
@@ -625,17 +826,51 @@ export default {
       return keyMap[type] || "";
     };
 
+    const payActionLabel = computed(() => {
+      if (totalWithFee.value <= 0) return "立即开通";
+      return isContinuePaymentMode.value ? "继续支付" : "立即支付";
+    });
+    const selectedOrderDisplay = computed(() => {
+      const planName = plan.value?.name || "-";
+      const periodType = isContinuePaymentMode.value
+        ? String(lockedPendingOrder.value?.period || "")
+        : selectedPriceType.value;
+      if (!periodType) {
+        return planName;
+      }
+      return `${planName} · ${formatPeriodOption(periodType)}`;
+    });
+    const totalDiscountDisplayAmount = computed(() =>
+      Math.max(
+        0,
+        couponDiscountAmount.value + userDiscountAmount.value + surplusDeductionAmount.value
+      )
+    );
+    const hasDiscountDetails = computed(
+      () =>
+        couponDiscountAmount.value > 0 ||
+        userDiscountAmount.value > 0 ||
+        surplusDeductionAmount.value > 0
+    );
+    const currentPlanBadgeLabel = computed(() =>
+      isCurrentSubscriptionExpired.value ? "您最近的订阅" : t("shop.plan.current")
+    );
+
     const selectPriceType = (type) => {
+      if (isSelectionLocked.value) return;
       selectedPriceType.value = type;
     };
 
     const isCurrentPlanOption = (targetPlan) => {
-      const currentPlanId = Number(userInfo.value?.plan_id || 0);
+      const currentPlanId = Number(
+        currentSubscribedPlanId.value || userInfo.value?.plan_id || 0
+      );
       if (!currentPlanId) return false;
       return Number(targetPlan?.id) === currentPlanId;
     };
 
     const selectPlanOption = (targetPlan) => {
+      if (isSelectionLocked.value) return;
       if (!targetPlan) return;
       plan.value = { ...targetPlan };
       const firstValidPriceType = Object.keys(availablePrices.value)[0];
@@ -645,6 +880,32 @@ export default {
 
     const selectPaymentMethod = (methodId) => {
       selectedMethod.value = methodId;
+    };
+
+    const unlockSelection = async () => {
+      if (!isSelectionLocked.value) return;
+      const tradeNo = String(lockedPendingOrder.value?.trade_no || "");
+      loading.lockedOrder = true;
+      try {
+        if (tradeNo) {
+          await cancelOrderByTradeNo(tradeNo);
+        }
+        lockedPendingOrder.value = null;
+        lockedOrderDetail.value = null;
+        if (route.query.trade_no) {
+          const nextQuery = { ...route.query };
+          delete nextQuery.trade_no;
+          await router.replace({ query: nextQuery });
+        }
+        showToast("已取消原待支付订单，可重新选择订阅规格与周期", "success");
+      } catch (error) {
+        showToast(
+          error?.response?.message || error?.message || "取消原订单失败，请稍后重试",
+          "error"
+        );
+      } finally {
+        loading.lockedOrder = false;
+      }
     };
 
     const formatMethodFee = (method) => {
@@ -773,39 +1034,19 @@ export default {
       }
     };
 
-    const isPendingOrderConflict = (message = "") => {
-      const normalized = String(message || "");
-      return (
-        normalized.includes("未付款") ||
-        normalized.includes("开通中") ||
-        normalized.includes("未完成") ||
-        normalized.includes("有未支付")
-      );
-    };
-
-    const extractPendingTradeNo = (error) => {
-      const payload = error?.response?.data;
-      return (
-        payload?.data?.trade_no ||
-        payload?.data ||
-        payload?.trade_no ||
-        error?.response?.trade_no ||
-        ""
-      );
-    };
-
-    const isUnpaidCreatedOrder = (order) => {
-      if (!order) return false;
-      return order.total_amount !== null && order.payment_amount == null;
-    };
-
     const fetchLatestPendingOrder = async (tradeNo = "") => {
       try {
         const resp = await fetchOrderList();
         const orders = Array.isArray(resp?.data) ? resp.data : [];
         const pendingOrders = orders.filter(
-          (item) => Number(item?.status) === 0 || Number(item?.status) === 1
+          (item) => Number(item?.status) === 0
         );
+        pendingOrders.sort((a, b) => {
+          const aTs = new Date(a?.created_at || 0).getTime();
+          const bTs = new Date(b?.created_at || 0).getTime();
+          if (aTs !== bTs) return bTs - aTs;
+          return Number(b?.id || 0) - Number(a?.id || 0);
+        });
         if (tradeNo) {
           const matched = pendingOrders.find((item) => item?.trade_no === tradeNo);
           if (matched) {
@@ -819,9 +1060,23 @@ export default {
       }
     };
 
-    const fetchLatestPendingTradeNo = async () => {
-      const pending = await fetchLatestPendingOrder();
-      return pending?.trade_no || "";
+    const fetchLockedOrderDetail = async () => {
+      if (!isContinuePaymentMode.value) {
+        lockedOrderDetail.value = null;
+        return;
+      }
+      loading.lockedOrder = true;
+      try {
+        const tradeNo = String(lockedPendingOrder.value?.trade_no || "");
+        const response = await getOrderDetail(tradeNo);
+        lockedOrderDetail.value = response?.data || null;
+      } catch (err) {
+        console.error("Failed to fetch locked order detail:", err);
+        lockedOrderDetail.value = null;
+        showToast(err?.response?.message || err?.message || "未能读取待支付订单详情", "error");
+      } finally {
+        loading.lockedOrder = false;
+      }
     };
 
     const closePaymentModal = () => {
@@ -880,7 +1135,14 @@ export default {
     };
 
     const checkPaymentStatusNow = async () => {
-      await performPaymentCheck(paymentTradeNo.value);
+      const tradeNo =
+        paymentTradeNo.value || String(lockedPendingOrder.value?.trade_no || "");
+      if (!tradeNo) {
+        showToast("未找到待支付订单号", "warning");
+        return;
+      }
+      paymentTradeNo.value = tradeNo;
+      await performPaymentCheck(tradeNo);
     };
 
     const startPaymentCheck = (tradeNo) => {
@@ -895,11 +1157,20 @@ export default {
     };
 
     const submitOrder = async () => {
-      if (!selectedPriceType.value || loading.submitting || loading.cancellingExisting) return;
+      if (loading.submitting || loading.paying) return;
+      if (!isLockedOrderReady.value) {
+        showToast("待支付订单数据加载中，请稍后重试", "warning");
+        return;
+      }
       if (totalWithFee.value > 0 && !selectedMethod.value) {
         showToast(t("payment.select_method_first"), "warning");
         return;
       }
+      if (isContinuePaymentMode.value) {
+        await checkoutTradeNo(String(lockedPendingOrder.value?.trade_no || ""));
+        return;
+      }
+      if (!selectedPriceType.value) return;
 
       await executeOrderSubmission();
     };
@@ -971,8 +1242,7 @@ export default {
 
     // 实际的订单提交逻辑
 
-    const executeOrderSubmission = async (options = {}) => {
-      const { conflictResolved = false } = options;
+    const executeOrderSubmission = async () => {
       loading.submitting = true;
 
       try {
@@ -998,37 +1268,6 @@ export default {
         console.error("Failed to submit order:", error);
 
         const message = error.response?.message || error.message || t("order.order_failed");
-        if (isPendingOrderConflict(message)) {
-          const fallbackTradeNo = extractPendingTradeNo(error) || (await fetchLatestPendingTradeNo());
-          const matchedOrder = await fetchLatestPendingOrder(fallbackTradeNo);
-
-          const tradeNoToCancel =
-            (matchedOrder && isUnpaidCreatedOrder(matchedOrder) && matchedOrder.trade_no) ||
-            fallbackTradeNo ||
-            "";
-
-          if (!conflictResolved && tradeNoToCancel) {
-              loading.cancellingExisting = true;
-              try {
-                await cancelExistingOrder(tradeNoToCancel);
-                await executeOrderSubmission({ conflictResolved: true });
-              } catch (cancelError) {
-                showToast(
-                cancelError?.response?.message ||
-                  cancelError?.message ||
-                  "取消订单失败",
-                "error"
-              );
-            } finally {
-              loading.cancellingExisting = false;
-            }
-            return;
-          }
-
-          showToast(t("order.order_failed"), "error");
-          return;
-        }
-
         showToast(message, "error");
       } finally {
         loading.submitting = false;
@@ -1039,7 +1278,10 @@ export default {
       loading.plan = true;
 
       try {
-        if (!route.query.id) {
+        const lockedPlanId =
+          Number(lockedPendingOrder.value?.plan_id || lockedPendingOrder.value?.plan?.id || 0) || null;
+        const targetPlanId = lockedPlanId || Number(route.query.id || 0) || null;
+        if (!targetPlanId) {
           showToast(t("order.no_plan_selected"), "error");
 
           router.push("/shop");
@@ -1047,7 +1289,7 @@ export default {
           return;
         }
 
-        const response = await fetchPlanById(route.query.id, locale.value);
+        const response = await fetchPlanById(targetPlanId, locale.value);
         try {
           const plansResponse = await fetchPlans(locale.value);
           if (Array.isArray(plansResponse?.data)) {
@@ -1061,7 +1303,10 @@ export default {
         if (response.data) {
           plan.value = response.data;
 
-          if (route.query.period && hasPeriodPrice(plan.value, route.query.period)) {
+          const lockedPeriod = String(lockedPendingOrder.value?.period || "");
+          if (lockedPeriod && hasPeriodPrice(plan.value, lockedPeriod)) {
+            selectedPriceType.value = lockedPeriod;
+          } else if (route.query.period && hasPeriodPrice(plan.value, route.query.period)) {
             selectedPriceType.value = route.query.period;
           } else {
             const firstValidPriceType = Object.keys(availablePrices.value)[0];
@@ -1109,6 +1354,23 @@ export default {
         );
       } finally {
         loading.userInfo = false;
+      }
+    };
+
+    const fetchCurrentSubscriptionStatus = async () => {
+      try {
+        const response = await getSubscribe();
+        const subscribe = response?.data || {};
+        currentSubscribedPlanId.value =
+          Number(subscribe.plan_id || subscribe.plan?.id || 0) || null;
+        const expiredAt = Number(subscribe?.expired_at || 0);
+        isCurrentSubscriptionExpired.value =
+          Number.isFinite(expiredAt) && expiredAt > 0
+            ? expiredAt * 1000 <= Date.now()
+            : false;
+      } catch (error) {
+        currentSubscribedPlanId.value = null;
+        isCurrentSubscriptionExpired.value = false;
       }
     };
 
@@ -1185,9 +1447,45 @@ export default {
         fetchPlanData();
       }
     );
+
+    watch(
+      () => [plan.value?.id, selectedPriceType.value, lockedPendingOrder.value?.trade_no],
+      () => {
+        showDiscountDetails.value = false;
+      }
+    );
+
+    watch(
+      [
+        () => plan.value?.id,
+        () => selectedPriceType.value,
+        () => couponApplied.value,
+        () => couponCode.value,
+        () => isContinuePaymentMode.value,
+        () => currentSubscribedPlanId.value,
+        () => isCurrentSubscriptionExpired.value,
+        () => userInfo.value?.balance,
+        () =>
+          Array.isArray(userInfo.value?.wallets)
+            ? userInfo.value.wallets.map((wallet) => Number(wallet?.balance || 0)).join(",")
+            : "",
+      ],
+      async () => {
+        await refreshOrderPreview();
+      }
+    );
     onMounted(async () => {
-      const tasks = [fetchUserInfo(), fetchConfig(), fetchAvailablePaymentMethods()];
-      if (route.query.id) {
+      const tasks = [
+        fetchUserInfo(),
+        fetchCurrentSubscriptionStatus(),
+        fetchConfig(),
+        fetchAvailablePaymentMethods(),
+      ];
+      lockedPendingOrder.value = await fetchLatestPendingOrder(
+        route.query.trade_no ? String(route.query.trade_no) : ""
+      );
+      await fetchLockedOrderDetail();
+      if (route.query.id || lockedPendingOrder.value?.plan_id || lockedPendingOrder.value?.plan?.id) {
         tasks.unshift(fetchPlanData());
       }
       await Promise.all(tasks);
@@ -1221,6 +1519,15 @@ export default {
       displayCurrency,
 
       selectedPriceType,
+      isSelectionLocked,
+      isContinuePaymentMode,
+      isLockedOrderReady,
+      showCouponInputSection,
+      payActionLabel,
+      showDiscountDetails,
+      selectedOrderDisplay,
+      totalDiscountDisplayAmount,
+      hasDiscountDetails,
 
       couponCode,
 
@@ -1235,6 +1542,7 @@ export default {
       selectedMethod,
 
       originalPrice,
+      summaryOriginalPrice,
 
       couponDiscountAmount,
 
@@ -1243,6 +1551,9 @@ export default {
       totalDiscountAmount,
 
       finalPrice,
+      surplusDeductionAmount,
+
+      balanceDeductionAmount,
 
       totalWithFee,
 
@@ -1258,9 +1569,11 @@ export default {
 
       selectPriceType,
       selectPlanOption,
+      unlockSelection,
       selectPaymentMethod,
       formatMethodFee,
       isCurrentPlanOption,
+      currentPlanBadgeLabel,
       showPeriodDiscountTag,
       getPeriodDiscountPercent,
       getPeriodOriginalPrice,
@@ -1290,7 +1603,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .order-confirm-container {
   padding: 0;
@@ -1304,15 +1619,15 @@ export default {
 
   justify-content: center;
 
-  margin-top: 20px;
+  margin-top: 0;
 
-  min-height: calc(100vh - 100px);
+  min-height: auto;
 
   .order-confirm-inner {
     width: 100%;
 
     
-    padding-bottom: 100px;
+    padding-bottom: var(--page-content-bottom-gap, 12px);
   }
 
   .welcome-card {
@@ -1395,15 +1710,16 @@ export default {
     margin-bottom: 25px;
 
     .section-title {
-      font-size: $font-size-xl;
-
-      font-weight: $font-weight-semibold;
+      @extend %typo-section-title;
 
       margin-bottom: 15px;
 
       color: var(--text-primary);
 
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
       padding-left: 14px;
 
@@ -1426,6 +1742,24 @@ export default {
 
         border-radius: 2px;
       }
+
+      .locked-tip {
+        font-style: normal;
+        font-size: $font-size-sm;
+        color: var(--text-tertiary);
+        margin-left: 4px;
+      }
+
+      .btn-unlock-selection {
+        height: 30px;
+        padding: 0 10px;
+        border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+        border-radius: $border-radius-sm;
+        background: transparent;
+        color: var(--theme-color);
+        font-size: $font-size-sm;
+        cursor: pointer;
+      }
     }
   }
 
@@ -1433,7 +1767,8 @@ export default {
     border: none;
     background: transparent;
     padding: 0;
-    margin-bottom: 20px;
+    margin-top: map.get($spacers, 2);
+    margin-bottom: map.get($spacers, 2);
   }
 
   .plan-selector-grid {
@@ -1446,7 +1781,7 @@ export default {
     position: relative;
     border: 1px solid var(--border-color);
     border-radius: $border-radius;
-    background: transparent;
+    background: var(--card-background);
     min-height: 110px;
     padding: 12px;
     text-align: left;
@@ -1465,6 +1800,11 @@ export default {
     &.active.tone-1 { background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%); }
     &.active.tone-2 { background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%); }
     &.active.tone-3 { background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%); }
+
+    &:disabled,
+    &.is-locked {
+      cursor: not-allowed;
+    }
   }
 
   .selector-current-badge {
@@ -1508,18 +1848,32 @@ export default {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
+    margin-top: map.get($spacers, 2) !important;
+    margin-bottom: map.get($spacers, 2) !important;
   }
 
-  .section-wrapper.subscription-intro-section,
+  .section-wrapper.subscription-intro-section {
+    background-color: var(--background-color) !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin-top: map.get($spacers, 2) !important;
+    margin-bottom: map.get($spacers, 2) !important;
+  }
+
   .section-wrapper.payment-methods-section {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
+    margin-top: map.get($spacers, 2) !important;
+    margin-bottom: map.get($spacers, 2) !important;
   }
 
   .subscription-intro-section .section-title,
+  .period-section .section-title,
   .payment-methods-section .section-title {
     background-color: var(--background-color);
+    margin-top: map.get($spacers, 2);
+    margin-bottom: map.get($spacers, 2);
   }
 
   .plan-card {
@@ -1674,7 +2028,7 @@ export default {
   }
 
   .period-selection {
-    margin-bottom: 20px;
+    margin-bottom: 0;
 
     width: 100%;
 
@@ -1790,6 +2144,13 @@ export default {
           box-shadow: none;
         }
 
+        &.is-locked,
+        &.is-locked:hover {
+          cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
+        }
+
         .period-card-inner {
           background-color: #ffffff !important;
 
@@ -1871,7 +2232,7 @@ export default {
   .coupon-input {
     display: flex;
 
-    gap: 12px;
+    gap: 8px;
 
     margin-bottom: 20px;
 
@@ -1882,9 +2243,9 @@ export default {
     .coupon-field {
       flex: 1;
 
-      height: 48px;
+      height: 40px;
 
-      padding: 0 18px;
+      padding: 0 14px;
 
       border-radius: $border-radius-sm;
 
@@ -1894,7 +2255,7 @@ export default {
 
       color: var(--text-primary);
 
-      font-size: $font-size-md;
+      font-size: $font-size-sm;
 
       outline: none;
 
@@ -1925,17 +2286,16 @@ export default {
     }
 
     .btn-verify {
-      height: 48px;
+      height: 40px;
 
-      padding: 0 24px;
+      padding: 0 14px;
 
       border-radius: $border-radius-sm;
 
-      background-color: var(--theme-color);
-
+      background: color-mix(in srgb, var(--theme-color) 24%, transparent);
+      border: 1px solid color-mix(in srgb, var(--theme-color) 52%, white);
       color: var(--text-on-dark-primary);
-
-      font-size: $font-size-md;
+      font-size: $font-size-sm;
 
       font-weight: $font-weight-medium;
 
@@ -1944,8 +2304,6 @@ export default {
       align-items: center;
 
       gap: 8px;
-
-      border: none;
 
       cursor: pointer;
 
@@ -1958,11 +2316,8 @@ export default {
       flex-shrink: 0;
 
       &:hover:not(:disabled) {
-        background-color: color-mix(
-          in srgb,
-          var(--theme-color) 85%,
-          black
-        ) !important;
+        background: color-mix(in srgb, var(--theme-color) 36%, transparent);
+        color: var(--text-on-dark-primary);
 
         transform: translateY(-2px);
 
@@ -1980,24 +2335,24 @@ export default {
 
         height: 16px;
 
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        border: 2px solid rgba(148, 163, 184, 0.35);
 
         border-radius: 50%;
 
-        border-top-color: white;
+        border-top-color: var(--text-tertiary);
 
         animation: spin 1s linear infinite;
       }
     }
 
     .coupon-applied-tag {
-      height: 48px;
-      padding: 0 16px;
+      height: 40px;
+      padding: 0 12px;
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--text-tertiary);
-      font-size: $font-size-md;
+      font-size: $font-size-sm;
       display: inline-flex;
       align-items: center;
       line-height: 1;
@@ -2006,13 +2361,13 @@ export default {
     }
 
     .btn-remove-text {
-      height: 48px;
-      padding: 0 16px;
+      height: 40px;
+      padding: 0 12px;
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
       color: var(--text-tertiary);
-      font-size: $font-size-md;
+      font-size: $font-size-sm;
       cursor: pointer;
       line-height: 1;
       white-space: nowrap;
@@ -2157,14 +2512,6 @@ export default {
       }
     }
 
-    .payment-security-note {
-      padding: 6px 12px 8px;
-      border-top: 1px solid var(--border-color);
-      font-size: $font-size-sm;
-      color: var(--text-tertiary);
-      line-height: 1.4;
-      background: #fff;
-    }
   }
 
   .methods-skeleton {
@@ -2187,9 +2534,9 @@ export default {
 
     box-shadow: none;
 
-    padding: 24px;
+    padding: map.get($spacers, 3);
 
-    margin-bottom: 20px;
+    margin: 0;
 
     border: 1px solid var(--border-color);
 
@@ -2201,12 +2548,62 @@ export default {
       -webkit-backdrop-filter: blur(20px);
     }
 
+    .summary-header-block {
+      margin-bottom: 14px;
+
+      .summary-title {
+        @extend %typo-card-title;
+        @extend %typo-dark-primary;
+        margin-bottom: 4px;
+      }
+
+      .summary-subtitle {
+        font-size: $font-size-sm;
+        color: var(--text-on-dark-primary);
+        opacity: 0.72;
+
+        &.pending {
+          opacity: 0.9;
+          color: color-mix(in srgb, var(--theme-color) 70%, white);
+        }
+      }
+    }
+
+    .coupon-merge-block.compact {
+      margin-bottom: 14px;
+
+      .coupon-input {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .coupon-applied-inline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        min-height: 32px;
+      }
+
+      .coupon-code-text {
+        font-size: $font-size-sm;
+        color: var(--right-card-text);
+        opacity: 0.9;
+      }
+    }
+
+    .summary-amounts {
+      display: grid;
+      gap: 8px;
+    }
+
     .summary-row {
       display: flex;
 
       justify-content: space-between;
 
-      margin-bottom: 12px;
+      margin-bottom: 0;
 
       align-items: center;
 
@@ -2217,7 +2614,7 @@ export default {
       .summary-label {
         flex: 1;
         min-width: 0;
-        font-size: $font-size-md;
+        font-size: $font-size-sm;
 
         color: var(--text-tertiary);
 
@@ -2230,12 +2627,18 @@ export default {
 
           font-style: italic;
         }
+
+        &.summary-label-with-action {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+        }
       }
 
       .summary-value {
         min-width: 120px;
         text-align: right;
-        font-size: $font-size-md;
+        font-size: $font-size-sm;
 
         font-weight: $font-weight-medium;
 
@@ -2247,38 +2650,6 @@ export default {
           font-weight: $font-weight-semibold;
         }
       }
-
-      &.total {
-        margin-top: 8px;
-
-        margin-bottom: 0;
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 6px;
-
-        .summary-label {
-          font-size: $font-size-md;
-
-          font-weight: $font-weight-semibold;
-
-          color: var(--text-primary);
-        }
-
-        .summary-value {
-          min-width: 0;
-          text-align: left;
-          font-size: $font-size-xl;
-
-          font-weight: $font-weight-bold;
-
-          color: var(--theme-color);
-
-          line-height: 1.15;
-        }
-      }
     }
 
     .summary-divider {
@@ -2287,7 +2658,46 @@ export default {
       background-color: var(--border-color);
 
       margin: 16px 0;
+
+      &.strong {
+        margin: 6px 0 10px;
+      }
+
+      &.compact {
+        margin: 8px 0 6px;
+      }
     }
+
+    .summary-detail-toggle {
+      justify-self: flex-start;
+      padding: 0;
+      margin-top: -2px;
+      font-size: $font-size-xs;
+
+      &.inline {
+        margin-top: 0;
+        font-size: $font-size-xs;
+      }
+    }
+
+    .payable-block {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      .payable-label {
+        @extend %typo-label-text;
+        @extend %typo-dark-secondary;
+      }
+
+      .payable-value {
+        @extend %typo-metric-lg;
+        @extend %typo-dark-primary;
+        line-height: 1.1;
+      }
+    }
+
   }
 
   .coupon-verify-section,
@@ -2397,12 +2807,13 @@ export default {
 
   .order-summary-section {
     margin-top: 0;
+    margin-bottom: 0;
   }
 
   .order-summary .summary-submit-action {
     width: 100%;
-    margin-top: 14px;
-    height: 44px;
+    margin-top: 10px;
+    height: 40px;
     padding: 0 24px;
     border-radius: $border-radius-sm;
     background-color: var(--theme-color);
@@ -2673,9 +3084,9 @@ export default {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .order-confirm-container {
-    margin-top: 15px;
+    margin-top: 0;
 
     :deep(.page-inner) {
       padding-left: 0 !important;
@@ -2735,7 +3146,7 @@ export default {
     .content-wrapper {
       flex-direction: column;
 
-      gap: 20px;
+      gap: 0;
 
       .right-column {
         max-width: none;
@@ -2775,7 +3186,7 @@ export default {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: #{$bp-xs}) {
   .order-confirm-container {
     .section-title {
       font-size: $font-size-md;
@@ -2852,7 +3263,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: #{$bp-md}) {
   .order-confirm-container .period-selection .period-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
@@ -2860,7 +3271,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: #{$bp-xs}) {
   .order-confirm-container .period-selection .period-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
@@ -2872,7 +3283,7 @@ export default {
   display: grid !important;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: #{$bp-md}) {
   .period-cards {
     display: grid !important;
 
@@ -2882,7 +3293,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: #{$bp-xs}) {
   .period-cards {
     display: grid !important;
 
@@ -2902,7 +3313,7 @@ export default {
   width: 100% !important;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: #{$bp-md}) {
   :deep(.period-cards) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
@@ -2910,7 +3321,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: #{$bp-xs}) {
   :deep(.period-cards) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 

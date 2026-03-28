@@ -46,6 +46,14 @@ export function submitOrder(data) {
   });
 }
 
+export function previewOrder(data) {
+  return request({
+    url: '/user/order/preview',
+    method: 'post',
+    data
+  });
+}
+
 
 export function getOrderDetail(tradeNo) {
   return request({
