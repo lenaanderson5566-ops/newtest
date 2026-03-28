@@ -351,6 +351,7 @@ export default {
 
     const selectedPriceType = reactive({});
     const currentPlanId = ref(null);
+    const isCurrentSubscriptionExpired = ref(false);
 
     const paymentMethods = ref([]);
 
@@ -408,7 +409,9 @@ export default {
       };
     });
 
-    const currentPlanBadgeLabel = computed(() => t("shop.plan.current"));
+    const currentPlanBadgeLabel = computed(() =>
+      isCurrentSubscriptionExpired.value ? "您最近的订阅" : t("shop.plan.current")
+    );
 
     const setFilter = (filter) => {
       selectedFilter.value = filter;
@@ -431,9 +434,15 @@ export default {
         const response = await getSubscribe();
         const subscribe = response?.data || {};
         currentPlanId.value = subscribe.plan_id || subscribe.plan?.id || null;
+        const expiredAt = Number(subscribe?.expired_at || 0);
+        isCurrentSubscriptionExpired.value =
+          Number.isFinite(expiredAt) && expiredAt > 0
+            ? expiredAt * 1000 <= Date.now()
+            : false;
       } catch (error) {
         console.error('Failed to fetch current subscription:', error);
         currentPlanId.value = null;
+        isCurrentSubscriptionExpired.value = false;
       }
     };
 
