@@ -1918,8 +1918,21 @@ export default {
       &.traffic-board-package {
         min-height: auto;
         height: auto;
+        min-width: 0;
+        width: 100%;
         z-index: 8;
         background: var(--saas-card-bg);
+
+        .usage-card-main.package-main {
+          min-width: 0;
+        }
+
+        .usage-percent {
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
 
       &.traffic-board-total {
@@ -2048,6 +2061,7 @@ export default {
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
     background: var(--saas-card-bg);
+    min-width: 0;
     z-index: 2;
     align-items: flex-start;
     flex-direction: column;
