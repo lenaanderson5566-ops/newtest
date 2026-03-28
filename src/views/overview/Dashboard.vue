@@ -2365,7 +2365,7 @@ export default {
   }
 
   .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     grid-template-areas:
       'total total'
       'package today'
@@ -2395,6 +2395,7 @@ export default {
     .stats-card.traffic-board-package,
     .stats-card.today-traffic-card {
       min-width: 0;
+      width: auto !important;
     }
 
     .stats-card.traffic-board-subscription {
@@ -2434,7 +2435,7 @@ export default {
 
 @media (min-width: 769px) {
   .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     grid-template-areas:
       'total total'
       'package today'
@@ -2455,6 +2456,7 @@ export default {
     .stats-card.traffic-board-package,
     .stats-card.today-traffic-card {
       min-width: 0;
+      width: auto !important;
     }
 
     .stats-card.traffic-board-subscription {
