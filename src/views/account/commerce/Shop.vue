@@ -2137,13 +2137,13 @@ export default {
       padding: 0 9px;
 
       .option-text {
-        font-size: $font-size-sm;
+        font-size: $font-size-xs;
       }
     }
   }
 
   .shop-container .filter-toggle-container .max-saving-tip {
-    font-size: 10px;
+    font-size: $font-size-xs;
   }
 }
 </style>
