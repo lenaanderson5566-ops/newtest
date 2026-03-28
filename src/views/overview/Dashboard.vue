@@ -2375,6 +2375,7 @@ export default {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
 
+    .stats-card.today-traffic-card {
       .today-traffic-total-main {
         .usage-percent {
           &.compact {
