@@ -2600,7 +2600,7 @@ export default {
 
     .summary-amounts {
       display: grid;
-      gap: 10px;
+      gap: 8px;
     }
 
     .summary-row {
@@ -2665,7 +2665,7 @@ export default {
       margin: 16px 0;
 
       &.strong {
-        margin: 18px 0 12px;
+        margin: 10px 0 10px;
       }
 
       &.compact {
@@ -2698,7 +2698,7 @@ export default {
       }
 
       .payable-value {
-        font-size: $font-size-2xl;
+        font-size: $font-size-3xl;
         font-weight: $font-weight-bold;
         color: var(--text-on-dark-primary);
         line-height: 1.1;
