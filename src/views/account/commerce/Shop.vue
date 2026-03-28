@@ -2118,7 +2118,7 @@ export default {
     }
 
     .max-saving-tip {
-      font-size: $font-size-lg;
+      font-size: $font-size-sm;
     }
   }
 }
