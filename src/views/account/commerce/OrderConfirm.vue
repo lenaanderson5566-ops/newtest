@@ -1862,8 +1862,8 @@ export default {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
-    margin-top: map.get($spacers, 2) !important;
-    margin-bottom: map.get($spacers, 2) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   .subscription-intro-section .section-title,
@@ -1872,7 +1872,7 @@ export default {
   }
 
   .payment-methods-section .section-title {
-    margin-bottom: map.get($spacers, 2);
+    margin-bottom: 0;
   }
 
   .plan-card {
@@ -2535,7 +2535,7 @@ export default {
 
     padding: map.get($spacers, 3);
 
-    margin-bottom: map.get($spacers, 2);
+    margin-bottom: 0;
 
     border: 1px solid var(--border-color);
 
@@ -2808,8 +2808,8 @@ export default {
   }
 
   .order-summary-section {
-    margin-top: map.get($spacers, 2);
-    margin-bottom: map.get($spacers, 2);
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .order-summary .summary-submit-action {
