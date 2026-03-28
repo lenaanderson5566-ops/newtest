@@ -2316,7 +2316,7 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-state {
-      min-height: 76px;
+      min-height: 90px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2326,7 +2326,7 @@ $space-2: map.get($spacers, 2);
 
     .usage-trend-chart {
       width: 100%;
-      height: 132px;
+      height: 156px;
     }
   }
   /* 待支付横幅卡片 */
