@@ -708,7 +708,7 @@ export default {
     };
 
     const payActionLabel = computed(() => {
-      if (totalWithFee.value <= 0) return t("payment.free_activate");
+      if (summaryOriginalPrice.value <= 0) return t("payment.free_activate");
       return isContinuePaymentMode.value ? "继续支付" : "立即支付";
     });
     const currentPlanBadgeLabel = computed(() =>
