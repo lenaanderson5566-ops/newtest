@@ -268,6 +268,7 @@
                     </div>
                   </template>
 
+                  <div class="summary-divider" v-if="balanceDeductionAmount > 0"></div>
                   <div class="summary-row" v-if="balanceDeductionAmount > 0">
                     <div class="summary-label">余额支付</div>
                     <div class="summary-value discount">-{{ formatCurrencyAmount(balanceDeductionAmount) }}</div>
@@ -309,7 +310,6 @@
                 >
                   检查支付状态
                 </button>
-                <div class="summary-helper-text">支付创建后可继续支付</div>
               </div>
             </div>
           </div>
@@ -2285,9 +2285,9 @@ export default {
 
       border-radius: $border-radius-sm;
 
-      background: rgba(148, 163, 184, 0.08);
-      border: 1px solid var(--border-color);
-      color: var(--text-tertiary);
+      background: color-mix(in srgb, var(--theme-color) 24%, transparent);
+      border: 1px solid color-mix(in srgb, var(--theme-color) 52%, white);
+      color: var(--text-on-dark-primary);
       font-size: $font-size-sm;
 
       font-weight: $font-weight-medium;
@@ -2309,8 +2309,8 @@ export default {
       flex-shrink: 0;
 
       &:hover:not(:disabled) {
-        background: rgba(148, 163, 184, 0.14);
-        color: var(--text-primary);
+        background: color-mix(in srgb, var(--theme-color) 36%, transparent);
+        color: var(--text-on-dark-primary);
 
         transform: translateY(-2px);
 
@@ -2675,13 +2675,14 @@ export default {
 
       .payable-label {
         font-size: $font-size-sm;
-        color: var(--text-tertiary);
+        color: var(--text-on-dark-primary);
+        opacity: 0.9;
       }
 
       .payable-value {
         font-size: $font-size-2xl;
         font-weight: $font-weight-bold;
-        color: var(--theme-color);
+        color: var(--text-on-dark-primary);
         line-height: 1.1;
       }
     }
@@ -2692,12 +2693,6 @@ export default {
       height: 38px;
     }
 
-    .summary-helper-text {
-      margin-top: 8px;
-      font-size: $font-size-xs;
-      color: var(--text-tertiary);
-      opacity: 0.85;
-    }
   }
 
   .coupon-verify-section,
