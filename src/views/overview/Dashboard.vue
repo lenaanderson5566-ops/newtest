@@ -1339,8 +1339,6 @@ export default {
 $bp-md: map-get($breakpoints, md);
 $bp-lg: map-get($breakpoints, lg);
 $bp-xl: map-get($breakpoints, xl);
-$bp-ip-location-stack: $bp-lg - 72px; // 920px
-$bp-ip-region-compact: $bp-md - 88px; // 680px
 
 .dashboard-container {
   display: flex;
@@ -2135,7 +2133,7 @@ $bp-ip-region-compact: $bp-md - 88px; // 680px
       gap: 12px;
       color: var(--text-primary);
 
-      @media (max-width: #{$bp-ip-location-stack}) {
+      @media (max-width: #{$bp-lg}) {
         align-items: flex-start;
         flex-direction: column;
       }
@@ -2162,7 +2160,7 @@ $bp-ip-region-compact: $bp-md - 88px; // 680px
       letter-spacing: -0.01em;
       color: var(--text-primary);
 
-      @media (max-width: #{$bp-ip-region-compact}) {
+      @media (max-width: #{$bp-md}) {
         font-size: $font-size-xl;
       }
     }

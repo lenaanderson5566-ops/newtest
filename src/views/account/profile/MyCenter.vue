@@ -561,7 +561,6 @@ onMounted(async () => {
 
 $bp-md: map-get($breakpoints, md);
 $bp-xl: map-get($breakpoints, xl);
-$bp-overview-panels-single-column: $bp-xl - 100px; // 1100px
 
 .my-center {
   padding: 0 0 2px;
@@ -1157,7 +1156,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: #{$bp-overview-panels-single-column}) {
+@media (max-width: #{$bp-xl}) {
   .overview-panels {
     grid-template-columns: 1fr;
   }
