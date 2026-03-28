@@ -294,7 +294,7 @@
                 >
                   <IconCreditCard v-if="!loading.checking" :size="18" />
                   <div v-else class="loader"></div>
-                  <span>{{ $t("payment.free_activate") }}</span>
+                  <span>立即开通</span>
                 </button>
               </div>
 
