@@ -174,33 +174,44 @@
 
           <div class="section-wrapper order-summary-section">
             <div class="order-summary glassmorphism">
-              <div v-if="showCouponInputSection" class="coupon-merge-block">
-                <div class="summary-row coupon-row">
-                  <div class="summary-label">优惠码</div>
+              <div class="summary-header-block">
+                <div class="summary-title">订单摘要</div>
+                <div class="summary-subtitle" :class="{ pending: isContinuePaymentMode }">
+                  {{ selectedOrderDisplay }}
+                </div>
+              </div>
+
+              <div v-if="showCouponInputSection" class="coupon-merge-block compact">
+                <template v-if="!couponApplied">
                   <div class="coupon-input">
                     <input
                       type="text"
                       v-model="couponCode"
-                      :disabled="loading.plan || couponApplied"
+                      :disabled="loading.plan"
                       :placeholder="$t('order.enter_coupon')"
                       class="coupon-field"
-                      :class="{ applied: couponApplied }"
                       spellcheck="false"
                       autocapitalize="off"
                       autocomplete="off"
                     />
-                    <button v-if="!couponApplied" class="btn-verify" @click="verifyCoupon"
-                      :disabled="!couponCode || verifying || loading.plan">
+                    <button
+                      class="btn-verify"
+                      @click="verifyCoupon"
+                      :disabled="!couponCode || verifying || loading.plan"
+                    >
                       <IconDiscount2 v-if="!verifying" />
                       <span v-else class="loader"></span>
                       <span>{{ $t("order.verify_coupon") }}</span>
                     </button>
-                    <template v-else>
-                      <span class="coupon-applied-tag">已应用</span>
-                      <button class="btn-remove-text" @click="removeCoupon">移除</button>
-                    </template>
                   </div>
-                </div>
+                </template>
+                <template v-else>
+                  <div class="coupon-applied-inline">
+                    <span class="coupon-code-text">优惠码：{{ couponCode }}</span>
+                    <span class="coupon-applied-tag">已应用</span>
+                    <button class="btn-remove-text" @click="removeCoupon">移除</button>
+                  </div>
+                </template>
                 <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
               </div>
 
@@ -225,78 +236,52 @@
               <!-- 实际内容 -->
 
               <div v-else>
-                <div class="summary-row order-selected-row">
-                  <div class="summary-label">已选订单</div>
-                  <div class="summary-value">{{ selectedOrderDisplay }}</div>
-                </div>
-
-                <div class="summary-row">
-                  <div class="summary-label">订阅价格</div>
-
-                  <div class="summary-value">
-                    {{ formatCurrencyAmount(summaryOriginalPrice) }}
+                <div class="summary-amounts">
+                  <div class="summary-row">
+                    <div class="summary-label">套餐原价</div>
+                    <div class="summary-value">{{ formatCurrencyAmount(summaryOriginalPrice) }}</div>
                   </div>
-                </div>
 
-                <div class="summary-row">
-                  <div class="summary-label">总优惠</div>
-                  <div class="summary-value discount">
-                    -{{ formatCurrencyAmount(totalDiscountDisplayAmount) }}
+                  <div class="summary-row" v-if="totalDiscountDisplayAmount > 0">
+                    <div class="summary-label">总优惠</div>
+                    <div class="summary-value discount">-{{ formatCurrencyAmount(totalDiscountDisplayAmount) }}</div>
                   </div>
-                </div>
 
-                <button
-                  v-if="hasDiscountDetails"
-                  type="button"
-                  class="btn-remove-text summary-detail-toggle"
-                  @click="showDiscountDetails = !showDiscountDetails"
-                >
-                  {{ showDiscountDetails ? "收起明细" : "查看明细" }}
-                </button>
+                  <button
+                    v-if="hasDiscountDetails"
+                    type="button"
+                    class="btn-remove-text summary-detail-toggle"
+                    @click="showDiscountDetails = !showDiscountDetails"
+                  >
+                    {{ showDiscountDetails ? "收起优惠明细" : "查看优惠明细" }}
+                  </button>
 
-                <template v-if="showDiscountDetails">
-                  <div class="summary-row" v-if="couponDiscountAmount > 0">
-                    <div class="summary-label">优惠券</div>
-
-                    <div class="summary-value discount">
-                      -{{ formatCurrencyAmount(couponDiscountAmount) }}
+                  <template v-if="showDiscountDetails">
+                    <div class="summary-row" v-if="couponDiscountAmount > 0">
+                      <div class="summary-label">优惠券</div>
+                      <div class="summary-value discount">-{{ formatCurrencyAmount(couponDiscountAmount) }}</div>
                     </div>
-                  </div>
-
-                  <div class="summary-row" v-if="userDiscountAmount > 0">
-                    <div class="summary-label">会员折扣</div>
-
-                    <div class="summary-value discount">
-                      -{{ formatCurrencyAmount(userDiscountAmount) }}
+                    <div class="summary-row" v-if="userDiscountAmount > 0">
+                      <div class="summary-label">会员折扣</div>
+                      <div class="summary-value discount">-{{ formatCurrencyAmount(userDiscountAmount) }}</div>
                     </div>
-                  </div>
-
-                  <div class="summary-row" v-if="surplusDeductionAmount > 0">
-                    <div class="summary-label">当前套餐抵扣</div>
-
-                    <div class="summary-value discount">
-                      -{{ formatCurrencyAmount(surplusDeductionAmount) }}
+                    <div class="summary-row" v-if="surplusDeductionAmount > 0">
+                      <div class="summary-label">当前套餐抵扣</div>
+                      <div class="summary-value discount">-{{ formatCurrencyAmount(surplusDeductionAmount) }}</div>
                     </div>
-                  </div>
-                </template>
+                  </template>
 
-                <div class="summary-divider"></div>
-
-                <div class="summary-row">
-                  <div class="summary-label">余额支付</div>
-                  <div class="summary-value discount">
-                    -{{ formatCurrencyAmount(balanceDeductionAmount) }}
+                  <div class="summary-row" v-if="balanceDeductionAmount > 0">
+                    <div class="summary-label">余额支付</div>
+                    <div class="summary-value discount">-{{ formatCurrencyAmount(balanceDeductionAmount) }}</div>
                   </div>
                 </div>
 
-                <div class="summary-divider"></div>
+                <div class="summary-divider strong"></div>
 
-                <div class="summary-row total">
-                  <div class="summary-label">应付金额</div>
-
-                  <div class="summary-value">
-                    {{ formatCurrencyAmount(totalWithFee) }}
-                  </div>
+                <div class="payable-block">
+                  <div class="payable-label">应付金额</div>
+                  <div class="payable-value">{{ formatCurrencyAmount(totalWithFee) }}</div>
                 </div>
 
                 <button
@@ -319,6 +304,15 @@
 
                   <span>{{ payActionLabel }}</span>
                 </button>
+                <button
+                  v-if="isContinuePaymentMode"
+                  class="btn-return-orders summary-check-action"
+                  @click="checkPaymentStatusNow"
+                  :disabled="loading.paying || loading.submitting || loading.lockedOrder"
+                >
+                  检查支付状态
+                </button>
+                <div class="summary-helper-text">支付创建后可继续支付</div>
               </div>
             </div>
           </div>
@@ -1152,7 +1146,14 @@ export default {
     };
 
     const checkPaymentStatusNow = async () => {
-      await performPaymentCheck(paymentTradeNo.value);
+      const tradeNo =
+        paymentTradeNo.value || String(lockedPendingOrder.value?.trade_no || "");
+      if (!tradeNo) {
+        showToast("未找到待支付订单号", "warning");
+        return;
+      }
+      paymentTradeNo.value = tradeNo;
+      await performPaymentCheck(tradeNo);
     };
 
     const startPaymentCheck = (tradeNo) => {
@@ -2551,12 +2552,63 @@ export default {
       -webkit-backdrop-filter: blur(20px);
     }
 
+    .summary-header-block {
+      margin-bottom: 14px;
+
+      .summary-title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: var(--right-card-text);
+        margin-bottom: 4px;
+      }
+
+      .summary-subtitle {
+        font-size: $font-size-sm;
+        color: var(--text-on-dark-primary);
+        opacity: 0.72;
+
+        &.pending {
+          opacity: 0.9;
+          color: color-mix(in srgb, var(--theme-color) 70%, white);
+        }
+      }
+    }
+
+    .coupon-merge-block.compact {
+      margin-bottom: 14px;
+
+      .coupon-input {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .coupon-applied-inline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        min-height: 32px;
+      }
+
+      .coupon-code-text {
+        font-size: $font-size-sm;
+        color: var(--right-card-text);
+        opacity: 0.9;
+      }
+    }
+
+    .summary-amounts {
+      display: grid;
+      gap: 10px;
+    }
+
     .summary-row {
       display: flex;
 
       justify-content: space-between;
 
-      margin-bottom: 12px;
+      margin-bottom: 0;
 
       align-items: center;
 
@@ -2567,7 +2619,7 @@ export default {
       .summary-label {
         flex: 1;
         min-width: 0;
-        font-size: $font-size-md;
+        font-size: $font-size-sm;
 
         color: var(--text-tertiary);
 
@@ -2585,7 +2637,7 @@ export default {
       .summary-value {
         min-width: 120px;
         text-align: right;
-        font-size: $font-size-md;
+        font-size: $font-size-sm;
 
         font-weight: $font-weight-medium;
 
@@ -2597,38 +2649,6 @@ export default {
           font-weight: $font-weight-semibold;
         }
       }
-
-      &.total {
-        margin-top: 8px;
-
-        margin-bottom: 0;
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 6px;
-
-        .summary-label {
-          font-size: $font-size-md;
-
-          font-weight: $font-weight-semibold;
-
-          color: var(--text-primary);
-        }
-
-        .summary-value {
-          min-width: 0;
-          text-align: left;
-          font-size: $font-size-2xl;
-
-          font-weight: $font-weight-bold;
-
-          color: var(--theme-color);
-
-          line-height: 1.15;
-        }
-      }
     }
 
     .summary-divider {
@@ -2637,6 +2657,49 @@ export default {
       background-color: var(--border-color);
 
       margin: 16px 0;
+
+      &.strong {
+        margin: 18px 0 12px;
+      }
+    }
+
+    .summary-detail-toggle {
+      justify-self: flex-start;
+      padding: 0;
+      margin-top: -2px;
+      font-size: $font-size-xs;
+    }
+
+    .payable-block {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      .payable-label {
+        font-size: $font-size-sm;
+        color: var(--text-tertiary);
+      }
+
+      .payable-value {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-bold;
+        color: var(--theme-color);
+        line-height: 1.1;
+      }
+    }
+
+    .summary-check-action {
+      width: 100%;
+      margin-top: 8px;
+      height: 38px;
+    }
+
+    .summary-helper-text {
+      margin-top: 8px;
+      font-size: $font-size-xs;
+      color: var(--text-tertiary);
+      opacity: 0.85;
     }
   }
 
@@ -2751,7 +2814,7 @@ export default {
 
   .order-summary .summary-submit-action {
     width: 100%;
-    margin-top: 14px;
+    margin-top: 10px;
     height: 44px;
     padding: 0 24px;
     border-radius: $border-radius-sm;
