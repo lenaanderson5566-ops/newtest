@@ -44,7 +44,7 @@
                 :disabled="isSelectionLocked"
                 @click="selectPlanOption(item)"
               >
-                <span class="selector-current-badge" v-if="isCurrentPlanOption(item)">{{ $t('shop.plan.current') }}</span>
+                <span class="selector-current-badge" v-if="isCurrentPlanOption(item)">{{ currentPlanBadgeLabel }}</span>
                 <span class="selector-name">{{ item.name }}</span>
                 <span class="selector-check" v-if="Number(plan?.id) === Number(item.id)">
                   <IconCheck :size="14" />
@@ -709,6 +709,14 @@ export default {
       if (totalWithFee.value <= 0) return t("payment.free_activate");
       return isContinuePaymentMode.value ? "继续支付" : "立即支付";
     });
+    const isCurrentSubscriptionExpired = computed(() => {
+      const expiredAt = Number(userInfo.value?.expired_at || userInfo.value?.expiredAt || 0);
+      if (!Number.isFinite(expiredAt) || expiredAt <= 0) return false;
+      return expiredAt * 1000 <= Date.now();
+    });
+    const currentPlanBadgeLabel = computed(() =>
+      isCurrentSubscriptionExpired.value ? "您最近的订阅" : t("shop.plan.current")
+    );
 
     const selectPriceType = (type) => {
       if (isSelectionLocked.value) return;
@@ -1345,6 +1353,7 @@ export default {
       selectPaymentMethod,
       formatMethodFee,
       isCurrentPlanOption,
+      currentPlanBadgeLabel,
       showPeriodDiscountTag,
       getPeriodDiscountPercent,
       getPeriodOriginalPrice,
