@@ -1464,11 +1464,11 @@ $space-2: map.get($spacers, 2);
     }
 
     > .stats-card.traffic-board-package {
-      grid-column: 1 / 2;
+      grid-column: 2 / 3;
     }
 
     > .stats-card.today-traffic-card {
-      grid-column: 2 / 3;
+      grid-column: 1 / 2;
     }
 
     @media (min-width: #{$bp-md-up}) {
@@ -1483,12 +1483,12 @@ $space-2: map.get($spacers, 2);
 
       > .stats-card.traffic-board-package {
         grid-column: 2 / 3;
-        grid-row: 1 / 2;
+        grid-row: 2 / 3;
       }
 
       > .stats-card.today-traffic-card {
         grid-column: 2 / 3;
-        grid-row: 2 / 3;
+        grid-row: 1 / 2;
       }
     }
 
