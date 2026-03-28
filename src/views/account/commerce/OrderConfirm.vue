@@ -1602,6 +1602,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 
 .order-confirm-container {
