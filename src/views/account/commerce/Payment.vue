@@ -538,11 +538,7 @@ export default {
     const discountAmount = computed(() => Number(orderDetail.value?.discount_amount || 0));
     const surplusAmount = computed(() => Number(orderDetail.value?.surplus_amount || 0));
     const balanceDeductionAmount = computed(() => {
-      const rawValue =
-        orderDetail.value?.balance_amount ??
-        orderDetail.value?.balance_discount_amount ??
-        0;
-      const amount = Number(rawValue || 0);
+      const amount = Number(orderDetail.value?.balance_amount || 0);
       if (!Number.isFinite(amount)) return 0;
       return Math.max(0, Math.abs(amount));
     });
