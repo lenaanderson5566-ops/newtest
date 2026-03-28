@@ -21,7 +21,10 @@
 
           <div class="section-wrapper subscription-intro-section" v-else-if="plan">
             <div class="section-title">
-              <span>选择订阅计划</span>
+              <span>
+                选择订阅计划
+                <em v-if="isSelectionLocked" class="locked-tip">（当前未支付订单已锁定）</em>
+              </span>
             </div>
             <div class="plan-selector-grid">
               <button
@@ -29,7 +32,8 @@
                 :key="`order-plan-${item.id}`"
                 type="button"
                 class="plan-selector-btn"
-                :class="{ active: Number(plan?.id) === Number(item.id), 'is-current': isCurrentPlanOption(item), [`tone-${(idx % 3) + 1}`]: true }"
+                :class="{ active: Number(plan?.id) === Number(item.id), 'is-current': isCurrentPlanOption(item), 'is-locked': isSelectionLocked, [`tone-${(idx % 3) + 1}`]: true }"
+                :disabled="isSelectionLocked"
                 @click="selectPlanOption(item)"
               >
                 <span class="selector-current-badge" v-if="isCurrentPlanOption(item)">{{ $t('shop.plan.current') }}</span>
@@ -57,7 +61,7 @@
                   v-for="(price, type) in availablePrices"
                   :key="type"
                   class="period-card"
-                  :class="{ active: selectedPriceType === type }"
+                  :class="{ active: selectedPriceType === type, 'is-locked': isSelectionLocked }"
                   @click="selectPriceType(type)"
                 >
                   <div class="period-card-inner">
@@ -450,6 +454,7 @@ export default {
     const paymentCheckTimer = ref(null);
     const showPaymentSuccessPrompt = ref(false);
     const hasNavigatedAfterSuccess = ref(false);
+    const lockedPendingOrder = ref(null);
 
     const discountPercent = ref(0);
 
@@ -638,7 +643,10 @@ export default {
       return keyMap[type] || "";
     };
 
+    const isSelectionLocked = computed(() => Boolean(lockedPendingOrder.value));
+
     const selectPriceType = (type) => {
+      if (isSelectionLocked.value) return;
       selectedPriceType.value = type;
     };
 
@@ -649,6 +657,7 @@ export default {
     };
 
     const selectPlanOption = (targetPlan) => {
+      if (isSelectionLocked.value) return;
       if (!targetPlan) return;
       plan.value = { ...targetPlan };
       const firstValidPriceType = Object.keys(availablePrices.value)[0];
@@ -1052,7 +1061,10 @@ export default {
       loading.plan = true;
 
       try {
-        if (!route.query.id) {
+        const lockedPlanId =
+          Number(lockedPendingOrder.value?.plan_id || lockedPendingOrder.value?.plan?.id || 0) || null;
+        const targetPlanId = lockedPlanId || Number(route.query.id || 0) || null;
+        if (!targetPlanId) {
           showToast(t("order.no_plan_selected"), "error");
 
           router.push("/shop");
@@ -1060,7 +1072,7 @@ export default {
           return;
         }
 
-        const response = await fetchPlanById(route.query.id, locale.value);
+        const response = await fetchPlanById(targetPlanId, locale.value);
         try {
           const plansResponse = await fetchPlans(locale.value);
           if (Array.isArray(plansResponse?.data)) {
@@ -1074,7 +1086,10 @@ export default {
         if (response.data) {
           plan.value = response.data;
 
-          if (route.query.period && hasPeriodPrice(plan.value, route.query.period)) {
+          const lockedPeriod = String(lockedPendingOrder.value?.period || "");
+          if (lockedPeriod && hasPeriodPrice(plan.value, lockedPeriod)) {
+            selectedPriceType.value = lockedPeriod;
+          } else if (route.query.period && hasPeriodPrice(plan.value, route.query.period)) {
             selectedPriceType.value = route.query.period;
           } else {
             const firstValidPriceType = Object.keys(availablePrices.value)[0];
@@ -1200,7 +1215,10 @@ export default {
     );
     onMounted(async () => {
       const tasks = [fetchUserInfo(), fetchConfig(), fetchAvailablePaymentMethods()];
-      if (route.query.id) {
+      lockedPendingOrder.value = await fetchLatestPendingOrder(
+        route.query.trade_no ? String(route.query.trade_no) : ""
+      );
+      if (route.query.id || lockedPendingOrder.value?.plan_id || lockedPendingOrder.value?.plan?.id) {
         tasks.unshift(fetchPlanData());
       }
       await Promise.all(tasks);
@@ -1234,6 +1252,7 @@ export default {
       displayCurrency,
 
       selectedPriceType,
+      isSelectionLocked,
 
       couponCode,
 
@@ -1441,6 +1460,13 @@ export default {
 
         border-radius: 2px;
       }
+
+      .locked-tip {
+        font-style: normal;
+        font-size: $font-size-sm;
+        color: var(--text-tertiary);
+        margin-left: 4px;
+      }
     }
   }
 
@@ -1480,6 +1506,11 @@ export default {
     &.active.tone-1 { background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%); }
     &.active.tone-2 { background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%); }
     &.active.tone-3 { background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%); }
+
+    &:disabled,
+    &.is-locked {
+      cursor: not-allowed;
+    }
   }
 
   .selector-current-badge {
@@ -1802,6 +1833,13 @@ export default {
 
           border-color: rgba(var(--theme-color-rgb), 0.3);
 
+          box-shadow: none;
+        }
+
+        &.is-locked,
+        &.is-locked:hover {
+          cursor: not-allowed;
+          transform: none;
           box-shadow: none;
         }
 
