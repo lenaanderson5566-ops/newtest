@@ -1334,9 +1334,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 
 $bp-md-up: $bp-md + 1px;
+$space-2: map.get($spacers, 2);
 
 .dashboard-container {
   display: flex;
@@ -1429,7 +1431,7 @@ $bp-md-up: $bp-md + 1px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: #{$space-2};
 
       .card-title {
         font-size: var(--dashboard-title-size);
@@ -1440,7 +1442,7 @@ $bp-md-up: $bp-md + 1px;
 
       .card-actions {
         display: flex;
-        gap: 10px;
+        gap: #{$space-2};
       }
     }
   }
@@ -1502,7 +1504,7 @@ $bp-md-up: $bp-md + 1px;
       box-shadow: none;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: #{$space-2};
       padding: var(--dashboard-card-padding);
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
@@ -1518,7 +1520,7 @@ $bp-md-up: $bp-md + 1px;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        gap: 10px;
+        gap: #{$space-2};
 
         .stats-info {
           width: 100%;
@@ -1609,7 +1611,7 @@ $bp-md-up: $bp-md + 1px;
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: #{$space-2};
           margin-top: 6px;
           overflow: visible;
 
@@ -1697,7 +1699,7 @@ $bp-md-up: $bp-md + 1px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            gap: #{$space-2};
             padding: 2px 0;
           }
 
@@ -1760,7 +1762,7 @@ $bp-md-up: $bp-md + 1px;
 
           .plan-summary-actions {
             display: flex;
-            gap: 10px;
+            gap: #{$space-2};
             margin-top: 0;
 
 
@@ -2082,7 +2084,7 @@ $bp-md-up: $bp-md + 1px;
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 10px;
+    gap: #{$space-2};
 
     .today-card-title {
       margin-bottom: 2px;
@@ -2116,7 +2118,7 @@ $bp-md-up: $bp-md + 1px;
       display: inline-flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: #{$space-2};
       font-size: $font-size-sm;
       line-height: 1.45;
       color: var(--text-tertiary);
@@ -2148,7 +2150,7 @@ $bp-md-up: $bp-md + 1px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: #{$space-2};
       color: var(--text-primary);
 
       @media (max-width: #{$bp-lg}) {
@@ -2333,7 +2335,7 @@ $bp-md-up: $bp-md + 1px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: #{$space-2};
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 
@@ -2492,7 +2494,7 @@ $bp-md-up: $bp-md + 1px;
   background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
   border-radius: 4px;
   width: 80%;
-  margin-bottom: 10px;
+  margin-bottom: #{$space-2};
   position: relative;
 }
 
@@ -2554,8 +2556,11 @@ $bp-md-up: $bp-md + 1px;
 
 <!-- 全局样式，不受scoped限制 -->
 <style lang="scss">
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 @use '@/assets/styles/no-plan-card' as *;
+
+$space-2: map.get($spacers, 2);
 
 /* 统计卡片状态样式（全局） */
 .dashboard-container .stats-card {
@@ -2674,7 +2679,7 @@ $bp-md-up: $bp-md + 1px;
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: #{$space-2};
 
     .btn {
       min-width: 88px;
@@ -2691,13 +2696,13 @@ $bp-md-up: $bp-md + 1px;
   .traffic-package-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: #{$space-2};
   }
 
   .traffic-package-item {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: #{$space-2};
     padding: 14px;
     border: 1px solid var(--border-color);
     border-radius: var(--dashboard-radius);
@@ -2712,7 +2717,7 @@ $bp-md-up: $bp-md + 1px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: #{$space-2};
 
     strong {
       color: var(--text-primary);

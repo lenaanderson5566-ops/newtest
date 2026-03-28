@@ -557,7 +557,10 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+
+$space-2: map.get($spacers, 2);
 
 .my-center {
   padding: 0 0 2px;
@@ -566,7 +569,7 @@ onMounted(async () => {
 
 .my-center-inner {
   display: grid;
-  gap: 1rem;
+  gap: #{$space-2};
 }
 
 .top-nav-wrap {
@@ -669,7 +672,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: #{$space-2};
   padding: 10px 0;
 }
 
@@ -698,12 +701,12 @@ onMounted(async () => {
 .overview-panels {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1rem;
+  gap: #{$space-2};
 }
 
 .benefits-stack {
   display: grid;
-  gap: 1rem;
+  gap: #{$space-2};
 }
 
 
@@ -718,8 +721,8 @@ onMounted(async () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
+    gap: #{$space-2};
+    margin-bottom: #{$space-2};
 
     h3 {
       margin: 0;
@@ -795,7 +798,7 @@ onMounted(async () => {
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  gap: #{$space-2};
 }
 
 .summary-actions {
@@ -844,7 +847,7 @@ onMounted(async () => {
 
 .section-group {
   display: grid;
-  gap: 10px;
+  gap: #{$space-2};
 }
 
 .section-title-outside {
@@ -877,7 +880,7 @@ onMounted(async () => {
 .row-main-with-icon {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: #{$space-2};
 }
 
 .row-leading-icon {
@@ -908,7 +911,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: #{$space-2};
 }
 
 .settings-row + .settings-row,
@@ -932,7 +935,7 @@ onMounted(async () => {
 
 .tier-intro-list {
   display: grid;
-  gap: 10px;
+  gap: #{$space-2};
   padding: 12px;
 }
 
@@ -1059,7 +1062,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 }
 
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: #{$space-2};
 
   &:last-child {
     margin-bottom: 0;
@@ -1102,7 +1105,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  gap: #{$space-2};
 }
 
 .btn-cancel,
@@ -1136,7 +1139,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .modal-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: #{$space-2};
   padding: 0 16px 16px;
 }
 
@@ -1166,7 +1169,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     background: #f3f3f5;
   }
 
-  .my-center-inner { max-width: 100%; gap: 0.9rem; }
+  .my-center-inner { max-width: 100%; gap: #{$space-2}; }
 
   .top-nav-wrap {
     border-radius: 0;
@@ -1183,7 +1186,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     font-size: $font-size-md;
   }
 
-  .overview-panels { gap: 0.75rem; }
+  .overview-panels { gap: #{$space-2}; }
   .summary-panel { padding: 14px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-item { padding: 10px; }
