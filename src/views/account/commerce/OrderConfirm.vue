@@ -707,8 +707,15 @@ export default {
       return keyMap[type] || "";
     };
 
+    const isFreeActivateByPlanPrice = computed(() => {
+      const rawPrice = isContinuePaymentMode.value
+        ? lockedOrderDetail.value?.plan?.[lockedOrderDetail.value?.period]
+        : plan.value?.[selectedPriceType.value];
+      const parsed = Number(rawPrice);
+      return Number.isFinite(parsed) && parsed === 0;
+    });
     const payActionLabel = computed(() => {
-      if (summaryOriginalPrice.value <= 0) return t("payment.free_activate");
+      if (isFreeActivateByPlanPrice.value) return t("payment.free_activate");
       return isContinuePaymentMode.value ? "继续支付" : "立即支付";
     });
     const currentPlanBadgeLabel = computed(() =>
