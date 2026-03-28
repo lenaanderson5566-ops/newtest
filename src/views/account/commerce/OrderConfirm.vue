@@ -1851,12 +1851,19 @@ export default {
     margin-bottom: map.get($spacers, 1) !important;
   }
 
-  .section-wrapper.subscription-intro-section,
+  .section-wrapper.subscription-intro-section {
+    background-color: var(--background-color) !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin-bottom: map.get($spacers, 1) !important;
+  }
+
   .section-wrapper.payment-methods-section {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
-    margin-bottom: 8px !important;
+    margin-top: map.get($spacers, 2) !important;
+    margin-bottom: map.get($spacers, 2) !important;
   }
 
   .subscription-intro-section .section-title,
@@ -1865,7 +1872,7 @@ export default {
   }
 
   .payment-methods-section .section-title {
-    margin-bottom: 10px;
+    margin-bottom: map.get($spacers, 2);
   }
 
   .plan-card {
@@ -2528,7 +2535,7 @@ export default {
 
     padding: map.get($spacers, 3);
 
-    margin-bottom: 12px;
+    margin-bottom: map.get($spacers, 2);
 
     border: 1px solid var(--border-color);
 
@@ -2801,8 +2808,8 @@ export default {
   }
 
   .order-summary-section {
-    margin-top: 0;
-    margin-bottom: 12px;
+    margin-top: map.get($spacers, 2);
+    margin-bottom: map.get($spacers, 2);
   }
 
   .order-summary .summary-submit-action {
