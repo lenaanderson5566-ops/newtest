@@ -176,9 +176,6 @@
             <div class="order-summary glassmorphism">
               <div class="summary-header-block">
                 <div class="summary-title">订单摘要</div>
-                <div class="summary-subtitle" :class="{ pending: isContinuePaymentMode }">
-                  {{ selectedOrderDisplay }}
-                </div>
               </div>
 
               <div v-if="showCouponInputSection" class="coupon-merge-block compact">
@@ -238,7 +235,7 @@
               <div v-else>
                 <div class="summary-amounts">
                   <div class="summary-row">
-                    <div class="summary-label">套餐原价</div>
+                    <div class="summary-label">{{ selectedOrderDisplay }}</div>
                     <div class="summary-value">{{ formatCurrencyAmount(summaryOriginalPrice) }}</div>
                   </div>
 
