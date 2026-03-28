@@ -1232,7 +1232,7 @@ onUnmounted(() => {
 
   
 
-  @media (min-width: 768px) {
+  @media (min-width: #{$bp-md}) {
 
     padding: 0;
 
@@ -1560,7 +1560,7 @@ onUnmounted(() => {
 
   
 
-  @media (min-width: 768px) {
+  @media (min-width: #{$bp-md}) {
 
     padding: 2rem;
 
@@ -1604,7 +1604,7 @@ onUnmounted(() => {
 
     
 
-    @media (min-width: 768px) {
+    @media (min-width: #{$bp-md}) {
 
       font-size: $font-size-2xl;
 
@@ -2080,7 +2080,7 @@ onUnmounted(() => {
 
     
 
-    @media (min-width: 768px) {
+    @media (min-width: #{$bp-md}) {
 
       display: table;
 

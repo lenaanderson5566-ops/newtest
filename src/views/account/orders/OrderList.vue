@@ -347,7 +347,7 @@ watch(locale, () => {
   --order-tone-soft: rgba(var(--theme-color-rgb), 0.72);
   --order-tone-faint: rgba(var(--theme-color-rgb), 0.12);
   
-  @media (min-width: 768px) {
+  @media (min-width: #{$bp-md}) {
     padding: 0;
     padding-bottom: 2px; 
   }
@@ -592,7 +592,7 @@ watch(locale, () => {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .order-table {
     width: 100%;
     table-layout: auto;
@@ -856,7 +856,7 @@ watch(locale, () => {
 
 
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .orders-container {
     padding-bottom: calc(2px + 56px);
   }

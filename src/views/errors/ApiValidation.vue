@@ -462,7 +462,7 @@ export default {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .validation-container {
     max-width: 85%;
 

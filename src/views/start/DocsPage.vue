@@ -287,7 +287,7 @@ onMounted(() => {
 
   
 
-  @media (min-width: 768px) {
+  @media (min-width: #{$bp-md}) {
 
     padding: 0;
 
@@ -748,7 +748,7 @@ onMounted(() => {
 
 
 
-@media (min-width: 768px) {
+@media (min-width: #{$bp-md}) {
 
   .doc-items {
 

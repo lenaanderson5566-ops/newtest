@@ -1384,11 +1384,11 @@ export default {
 
     margin-bottom: 24px;
 
-    @media (max-width: 1200px) {
+    @media (max-width: #{$bp-xl}) {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: #{$bp-md}) {
       grid-template-columns: 1fr;
     }
 
@@ -2028,7 +2028,7 @@ export default {
   color: var(--text-tertiary);
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .back-label {
     display: none;
   }
@@ -2245,7 +2245,7 @@ export default {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: #{$bp-xs}) {
   .shop-container .plans-wrapper .mobile-plan-selector {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

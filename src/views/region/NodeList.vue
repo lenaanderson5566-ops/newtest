@@ -326,7 +326,7 @@ onMounted(() => {
 
   
 
-  @media (min-width: 768px) {
+  @media (min-width: #{$bp-md}) {
 
     padding: 0;
 

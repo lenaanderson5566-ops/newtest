@@ -2158,7 +2158,7 @@ onUnmounted(() => {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{$bp-md}) {
   .ticket-container {
     flex-direction: column;
 

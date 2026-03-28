@@ -1586,7 +1586,7 @@ onMounted(() => {
 
 
 
-  @media (min-width: 768px) {
+  @media (min-width: #{$bp-md}) {
 
     padding: 0;
 
@@ -2097,7 +2097,7 @@ onMounted(() => {
 
 
 
-      @media (min-width: 768px) {
+      @media (min-width: #{$bp-md}) {
 
         grid-template-columns: repeat(2, 1fr);
 
@@ -2303,7 +2303,7 @@ onMounted(() => {
 
 
 
-        @media (max-width: 576px) {
+        @media (max-width: #{$bp-sm}) {
 
           flex-direction: column;
 
@@ -2377,7 +2377,7 @@ onMounted(() => {
 
 
 
-          @media (max-width: 576px) {
+          @media (max-width: #{$bp-sm}) {
 
             width: 100%;
 
@@ -3011,7 +3011,7 @@ onMounted(() => {
 
 
 
-@media (max-width: 576px) {
+@media (max-width: #{$bp-sm}) {
 
   .profile-container {
 

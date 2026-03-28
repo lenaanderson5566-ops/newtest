@@ -1307,7 +1307,7 @@ export default {
     display: flex;
     gap: 25px;
 
-    @media (max-width: 768px) {
+    @media (max-width: #{$bp-md}) {
       flex-direction: column;
     }
 
@@ -1713,7 +1713,7 @@ export default {
       gap: 15px;
       width: 100%;
 
-      @media (max-width: 480px) {
+      @media (max-width: #{$bp-xs}) {
         flex-direction: column;
         gap: 10px;
 
@@ -1782,7 +1782,7 @@ export default {
         box-shadow: none !important;
       }
 
-      @media (max-width: 480px) {
+      @media (max-width: #{$bp-xs}) {
         width: 100%;
         height: 48px;
         min-height: 48px;
@@ -2089,7 +2089,7 @@ export default {
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: #{$bp-md}) {
     .content-wrapper {
       flex-direction: column;
     }
@@ -2100,10 +2100,10 @@ export default {
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: #{$bp-md}) {
     padding-bottom: 100px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: #{$bp-xs}) {
     padding-bottom: 120px;
 
     .right-column {
