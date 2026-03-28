@@ -25,6 +25,14 @@
                 选择订阅计划
                 <em v-if="isSelectionLocked" class="locked-tip">（当前未支付订单已锁定）</em>
               </span>
+              <button
+                v-if="isSelectionLocked"
+                type="button"
+                class="btn-unlock-selection"
+                @click="unlockSelection"
+              >
+                重新选择
+              </button>
             </div>
             <div class="plan-selector-grid">
               <button
@@ -257,7 +265,7 @@
                   class="btn-order summary-submit-action"
                   @click="submitOrder"
                   :disabled="
-                    !selectedPriceType ||
+                    (!isContinuePaymentMode && !selectedPriceType) ||
                     loading.submitting ||
                     loading.paying ||
                     loading.plan ||
@@ -268,7 +276,7 @@
 
                   <span v-else class="loader"></span>
 
-                  <span>{{ totalWithFee <= 0 ? $t("payment.free_activate") : "立即支付" }}</span>
+                  <span>{{ payActionLabel }}</span>
                 </button>
               </div>
             </div>
@@ -336,7 +344,6 @@ import {
   checkOrderStatus,
   verifyCoupon as checkCoupon,
   submitOrder as createOrder,
-  cancelOrder as cancelExistingOrder,
   checkoutOrder,
 } from "@/api/account/shop";
 
@@ -394,7 +401,6 @@ export default {
 
       submitting: false,
       paying: false,
-      cancellingExisting: false,
     });
 
     const plan = ref(null);
@@ -644,6 +650,13 @@ export default {
     };
 
     const isSelectionLocked = computed(() => Boolean(lockedPendingOrder.value));
+    const isContinuePaymentMode = computed(
+      () => Boolean(isSelectionLocked.value && lockedPendingOrder.value?.trade_no)
+    );
+    const payActionLabel = computed(() => {
+      if (totalWithFee.value <= 0) return t("payment.free_activate");
+      return isContinuePaymentMode.value ? "继续支付" : "立即支付";
+    });
 
     const selectPriceType = (type) => {
       if (isSelectionLocked.value) return;
@@ -667,6 +680,12 @@ export default {
 
     const selectPaymentMethod = (methodId) => {
       selectedMethod.value = methodId;
+    };
+
+    const unlockSelection = () => {
+      if (!isSelectionLocked.value) return;
+      lockedPendingOrder.value = null;
+      showToast("已解除锁定，可重新选择订阅规格与周期", "info");
     };
 
     const formatMethodFee = (method) => {
@@ -795,32 +814,6 @@ export default {
       }
     };
 
-    const isPendingOrderConflict = (message = "") => {
-      const normalized = String(message || "");
-      return (
-        normalized.includes("未付款") ||
-        normalized.includes("开通中") ||
-        normalized.includes("未完成") ||
-        normalized.includes("有未支付")
-      );
-    };
-
-    const extractPendingTradeNo = (error) => {
-      const payload = error?.response?.data;
-      return (
-        payload?.data?.trade_no ||
-        payload?.data ||
-        payload?.trade_no ||
-        error?.response?.trade_no ||
-        ""
-      );
-    };
-
-    const isUnpaidCreatedOrder = (order) => {
-      if (!order) return false;
-      return order.total_amount !== null && order.payment_amount == null;
-    };
-
     const fetchLatestPendingOrder = async (tradeNo = "") => {
       try {
         const resp = await fetchOrderList();
@@ -839,11 +832,6 @@ export default {
         console.error("Failed to fetch pending orders:", err);
         return null;
       }
-    };
-
-    const fetchLatestPendingTradeNo = async () => {
-      const pending = await fetchLatestPendingOrder();
-      return pending?.trade_no || "";
     };
 
     const closePaymentModal = () => {
@@ -917,11 +905,16 @@ export default {
     };
 
     const submitOrder = async () => {
-      if (!selectedPriceType.value || loading.submitting || loading.cancellingExisting) return;
+      if (loading.submitting || loading.paying) return;
       if (totalWithFee.value > 0 && !selectedMethod.value) {
         showToast(t("payment.select_method_first"), "warning");
         return;
       }
+      if (isContinuePaymentMode.value) {
+        await checkoutTradeNo(String(lockedPendingOrder.value?.trade_no || ""));
+        return;
+      }
+      if (!selectedPriceType.value) return;
 
       await executeOrderSubmission();
     };
@@ -993,8 +986,7 @@ export default {
 
     // 实际的订单提交逻辑
 
-    const executeOrderSubmission = async (options = {}) => {
-      const { conflictResolved = false } = options;
+    const executeOrderSubmission = async () => {
       loading.submitting = true;
 
       try {
@@ -1020,37 +1012,6 @@ export default {
         console.error("Failed to submit order:", error);
 
         const message = error.response?.message || error.message || t("order.order_failed");
-        if (isPendingOrderConflict(message)) {
-          const fallbackTradeNo = extractPendingTradeNo(error) || (await fetchLatestPendingTradeNo());
-          const matchedOrder = await fetchLatestPendingOrder(fallbackTradeNo);
-
-          const tradeNoToCancel =
-            (matchedOrder && isUnpaidCreatedOrder(matchedOrder) && matchedOrder.trade_no) ||
-            fallbackTradeNo ||
-            "";
-
-          if (!conflictResolved && tradeNoToCancel) {
-              loading.cancellingExisting = true;
-              try {
-                await cancelExistingOrder(tradeNoToCancel);
-                await executeOrderSubmission({ conflictResolved: true });
-              } catch (cancelError) {
-                showToast(
-                cancelError?.response?.message ||
-                  cancelError?.message ||
-                  "取消订单失败",
-                "error"
-              );
-            } finally {
-              loading.cancellingExisting = false;
-            }
-            return;
-          }
-
-          showToast(t("order.order_failed"), "error");
-          return;
-        }
-
         showToast(message, "error");
       } finally {
         loading.submitting = false;
@@ -1253,6 +1214,8 @@ export default {
 
       selectedPriceType,
       isSelectionLocked,
+      isContinuePaymentMode,
+      payActionLabel,
 
       couponCode,
 
@@ -1292,6 +1255,7 @@ export default {
 
       selectPriceType,
       selectPlanOption,
+      unlockSelection,
       selectPaymentMethod,
       formatMethodFee,
       isCurrentPlanOption,
@@ -1438,6 +1402,9 @@ export default {
       color: var(--text-primary);
 
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
       padding-left: 14px;
 
@@ -1466,6 +1433,17 @@ export default {
         font-size: $font-size-sm;
         color: var(--text-tertiary);
         margin-left: 4px;
+      }
+
+      .btn-unlock-selection {
+        height: 30px;
+        padding: 0 10px;
+        border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+        border-radius: $border-radius-sm;
+        background: transparent;
+        color: var(--theme-color);
+        font-size: $font-size-sm;
+        cursor: pointer;
       }
     }
   }
