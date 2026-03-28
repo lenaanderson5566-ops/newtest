@@ -115,6 +115,7 @@ const goBack = () => {
 
 <style scoped lang="scss">
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .gift-card-page {
   .gift-card-inner {
     gap: 12px;
@@ -145,7 +146,7 @@ const goBack = () => {
 
   h2 {
     margin: 0;
-    font-size: $font-size-xl;
+    @extend %typo-section-title;
   }
 }
 
@@ -174,7 +175,7 @@ const goBack = () => {
 .rule-card {
   h3 {
     margin: 0 0 8px;
-    font-size: $font-size-md;
+    @extend %typo-item-title;
   }
 
   ul {
@@ -190,6 +191,6 @@ const goBack = () => {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-weight: $font-weight-bold;
+  @extend %typo-item-title;
 }
 </style>

@@ -1223,6 +1223,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .doc-detail-container {
 
   padding: 0;
@@ -1435,15 +1436,8 @@ onUnmounted(() => {
   
 
   .error-title {
-
-    font-size: $font-size-xl;
-
-    font-weight: $font-weight-semibold;
-
+    @extend %typo-section-title;
     margin-bottom: 0.75rem;
-
-    color: var(--text-primary);
-
   }
 
   
@@ -1591,15 +1585,8 @@ onUnmounted(() => {
   
 
   .doc-title {
-
-    font-size: $font-size-2xl;
-
-    font-weight: $font-weight-bold;
-
+    @extend %typo-page-title;
     margin-bottom: 1rem;
-
-    color: var(--text-primary);
-
     line-height: 1.3;
 
     
@@ -1622,9 +1609,7 @@ onUnmounted(() => {
 
     gap: 1rem;
 
-    font-size: $font-size-sm;
-
-    color: var(--text-quaternary);
+    @extend %typo-meta-text;
 
     
 

@@ -808,6 +808,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .trafficlog-container {
 
   padding: 0;
@@ -935,10 +936,7 @@ onUnmounted(() => {
       gap: 6px;
 
       .card-title {
-
-        font-size: $font-size-xl;
-
-        font-weight: $font-weight-semibold;
+        @extend %typo-section-title;
 
         margin: 0;
 
@@ -963,8 +961,7 @@ onUnmounted(() => {
     
 
     .formula-title {
-
-      font-weight: $font-weight-semibold;
+      @extend %typo-item-title;
 
       margin-bottom: 8px;
 

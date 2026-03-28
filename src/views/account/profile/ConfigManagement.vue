@@ -77,6 +77,7 @@ const handleResetSecurity = async () => {
 
 <style scoped lang="scss">
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .config-management {
   padding-bottom: 2px;
 }
@@ -86,8 +87,7 @@ const handleResetSecurity = async () => {
   border: none;
   background: transparent;
   color: var(--text-primary);
-  font-size: $font-size-md;
-  font-weight: $font-weight-semibold;
+  @extend %typo-item-title;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -97,8 +97,7 @@ const handleResetSecurity = async () => {
 }
 
 .back-label {
-  font-size: $font-size-md;
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 }
 
 .profile-card {
@@ -110,7 +109,7 @@ const handleResetSecurity = async () => {
 
 .desc {
   margin: 0 0 12px;
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 }
 
 .action-btn {
@@ -153,7 +152,7 @@ const handleResetSecurity = async () => {
 
   h3 {
     margin: 0;
-    font-size: $font-size-md;
+    @extend %typo-item-title;
   }
 }
 

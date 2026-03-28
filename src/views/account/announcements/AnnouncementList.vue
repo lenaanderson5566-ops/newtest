@@ -62,6 +62,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .announcement-page {
   padding: 0 0 24px;
@@ -87,19 +88,17 @@ export default {
 
     h3 {
       margin: 0;
-      font-size: $font-size-xl;
-      color: var(--text-primary);
+      @extend %typo-section-title;
     }
 
     time {
-      font-size: $font-size-sm;
-      color: var(--text-tertiary);
+      @extend %typo-meta-text;
       white-space: nowrap;
     }
   }
 
   .announcement-content {
-    color: var(--text-tertiary);
+    @extend %typo-body-text;
     line-height: 1.6;
   }
 }
