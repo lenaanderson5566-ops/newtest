@@ -1546,7 +1546,7 @@ $space-2: map.get($spacers, 2);
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
-          font-size: var(--dashboard-title-size);
+          @extend %typo-card-title;
           line-height: 1.35;
           min-height: 20px;
         }
