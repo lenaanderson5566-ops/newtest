@@ -1082,13 +1082,13 @@ export default {
           right: 8,
           textStyle: { color: textColor }
         },
-        grid: { left: '5%', right: '3%', bottom: '16px', top: '46px', containLabel: true },
+        grid: { left: '5%', right: '3%', bottom: '8px', top: '40px', containLabel: true },
         xAxis: {
           type: 'category',
           boundaryGap: false,
           data: trafficTrendData.value.map((i) => i.date),
           axisLabel: {
-            rotate: 38,
+            rotate: 28,
             color: textColor,
             interval: (index) => {
               const total = trafficTrendData.value.length;
@@ -2307,10 +2307,11 @@ $space-2: map.get($spacers, 2);
   .usage-trend-card {
     .card-body {
       padding-top: 6px;
+      padding-bottom: 6px;
     }
 
     .trend-state {
-      min-height: 116px;
+      min-height: 96px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2320,7 +2321,7 @@ $space-2: map.get($spacers, 2);
 
     .usage-trend-chart {
       width: 100%;
-      height: 208px;
+      height: 176px;
     }
   }
   /* 待支付横幅卡片 */
@@ -2435,6 +2436,21 @@ $space-2: map.get($spacers, 2);
         padding: 6px;
       }
 
+    }
+  }
+
+  .usage-trend-card {
+    .card-body {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+
+    .trend-state {
+      min-height: 88px;
+    }
+
+    .usage-trend-chart {
+      height: 152px;
     }
   }
 
