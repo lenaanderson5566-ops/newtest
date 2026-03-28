@@ -2540,7 +2540,7 @@ export default {
 
     padding: map.get($spacers, 3);
 
-    margin-bottom: 0;
+    margin: 0;
 
     border: 1px solid var(--border-color);
 
