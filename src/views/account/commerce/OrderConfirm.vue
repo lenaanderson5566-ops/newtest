@@ -174,26 +174,31 @@
           <div class="section-wrapper order-summary-section">
             <div class="order-summary glassmorphism">
               <div v-if="showCouponInputSection" class="coupon-merge-block">
-                <div class="coupon-input">
-                  <input
-                    type="text"
-                    v-model="couponCode"
-                    :disabled="loading.plan || couponApplied"
-                    :placeholder="$t('order.enter_coupon')"
-                    class="coupon-field"
-                    :class="{ applied: couponApplied }"
-                    spellcheck="false"
-                    autocapitalize="off"
-                    autocomplete="off"
-                  />
-                  <button v-if="!couponApplied" class="btn-verify" @click="verifyCoupon"
-                    :disabled="!couponCode || verifying || loading.plan">
-                    <IconDiscount2 v-if="!verifying" />
-                    <span v-else class="loader"></span>
-                    <span>{{ $t("order.verify_coupon") }}</span>
-                  </button>
-                  <span v-if="couponApplied" class="coupon-applied-tag">✓ 已应用</span>
-                  <button v-if="couponApplied" class="btn-remove-text" @click="removeCoupon">移除</button>
+                <div class="summary-row coupon-row">
+                  <div class="summary-label">优惠码</div>
+                  <div class="coupon-input">
+                    <input
+                      type="text"
+                      v-model="couponCode"
+                      :disabled="loading.plan || couponApplied"
+                      :placeholder="$t('order.enter_coupon')"
+                      class="coupon-field"
+                      :class="{ applied: couponApplied }"
+                      spellcheck="false"
+                      autocapitalize="off"
+                      autocomplete="off"
+                    />
+                    <button v-if="!couponApplied" class="btn-verify" @click="verifyCoupon"
+                      :disabled="!couponCode || verifying || loading.plan">
+                      <IconDiscount2 v-if="!verifying" />
+                      <span v-else class="loader"></span>
+                      <span>{{ $t("order.verify_coupon") }}</span>
+                    </button>
+                    <template v-else>
+                      <span class="coupon-applied-tag">已应用</span>
+                      <button class="btn-remove-text" @click="removeCoupon">移除</button>
+                    </template>
+                  </div>
                 </div>
                 <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
               </div>
@@ -219,6 +224,11 @@
               <!-- 实际内容 -->
 
               <div v-else>
+                <div class="summary-row order-selected-row">
+                  <div class="summary-label">已选订单</div>
+                  <div class="summary-value">{{ selectedOrderDisplay }}</div>
+                </div>
+
                 <div class="summary-row">
                   <div class="summary-label">订阅价格</div>
 
@@ -227,33 +237,52 @@
                   </div>
                 </div>
 
-                <div class="summary-row" v-if="couponDiscountAmount > 0">
-                  <div class="summary-label">优惠券</div>
-
+                <div class="summary-row">
+                  <div class="summary-label">总优惠</div>
                   <div class="summary-value discount">
-                    -{{ formatCurrencyAmount(couponDiscountAmount) }}
+                    -{{ formatCurrencyAmount(totalDiscountDisplayAmount) }}
                   </div>
                 </div>
 
-                <div class="summary-row" v-if="userDiscountAmount > 0">
-                  <div class="summary-label">会员折扣</div>
+                <button
+                  v-if="hasDiscountDetails"
+                  type="button"
+                  class="btn-remove-text summary-detail-toggle"
+                  @click="showDiscountDetails = !showDiscountDetails"
+                >
+                  {{ showDiscountDetails ? "收起明细" : "查看明细" }}
+                </button>
 
-                  <div class="summary-value discount">
-                    -{{ formatCurrencyAmount(userDiscountAmount) }}
+                <template v-if="showDiscountDetails">
+                  <div class="summary-row" v-if="couponDiscountAmount > 0">
+                    <div class="summary-label">优惠券</div>
+
+                    <div class="summary-value discount">
+                      -{{ formatCurrencyAmount(couponDiscountAmount) }}
+                    </div>
                   </div>
-                </div>
 
-                <div class="summary-row" v-if="surplusDeductionAmount > 0">
-                  <div class="summary-label">原订阅抵折</div>
+                  <div class="summary-row" v-if="userDiscountAmount > 0">
+                    <div class="summary-label">会员折扣</div>
 
-                  <div class="summary-value discount">
-                    -{{ formatCurrencyAmount(surplusDeductionAmount) }}
+                    <div class="summary-value discount">
+                      -{{ formatCurrencyAmount(userDiscountAmount) }}
+                    </div>
                   </div>
-                </div>
 
-                <div class="summary-row" v-if="balanceDeductionAmount > 0">
-                  <div class="summary-label">余额抵扣</div>
+                  <div class="summary-row" v-if="surplusDeductionAmount > 0">
+                    <div class="summary-label">当前套餐抵扣</div>
 
+                    <div class="summary-value discount">
+                      -{{ formatCurrencyAmount(surplusDeductionAmount) }}
+                    </div>
+                  </div>
+                </template>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-row">
+                  <div class="summary-label">余额支付</div>
                   <div class="summary-value discount">
                     -{{ formatCurrencyAmount(balanceDeductionAmount) }}
                   </div>
@@ -475,6 +504,7 @@ export default {
     const paymentCheckTimer = ref(null);
     const showPaymentSuccessPrompt = ref(false);
     const hasNavigatedAfterSuccess = ref(false);
+    const showDiscountDetails = ref(false);
     const lockedPendingOrder = ref(null);
     const lockedOrderDetail = ref(null);
     const orderPreview = ref(null);
@@ -815,6 +845,28 @@ export default {
       if (totalWithFee.value <= 0) return "立即开通";
       return isContinuePaymentMode.value ? "继续支付" : "立即支付";
     });
+    const selectedOrderDisplay = computed(() => {
+      const planName = plan.value?.name || "-";
+      const periodType = isContinuePaymentMode.value
+        ? String(lockedPendingOrder.value?.period || "")
+        : selectedPriceType.value;
+      if (!periodType) {
+        return planName;
+      }
+      return `${planName} · ${formatPeriodOption(periodType)}`;
+    });
+    const totalDiscountDisplayAmount = computed(() =>
+      Math.max(
+        0,
+        couponDiscountAmount.value + userDiscountAmount.value + surplusDeductionAmount.value
+      )
+    );
+    const hasDiscountDetails = computed(
+      () =>
+        couponDiscountAmount.value > 0 ||
+        userDiscountAmount.value > 0 ||
+        surplusDeductionAmount.value > 0
+    );
     const currentPlanBadgeLabel = computed(() =>
       isCurrentSubscriptionExpired.value ? "您最近的订阅" : t("shop.plan.current")
     );
@@ -1386,6 +1438,13 @@ export default {
     );
 
     watch(
+      () => [plan.value?.id, selectedPriceType.value, lockedPendingOrder.value?.trade_no],
+      () => {
+        showDiscountDetails.value = false;
+      }
+    );
+
+    watch(
       [
         () => plan.value?.id,
         () => selectedPriceType.value,
@@ -1454,6 +1513,10 @@ export default {
       isLockedOrderReady,
       showCouponInputSection,
       payActionLabel,
+      showDiscountDetails,
+      selectedOrderDisplay,
+      totalDiscountDisplayAmount,
+      hasDiscountDetails,
 
       couponCode,
 
