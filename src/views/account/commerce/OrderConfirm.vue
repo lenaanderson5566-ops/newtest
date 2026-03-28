@@ -3153,7 +3153,7 @@ export default {
     .content-wrapper {
       flex-direction: column;
 
-      gap: 20px;
+      gap: 0;
 
       .right-column {
         max-width: none;
