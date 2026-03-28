@@ -1451,16 +1451,23 @@ export default {
   .stats-grid {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--dashboard-gap-compact);
     margin-bottom: var(--dashboard-section-margin);
 
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    > .stats-card.traffic-board-total,
+    > .stats-card.traffic-board-subscription {
+      grid-column: 1 / -1;
     }
 
-    @media (min-width: 1200px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    > .stats-card.traffic-board-package {
+      grid-column: 1 / 2;
+      min-width: 0;
+    }
+
+    > .stats-card.today-traffic-card {
+      grid-column: 2 / 3;
+      min-width: 0;
     }
 
     .stats-card {
@@ -2368,13 +2375,6 @@ export default {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
 
-    .stats-card.traffic-board-total {
-      grid-column: 1 / -1;
-    }
-
-    .stats-card.today-traffic-card {
-      grid-column: 2 / 3;
-
       .today-traffic-total-main {
         .usage-percent {
           &.compact {
@@ -2384,22 +2384,8 @@ export default {
       }
     }
 
-    .stats-card.traffic-board-package {
-      grid-column: 1 / 2;
-    }
-
-    .stats-card.traffic-board-subscription {
-      grid-column: 1 / -1;
-    }
-
-    .stats-card.traffic-board-package,
-    .stats-card.today-traffic-card,
-    .stats-card.traffic-board-subscription,
     .stats-card.quota-traffic-card {
       min-width: 0;
-    }
-
-    .stats-card.quota-traffic-card {
       min-height: auto;
       height: auto;
       padding: 10px;
@@ -2428,28 +2414,6 @@ export default {
     }
   }
 
-}
-
-@media (min-width: 769px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    .stats-card.traffic-board-total {
-      grid-column: 1 / -1;
-    }
-
-    .stats-card.traffic-board-package {
-      grid-column: 1 / 2;
-    }
-
-    .stats-card.today-traffic-card {
-      grid-column: 2 / 3;
-    }
-
-    .stats-card.traffic-board-subscription {
-      grid-column: 1 / -1;
-    }
-  }
 }
 
 
