@@ -673,7 +673,7 @@ export default {
 
           if (
             orderDetail.value.status === 0 &&
-            orderDetail.value.total_amount === 0
+            (orderDetail.value.total_amount === 0 || resultFromOrderConfirm.value)
           ) {
             startPaymentCheck();
           }
@@ -1189,11 +1189,6 @@ export default {
         { immediate: true }
       );
 
-      if (resultFromOrderConfirm.value && route.query.trade_no) {
-        setTimeout(() => {
-          performPaymentCheck(true);
-        }, 600);
-      }
     });
 
     onBeforeUnmount(() => {
