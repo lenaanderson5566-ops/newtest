@@ -223,7 +223,7 @@
                   <div class="summary-label">订阅价格</div>
 
                   <div class="summary-value">
-                    {{ formatCurrencyAmount(originalPrice) }}
+                    {{ formatCurrencyAmount(summaryOriginalPrice) }}
                   </div>
                 </div>
 
@@ -269,6 +269,8 @@
                     loading.submitting ||
                     loading.paying ||
                     loading.plan ||
+                    loading.lockedOrder ||
+                    !isLockedOrderReady ||
                     (totalWithFee > 0 && !selectedMethod)
                   "
                 >
@@ -345,6 +347,7 @@ import {
   verifyCoupon as checkCoupon,
   submitOrder as createOrder,
   checkoutOrder,
+  getOrderDetail,
 } from "@/api/account/shop";
 
 import { getUserInfo } from "@/api/overview/dashboard";
@@ -398,6 +401,7 @@ export default {
 
       userInfo: true,
       methods: false,
+      lockedOrder: false,
 
       submitting: false,
       paying: false,
@@ -461,6 +465,14 @@ export default {
     const showPaymentSuccessPrompt = ref(false);
     const hasNavigatedAfterSuccess = ref(false);
     const lockedPendingOrder = ref(null);
+    const lockedOrderDetail = ref(null);
+    const isSelectionLocked = computed(() => Boolean(lockedPendingOrder.value));
+    const isContinuePaymentMode = computed(
+      () => Boolean(isSelectionLocked.value && lockedPendingOrder.value?.trade_no)
+    );
+    const isLockedOrderReady = computed(
+      () => !isContinuePaymentMode.value || Boolean(lockedOrderDetail.value)
+    );
 
     const discountPercent = ref(0);
 
@@ -469,8 +481,21 @@ export default {
 
       return plan.value[selectedPriceType.value] || 0;
     });
+    const summaryOriginalPrice = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(
+          lockedOrderDetail.value?.plan_amount ?? lockedOrderDetail.value?.original_amount ?? 0
+        );
+        return Number.isFinite(amount) && amount > 0 ? amount : 0;
+      }
+      return originalPrice.value;
+    });
 
     const couponDiscountAmount = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.coupon_discount_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
       if (!couponApplied.value || !couponInfo.value) return 0;
 
       if (typeof couponInfo.value.coupon_discount_amount === 'number') {
@@ -501,6 +526,10 @@ export default {
     });
 
     const userDiscountAmount = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.user_discount_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
+      }
       if (originalPrice.value <= 0 || userDiscountPercent.value <= 0) {
         return 0;
       }
@@ -509,19 +538,42 @@ export default {
     });
 
     const totalDiscountAmount = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.discount_amount);
+        if (Number.isFinite(amount)) {
+          return Math.max(0, Math.abs(amount));
+        }
+      }
       return Math.max(0, couponDiscountAmount.value + userDiscountAmount.value);
     });
     const finalPrice = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.total_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, amount) : 0;
+      }
       return Math.max(0, originalPrice.value - totalDiscountAmount.value);
     });
     const balanceDeductionAmount = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.balance_amount || 0);
+        if (!Number.isFinite(amount)) {
+          return 0;
+        }
+        return Math.max(0, Math.abs(amount));
+      }
       const userBalance = Number(userInfo.value?.balance || 0);
       if (!Number.isFinite(userBalance) || userBalance <= 0) {
         return 0;
       }
       return Math.min(userBalance, finalPrice.value);
     });
-    const totalWithFee = computed(() => Math.max(0, finalPrice.value - balanceDeductionAmount.value));
+    const totalWithFee = computed(() => {
+      if (isContinuePaymentMode.value) {
+        const amount = Number(lockedOrderDetail.value?.total_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, amount) : 0;
+      }
+      return Math.max(0, finalPrice.value - balanceDeductionAmount.value);
+    });
 
     const displayCurrency = computed(() => {
       return `${currency.value || 'USD'}`.toUpperCase();
@@ -649,10 +701,6 @@ export default {
       return keyMap[type] || "";
     };
 
-    const isSelectionLocked = computed(() => Boolean(lockedPendingOrder.value));
-    const isContinuePaymentMode = computed(
-      () => Boolean(isSelectionLocked.value && lockedPendingOrder.value?.trade_no)
-    );
     const payActionLabel = computed(() => {
       if (totalWithFee.value <= 0) return t("payment.free_activate");
       return isContinuePaymentMode.value ? "继续支付" : "立即支付";
@@ -685,6 +733,7 @@ export default {
     const unlockSelection = () => {
       if (!isSelectionLocked.value) return;
       lockedPendingOrder.value = null;
+      lockedOrderDetail.value = null;
       showToast("已解除锁定，可重新选择订阅规格与周期", "info");
     };
 
@@ -819,8 +868,14 @@ export default {
         const resp = await fetchOrderList();
         const orders = Array.isArray(resp?.data) ? resp.data : [];
         const pendingOrders = orders.filter(
-          (item) => Number(item?.status) === 0 || Number(item?.status) === 1
+          (item) => Number(item?.status) === 0
         );
+        pendingOrders.sort((a, b) => {
+          const aTs = new Date(a?.created_at || 0).getTime();
+          const bTs = new Date(b?.created_at || 0).getTime();
+          if (aTs !== bTs) return bTs - aTs;
+          return Number(b?.id || 0) - Number(a?.id || 0);
+        });
         if (tradeNo) {
           const matched = pendingOrders.find((item) => item?.trade_no === tradeNo);
           if (matched) {
@@ -831,6 +886,25 @@ export default {
       } catch (err) {
         console.error("Failed to fetch pending orders:", err);
         return null;
+      }
+    };
+
+    const fetchLockedOrderDetail = async () => {
+      if (!isContinuePaymentMode.value) {
+        lockedOrderDetail.value = null;
+        return;
+      }
+      loading.lockedOrder = true;
+      try {
+        const tradeNo = String(lockedPendingOrder.value?.trade_no || "");
+        const response = await getOrderDetail(tradeNo);
+        lockedOrderDetail.value = response?.data || null;
+      } catch (err) {
+        console.error("Failed to fetch locked order detail:", err);
+        lockedOrderDetail.value = null;
+        showToast(err?.response?.message || err?.message || "未能读取待支付订单详情", "error");
+      } finally {
+        loading.lockedOrder = false;
       }
     };
 
@@ -906,6 +980,10 @@ export default {
 
     const submitOrder = async () => {
       if (loading.submitting || loading.paying) return;
+      if (!isLockedOrderReady.value) {
+        showToast("待支付订单数据加载中，请稍后重试", "warning");
+        return;
+      }
       if (totalWithFee.value > 0 && !selectedMethod.value) {
         showToast(t("payment.select_method_first"), "warning");
         return;
@@ -1179,6 +1257,7 @@ export default {
       lockedPendingOrder.value = await fetchLatestPendingOrder(
         route.query.trade_no ? String(route.query.trade_no) : ""
       );
+      await fetchLockedOrderDetail();
       if (route.query.id || lockedPendingOrder.value?.plan_id || lockedPendingOrder.value?.plan?.id) {
         tasks.unshift(fetchPlanData());
       }
@@ -1215,6 +1294,7 @@ export default {
       selectedPriceType,
       isSelectionLocked,
       isContinuePaymentMode,
+      isLockedOrderReady,
       payActionLabel,
 
       couponCode,
@@ -1230,6 +1310,7 @@ export default {
       selectedMethod,
 
       originalPrice,
+      summaryOriginalPrice,
 
       couponDiscountAmount,
 
