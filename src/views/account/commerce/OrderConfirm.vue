@@ -350,7 +350,7 @@ import {
   getOrderDetail,
 } from "@/api/account/shop";
 
-import { getUserInfo } from "@/api/overview/dashboard";
+import { getUserInfo, getSubscribe } from "@/api/overview/dashboard";
 import { fetchOrderList } from "@/api/account/orderlist";
 import QrcodeVue from "qrcode.vue";
 
@@ -466,6 +466,8 @@ export default {
     const hasNavigatedAfterSuccess = ref(false);
     const lockedPendingOrder = ref(null);
     const lockedOrderDetail = ref(null);
+    const currentSubscribedPlanId = ref(null);
+    const isCurrentSubscriptionExpired = ref(false);
     const isSelectionLocked = computed(() => Boolean(lockedPendingOrder.value));
     const isContinuePaymentMode = computed(
       () => Boolean(isSelectionLocked.value && lockedPendingOrder.value?.trade_no)
@@ -709,11 +711,6 @@ export default {
       if (totalWithFee.value <= 0) return t("payment.free_activate");
       return isContinuePaymentMode.value ? "继续支付" : "立即支付";
     });
-    const isCurrentSubscriptionExpired = computed(() => {
-      const expiredAt = Number(userInfo.value?.expired_at || userInfo.value?.expiredAt || 0);
-      if (!Number.isFinite(expiredAt) || expiredAt <= 0) return false;
-      return expiredAt * 1000 <= Date.now();
-    });
     const currentPlanBadgeLabel = computed(() =>
       isCurrentSubscriptionExpired.value ? "您最近的订阅" : t("shop.plan.current")
     );
@@ -724,7 +721,9 @@ export default {
     };
 
     const isCurrentPlanOption = (targetPlan) => {
-      const currentPlanId = Number(userInfo.value?.plan_id || 0);
+      const currentPlanId = Number(
+        currentSubscribedPlanId.value || userInfo.value?.plan_id || 0
+      );
       if (!currentPlanId) return false;
       return Number(targetPlan?.id) === currentPlanId;
     };
@@ -1191,6 +1190,23 @@ export default {
       }
     };
 
+    const fetchCurrentSubscriptionStatus = async () => {
+      try {
+        const response = await getSubscribe();
+        const subscribe = response?.data || {};
+        currentSubscribedPlanId.value =
+          Number(subscribe.plan_id || subscribe.plan?.id || 0) || null;
+        const expiredAt = Number(subscribe?.expired_at || 0);
+        isCurrentSubscriptionExpired.value =
+          Number.isFinite(expiredAt) && expiredAt > 0
+            ? expiredAt * 1000 <= Date.now()
+            : false;
+      } catch (error) {
+        currentSubscribedPlanId.value = null;
+        isCurrentSubscriptionExpired.value = false;
+      }
+    };
+
     const fetchConfig = async () => {
       try {
         const response = await getCommConfig();
@@ -1265,7 +1281,12 @@ export default {
       }
     );
     onMounted(async () => {
-      const tasks = [fetchUserInfo(), fetchConfig(), fetchAvailablePaymentMethods()];
+      const tasks = [
+        fetchUserInfo(),
+        fetchCurrentSubscriptionStatus(),
+        fetchConfig(),
+        fetchAvailablePaymentMethods(),
+      ];
       lockedPendingOrder.value = await fetchLatestPendingOrder(
         route.query.trade_no ? String(route.query.trade_no) : ""
       );
