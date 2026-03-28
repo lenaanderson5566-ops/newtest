@@ -383,7 +383,9 @@ onMounted(fetchUserStatus);
 </script>
 
 <style scoped lang="scss">
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .quick-start-container {
   padding-bottom: calc(2px + 64px);
@@ -397,19 +399,16 @@ onMounted(fetchUserStatus);
   background: rgba(var(--theme-color-rgb), 0.06);
   border: 1px solid rgba(var(--theme-color-rgb), 0.14);
   border-radius: $border-radius-sm;
-  padding: 10px 14px;
+  padding: map.get($spacers, 2);
 
   .status-main {
     margin: 0;
-    font-size: $font-size-md;
-    font-weight: $font-weight-semibold;
-    color: var(--text-primary);
+    @extend %typo-item-title;
   }
 
   .status-sub {
     margin: 4px 0 0;
-    font-size: $font-size-sm;
-    color: var(--text-tertiary);
+    @extend %typo-body-text;
   }
 }
 
@@ -418,7 +417,7 @@ onMounted(fetchUserStatus);
   background: #f8faff;
   border: 1px solid rgba(47, 85, 212, 0.08);
   border-radius: $border-radius-sm;
-  padding: 14px;
+  padding: map.get($spacers, 3);
 
   .step-header {
     display: flex;
@@ -428,8 +427,7 @@ onMounted(fetchUserStatus);
 
     h2 {
       margin: 0;
-      font-size: $font-size-xl;
-      font-weight: $font-weight-semibold;
+      @extend %typo-section-title;
     }
   }
 
@@ -450,8 +448,7 @@ onMounted(fetchUserStatus);
 .step-tip,
 .connect-text {
   margin: 0;
-  color: var(--text-tertiary);
-  font-size: $font-size-md;
+  @extend %typo-body-text;
 }
 
 .system-grid {
@@ -478,7 +475,7 @@ onMounted(fetchUserStatus);
     border-color: rgba(var(--theme-color-rgb), 0.5);
   }
 
-  strong { font-size: $font-size-md; }
+  strong { @extend %typo-item-title; }
 
   &.active {
     border-color: rgba(var(--theme-color-rgb), 0.85);
@@ -504,8 +501,8 @@ onMounted(fetchUserStatus);
 .client-item {
   border: 1px solid var(--border-color);
   background: #fff;
-  border-radius: 10px;
-  padding: 12px 34px 12px 14px;
+  border-radius: $border-radius-sm;
+  padding: map.get($spacers, 2) 34px map.get($spacers, 2) map.get($spacers, 2);
   min-height: 62px;
   display: flex;
   align-items: center;
@@ -526,7 +523,7 @@ onMounted(fetchUserStatus);
     flex: 0 1 auto;
     min-width: 0;
     max-width: 100%;
-    font-weight: $font-weight-semibold;
+    @extend %typo-item-title;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -582,8 +579,8 @@ onMounted(fetchUserStatus);
   border: 1px solid var(--border-color);
   background: #fff;
   color: var(--info-color);
-  border-radius: 8px;
-  padding: 8px 14px;
+  border-radius: $border-radius-sm;
+  padding: map.get($spacers, 2);
   cursor: pointer;
 
   &.primary {
@@ -608,9 +605,9 @@ onMounted(fetchUserStatus);
 
 .qrcode-modal {
   width: min(420px, 92vw);
-  border-radius: 14px;
+  border-radius: $border-radius-sm;
   background: #fff;
-  padding: 16px;
+  padding: map.get($spacers, 3);
 
   .qrcode-header {
     display: flex;

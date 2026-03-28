@@ -559,6 +559,7 @@ onMounted(async () => {
 <style scoped lang="scss">
 @use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 $space-2: map.get($spacers, 2);
 
@@ -591,8 +592,7 @@ $space-2: map.get($spacers, 2);
   border: none;
   background: transparent;
   color: var(--text-tertiary);
-  font-size: $font-size-md;
-  font-weight: $font-weight-semibold;
+  @extend %typo-item-title;
   cursor: pointer;
   white-space: nowrap;
 
@@ -619,7 +619,7 @@ $space-2: map.get($spacers, 2);
 
 .section-block {
   border-radius: $border-radius-sm;
-  background-color: #fff;
+  background-color: var(--card-background);
   border: 1px solid rgba(15, 23, 42, 0.15);
   box-shadow: none;
   transition: box-shadow 0.22s ease, border-color 0.22s ease;
@@ -645,16 +645,15 @@ $space-2: map.get($spacers, 2);
   pointer-events: none;
 }
 
-.summary-panel { padding: 1rem; }
+.summary-panel { padding: map.get($spacers, 3); }
 
 .recent-login-panel {
-  padding: 1rem;
+  padding: map.get($spacers, 3);
 }
 
 .recent-login-header p {
   margin: 4px 0 0;
-  font-size: $font-size-sm;
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 }
 
 .recent-login-list {
@@ -664,8 +663,7 @@ $space-2: map.get($spacers, 2);
 
 .recent-login-state {
   padding: 14px 2px 4px;
-  color: var(--text-tertiary);
-  font-size: $font-size-sm;
+  @extend %typo-meta-text;
 }
 
 .recent-login-item {
@@ -687,14 +685,12 @@ $space-2: map.get($spacers, 2);
 }
 
 .recent-login-main strong {
-  font-size: $font-size-sm;
-  color: var(--text-primary);
+  @extend %typo-item-title;
 }
 
 .recent-login-main span,
 .recent-login-ip {
-  font-size: $font-size-sm;
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 }
 
 
@@ -840,9 +836,7 @@ $space-2: map.get($spacers, 2);
 
 .section-title {
   margin: 0;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-bold;
-  color: var(--text-primary);
+  @extend %typo-section-title;
 }
 
 .section-group {
@@ -857,8 +851,7 @@ $space-2: map.get($spacers, 2);
 .section-subtitle {
   margin: 0;
   padding: 0 2px;
-  font-size: $font-size-sm;
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 }
 
 .plan-overview-row {
@@ -866,15 +859,12 @@ $space-2: map.get($spacers, 2);
 }
 
 .plan-name {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  color: var(--text-primary);
+  @extend %typo-section-title;
 }
 
 .plan-desc {
   margin: 8px 0 0;
-  font-size: $font-size-md;
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 }
 
 .row-main-with-icon {
@@ -895,7 +885,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .balance-amount {
-  font-size: $font-size-xl !important;
+  @extend %typo-metric-md;
   line-height: 1.2;
 }
 

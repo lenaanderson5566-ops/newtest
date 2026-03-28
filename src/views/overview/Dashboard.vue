@@ -1336,6 +1336,7 @@ export default {
 <style lang="scss" scoped>
 @use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 $bp-md-up: $bp-md + 1px;
 $space-2: map.get($spacers, 2);
@@ -1434,10 +1435,8 @@ $space-2: map.get($spacers, 2);
       margin-bottom: #{$space-2};
 
       .card-title {
-        font-size: var(--dashboard-title-size);
-        font-weight: $font-weight-semibold;
+        @extend %typo-card-title;
         margin: 0;
-        color: var(--text-primary);
       }
 
       .card-actions {
@@ -2071,11 +2070,9 @@ $space-2: map.get($spacers, 2);
   .overview-card--traffic-quota .usage-card-title,
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
-    font-size: var(--dashboard-title-size);
+    @extend %typo-card-title;
     line-height: 1.3;
-    font-weight: $font-weight-semibold;
     letter-spacing: 0.02em;
-    color: var(--text-primary);
   }
 
 
@@ -2101,19 +2098,15 @@ $space-2: map.get($spacers, 2);
 
       .usage-percent {
         line-height: 1;
-        font-weight: $font-weight-bold;
-        color: var(--text-primary);
-        font-size: $font-size-xl;
+        @extend %typo-metric-md;
 
         &.compact {
-          font-size: $font-size-xl;
+          @extend %typo-metric-md;
         }
       }
 
       .usage-percent-label {
-        font-size: var(--dashboard-kpi-size);
-        color: var(--quota-label-color);
-        font-weight: $font-weight-medium;
+        @extend %typo-label-text;
       }
     }
 
@@ -2210,8 +2203,7 @@ $space-2: map.get($spacers, 2);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-tertiary);
-      font-size: $font-size-md;
+      @extend %typo-body-text;
     }
 
     .usage-trend-chart {

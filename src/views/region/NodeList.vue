@@ -324,7 +324,9 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .nodes-container {
 
@@ -362,9 +364,9 @@ onMounted(() => {
 
   box-shadow: none;
 
-  padding: 20px;
+  padding: map.get($spacers, 3);
 
-  margin-bottom: 24px;
+  margin-bottom: map.get($spacers, 3);
 
   border: 1px solid var(--border-color);
 
@@ -397,10 +399,7 @@ onMounted(() => {
     
 
     .card-title {
-
-      font-size: $font-size-xl;
-
-      font-weight: $font-weight-semibold;
+      @extend %typo-section-title;
 
       margin: 0;
 
@@ -430,7 +429,7 @@ onMounted(() => {
 
 .welcome-card {
 
-  margin-bottom: 24px;
+  margin-bottom: map.get($spacers, 3);
 
   .quick-actions {
     margin-top: 12px;
@@ -449,7 +448,7 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: $font-size-md;
+    @extend %typo-item-title;
 
     &.active {
       border-color: rgba(var(--theme-color-rgb), 0.65);
@@ -501,8 +500,8 @@ onMounted(() => {
       background: rgba(var(--theme-color-rgb), 0.12);
     }
 
-    .import-title { font-size: $font-size-xl; font-weight: $font-weight-semibold; }
-    .import-desc { color: var(--text-tertiary); font-size: $font-size-md; }
+    .import-title { @extend %typo-section-title; }
+    .import-desc { @extend %typo-body-text; }
 
     .platform-selector {
       display: flex;
@@ -529,9 +528,8 @@ onMounted(() => {
     }
 
     .platform-title {
-      font-size: $font-size-md;
+      @extend %typo-item-title;
       margin: 8px 0 12px;
-      font-weight: $font-weight-semibold;
     }
 
     .platform-options {

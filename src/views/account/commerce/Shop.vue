@@ -975,9 +975,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .shop-container {
-  --shop-card-radius: var(--radius-lg);
+  --shop-card-radius: #{$border-radius-sm};
 
   padding: 0;
 
@@ -997,15 +999,13 @@ export default {
     box-shadow: none;
     background: transparent;
     background-color: transparent;
-    padding: 20px;
+    padding: map.get($spacers, 3);
 
     margin-bottom: 12px;
 
     .card-body p {
-      color: var(--text-tertiary);
-      font-size: $font-size-md;
+      @extend %typo-body-text;
       line-height: 1.6;
-      font-weight: $font-weight-medium;
     }
 
     .welcome-top-row {
@@ -1023,12 +1023,11 @@ export default {
 
   .dashboard-card {
     background-color: var(--card-bg-color);
-
-    border-radius: 12px;
+    border-radius: $border-radius-sm;
 
     box-shadow: none;
 
-    padding: 20px;
+    padding: map.get($spacers, 3);
 
     margin-bottom: 24px;
 
@@ -1054,9 +1053,7 @@ export default {
       margin-bottom: 15px;
 
       .card-title {
-        font-size: $font-size-xl;
-
-        font-weight: $font-weight-bold;
+        @extend %typo-section-title;
 
         margin: 0;
 
@@ -1085,9 +1082,8 @@ export default {
   .current-plan-badge {
     display: inline-flex;
     align-items: center;
-    font-size: $font-size-sm;
+    @extend %typo-label-text;
     line-height: 1;
-    font-weight: $font-weight-semibold;
     color: var(--theme-color);
     background: rgba(var(--theme-color-rgb), 0.1);
     border: 1px solid rgba(var(--theme-color-rgb), 0.26);

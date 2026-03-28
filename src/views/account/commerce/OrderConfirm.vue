@@ -1605,6 +1605,7 @@ export default {
 <style lang="scss" scoped>
 @use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .order-confirm-container {
   padding: 0;
@@ -1709,9 +1710,7 @@ export default {
     margin-bottom: 25px;
 
     .section-title {
-      font-size: $font-size-xl;
-
-      font-weight: $font-weight-semibold;
+      @extend %typo-section-title;
 
       margin-bottom: 15px;
 
@@ -2553,9 +2552,8 @@ export default {
       margin-bottom: 14px;
 
       .summary-title {
-        font-size: $font-size-lg;
-        font-weight: $font-weight-semibold;
-        color: var(--right-card-text);
+        @extend %typo-card-title;
+        @extend %typo-dark-primary;
         margin-bottom: 4px;
       }
 
@@ -2689,15 +2687,13 @@ export default {
       margin-bottom: 10px;
 
       .payable-label {
-        font-size: $font-size-sm;
-        color: var(--text-on-dark-primary);
-        opacity: 0.9;
+        @extend %typo-label-text;
+        @extend %typo-dark-secondary;
       }
 
       .payable-value {
-        font-size: $font-size-3xl;
-        font-weight: $font-weight-bold;
-        color: var(--text-on-dark-primary);
+        @extend %typo-metric-lg;
+        @extend %typo-dark-primary;
         line-height: 1.1;
       }
     }

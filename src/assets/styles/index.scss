@@ -5,6 +5,7 @@
 
 // 导入基础样式
 @use "./base/variables.scss" as *;
+@use "./base/typography.scss" as *;
 @use "./base/reset.scss" as *;
 @use "./base/animations.scss" as *;
 @use "./base/scrollbar.scss" as *;
@@ -48,6 +49,21 @@
   color: var(--text-primary);
   line-height: 1.3;
 }
+
+/* typography semantic utilities */
+.typo-page-title { @extend %typo-page-title; }
+.typo-section-title { @extend %typo-section-title; }
+.typo-card-title { @extend %typo-card-title; }
+.typo-item-title { @extend %typo-item-title; }
+.typo-body-text { @extend %typo-body-text; }
+.typo-label-text { @extend %typo-label-text; }
+.typo-meta-text { @extend %typo-meta-text; }
+.typo-metric-md { @extend %typo-metric-md; }
+.typo-metric-lg { @extend %typo-metric-lg; }
+.typo-dark-primary { @extend %typo-dark-primary; }
+.typo-dark-secondary { @extend %typo-dark-secondary; }
+.typo-dark-tertiary { @extend %typo-dark-tertiary; }
+.typo-dark-disabled { @extend %typo-dark-disabled; }
 
 .app-content-wrapper .page-shell .muted,
 .app-content-wrapper .page-shell .secondary,
