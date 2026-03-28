@@ -239,18 +239,19 @@
                   </div>
 
                   <div class="summary-row" v-if="totalDiscountDisplayAmount > 0">
-                    <div class="summary-label">总优惠</div>
+                    <div class="summary-label summary-label-with-action">
+                      <span>总优惠</span>
+                      <button
+                        v-if="hasDiscountDetails"
+                        type="button"
+                        class="btn-remove-text summary-detail-toggle inline"
+                        @click="showDiscountDetails = !showDiscountDetails"
+                      >
+                        {{ showDiscountDetails ? "收起明细" : "查看明细" }}
+                      </button>
+                    </div>
                     <div class="summary-value discount">-{{ formatCurrencyAmount(totalDiscountDisplayAmount) }}</div>
                   </div>
-
-                  <button
-                    v-if="hasDiscountDetails"
-                    type="button"
-                    class="btn-remove-text summary-detail-toggle"
-                    @click="showDiscountDetails = !showDiscountDetails"
-                  >
-                    {{ showDiscountDetails ? "收起优惠明细" : "查看优惠明细" }}
-                  </button>
 
                   <template v-if="showDiscountDetails">
                     <div class="summary-row" v-if="couponDiscountAmount > 0">
@@ -267,7 +268,7 @@
                     </div>
                   </template>
 
-                  <div class="summary-divider" v-if="balanceDeductionAmount > 0"></div>
+                  <div class="summary-divider compact" v-if="balanceDeductionAmount > 0"></div>
                   <div class="summary-row" v-if="balanceDeductionAmount > 0">
                     <div class="summary-label">余额支付</div>
                     <div class="summary-value discount">-{{ formatCurrencyAmount(balanceDeductionAmount) }}</div>
@@ -2615,6 +2616,12 @@ export default {
 
           font-style: italic;
         }
+
+        &.summary-label-with-action {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+        }
       }
 
       .summary-value {
@@ -2644,6 +2651,10 @@ export default {
       &.strong {
         margin: 18px 0 12px;
       }
+
+      &.compact {
+        margin: 8px 0 6px;
+      }
     }
 
     .summary-detail-toggle {
@@ -2651,6 +2662,11 @@ export default {
       padding: 0;
       margin-top: -2px;
       font-size: $font-size-xs;
+
+      &.inline {
+        margin-top: 0;
+        font-size: $font-size-xs;
+      }
     }
 
     .payable-block {

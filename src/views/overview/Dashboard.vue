@@ -1457,6 +1457,7 @@ $space-2: map.get($spacers, 2);
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--dashboard-gap-compact);
+    grid-auto-flow: row dense;
     margin-bottom: var(--dashboard-section-margin);
 
     > .stats-card.traffic-board-total {
@@ -1465,10 +1466,12 @@ $space-2: map.get($spacers, 2);
 
     > .stats-card.traffic-board-package {
       grid-column: 2 / 3;
+      grid-row: 2 / 3;
     }
 
     > .stats-card.today-traffic-card {
       grid-column: 1 / 2;
+      grid-row: 2 / 3;
     }
 
     @media (min-width: #{$bp-md-up}) {
