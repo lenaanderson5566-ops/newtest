@@ -1824,7 +1824,7 @@ export default {
 
     .max-saving-tip {
       color: var(--text-tertiary);
-      font-size: $font-size-md;
+      font-size: $font-size-sm;
       font-weight: $font-weight-semibold;
       white-space: nowrap;
       line-height: 1;
@@ -2143,7 +2143,7 @@ export default {
   }
 
   .shop-container .filter-toggle-container .max-saving-tip {
-    font-size: $font-size-xs;
+    font-size: 10px;
   }
 }
 </style>
