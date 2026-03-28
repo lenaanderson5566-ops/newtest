@@ -2435,18 +2435,18 @@ export default {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 
     .stats-card.traffic-board-total {
-      grid-column: 1;
-      grid-row: 1 / span 2;
+      grid-column: 1 / -1;
+      grid-row: auto;
     }
 
     .stats-card.traffic-board-package {
-      grid-column: 2;
-      grid-row: 1;
+      grid-column: 1;
+      grid-row: auto;
     }
 
     .stats-card.today-traffic-card {
       grid-column: 2;
-      grid-row: 2;
+      grid-row: auto;
     }
   }
 }
