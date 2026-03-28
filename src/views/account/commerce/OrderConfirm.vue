@@ -231,6 +231,14 @@
                   </div>
                 </div>
 
+                <div class="summary-row" v-if="balanceDeductionAmount > 0">
+                  <div class="summary-label">余额抵扣</div>
+
+                  <div class="summary-value discount">
+                    -{{ formatCurrencyAmount(balanceDeductionAmount) }}
+                  </div>
+                </div>
+
                 <div class="summary-divider"></div>
 
                 <div class="summary-row total">
@@ -492,12 +500,17 @@ export default {
     const totalDiscountAmount = computed(() => {
       return Math.max(0, couponDiscountAmount.value + userDiscountAmount.value);
     });
-
     const finalPrice = computed(() => {
       return Math.max(0, originalPrice.value - totalDiscountAmount.value);
     });
-
-    const totalWithFee = computed(() => finalPrice.value);
+    const balanceDeductionAmount = computed(() => {
+      const userBalance = Number(userInfo.value?.balance || 0);
+      if (!Number.isFinite(userBalance) || userBalance <= 0) {
+        return 0;
+      }
+      return Math.min(userBalance, finalPrice.value);
+    });
+    const totalWithFee = computed(() => Math.max(0, finalPrice.value - balanceDeductionAmount.value));
 
     const displayCurrency = computed(() => {
       return `${currency.value || 'USD'}`.toUpperCase();
@@ -1243,6 +1256,8 @@ export default {
       totalDiscountAmount,
 
       finalPrice,
+
+      balanceDeductionAmount,
 
       totalWithFee,
 
