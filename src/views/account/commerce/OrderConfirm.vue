@@ -1618,15 +1618,15 @@ export default {
 
   justify-content: center;
 
-  margin-top: 20px;
+  margin-top: 0;
 
-  min-height: calc(100vh - 100px);
+  min-height: auto;
 
   .order-confirm-inner {
     width: 100%;
 
     
-    padding-bottom: 100px;
+    padding-bottom: var(--page-content-bottom-gap, 12px);
   }
 
   .welcome-card {
@@ -3076,7 +3076,7 @@ export default {
 
 @media (max-width: #{$bp-md}) {
   .order-confirm-container {
-    margin-top: 15px;
+    margin-top: 0;
 
     :deep(.page-inner) {
       padding-left: 0 !important;
