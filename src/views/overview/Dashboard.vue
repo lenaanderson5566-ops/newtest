@@ -2476,7 +2476,7 @@ export default {
 
     .stats-card.today-traffic-card {
       order: 2;
-      grid-column: 1 / -1;
+      grid-column: auto;
 
       .today-traffic-total-main {
         .usage-percent {
@@ -2489,14 +2489,15 @@ export default {
 
     .stats-card.traffic-board-package {
       order: 3;
+      grid-column: auto;
     }
 
     .stats-card.traffic-board-subscription {
       order: 4;
+      grid-column: 1 / -1;
     }
 
     .stats-card.quota-traffic-card {
-      grid-column: 1 / -1;
       min-height: auto;
       height: auto;
       padding: 10px;
