@@ -1768,7 +1768,7 @@ export default {
     border: none;
     background: transparent;
     padding: 0;
-    margin-bottom: map.get($spacers, 1);
+    margin-bottom: 0;
   }
 
   .plan-selector-grid {
@@ -1848,14 +1848,16 @@ export default {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
-    margin-bottom: map.get($spacers, 1) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   .section-wrapper.subscription-intro-section {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
-    margin-bottom: map.get($spacers, 1) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   .section-wrapper.payment-methods-section {
@@ -1867,8 +1869,11 @@ export default {
   }
 
   .subscription-intro-section .section-title,
+  .period-section .section-title,
   .payment-methods-section .section-title {
     background-color: var(--background-color);
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .payment-methods-section .section-title {
@@ -2027,7 +2032,7 @@ export default {
   }
 
   .period-selection {
-    margin-bottom: 20px;
+    margin-bottom: 0;
 
     width: 100%;
 
