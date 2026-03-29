@@ -1090,7 +1090,7 @@ export default {
 
       if (route.query.from === "orders") {
         fromOrderList.value = true;
-      } else if (document.referrer && document.referrer.includes("/orders") || document.referrer.includes("/billing")) {
+      } else if (document.referrer && document.referrer.includes("/orders")) {
         fromOrderList.value = true;
       } else {
         fromOrderList.value = false;

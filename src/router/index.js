@@ -402,16 +402,6 @@ const routes = [
       },
 
       {
-        path: 'billing',
-        redirect: (to) => {
-          const tab = String(to.query?.tab || '');
-          if (tab === 'wallet') return '/wallet/deposit';
-          if (tab === 'referral') return '/invite';
-          return '/orders';
-        }
-      },
-
-      {
 
         path: 'orders',
 
