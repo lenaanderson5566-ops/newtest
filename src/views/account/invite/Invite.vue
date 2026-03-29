@@ -237,7 +237,6 @@
                               </div>
                             </div>
                             <div class="invite-card-footer">
-                              <div class="card-label">{{ $t('invite.inviteLink.scanDescription') }}</div>
                               <div class="invite-card-date">{{ $t('invite.inviteLink.createdAt', { date: formatCodeDate(code.created_at) }) }}</div>
                             </div>
                           </div>
@@ -328,6 +327,9 @@
       </div>
       
       <div class="dashboard-card referral-kpi-card" v-if="!loading.inviteData">
+        <div class="card-header">
+          <h2 class="card-title">邀请统计</h2>
+        </div>
         <div class="referral-kpi-grid">
           <div class="kpi-item">
             <div class="kpi-label">{{ $t('invite.stats.registeredUsers') }}</div>
@@ -1603,6 +1605,12 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+}
+
+.referral-kpi-card {
+  .card-header {
+    margin-bottom: 14px;
+  }
 }
 
 .kpi-item {
