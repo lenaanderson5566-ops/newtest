@@ -29,28 +29,29 @@ const getAuthComponent = (componentName) => {
 
 
 
+const dashboardRoutes = new Set(['Dashboard']);
+const regionRoutes = new Set(['NodeList']);
+const quickStartRoutes = new Set(['QuickStart']);
+const usageRoutes = new Set(['Docs', 'DocDetail']);
+const myRoutes = new Set([
+  'Profile',
+  'ConfigManagement',
+  'SecuritySettings',
+  'Billing',
+  'WalletDeposit',
+  'OrderList',
+  'Invite',
+  'TicketList',
+  'MobileTickets',
+  'TrafficLog',
+  'Shop',
+  'OrderConfirm',
+  'Payment',
+  'GiftCardRedeem',
+  'AnnouncementList'
+]);
+
 const getActiveNavForRoute = (routeName) => {
-  const dashboardRoutes = new Set(['Dashboard']);
-  const regionRoutes = new Set(['NodeList']);
-  const quickStartRoutes = new Set(['QuickStart']);
-  const usageRoutes = new Set(['Docs', 'DocDetail']);
-  const myRoutes = new Set([
-    'Profile',
-    'ConfigManagement',
-    'SecuritySettings',
-    'Billing',
-    'WalletDeposit',
-    'OrderList',
-    'Invite',
-    'TicketList',
-    'MobileTickets',
-    'TrafficLog',
-    'Shop',
-    'OrderConfirm',
-    'Payment',
-    'GiftCardRedeem',
-    'AnnouncementList'
-  ]);
 
   if (regionRoutes.has(routeName)) return 'Nodes';
   if (quickStartRoutes.has(routeName)) return 'QuickStart';
