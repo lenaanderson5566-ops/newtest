@@ -333,6 +333,9 @@
           <div class="pending-order-header">
             <h3>{{ paymentQRCode ? "扫码支付" : $t("payment.payment_method") }}</h3>
             <p v-if="paymentQRCode">请使用{{ selectedMethodDisplayName }}扫描二维码完成支付</p>
+            <p v-if="paymentQRCode && qrPaymentAmountHint" class="payment-amount-hint">
+              订单金额：{{ qrPaymentAmountHint }}
+            </p>
             <p v-else-if="paymentLink">{{ $t("payment.open_in_new_tab") }}</p>
           </div>
           <div class="payment-qrcode-wrap" v-if="paymentQRCode">
@@ -916,6 +919,33 @@ export default {
         (item) => Number(item?.id) === Number(selectedMethod.value)
       );
       return currentMethod?.name || "当前支付方式";
+    });
+    const qrPaymentAmountHint = computed(() => {
+      if (!paymentQRCode.value || !lockedOrderDetail.value) {
+        return "";
+      }
+
+      const orderAmount = Number(lockedOrderDetail.value?.total_amount);
+      const orderCurrency = String(
+        lockedOrderDetail.value?.pricing_currency || displayCurrency.value || ""
+      ).toUpperCase();
+      const paymentAmount = Number(lockedOrderDetail.value?.payment_amount);
+      const paymentCurrency = String(
+        lockedOrderDetail.value?.payment_currency || ""
+      ).toUpperCase();
+
+      if (!Number.isFinite(orderAmount) || orderAmount < 0 || !orderCurrency) {
+        return "";
+      }
+
+      const formatWithCurrency = (amount, currencyCode) =>
+        `${(Number(amount) / 100).toFixed(2)}${currencyCode}`;
+
+      if (Number.isFinite(paymentAmount) && paymentAmount > 0 && paymentCurrency) {
+        return `${formatWithCurrency(orderAmount, orderCurrency)} ≈ ${formatWithCurrency(paymentAmount, paymentCurrency)}`;
+      }
+
+      return formatWithCurrency(orderAmount, orderCurrency);
     });
     const totalDiscountDisplayAmount = computed(() =>
       Math.max(
@@ -1629,6 +1659,7 @@ export default {
       showDiscountDetails,
       selectedOrderDisplay,
       selectedMethodDisplayName,
+      qrPaymentAmountHint,
       totalDiscountDisplayAmount,
       hasDiscountDetails,
 
@@ -3173,6 +3204,13 @@ export default {
 
 .payment-dialog {
   width: min(92vw, 520px);
+}
+
+.pending-order-modal.payment-modal .pending-order-header .payment-amount-hint {
+  margin-top: 4px;
+  font-size: $font-size-sm;
+  color: var(--text-secondary);
+  font-weight: $font-weight-medium;
 }
 
 .pending-order-modal.payment-modal .pending-order-actions .btn-confirm-cancel {
