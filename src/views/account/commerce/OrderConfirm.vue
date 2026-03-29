@@ -540,12 +540,6 @@ export default {
         }
         return 0;
       }
-      if (shouldUseServerPreview.value && orderPreview.value) {
-        const previewTotal = Number(orderPreview.value?.total_amount || 0);
-        const previewBalance = Math.max(0, Number(orderPreview.value?.balance_amount || 0));
-        const previewSurplus = Math.max(0, Number(orderPreview.value?.surplus_amount || 0));
-        return Math.max(0, previewTotal + previewBalance + previewSurplus);
-      }
       return originalPrice.value;
     });
 
