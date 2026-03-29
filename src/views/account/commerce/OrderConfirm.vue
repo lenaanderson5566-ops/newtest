@@ -22,7 +22,7 @@
           <div class="section-wrapper subscription-intro-section" v-else-if="plan">
             <div class="section-title">
               <span>
-                {{ $t("shop.popup.reselectPlan") }}
+                {{ $t("order.title") }}
                 <em v-if="isSelectionLocked" class="locked-tip">({{ $t("payment.payment_pending") }})</em>
               </span>
               <button
@@ -785,8 +785,8 @@ export default {
     };
 
     const formatPeriodOption = (type) => {
-      if (type === "month_price") return t("shop.periodTypes.month");
-      if (type === "year_price") return t("shop.periodTypes.year");
+      if (type === "month_price") return t("shop.plan.price_options.month");
+      if (type === "year_price") return t("shop.plan.price_options.year");
       return t(`shop.plan.price_options.${getPriceTypeKey(type)}`);
     };
 
