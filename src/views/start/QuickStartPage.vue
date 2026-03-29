@@ -105,7 +105,9 @@
           <div class="qrcode-modal" @click.stop>
             <div class="qrcode-header">
               <h3>{{ $t('quickStartPage.qrModalTitle') }}</h3>
-              <button class="close-btn" @click="showQrCode = false">✕</button>
+              <button class="close-btn" @click="showQrCode = false" :aria-label="$t('common.close')">
+                <IconX :size="18" />
+              </button>
             </div>
             <img :src="qrCodeUrl" alt="QR Code" />
           </div>
@@ -130,7 +132,8 @@ import {
   IconBolt,
   IconCopy,
   IconQrcode,
-  IconBook
+  IconBook,
+  IconX
 } from '@tabler/icons-vue';
 import { CLIENT_CONFIG } from '@/utils/baseConfig';
 import { getSubscribe } from '@/api/overview/dashboard';
@@ -648,7 +651,10 @@ onMounted(fetchUserStatus);
     border: none;
     background: transparent;
     cursor: pointer;
-    font-size: $font-size-xl;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
   }
 
   img {
