@@ -188,7 +188,7 @@
       <!-- 邀请链接卡片 -->
       <div class="dashboard-card invite-link-card">
         <div class="card-header">
-          <h2 class="card-title">{{ $t('invite.inviteLink.title') }}</h2>
+          <h2 class="card-title invite-main-title">邀请返利</h2>
         </div>
         <div v-if="loading.inviteData" class="card-body skeleton-loading">
           <div class="skeleton-row"></div>
@@ -204,9 +204,9 @@
                   <p>创建邀请链接并选择要分享的链接</p>
                 </div>
                 <button class="btn-action invite-step-create-btn" @click="createInviteCode" :disabled="creatingCode">
-                  <div v-if="creatingCode" class="loading-icon"></div>
+                  <span v-if="creatingCode" class="loading-icon"></span>
                   <IconPlus v-else class="action-icon" />
-                  {{ creatingCode ? $t('invite.inviteLink.creating') : '创建邀请链接' }}
+                  <span>{{ creatingCode ? $t('invite.inviteLink.creating') : '创建邀请链接' }}</span>
                 </button>
               </header>
               <template v-if="inviteCodes.length > 0">
@@ -275,6 +275,7 @@
                       {{ $t('invite.inviteLink.copyLink') }}
                     </button>
                   </div>
+                  <p class="invite-benefit-note">扫码注册可获得额外福利</p>
                 </div>
               </template>
               <div v-else class="no-invite-code">
@@ -321,7 +322,10 @@
                   <p>根据需求将返佣金额划转到余额或申请提现</p>
                 </div>
               </header>
-              <p class="step-balance-text">当前剩余佣金：{{ baseCurrencyCode }} {{ inviteStats.availableCommission }}</p>
+              <p class="step-balance-text">
+                当前剩余佣金：
+                <span class="step-balance-amount">{{ baseCurrencyCode }} {{ inviteStats.availableCommission }}</span>
+              </p>
               <div class="step-action-row">
                 <button class="btn-primary" @click="toggleTransferCard">划转</button>
                 <button v-if="withdrawClose === 0" class="btn-primary withdraw-btn" @click="toggleWithdrawCard">
@@ -1762,6 +1766,10 @@ export default {
     margin-bottom: 14px;
   }
 
+  .invite-main-title {
+    @extend %typo-section-title;
+  }
+
   .card-actions .btn-action {
     width: auto;
     padding: 0 10px;
@@ -1808,6 +1816,19 @@ export default {
     min-width: 0;
     padding: 0 10px;
     height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    .loading-icon {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(var(--theme-color-rgb), 0.35);
+      border-top-color: rgba(var(--theme-color-rgb), 0.9);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
   }
 }
 
@@ -1834,6 +1855,23 @@ export default {
   margin: 0 0 8px;
   @extend %typo-item-title;
   color: var(--text-primary);
+}
+
+.step-balance-amount {
+  margin-left: 4px;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  color: rgba(var(--theme-color-rgb), 0.95);
+}
+
+.invite-benefit-note {
+  margin: 8px 0 0;
+  @extend %typo-body-text;
+  color: rgba(var(--theme-color-rgb), 0.88);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .records-table-wrapper {
