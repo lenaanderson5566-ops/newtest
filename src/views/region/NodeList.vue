@@ -426,9 +426,6 @@ onMounted(() => {
 
 
 .welcome-card {
-
-  margin-bottom: map.get($spacers, 3);
-
   .quick-actions {
     margin-top: 12px;
     display: flex;

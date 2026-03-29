@@ -967,10 +967,6 @@ onUnmounted(() => {
   }
 }
 
-.welcome-card {
-  margin-bottom: 24px;
-}
-
 .ticket-list-container {
   display: flex;
 

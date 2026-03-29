@@ -829,10 +829,6 @@ fetchTickets();
   }
 }
 
-.welcome-card {
-  margin-bottom: 24px;
-}
-
 .create-ticket-wrapper {
   padding: 0;
 

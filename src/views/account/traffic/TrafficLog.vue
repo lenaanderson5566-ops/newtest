@@ -830,17 +830,7 @@ onUnmounted(() => {
 
   
 
-  .welcome-card {
-
-    margin-bottom: 24px;
-
-  }
-
-  
-
   .chart-card {
-
-    margin-bottom: 24px;
 
     
 

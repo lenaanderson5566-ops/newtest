@@ -358,8 +358,6 @@ onMounted(() => {
   }
   
   .welcome-card {
-    margin-bottom: 24px;
-    
     .card-body {
       p {
         color: var(--text-tertiary);
