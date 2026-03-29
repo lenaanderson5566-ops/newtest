@@ -1541,6 +1541,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .account-container {
   padding: 8px;
@@ -1567,8 +1568,7 @@ export default {
 
 .card-title {
   margin: 0;
-  font-size: $font-size-md;
-  font-weight: $font-weight-bold;
+  @extend %typo-item-title;
 }
 
 .balance-container {
@@ -1614,14 +1614,12 @@ export default {
 }
 
 .kpi-label {
-  font-size: $font-size-sm;
-  color: var(--text-tertiary);
+  @extend %typo-label-text;
 }
 
 .kpi-value {
   margin-top: 4px;
-  font-size: $font-size-md;
-  font-weight: $font-weight-bold;
+  @extend %typo-item-title;
 }
 
 .invite-codes-wrapper {

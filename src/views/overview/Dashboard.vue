@@ -1546,7 +1546,7 @@ $space-2: map.get($spacers, 2);
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
-          font-size: var(--dashboard-title-size);
+          @extend %typo-card-title;
           line-height: 1.35;
           min-height: 20px;
         }
@@ -2065,9 +2065,8 @@ $space-2: map.get($spacers, 2);
     box-shadow: none;
   }
 
-  /* 概览卡片左上角标题统一样式 */
-  .overview-card--today-traffic .usage-card-title,
-  .overview-card--traffic-quota .usage-card-title,
+  /* 概览卡片左上角标题统一样式（今日流量 / 订阅流量 / 流量额度包 / 用量记录） */
+  .stats-grid .stats-card.today-traffic-card .usage-card-title,
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
     @extend %typo-card-title;

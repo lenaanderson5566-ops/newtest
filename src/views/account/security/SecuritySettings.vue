@@ -384,11 +384,9 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .security-container {
   padding: 0;
-}
-
-.security-inner {
 }
 
 .account-back-btn {
@@ -396,8 +394,7 @@ onMounted(() => {
   border: none;
   background: transparent;
   color: var(--text-primary);
-  font-size: $font-size-md;
-  font-weight: $font-weight-semibold;
+  @extend %typo-item-title;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -407,8 +404,7 @@ onMounted(() => {
 }
 
 .back-label {
-  font-size: $font-size-md;
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 }
 
 .profile-card {
@@ -424,6 +420,7 @@ onMounted(() => {
 
   h3 {
     margin: 0;
+    @extend %typo-item-title;
   }
 }
 

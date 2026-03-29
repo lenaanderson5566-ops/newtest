@@ -912,6 +912,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .ticket-container {
   padding: 0;
 
@@ -951,9 +952,7 @@ onUnmounted(() => {
     margin-bottom: 15px;
 
     .card-title {
-      font-size: $font-size-xl;
-
-      font-weight: $font-weight-semibold;
+      @extend %typo-section-title;
 
       margin: 0;
     }

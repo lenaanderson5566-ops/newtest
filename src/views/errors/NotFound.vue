@@ -148,6 +148,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .not-found-container {
 
   display: flex;
@@ -190,9 +191,7 @@ export default {
 
   color: var(--theme-color);
 
-  font-size: $font-size-md;
-
-  font-weight: $font-weight-medium;
+  @extend %typo-item-title;
 
   padding: 8px 16px;
 
@@ -237,11 +236,7 @@ export default {
 
 
 .error-code {
-
-  font-size: $font-size-xl;
-
-  font-weight: $font-weight-bold;
-
+  @extend %typo-metric-lg;
   color: var(--theme-color);
 
   margin: 0;
@@ -265,12 +260,7 @@ export default {
 
 
 .error-title {
-
-  font-size: $font-size-xl;
-
-  font-weight: $font-weight-bold;
-
-  color: var(--text-primary);
+  @extend %typo-section-title;
 
   margin: 10px 0 20px;
 
@@ -279,12 +269,10 @@ export default {
 
 
 .error-description {
-
+  @extend %typo-body-text;
   font-size: $font-size-xl;
 
   line-height: 1.6;
-
-  color: var(--text-tertiary);
 
   margin-bottom: 30px;
 
@@ -312,9 +300,7 @@ export default {
 
   padding: 12px 24px;
 
-  font-size: $font-size-md;
-
-  font-weight: $font-weight-medium;
+  @extend %typo-item-title;
 
   cursor: pointer;
 
@@ -347,14 +333,6 @@ export default {
 @media (max-width: #{$bp-md}) {
 
   .error-code {
-
-    font-size: $font-size-xl;
-
-  }
-
-  
-
-  .error-title {
 
     font-size: $font-size-xl;
 

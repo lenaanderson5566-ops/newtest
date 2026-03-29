@@ -287,6 +287,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .landing-page {
 
   position: relative;
@@ -511,10 +512,7 @@ export default {
 
 
 .site-title {
-
-  font-size: $font-size-xl;
-
-  font-weight: $font-weight-bold;
+  @extend %typo-section-title;
 
   margin-bottom: 20px;
 
@@ -557,9 +555,7 @@ export default {
 
 
 .landing-text {
-
-  font-size: $font-size-2xl;
-
+  @extend %typo-page-title;
   font-weight: $font-weight-normal;
 
   line-height: 1.5;
@@ -647,10 +643,7 @@ export default {
 
 
 .scroll-text {
-
-  font-size: $font-size-sm;
-
-  color: var(--text-tertiary);
+  @extend %typo-body-text;
 
   opacity: 0.8;
 

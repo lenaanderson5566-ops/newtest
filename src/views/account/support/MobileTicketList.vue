@@ -768,6 +768,7 @@ fetchTickets();
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .mobile-ticket-container {
   height: 100%;
 
@@ -813,9 +814,7 @@ fetchTickets();
     margin-bottom: 15px;
 
     .card-title {
-      font-size: $font-size-xl;
-
-      font-weight: $font-weight-semibold;
+      @extend %typo-section-title;
 
       margin: 0;
     }
