@@ -677,6 +677,7 @@ profile: {
         description: '选择适合您的订阅服务',
         loading: '正在加载订阅...',
         billingPeriodAria: '计费周期切换',
+        maxSavingsTip: '最多节省 {percent}%',
         filter: {
             all: '全部',
             recurring: '周期性',

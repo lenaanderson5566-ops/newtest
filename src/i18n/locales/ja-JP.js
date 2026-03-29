@@ -671,6 +671,7 @@ profile: {
     description: '利用可能なプランを表示・購入',
     loading: 'サブスクリプション読み込み中...',
     billingPeriodAria: '請求周期の切り替え',
+    maxSavingsTip: '最大 {percent}% お得',
     filter: {
       all: 'すべて',
       recurring: '定期',

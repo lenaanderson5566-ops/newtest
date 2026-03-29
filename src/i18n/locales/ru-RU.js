@@ -671,6 +671,7 @@ profile: {
     description: 'Просмотрите и купите доступные планы',
     loading: 'Загрузка подписок...',
     billingPeriodAria: 'Переключение расчётного периода',
+    maxSavingsTip: 'Экономия до {percent}%',
     filter: {
       all: 'Все',
       recurring: 'Периодические',

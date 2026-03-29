@@ -34,7 +34,7 @@
                 class="max-saving-tip"
                 :class="{ 'active-year': selectedFilter === 'year_price' }"
               >
-                （最多节省 {{ maxYearlyDiscountPercent }}%）
+                {{ $t('shop.maxSavingsTip', { percent: maxYearlyDiscountPercent }) }}
               </span>
             </div>
           </div>

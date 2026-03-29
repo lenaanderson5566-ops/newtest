@@ -664,6 +664,7 @@ profile: {
         description: 'Xem và mua các gói cước khả dụng',
         loading: 'Đang tải gói đăng ký...',
         billingPeriodAria: 'Chuyển chu kỳ thanh toán',
+        maxSavingsTip: 'Tiết kiệm tối đa {percent}%',
         filter: {
             all: 'Tất cả',
             recurring: 'Định kỳ',

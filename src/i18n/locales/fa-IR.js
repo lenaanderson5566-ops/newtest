@@ -671,6 +671,7 @@ profile: {
     description: 'بسته های موجود را ببینید و خریداری کنید',
     loading: 'در حال بارگذاری اشتراک ها...',
     billingPeriodAria: 'تغییر دوره صورتحساب',
+    maxSavingsTip: 'تا {percent}% صرفه‌جویی',
     filter: {
       all: 'همه',
       recurring: 'دوره ای',
