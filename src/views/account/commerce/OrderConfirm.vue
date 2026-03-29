@@ -1323,6 +1323,26 @@ export default {
 
         if (response.data) {
           showToast(response.message || t("order.order_success"), "success");
+          const createdTradeNo = String(response.data);
+          lockedPendingOrder.value =
+            (await fetchLatestPendingOrder(createdTradeNo)) ||
+            {
+              trade_no: createdTradeNo,
+              plan_id: Number(plan.value?.id || 0),
+              period: selectedPriceType.value,
+              status: 0,
+            };
+          await fetchLockedOrderDetail();
+          try {
+            await router.replace({
+              query: {
+                ...route.query,
+                trade_no: createdTradeNo,
+              },
+            });
+          } catch (routeErr) {
+            console.warn("Failed to sync trade_no in route query:", routeErr);
+          }
           await checkoutTradeNo(response.data);
         } else {
           showToast(response.message || t("order.order_failed"), "error");
