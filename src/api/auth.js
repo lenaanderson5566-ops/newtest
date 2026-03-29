@@ -4,6 +4,7 @@ import { pinia, useAppStore } from '@/store';
 import { SITE_CONFIG } from '@/utils/baseConfig';
 import { updateUserLanguage, logoutCurrentSession } from './account/user';
 import { getDefaultRegisterLanguage } from '@/utils/userLanguage';
+import { reloadMessages, initializeLanguageFromUserSettings } from '@/i18n';
 
 
 const setCookie = (name, value, days) => {
@@ -156,17 +157,16 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
         }
       }
       
-      Promise.resolve().then(function() { return import('@/i18n'); })
-        .then(async ({ reloadMessages, initializeLanguageFromUserSettings }) => {
-          try {
-            await initializeLanguageFromUserSettings();
-          } catch (e) {
-          }
+      Promise.resolve().then(async () => {
+        try {
+          await initializeLanguageFromUserSettings();
+        } catch (e) {
+        }
 
-          reloadMessages().catch(() => {
-          });
-        }).catch(() => {
+        reloadMessages().catch(() => {
         });
+      }).catch(() => {
+      });
     }, 500);
     
     return { success: true };
@@ -252,8 +252,7 @@ export function register(data) {
     console.log('注册成功，准备重新加载语言文件');
     setTimeout(async () => {
       try {
-        const i18nModule = await import('@/i18n');
-        const result = await i18nModule.reloadMessages();
+        const result = await reloadMessages();
         console.log('注册后重新加载语言包结果:', result);
         
         window.dispatchEvent(new CustomEvent('languageChanged'));
@@ -296,28 +295,27 @@ export const logout = async () => {
     
     return new Promise(resolve => {
       setTimeout(() => {
-        Promise.resolve().then(function() { return import('@/i18n'); })
-          .then(({ reloadMessages }) => {
-            reloadMessages().then(() => {
-              resolve({
-                success: true,
-                redirectToLogin: true,
-                redirectUrl: '/login?logout=true'
-              });
-            }).catch(() => {
-              resolve({
-                success: true, 
-                redirectToLogin: true,
-                redirectUrl: '/login?logout=true'
-              });
-            });
-          }).catch(() => {
+        Promise.resolve().then(() => {
+          reloadMessages().then(() => {
             resolve({
               success: true,
               redirectToLogin: true,
               redirectUrl: '/login?logout=true'
             });
+          }).catch(() => {
+            resolve({
+              success: true, 
+              redirectToLogin: true,
+              redirectUrl: '/login?logout=true'
+            });
           });
+        }).catch(() => {
+          resolve({
+            success: true,
+            redirectToLogin: true,
+            redirectUrl: '/login?logout=true'
+          });
+        });
       }, 200);
     });
   } catch (error) {

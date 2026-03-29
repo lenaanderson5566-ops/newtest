@@ -2028,6 +2028,10 @@ export default {
   overflow: hidden;
 }
 
+.input-with-prefix.account-input {
+  grid-template-columns: 1fr;
+}
+
 .input-prefix {
   min-width: 64px;
   padding: 0 12px;

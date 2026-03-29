@@ -1,5 +1,6 @@
 ﻿
 import { checkLoginStatus } from '@/api/auth';
+import { reloadMessages } from '@/i18n';
 
 let lastLoginState = null;
 
@@ -13,7 +14,6 @@ export const checkAuthAndReloadMessages = () => {
     try {
       setTimeout(async () => {
         try {
-          const { reloadMessages } = await import('@/i18n');
           await reloadMessages();
         } catch (asyncError) {
         }
@@ -38,11 +38,10 @@ export const setupLoginStateWatcher = () => {
     const isLoggedIn = checkLoginStatus();
     
     if (lastLoginState !== null && lastLoginState !== isLoggedIn) {
-      Promise.resolve().then(function() { return import('@/i18n'); })
-        .then(({ reloadMessages }) => {
-          reloadMessages().catch(() => {
-          });
-        }).catch(() => {
+      Promise.resolve().then(() => {
+        reloadMessages().catch(() => {
+        });
+      }).catch(() => {
         });
     }
     

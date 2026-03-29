@@ -4,7 +4,8 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, TRAFFICLOG_CONFIG, AUTH_LAYOUT_CONFIG } from '@/utils/baseConfig';
 
-import i18n from '@/i18n';
+import i18n, { reloadMessages } from '@/i18n';
+import { shouldCheckApiAvailability } from '@/utils/apiAvailabilityChecker';
 
 import pageCache from '@/utils/pageCache';
 
@@ -661,8 +662,6 @@ router.beforeEach(async (to, from, next) => {
 
   
 
-  const { shouldCheckApiAvailability } = await import('@/utils/apiAvailabilityChecker');
-
   if (shouldCheckApiAvailability() && to.name !== 'ApiValidation') {
 
     const availableUrl = sessionStorage.getItem('ez_api_available_url');
@@ -736,9 +735,6 @@ router.beforeEach(async (to, from, next) => {
   if (loginStatusChanged) {
 
     try {
-
-      const { reloadMessages } = await import('@/i18n');
-
       await reloadMessages();
 
     } catch (error) {

@@ -150,14 +150,14 @@
                   </div>
                 </div>
                 <div v-else class="summary-row">
-                  <div class="summary-label">订阅价格</div>
+                  <div class="summary-label">{{ summaryPlanLabel }}</div>
                   <div class="summary-value amount">
                     {{ formatAmount(getPlanPrice()) }}
                   </div>
                 </div>
 
                 <div class="summary-row discount-row" v-if="discountBreakdownVisible">
-                  <div class="summary-label">优惠金额</div>
+                  <div class="summary-label">总优惠</div>
                   <div class="summary-value discount">-{{ formatAmount(discountAmount) }}</div>
                 </div>
                 <div class="summary-row" v-if="surplusAmount > 0">
@@ -214,7 +214,7 @@
               >
                 <IconCreditCard v-if="!loading.paying" :size="18" />
                 <div v-else class="loader"></div>
-                <span>{{ $t("payment.pay_now") }}</span>
+                <span>继续支付</span>
               </button>
             </div>
           </div>
@@ -710,6 +710,13 @@ export default {
       return orderDetail.value.plan[orderDetail.value.period] || 0;
     };
 
+    const summaryPlanLabel = computed(() => {
+      const planName = orderDetail.value?.plan?.name || "-";
+      const period = orderDetail.value?.period;
+      if (!period || period === "deposit") return planName;
+      return `${planName} · ${formatPeriod(period)}`;
+    });
+
     const checkPayment = async () => {
       if (orderDetail.value.total_amount > 0 && !selectedMethod.value) {
         showToast(t("payment.select_method_first"), "warning");
@@ -1149,6 +1156,7 @@ export default {
       cancelCurrentOrder,
       goToDashboard,
       getPlanPrice,
+      summaryPlanLabel,
       showCancelConfirm,
       confirmCancel,
       closeModal,
@@ -1299,12 +1307,12 @@ export default {
     }
 
     .overview-cancel-btn {
-      height: 26px;
-      padding: 0 8px;
+      height: 30px;
+      padding: 0 10px;
       border-radius: $border-radius-sm;
-      border: 1px solid var(--border-color);
+      border: 1px solid rgba(var(--theme-color-rgb), 0.38);
       background: transparent;
-      color: var(--text-tertiary);
+      color: var(--theme-color);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1313,7 +1321,7 @@ export default {
       transition: all 0.2s ease;
 
       &:hover:not(:disabled) {
-        background-color: rgba(148, 163, 184, 0.08);
+        background-color: rgba(var(--theme-color-rgb), 0.08);
       }
 
       &:disabled {

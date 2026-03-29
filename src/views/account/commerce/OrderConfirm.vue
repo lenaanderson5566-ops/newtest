@@ -41,7 +41,13 @@
                 :key="`order-plan-${item.id}`"
                 type="button"
                 class="plan-selector-btn"
-                :class="{ active: Number(plan?.id) === Number(item.id), 'is-current': isCurrentPlanOption(item), 'is-locked': isSelectionLocked, [`tone-${(idx % 3) + 1}`]: true }"
+                :class="{
+                  active: Number(plan?.id) === Number(item.id),
+                  'is-current': isCurrentPlanOption(item),
+                  'is-locked': isSelectionLocked,
+                  'is-dimmed': isSelectionLocked && Number(plan?.id) !== Number(item.id),
+                  [`tone-${(idx % 3) + 1}`]: true
+                }"
                 :disabled="isSelectionLocked"
                 @click="selectPlanOption(item)"
               >
@@ -70,7 +76,11 @@
                   v-for="(price, type) in availablePrices"
                   :key="type"
                   class="period-card"
-                  :class="{ active: selectedPriceType === type, 'is-locked': isSelectionLocked }"
+                  :class="{
+                    active: selectedPriceType === type,
+                    'is-locked': isSelectionLocked,
+                    'is-dimmed': isSelectionLocked && selectedPriceType !== type
+                  }"
                   @click="selectPriceType(type)"
                 >
                   <div class="period-card-inner">
@@ -204,8 +214,10 @@
                 <template v-else>
                   <div class="coupon-applied-inline">
                     <span class="coupon-code-text">优惠码：{{ couponCode }}</span>
-                    <span class="coupon-applied-tag">已应用</span>
-                    <button class="btn-remove-text" @click="removeCoupon">移除</button>
+                    <div class="coupon-applied-actions">
+                      <span class="coupon-applied-tag">已应用</span>
+                      <button class="btn-remove-text" @click="removeCoupon">移除</button>
+                    </div>
                   </div>
                 </template>
                 <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
@@ -263,11 +275,12 @@
                       <div class="summary-label">会员折扣</div>
                       <div class="summary-value discount">-{{ formatCurrencyAmount(userDiscountAmount) }}</div>
                     </div>
-                    <div class="summary-row" v-if="surplusDeductionAmount > 0">
-                      <div class="summary-label">当前套餐抵扣</div>
-                      <div class="summary-value discount">-{{ formatCurrencyAmount(surplusDeductionAmount) }}</div>
-                    </div>
                   </template>
+
+                  <div class="summary-row" v-if="surplusDeductionAmount > 0">
+                    <div class="summary-label">原订阅抵折</div>
+                    <div class="summary-value discount">-{{ formatCurrencyAmount(surplusDeductionAmount) }}</div>
+                  </div>
 
                   <div class="summary-divider compact" v-if="balanceDeductionAmount > 0"></div>
                   <div class="summary-row" v-if="balanceDeductionAmount > 0">
@@ -318,8 +331,11 @@
         <div class="pending-order-overlay" @click="closePaymentModal"></div>
         <div class="pending-order-dialog payment-dialog" role="dialog" aria-modal="true">
           <div class="pending-order-header">
-            <h3>{{ $t("payment.payment_method") }}</h3>
-            <p v-if="paymentQRCode">{{ $t("payment.scan_qrcode") }}</p>
+            <h3>{{ paymentQRCode ? "扫码支付" : $t("payment.payment_method") }}</h3>
+            <p v-if="paymentQRCode">请使用{{ selectedMethodDisplayName }}扫描二维码完成支付</p>
+            <p v-if="paymentQRCode && qrPaymentAmountHint" class="payment-amount-hint">
+              订单金额：{{ qrPaymentAmountHint }}
+            </p>
             <p v-else-if="paymentLink">{{ $t("payment.open_in_new_tab") }}</p>
           </div>
           <div class="payment-qrcode-wrap" v-if="paymentQRCode">
@@ -332,10 +348,10 @@
           </div>
           <div class="pending-order-actions">
             <button class="btn-return-orders cancel-btn" @click="closePaymentModal">
-              {{ $t("common.cancel") }}
+              {{ paymentQRCode ? "关闭窗口" : $t("common.cancel") }}
             </button>
             <button class="btn-confirm-cancel confirm-btn" @click="checkPaymentStatusNow">
-              {{ $t("payment.check_payment") }}
+              {{ paymentQRCode ? "检查状态" : $t("payment.check_payment") }}
             </button>
           </div>
         </div>
@@ -526,13 +542,13 @@ export default {
       const { hasPlanLimit, hasPeriodLimit, planMatched, periodMatched } =
         couponScopeValidation.value;
       if (hasPlanLimit && !planMatched && hasPeriodLimit && !periodMatched) {
-        return "当前订阅和周期均不在该优惠码适用范围内，请切换后再使用。";
+        return "当前订阅/周期不适用此优惠码";
       }
       if (hasPlanLimit && !planMatched) {
-        return "当前订阅不在该优惠码适用范围内，请切换订阅后再使用。";
+        return "当前订阅不适用此优惠码";
       }
       if (hasPeriodLimit && !periodMatched) {
-        return "当前周期不在该优惠码适用范围内，请切换周期后再使用。";
+        return "当前周期不适用此优惠码";
       }
       return "";
     });
@@ -543,6 +559,7 @@ export default {
     const paymentQRCode = ref("");
     const paymentLink = ref("");
     const paymentTradeNo = ref("");
+    const checkoutAmountInfo = ref(null);
     const paymentCheckTimer = ref(null);
     const showPaymentSuccessPrompt = ref(false);
     const hasNavigatedAfterSuccess = ref(false);
@@ -898,17 +915,49 @@ export default {
       }
       return `${planName} · ${formatPeriodOption(periodType)}`;
     });
+    const selectedMethodDisplayName = computed(() => {
+      const currentMethod = paymentMethods.value.find(
+        (item) => Number(item?.id) === Number(selectedMethod.value)
+      );
+      return currentMethod?.name || "当前支付方式";
+    });
+    const qrPaymentAmountHint = computed(() => {
+      if (!paymentQRCode.value || !checkoutAmountInfo.value) {
+        return "";
+      }
+
+      const orderAmount = Number(checkoutAmountInfo.value?.total_amount);
+      const orderCurrency = String(
+        checkoutAmountInfo.value?.pricing_currency || displayCurrency.value || ""
+      ).toUpperCase();
+      const paymentAmount = Number(checkoutAmountInfo.value?.payment_amount);
+      const paymentCurrency = String(
+        checkoutAmountInfo.value?.payment_currency || ""
+      ).toUpperCase();
+
+      if (!Number.isFinite(orderAmount) || orderAmount < 0 || !orderCurrency) {
+        return "";
+      }
+
+      const formatWithCurrency = (amount, currencyCode) =>
+        `${currencyCode} ${(Number(amount) / 100).toFixed(2)}`;
+
+      if (Number.isFinite(paymentAmount) && paymentAmount > 0 && paymentCurrency) {
+        return `${formatWithCurrency(orderAmount, orderCurrency)} ≈ ${formatWithCurrency(paymentAmount, paymentCurrency)}`;
+      }
+
+      return formatWithCurrency(orderAmount, orderCurrency);
+    });
     const totalDiscountDisplayAmount = computed(() =>
       Math.max(
         0,
-        couponDiscountAmount.value + userDiscountAmount.value + surplusDeductionAmount.value
+        couponDiscountAmount.value + userDiscountAmount.value
       )
     );
     const hasDiscountDetails = computed(
       () =>
         couponDiscountAmount.value > 0 ||
-        userDiscountAmount.value > 0 ||
-        surplusDeductionAmount.value > 0
+        userDiscountAmount.value > 0
     );
     const currentPlanBadgeLabel = computed(() =>
       isCurrentSubscriptionExpired.value ? "您最近的订阅" : t("shop.plan.current")
@@ -1144,6 +1193,7 @@ export default {
       showPaymentModal.value = false;
       paymentQRCode.value = "";
       paymentLink.value = "";
+      checkoutAmountInfo.value = null;
     };
 
     const handlePaymentSuccess = () => {
@@ -1251,6 +1301,7 @@ export default {
       if (!tradeNo) return;
       hasNavigatedAfterSuccess.value = false;
       paymentTradeNo.value = tradeNo;
+      checkoutAmountInfo.value = null;
       loading.paying = true;
       try {
         const methodForCheckout =
@@ -1261,6 +1312,13 @@ export default {
           showToast(checkoutResp?.message || t("payment.check_failed"), "error");
           return;
         }
+
+        checkoutAmountInfo.value = {
+          total_amount: Number(checkoutResp?.total_amount),
+          pricing_currency: checkoutResp?.pricing_currency || "",
+          payment_amount: Number(checkoutResp?.payment_amount),
+          payment_currency: checkoutResp?.payment_currency || "",
+        };
 
         if (totalWithFee.value <= 0) {
           showToast(t("payment.payment_processing"), "info");
@@ -1321,6 +1379,26 @@ export default {
 
         if (response.data) {
           showToast(response.message || t("order.order_success"), "success");
+          const createdTradeNo = String(response.data);
+          lockedPendingOrder.value =
+            (await fetchLatestPendingOrder(createdTradeNo)) ||
+            {
+              trade_no: createdTradeNo,
+              plan_id: Number(plan.value?.id || 0),
+              period: selectedPriceType.value,
+              status: 0,
+            };
+          await fetchLockedOrderDetail();
+          try {
+            await router.replace({
+              query: {
+                ...route.query,
+                trade_no: createdTradeNo,
+              },
+            });
+          } catch (routeErr) {
+            console.warn("Failed to sync trade_no in route query:", routeErr);
+          }
           await checkoutTradeNo(response.data);
         } else {
           showToast(response.message || t("order.order_failed"), "error");
@@ -1590,6 +1668,8 @@ export default {
       payActionLabel,
       showDiscountDetails,
       selectedOrderDisplay,
+      selectedMethodDisplayName,
+      qrPaymentAmountHint,
       totalDiscountDisplayAmount,
       hasDiscountDetails,
 
@@ -1863,6 +1943,11 @@ export default {
       color: var(--text-on-dark-primary);
     }
 
+    &.active.is-locked {
+      border-color: rgba(var(--theme-color-rgb), 0.95);
+      box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
+    }
+
     &.active.tone-1 { background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%); }
     &.active.tone-2 { background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%); }
     &.active.tone-3 { background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%); }
@@ -1870,6 +1955,14 @@ export default {
     &:disabled,
     &.is-locked {
       cursor: not-allowed;
+    }
+
+    &.is-dimmed {
+      opacity: 0.28;
+      filter: grayscale(0.92) saturate(0.58) brightness(0.92);
+      border-color: var(--theme-border-soft);
+      background: var(--theme-surface-muted);
+      transform: none;
     }
   }
 
@@ -2171,11 +2264,11 @@ export default {
       .period-card {
         cursor: pointer;
 
-        border-radius: $border-radius-sm;
+        border-radius: $border-radius;
 
         overflow: hidden;
 
-        border: 2px solid var(--border-color);
+        border: 1px solid var(--border-color);
 
         transition: all 0.3s ease;
 
@@ -2202,6 +2295,11 @@ export default {
           }
         }
 
+        &.active.is-locked {
+          border-color: rgba(var(--theme-color-rgb), 0.95);
+          box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
+        }
+
         &:hover:not(.active) {
           transform: translateY(-3px);
 
@@ -2215,6 +2313,18 @@ export default {
           cursor: not-allowed;
           transform: none;
           box-shadow: none;
+        }
+
+        &.is-dimmed {
+          opacity: 0.28;
+          filter: grayscale(0.92) saturate(0.58) brightness(0.92);
+          border-color: var(--theme-border-soft);
+          background: var(--theme-surface-muted);
+          transform: none;
+
+          .period-card-inner {
+            background: var(--theme-surface-muted) !important;
+          }
         }
 
         .period-card-inner {
@@ -2486,11 +2596,11 @@ export default {
     line-height: 1.4;
 
     &.error {
-      color: var(--error-color);
+      color: var(--text-tertiary);
     }
 
     &.warning {
-      color: var(--warning-color);
+      color: var(--text-tertiary);
     }
   }
 
@@ -2656,6 +2766,14 @@ export default {
         min-height: 32px;
       }
 
+      .coupon-applied-actions {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
       .coupon-code-text {
         font-size: $font-size-sm;
         color: var(--right-card-text);
@@ -2665,7 +2783,7 @@ export default {
 
     .summary-amounts {
       display: grid;
-      gap: 8px;
+      gap: 6px;
     }
 
     .summary-row {
@@ -2701,7 +2819,7 @@ export default {
         &.summary-label-with-action {
           display: inline-flex;
           align-items: center;
-          gap: 8px;
+          gap: 6px;
         }
       }
 
@@ -3096,6 +3214,24 @@ export default {
 
 .payment-dialog {
   width: min(92vw, 520px);
+}
+
+.pending-order-modal.payment-modal .pending-order-header .payment-amount-hint {
+  margin-top: 4px;
+  font-size: $font-size-md;
+  color: var(--text-secondary);
+  font-weight: $font-weight-medium;
+}
+
+.pending-order-modal.payment-modal .pending-order-actions .btn-confirm-cancel {
+  background: var(--theme-color);
+  border-color: var(--theme-color);
+  color: var(--text-on-dark-primary);
+}
+
+.pending-order-modal.payment-modal .pending-order-actions .btn-confirm-cancel:hover {
+  background: color-mix(in srgb, var(--theme-color) 88%, black);
+  border-color: color-mix(in srgb, var(--theme-color) 88%, black);
 }
 
 .payment-qrcode-wrap {
