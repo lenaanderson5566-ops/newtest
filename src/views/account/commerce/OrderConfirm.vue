@@ -348,7 +348,7 @@
               {{ paymentQRCode ? "关闭窗口" : $t("common.cancel") }}
             </button>
             <button class="btn-confirm-cancel confirm-btn" @click="checkPaymentStatusNow">
-              {{ paymentQRCode ? "我已支付，检查状态" : $t("payment.check_payment") }}
+              {{ paymentQRCode ? "检查状态" : $t("payment.check_payment") }}
             </button>
           </div>
         </div>
