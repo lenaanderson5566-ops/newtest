@@ -3,10 +3,10 @@
   "version": "v0.3.8",
   "private": true,
   "scripts": {
-    "dev": "npx vite",
-    "build": "npx vite build",
-    "preview": "npx vite preview",
-    "serve": "npx vite"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite"
   },
   "keywords": [],
   "author": "",

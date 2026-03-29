@@ -7,6 +7,7 @@ import JavaScriptObfuscator from 'javascript-obfuscator';
 const isProd = process.env.NODE_ENV === 'production';
 const enableConfigJS = String(process.env.VITE_CONFIGJS ?? process.env.VUE_APP_CONFIGJS ?? 'false') === 'true';
 const enableObfuscation = String(process.env.VITE_OBFUSCATION ?? process.env.VUE_APP_OBFUSCATION ?? 'false') === 'true';
+const useTerser = String(process.env.VITE_MINIFY ?? '').toLowerCase() === 'terser';
 
 const generateRandomFileName = (length = 8) => {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -86,17 +87,19 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'static',
     sourcemap: false,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      },
-      format: {
-        comments: false,
-        ascii_only: true
-      }
-    }
+    minify: useTerser ? 'terser' : 'esbuild',
+    terserOptions: useTerser
+      ? {
+          compress: {
+            drop_console: true,
+            drop_debugger: true
+          },
+          format: {
+            comments: false,
+            ascii_only: true
+          }
+        }
+      : undefined
   },
   server: {
     hmr: {
