@@ -1895,6 +1895,11 @@ export default {
       color: var(--text-on-dark-primary);
     }
 
+    &.active.is-locked {
+      border-color: rgba(var(--theme-color-rgb), 0.95);
+      box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
+    }
+
     &.active.tone-1 { background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%); }
     &.active.tone-2 { background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%); }
     &.active.tone-3 { background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%); }
@@ -1905,10 +1910,11 @@ export default {
     }
 
     &.is-dimmed {
-      opacity: 0.46;
-      filter: grayscale(0.28);
+      opacity: 0.28;
+      filter: grayscale(0.92) saturate(0.58) brightness(0.92);
       border-color: var(--theme-border-soft);
       background: var(--theme-surface-muted);
+      transform: none;
     }
   }
 
@@ -2241,6 +2247,11 @@ export default {
           }
         }
 
+        &.active.is-locked {
+          border-color: rgba(var(--theme-color-rgb), 0.95);
+          box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
+        }
+
         &:hover:not(.active) {
           transform: translateY(-3px);
 
@@ -2257,10 +2268,11 @@ export default {
         }
 
         &.is-dimmed {
-          opacity: 0.46;
-          filter: grayscale(0.28);
+          opacity: 0.28;
+          filter: grayscale(0.92) saturate(0.58) brightness(0.92);
           border-color: var(--theme-border-soft);
           background: var(--theme-surface-muted);
+          transform: none;
 
           .period-card-inner {
             background: var(--theme-surface-muted) !important;
