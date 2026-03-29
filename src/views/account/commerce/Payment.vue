@@ -142,66 +142,56 @@
             </div>
 
             <div class="order-info" v-if="!loading.order">
-              <div v-if="orderDetail.period === 'deposit'" class="info-row">
-                <div class="info-label">{{ $t("wallet.deposit.title") }}</div>
-                <div class="info-value amount">
-                  {{ formatAmount(orderDetail.total_amount) }}
+              <div class="summary-amounts">
+                <div v-if="orderDetail.period === 'deposit'" class="summary-row">
+                  <div class="summary-label">{{ $t("wallet.deposit.title") }}</div>
+                  <div class="summary-value amount">
+                    {{ formatAmount(orderDetail.total_amount) }}
+                  </div>
                 </div>
-              </div>
-              <div v-else class="info-row">
-                <div class="info-label">订阅价格</div>
-                <div class="info-value amount">
-                  {{ formatAmount(getPlanPrice()) }}
+                <div v-else class="summary-row">
+                  <div class="summary-label">订阅价格</div>
+                  <div class="summary-value amount">
+                    {{ formatAmount(getPlanPrice()) }}
+                  </div>
                 </div>
-              </div>
 
-              <div
-                class="info-row"
-                v-if="
-                  periodDiscount.showDiscount &&
-                  orderDetail.period !== 'deposit'
-                "
-              >
-                <div class="info-label">{{ $t("shop.plan.discount.relative") }}</div>
-                <div class="info-value">
-                  {{ periodDiscount.periodName }} {{ periodDiscount.discountPercentage }}% ，{{ $t("shop.plan.discount.savings") }}
-                  {{ formatAmount(periodDiscount.savingsAmountInCents) }}
+                <div class="summary-row discount-row" v-if="discountBreakdownVisible">
+                  <div class="summary-label">优惠金额</div>
+                  <div class="summary-value discount">-{{ formatAmount(discountAmount) }}</div>
+                </div>
+                <div class="summary-row" v-if="surplusAmount > 0">
+                  <div class="summary-label">原订阅抵折</div>
+                  <div class="summary-value discount">-{{ formatAmount(surplusAmount) }}</div>
+                </div>
+                <div class="summary-divider compact" v-if="balanceDeductionAmount > 0"></div>
+                <div
+                  class="summary-row"
+                  v-if="balanceDeductionAmount > 0"
+                >
+                  <div class="summary-label">{{ $t("payment.balance_amount") }}</div>
+                  <div class="summary-value discount">-{{ formatAmount(balanceDeductionAmount) }}</div>
+                </div>
+                <div
+                  class="summary-row"
+                  v-if="
+                    orderDetail.refund_amount !== null &&
+                    orderDetail.refund_amount !== undefined &&
+                    orderDetail.refund_amount > 0
+                  "
+                >
+                  <div class="summary-label">{{ $t("payment.refund_amount") }}</div>
+                  <div class="summary-value">{{ formatAmount(orderDetail.refund_amount) }}</div>
+                </div>
+                <div class="summary-row" v-if="selectedMethod && handleFeeAmount > 0">
+                  <div class="summary-label">{{ $t("payment.handling_fee") }}</div>
+                  <div class="summary-value fee">{{ formatAmount(handleFeeAmount) }}</div>
                 </div>
               </div>
-
-              <div class="info-row discount-row" v-if="discountBreakdownVisible">
-                <div class="info-label">优惠金额</div>
-                <div class="info-value discount">-{{ formatAmount(discountAmount) }}</div>
-              </div>
-              <div class="info-row" v-if="surplusAmount > 0">
-                <div class="info-label">原订阅抵折</div>
-                <div class="info-value discount">-{{ formatAmount(surplusAmount) }}</div>
-              </div>
-              <div
-                class="info-row"
-                v-if="balanceDeductionAmount > 0"
-              >
-                <div class="info-label">{{ $t("payment.balance_amount") }}</div>
-                <div class="info-value discount">-{{ formatAmount(balanceDeductionAmount) }}</div>
-              </div>
-              <div
-                class="info-row"
-                v-if="
-                  orderDetail.refund_amount !== null &&
-                  orderDetail.refund_amount !== undefined &&
-                  orderDetail.refund_amount > 0
-                "
-              >
-                <div class="info-label">{{ $t("payment.refund_amount") }}</div>
-                <div class="info-value">{{ formatAmount(orderDetail.refund_amount) }}</div>
-              </div>
-              <div class="info-row" v-if="selectedMethod && handleFeeAmount > 0">
-                <div class="info-label">{{ $t("payment.handling_fee") }}</div>
-                <div class="info-value fee">{{ formatAmount(handleFeeAmount) }}</div>
-              </div>
-              <div class="info-row final-row">
-                <div class="info-label">应付金额</div>
-                <div class="info-value final">{{ formatAmount(totalWithFee) }}</div>
+              <div class="summary-divider strong"></div>
+              <div class="summary-row total">
+                <div class="summary-label">应付金额</div>
+                <div class="summary-value final">{{ formatAmount(totalWithFee) }}</div>
               </div>
             </div>
 
@@ -581,63 +571,6 @@ export default {
         return 0;
       }
       return orderDetail.value.total_amount + handleFeeAmount.value;
-    });
-
-    const periodDiscount = computed(() => {
-      const plan = orderDetail.value?.plan;
-      const period = orderDetail.value?.period;
-      if (
-        !plan ||
-        !period ||
-        period === "deposit" ||
-        period === "onetime_price"
-      ) {
-        return {
-          showDiscount: false,
-          periodName: "",
-          discountPercentage: 0,
-          savingsAmountInCents: 0,
-        };
-      }
-      const monthPrice = plan.month_price;
-      const selectedPrice = plan[period];
-      const monthCountMap = {
-        quarter_price: 3,
-        half_year_price: 6,
-        year_price: 12,
-        two_year_price: 24,
-        three_year_price: 36,
-      };
-      const months = monthCountMap[period];
-      if (!monthPrice || !selectedPrice || !months) {
-        return {
-          showDiscount: false,
-          periodName: "",
-          discountPercentage: 0,
-          savingsAmountInCents: 0,
-        };
-      }
-      const totalMonthCost = monthPrice * months;
-      if (totalMonthCost <= selectedPrice) {
-        return {
-          showDiscount: false,
-          periodName: "",
-          discountPercentage: 0,
-          savingsAmountInCents: 0,
-        };
-      }
-      const savingsAmountInCents = totalMonthCost - selectedPrice;
-      const discountPercentage = Math.round(
-        (savingsAmountInCents / totalMonthCost) * 100
-      );
-      return {
-        showDiscount: discountPercentage > 1,
-        periodName: t(
-          `shop.plan.price_options.${period.replace("_price", "")}`
-        ),
-        discountPercentage,
-        savingsAmountInCents,
-      };
     });
 
     const fetchOrderDetail = async () => {
@@ -1229,7 +1162,6 @@ export default {
       closePaymentModal,
       handleFeeAmount,
       totalWithFee,
-      periodDiscount,
       couponDiscountAmount,
       userDiscountAmount,
       discountAmount,
@@ -1474,32 +1406,66 @@ export default {
     }
 
     .order-info {
-      .info-label,
-      .info-value {
-        color: var(--text-primary);
+      .summary-amounts {
+        display: grid;
+        gap: 8px;
       }
 
-      .info-value.discount {
-        color: var(--error-color);
-      }
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0;
 
-      .info-value.fee {
-        color: var(--text-tertiary);
-      }
-
-      .info-row.final-row {
-        border-top: 1px solid var(--border-color);
-        padding-top: 10px;
-        margin-top: 8px;
-
-        .info-label {
-          color: var(--text-primary);
-          font-weight: $font-weight-semibold;
+        .summary-label {
+          flex: 1;
+          min-width: 0;
+          font-size: $font-size-sm;
+          color: var(--text-tertiary);
+          letter-spacing: 0.2px;
         }
 
-        .info-value.final {
-          color: var(--theme-color);
-          font-weight: $font-weight-bold;
+        .summary-value {
+          min-width: 120px;
+          text-align: right;
+          font-size: $font-size-sm;
+          font-weight: $font-weight-medium;
+          color: var(--text-primary);
+
+          &.discount {
+            color: var(--error-color);
+            font-weight: $font-weight-semibold;
+          }
+
+          &.fee {
+            color: var(--text-tertiary);
+          }
+        }
+
+        &.total {
+          .summary-label {
+            color: var(--text-primary);
+            font-weight: $font-weight-semibold;
+          }
+
+          .summary-value.final {
+            color: var(--theme-color);
+            font-weight: $font-weight-bold;
+          }
+        }
+      }
+
+      .summary-divider {
+        height: 1px;
+        background-color: var(--border-color);
+        margin: 16px 0;
+
+        &.strong {
+          margin: 6px 0 10px;
+        }
+
+        &.compact {
+          margin: 8px 0 6px;
         }
       }
     }
@@ -1549,13 +1515,13 @@ export default {
   }
 
   .right-column .order-amount-section .section-title,
-  .right-column .order-amount-section .info-label,
-  .right-column .order-amount-section .info-value {
+  .right-column .order-amount-section .summary-label,
+  .right-column .order-amount-section .summary-value {
     color: var(--right-card-text) !important;
   }
 
-  .right-column .order-amount-section .info-row.final-row {
-    border-top-color: rgba(255, 255, 255, 0.18) !important;
+  .right-column .order-amount-section .summary-divider {
+    background-color: rgba(255, 255, 255, 0.18) !important;
   }
 
   .payment-methods {
