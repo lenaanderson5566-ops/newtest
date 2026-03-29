@@ -14,13 +14,8 @@
   "description": "",
   "dependencies": {
     "@tabler/icons-vue": "^3.39.0",
-    "@vue/compat": "^3.5.29",
-    "@vue/runtime-core": "^3.5.29",
-    "@vue/runtime-dom": "^3.5.29",
-    "@vue/shared": "^3.5.29",
     "@vueuse/motion": "^3.0.3",
     "axios": "^1.13.6",
-    "core-js": "^3.48.0",
     "disable-devtool": "^0.3.9",
     "dompurify": "^3.3.2",
     "echarts": "^6.0.0",
@@ -34,8 +29,6 @@
     "vue-router": "^5.0.3"
   },
   "devDependencies": {
-    "@stagewise-plugins/vue": "^0.5.2",
-    "@stagewise/toolbar-vue": "^0.5.2",
     "@types/qrcode": "^1.5.6",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/compiler-sfc": "^3.5.29",
@@ -44,7 +37,6 @@
     "postcss": "^8.5.8",
     "postcss-import": "^16.1.1",
     "sass": "^1.97.3",
-    "tailwindcss": "^4.2.1",
     "vite": "^7.1.5",
     "vue": "^3.5.29"
   }
