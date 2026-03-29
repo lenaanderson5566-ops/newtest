@@ -318,7 +318,6 @@ export default {
     lines: '連線區域',
     traffic: '用量記錄',
     wallet: '帳戶餘額',
-    billing: '帳單',
     profile: '帳號',
     more: '更多',
     commission: '返利',

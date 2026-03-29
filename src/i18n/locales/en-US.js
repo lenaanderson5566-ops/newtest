@@ -318,7 +318,6 @@ export default {
         orders: 'Orders',
         lines: 'Lines',
         wallet: 'Wallet',
-        billing: 'Billing',
         traffic: 'Traffic',
         profile: 'Profile',
         more: 'More',

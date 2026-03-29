@@ -318,7 +318,6 @@ export default {
     lines: 'نودها',
     traffic: 'ترافیک',
     wallet: 'کیف پول',
-    billing: 'صورتحساب',
     profile: 'پروفایل',
     more: 'بیشتر',
     commission: 'کمیسیون',

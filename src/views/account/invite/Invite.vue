@@ -743,7 +743,7 @@ export default {
               p { color: var(--text-tertiary); }
             
 
-/* Compact dashboard layout overrides for Billing / Referral */
+/* Compact dashboard layout overrides for Referral */
 .account-container {
   padding: 16px;
 

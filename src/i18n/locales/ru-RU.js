@@ -318,7 +318,6 @@ export default {
     lines: 'Узлы',
     traffic: 'Трафик',
     wallet: 'Кошелек',
-    billing: 'Биллинг',
     profile: 'Профиль',
     more: 'Еще',
     commission: 'Комиссия',

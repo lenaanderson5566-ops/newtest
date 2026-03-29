@@ -320,7 +320,6 @@ export default {
         lines: '连接区域',
         traffic: '用量记录',
         wallet: '账户余额',
-        billing: '账单',
         profile: '账号',
         more: '更多',
         commission: '返利',

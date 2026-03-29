@@ -324,7 +324,6 @@ export default {
         lines: 'Nút',
         traffic: 'Lưu lượng',
         wallet: 'Ví',
-        billing: 'Hóa đơn',
         profile: 'Hồ sơ',
         more: 'Thêm',
         commission: 'Hoa hồng',
