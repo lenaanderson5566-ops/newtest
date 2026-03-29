@@ -294,11 +294,10 @@
                 <button class="btn-outline telegram-btn" @click="shareToTelegram">
                   <IconBrandTelegram class="btn-icon" /> {{ $t('invite.share.telegram') }}
                 </button>
+                <button class="btn-outline" @click="copyInviteLink">
+                  <IconCopy class="btn-icon" /> 其他
+                </button>
               </div>
-              <button class="btn-primary manual-copy-btn" @click="copyInviteLink">
-                <IconCopy class="btn-icon" />
-                手动复制
-              </button>
             </section>
 
             <section class="invite-step">
@@ -1737,12 +1736,6 @@ export default {
     min-width: 104px;
     padding: 0 12px;
   }
-}
-
-.manual-copy-btn {
-  margin-top: 10px;
-  width: auto;
-  min-width: 110px;
 }
 
 .invite-link-card {
