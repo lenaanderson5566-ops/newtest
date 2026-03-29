@@ -559,6 +559,7 @@ export default {
     const paymentQRCode = ref("");
     const paymentLink = ref("");
     const paymentTradeNo = ref("");
+    const checkoutAmountInfo = ref(null);
     const paymentCheckTimer = ref(null);
     const showPaymentSuccessPrompt = ref(false);
     const hasNavigatedAfterSuccess = ref(false);
@@ -921,17 +922,17 @@ export default {
       return currentMethod?.name || "当前支付方式";
     });
     const qrPaymentAmountHint = computed(() => {
-      if (!paymentQRCode.value || !lockedOrderDetail.value) {
+      if (!paymentQRCode.value || !checkoutAmountInfo.value) {
         return "";
       }
 
-      const orderAmount = Number(lockedOrderDetail.value?.total_amount);
+      const orderAmount = Number(checkoutAmountInfo.value?.total_amount);
       const orderCurrency = String(
-        lockedOrderDetail.value?.pricing_currency || displayCurrency.value || ""
+        checkoutAmountInfo.value?.pricing_currency || displayCurrency.value || ""
       ).toUpperCase();
-      const paymentAmount = Number(lockedOrderDetail.value?.payment_amount);
+      const paymentAmount = Number(checkoutAmountInfo.value?.payment_amount);
       const paymentCurrency = String(
-        lockedOrderDetail.value?.payment_currency || ""
+        checkoutAmountInfo.value?.payment_currency || ""
       ).toUpperCase();
 
       if (!Number.isFinite(orderAmount) || orderAmount < 0 || !orderCurrency) {
@@ -1192,6 +1193,7 @@ export default {
       showPaymentModal.value = false;
       paymentQRCode.value = "";
       paymentLink.value = "";
+      checkoutAmountInfo.value = null;
     };
 
     const handlePaymentSuccess = () => {
@@ -1299,6 +1301,7 @@ export default {
       if (!tradeNo) return;
       hasNavigatedAfterSuccess.value = false;
       paymentTradeNo.value = tradeNo;
+      checkoutAmountInfo.value = null;
       loading.paying = true;
       try {
         const methodForCheckout =
@@ -1309,6 +1312,13 @@ export default {
           showToast(checkoutResp?.message || t("payment.check_failed"), "error");
           return;
         }
+
+        checkoutAmountInfo.value = {
+          total_amount: Number(checkoutResp?.total_amount),
+          pricing_currency: checkoutResp?.pricing_currency || "",
+          payment_amount: Number(checkoutResp?.payment_amount),
+          payment_currency: checkoutResp?.payment_currency || "",
+        };
 
         if (totalWithFee.value <= 0) {
           showToast(t("payment.payment_processing"), "info");
