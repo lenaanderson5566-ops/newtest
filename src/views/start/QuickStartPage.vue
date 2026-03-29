@@ -61,15 +61,25 @@
           </div>
 
           <div class="action-row" v-if="subscriptionUrl">
-            <button class="action-btn primary" @click="downloadSelectedClient">{{ downloadButtonText }}</button>
-            <button class="action-btn" @click="quickImportSelectedClient">{{ $t('quickStartPage.quickImport') }}</button>
-            <button class="action-btn" @click="copySubscriptionUrl">{{ $t('quickStartPage.copySubscription') }}</button>
+            <button class="action-btn primary" @click="downloadSelectedClient">
+              <IconDownload :size="16" />
+              <span>{{ downloadButtonText }}</span>
+            </button>
+            <button class="action-btn" @click="quickImportSelectedClient">
+              <IconBolt :size="16" />
+              <span>{{ $t('quickStartPage.quickImport') }}</span>
+            </button>
+            <button class="action-btn" @click="copySubscriptionUrl">
+              <IconCopy :size="16" />
+              <span>{{ $t('quickStartPage.copySubscription') }}</span>
+            </button>
             <button
               v-if="selectedPlatform === 'ios' || selectedPlatform === 'android'"
               class="action-btn"
               @click="openQrCodeModal"
             >
-              {{ $t('quickStartPage.qrImport') }}
+              <IconQrcode :size="16" />
+              <span>{{ $t('quickStartPage.qrImport') }}</span>
             </button>
           </div>
 
@@ -83,7 +93,10 @@
         </header>
         <div class="step-body">
           <p class="connect-text">{{ $t('quickStartPage.connectHint') }}</p>
-          <button class="help-btn" @click="router.push('/docs')">{{ $t('quickStartPage.helpCta') }}</button>
+          <button class="help-btn" @click="router.push('/docs')">
+            <IconBook :size="16" />
+            <span>{{ $t('quickStartPage.helpCta') }}</span>
+          </button>
         </div>
       </section>
 
@@ -106,7 +119,19 @@
 import { computed, inject, onMounted, reactive, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { IconBrandApple, IconBrandAndroid, IconBrandFinder, IconBrandWindows, IconApps, IconCheck } from '@tabler/icons-vue';
+import {
+  IconBrandApple,
+  IconBrandAndroid,
+  IconBrandFinder,
+  IconBrandWindows,
+  IconApps,
+  IconCheck,
+  IconDownload,
+  IconBolt,
+  IconCopy,
+  IconQrcode,
+  IconBook
+} from '@tabler/icons-vue';
 import { CLIENT_CONFIG } from '@/utils/baseConfig';
 import { getSubscribe } from '@/api/overview/dashboard';
 import { useToast } from '@/composables/useToast';
@@ -581,6 +606,10 @@ onMounted(fetchUserStatus);
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 
   &.primary {
     background: #3f72e8;
