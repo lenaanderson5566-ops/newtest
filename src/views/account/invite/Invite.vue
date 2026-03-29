@@ -1750,19 +1750,59 @@ export default {
   position: fixed;
   inset: 0;
   z-index: 1000;
-}
-
-.modal-overlay {
   background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .modal-content {
-  width: min(94vw, 420px);
-  margin: 8vh auto 0;
-  background: var(--card-bg-color);
+  width: min(94vw, 460px);
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  background: var(--card-background);
   border-radius: 12px;
   border: 1px solid var(--border-color);
-  padding: 14px;
+  box-shadow: none;
+}
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    @extend %typo-section-title;
+  }
+}
+
+.modal-close {
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  padding: 4px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-body {
+  padding: 16px 20px;
+}
+
+.modal-footer {
+  padding: 14px 20px 16px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .account-back-btn {
