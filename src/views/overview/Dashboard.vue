@@ -878,7 +878,7 @@ export default {
     });
 
     const goToOrders = () => {
-      router.push('/billing?tab=orders');
+      router.push('/orders');
     };
 
 
@@ -1191,7 +1191,7 @@ export default {
     const isXiaoPanel = isXiaoV2board();
 
     const navigateToDeposit = () => {
-      router.push('/billing?tab=wallet');
+      router.push('/wallet/deposit');
     };
 
     const showDeviceLimit = computed(() => {

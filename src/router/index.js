@@ -38,7 +38,6 @@ const ACTIVE_NAV_BY_ROUTE = {
   Profile: 'Profile',
   ConfigManagement: 'Profile',
   SecuritySettings: 'Profile',
-  Billing: 'Profile',
   WalletDeposit: 'Profile',
   OrderList: 'Profile',
   Invite: 'Profile',
@@ -399,25 +398,6 @@ const routes = [
           requiresAuth: true,
           get activeNav() { return getActiveNavForRoute('GiftCardRedeem'); }
         }
-      },
-
-      {
-
-        path: 'billing',
-
-        name: 'Billing',
-
-        component: () => import('@/views/account/billing/Billing.vue'),
-
-        meta: {
-
-          titleKey: 'menu.billing',
-
-          requiresAuth: true,
-
-          get activeNav() { return getActiveNavForRoute('Billing'); } 
-        }
-
       },
 
       {
