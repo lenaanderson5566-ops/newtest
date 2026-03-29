@@ -263,11 +263,12 @@
                       <div class="summary-label">会员折扣</div>
                       <div class="summary-value discount">-{{ formatCurrencyAmount(userDiscountAmount) }}</div>
                     </div>
-                    <div class="summary-row" v-if="surplusDeductionAmount > 0">
-                      <div class="summary-label">当前套餐抵扣</div>
-                      <div class="summary-value discount">-{{ formatCurrencyAmount(surplusDeductionAmount) }}</div>
-                    </div>
                   </template>
+
+                  <div class="summary-row" v-if="surplusDeductionAmount > 0">
+                    <div class="summary-label">原订阅抵折</div>
+                    <div class="summary-value discount">-{{ formatCurrencyAmount(surplusDeductionAmount) }}</div>
+                  </div>
 
                   <div class="summary-divider compact" v-if="balanceDeductionAmount > 0"></div>
                   <div class="summary-row" v-if="balanceDeductionAmount > 0">
@@ -901,14 +902,13 @@ export default {
     const totalDiscountDisplayAmount = computed(() =>
       Math.max(
         0,
-        couponDiscountAmount.value + userDiscountAmount.value + surplusDeductionAmount.value
+        couponDiscountAmount.value + userDiscountAmount.value
       )
     );
     const hasDiscountDetails = computed(
       () =>
         couponDiscountAmount.value > 0 ||
-        userDiscountAmount.value > 0 ||
-        surplusDeductionAmount.value > 0
+        userDiscountAmount.value > 0
     );
     const currentPlanBadgeLabel = computed(() =>
       isCurrentSubscriptionExpired.value ? "您最近的订阅" : t("shop.plan.current")
@@ -2665,7 +2665,7 @@ export default {
 
     .summary-amounts {
       display: grid;
-      gap: 8px;
+      gap: 6px;
     }
 
     .summary-row {
@@ -2701,7 +2701,7 @@ export default {
         &.summary-label-with-action {
           display: inline-flex;
           align-items: center;
-          gap: 8px;
+          gap: 6px;
         }
       }
 
