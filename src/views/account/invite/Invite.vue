@@ -1,10 +1,9 @@
 <template>
   <div class="account-container page-shell">
-    <!-- 自定义确认弹窗 -->
-    <transition name="modal">
-      <div class="custom-modal" v-if="showConfirmModal">
-        <div class="modal-overlay" @click="cancelConfirmation"></div>
-        <div class="modal-container">
+    <!-- 确认弹窗（复用项目已有弹窗结构） -->
+    <transition name="modal-fade">
+      <div v-if="showConfirmModal" class="modal-overlay" @click="cancelConfirmation">
+        <div class="modal-content" @click.stop>
           <div class="modal-header">
             <h3>{{ $t('invite.confirm.title') }}</h3>
             <button class="modal-close" @click="cancelConfirmation">
@@ -262,12 +261,15 @@
                 </div>
                 
                 <div class="invite-cards-wrapper">
-                  <transition-group name="invite-card" tag="div" class="invite-cards">
+                  <div
+                    class="invite-cards"
+                    :style="{ transform: `translateX(-${selectedCodeIndex * 100}%)` }"
+                  >
                     <div 
                       v-for="(code, index) in inviteCodes" 
                       :key="code.id || 'invite-code-' + index" 
                       class="invite-card"
-                      :class="{ 'active': selectedCodeIndex === index, 'prev': index < selectedCodeIndex, 'next': index > selectedCodeIndex }"
+                      :class="{ 'active': selectedCodeIndex === index }"
                       @click="selectedCodeIndex = index"
                     >
                       <div class="invite-card-inner">
@@ -293,7 +295,7 @@
                         </div>
                       </div>
                     </div>
-                  </transition-group>
+                  </div>
                 </div>
                 
                 <div class="invite-cards-nav next" @click="nextInviteCode" v-if="inviteCodes.length > 1">
@@ -362,12 +364,6 @@
       <div class="dashboard-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('invite.records.title') }}</h2>
-          <div class="card-actions">
-            <button class="btn-action" @click="refreshRecords" :disabled="loading.inviteDetails">
-              <IconRefresh class="action-icon" :class="{ 'spin': loading.inviteDetails }" />
-              {{ loading.inviteDetails ? $t('invite.records.refreshing') : $t('invite.records.refresh') }}
-            </button>
-          </div>
         </div>
         <div v-if="loading.inviteDetails" class="card-body skeleton-loading">
           <div class="skeleton-table">
@@ -519,7 +515,6 @@ import {
   IconBrandTwitter,
   IconBrandTelegram,
   IconCash,
-  IconRefresh,
   IconPlus,
   IconBrandQq,
   IconLink,
@@ -540,7 +535,6 @@ export default {
     IconBrandTwitter,
     IconBrandTelegram,
     IconCash,
-    IconRefresh,
     IconPlus,
     IconBrandQq,
     IconLink,
@@ -1052,14 +1046,6 @@ export default {
       window.open(`https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(inviteLink.value)}&title=${encodeURIComponent(t('invite.share.shareTitle'))}&desc=${encodeURIComponent(t('invite.share.shareDescription'))}`, '_blank');
     };
     
-    const refreshRecords = () => {
-      if (loading.inviteDetails) return;
-      
-      showToast(t('invite.records.refreshingData'), 'info');
-      currentPage.value = 1; 
-      fetchInviteDetails(1);
-    };
-    
     const formatDate = (timestamp) => {
       if (!timestamp) return '-';
       const date = new Date(timestamp * 1000);
@@ -1482,7 +1468,6 @@ export default {
       shareToTwitter,
       shareToTelegram,
       shareToQQ,
-      refreshRecords,
       formatDate,
       getStatusClass,
       getStatusText,
@@ -1651,11 +1636,15 @@ export default {
 
 .invite-cards {
   display: flex;
-  gap: 8px;
+  gap: 0;
+  transition: transform 0.3s ease;
+  will-change: transform;
 }
 
 .invite-card {
+  flex: 0 0 100%;
   min-width: 100%;
+  width: 100%;
 }
 
 .invite-card-inner {
@@ -1757,8 +1746,7 @@ export default {
   white-space: nowrap;
 }
 
-.modal-overlay,
-.custom-modal {
+.modal-overlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -1768,8 +1756,7 @@ export default {
   background: rgba(0, 0, 0, 0.45);
 }
 
-.modal-content,
-.modal-container {
+.modal-content {
   width: min(94vw, 420px);
   margin: 8vh auto 0;
   background: var(--card-bg-color);
