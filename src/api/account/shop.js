@@ -26,14 +26,13 @@ export function fetchPlanById(id, language = getCurrentLanguage()) {
 }
 
 
-export function verifyCoupon(code, planId, period) {
+export function verifyCoupon(code, planId) {
   return request({
     url: '/user/coupon/check',
     method: 'post',
     data: {
       code: code,
-      plan_id: planId,
-      period: period
+      plan_id: planId
     }
   });
 }
