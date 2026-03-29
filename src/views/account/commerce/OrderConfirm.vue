@@ -41,7 +41,13 @@
                 :key="`order-plan-${item.id}`"
                 type="button"
                 class="plan-selector-btn"
-                :class="{ active: Number(plan?.id) === Number(item.id), 'is-current': isCurrentPlanOption(item), 'is-locked': isSelectionLocked, [`tone-${(idx % 3) + 1}`]: true }"
+                :class="{
+                  active: Number(plan?.id) === Number(item.id),
+                  'is-current': isCurrentPlanOption(item),
+                  'is-locked': isSelectionLocked,
+                  'is-dimmed': isSelectionLocked && Number(plan?.id) !== Number(item.id),
+                  [`tone-${(idx % 3) + 1}`]: true
+                }"
                 :disabled="isSelectionLocked"
                 @click="selectPlanOption(item)"
               >
@@ -70,7 +76,11 @@
                   v-for="(price, type) in availablePrices"
                   :key="type"
                   class="period-card"
-                  :class="{ active: selectedPriceType === type, 'is-locked': isSelectionLocked }"
+                  :class="{
+                    active: selectedPriceType === type,
+                    'is-locked': isSelectionLocked,
+                    'is-dimmed': isSelectionLocked && selectedPriceType !== type
+                  }"
                   @click="selectPriceType(type)"
                 >
                   <div class="period-card-inner">
@@ -1893,6 +1903,13 @@ export default {
     &.is-locked {
       cursor: not-allowed;
     }
+
+    &.is-dimmed {
+      opacity: 0.46;
+      filter: grayscale(0.28);
+      border-color: var(--theme-border-soft);
+      background: var(--theme-surface-muted);
+    }
   }
 
   .selector-current-badge {
@@ -2237,6 +2254,17 @@ export default {
           cursor: not-allowed;
           transform: none;
           box-shadow: none;
+        }
+
+        &.is-dimmed {
+          opacity: 0.46;
+          filter: grayscale(0.28);
+          border-color: var(--theme-border-soft);
+          background: var(--theme-surface-muted);
+
+          .period-card-inner {
+            background: var(--theme-surface-muted) !important;
+          }
         }
 
         .period-card-inner {
