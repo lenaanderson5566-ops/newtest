@@ -413,7 +413,6 @@ onMounted(fetchUserStatus);
 }
 
 .step-card {
-  margin-top: 18px;
   background: #f8faff;
   border: 1px solid rgba(47, 85, 212, 0.08);
   border-radius: $border-radius-sm;
