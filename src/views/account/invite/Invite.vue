@@ -232,7 +232,9 @@
                               </div>
                             </div>
                             <div class="invite-card-body">
-                              <div class="invite-link-preview">{{ inviteLink || '-' }}</div>
+                              <div class="invite-link-preview" @click="copyInviteLink" title="点击复制邀请链接">
+                                {{ inviteLink || '-' }}
+                              </div>
                             </div>
                             <div class="invite-card-footer">
                               <div class="card-label">{{ $t('invite.inviteLink.scanDescription') }}</div>
@@ -1691,6 +1693,14 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   @extend %typo-item-title;
+  color: var(--text-on-dark-primary);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
 }
 
 .invite-card-footer {
