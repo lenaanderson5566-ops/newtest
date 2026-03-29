@@ -331,8 +331,8 @@
         <div class="pending-order-overlay" @click="closePaymentModal"></div>
         <div class="pending-order-dialog payment-dialog" role="dialog" aria-modal="true">
           <div class="pending-order-header">
-            <h3>{{ $t("payment.payment_method") }}</h3>
-            <p v-if="paymentQRCode">{{ $t("payment.scan_qrcode") }}</p>
+            <h3>{{ paymentQRCode ? "扫码支付" : $t("payment.payment_method") }}</h3>
+            <p v-if="paymentQRCode">请使用{{ selectedMethodDisplayName }}扫描二维码完成支付</p>
             <p v-else-if="paymentLink">{{ $t("payment.open_in_new_tab") }}</p>
           </div>
           <div class="payment-qrcode-wrap" v-if="paymentQRCode">
@@ -345,10 +345,10 @@
           </div>
           <div class="pending-order-actions">
             <button class="btn-return-orders cancel-btn" @click="closePaymentModal">
-              {{ $t("common.cancel") }}
+              {{ paymentQRCode ? "关闭窗口" : $t("common.cancel") }}
             </button>
             <button class="btn-confirm-cancel confirm-btn" @click="checkPaymentStatusNow">
-              {{ $t("payment.check_payment") }}
+              {{ paymentQRCode ? "我已支付，检查状态" : $t("payment.check_payment") }}
             </button>
           </div>
         </div>
@@ -910,6 +910,12 @@ export default {
         return planName;
       }
       return `${planName} · ${formatPeriodOption(periodType)}`;
+    });
+    const selectedMethodDisplayName = computed(() => {
+      const currentMethod = paymentMethods.value.find(
+        (item) => Number(item?.id) === Number(selectedMethod.value)
+      );
+      return currentMethod?.name || "当前支付方式";
     });
     const totalDiscountDisplayAmount = computed(() =>
       Math.max(
@@ -1622,6 +1628,7 @@ export default {
       payActionLabel,
       showDiscountDetails,
       selectedOrderDisplay,
+      selectedMethodDisplayName,
       totalDiscountDisplayAmount,
       hasDiscountDetails,
 
@@ -3166,6 +3173,17 @@ export default {
 
 .payment-dialog {
   width: min(92vw, 520px);
+}
+
+.pending-order-modal.payment-modal .pending-order-actions .btn-confirm-cancel {
+  background: var(--theme-color);
+  border-color: var(--theme-color);
+  color: var(--text-on-dark-primary);
+}
+
+.pending-order-modal.payment-modal .pending-order-actions .btn-confirm-cancel:hover {
+  background: color-mix(in srgb, var(--theme-color) 88%, black);
+  border-color: color-mix(in srgb, var(--theme-color) 88%, black);
 }
 
 .payment-qrcode-wrap {
