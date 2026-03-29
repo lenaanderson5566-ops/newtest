@@ -930,8 +930,6 @@ onUnmounted(() => {
 
   padding: 20px;
 
-  margin-bottom: 24px;
-
   border: 1px solid var(--border-color);
 
   transition: all 0.3s ease;

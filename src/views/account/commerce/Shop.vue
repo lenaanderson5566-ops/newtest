@@ -1029,8 +1029,6 @@ export default {
 
     padding: map.get($spacers, 3);
 
-    margin-bottom: 24px;
-
     border: 1px solid var(--border-color);
 
     transition: all 0.3s ease;
