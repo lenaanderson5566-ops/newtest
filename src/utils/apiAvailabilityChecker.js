@@ -1,9 +1,10 @@
 let _router = null;
 
-const getRouterInstance = async () => {
+const getRouterInstance = () => {
   if (_router) return _router;
-  const mod = await import("@/router");
-  _router = mod.default || mod.router || mod;
+  if (typeof window !== "undefined" && window.router) {
+    _router = window.router;
+  }
   return _router;
 };
 
@@ -49,7 +50,10 @@ async function initApiAvailabilityChecker(redirect = true) {
     }
 
     if (redirect) {
-      const router = await getRouterInstance();
+      const router = getRouterInstance();
+      if (!router) {
+        return null;
+      }
       if (router.currentRoute.value.name !== "ApiValidation") {
         const { path: currentPath, query: currentQuery } =
           router.currentRoute.value;
