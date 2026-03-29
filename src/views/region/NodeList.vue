@@ -366,7 +366,7 @@ onMounted(() => {
 
   padding: map.get($spacers, 3);
 
-  margin-bottom: map.get($spacers, 3);
+  margin-bottom: var(--global-card-gap);
 
   border: 1px solid var(--border-color);
 

@@ -411,7 +411,7 @@ onMounted(() => {
   background: var(--card-bg-color);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  margin-bottom: 20px;
+  margin-bottom: var(--global-card-gap);
 }
 
 .card-header {

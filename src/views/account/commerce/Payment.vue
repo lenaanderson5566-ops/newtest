@@ -1271,7 +1271,7 @@ export default {
     border-radius: $border-radius-sm;
     box-shadow: none;
     padding: map.get($spacers, 3);
-    margin-bottom: map.get($spacers, 3);
+    margin-bottom: var(--global-card-gap);
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     position: relative;
