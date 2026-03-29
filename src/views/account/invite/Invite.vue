@@ -33,7 +33,7 @@
       <!-- 佣金余额卡片 -->
       <div class="dashboard-card balance-card">
         <div class="card-header">
-          <h2 class="card-title">{{ $t('invite.balance.title') }}</h2>
+          <h2 class="card-title">邀请返利</h2>
         </div>
         <div v-if="loading.inviteData" class="card-body skeleton-loading">
           <div class="skeleton-row"></div>
@@ -44,7 +44,6 @@
             <div class="balance-info">
               <div class="balance-label">{{ $t('invite.balance.available') }}</div>
               <div class="balance-value">{{ baseCurrencyCode }} {{ inviteStats.availableCommission }}</div>
-              <div class="balance-description">{{ $t('invite.balance.description') }}</div>
             </div>
             <div class="balance-actions">
               <button class="btn-primary" @click="toggleTransferCard">
@@ -237,7 +236,7 @@
       </transition>
       
       <!-- 邀请链接卡片 -->
-      <div class="dashboard-card">
+      <div class="dashboard-card invite-link-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('invite.inviteLink.title') }}</h2>
           <div class="card-actions">
@@ -1636,14 +1635,14 @@ export default {
 
 .invite-codes-wrapper {
   display: grid;
-  gap: 10px;
+  gap: 14px;
 }
 
 .invite-cards-container {
   display: grid;
   grid-template-columns: 30px 1fr 30px;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .invite-cards-nav {
@@ -1675,9 +1674,11 @@ export default {
 }
 
 .invite-card-inner {
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 12px;
+  border: 1px solid rgba(var(--theme-color-rgb), 0.2);
+  border-radius: 14px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(43, 46, 124, 0.98), rgba(53, 58, 138, 0.92));
+  color: var(--text-on-dark-primary);
 }
 
 .invite-card-title {
@@ -1695,10 +1696,11 @@ export default {
 }
 
 .code-char {
-  min-width: 20px;
-  padding: 3px 5px;
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
+  min-width: 24px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
   text-align: center;
   font-weight: $font-weight-semibold;
 }
@@ -1706,7 +1708,7 @@ export default {
 .invite-card-footer {
   margin-top: 10px;
   font-size: $font-size-sm;
-  color: var(--text-tertiary);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .invite-cards-indicators {
@@ -1730,6 +1732,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 8px;
+  align-items: center;
 }
 
 .input-with-icon {
@@ -1760,6 +1763,22 @@ export default {
     width: auto;
     min-width: 104px;
     padding: 0 12px;
+  }
+}
+
+.invite-link-card {
+  .card-header {
+    margin-bottom: 14px;
+  }
+
+  .card-actions .btn-action {
+    width: auto;
+    padding: 0 10px;
+  }
+
+  .invite-cards-wrapper {
+    max-width: 980px;
+    margin: 0 auto;
   }
 }
 
