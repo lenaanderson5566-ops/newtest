@@ -47,10 +47,13 @@
           </div>
         </section>
 
-        <section class="section-block dashboard-like-card recent-login-panel">
-          <div class="recent-login-header">
-            <div class="row-title">{{ $t('myCenter.recentLoginTitle') }}</div>
-            <p>{{ $t('myCenter.recentLoginDesc') }}</p>
+        <p class="section-subtitle">{{ $t('myCenter.accessPrivacy') }}</p>
+        <section class="recent-login-panel">
+          <div class="recent-login-header row-main row-main-with-icon">
+            <IconDevices :size="20" class="row-leading-icon" />
+            <div class="row-content">
+              <div class="row-title">{{ $t('myCenter.accessPrivacy') }}</div>
+            </div>
           </div>
           <div class="recent-login-list">
             <div v-if="recentLoginLoading" class="recent-login-state">{{ $t('myCenter.loadingRecentLogin') }}</div>
@@ -648,16 +651,11 @@ $space-2: map.get($spacers, 2);
 .summary-panel { padding: map.get($spacers, 3); }
 
 .recent-login-panel {
-  padding: map.get($spacers, 3);
-}
-
-.recent-login-header p {
-  margin: 4px 0 0;
-  @extend %typo-body-text;
+  padding: 0 2px;
 }
 
 .recent-login-list {
-  margin-top: 12px;
+  margin-top: 8px;
   border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
 }
 
