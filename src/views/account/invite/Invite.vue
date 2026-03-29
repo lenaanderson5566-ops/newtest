@@ -59,27 +59,6 @@
         </div>
       </div>
 
-      <div class="dashboard-card referral-kpi-card" v-if="!loading.inviteData">
-        <div class="referral-kpi-grid">
-          <div class="kpi-item">
-            <div class="kpi-label">{{ $t('invite.stats.registeredUsers') }}</div>
-            <div class="kpi-value">{{ inviteStats.registeredUsers }}</div>
-          </div>
-          <div class="kpi-item">
-            <div class="kpi-label">{{ $t('invite.stats.commissionRate') }}</div>
-            <div class="kpi-value">{{ inviteStats.commissionRate }}%</div>
-          </div>
-          <div class="kpi-item">
-            <div class="kpi-label">{{ $t('invite.stats.pendingCommission') }}</div>
-            <div class="kpi-value">{{ baseCurrencyCode }} {{ inviteStats.pendingCommission }}</div>
-          </div>
-          <div class="kpi-item">
-            <div class="kpi-label">{{ $t('invite.stats.availableCommission') }}</div>
-            <div class="kpi-value">{{ baseCurrencyCode }} {{ inviteStats.validCommission }}</div>
-          </div>
-        </div>
-      </div>
-      
       <!-- 划转到余额弹窗 -->
       <transition name="modal-fade">
         <div v-if="showTransferCardState" class="modal-overlay" @click="showTransferCardState = false">
@@ -252,109 +231,155 @@
           <div class="skeleton-row"></div>
         </div>
         <div v-else class="card-body">
-          <template v-if="inviteCodes.length > 0">
-            <div class="invite-codes-wrapper">
-              <div class="invite-cards-container">
-                <div class="invite-cards-nav prev" @click="prevInviteCode" v-if="inviteCodes.length > 1">
-                  <IconChevronLeft />
+          <div class="invite-steps">
+            <section class="invite-step">
+              <header class="invite-step-header">
+                <span class="invite-step-index">1</span>
+                <div>
+                  <h3>{{ $t('invite.inviteLink.createCode') }} & {{ $t('invite.inviteLink.inviteCode') }}</h3>
+                  <p>创建邀请码并选择要分享的邀请链接</p>
                 </div>
-                
-                <div class="invite-cards-wrapper">
-                  <div
-                    class="invite-cards"
-                    :style="{ transform: `translateX(-${selectedCodeIndex * 100}%)` }"
-                  >
-                    <div 
-                      v-for="(code, index) in inviteCodes" 
-                      :key="code.id || 'invite-code-' + index" 
-                      class="invite-card"
-                      :class="{ 'active': selectedCodeIndex === index }"
-                      @click="selectedCodeIndex = index"
-                    >
-                      <div class="invite-card-inner">
-                        <div class="card-shine"></div>
-                        <div class="card-decoration"></div>
-                        
-                        <div class="invite-card-header">
-                          <div class="invite-card-title">
-                            <IconTicket class="card-icon" />
-                            {{ $t('invite.inviteLink.inviteCode') }} {{ index + 1 }}
+              </header>
+              <template v-if="inviteCodes.length > 0">
+                <div class="invite-codes-wrapper">
+                  <div class="invite-cards-container">
+                    <div class="invite-cards-nav prev" @click="prevInviteCode" v-if="inviteCodes.length > 1">
+                      <IconChevronLeft />
+                    </div>
+                    <div class="invite-cards-wrapper">
+                      <div class="invite-cards" :style="{ transform: `translateX(-${selectedCodeIndex * 100}%)` }">
+                        <div
+                          v-for="(code, index) in inviteCodes"
+                          :key="code.id || 'invite-code-' + index"
+                          class="invite-card"
+                          :class="{ 'active': selectedCodeIndex === index }"
+                          @click="selectedCodeIndex = index"
+                        >
+                          <div class="invite-card-inner">
+                            <div class="invite-card-header">
+                              <div class="invite-card-title">
+                                <IconTicket class="card-icon" />
+                                {{ $t('invite.inviteLink.inviteCode') }} {{ index + 1 }}
+                              </div>
+                            </div>
+                            <div class="invite-card-body">
+                              <div class="invite-code-display">
+                                <span v-for="(char, i) in code.code" :key="i" class="code-char">{{ char }}</span>
+                              </div>
+                            </div>
+                            <div class="invite-card-footer">
+                              <div class="card-label">{{ $t('invite.inviteLink.scanDescription') }}</div>
+                              <div class="invite-card-date">{{ $t('invite.inviteLink.createdAt', { date: formatCodeDate(code.created_at) }) }}</div>
+                            </div>
                           </div>
-                        </div>
-                        
-                        <div class="invite-card-body">
-                          <div class="invite-code-display">
-                            <span v-for="(char, i) in code.code" :key="i" class="code-char">{{ char }}</span>
-                          </div>
-                        </div>
-                        
-                        <div class="invite-card-footer">
-                          <div class="card-label">{{ $t('invite.inviteLink.scanDescription') }}</div>
-                          <div class="invite-card-date">{{ $t('invite.inviteLink.createdAt', { date: formatCodeDate(code.created_at) }) }}</div>
                         </div>
                       </div>
                     </div>
+                    <div class="invite-cards-nav next" @click="nextInviteCode" v-if="inviteCodes.length > 1">
+                      <IconChevronRight />
+                    </div>
+                  </div>
+
+                  <div class="invite-cards-indicators" v-if="inviteCodes.length > 1">
+                    <span
+                      v-for="(code, index) in inviteCodes"
+                      :key="code.id"
+                      class="indicator"
+                      :class="{ 'active': selectedCodeIndex === index }"
+                      @click="selectedCodeIndex = index"
+                    ></span>
+                  </div>
+
+                  <div class="invite-link-wrapper">
+                    <div class="input-with-icon">
+                      <IconLink class="input-icon" />
+                      <input
+                        type="text"
+                        class="invite-link"
+                        :value="inviteLink"
+                        readonly
+                        :placeholder="$t('invite.inviteLink.placeholder')"
+                      />
+                    </div>
+                    <button class="btn-primary" @click="copyInviteLink">
+                      <IconCopy class="btn-icon" />
+                      {{ $t('invite.inviteLink.copyLink') }}
+                    </button>
                   </div>
                 </div>
-                
-                <div class="invite-cards-nav next" @click="nextInviteCode" v-if="inviteCodes.length > 1">
-                  <IconChevronRight />
-                </div>
-              </div>
-              
-              <!-- 添加指示器 -->
-              <div class="invite-cards-indicators" v-if="inviteCodes.length > 1">
-                <span 
-                  v-for="(code, index) in inviteCodes" 
-                  :key="code.id"
-                  class="indicator"
-                  :class="{ 'active': selectedCodeIndex === index }"
-                  @click="selectedCodeIndex = index"
-                ></span>
-              </div>
-              
-              <div class="invite-link-wrapper">
-                <div class="input-with-icon">
-                  <IconLink class="input-icon" />
-                  <input 
-                    type="text" 
-                    class="invite-link" 
-                    :value="inviteLink" 
-                    readonly
-                    :placeholder="$t('invite.inviteLink.placeholder')"
-                  />
-                </div>
-                <button class="btn-primary" @click="copyInviteLink">
-                  <IconCopy class="btn-icon" />
-                  {{ $t('invite.inviteLink.copyLink') }}
+              </template>
+              <div v-else class="no-invite-code">
+                <p>{{ $t('invite.inviteLink.noInviteCode') }}</p>
+                <button class="btn-primary create-code-btn" @click="createInviteCode" :disabled="creatingCode">
+                  <div v-if="creatingCode" class="loading-icon"></div>
+                  <span v-else class="create-btn-content">
+                    <IconPlus class="btn-icon" />
+                    {{ $t('invite.inviteLink.createCode') }}
+                  </span>
                 </button>
               </div>
-            </div>
-            
-            <div class="share-buttons mt-3">
-              <button class="btn-outline wechat-btn" @click="shareToWechat">
-                <IconBrandWechat class="btn-icon" /> {{ $t('invite.share.wechat') }}
-              </button>
-              <button class="btn-outline qq-btn" @click="shareToQQ">
-                <IconBrandQq class="btn-icon" /> {{ $t('invite.share.qq') }}
-              </button>
-              <button class="btn-outline twitter-btn" @click="shareToTwitter">
-                <IconBrandTwitter class="btn-icon" /> {{ $t('invite.share.twitter') }}
-              </button>
-              <button class="btn-outline telegram-btn" @click="shareToTelegram">
-                <IconBrandTelegram class="btn-icon" /> {{ $t('invite.share.telegram') }}
-              </button>
-            </div>
-          </template>
-          <div v-else class="no-invite-code">
-            <p>{{ $t('invite.inviteLink.noInviteCode') }}</p>
-            <button class="btn-primary create-code-btn" @click="createInviteCode" :disabled="creatingCode">
-              <div v-if="creatingCode" class="loading-icon"></div>
-              <span v-else class="create-btn-content">
-                <IconPlus class="btn-icon" />
-                {{ $t('invite.inviteLink.createCode') }}
-              </span>
-            </button>
+            </section>
+
+            <section class="invite-step">
+              <header class="invite-step-header">
+                <span class="invite-step-index">2</span>
+                <div>
+                  <h3>选择平台并分享</h3>
+                  <p>选择社交媒体平台快速分享邀请链接</p>
+                </div>
+              </header>
+              <div class="share-buttons">
+                <button class="btn-outline wechat-btn" @click="shareToWechat">
+                  <IconBrandWechat class="btn-icon" /> {{ $t('invite.share.wechat') }}
+                </button>
+                <button class="btn-outline qq-btn" @click="shareToQQ">
+                  <IconBrandQq class="btn-icon" /> {{ $t('invite.share.qq') }}
+                </button>
+                <button class="btn-outline twitter-btn" @click="shareToTwitter">
+                  <IconBrandTwitter class="btn-icon" /> {{ $t('invite.share.twitter') }}
+                </button>
+                <button class="btn-outline telegram-btn" @click="shareToTelegram">
+                  <IconBrandTelegram class="btn-icon" /> {{ $t('invite.share.telegram') }}
+                </button>
+              </div>
+            </section>
+
+            <section class="invite-step">
+              <header class="invite-step-header">
+                <span class="invite-step-index">3</span>
+                <div>
+                  <h3>划转或提现</h3>
+                  <p>根据需求将返佣金额划转到余额或申请提现</p>
+                </div>
+              </header>
+              <div class="step-action-row">
+                <button class="btn-primary" @click="toggleTransferCard">划转</button>
+                <button v-if="withdrawClose === 0" class="btn-primary withdraw-btn" @click="toggleWithdrawCard">
+                  {{ $t('invite.balance.withdraw') }}
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      
+      <div class="dashboard-card referral-kpi-card" v-if="!loading.inviteData">
+        <div class="referral-kpi-grid">
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.registeredUsers') }}</div>
+            <div class="kpi-value">{{ inviteStats.registeredUsers }}</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.commissionRate') }}</div>
+            <div class="kpi-value">{{ inviteStats.commissionRate }}%</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.pendingCommission') }}</div>
+            <div class="kpi-value">{{ baseCurrencyCode }} {{ inviteStats.pendingCommission }}</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">{{ $t('invite.stats.availableCommission') }}</div>
+            <div class="kpi-value">{{ baseCurrencyCode }} {{ inviteStats.validCommission }}</div>
           </div>
         </div>
       </div>
@@ -1780,6 +1805,55 @@ export default {
     max-width: 980px;
     margin: 0 auto;
   }
+}
+
+.invite-steps {
+  display: grid;
+  gap: 12px;
+}
+
+.invite-step {
+  background: #f8faff;
+  border: 1px solid rgba(var(--theme-color-rgb), 0.1);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.invite-step-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+
+  h3 {
+    margin: 0;
+    @extend %typo-item-title;
+  }
+
+  p {
+    margin: 4px 0 0;
+    @extend %typo-body-text;
+    color: var(--text-secondary);
+  }
+}
+
+.invite-step-index {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(var(--theme-color-rgb), 0.92);
+  color: var(--text-on-dark-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-semibold;
+}
+
+.step-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px;
 }
 
 .records-table-wrapper {
