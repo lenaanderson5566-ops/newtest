@@ -43,7 +43,7 @@
               <transition-group name="page-switch">
                 <tr v-for="order in filteredOrders" :key="order.trade_no">
                   <td>{{ formatDate(order.created_at) }}</td>
-                  <td>{{ getSubscriptionName(order) }}·{{ formatCycle(order.period) }}</td>
+                  <td>{{ formatSubscriptionCycle(order) }}</td>
                   <td class="amount">{{ formatAmount(order.total_amount, order.order_currency || order.pricing_currency) }}</td>
                   <td>
                     <span class="status-badge" :class="getStatusClass(order.status)">
@@ -207,6 +207,18 @@ const formatAmount = (amount, orderCurrency) => {
 
 const getSubscriptionName = (order) => {
   return order?.plan?.name || order?.plan_name || order?.subject || '--';
+};
+
+const formatSubscriptionCycle = (order) => {
+  const name = getSubscriptionName(order);
+  const cycle = formatCycle(order?.period);
+  const hasName = !!name && name !== '--';
+  const hasCycle = !!cycle && cycle !== '--';
+
+  if (hasName && hasCycle) return `${name}·${cycle}`;
+  if (hasName) return name;
+  if (hasCycle) return cycle;
+  return '--';
 };
 
 const statusTextMap = computed(() => {
