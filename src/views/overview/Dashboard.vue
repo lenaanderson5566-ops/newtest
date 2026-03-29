@@ -2097,10 +2097,12 @@ $space-2: map.get($spacers, 2);
 
       .usage-percent {
         line-height: 1;
-        @extend %typo-metric-md;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
 
         &.compact {
-          @extend %typo-metric-md;
+          font-size: $font-size-xl;
+          font-weight: $font-weight-semibold;
         }
       }
 
