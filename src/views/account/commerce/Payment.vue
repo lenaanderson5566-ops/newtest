@@ -1048,7 +1048,7 @@ export default {
 
     const goToDashboard = () => {
       if (orderDetail.value.period === "deposit") {
-        router.push("/billing?tab=wallet");
+        router.push("/wallet/deposit");
       } else {
         router.push("/dashboard");
       }

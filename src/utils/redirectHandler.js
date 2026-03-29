@@ -10,9 +10,9 @@ export function handleRedirectPath(redirectPath) {
     } else if (redirectPath === '/profile' || redirectPath === 'profile') {
       targetPath = '/profile'; 
     } else if (redirectPath === '/invite' || redirectPath === 'invite') {
-      targetPath = '/billing?tab=referral'; 
+      targetPath = '/invite';
     } else if (redirectPath === '/order' || redirectPath === '/orders' || redirectPath === 'order' || redirectPath === 'orders') {
-      targetPath = '/billing?tab=orders'; 
+      targetPath = '/orders';
     }
     else if (redirectPath.startsWith('/')) {
       targetPath = redirectPath;

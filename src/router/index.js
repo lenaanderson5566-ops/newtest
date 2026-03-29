@@ -39,7 +39,6 @@ const ACTIVE_NAV_BY_ROUTE = {
   Profile: 'Profile',
   ConfigManagement: 'Profile',
   SecuritySettings: 'Profile',
-  Billing: 'Profile',
   WalletDeposit: 'Profile',
   OrderList: 'Profile',
   Invite: 'Profile',
@@ -403,22 +402,13 @@ const routes = [
       },
 
       {
-
         path: 'billing',
-
-        name: 'Billing',
-
-        component: () => import('@/views/account/billing/Billing.vue'),
-
-        meta: {
-
-          titleKey: 'menu.billing',
-
-          requiresAuth: true,
-
-          get activeNav() { return getActiveNavForRoute('Billing'); } 
+        redirect: (to) => {
+          const tab = String(to.query?.tab || '');
+          if (tab === 'wallet') return '/wallet/deposit';
+          if (tab === 'referral') return '/invite';
+          return '/orders';
         }
-
       },
 
       {

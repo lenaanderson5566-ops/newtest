@@ -66,7 +66,6 @@ export default {
         'Profile',
         'ConfigManagement',
         'SecuritySettings',
-        'Billing',
         'TicketList',
         'MobileTickets',
         'TrafficLog',
