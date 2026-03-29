@@ -232,9 +232,7 @@
                               </div>
                             </div>
                             <div class="invite-card-body">
-                              <div class="invite-code-display">
-                                <span v-for="(char, i) in code.code" :key="i" class="code-char">{{ char }}</span>
-                              </div>
+                              <div class="invite-link-preview">{{ inviteLink || '-' }}</div>
                             </div>
                             <div class="invite-card-footer">
                               <div class="card-label">{{ $t('invite.inviteLink.scanDescription') }}</div>
@@ -259,22 +257,6 @@
                     ></span>
                   </div>
 
-                  <div class="invite-link-wrapper">
-                    <div class="input-with-icon">
-                      <IconLink class="input-icon" />
-                      <input
-                        type="text"
-                        class="invite-link"
-                        :value="inviteLink"
-                        readonly
-                        :placeholder="$t('invite.inviteLink.placeholder')"
-                      />
-                    </div>
-                    <button class="btn-primary" @click="copyInviteLink">
-                      <IconCopy class="btn-icon" />
-                      {{ $t('invite.inviteLink.copyLink') }}
-                    </button>
-                  </div>
                 </div>
               </template>
               <div v-else class="no-invite-code">
@@ -311,6 +293,10 @@
                   <IconBrandTelegram class="btn-icon" /> {{ $t('invite.share.telegram') }}
                 </button>
               </div>
+              <button class="btn-primary manual-copy-btn" @click="copyInviteLink">
+                <IconCopy class="btn-icon" />
+                手动复制
+              </button>
             </section>
 
             <section class="invite-step">
@@ -326,8 +312,12 @@
                 <span class="step-balance-amount">{{ baseCurrencyCode }} {{ inviteStats.availableCommission }}</span>
               </p>
               <div class="step-action-row">
-                <button class="btn-primary" @click="toggleTransferCard">划转</button>
+                <button class="btn-primary" @click="toggleTransferCard">
+                  <IconCash class="btn-icon" />
+                  划转
+                </button>
                 <button v-if="withdrawClose === 0" class="btn-primary withdraw-btn" @click="toggleWithdrawCard">
+                  <IconReceipt class="btn-icon" />
                   {{ $t('invite.balance.withdraw') }}
                 </button>
               </div>
@@ -511,15 +501,16 @@ import {
   IconBrandWechat,
   IconBrandTwitter,
   IconBrandTelegram,
+  IconCash,
   IconPlus,
   IconBrandQq,
-  IconLink,
   IconX,
   IconChevronLeft,
   IconChevronRight,
   IconChevronDown,
   IconTicket,
   IconAlertTriangle,
+  IconReceipt,
 } from '@tabler/icons-vue';
 
 export default {
@@ -529,15 +520,16 @@ export default {
     IconBrandWechat,
     IconBrandTwitter,
     IconBrandTelegram,
+    IconCash,
     IconPlus,
     IconBrandQq,
-    IconLink,
     IconX,
     IconChevronLeft,
     IconChevronRight,
     IconChevronDown,
     IconTicket,
     IconAlertTriangle,
+    IconReceipt,
   },
   setup() {
     const { showToast } = useToast();
@@ -1689,14 +1681,16 @@ export default {
   gap: 4px;
 }
 
-.code-char {
-  min-width: 24px;
-  padding: 6px 8px;
-  border-radius: 8px;
+.invite-link-preview {
+  margin-top: 10px;
+  border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: rgba(255, 255, 255, 0.08);
-  text-align: center;
-  font-weight: $font-weight-semibold;
+  padding: 10px 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @extend %typo-item-title;
 }
 
 .invite-card-footer {
@@ -1722,31 +1716,6 @@ export default {
   }
 }
 
-.invite-link-wrapper {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px;
-  align-items: center;
-}
-
-.input-with-icon {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 0 10px;
-}
-
-.invite-link {
-  flex: 1;
-  min-width: 0;
-  height: 38px;
-  border: none;
-  background: transparent;
-  color: var(--text-primary);
-}
-
 .share-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -1758,6 +1727,12 @@ export default {
     min-width: 104px;
     padding: 0 12px;
   }
+}
+
+.manual-copy-btn {
+  margin-top: 10px;
+  width: auto;
+  min-width: 110px;
 }
 
 .invite-link-card {
