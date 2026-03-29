@@ -22,8 +22,8 @@
           <div class="section-wrapper subscription-intro-section" v-else-if="plan">
             <div class="section-title">
               <span>
-                选择订阅计划
-                <em v-if="isSelectionLocked" class="locked-tip">（当前未支付订单已锁定）</em>
+                {{ $t("shop.popup.reselectPlan") }}
+                <em v-if="isSelectionLocked" class="locked-tip">({{ $t("payment.payment_pending") }})</em>
               </span>
               <button
                 v-if="isSelectionLocked"
@@ -32,7 +32,7 @@
                 :disabled="loading.lockedOrder"
                 @click="unlockSelection"
               >
-                重新选择
+                {{ $t("order.back_to_shop") }}
               </button>
             </div>
             <div class="plan-selector-grid">
@@ -184,7 +184,7 @@
           <div class="section-wrapper order-summary-section">
             <div class="order-summary glassmorphism">
               <div class="summary-header-block">
-                <div class="summary-title">订单摘要</div>
+                <div class="summary-title">{{ $t("order.order_summary") }}</div>
               </div>
 
               <div v-if="showCouponInputSection" class="coupon-merge-block compact">
@@ -213,10 +213,10 @@
                 </template>
                 <template v-else>
                   <div class="coupon-applied-inline">
-                    <span class="coupon-code-text">优惠码：{{ couponCode }}</span>
+                    <span class="coupon-code-text">{{ $t("order.coupon") }}：{{ couponCode }}</span>
                     <div class="coupon-applied-actions">
-                      <span class="coupon-applied-tag">已应用</span>
-                      <button class="btn-remove-text" @click="removeCoupon">移除</button>
+                      <span class="coupon-applied-tag">{{ $t("order.coupon_applied") }}</span>
+                      <button class="btn-remove-text" @click="removeCoupon">{{ $t("order.remove_coupon") }}</button>
                     </div>
                   </div>
                 </template>
@@ -253,14 +253,14 @@
 
                   <div class="summary-row" v-if="totalDiscountDisplayAmount > 0">
                     <div class="summary-label summary-label-with-action">
-                      <span>总优惠</span>
+                      <span>{{ $t("payment.total_discount_amount") }}</span>
                       <button
                         v-if="hasDiscountDetails"
                         type="button"
                         class="btn-remove-text summary-detail-toggle inline"
                         @click="showDiscountDetails = !showDiscountDetails"
                       >
-                        {{ showDiscountDetails ? "收起明细" : "查看明细" }}
+                        {{ showDiscountDetails ? $t("common.close") : $t("common.viewDetails") }}
                       </button>
                     </div>
                     <div class="summary-value discount">-{{ formatCurrencyAmount(totalDiscountDisplayAmount) }}</div>
@@ -268,23 +268,23 @@
 
                   <template v-if="showDiscountDetails">
                     <div class="summary-row" v-if="couponDiscountAmount > 0">
-                      <div class="summary-label">优惠券</div>
+                      <div class="summary-label">{{ $t("payment.coupon_discount_amount") }}</div>
                       <div class="summary-value discount">-{{ formatCurrencyAmount(couponDiscountAmount) }}</div>
                     </div>
                     <div class="summary-row" v-if="userDiscountAmount > 0">
-                      <div class="summary-label">会员折扣</div>
+                      <div class="summary-label">{{ $t("payment.user_discount_amount") }}</div>
                       <div class="summary-value discount">-{{ formatCurrencyAmount(userDiscountAmount) }}</div>
                     </div>
                   </template>
 
                   <div class="summary-row" v-if="surplusDeductionAmount > 0">
-                    <div class="summary-label">原订阅抵折</div>
+                    <div class="summary-label">{{ $t("payment.discount_amount") }}</div>
                     <div class="summary-value discount">-{{ formatCurrencyAmount(surplusDeductionAmount) }}</div>
                   </div>
 
                   <div class="summary-divider compact" v-if="balanceDeductionAmount > 0"></div>
                   <div class="summary-row" v-if="balanceDeductionAmount > 0">
-                    <div class="summary-label">余额支付</div>
+                    <div class="summary-label">{{ $t("payment.balance_amount") }}</div>
                     <div class="summary-value discount">-{{ formatCurrencyAmount(balanceDeductionAmount) }}</div>
                   </div>
                 </div>
@@ -292,7 +292,7 @@
                 <div class="summary-divider strong"></div>
 
                 <div class="payable-block">
-                  <div class="payable-label">应付金额</div>
+                  <div class="payable-label">{{ $t("payment.total_with_fee") }}</div>
                   <div class="payable-value">{{ formatCurrencyAmount(totalWithFee) }}</div>
                 </div>
 
@@ -331,10 +331,10 @@
         <div class="pending-order-overlay" @click="closePaymentModal"></div>
         <div class="pending-order-dialog payment-dialog" role="dialog" aria-modal="true">
           <div class="pending-order-header">
-            <h3>{{ paymentQRCode ? "扫码支付" : $t("payment.payment_method") }}</h3>
-            <p v-if="paymentQRCode">请使用{{ selectedMethodDisplayName }}扫描二维码完成支付</p>
+            <h3>{{ paymentQRCode ? $t("payment.scan_qrcode") : $t("payment.payment_method") }}</h3>
+            <p v-if="paymentQRCode">{{ $t("payment.payment_method") }}：{{ selectedMethodDisplayName }}</p>
             <p v-if="paymentQRCode && qrPaymentAmountHint" class="payment-amount-hint">
-              订单金额：{{ qrPaymentAmountHint }}
+              {{ $t("payment.total_with_fee") }}：{{ qrPaymentAmountHint }}
             </p>
             <p v-else-if="paymentLink">{{ $t("payment.open_in_new_tab") }}</p>
           </div>
@@ -348,10 +348,10 @@
           </div>
           <div class="pending-order-actions">
             <button class="btn-return-orders cancel-btn" @click="closePaymentModal">
-              {{ paymentQRCode ? "关闭窗口" : $t("common.cancel") }}
+              {{ paymentQRCode ? $t("common.close") : $t("common.cancel") }}
             </button>
             <button class="btn-confirm-cancel confirm-btn" @click="checkPaymentStatusNow">
-              {{ paymentQRCode ? "检查状态" : $t("payment.check_payment") }}
+              {{ paymentQRCode ? $t("payment.check_payment") : $t("payment.check_payment") }}
             </button>
           </div>
         </div>
@@ -542,13 +542,13 @@ export default {
       const { hasPlanLimit, hasPeriodLimit, planMatched, periodMatched } =
         couponScopeValidation.value;
       if (hasPlanLimit && !planMatched && hasPeriodLimit && !periodMatched) {
-        return "当前订阅/周期不适用此优惠码";
+        return t("order.coupon_invalid");
       }
       if (hasPlanLimit && !planMatched) {
-        return "当前订阅不适用此优惠码";
+        return t("order.coupon_invalid");
       }
       if (hasPeriodLimit && !periodMatched) {
-        return "当前周期不适用此优惠码";
+        return t("order.coupon_invalid");
       }
       return "";
     });
@@ -765,7 +765,7 @@ export default {
         }
         orderPreview.value = null;
         showToast(
-          error?.response?.message || error?.message || "订单预览加载失败，已切换为本地估算金额",
+          error?.response?.message || error?.message || t("order.failed_to_fetch_plan"),
           "warning"
         );
       } finally {
@@ -785,8 +785,8 @@ export default {
     };
 
     const formatPeriodOption = (type) => {
-      if (type === "month_price") return "月付";
-      if (type === "year_price") return "年付";
+      if (type === "month_price") return t("shop.periodTypes.month");
+      if (type === "year_price") return t("shop.periodTypes.year");
       return t(`shop.plan.price_options.${getPriceTypeKey(type)}`);
     };
 
@@ -902,8 +902,8 @@ export default {
     };
 
     const payActionLabel = computed(() => {
-      if (totalWithFee.value <= 0) return "立即开通";
-      return isContinuePaymentMode.value ? "继续支付" : "立即支付";
+      if (totalWithFee.value <= 0) return t("payment.activate");
+      return t("payment.pay_now");
     });
     const selectedOrderDisplay = computed(() => {
       const planName = plan.value?.name || "-";
@@ -919,7 +919,7 @@ export default {
       const currentMethod = paymentMethods.value.find(
         (item) => Number(item?.id) === Number(selectedMethod.value)
       );
-      return currentMethod?.name || "当前支付方式";
+      return currentMethod?.name || t("payment.payment_method");
     });
     const qrPaymentAmountHint = computed(() => {
       if (!paymentQRCode.value || !checkoutAmountInfo.value) {
@@ -960,7 +960,7 @@ export default {
         userDiscountAmount.value > 0
     );
     const currentPlanBadgeLabel = computed(() =>
-      isCurrentSubscriptionExpired.value ? "您最近的订阅" : t("shop.plan.current")
+      t("shop.plan.current")
     );
 
     const selectPriceType = (type) => {
@@ -1003,10 +1003,10 @@ export default {
           delete nextQuery.trade_no;
           await router.replace({ query: nextQuery });
         }
-        showToast("已取消原待支付订单，可重新选择订阅规格与周期", "success");
+        showToast(t("payment.cancel_success"), "success");
       } catch (error) {
         showToast(
-          error?.response?.message || error?.message || "取消原订单失败，请稍后重试",
+          error?.response?.message || error?.message || t("payment.cancel_failed"),
           "error"
         );
       } finally {
@@ -1183,7 +1183,7 @@ export default {
       } catch (err) {
         console.error("Failed to fetch locked order detail:", err);
         lockedOrderDetail.value = null;
-        showToast(err?.response?.message || err?.message || "未能读取待支付订单详情", "error");
+        showToast(err?.response?.message || err?.message || t("payment.failed_to_fetch_order"), "error");
       } finally {
         loading.lockedOrder = false;
       }
@@ -1249,7 +1249,7 @@ export default {
       const tradeNo =
         paymentTradeNo.value || String(lockedPendingOrder.value?.trade_no || "");
       if (!tradeNo) {
-        showToast("未找到待支付订单号", "warning");
+        showToast(t("payment.no_order_selected"), "warning");
         return;
       }
       paymentTradeNo.value = tradeNo;
@@ -1270,7 +1270,7 @@ export default {
     const submitOrder = async () => {
       if (loading.submitting || loading.paying) return;
       if (!isLockedOrderReady.value) {
-        showToast("待支付订单数据加载中，请稍后重试", "warning");
+        showToast(t("payment.payment_processing"), "warning");
         return;
       }
       if (totalWithFee.value > 0 && !selectedMethod.value) {

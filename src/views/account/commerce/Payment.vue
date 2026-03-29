@@ -7,7 +7,7 @@
           <!-- 订单概览 -->
           <div class="section-wrapper overview-section">
             <div class="section-title with-status">
-              <span>订单摘要</span>
+              <span>{{ $t("order.order_summary") }}</span>
               <button
                 v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
                 class="overview-cancel-btn"
@@ -25,11 +25,11 @@
               <div class="overview-divider"></div>
 
               <div class="info-row">
-                <div class="info-label">订阅</div>
+                <div class="info-label">{{ $t("payment.plan_name") }}</div>
                 <div class="info-value">{{ orderDetail.plan?.name || (orderDetail.period === 'deposit' ? $t("wallet.deposit.title") : "-") }}</div>
               </div>
               <div class="info-row" v-if="orderDetail.period !== 'deposit'">
-                <div class="info-label">周期</div>
+                <div class="info-label">{{ $t("payment.period") }}</div>
                 <div class="info-value">{{ formatPeriod(orderDetail.period) }}</div>
               </div>
 
@@ -44,7 +44,7 @@
                 </div>
               </div>
               <div class="info-row">
-                <div class="info-label">状态</div>
+                <div class="info-label">{{ $t("payment.order_status") }}</div>
                 <div class="info-value">
                   <span class="inline-status-badge" :class="getStatusClass(orderDetail.status)">
                     <IconClock
@@ -119,7 +119,7 @@
                   <img v-else :src="method.icon" :alt="method.name" />
                 </div>
               </div>
-              <div class="payment-security-note">安全支付 · 实时到账</div>
+              <div class="payment-security-note">{{ $t("payment.payment_processing") }}</div>
             </div>
 
             <!-- 支付方式骨架屏 -->
@@ -138,7 +138,7 @@
           <!-- 订单金额摘要 -->
           <div class="section-wrapper order-amount-section">
             <div class="section-title">
-              <span>支付信息</span>
+              <span>{{ $t("payment.order_info") }}</span>
             </div>
 
             <div class="order-info" v-if="!loading.order">
@@ -157,11 +157,11 @@
                 </div>
 
                 <div class="summary-row discount-row" v-if="discountBreakdownVisible">
-                  <div class="summary-label">总优惠</div>
+                  <div class="summary-label">{{ $t("payment.total_discount_amount") }}</div>
                   <div class="summary-value discount">-{{ formatAmount(discountAmount) }}</div>
                 </div>
                 <div class="summary-row" v-if="surplusAmount > 0">
-                  <div class="summary-label">原订阅抵折</div>
+                  <div class="summary-label">{{ $t("payment.discount_amount") }}</div>
                   <div class="summary-value discount">-{{ formatAmount(surplusAmount) }}</div>
                 </div>
                 <div class="summary-divider compact" v-if="balanceDeductionAmount > 0"></div>
@@ -190,7 +190,7 @@
               </div>
               <div class="summary-divider strong"></div>
               <div class="summary-row total">
-                <div class="summary-label">应付金额</div>
+                <div class="summary-label">{{ $t("payment.total_with_fee") }}</div>
                 <div class="summary-value final">{{ formatAmount(totalWithFee) }}</div>
               </div>
             </div>
@@ -214,7 +214,7 @@
               >
                 <IconCreditCard v-if="!loading.paying" :size="18" />
                 <div v-else class="loader"></div>
-                <span>继续支付</span>
+                <span>{{ $t("payment.pay_now") }}</span>
               </button>
             </div>
           </div>
@@ -284,7 +284,7 @@
                 >
                   <IconCreditCard v-if="!loading.checking" :size="18" />
                   <div v-else class="loader"></div>
-                  <span>立即开通</span>
+                  <span>{{ $t("payment.activate") }}</span>
                 </button>
               </div>
 
@@ -673,10 +673,10 @@ export default {
       }
 
       const periodMap = {
-        month_price: "月付",
+        month_price: t("shop.plan.price_options.month"),
         quarter_price: t("shop.plan.price_options.quarter"),
         half_year_price: t("shop.plan.price_options.half_year"),
-        year_price: "年付",
+        year_price: t("shop.plan.price_options.year"),
         two_year_price: t("shop.plan.price_options.two_year"),
         three_year_price: t("shop.plan.price_options.three_year"),
         onetime_price: t("shop.plan.price_options.onetime"),
