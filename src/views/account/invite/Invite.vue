@@ -30,25 +30,6 @@
         <IconChevronLeft :size="20" />
       </button>
 
-      <!-- 佣金余额卡片 -->
-      <div class="dashboard-card balance-card">
-        <div class="card-header">
-          <h2 class="card-title">邀请返利</h2>
-        </div>
-        <div v-if="loading.inviteData" class="card-body skeleton-loading">
-          <div class="skeleton-row"></div>
-          <div class="skeleton-row"></div>
-        </div>
-        <div v-else class="card-body">
-          <div class="balance-container">
-            <div class="balance-info">
-              <div class="balance-label">{{ $t('invite.balance.available') }}</div>
-              <div class="balance-value">{{ baseCurrencyCode }} {{ inviteStats.availableCommission }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- 划转到余额弹窗 -->
       <transition name="modal-fade">
         <div v-if="showTransferCardState" class="modal-overlay" @click="showTransferCardState = false">
