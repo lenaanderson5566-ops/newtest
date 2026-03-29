@@ -48,7 +48,7 @@ export default {
         { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/overview/Dashboard.vue') },
         { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/account/commerce/Shop.vue') },
         { path: 'Invite', name: 'Invite', priority: 4, component: () => import('@/views/account/invite/Invite.vue') },
-        { path: 'Profile', name: 'Profile', priority: 5, component: () => import('@/views/account/profile/UserProfile.vue') }
+        { path: 'Profile', name: 'Profile', priority: 5, component: () => import('@/views/account/profile/MyCenter.vue') }
       ],
       
       route: {
@@ -164,7 +164,7 @@ export default {
         '/dashboard': [
           { path: 'Shop', name: 'Shop', priority: 1, component: () => import('@/views/account/commerce/Shop.vue') },
           { path: 'Invite', name: 'Invite', priority: 3, component: () => import('@/views/account/invite/Invite.vue') },
-          { path: 'Profile', name: 'Profile', priority: 4, component: () => import('@/views/account/profile/UserProfile.vue') },
+          { path: 'Profile', name: 'Profile', priority: 4, component: () => import('@/views/account/profile/MyCenter.vue') },
           { path: 'OrderList', name: 'OrderList', priority: 5, component: () => import('@/views/account/orders/OrderList.vue') },
           { path: 'Payment', name: 'Payment', priority: 6, component: () => import('@/views/account/commerce/Payment.vue') }
         ],
@@ -180,11 +180,11 @@ export default {
           { path: 'ConfigManagement', name: 'ConfigManagement', priority: 1, component: () => import('@/views/account/profile/ConfigManagement.vue') },
           { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/account/commerce/Shop.vue') },
           { path: 'TicketList', name: 'TicketList', priority: 4, component: () => import('@/views/account/support/TicketList.vue') },
-          { path: 'Profile', name: 'Profile', priority: 5, component: () => import('@/views/account/profile/UserProfile.vue') },
+          { path: 'Profile', name: 'Profile', priority: 5, component: () => import('@/views/account/profile/MyCenter.vue') },
           { path: 'SecuritySettings', name: 'SecuritySettings', priority: 6, component: () => import('@/views/account/security/SecuritySettings.vue') }
         ],
         '/tickets': [
-          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/account/profile/UserProfile.vue') },
+          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/account/profile/MyCenter.vue') },
           { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/overview/Dashboard.vue') },
           { path: 'MobileTickets', name: 'MobileTickets', priority: 3, component: () => import('@/views/account/support/MobileTicketList.vue') }
         ],
@@ -218,19 +218,19 @@ export default {
         ],
         '/trafficlog': [
           { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/overview/Dashboard.vue') },
-          { path: 'Profile', name: 'Profile', priority: 3, component: () => import('@/views/account/profile/UserProfile.vue') }
+          { path: 'Profile', name: 'Profile', priority: 3, component: () => import('@/views/account/profile/MyCenter.vue') }
         ],
         '/wallet/deposit': [
           { path: 'Dashboard', name: 'Dashboard', priority: 1, component: () => import('@/views/overview/Dashboard.vue') },
           { path: 'Shop', name: 'Shop', priority: 2, component: () => import('@/views/account/commerce/Shop.vue') },
-          { path: 'Profile', name: 'Profile', priority: 3, component: () => import('@/views/account/profile/UserProfile.vue') }
+          { path: 'Profile', name: 'Profile', priority: 3, component: () => import('@/views/account/profile/MyCenter.vue') }
         ],
         '/security-settings': [
-          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/account/profile/UserProfile.vue') },
+          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/account/profile/MyCenter.vue') },
           { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/overview/Dashboard.vue') }
         ],
         '/config-management': [
-          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/account/profile/UserProfile.vue') },
+          { path: 'Profile', name: 'Profile', priority: 1, component: () => import('@/views/account/profile/MyCenter.vue') },
           { path: 'Dashboard', name: 'Dashboard', priority: 2, component: () => import('@/views/overview/Dashboard.vue') }
         ],
         '/payment': [
