@@ -643,6 +643,9 @@ export default {
         }
         return Math.max(0, Math.abs(amount));
       }
+      if (shouldUseServerPreview.value) {
+        return 0;
+      }
       const userBalance = Number(userInfo.value?.balance || 0);
       if (!Number.isFinite(userBalance) || userBalance <= 0) {
         return 0;
@@ -652,6 +655,10 @@ export default {
     const totalWithFee = computed(() => {
       if (isContinuePaymentMode.value) {
         const amount = Number(lockedOrderDetail.value?.total_amount || 0);
+        return Number.isFinite(amount) ? Math.max(0, amount) : 0;
+      }
+      if (shouldUseServerPreview.value && orderPreview.value) {
+        const amount = Number(orderPreview.value?.total_amount || 0);
         return Number.isFinite(amount) ? Math.max(0, amount) : 0;
       }
       return Math.max(0, finalPrice.value - balanceDeductionAmount.value);
