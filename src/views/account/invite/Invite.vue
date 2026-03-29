@@ -275,7 +275,6 @@
                       {{ $t('invite.inviteLink.copyLink') }}
                     </button>
                   </div>
-                  <p class="invite-benefit-note">扫码注册可获得额外福利</p>
                 </div>
               </template>
               <div v-else class="no-invite-code">
@@ -1862,12 +1861,6 @@ export default {
   font-size: $font-size-3xl;
   font-weight: $font-weight-bold;
   color: rgba(var(--theme-color-rgb), 0.95);
-}
-
-.invite-benefit-note {
-  margin: 8px 0 0;
-  @extend %typo-body-text;
-  color: rgba(var(--theme-color-rgb), 0.88);
 }
 
 @keyframes spin {
