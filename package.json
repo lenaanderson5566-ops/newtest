@@ -6,7 +6,8 @@
     "dev": "npx vite",
     "build": "npx vite build",
     "preview": "npx vite preview",
-    "serve": "npx vite"
+    "serve": "npx vite",
+    "screenshot:preview": "node scripts/capture-preview-screenshot.mjs"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +37,7 @@
     "javascript-obfuscator": "^5.3.0",
     "postcss": "^8.5.8",
     "postcss-import": "^16.1.1",
+    "playwright": "^1.54.2",
     "sass": "^1.97.3",
     "vite": "^7.1.5",
     "vue": "^3.5.29"

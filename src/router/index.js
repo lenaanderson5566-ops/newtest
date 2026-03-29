@@ -2,7 +2,7 @@
 
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, TRAFFICLOG_CONFIG, isXiaoV2board, AUTH_LAYOUT_CONFIG } from '@/utils/baseConfig';
+import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, TRAFFICLOG_CONFIG, AUTH_LAYOUT_CONFIG } from '@/utils/baseConfig';
 
 import i18n from '@/i18n';
 
@@ -29,35 +29,31 @@ const getAuthComponent = (componentName) => {
 
 
 
-const getActiveNavForRoute = (routeName) => {
-  const dashboardRoutes = new Set(['Dashboard']);
-  const regionRoutes = new Set(['NodeList']);
-  const quickStartRoutes = new Set(['QuickStart']);
-  const usageRoutes = new Set(['Docs', 'DocDetail']);
-  const myRoutes = new Set([
-    'Profile',
-    'ConfigManagement',
-    'SecuritySettings',
-    'Billing',
-    'WalletDeposit',
-    'OrderList',
-    'Invite',
-    'TicketList',
-    'MobileTickets',
-    'TrafficLog',
-    'Shop',
-    'OrderConfirm',
-    'Payment',
-    'GiftCardRedeem',
-    'AnnouncementList'
-  ]);
+const ACTIVE_NAV_BY_ROUTE = {
+  Dashboard: 'Dashboard',
+  NodeList: 'Nodes',
+  QuickStart: 'QuickStart',
+  Docs: 'Docs',
+  DocDetail: 'Docs',
+  Profile: 'Profile',
+  ConfigManagement: 'Profile',
+  SecuritySettings: 'Profile',
+  Billing: 'Profile',
+  WalletDeposit: 'Profile',
+  OrderList: 'Profile',
+  Invite: 'Profile',
+  TicketList: 'Profile',
+  MobileTickets: 'Profile',
+  TrafficLog: 'Profile',
+  Shop: 'Profile',
+  OrderConfirm: 'Profile',
+  Payment: 'Profile',
+  GiftCardRedeem: 'Profile',
+  AnnouncementList: 'Profile'
+};
 
-  if (regionRoutes.has(routeName)) return 'Nodes';
-  if (quickStartRoutes.has(routeName)) return 'QuickStart';
-  if (usageRoutes.has(routeName)) return 'Docs';
-  if (myRoutes.has(routeName)) return 'Profile';
-  if (dashboardRoutes.has(routeName)) return 'Dashboard';
-  return 'Dashboard';
+const getActiveNavForRoute = (routeName) => {
+  return ACTIVE_NAV_BY_ROUTE[routeName] || 'Dashboard';
 };
 
 

@@ -328,7 +328,6 @@ onMounted(() => {
     border-radius: $border-radius-sm;
     box-shadow: none;
     padding: map.get($spacers, 3);
-    margin-bottom: map.get($spacers, 3);
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     
@@ -359,8 +358,6 @@ onMounted(() => {
   }
   
   .welcome-card {
-    margin-bottom: 24px;
-    
     .card-body {
       p {
         color: var(--text-tertiary);
@@ -713,7 +710,6 @@ onMounted(() => {
 
     .dashboard-card {
       padding: 14px;
-      margin-bottom: 14px;
     }
     
     .balance-card {

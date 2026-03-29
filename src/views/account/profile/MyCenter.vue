@@ -32,7 +32,12 @@
             </div>
             <div class="summary-item is-highlight">
               <span class="label">{{ $t('myCenter.accountBalance') }}</span>
-              <strong class="balance-amount">{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
+              <div class="balance-amount-row">
+                <strong v-for="item in balanceDisplayItems" :key="item.key" class="balance-amount">
+                  <span class="balance-currency">{{ item.currency }}</span>
+                  <span>{{ item.amount }}</span>
+                </strong>
+              </div>
             </div>
           </div>
 
@@ -47,11 +52,8 @@
           </div>
         </section>
 
+        <p class="section-subtitle">{{ $t('myCenter.recentLoginTitle') }}</p>
         <section class="section-block dashboard-like-card recent-login-panel">
-          <div class="recent-login-header">
-            <div class="row-title">{{ $t('myCenter.recentLoginTitle') }}</div>
-            <p>{{ $t('myCenter.recentLoginDesc') }}</p>
-          </div>
           <div class="recent-login-list">
             <div v-if="recentLoginLoading" class="recent-login-state">{{ $t('myCenter.loadingRecentLogin') }}</div>
             <div v-else-if="!recentLoginRecords.length" class="recent-login-state">{{ $t('myCenter.recentLoginEmpty') }}</div>
@@ -80,7 +82,7 @@
             </div>
             <button class="nav-row" @click="go('/shop')">
               <div class="row-main row-main-with-icon">
-                <IconRefresh :size="20" class="row-leading-icon" />
+                <IconShoppingCart :size="20" class="row-leading-icon" />
                 <div class="row-content">
                   <div class="row-title">{{ $t('myCenter.changeSubscription') }}</div>
                 </div>
@@ -321,7 +323,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { IconAlertCircle, IconBell, IconChevronRight, IconClock, IconDevices, IconGift, IconLock, IconReceipt, IconRefresh, IconX } from '@tabler/icons-vue';
+import { IconAlertCircle, IconBell, IconChevronRight, IconClock, IconDevices, IconGift, IconLock, IconReceipt, IconRefresh, IconShoppingCart, IconX } from '@tabler/icons-vue';
 import { useI18n } from 'vue-i18n';
 import { changePassword as apiChangePassword, getRecentLoginRecords, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
@@ -412,6 +414,25 @@ const subscriptionExpireText = computed(() => {
 });
 
 const formatBalance = (balance) => ((Number(balance || 0) / 100).toFixed(2));
+const balanceDisplayItems = computed(() => {
+  if (Array.isArray(userInfo.value?.wallets) && userInfo.value.wallets.length > 0) {
+    return userInfo.value.wallets
+      .filter((wallet) => wallet && wallet.currency)
+      .map((wallet, index) => ({
+        key: `${String(wallet.currency).toUpperCase()}-${index}`,
+        currency: String(wallet.currency).toUpperCase(),
+        amount: formatBalance(wallet.balance)
+      }));
+  }
+
+  return [
+    {
+      key: 'default-balance',
+      currency: currencySymbol.value,
+      amount: formatBalance(userInfo.value?.balance)
+    }
+  ];
+});
 const formatLoginTime = (timestamp) => (timestamp ? formatDate(Number(timestamp), true) : '-');
 const formatLoginLocation = (record = {}) => {
   const city = `${record.city || ''}`.trim();
@@ -651,13 +672,8 @@ $space-2: map.get($spacers, 2);
   padding: map.get($spacers, 3);
 }
 
-.recent-login-header p {
-  margin: 4px 0 0;
-  @extend %typo-body-text;
-}
-
 .recent-login-list {
-  margin-top: 12px;
+  margin-top: 0;
   border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
 }
 
@@ -885,8 +901,24 @@ $space-2: map.get($spacers, 2);
 }
 
 .balance-amount {
-  @extend %typo-metric-md;
+  font-size: 2.5rem;
+  font-weight: $font-weight-bold;
   line-height: 1.2;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.balance-amount-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.balance-currency {
+  font-size: $font-size-md;
+  color: var(--text-secondary);
 }
 
 .settings-list {

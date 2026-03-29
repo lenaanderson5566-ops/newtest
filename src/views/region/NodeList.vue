@@ -366,8 +366,6 @@ onMounted(() => {
 
   padding: map.get($spacers, 3);
 
-  margin-bottom: map.get($spacers, 3);
-
   border: 1px solid var(--border-color);
 
   transition: all 0.3s ease;
@@ -428,9 +426,6 @@ onMounted(() => {
 
 
 .welcome-card {
-
-  margin-bottom: map.get($spacers, 3);
-
   .quick-actions {
     margin-top: 12px;
     display: flex;

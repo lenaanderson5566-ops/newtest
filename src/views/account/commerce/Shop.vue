@@ -1001,8 +1001,6 @@ export default {
     background-color: transparent;
     padding: map.get($spacers, 3);
 
-    margin-bottom: 12px;
-
     .card-body p {
       @extend %typo-body-text;
       line-height: 1.6;
@@ -1028,8 +1026,6 @@ export default {
     box-shadow: none;
 
     padding: map.get($spacers, 3);
-
-    margin-bottom: 24px;
 
     border: 1px solid var(--border-color);
 

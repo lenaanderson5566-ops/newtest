@@ -830,17 +830,7 @@ onUnmounted(() => {
 
   
 
-  .welcome-card {
-
-    margin-bottom: 24px;
-
-  }
-
-  
-
   .chart-card {
-
-    margin-bottom: 24px;
 
     
 
@@ -905,8 +895,6 @@ onUnmounted(() => {
     box-shadow: none;
 
     padding: 20px;
-
-    margin-bottom: 24px;
 
     border: 1px solid var(--border-color);
 

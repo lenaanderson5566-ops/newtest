@@ -792,8 +792,6 @@ fetchTickets();
 
   padding: 20px;
 
-  margin-bottom: 24px;
-
   border: 1px solid var(--border-color);
 
   transition: all 0.3s ease;
@@ -829,10 +827,6 @@ fetchTickets();
       line-height: 1.5;
     }
   }
-}
-
-.welcome-card {
-  margin-bottom: 24px;
 }
 
 .create-ticket-wrapper {
