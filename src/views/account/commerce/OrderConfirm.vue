@@ -204,8 +204,10 @@
                 <template v-else>
                   <div class="coupon-applied-inline">
                     <span class="coupon-code-text">优惠码：{{ couponCode }}</span>
-                    <span class="coupon-applied-tag">已应用</span>
-                    <button class="btn-remove-text" @click="removeCoupon">移除</button>
+                    <div class="coupon-applied-actions">
+                      <span class="coupon-applied-tag">已应用</span>
+                      <button class="btn-remove-text" @click="removeCoupon">移除</button>
+                    </div>
                   </div>
                 </template>
                 <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
@@ -2171,11 +2173,11 @@ export default {
       .period-card {
         cursor: pointer;
 
-        border-radius: $border-radius-sm;
+        border-radius: $border-radius;
 
         overflow: hidden;
 
-        border: 2px solid var(--border-color);
+        border: 1px solid var(--border-color);
 
         transition: all 0.3s ease;
 
@@ -2654,6 +2656,14 @@ export default {
         justify-content: space-between;
         gap: 8px;
         min-height: 32px;
+      }
+
+      .coupon-applied-actions {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
       }
 
       .coupon-code-text {

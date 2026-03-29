@@ -1307,12 +1307,12 @@ export default {
     }
 
     .overview-cancel-btn {
-      height: 26px;
-      padding: 0 8px;
+      height: 30px;
+      padding: 0 10px;
       border-radius: $border-radius-sm;
-      border: 1px solid var(--border-color);
+      border: 1px solid rgba(var(--theme-color-rgb), 0.38);
       background: transparent;
-      color: var(--text-tertiary);
+      color: var(--theme-color);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1321,7 +1321,7 @@ export default {
       transition: all 0.2s ease;
 
       &:hover:not(:disabled) {
-        background-color: rgba(148, 163, 184, 0.08);
+        background-color: rgba(var(--theme-color-rgb), 0.08);
       }
 
       &:disabled {
