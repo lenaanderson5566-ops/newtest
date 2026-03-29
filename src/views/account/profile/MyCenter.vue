@@ -47,10 +47,8 @@
           </div>
         </section>
 
+        <p class="section-subtitle">{{ $t('myCenter.recentLoginTitle') }}</p>
         <section class="section-block dashboard-like-card recent-login-panel">
-          <div class="recent-login-header">
-            <div class="row-title">{{ $t('myCenter.recentLoginTitle') }}</div>
-          </div>
           <div class="recent-login-list">
             <div v-if="recentLoginLoading" class="recent-login-state">{{ $t('myCenter.loadingRecentLogin') }}</div>
             <div v-else-if="!recentLoginRecords.length" class="recent-login-state">{{ $t('myCenter.recentLoginEmpty') }}</div>
@@ -651,7 +649,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .recent-login-list {
-  margin-top: 12px;
+  margin-top: 0;
   border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
 }
 
