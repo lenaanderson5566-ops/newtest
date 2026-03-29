@@ -1806,6 +1806,17 @@ export default {
   h3 {
     margin: 0;
     @extend %typo-section-title;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    &::before {
+      content: '';
+      width: 4px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(var(--theme-color-rgb), 0.92);
+    }
   }
 }
 
@@ -1832,6 +1843,93 @@ export default {
 
 .modal-body {
   padding: 16px 20px;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+
+  &.alert-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.28);
+    border-left: 4px solid rgba(245, 158, 11, 0.92);
+  }
+
+  .alert-icon {
+    color: rgba(245, 158, 11, 0.92);
+    flex: 0 0 auto;
+  }
+
+  .alert-title {
+    @extend %typo-item-title;
+    color: rgba(180, 83, 9, 0.95);
+    margin-bottom: 2px;
+  }
+
+  .alert-desc {
+    @extend %typo-body-text;
+    color: var(--text-secondary);
+  }
+}
+
+.transfer-form,
+.withdraw-form {
+  display: grid;
+  gap: 12px;
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+}
+
+.form-label {
+  @extend %typo-item-title;
+  color: var(--text-primary);
+}
+
+.input-with-prefix {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--card-background);
+  overflow: hidden;
+}
+
+.input-prefix {
+  min-width: 64px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--text-color-rgb), 0.04);
+  border-right: 1px solid var(--border-color);
+  @extend %typo-item-title;
+}
+
+.form-control {
+  width: 100%;
+  min-width: 0;
+  height: 52px;
+  border: none;
+  background: transparent;
+  padding: 0 14px;
+  color: var(--text-primary);
+  @extend %typo-body-text;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.form-hint {
+  @extend %typo-body-text;
+  color: var(--text-secondary);
 }
 
 .modal-footer {
