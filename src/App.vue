@@ -11,7 +11,7 @@
 
         <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
         <div class="top-toolbar">
-        <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
+        <ServiceNoticeButton :has-unread="hasUnreadNotice" :aria-label="$t('menu.announcement')" />
         <LanguageSelector />
         <button
           v-if="PROFILE_CONFIG.showGiftCardRedeem"

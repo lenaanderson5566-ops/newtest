@@ -35,7 +35,7 @@
         <div v-if="showTransferCardState" class="modal-overlay" @click="showTransferCardState = false">
           <div class="modal-content" @click.stop>
             <div class="modal-header">
-              <h3>推广佣金划转至余额</h3>
+              <h3>{{ $t('invite.transfer.title') }}</h3>
               <button class="modal-close" @click="showTransferCardState = false">
                 <IconX :size="20" />
               </button>
@@ -188,7 +188,7 @@
       <!-- 邀请链接卡片 -->
       <div class="dashboard-card invite-link-card">
         <div class="card-header">
-          <h2 class="card-title invite-main-title">邀请返利</h2>
+          <h2 class="card-title invite-main-title">{{ $t('invite.title') }}</h2>
         </div>
         <div v-if="loading.inviteData" class="card-body skeleton-loading">
           <div class="skeleton-row"></div>
@@ -200,13 +200,13 @@
               <header class="invite-step-header">
                 <span class="invite-step-index">1</span>
                 <div>
-                  <h3>创建邀请链接</h3>
-                  <p>创建邀请链接并选择要分享的链接</p>
+                  <h3>{{ $t('invite.inviteLink.createCode') }}</h3>
+                  <p>{{ $t('invite.rules.share.desc') }}</p>
                 </div>
                 <button class="btn-action invite-step-create-btn" @click="createInviteCode" :disabled="creatingCode">
                   <span v-if="creatingCode" class="loading-icon"></span>
                   <IconPlus v-else class="action-icon" />
-                  <span>{{ creatingCode ? $t('invite.inviteLink.creating') : '创建邀请链接' }}</span>
+                  <span>{{ creatingCode ? $t('invite.inviteLink.creating') : $t('invite.inviteLink.createCode') }}</span>
                 </button>
               </header>
               <template v-if="inviteCodes.length > 0">
@@ -228,11 +228,11 @@
                             <div class="invite-card-header">
                               <div class="invite-card-title">
                                 <IconTicket class="card-icon" />
-                                邀请链接 {{ index + 1 }}
+                                {{ $t('invite.inviteLink.title') }} {{ index + 1 }}
                               </div>
                             </div>
                             <div class="invite-card-body">
-                              <div class="invite-link-preview" @click="copyInviteLink" title="点击复制邀请链接">
+                              <div class="invite-link-preview" @click="copyInviteLink" :title="$t('invite.inviteLink.copyLink')">
                                 {{ inviteLink || '-' }}
                               </div>
                             </div>
@@ -266,7 +266,7 @@
                   <div v-if="creatingCode" class="loading-icon"></div>
                   <span v-else class="create-btn-content">
                     <IconPlus class="btn-icon" />
-                    创建邀请链接
+                    {{ $t('invite.inviteLink.createCode') }}
                   </span>
                 </button>
               </div>
@@ -276,8 +276,8 @@
               <header class="invite-step-header">
                 <span class="invite-step-index">2</span>
                 <div>
-                  <h3>选择平台并分享</h3>
-                  <p>选择社交媒体平台快速分享邀请链接</p>
+                  <h3>{{ $t('invite.rules.share.title') }}</h3>
+                  <p>{{ $t('invite.share.shareDescription') }}</p>
                 </div>
               </header>
               <div class="share-buttons">
@@ -294,7 +294,7 @@
                   <IconBrandTelegram class="btn-icon" /> {{ $t('invite.share.telegram') }}
                 </button>
                 <button class="btn-outline" @click="copyInviteLink">
-                  <IconCopy class="btn-icon" /> 其他
+                  <IconCopy class="btn-icon" /> {{ $t('common.copy') }}
                 </button>
               </div>
             </section>
@@ -303,18 +303,18 @@
               <header class="invite-step-header">
                 <span class="invite-step-index">3</span>
                 <div>
-                  <h3>划转或提现</h3>
-                  <p>根据需求将返佣金额划转到余额或申请提现</p>
+                  <h3>{{ $t('invite.balance.title') }}</h3>
+                  <p>{{ $t('invite.balance.description') }}</p>
                 </div>
               </header>
               <p class="step-balance-text">
-                当前剩余佣金：
+                {{ $t('invite.balance.available') }}:
                 <span class="step-balance-amount">{{ baseCurrencyCode }} {{ inviteStats.availableCommission }}</span>
               </p>
               <div class="step-action-row">
                 <button class="btn-primary" @click="toggleTransferCard">
                   <IconCash class="btn-icon" />
-                  划转
+                  {{ $t('invite.balance.transferToBalance') }}
                 </button>
                 <button v-if="withdrawClose === 0" class="btn-primary withdraw-btn" @click="toggleWithdrawCard">
                   <IconReceipt class="btn-icon" />
@@ -328,7 +328,7 @@
       
       <div class="dashboard-card referral-kpi-card" v-if="!loading.inviteData">
         <div class="card-header">
-          <h2 class="card-title">邀请统计</h2>
+          <h2 class="card-title">{{ $t('invite.title') }}</h2>
         </div>
         <div class="referral-kpi-grid">
           <div class="kpi-item">

@@ -32,7 +32,7 @@
             <span>{{ option.label }}</span>
           </button>
         </div>
-        <div v-else class="no-clients-tip">当前平台暂无可用导入客户端</div>
+        <div v-else class="no-clients-tip">{{ t('dashboard.noClientsAvailable') }}</div>
       </div>
     </div>
 
@@ -184,7 +184,7 @@ const fetchSubscription = async () => {
 const openClientLink = async (clientType) => {
   if (!subscriptionUrl.value) return;
   const subscribeUrl = subscriptionUrl.value;
-  const siteName = '订阅';
+  const siteName = t('quickStartPage.subscriptionTag');
   let url = subscribeUrl;
 
   switch (clientType) {
@@ -242,7 +242,7 @@ const openClientLink = async (clientType) => {
   const copied = await preCopySubscriptionUrl();
   window.open(url, '_blank');
   if ($toast) {
-    $toast.success(copied ? '已尝试唤起客户端，订阅地址已复制到剪贴板' : t('dashboard.manualImportRequired'));
+    $toast.success(copied ? t('quickStartPage.quickImportTriggered') : t('dashboard.manualImportRequired'));
   }
 };
 onMounted(() => {
