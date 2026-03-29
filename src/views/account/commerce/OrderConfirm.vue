@@ -542,13 +542,13 @@ export default {
       const { hasPlanLimit, hasPeriodLimit, planMatched, periodMatched } =
         couponScopeValidation.value;
       if (hasPlanLimit && !planMatched && hasPeriodLimit && !periodMatched) {
-        return "当前订阅和周期均不在该优惠码适用范围内，请切换后再使用。";
+        return "当前订阅/周期不适用此优惠码";
       }
       if (hasPlanLimit && !planMatched) {
-        return "当前订阅不在该优惠码适用范围内，请切换订阅后再使用。";
+        return "当前订阅不适用此优惠码";
       }
       if (hasPeriodLimit && !periodMatched) {
-        return "当前周期不在该优惠码适用范围内，请切换周期后再使用。";
+        return "当前周期不适用此优惠码";
       }
       return "";
     });
@@ -2596,11 +2596,11 @@ export default {
     line-height: 1.4;
 
     &.error {
-      color: var(--error-color);
+      color: var(--text-tertiary);
     }
 
     &.warning {
-      color: var(--warning-color);
+      color: var(--text-tertiary);
     }
   }
 
@@ -3218,7 +3218,7 @@ export default {
 
 .pending-order-modal.payment-modal .pending-order-header .payment-amount-hint {
   margin-top: 4px;
-  font-size: $font-size-sm;
+  font-size: $font-size-md;
   color: var(--text-secondary);
   font-weight: $font-weight-medium;
 }
