@@ -32,7 +32,12 @@
             </div>
             <div class="summary-item is-highlight">
               <span class="label">{{ $t('myCenter.accountBalance') }}</span>
-              <strong class="balance-amount">{{ currencySymbol }}{{ formatBalance(userInfo.balance) }}</strong>
+              <div class="balance-amount-row">
+                <strong v-for="item in balanceDisplayItems" :key="item.key" class="balance-amount">
+                  <span class="balance-currency">{{ item.currency }}</span>
+                  <span>{{ item.amount }}</span>
+                </strong>
+              </div>
             </div>
           </div>
 
@@ -409,6 +414,25 @@ const subscriptionExpireText = computed(() => {
 });
 
 const formatBalance = (balance) => ((Number(balance || 0) / 100).toFixed(2));
+const balanceDisplayItems = computed(() => {
+  if (Array.isArray(userInfo.value?.wallets) && userInfo.value.wallets.length > 0) {
+    return userInfo.value.wallets
+      .filter((wallet) => wallet && wallet.currency)
+      .map((wallet, index) => ({
+        key: `${String(wallet.currency).toUpperCase()}-${index}`,
+        currency: String(wallet.currency).toUpperCase(),
+        amount: formatBalance(wallet.balance)
+      }));
+  }
+
+  return [
+    {
+      key: 'default-balance',
+      currency: currencySymbol.value,
+      amount: formatBalance(userInfo.value?.balance)
+    }
+  ];
+});
 const formatLoginTime = (timestamp) => (timestamp ? formatDate(Number(timestamp), true) : '-');
 const formatLoginLocation = (record = {}) => {
   const city = `${record.city || ''}`.trim();
@@ -877,8 +901,24 @@ $space-2: map.get($spacers, 2);
 }
 
 .balance-amount {
-  @extend %typo-metric-md;
+  font-size: 2.5rem;
+  font-weight: $font-weight-bold;
   line-height: 1.2;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.balance-amount-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.balance-currency {
+  font-size: $font-size-md;
+  color: var(--text-secondary);
 }
 
 .settings-list {
