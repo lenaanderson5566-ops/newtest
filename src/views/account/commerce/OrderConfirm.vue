@@ -178,7 +178,7 @@
               </div>
 
               <div v-if="showCouponInputSection" class="coupon-merge-block compact">
-                <template v-if="!couponApplied">
+                <template v-if="!effectiveCouponApplied">
                   <div class="coupon-input">
                     <input
                       type="text"
@@ -209,6 +209,7 @@
                   </div>
                 </template>
                 <div v-if="couponErrorMessage" class="coupon-feedback error">{{ couponErrorMessage }}</div>
+                <div v-else-if="couponScopeHint" class="coupon-feedback warning">{{ couponScopeHint }}</div>
               </div>
 
               <!-- 骨架屏 -->
@@ -479,6 +480,62 @@ export default {
     const verifying = ref(false);
 
     const couponInfo = ref(null);
+    const normalizeCouponScopeList = (list = []) => {
+      if (!Array.isArray(list)) return [];
+      return list
+        .map((item) => String(item).trim())
+        .filter((item) => item !== "");
+    };
+
+    const getCouponScopeValidation = () => {
+      if (!couponInfo.value || !plan.value?.id || !selectedPriceType.value) {
+        return {
+          applicable: true,
+          hasPlanLimit: false,
+          hasPeriodLimit: false,
+        };
+      }
+
+      const limitPlanIds = normalizeCouponScopeList(couponInfo.value.limit_plan_ids);
+      const limitPeriods = normalizeCouponScopeList(couponInfo.value.limit_period);
+      const currentPlanId = String(plan.value.id);
+      const currentPeriod = String(selectedPriceType.value);
+
+      const hasPlanLimit = limitPlanIds.length > 0;
+      const hasPeriodLimit = limitPeriods.length > 0;
+      const planMatched = !hasPlanLimit || limitPlanIds.includes(currentPlanId);
+      const periodMatched = !hasPeriodLimit || limitPeriods.includes(currentPeriod);
+
+      return {
+        applicable: planMatched && periodMatched,
+        hasPlanLimit,
+        hasPeriodLimit,
+        planMatched,
+        periodMatched,
+      };
+    };
+
+    const couponScopeValidation = computed(() => getCouponScopeValidation());
+    const effectiveCouponApplied = computed(
+      () => couponApplied.value && couponScopeValidation.value.applicable
+    );
+    const couponScopeHint = computed(() => {
+      if (!couponApplied.value || couponScopeValidation.value.applicable) {
+        return "";
+      }
+      const { hasPlanLimit, hasPeriodLimit, planMatched, periodMatched } =
+        couponScopeValidation.value;
+      if (hasPlanLimit && !planMatched && hasPeriodLimit && !periodMatched) {
+        return "当前订阅和周期均不在该优惠码适用范围内，请切换后再使用。";
+      }
+      if (hasPlanLimit && !planMatched) {
+        return "当前订阅不在该优惠码适用范围内，请切换订阅后再使用。";
+      }
+      if (hasPeriodLimit && !periodMatched) {
+        return "当前周期不在该优惠码适用范围内，请切换周期后再使用。";
+      }
+      return "";
+    });
 
     const paymentMethods = ref([]);
     const selectedMethod = ref(null);
@@ -552,7 +609,7 @@ export default {
         const amount = Number(orderPreview.value?.coupon_discount_amount || 0);
         return Number.isFinite(amount) ? Math.max(0, Math.abs(amount)) : 0;
       }
-      if (!couponApplied.value || !couponInfo.value) return 0;
+      if (!effectiveCouponApplied.value || !couponInfo.value) return 0;
 
       if (typeof couponInfo.value.coupon_discount_amount === 'number') {
         return Math.max(0, Number(couponInfo.value.coupon_discount_amount));
@@ -677,7 +734,7 @@ export default {
           plan_id: Number(plan.value?.id),
           period: selectedPriceType.value,
         };
-        if (couponApplied.value && couponCode.value) {
+        if (effectiveCouponApplied.value && couponCode.value) {
           payload.coupon_code = couponCode.value;
         }
         const response = await fetchOrderPreview(payload);
@@ -876,7 +933,6 @@ export default {
       plan.value = { ...targetPlan };
       const firstValidPriceType = Object.keys(availablePrices.value)[0];
       selectedPriceType.value = firstValidPriceType || "";
-      removeCoupon({ silent: true });
     };
 
     const selectPaymentMethod = (methodId) => {
@@ -968,6 +1024,10 @@ export default {
           couponApplied.value = true;
 
           couponInfo.value = response.data;
+          if (!couponScopeValidation.value.applicable) {
+            couponErrorMessage.value = couponScopeHint.value || t("order.coupon_invalid");
+            showToast(couponErrorMessage.value, "warning");
+          }
 
           if (response.message) {
             showToast(response.message, "success");
@@ -1253,7 +1313,7 @@ export default {
           period: selectedPriceType.value,
         };
 
-        if (couponApplied.value && couponCode.value && couponInfo.value) {
+        if (effectiveCouponApplied.value && couponCode.value && couponInfo.value) {
           orderData.coupon_code = couponCode.value;
         }
 
@@ -1453,6 +1513,9 @@ export default {
       () => [plan.value?.id, selectedPriceType.value, lockedPendingOrder.value?.trade_no],
       () => {
         showDiscountDetails.value = false;
+        if (couponApplied.value) {
+          couponErrorMessage.value = couponScopeHint.value;
+        }
       }
     );
 
@@ -1533,8 +1596,10 @@ export default {
       couponCode,
 
       couponApplied,
+      effectiveCouponApplied,
 
       couponErrorMessage,
+      couponScopeHint,
 
       verifying,
 
@@ -2422,6 +2487,10 @@ export default {
 
     &.error {
       color: var(--error-color);
+    }
+
+    &.warning {
+      color: var(--warning-color);
     }
   }
 
