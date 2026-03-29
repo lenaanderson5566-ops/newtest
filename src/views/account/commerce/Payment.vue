@@ -155,20 +155,6 @@
                 </div>
               </div>
 
-              <div
-                class="info-row"
-                v-if="
-                  periodDiscount.showDiscount &&
-                  orderDetail.period !== 'deposit'
-                "
-              >
-                <div class="info-label">{{ $t("shop.plan.discount.relative") }}</div>
-                <div class="info-value">
-                  {{ periodDiscount.periodName }} {{ periodDiscount.discountPercentage }}% ，{{ $t("shop.plan.discount.savings") }}
-                  {{ formatAmount(periodDiscount.savingsAmountInCents) }}
-                </div>
-              </div>
-
               <div class="info-row discount-row" v-if="discountBreakdownVisible">
                 <div class="info-label">优惠金额</div>
                 <div class="info-value discount">-{{ formatAmount(discountAmount) }}</div>
@@ -581,63 +567,6 @@ export default {
         return 0;
       }
       return orderDetail.value.total_amount + handleFeeAmount.value;
-    });
-
-    const periodDiscount = computed(() => {
-      const plan = orderDetail.value?.plan;
-      const period = orderDetail.value?.period;
-      if (
-        !plan ||
-        !period ||
-        period === "deposit" ||
-        period === "onetime_price"
-      ) {
-        return {
-          showDiscount: false,
-          periodName: "",
-          discountPercentage: 0,
-          savingsAmountInCents: 0,
-        };
-      }
-      const monthPrice = plan.month_price;
-      const selectedPrice = plan[period];
-      const monthCountMap = {
-        quarter_price: 3,
-        half_year_price: 6,
-        year_price: 12,
-        two_year_price: 24,
-        three_year_price: 36,
-      };
-      const months = monthCountMap[period];
-      if (!monthPrice || !selectedPrice || !months) {
-        return {
-          showDiscount: false,
-          periodName: "",
-          discountPercentage: 0,
-          savingsAmountInCents: 0,
-        };
-      }
-      const totalMonthCost = monthPrice * months;
-      if (totalMonthCost <= selectedPrice) {
-        return {
-          showDiscount: false,
-          periodName: "",
-          discountPercentage: 0,
-          savingsAmountInCents: 0,
-        };
-      }
-      const savingsAmountInCents = totalMonthCost - selectedPrice;
-      const discountPercentage = Math.round(
-        (savingsAmountInCents / totalMonthCost) * 100
-      );
-      return {
-        showDiscount: discountPercentage > 1,
-        periodName: t(
-          `shop.plan.price_options.${period.replace("_price", "")}`
-        ),
-        discountPercentage,
-        savingsAmountInCents,
-      };
     });
 
     const fetchOrderDetail = async () => {
@@ -1229,7 +1158,6 @@ export default {
       closePaymentModal,
       handleFeeAmount,
       totalWithFee,
-      periodDiscount,
       couponDiscountAmount,
       userDiscountAmount,
       discountAmount,
@@ -1474,9 +1402,30 @@ export default {
     }
 
     .order-info {
+      display: grid;
+      gap: 8px;
+
+      .info-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 0;
+      }
+
       .info-label,
       .info-value {
+        font-size: $font-size-sm;
         color: var(--text-primary);
+      }
+
+      .info-label {
+        color: var(--text-tertiary);
+      }
+
+      .info-value {
+        text-align: right;
+        font-weight: $font-weight-medium;
       }
 
       .info-value.discount {
@@ -1490,7 +1439,7 @@ export default {
       .info-row.final-row {
         border-top: 1px solid var(--border-color);
         padding-top: 10px;
-        margin-top: 8px;
+        margin-top: 6px;
 
         .info-label {
           color: var(--text-primary);

@@ -2352,7 +2352,7 @@ export default {
     }
 
     .btn-verify {
-      height: 40px;
+      height: 36px;
 
       padding: 0 14px;
 
