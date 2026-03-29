@@ -432,63 +432,32 @@ watch(locale, () => {
 }
 
 .order-table-container {
-  overflow-x: auto; 
-  background-color: #fff;
-  border-radius: $border-radius-sm;
-  box-shadow: none;
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-  
-  &:hover {
-    box-shadow: none;
-    border-color: rgba(var(--theme-color-rgb), 0.3);
-  }
+  overflow-x: auto;
 }
 
 .order-table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  table-layout: fixed; 
+  border-collapse: collapse;
+  font-size: $font-size-sm;
   
   th, td {
-    padding: 0.48rem 0.42rem;
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 6px;
     text-align: left;
     white-space: nowrap;
-    word-break: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
     vertical-align: middle;
   }
   
   th {
-    background-color: rgba(var(--theme-color-rgb), 0.05);
     font-weight: $font-weight-semibold;
-    font-size: $font-size-sm;
     color: var(--text-primary);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    
-    &:first-child {
-      border-top-left-radius: 12px;
-    }
-    
-    &:last-child {
-      border-top-right-radius: 12px;
-    }
   }
   
   tbody tr {
-    border-bottom: 1px solid var(--border-color);
-    transition: background-color 0.2s ease;
-    
-    &:hover {
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-    }
-    
     &:last-child {
-      border-bottom: none;
+      td {
+        border-bottom: none;
+      }
     }
   }
   
@@ -590,29 +559,18 @@ watch(locale, () => {
 
 @media (max-width: #{$bp-md}) {
   .order-table {
-    width: 100%;
-    table-layout: auto;
-
-    th:nth-child(1), td:nth-child(1) { width: 92px; }
-    th:nth-child(3), td:nth-child(3) { width: 86px; }
-    th:nth-child(4), td:nth-child(4) { width: 72px; text-align: center; }
-    th:nth-child(5), td:nth-child(5) { width: 44px; text-align: center; }
-
     th, td {
-      padding: 0.28rem 0.22rem;
-      line-height: 1.15;
+      padding: 8px 6px;
     }
 
     .actions {
-      gap: 0.18rem;
-      justify-content: center;
+      gap: 0.25rem;
 
       .action-button {
-        min-width: 24px;
-        width: 24px;
-        height: 24px;
-        padding: 0;
-        flex: 0 0 24px;
+        min-width: 48px;
+        height: 28px;
+        padding: 0 6px;
+        flex: 0 0 auto;
       }
 
       .action-button span {
