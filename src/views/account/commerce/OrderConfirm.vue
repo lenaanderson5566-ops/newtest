@@ -860,6 +860,7 @@ export default {
     const selectPriceType = (type) => {
       if (isSelectionLocked.value) return;
       selectedPriceType.value = type;
+      removeCoupon({ silent: true });
     };
 
     const isCurrentPlanOption = (targetPlan) => {
@@ -957,12 +958,26 @@ export default {
 
     const verifyCoupon = async () => {
       if (!couponCode.value || verifying.value) return;
+      if (!plan.value?.id) {
+        couponErrorMessage.value = t("order.no_plan_selected");
+        showToast(couponErrorMessage.value, "error");
+        return;
+      }
+      if (!selectedPriceType.value) {
+        couponErrorMessage.value = t("order.select_period");
+        showToast(couponErrorMessage.value, "error");
+        return;
+      }
 
       verifying.value = true;
       couponErrorMessage.value = "";
 
       try {
-        const response = await checkCoupon(couponCode.value, plan.value.id);
+        const response = await checkCoupon(
+          couponCode.value,
+          Number(plan.value.id),
+          selectedPriceType.value
+        );
 
         if (response.data) {
           couponApplied.value = true;
