@@ -753,7 +753,6 @@ export default {
 
   .dashboard-card {
     padding: 22px;
-    margin-bottom: var(--global-card-gap);
 
     .card-header {
       margin-bottom: 10px;
@@ -974,7 +973,6 @@ export default {
   .account-container {
     .dashboard-card {
       padding: 20px;
-      margin-bottom: 16px;
     }
 
     .stats-grid,
