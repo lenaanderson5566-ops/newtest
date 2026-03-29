@@ -1866,7 +1866,7 @@ export default {
 
 .step-balance-amount {
   margin-left: 4px;
-  font-size: $font-size-3xl;
+  font-size: $font-size-2xl;
   font-weight: $font-weight-bold;
   color: rgba(var(--theme-color-rgb), 0.95);
 }
