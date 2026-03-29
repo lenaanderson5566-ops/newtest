@@ -77,7 +77,7 @@
             </div>
             <button class="nav-row" @click="go('/shop')">
               <div class="row-main row-main-with-icon">
-                <IconRefresh :size="20" class="row-leading-icon" />
+                <IconShoppingCart :size="20" class="row-leading-icon" />
                 <div class="row-content">
                   <div class="row-title">{{ $t('myCenter.changeSubscription') }}</div>
                 </div>
@@ -318,7 +318,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { IconAlertCircle, IconBell, IconChevronRight, IconClock, IconDevices, IconGift, IconLock, IconReceipt, IconRefresh, IconX } from '@tabler/icons-vue';
+import { IconAlertCircle, IconBell, IconChevronRight, IconClock, IconDevices, IconGift, IconLock, IconReceipt, IconRefresh, IconShoppingCart, IconX } from '@tabler/icons-vue';
 import { useI18n } from 'vue-i18n';
 import { changePassword as apiChangePassword, getRecentLoginRecords, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
