@@ -43,7 +43,7 @@
           <div class="balance-container">
             <div class="balance-info">
               <div class="balance-label">{{ $t('invite.balance.available') }}</div>
-              <div class="balance-value">{{ currencySymbol }}{{ inviteStats.availableCommission }}</div>
+              <div class="balance-value">{{ baseCurrencyCode }} {{ inviteStats.availableCommission }}</div>
               <div class="balance-description">{{ $t('invite.balance.description') }}</div>
             </div>
             <div class="balance-actions">
@@ -72,11 +72,11 @@
           </div>
           <div class="kpi-item">
             <div class="kpi-label">{{ $t('invite.stats.pendingCommission') }}</div>
-            <div class="kpi-value">{{ currencySymbol }}{{ inviteStats.pendingCommission }}</div>
+            <div class="kpi-value">{{ baseCurrencyCode }} {{ inviteStats.pendingCommission }}</div>
           </div>
           <div class="kpi-item">
             <div class="kpi-label">{{ $t('invite.stats.availableCommission') }}</div>
-            <div class="kpi-value">{{ currencySymbol }}{{ inviteStats.validCommission }}</div>
+            <div class="kpi-value">{{ baseCurrencyCode }} {{ inviteStats.validCommission }}</div>
           </div>
         </div>
       </div>
@@ -104,7 +104,7 @@
                 <div class="form-group">
                   <label class="form-label">{{ $t('invite.transfer.amount') }}</label>
                   <div class="input-with-prefix">
-                    <div class="input-prefix">{{ currencySymbol }}</div>
+                    <div class="input-prefix">{{ baseCurrencyCode }}</div>
                     <input 
                       type="number" 
                       v-model="transferAmount" 
@@ -116,7 +116,7 @@
                     />
                   </div>
                   <div class="form-hint">
-                    {{ $t('invite.transfer.availableCommission') }}: {{ currencySymbol }}{{ inviteStats.availableCommission }}
+                    {{ $t('invite.transfer.availableCommission') }}: {{ baseCurrencyCode }} {{ inviteStats.availableCommission }}
                   </div>
                   <div v-if="transferError" class="error-message">{{ transferError }}</div>
                 </div>
@@ -197,7 +197,7 @@
                 <div class="form-group">
                   <label class="form-label">{{ $t('invite.withdraw.amount') }}</label>
                   <div class="input-with-prefix">
-                    <div class="input-prefix">{{ currencySymbol }}</div>
+                    <div class="input-prefix">{{ baseCurrencyCode }}</div>
                     <input 
                       type="number" 
                       v-model="withdrawAmount" 
@@ -209,9 +209,9 @@
                     />
                   </div>
                   <div class="form-hint">
-                    {{ $t('invite.withdraw.availableCommission') }}: {{ currencySymbol }}{{ inviteStats.availableCommission }}
+                    {{ $t('invite.withdraw.availableCommission') }}: {{ baseCurrencyCode }} {{ inviteStats.availableCommission }}
                     <span v-if="minWithdrawAmount > 0" class="min-withdraw-hint">
-                      ({{ $t('invite.withdraw.minWithdrawAmount') }}: {{ currencySymbol }}{{ minWithdrawAmount }})
+                      ({{ $t('invite.withdraw.minWithdrawAmount') }}: {{ baseCurrencyCode }} {{ minWithdrawAmount }})
                     </span>
                   </div>
                 </div>
@@ -396,8 +396,8 @@
               <tbody>
                 <tr v-for="record in paginatedRecords" :key="record.id">
                     <td>{{ formatDate(record.created_at) }}</td>
-                    <td>{{ currencySymbol }}{{ record.amount || '0.00' }}</td>
-                    <td>{{ currencySymbol }}{{ record.commission_amount }}</td>
+                    <td>{{ baseCurrencyCode }} {{ record.amount || '0.00' }}</td>
+                    <td>{{ baseCurrencyCode }} {{ record.commission_amount }}</td>
                     <td>
                       <span class="status-badge" :class="record.commission_status === 1 ? 'confirmed' : 'pending'">
                         {{ record.commission_status === 1 ? $t('invite.records.status.confirmed') : $t('invite.records.status.pending') }}
@@ -559,8 +559,8 @@ export default {
     
     const creatingCode = ref(false);
     
-    const currency = ref('CNY');
-    const currencySymbol = ref('¥');
+    const currency = ref('USD');
+    const baseCurrencyCode = computed(() => String(currency.value || 'USD').toUpperCase());
     
     const inviteCodes = ref([]);
     const selectedCodeIndex = ref(0);
@@ -1137,8 +1137,7 @@ export default {
       try {
         const res = await getCommissionConfig();
         if (res.data) {
-          currency.value = res.data.currency || 'CNY';
-          currencySymbol.value = res.data.currency_symbol || '¥';
+          currency.value = res.data.currency || 'USD';
           
           withdrawClose.value = Number(res.data.withdraw_close);
           
@@ -1299,7 +1298,7 @@ export default {
       
       if (amount < minWithdrawAmount.value && minWithdrawAmount.value > 0) {
         withdrawError.value = t('invite.withdraw.belowMinAmount', { 
-          amount: currencySymbol.value + minWithdrawAmount.value + currency.value 
+          amount: `${baseCurrencyCode.value} ${minWithdrawAmount.value}`
         });
         showToast(withdrawError.value, 'error');
         return;
@@ -1461,7 +1460,7 @@ export default {
       inviteRecords,
       inviteLink,
       currency,
-      currencySymbol,
+      baseCurrencyCode,
       copyInviteLink,
       createInviteCode,
       shareToWechat,
@@ -1549,6 +1548,10 @@ export default {
 
 .card-header {
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .card-title {
@@ -1562,7 +1565,7 @@ export default {
 }
 
 .balance-value {
-  font-size: $font-size-xl;
+  font-size: $font-size-2xl;
   font-weight: $font-weight-bold;
   color: var(--theme-color);
 }
@@ -1584,6 +1587,21 @@ export default {
   justify-content: center;
   gap: 6px;
   padding: 0 10px;
+}
+
+.modal-footer .btn-cancel {
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-primary);
+  min-width: 92px;
+}
+
+.modal-footer .btn-submit,
+.modal-footer .btn-primary.confirm-btn {
+  border: none;
+  background: rgba(var(--theme-color-rgb), 0.92);
+  color: var(--text-on-dark-primary);
+  min-width: 92px;
 }
 
 .referral-kpi-grid {
@@ -1724,9 +1742,16 @@ export default {
 }
 
 .share-buttons {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 8px;
+
+  .btn-outline {
+    width: auto;
+    min-width: 104px;
+    padding: 0 12px;
+  }
 }
 
 .records-table-wrapper {
@@ -1744,6 +1769,8 @@ export default {
   border-bottom: 1px solid var(--border-color);
   padding: 8px 6px;
   white-space: nowrap;
+  text-align: left;
+  vertical-align: middle;
 }
 
 .modal-overlay {
@@ -1793,6 +1820,16 @@ export default {
   justify-content: center;
 }
 
+.no-invite-code {
+  display: grid;
+  gap: 10px;
+
+  .create-code-btn {
+    justify-self: flex-end;
+    width: auto;
+  }
+}
+
 .modal-body {
   padding: 16px 20px;
 }
@@ -1824,6 +1861,10 @@ export default {
     padding: 14px;
   }
 
+  .balance-value {
+    font-size: $font-size-3xl;
+  }
+
   .dashboard-card {
     padding: 16px;
   }
@@ -1836,8 +1877,6 @@ export default {
     grid-template-columns: 1fr 180px;
   }
 
-  .share-buttons {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+  .share-buttons { justify-content: flex-start; }
 }
 </style>
