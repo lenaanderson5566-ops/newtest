@@ -45,16 +45,6 @@
               <div class="balance-label">{{ $t('invite.balance.available') }}</div>
               <div class="balance-value">{{ baseCurrencyCode }} {{ inviteStats.availableCommission }}</div>
             </div>
-            <div class="balance-actions">
-              <button class="btn-primary" @click="toggleTransferCard">
-                <IconCash class="btn-icon" />
-                划转
-              </button>
-              <button v-if="withdrawClose === 0" class="btn-primary withdraw-btn" @click="toggleWithdrawCard">
-                <IconReceipt class="btn-icon" />
-                {{ $t('invite.balance.withdraw') }}
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -218,13 +208,6 @@
       <div class="dashboard-card invite-link-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('invite.inviteLink.title') }}</h2>
-          <div class="card-actions">
-            <button class="btn-action" @click="createInviteCode" :disabled="creatingCode">
-              <div v-if="creatingCode" class="loading-icon"></div>
-              <IconPlus v-else class="action-icon" />
-              {{ creatingCode ? $t('invite.inviteLink.creating') : $t('invite.inviteLink.createCode') }}
-            </button>
-          </div>
         </div>
         <div v-if="loading.inviteData" class="card-body skeleton-loading">
           <div class="skeleton-row"></div>
@@ -236,9 +219,14 @@
               <header class="invite-step-header">
                 <span class="invite-step-index">1</span>
                 <div>
-                  <h3>{{ $t('invite.inviteLink.createCode') }} & {{ $t('invite.inviteLink.inviteCode') }}</h3>
-                  <p>创建邀请码并选择要分享的邀请链接</p>
+                  <h3>创建邀请链接</h3>
+                  <p>创建邀请链接并选择要分享的链接</p>
                 </div>
+                <button class="btn-action invite-step-create-btn" @click="createInviteCode" :disabled="creatingCode">
+                  <div v-if="creatingCode" class="loading-icon"></div>
+                  <IconPlus v-else class="action-icon" />
+                  {{ creatingCode ? $t('invite.inviteLink.creating') : '创建邀请链接' }}
+                </button>
               </header>
               <template v-if="inviteCodes.length > 0">
                 <div class="invite-codes-wrapper">
@@ -259,7 +247,7 @@
                             <div class="invite-card-header">
                               <div class="invite-card-title">
                                 <IconTicket class="card-icon" />
-                                {{ $t('invite.inviteLink.inviteCode') }} {{ index + 1 }}
+                                邀请链接 {{ index + 1 }}
                               </div>
                             </div>
                             <div class="invite-card-body">
@@ -314,7 +302,7 @@
                   <div v-if="creatingCode" class="loading-icon"></div>
                   <span v-else class="create-btn-content">
                     <IconPlus class="btn-icon" />
-                    {{ $t('invite.inviteLink.createCode') }}
+                    创建邀请链接
                   </span>
                 </button>
               </div>
@@ -352,6 +340,7 @@
                   <p>根据需求将返佣金额划转到余额或申请提现</p>
                 </div>
               </header>
+              <p class="step-balance-text">当前剩余佣金：{{ baseCurrencyCode }} {{ inviteStats.availableCommission }}</p>
               <div class="step-action-row">
                 <button class="btn-primary" @click="toggleTransferCard">划转</button>
                 <button v-if="withdrawClose === 0" class="btn-primary withdraw-btn" @click="toggleWithdrawCard">
@@ -538,7 +527,6 @@ import {
   IconBrandWechat,
   IconBrandTwitter,
   IconBrandTelegram,
-  IconCash,
   IconPlus,
   IconBrandQq,
   IconLink,
@@ -548,7 +536,6 @@ import {
   IconChevronDown,
   IconTicket,
   IconAlertTriangle,
-  IconReceipt,
 } from '@tabler/icons-vue';
 
 export default {
@@ -558,7 +545,6 @@ export default {
     IconBrandWechat,
     IconBrandTwitter,
     IconBrandTelegram,
-    IconCash,
     IconPlus,
     IconBrandQq,
     IconLink,
@@ -568,7 +554,6 @@ export default {
     IconChevronDown,
     IconTicket,
     IconAlertTriangle,
-    IconReceipt,
   },
   setup() {
     const { showToast } = useToast();
@@ -1835,6 +1820,14 @@ export default {
     @extend %typo-body-text;
     color: var(--text-secondary);
   }
+
+  .invite-step-create-btn {
+    margin-left: auto;
+    width: auto;
+    min-width: 0;
+    padding: 0 10px;
+    height: 34px;
+  }
 }
 
 .invite-step-index {
@@ -1854,6 +1847,12 @@ export default {
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 8px;
+}
+
+.step-balance-text {
+  margin: 0 0 8px;
+  @extend %typo-item-title;
+  color: var(--text-primary);
 }
 
 .records-table-wrapper {
