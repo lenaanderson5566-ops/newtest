@@ -940,7 +940,7 @@ export default {
       }
 
       const formatWithCurrency = (amount, currencyCode) =>
-        `${(Number(amount) / 100).toFixed(2)}${currencyCode}`;
+        `${currencyCode} ${(Number(amount) / 100).toFixed(2)}`;
 
       if (Number.isFinite(paymentAmount) && paymentAmount > 0 && paymentCurrency) {
         return `${formatWithCurrency(orderAmount, orderCurrency)} ≈ ${formatWithCurrency(paymentAmount, paymentCurrency)}`;
