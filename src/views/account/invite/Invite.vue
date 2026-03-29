@@ -1630,6 +1630,7 @@ export default {
   grid-template-columns: 30px 1fr 30px;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .invite-cards-nav {
@@ -1645,6 +1646,8 @@ export default {
 
 .invite-cards-wrapper {
   overflow: hidden;
+  width: 100%;
+  min-width: 0;
 }
 
 .invite-cards {
@@ -1652,6 +1655,7 @@ export default {
   gap: 0;
   transition: transform 0.3s ease;
   will-change: transform;
+  width: 100%;
 }
 
 .invite-card {
@@ -1684,6 +1688,8 @@ export default {
 
 .invite-link-preview {
   margin-top: 10px;
+  width: 100%;
+  display: block;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: rgba(255, 255, 255, 0.08);
@@ -1755,6 +1761,30 @@ export default {
   .invite-cards-wrapper {
     max-width: 980px;
     margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .invite-step-header {
+    gap: 10px;
+
+    .invite-step-create-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .invite-cards-container {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .invite-cards-nav {
+    display: none;
+  }
+
+  .invite-card-inner {
+    padding: 12px;
   }
 }
 
