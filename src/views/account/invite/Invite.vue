@@ -49,7 +49,7 @@
             <div class="balance-actions">
               <button class="btn-primary" @click="toggleTransferCard">
                 <IconCash class="btn-icon" />
-                {{ $t('invite.balance.transferToBalance') }}
+                划转
               </button>
               <button v-if="withdrawClose === 0" class="btn-primary withdraw-btn" @click="toggleWithdrawCard">
                 <IconReceipt class="btn-icon" />
@@ -86,7 +86,7 @@
         <div v-if="showTransferCardState" class="modal-overlay" @click="showTransferCardState = false">
           <div class="modal-content" @click.stop>
             <div class="modal-header">
-              <h3>{{ $t('invite.transfer.title') }}</h3>
+              <h3>推广佣金划转至余额</h3>
               <button class="modal-close" @click="showTransferCardState = false">
                 <IconX :size="20" />
               </button>
@@ -807,7 +807,8 @@ export default {
 
       .stats-info {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: flex-start;
         gap: 6px;
 
         .stats-value {
@@ -888,12 +889,12 @@ export default {
     }
 
     .balance-actions {
-      justify-content: flex-end;
+      justify-content: flex-start;
       align-items: center;
       gap: 8px;
 
       .btn-primary {
-        min-width: 122px;
+        min-width: 0;
         height: 40px;
         padding: 0 14px;
       }
@@ -996,10 +997,11 @@ export default {
 
     .balance-container {
       .balance-actions {
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: flex-start;
 
         .btn-primary {
-          width: 100%;
+          width: auto;
         }
       }
     }
@@ -1571,9 +1573,16 @@ export default {
 }
 
 .balance-actions {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 8px;
+
+  .btn-primary {
+    width: auto;
+    min-width: 0;
+    padding: 0 14px;
+  }
 }
 
 .btn-primary,
