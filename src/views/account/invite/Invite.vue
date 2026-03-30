@@ -262,13 +262,6 @@
               </template>
               <div v-else class="no-invite-code">
                 <p>{{ $t('invite.inviteLink.noInviteCode') }}</p>
-                <button class="btn-primary create-code-btn" @click="createInviteCode" :disabled="creatingCode">
-                  <div v-if="creatingCode" class="loading-icon"></div>
-                  <span v-else class="create-btn-content">
-                    <IconPlus class="btn-icon" />
-                    {{ $t('invite.inviteLink.createCode') }}
-                  </span>
-                </button>
               </div>
             </section>
 
@@ -1977,12 +1970,16 @@ export default {
 }
 
 .no-invite-code {
-  display: grid;
-  gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  text-align: center;
 
-  .create-code-btn {
-    justify-self: flex-end;
-    width: auto;
+  p {
+    margin: 0;
+    font-size: $font-size-lg;
+    color: var(--text-secondary);
   }
 }
 
