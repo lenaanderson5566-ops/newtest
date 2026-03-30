@@ -39,22 +39,30 @@
 
       <!-- 无订阅解锁页 -->
       <div v-else-if="!hasActivePlan" class="nodes-no-plan">
-        <div class="no-plan-hero">
-          <div class="hero-copy">
-            <span class="hero-status-tag">订单待完成</span>
-            <h2>继续完成支付，激活服务</h2>
-            <p>完成支付后即可下载客户端并开始使用</p>
-            <div class="hero-actions">
-              <button class="hero-btn primary" @click="goToShop">继续支付</button>
-              <button class="hero-btn secondary" @click="goToQuickStart">查看教程</button>
-            </div>
-            <div class="hero-hint">支持多平台 · 一键导入配置</div>
-          </div>
-          <div class="hero-graphic" aria-hidden="true">
-            <div class="device device-laptop"></div>
-            <div class="device device-tablet"></div>
-            <div class="device device-phone"></div>
-          </div>
+        <div class="no-plan-head">
+          <h2>{{ $t('lines.noPlan.coverageTitle') }}</h2>
+          <p>{{ $t('lines.noPlan.coverageDesc') }}</p>
+        </div>
+
+        <div class="no-plan-map">
+          <svg class="world-map-svg" viewBox="0 0 1000 420" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+            <g class="continent-layer">
+              <path d="M96 168l34-26 44 10 28-18 37 16 40-8 22 20 31 4 28 22-16 24-34 10-21 27-37 6-28-20-20-26-35-6-29-20z" />
+              <path d="M364 126l32-18 48 8 23 18 38 4 30 20 22-10 26 12-8 24-27 16-4 24-40 8-27 22-38-8-13-26 6-32-28-20z" />
+              <path d="M502 240l34 12 29-8 26 14 10 30-18 20-38 0-36-18-19-22z" />
+              <path d="M598 138l42-20 58 6 42-16 46 20 8 28-28 22-38-2-34 10-27 22-45-6-27-24z" />
+              <path d="M744 220l29-18 36 8 24 22-8 24-27 12-30-10-20-20z" />
+              <path d="M802 296l30-16 24 10 12 20-12 16-30 4-24-12z" />
+            </g>
+            <g class="grid-lines">
+              <path d="M0 110h1000M0 210h1000M0 310h1000" />
+              <path d="M170 0v420M340 0v420M510 0v420M680 0v420M850 0v420" />
+            </g>
+          </svg>
+          <div class="map-glow region-jp">JP</div>
+          <div class="map-glow region-sg">SG</div>
+          <div class="map-glow region-hk">HK</div>
+          <div class="map-glow region-us">US</div>
         </div>
 
         <div class="region-lock-grid">
@@ -69,23 +77,6 @@
           <button class="cta-btn primary" @click="goToShop">{{ $t('lines.noPlan.subscribeNow') }}</button>
           <button class="cta-btn secondary" @click="goToShop">{{ $t('lines.noPlan.comparePlans') }}</button>
         </div>
-
-        <section class="service-support-card">
-          <div class="service-support-header">
-            <h3>服务支持</h3>
-            <p>支持常见流媒体与社交平台业务场景</p>
-          </div>
-          <div class="service-support-grid">
-            <div
-              v-for="service in serviceSupportItems"
-              :key="service.key"
-              class="service-support-item"
-            >
-              <img :src="service.icon" :alt="service.name" loading="lazy" decoding="async" />
-              <span>{{ service.name }}</span>
-            </div>
-          </div>
-        </section>
       </div>
 
       <!-- 线路列表内容 -->
@@ -154,16 +145,6 @@ import {
 import { fetchServerNodes } from '@/api/region/servers';
 
 import { getUserInfo } from '@/api/account/user';
-import iconFacebook from '@/assets/images/service-icons/facebook.svg';
-import iconYoutubePremium from '@/assets/images/service-icons/youtube-premium.svg';
-import iconChatgpt from '@/assets/images/service-icons/chatgpt.svg';
-import iconDisneyPlus from '@/assets/images/service-icons/disney-plus.svg';
-import iconYoutube from '@/assets/images/service-icons/youtube.svg';
-import iconTiktok from '@/assets/images/service-icons/tiktok.svg';
-import iconClaude from '@/assets/images/service-icons/claude.svg';
-import iconNetflix from '@/assets/images/service-icons/netflix.svg';
-import iconGoogle from '@/assets/images/service-icons/google.svg';
-import iconInstagram from '@/assets/images/service-icons/instagram.svg';
 
 
 import { NODES_CONFIG } from '@/utils/baseConfig';
@@ -187,19 +168,6 @@ const showNodeDetails = ref(NODES_CONFIG.showNodeDetails);
 
 
 const userInfo = ref(null);
-
-const serviceSupportItems = [
-  { key: 'youtube', name: 'YouTube', icon: iconYoutube },
-  { key: 'youtube-premium', name: 'YouTube Premium', icon: iconYoutubePremium },
-  { key: 'chatgpt', name: 'ChatGPT', icon: iconChatgpt },
-  { key: 'claude', name: 'Claude', icon: iconClaude },
-  { key: 'netflix', name: 'Netflix', icon: iconNetflix },
-  { key: 'disney-plus', name: 'Disney+', icon: iconDisneyPlus },
-  { key: 'tiktok', name: 'TikTok', icon: iconTiktok },
-  { key: 'instagram', name: 'Instagram', icon: iconInstagram },
-  { key: 'facebook', name: 'Facebook', icon: iconFacebook },
-  { key: 'google', name: 'Google', icon: iconGoogle }
-];
 
 
 
@@ -290,10 +258,6 @@ const lockedRegions = computed(() => [
 
 const goToShop = () => {
   router.push('/shop');
-};
-
-const goToQuickStart = () => {
-  router.push('/quick-start');
 };
 
 const fetchNodes = async () => {
@@ -658,146 +622,88 @@ onMounted(() => {
   padding: 24px;
   box-shadow: none;
 
-  .no-plan-hero {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 20px;
+  .no-plan-head {
+    text-align: center;
     margin-bottom: 16px;
-    padding: 20px;
-    border-radius: 14px;
-    border: 1px solid rgba(var(--theme-color-rgb), 0.16);
+
+    h2 {
+      margin: 0;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      letter-spacing: 0.2px;
+    }
+
+    p {
+      margin: 8px 0 0;
+      color: var(--text-tertiary);
+      font-size: $font-size-md;
+    }
+  }
+
+  .no-plan-map {
+    position: relative;
+    height: 240px;
+    border-radius: $border-radius-sm;
+    margin-bottom: 16px;
+    border: 1px solid rgba(var(--theme-color-rgb), 0.22);
     background:
-      radial-gradient(circle at 82% 18%, rgba(59, 130, 246, 0.16), transparent 42%),
-      radial-gradient(circle at 15% 72%, rgba(99, 102, 241, 0.1), transparent 48%),
-      linear-gradient(120deg, rgba(243, 246, 255, 0.88), rgba(250, 252, 255, 0.92));
+      radial-gradient(circle at 20% 30%, rgba(var(--theme-color-rgb), 0.22), transparent 35%),
+      radial-gradient(circle at 78% 42%, rgba(99, 102, 241, 0.2), transparent 32%),
+      linear-gradient(160deg, rgba(17, 24, 39, 0.95), rgba(30, 41, 59, 0.92));
+    overflow: hidden;
 
-    @media (max-width: 992px) {
-      grid-template-columns: 1fr;
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+      background-size: 42px 42px;
     }
 
-    .hero-copy {
+    .world-map-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+
+      .continent-layer {
+        fill: rgba(59, 130, 246, 0.16);
+        stroke: rgba(147, 197, 253, 0.5);
+        stroke-width: 2;
+        filter: none;
+      }
+
+      .grid-lines {
+        fill: none;
+        stroke: rgba(148, 163, 184, 0.2);
+        stroke-width: 1;
+      }
+    }
+
+    .map-glow {
+      position: absolute;
+      z-index: 2;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      align-items: flex-start;
-      gap: 10px;
-
-      .hero-status-tag {
-        display: inline-flex;
-        align-items: center;
-        border-radius: 999px;
-        padding: 6px 12px;
-        font-size: $font-size-sm;
-        font-weight: $font-weight-bold;
-        color: #b45309;
-        border: 1px solid rgba(245, 158, 11, 0.32);
-        background: rgba(245, 158, 11, 0.14);
-      }
-
-      h2 {
-        margin: 0;
-        font-size: clamp(24px, 3vw, 40px);
-        line-height: 1.16;
-        font-weight: $font-weight-bold;
-        color: var(--text-primary);
-      }
-
-      p {
-        margin: 0;
-        color: var(--text-secondary);
-        font-size: $font-size-lg;
-      }
-
-      .hero-actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-top: 4px;
-      }
-
-      .hero-btn {
-        min-width: 148px;
-        padding: 10px 18px;
-        border-radius: 10px;
-        border: 1px solid transparent;
-        font-size: $font-size-md;
-        font-weight: $font-weight-bold;
-        cursor: pointer;
-      }
-
-      .hero-btn.primary {
-        color: var(--text-on-dark-primary);
-        background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-      }
-
-      .hero-btn.secondary {
-        color: var(--neutral-strong);
-        background: rgba(255, 255, 255, 0.75);
-        border-color: rgba(148, 163, 184, 0.28);
-      }
-
-      .hero-hint {
-        margin-top: 2px;
-        color: var(--text-tertiary);
-        font-size: $font-size-md;
-      }
+      font-size: $font-size-sm;
+      font-weight: $font-weight-bold;
+      color: var(--text-on-dark-primary);
+      background: radial-gradient(circle at center, rgba(var(--theme-color-rgb), 0.95), rgba(var(--theme-color-rgb), 0.35));
+      box-shadow: none;
+      animation: regionPulse 2.8s ease-in-out infinite;
     }
 
-    .hero-graphic {
-      position: relative;
-      border-radius: 12px;
-      min-height: 220px;
-      overflow: hidden;
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      background:
-        radial-gradient(circle at 30% 75%, rgba(99, 102, 241, 0.09), transparent 46%),
-        radial-gradient(circle at 84% 22%, rgba(59, 130, 246, 0.12), transparent 40%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.65), rgba(241, 245, 255, 0.86));
-
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-image:
-          linear-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(148, 163, 184, 0.14) 1px, transparent 1px);
-        background-size: 26px 26px;
-      }
-
-      .device {
-        position: absolute;
-        border-radius: 10px;
-        border: 2px solid rgba(79, 70, 229, 0.2);
-        background: rgba(255, 255, 255, 0.34);
-      }
-
-      .device-laptop {
-        width: 190px;
-        height: 120px;
-        right: 18%;
-        top: 26%;
-      }
-
-      .device-tablet {
-        width: 110px;
-        height: 82px;
-        right: 8%;
-        top: 18%;
-      }
-
-      .device-phone {
-        width: 54px;
-        height: 96px;
-        right: 14%;
-        top: 48%;
-      }
-    }
-
-    @media (max-width: 992px) {
-      .hero-graphic {
-        min-height: 180px;
-      }
-    }
+    .region-jp { top: 62px; right: 360px; }
+    .region-sg { top: 126px; right: 470px; animation-delay: 0.4s; }
+    .region-hk { top: 96px; right: 420px; animation-delay: 0.9s; }
+    .region-us { top: 84px; left: 210px; animation-delay: 1.2s; }
   }
 
   .region-lock-grid {
@@ -851,7 +757,6 @@ onMounted(() => {
     justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
-    margin-bottom: 16px;
 
     .cta-btn {
       min-width: 168px;
@@ -875,63 +780,11 @@ onMounted(() => {
       background: var(--surface-subtle);
     }
   }
+}
 
-  .service-support-card {
-    border: 1px solid var(--border-color);
-    border-radius: $border-radius-sm;
-    background: var(--card-background);
-    padding: 16px;
-
-    .service-support-header {
-      margin-bottom: 12px;
-
-      h3 {
-        margin: 0;
-        font-size: $font-size-md;
-      }
-
-      p {
-        margin: 6px 0 0;
-        color: var(--text-tertiary);
-        font-size: $font-size-sm;
-      }
-    }
-
-    .service-support-grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 10px;
-
-      @media (max-width: 768px) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    .service-support-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 10px 8px;
-      border-radius: 10px;
-      background: #f8fafc;
-      border: 1px solid #e8ebf4;
-
-      img {
-        width: 22px;
-        height: 22px;
-        object-fit: contain;
-      }
-
-      span {
-        font-size: $font-size-xs;
-        color: var(--text-secondary);
-        text-align: center;
-        line-height: 1.2;
-      }
-    }
-  }
+@keyframes regionPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.85; }
 }
 
 .node-items {
