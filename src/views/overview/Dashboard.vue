@@ -6,9 +6,8 @@
       <!-- 待支付订单提醒条 -->
       <div
         v-if="hasPendingItems"
-        class="pending-order-banner"
+        class="pending-order-banner delay-01"
         :class="{'card-animate': !loading.userStats}"
-        style="animation-delay: 0.1s"
         @click="goToOrders"
       >
         <div class="banner-main">
@@ -31,18 +30,17 @@
 
         <template v-else-if="!hasPlan">
           <section
-            class="dashboard-card stats-card no-plan-flow-card"
+            class="dashboard-card stats-card no-plan-flow-card delay-05"
             :class="{ 'card-animate': !loading.userStats }"
-            style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;"
           >
             <div class="no-plan-flow-layout">
               <aside class="no-plan-flow-aside">
                 <span class="no-plan-badge">新用户引导</span>
-                <h3>开始使用前，<br>先完成订阅开通</h3>
-                <p>{{ $t('dashboard.noPlanPrompt') }}</p>
+                <h3 class="no-plan-title">开始使用前，<br>先完成订阅开通</h3>
+                <p class="no-plan-description">{{ $t('dashboard.noPlanPrompt') }}</p>
 
                 <div class="no-plan-platforms">
-                  <p>支持多平台 · 几分钟完成配置</p>
+                  <p class="platform-title">支持多平台 · 几分钟完成配置</p>
                   <p class="platform-text">Windows / macOS / Android / iPhone</p>
                   <div class="platform-icons">
                     <IconBrandWindows :size="18" />
@@ -76,13 +74,12 @@
           </section>
 
           <section
-            class="dashboard-card stats-card service-support-card"
+            class="dashboard-card stats-card service-support-card delay-06"
             :class="{ 'card-animate': !loading.userStats }"
-            style="animation-delay: 0.6s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;"
           >
             <div class="service-support-header">
-              <h3>服务支持</h3>
-              <p>支持常见流媒体与社交平台业务场景</p>
+              <h3 class="service-support-title">服务支持</h3>
+              <p class="service-support-desc">支持常见流媒体与社交平台业务场景</p>
             </div>
             <div class="service-support-grid">
               <div
@@ -1476,13 +1473,6 @@ $space-2: map.get($spacers, 2);
     }
   }
 
-  @media (min-width: #{$bp-md-up}) {
-    &.is-no-plan {
-      height: calc(100vh - var(--app-top-bar-height, 56px) - var(--page-content-top-gap, 8px));
-      overflow-y: hidden;
-    }
-  }
-
   .dashboard-inner {
     .overview-grid {
     display: grid;
@@ -2518,37 +2508,34 @@ $space-2: map.get($spacers, 2);
   z-index: 1;
 }
 
-.no-plan-flow-card {
-  background: #fff;
-  border: 1px solid #e8ebf4;
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 0 !important;
-}
-
+.no-plan-flow-card,
 .service-support-card {
+  grid-column: 1 / -1;
+  margin: 0 auto;
+  max-width: var(--page-content-max-width);
+  width: 100%;
   background: #fff;
   border: 1px solid #e8ebf4;
   border-radius: 14px;
   padding: 16px;
-  margin-bottom: 0 !important;
+  margin-bottom: 0;
 }
 
 .service-support-header {
   margin-bottom: 12px;
+}
 
-  h3 {
-    margin: 0;
-    font-size: $font-size-md;
-    font-weight: $font-weight-semibold;
-    color: var(--text-primary);
-  }
+.service-support-title {
+  margin: 0;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: var(--text-primary);
+}
 
-  p {
-    margin: 6px 0 0;
-    font-size: $font-size-sm;
-    color: var(--text-tertiary);
-  }
+.service-support-desc {
+  margin: 6px 0 0;
+  font-size: $font-size-sm;
+  color: var(--text-tertiary);
 }
 
 .service-support-grid {
@@ -2595,19 +2582,19 @@ $space-2: map.get($spacers, 2);
   background: #fff;
   display: flex;
   flex-direction: column;
+}
 
-  h3 {
-    @extend %typo-page-title;
-    margin: 16px 0 16px;
-    line-height: 1.3;
-    letter-spacing: 0.5px;
-  }
+.no-plan-title {
+  @extend %typo-page-title;
+  margin: 16px 0 16px;
+  line-height: 1.3;
+  letter-spacing: 0.5px;
+}
 
-  p {
-    @extend %typo-body-text;
-    margin: 0;
-    line-height: 1.75;
-  }
+.no-plan-description {
+  @extend %typo-body-text;
+  margin: 0;
+  line-height: 1.75;
 }
 
 .no-plan-badge {
@@ -2625,28 +2612,28 @@ $space-2: map.get($spacers, 2);
   margin-top: auto;
   padding-top: 24px;
   border-top: 1px solid #e8ebf4;
+}
 
-  p {
-    @extend %typo-item-title;
-    margin: 0;
-  }
+.platform-title {
+  @extend %typo-item-title;
+  margin: 0;
+}
 
-  .platform-text {
-    @extend %typo-label-text;
-    margin-top: 16px;
-  }
+.platform-text {
+  @extend %typo-label-text;
+  margin-top: 16px;
+}
 
-  .platform-icons {
-    margin-top: 16px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    color: #8ca0d8;
+.platform-icons {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #8ca0d8;
 
-    :deep(svg) {
-      width: 30px;
-      height: 30px;
-    }
+  :deep(svg) {
+    width: 30px;
+    height: 30px;
   }
 }
 
@@ -2669,16 +2656,17 @@ $space-2: map.get($spacers, 2);
   text-align: center;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 
-  .step-title {
-    font-size: $font-size-lg;
-    font-weight: $font-weight-semibold;
-  }
+}
 
-  .step-desc {
-    font-size: $font-size-sm;
-    opacity: 0.92;
-    line-height: 1.5;
-  }
+.step-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+}
+
+.step-desc {
+  font-size: $font-size-sm;
+  opacity: 0.92;
+  line-height: 1.5;
 }
 
 button.no-plan-step {
@@ -2701,6 +2689,18 @@ button.no-plan-step {
 
 .no-plan-step-success {
   background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%);
+}
+
+.delay-01 {
+  animation-delay: 0.1s;
+}
+
+.delay-05 {
+  animation-delay: 0.5s;
+}
+
+.delay-06 {
+  animation-delay: 0.6s;
 }
 
 @media (max-width: 768px) {
