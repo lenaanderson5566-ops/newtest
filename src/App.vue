@@ -394,7 +394,7 @@ export default {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  box-shadow: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
