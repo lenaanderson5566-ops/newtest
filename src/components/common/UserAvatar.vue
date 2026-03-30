@@ -52,7 +52,7 @@ export default {
     IconLogout
   },
   props: {
-    username: {
+    email: {
       type: String,
       default: ''
     },
@@ -68,31 +68,11 @@ export default {
     const isDropdownOpen = ref(false);
     const avatarContainer = ref(null);
     const avatarInitial = computed(() => {
-      const propUsername = (props.username || '').trim();
-      let fallbackUsername = '';
+      const rawEmail = (props.email || '').trim();
+      if (!rawEmail) return 'U';
 
-      if (!propUsername) {
-        try {
-          const localUserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-          fallbackUsername = (
-            localUserInfo.email
-            || localUserInfo.username
-            || localUserInfo.name
-            || localUserInfo.user_email
-            || ''
-          ).trim();
-        } catch (error) {
-          fallbackUsername = '';
-        }
-      }
-
-      const rawUsername = propUsername || fallbackUsername;
-      if (!rawUsername) return 'U';
-
-      const localPart = rawUsername.includes('@')
-        ? rawUsername.split('@')[0]
-        : rawUsername;
-      const fallbackTarget = localPart || rawUsername;
+      const localPart = rawEmail.split('@')[0] || rawEmail;
+      const fallbackTarget = localPart || rawEmail;
       const firstChar = [...fallbackTarget][0] || 'U';
 
       return firstChar.toUpperCase();

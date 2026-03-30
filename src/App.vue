@@ -20,7 +20,7 @@
         >
           <IconGift :size="18" />
         </button>
-        <UserAvatar :username="username" :avatarUrl="avatarUrl" />
+        <UserAvatar :email="email" :avatarUrl="avatarUrl" />
         </div>
       </div>
 
@@ -151,7 +151,7 @@ export default {
       handleRedirectParam();
     });
 
-    const username = computed(() => store.username);
+    const email = computed(() => store.userInfo?.email || '');
     const avatarUrl = computed(() => store.avatarUrl || '');
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
@@ -296,7 +296,7 @@ export default {
     );
 
     return {
-      username,
+      email,
       avatarUrl,
       siteConfig,
       PROFILE_CONFIG,
