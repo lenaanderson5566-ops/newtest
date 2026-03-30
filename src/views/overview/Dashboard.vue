@@ -2484,7 +2484,7 @@ $space-2: map.get($spacers, 2);
 
 .no-plan-flow-layout {
   display: grid;
-  grid-template-columns: 1.35fr 1fr;
+  grid-template-columns: 1fr;
   gap: 16px;
 }
 
