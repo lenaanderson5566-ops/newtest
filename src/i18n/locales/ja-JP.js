@@ -935,7 +935,7 @@ profile: {
     },
     inviteLink: {
       title: '招待リンク',
-      createCode: '招待コード作成',
+      createCode: '招待リンク作成',
       creating: '生成中...',
       inviteCode: '招待コード',
       registeredCount: '登録済み',
@@ -944,8 +944,8 @@ profile: {
       placeholder: '生成された招待リンクがここに表示されます',
       copyLink: 'リンクコピー',
       copied: 'コピー済み',
-      noInviteCode: '利用可能な招待コードなし',
-      created: '招待コード生成成功。友達と共有してください'
+      noInviteCode: '利用可能な招待リンクなし',
+      created: '招待リンク作成成功。友達と共有してください'
     },
     share: {
       wechat: 'WeChat',
@@ -970,7 +970,7 @@ profile: {
       registerTime: '登録時間',
       amount: '消費金額',
       userPlaceholder: 'ユーザー',
-      noRecords: '招待記録がありません。招待コードを生成して友達に共有してください！',
+      noRecords: '招待記録がありません。招待リンクを作成して友達に共有してください！',
       refresh: '更新',
       refreshing: '更新中...',
       refreshingData: 'データ更新中...',

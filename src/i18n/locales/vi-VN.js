@@ -937,7 +937,7 @@ profile: {
         },
         inviteLink: {
             title: 'Liên kết mời',
-            createCode: 'Tạo mã mời',
+            createCode: 'Tạo liên kết mời',
             creating: 'Đang tạo...',
             inviteCode: 'Mã mời',
             registeredCount: 'Đã đăng ký',
@@ -946,8 +946,8 @@ profile: {
             placeholder: 'Liên kết mời được tạo sẽ hiển thị ở đây',
             copyLink: 'Sao chép liên kết',
             copied: 'Đã sao chép',
-            noInviteCode: 'Chưa có mã mời khả dụng',
-            created: 'Tạo mã mời thành công, có thể chia sẻ với bạn bè rồi'
+            noInviteCode: 'Chưa có liên kết mời khả dụng',
+            created: 'Tạo liên kết mời thành công, có thể chia sẻ với bạn bè rồi'
         },
         share: {
             wechat: 'WeChat',
@@ -972,7 +972,7 @@ profile: {
             registerTime: 'Thời gian đăng ký',
             amount: 'Số tiền tiêu dùng',
             userPlaceholder: 'Người dùng',
-            noRecords: 'Bạn chưa có lịch sử mời, hãy tạo mã mời và chia sẻ với bạn bè!',
+            noRecords: 'Bạn chưa có lịch sử mời, hãy tạo liên kết mời và chia sẻ với bạn bè!',
             refresh: 'Làm mới',
             refreshing: 'Đang làm mới...',
             refreshingData: 'Đang làm mới dữ liệu...',

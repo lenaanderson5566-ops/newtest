@@ -935,7 +935,7 @@ profile: {
     },
     inviteLink: {
       title: 'لینک دعوت',
-      createCode: 'ایجاد کد دعوت',
+      createCode: 'ایجاد لینک دعوت',
       creating: 'در حال ایجاد...',
       inviteCode: 'کد دعوت',
       registeredCount: 'ثبت شده',
@@ -944,8 +944,8 @@ profile: {
       placeholder: 'لینک دعوت اینجا نمایش داده می شود',
       copyLink: 'کپی لینک',
       copied: 'کپی شد',
-      noInviteCode: 'کد دعوتی موجود نیست',
-      created: 'کد دعوت ایجاد شد، با دوستان اشتراک گذاری کنید'
+      noInviteCode: 'لینک دعوتی موجود نیست',
+      created: 'لینک دعوت ایجاد شد، با دوستان اشتراک گذاری کنید'
     },
     share: {
       wechat: 'WeChat',
@@ -970,7 +970,7 @@ profile: {
       registerTime: 'زمان ثبت نام',
       amount: 'مبلغ مصرف',
       userPlaceholder: 'کاربر',
-      noRecords: 'هنوز رکوردی ندارید، کد دعوت ایجاد کنید و با دوستان اشتراک گذاری کنید',
+      noRecords: 'هنوز رکوردی ندارید، لینک دعوت ایجاد کنید و با دوستان اشتراک گذاری کنید',
       refresh: 'تازه سازی',
       refreshing: 'در حال تازه سازی...',
       refreshingData: 'در حال تازه سازی داده ها...',

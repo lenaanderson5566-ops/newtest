@@ -936,7 +936,7 @@ profile: {
     },
     inviteLink: {
       title: '초대 링크',
-      createCode: '초대 코드 생성',
+      createCode: '초대 링크 생성',
       creating: '생성 중...',
       inviteCode: '초대 코드',
       registeredCount: '등록됨',
@@ -945,8 +945,8 @@ profile: {
       placeholder: '생성된 초대 링크가 여기에 표시됩니다',
       copyLink: '링크 복사',
       copied: '복사됨',
-      noInviteCode: '사용 가능한 초대 코드 없음',
-      created: '초대 코드 생성 성공, 친구와 공유하세요'
+      noInviteCode: '사용 가능한 초대 링크 없음',
+      created: '초대 링크 생성 성공, 친구와 공유하세요'
     },
     share: {
       wechat: 'WeChat',
@@ -971,7 +971,7 @@ profile: {
       registerTime: '등록 시간',
       amount: '소비 금액',
       userPlaceholder: '사용자',
-      noRecords: '초대 기록이 없습니다. 초대 코드를 생성하여 친구와 공유하세요!',
+      noRecords: '초대 기록이 없습니다. 초대 링크를 생성하여 친구와 공유하세요!',
       refresh: '새로고침',
       refreshing: '새로고침 중...',
       refreshingData: '데이터 새로고침 중...',

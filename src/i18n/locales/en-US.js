@@ -930,7 +930,7 @@ profile: {
         },
         inviteLink: {
             title: 'Invite Link',
-            createCode: 'Create Invite Code',
+            createCode: 'Create Invite Link',
             creating: 'Generating...',
             inviteCode: 'Invite Code',
             registeredCount: 'Registered',
@@ -939,8 +939,8 @@ profile: {
             placeholder: 'Generated invite link will appear here',
             copyLink: 'Copy Link',
             copied: 'Copied',
-            noInviteCode: 'No invite code available',
-            created: 'Invite code generated successfully, share with friends'
+            noInviteCode: 'No invite link available',
+            created: 'Invite link created successfully, share with friends'
         },
         share: {
             wechat: 'WeChat',
@@ -965,7 +965,7 @@ profile: {
             registerTime: 'Registration Time',
             amount: 'Spending Amount',
             userPlaceholder: 'User',
-            noRecords: 'You have no invite records, generate an invite code and share with friends!',
+            noRecords: 'You have no invite records, create an invite link and share with friends!',
             refresh: 'Refresh',
             refreshing: 'Refreshing...',
             refreshingData: 'Refreshing data...',

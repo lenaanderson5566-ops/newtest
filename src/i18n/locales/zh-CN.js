@@ -931,7 +931,7 @@ profile: {
         },
         inviteLink: {
             title: '邀请链接',
-            createCode: '创建邀请码',
+            createCode: '创建邀请链接',
             creating: '生成中...',
             inviteCode: '邀请码',
             registeredCount: '已注册',
@@ -940,8 +940,8 @@ profile: {
             placeholder: '生成的邀请链接将显示在这里',
             copyLink: '复制链接',
             copied: '已复制',
-            noInviteCode: '暂无可用邀请码',
-            created: '邀请码生成成功，可以分享给好友了'
+            noInviteCode: '暂无可用邀请链接',
+            created: '邀请链接创建成功，可以分享给好友了'
         },
         share: {
             wechat: '微信',
@@ -966,7 +966,7 @@ profile: {
             registerTime: '注册时间',
             amount: '消费金额',
             userPlaceholder: '用户',
-            noRecords: '您还没有邀请记录，生成邀请码并分享给朋友吧！',
+            noRecords: '您还没有邀请记录，创建邀请链接并分享给朋友吧！',
             refresh: '刷新',
             refreshing: '刷新中...',
             refreshingData: '正在刷新数据...',
