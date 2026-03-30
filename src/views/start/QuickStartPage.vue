@@ -49,9 +49,9 @@
                 :src="resolveClientIcon(client.icon)"
                 :alt="client.name"
                 class="client-icon-large"
-                :class="{ grayscale: !client.recommended }"
+                :class="{ grayscale: selectedClient?.name !== client.name }"
               />
-              <IconApps v-else :size="20" class="fallback-icon-large" :class="{ grayscale: !client.recommended }" />
+              <IconApps v-else :size="20" class="fallback-icon-large" :class="{ grayscale: selectedClient?.name !== client.name }" />
               <div class="client-text">
                 <span class="client-name">{{ client.name }}</span>
                 <small v-if="client.recommended" class="recommend-inline">{{ $t('quickStartPage.recommended') }}</small>
