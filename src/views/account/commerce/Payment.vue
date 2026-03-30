@@ -1461,6 +1461,8 @@ export default {
           .summary-value.final {
             color: var(--theme-color);
             font-weight: $font-weight-bold;
+            font-size: $font-size-3xl;
+            line-height: 1.1;
           }
         }
       }
