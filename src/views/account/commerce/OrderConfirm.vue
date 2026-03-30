@@ -908,7 +908,9 @@ export default {
 
     const payActionLabel = computed(() => {
       if (totalWithFee.value <= 0) return t("payment.activate");
-      return t("payment.continue_pay");
+      return isContinuePaymentMode.value
+        ? t("payment.continue_pay")
+        : t("payment.pay_now");
     });
     const selectedOrderDisplay = computed(() => {
       const planName = plan.value?.name || "-";
