@@ -2528,15 +2528,15 @@ button.no-plan-step {
 }
 
 .no-plan-step-primary {
-  background: linear-gradient(135deg, #5b7cff, #6b74e6);
+  background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
 }
 
 .no-plan-step-secondary {
-  background: linear-gradient(135deg, #5d7df8, #5f90ff);
+  background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
 }
 
 .no-plan-step-success {
-  background: linear-gradient(135deg, #49d89c, #59cf66);
+  background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%);
 }
 
 @media (max-width: 768px) {
