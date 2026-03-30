@@ -1437,13 +1437,6 @@ $space-2: map.get($spacers, 2);
       grid-column: 1 / -1;
     }
 
-    @media (max-width: #{$bp-lg}) {
-      > .pending-order-banner,
-      > .stats-grid,
-      > .usage-trend-card {
-        grid-column: 1 / -1;
-      }
-    }
   }
 
   .dashboard-card {
@@ -1589,7 +1582,6 @@ $space-2: map.get($spacers, 2);
           min-height: 42px;
 
           &.package-main {
-            align-items: baseline;
             width: 100%;
           }
 
