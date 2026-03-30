@@ -41,17 +41,6 @@
                 <h3>开始使用前，<br>先完成订阅开通</h3>
                 <p>{{ $t('dashboard.noPlanPrompt') }}</p>
 
-                <div class="no-plan-cta-group">
-                  <button class="no-plan-cta primary btn btn-primary" @click="goToShop">
-                    <IconShoppingCart :size="18" />
-                    <span>{{ $t('dashboard.purchasePlan') }}</span>
-                  </button>
-                  <button class="no-plan-cta secondary btn btn-outline" @click="goToDocs">
-                    <IconChevronRight :size="16" />
-                    <span>查看使用教程</span>
-                  </button>
-                </div>
-
                 <div class="no-plan-platforms">
                   <p>支持多平台 · 几分钟完成配置</p>
                   <p class="platform-text">Windows / macOS / Android / iPhone</p>
@@ -2530,35 +2519,6 @@ $space-2: map.get($spacers, 2);
   background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
 }
 
-.no-plan-cta-group {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-
-  .no-plan-cta {
-    @extend %typo-item-title;
-    justify-content: center;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    width: 360px;
-    max-width: 100%;
-    border-radius: 14px;
-    padding: 14px 18px;
-  }
-
-  .no-plan-cta.primary {
-    box-shadow: 0 8px 18px rgba(63, 94, 255, 0.25);
-  }
-
-  .no-plan-cta.secondary {
-    border-color: #d8deed;
-    color: #5f6f93;
-    background: #fff;
-  }
-}
-
 .no-plan-platforms {
   margin-top: auto;
   padding-top: 24px;
@@ -2648,11 +2608,6 @@ button.no-plan-step {
 
   .no-plan-flow-card {
     padding: 16px;
-  }
-
-  .no-plan-cta-group .no-plan-cta {
-    width: 100%;
-    padding: 11px 14px;
   }
 
   .no-plan-step {
