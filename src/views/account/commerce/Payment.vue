@@ -213,7 +213,7 @@
               >
                 <IconCreditCard v-if="!loading.paying" :size="18" />
                 <div v-else class="loader"></div>
-                <span>{{ $t("payment.continue_pay") }}</span>
+                <span>{{ summaryPayActionLabel }}</span>
               </button>
             </div>
           </OrderSummaryCard>
@@ -535,6 +535,10 @@ export default {
       }
       return orderDetail.value.total_amount + handleFeeAmount.value;
     });
+
+    const summaryPayActionLabel = computed(() =>
+      fromOrderList.value ? t("payment.continue_pay") : t("payment.pay_now")
+    );
 
     const qrPaymentAmountHint = computed(() => {
       if (!paymentQRCode.value) {
@@ -1121,6 +1125,7 @@ export default {
       closePaymentModal,
       handleFeeAmount,
       totalWithFee,
+      summaryPayActionLabel,
       qrPaymentAmountHint,
       couponDiscountAmount,
       userDiscountAmount,
