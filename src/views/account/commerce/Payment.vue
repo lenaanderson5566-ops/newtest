@@ -361,14 +361,8 @@
           <div class="pending-order-header">
             <h3>{{ paymentQRCode ? $t("payment.scan_qrcode") : $t("payment.payment_method") }}</h3>
             <p v-if="paymentQRCode">{{ $t("payment.payment_method") }}：{{ getSelectedMethodName() }}</p>
-            <p
-              v-if="
-                detectBrowser() === 'Safari' &&
-                PAYMENT_CONFIG.useSafariPaymentModal &&
-                paymentLink
-              "
-            >
-              {{ $t("payment.safari_payment_notice") }}
+            <p v-if="paymentQRCode && qrPaymentAmountHint" class="payment-amount-hint">
+              {{ $t("payment.total_with_fee") }}：{{ qrPaymentAmountHint }}
             </p>
             <p v-else-if="paymentLink">{{ $t("payment.open_in_new_tab") }}</p>
           </div>
@@ -541,6 +535,30 @@ export default {
         return 0;
       }
       return orderDetail.value.total_amount + handleFeeAmount.value;
+    });
+
+    const qrPaymentAmountHint = computed(() => {
+      if (!paymentQRCode.value) {
+        return "";
+      }
+
+      const orderAmount = Number(totalWithFee.value);
+      const orderCurrency = String(orderDetail.value?.pricing_currency || displayCurrency.value || "").toUpperCase();
+      const paymentAmount = Number(orderDetail.value?.payment_amount);
+      const paymentCurrency = String(orderDetail.value?.payment_currency || "").toUpperCase();
+
+      if (!Number.isFinite(orderAmount) || orderAmount < 0 || !orderCurrency) {
+        return "";
+      }
+
+      const formatWithCurrency = (amount, currencyCode) =>
+        `${currencyCode} ${(Number(amount) / 100).toFixed(2)}`;
+
+      if (Number.isFinite(paymentAmount) && paymentAmount > 0 && paymentCurrency) {
+        return `${formatWithCurrency(orderAmount, orderCurrency)} ≈ ${formatWithCurrency(paymentAmount, paymentCurrency)}`;
+      }
+
+      return formatWithCurrency(orderAmount, orderCurrency);
     });
 
     const fetchOrderDetail = async () => {
@@ -1104,6 +1122,7 @@ export default {
       closePaymentModal,
       handleFeeAmount,
       totalWithFee,
+      qrPaymentAmountHint,
       couponDiscountAmount,
       userDiscountAmount,
       discountAmount,
