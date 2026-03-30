@@ -360,10 +360,6 @@ watch(locale, () => {
   --order-tone-soft: rgba(var(--theme-color-rgb), 0.72);
   --order-tone-faint: rgba(var(--theme-color-rgb), 0.12);
   
-  @media (min-width: #{$bp-md}) {
-    padding: 0;
-    padding-bottom: 0; 
-  }
 }
 
 .account-back-btn {

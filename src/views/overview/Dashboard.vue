@@ -1772,18 +1772,7 @@ $space-2: map.get($spacers, 2);
             font-weight: $font-weight-semibold;
             color: var(--text-on-dark-primary);
             border: 1px solid rgba(255, 255, 255, 0.26);
-
-            &.is-active {
-              background: rgba(255, 255, 255, 0.2);
-            }
-
-            &.is-expiring {
-              background: rgba(255, 255, 255, 0.2);
-            }
-
-            &.is-expired {
-              background: rgba(255, 255, 255, 0.2);
-            }
+            background: rgba(255, 255, 255, 0.2);
           }
 
           .plan-summary-desc {
@@ -2303,13 +2292,11 @@ $space-2: map.get($spacers, 2);
 @media (max-width: #{$bp-xl}) {
   .dashboard-container {
     padding: 0;
-    padding-bottom: 64px;
   }
 }
 
 @media (max-width: #{$bp-md}) {
   .dashboard-container {
-    padding-bottom: 64px;
     --dashboard-card-padding: 8px;
   }
 
