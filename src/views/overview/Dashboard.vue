@@ -74,6 +74,27 @@
               </div>
             </div>
           </section>
+
+          <section
+            class="dashboard-card stats-card service-support-card"
+            :class="{ 'card-animate': !loading.userStats }"
+            style="animation-delay: 0.6s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;"
+          >
+            <div class="service-support-header">
+              <h3>服务支持</h3>
+              <p>支持常见流媒体与社交平台业务场景</p>
+            </div>
+            <div class="service-support-grid">
+              <div
+                v-for="service in serviceSupportItems"
+                :key="service.key"
+                class="service-support-item"
+              >
+                <img :src="service.icon" :alt="service.name" loading="lazy" decoding="async" />
+                <span>{{ service.name }}</span>
+              </div>
+            </div>
+          </section>
         </template>
 
         <template v-else>
@@ -352,6 +373,16 @@ import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import {fetchPlans} from '@/api/account/shop';
+import iconFacebook from '@/assets/images/service-icons/facebook.svg';
+import iconYoutubePremium from '@/assets/images/service-icons/youtube-premium.svg';
+import iconChatgpt from '@/assets/images/service-icons/chatgpt.svg';
+import iconDisneyPlus from '@/assets/images/service-icons/disney-plus.svg';
+import iconYoutube from '@/assets/images/service-icons/youtube.svg';
+import iconTiktok from '@/assets/images/service-icons/tiktok.svg';
+import iconClaude from '@/assets/images/service-icons/claude.svg';
+import iconNetflix from '@/assets/images/service-icons/netflix.svg';
+import iconGoogle from '@/assets/images/service-icons/google.svg';
+import iconInstagram from '@/assets/images/service-icons/instagram.svg';
 
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
@@ -1302,6 +1333,19 @@ export default {
       return `${baseDelay + trafficBoardSections.value.length * step}s`;
     });
 
+    const serviceSupportItems = [
+      { key: 'youtube', name: 'YouTube', icon: iconYoutube },
+      { key: 'youtube-premium', name: 'YouTube Premium', icon: iconYoutubePremium },
+      { key: 'chatgpt', name: 'ChatGPT', icon: iconChatgpt },
+      { key: 'claude', name: 'Claude', icon: iconClaude },
+      { key: 'netflix', name: 'Netflix', icon: iconNetflix },
+      { key: 'disney-plus', name: 'Disney+', icon: iconDisneyPlus },
+      { key: 'tiktok', name: 'TikTok', icon: iconTiktok },
+      { key: 'instagram', name: 'Instagram', icon: iconInstagram },
+      { key: 'facebook', name: 'Facebook', icon: iconFacebook },
+      { key: 'google', name: 'Google', icon: iconGoogle }
+    ];
+
     return {
       userStats,
       userBalance,
@@ -1349,6 +1393,7 @@ export default {
       trafficTrendError,
       todayTrafficStats,
       todayTrafficAnimationDelay,
+      serviceSupportItems,
       allowNewPeriod,
       showTrafficPackageModal,
       trafficPackageLoading,
@@ -2481,6 +2526,62 @@ $space-2: map.get($spacers, 2);
   margin-bottom: 0 !important;
 }
 
+.service-support-card {
+  background: #fff;
+  border: 1px solid #e8ebf4;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 0 !important;
+}
+
+.service-support-header {
+  margin-bottom: 12px;
+
+  h3 {
+    margin: 0;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
+  }
+
+  p {
+    margin: 6px 0 0;
+    font-size: $font-size-sm;
+    color: var(--text-tertiary);
+  }
+}
+
+.service-support-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.service-support-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 8px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #e8ebf4;
+
+  img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+  }
+
+  span {
+    font-size: $font-size-xs;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.2;
+  }
+}
+
 .no-plan-flow-layout {
   display: grid;
   grid-template-columns: 1.35fr 1fr;
@@ -2609,6 +2710,10 @@ button.no-plan-step {
 
   .no-plan-flow-card {
     padding: 16px;
+  }
+
+  .service-support-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .no-plan-step {
