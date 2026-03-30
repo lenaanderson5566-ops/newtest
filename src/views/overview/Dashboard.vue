@@ -37,18 +37,6 @@
               <aside class="no-plan-flow-aside">
                 <span class="no-plan-badge">新用户引导</span>
                 <h3 class="no-plan-title">开始使用前，<br>先完成订阅开通</h3>
-                <p class="no-plan-description">{{ $t('dashboard.noPlanPrompt') }}</p>
-
-                <div class="no-plan-platforms">
-                  <p class="platform-title">支持多平台 · 几分钟完成配置</p>
-                  <p class="platform-text">Windows / macOS / Android / iPhone</p>
-                  <div class="platform-icons">
-                    <IconBrandWindows :size="18" />
-                    <IconBrandApple :size="18" />
-                    <IconDeviceDesktop :size="18" />
-                    <IconBrandAndroid :size="18" />
-                  </div>
-                </div>
               </aside>
 
               <div class="no-plan-steps">
@@ -62,6 +50,12 @@
                   <IconDeviceDesktop :size="34" />
                   <span class="step-title">2. {{ $t('quickStartPage.step2Title') }}</span>
                   <span class="step-desc">{{ $t('quickStartPage.step2Tip') }}</span>
+                  <div class="platform-icons">
+                    <IconBrandWindows :size="18" />
+                    <IconBrandApple :size="18" />
+                    <IconDeviceDesktop :size="18" />
+                    <IconBrandAndroid :size="18" />
+                  </div>
                 </button>
 
                 <div class="no-plan-step no-plan-step-success">
@@ -73,25 +67,6 @@
             </div>
           </section>
 
-          <section
-            class="dashboard-card stats-card service-support-card delay-06"
-            :class="{ 'card-animate': !loading.userStats }"
-          >
-            <div class="service-support-header">
-              <h3 class="service-support-title">服务支持</h3>
-              <p class="service-support-desc">支持常见流媒体与社交平台业务场景</p>
-            </div>
-            <div class="service-support-grid">
-              <div
-                v-for="service in serviceSupportItems"
-                :key="service.key"
-                class="service-support-item"
-              >
-                <img :src="service.icon" :alt="service.name" loading="lazy" decoding="async" />
-                <span>{{ service.name }}</span>
-              </div>
-            </div>
-          </section>
         </template>
 
         <template v-else>
@@ -370,17 +345,6 @@ import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import {fetchPlans} from '@/api/account/shop';
-import iconFacebook from '@/assets/images/service-icons/facebook.svg';
-import iconYoutubePremium from '@/assets/images/service-icons/youtube-premium.svg';
-import iconChatgpt from '@/assets/images/service-icons/chatgpt.svg';
-import iconDisneyPlus from '@/assets/images/service-icons/disney-plus.svg';
-import iconYoutube from '@/assets/images/service-icons/youtube.svg';
-import iconTiktok from '@/assets/images/service-icons/tiktok.svg';
-import iconClaude from '@/assets/images/service-icons/claude.svg';
-import iconNetflix from '@/assets/images/service-icons/netflix.svg';
-import iconGoogle from '@/assets/images/service-icons/google.svg';
-import iconInstagram from '@/assets/images/service-icons/instagram.svg';
-
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 
@@ -1330,19 +1294,6 @@ export default {
       return `${baseDelay + trafficBoardSections.value.length * step}s`;
     });
 
-    const serviceSupportItems = [
-      { key: 'youtube', name: 'YouTube', icon: iconYoutube },
-      { key: 'youtube-premium', name: 'YouTube Premium', icon: iconYoutubePremium },
-      { key: 'chatgpt', name: 'ChatGPT', icon: iconChatgpt },
-      { key: 'claude', name: 'Claude', icon: iconClaude },
-      { key: 'netflix', name: 'Netflix', icon: iconNetflix },
-      { key: 'disney-plus', name: 'Disney+', icon: iconDisneyPlus },
-      { key: 'tiktok', name: 'TikTok', icon: iconTiktok },
-      { key: 'instagram', name: 'Instagram', icon: iconInstagram },
-      { key: 'facebook', name: 'Facebook', icon: iconFacebook },
-      { key: 'google', name: 'Google', icon: iconGoogle }
-    ];
-
     return {
       userStats,
       userBalance,
@@ -1390,7 +1341,6 @@ export default {
       trafficTrendError,
       todayTrafficStats,
       todayTrafficAnimationDelay,
-      serviceSupportItems,
       allowNewPeriod,
       showTrafficPackageModal,
       trafficPackageLoading,
@@ -1538,8 +1488,7 @@ $space-2: map.get($spacers, 2);
     &.no-plan-grid {
       margin-bottom: 0;
 
-      > .no-plan-flow-card,
-      > .service-support-card {
+      > .no-plan-flow-card {
         display: block;
         align-items: initial;
         min-height: auto;
@@ -2521,8 +2470,7 @@ $space-2: map.get($spacers, 2);
   z-index: 1;
 }
 
-.no-plan-flow-card,
-.service-support-card {
+.no-plan-flow-card {
   grid-column: 1 / -1;
   margin: 0 auto;
   max-width: var(--page-content-max-width);
@@ -2532,54 +2480,6 @@ $space-2: map.get($spacers, 2);
   border-radius: 14px;
   padding: 16px;
   margin-bottom: 0;
-}
-
-.service-support-header {
-  margin-bottom: 12px;
-}
-
-.service-support-title {
-  margin: 0;
-  font-size: $font-size-md;
-  font-weight: $font-weight-semibold;
-  color: var(--text-primary);
-}
-
-.service-support-desc {
-  margin: 6px 0 0;
-  font-size: $font-size-sm;
-  color: var(--text-tertiary);
-}
-
-.service-support-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.service-support-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 8px;
-  border-radius: 10px;
-  background: #f8fafc;
-  border: 1px solid #e8ebf4;
-
-  img {
-    width: 22px;
-    height: 22px;
-    object-fit: contain;
-  }
-
-  span {
-    font-size: $font-size-xs;
-    color: var(--text-secondary);
-    text-align: center;
-    line-height: 1.2;
-  }
 }
 
 .no-plan-flow-layout {
@@ -2604,12 +2504,6 @@ $space-2: map.get($spacers, 2);
   letter-spacing: 0.5px;
 }
 
-.no-plan-description {
-  @extend %typo-body-text;
-  margin: 0;
-  line-height: 1.75;
-}
-
 .no-plan-badge {
   @extend %typo-item-title;
   display: inline-flex;
@@ -2621,24 +2515,8 @@ $space-2: map.get($spacers, 2);
   background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
 }
 
-.no-plan-platforms {
-  margin-top: auto;
-  padding-top: 24px;
-  border-top: 1px solid #e8ebf4;
-}
-
-.platform-title {
-  @extend %typo-item-title;
-  margin: 0;
-}
-
-.platform-text {
-  @extend %typo-label-text;
-  margin-top: 16px;
-}
-
 .platform-icons {
-  margin-top: 16px;
+  margin-top: 10px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -2712,10 +2590,6 @@ button.no-plan-step {
   animation-delay: 0.5s;
 }
 
-.delay-06 {
-  animation-delay: 0.6s;
-}
-
 @media (max-width: 768px) {
   .no-plan-flow-layout {
     grid-template-columns: 1fr;
@@ -2723,10 +2597,6 @@ button.no-plan-step {
 
   .no-plan-flow-card {
     padding: 16px;
-  }
-
-  .service-support-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .no-plan-step {

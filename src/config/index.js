@@ -238,7 +238,7 @@ export const config = {
       ]
     },
 
-    // 订阅导入客户端显示控制 部分面板不支持SingBox导入请您注意检查
+    // 配置导入客户端显示控制 部分面板不支持SingBox导入请您注意检查
 
     // iOS平台
     showShadowrocket: true,

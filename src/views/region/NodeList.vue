@@ -77,6 +77,23 @@
           <button class="cta-btn primary" @click="goToShop">{{ $t('lines.noPlan.subscribeNow') }}</button>
           <button class="cta-btn secondary" @click="goToShop">{{ $t('lines.noPlan.comparePlans') }}</button>
         </div>
+
+        <section class="service-support-card">
+          <div class="service-support-header">
+            <h3>服务支持</h3>
+            <p>支持常见流媒体与社交平台业务场景</p>
+          </div>
+          <div class="service-support-grid">
+            <div
+              v-for="service in serviceSupportItems"
+              :key="service.key"
+              class="service-support-item"
+            >
+              <img :src="service.icon" :alt="service.name" loading="lazy" decoding="async" />
+              <span>{{ service.name }}</span>
+            </div>
+          </div>
+        </section>
       </div>
 
       <!-- 线路列表内容 -->
@@ -145,6 +162,16 @@ import {
 import { fetchServerNodes } from '@/api/region/servers';
 
 import { getUserInfo } from '@/api/account/user';
+import iconFacebook from '@/assets/images/service-icons/facebook.svg';
+import iconYoutubePremium from '@/assets/images/service-icons/youtube-premium.svg';
+import iconChatgpt from '@/assets/images/service-icons/chatgpt.svg';
+import iconDisneyPlus from '@/assets/images/service-icons/disney-plus.svg';
+import iconYoutube from '@/assets/images/service-icons/youtube.svg';
+import iconTiktok from '@/assets/images/service-icons/tiktok.svg';
+import iconClaude from '@/assets/images/service-icons/claude.svg';
+import iconNetflix from '@/assets/images/service-icons/netflix.svg';
+import iconGoogle from '@/assets/images/service-icons/google.svg';
+import iconInstagram from '@/assets/images/service-icons/instagram.svg';
 
 
 import { NODES_CONFIG } from '@/utils/baseConfig';
@@ -168,6 +195,19 @@ const showNodeDetails = ref(NODES_CONFIG.showNodeDetails);
 
 
 const userInfo = ref(null);
+
+const serviceSupportItems = [
+  { key: 'youtube', name: 'YouTube', icon: iconYoutube },
+  { key: 'youtube-premium', name: 'YouTube Premium', icon: iconYoutubePremium },
+  { key: 'chatgpt', name: 'ChatGPT', icon: iconChatgpt },
+  { key: 'claude', name: 'Claude', icon: iconClaude },
+  { key: 'netflix', name: 'Netflix', icon: iconNetflix },
+  { key: 'disney-plus', name: 'Disney+', icon: iconDisneyPlus },
+  { key: 'tiktok', name: 'TikTok', icon: iconTiktok },
+  { key: 'instagram', name: 'Instagram', icon: iconInstagram },
+  { key: 'facebook', name: 'Facebook', icon: iconFacebook },
+  { key: 'google', name: 'Google', icon: iconGoogle }
+];
 
 
 
@@ -757,6 +797,7 @@ onMounted(() => {
     justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
+    margin-bottom: 16px;
 
     .cta-btn {
       min-width: 168px;
@@ -778,6 +819,63 @@ onMounted(() => {
       color: var(--neutral-strong);
       border-color: var(--border-color);
       background: var(--surface-subtle);
+    }
+  }
+
+  .service-support-card {
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-sm;
+    background: var(--card-background);
+    padding: 16px;
+
+    .service-support-header {
+      margin-bottom: 12px;
+
+      h3 {
+        margin: 0;
+        font-size: $font-size-md;
+      }
+
+      p {
+        margin: 6px 0 0;
+        color: var(--text-tertiary);
+        font-size: $font-size-sm;
+      }
+    }
+
+    .service-support-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .service-support-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 8px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e8ebf4;
+
+      img {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+      }
+
+      span {
+        font-size: $font-size-xs;
+        color: var(--text-secondary);
+        text-align: center;
+        line-height: 1.2;
+      }
     }
   }
 }
