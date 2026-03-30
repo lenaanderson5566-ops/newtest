@@ -2283,7 +2283,7 @@ onUnmounted(() => {
 
   justify-content: center !important;
 
-  padding: 8px 16px !important;
+  padding: 8px 16px;
 
   border-radius: 6px !important;
 
@@ -2301,7 +2301,7 @@ onUnmounted(() => {
 
   font-weight: $font-weight-medium;
 
-  margin: 8px 4px !important;
+  margin: 8px 4px;
 
   text-decoration: none !important;
 
@@ -2331,7 +2331,7 @@ onUnmounted(() => {
 
   i, .icon, svg {
 
-    margin-right: 4px !important;
+    margin-right: 4px;
 
     display: inline-flex !important;
 

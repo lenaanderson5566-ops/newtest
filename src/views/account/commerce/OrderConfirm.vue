@@ -1757,8 +1757,8 @@ export default {
   padding: 0;
 
   :deep(.page-inner) {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   display: flex;
@@ -2007,24 +2007,24 @@ export default {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
-    margin-top: map.get($spacers, 2) !important;
-    margin-bottom: map.get($spacers, 2) !important;
+    margin-top: map.get($spacers, 2);
+    margin-bottom: map.get($spacers, 2);
   }
 
   .section-wrapper.subscription-intro-section {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
-    margin-top: map.get($spacers, 2) !important;
-    margin-bottom: map.get($spacers, 2) !important;
+    margin-top: map.get($spacers, 2);
+    margin-bottom: map.get($spacers, 2);
   }
 
   .section-wrapper.payment-methods-section {
     background-color: var(--background-color) !important;
     border: none !important;
     box-shadow: none !important;
-    margin-top: map.get($spacers, 2) !important;
-    margin-bottom: map.get($spacers, 2) !important;
+    margin-top: map.get($spacers, 2);
+    margin-bottom: map.get($spacers, 2);
   }
 
   .subscription-intro-section .section-title,
@@ -2330,7 +2330,7 @@ export default {
         .period-card-inner {
           background-color: #ffffff !important;
 
-          padding: 16px 8px !important;
+          padding: 16px 8px;
 
           min-height: 90px !important;
 
@@ -2350,7 +2350,7 @@ export default {
 
           font-weight: $font-weight-semibold;
 
-          margin-bottom: 8px !important;
+          margin-bottom: 8px;
 
           color: var(--text-primary);
 
@@ -3296,8 +3296,8 @@ export default {
     margin-top: 0;
 
     :deep(.page-inner) {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
+      padding-left: 0;
+      padding-right: 0;
       max-width: 100%;
     }
 
@@ -3367,14 +3367,14 @@ export default {
 
       .period-card {
         .period-card-inner {
-          padding: 8px 8px !important;
+          padding: 8px 8px;
 
           min-height: 80px !important;
 
           .period-type {
             font-size: $font-size-sm;
 
-            margin-bottom: 4px !important;
+            margin-bottom: 4px;
           }
 
           .period-price {
@@ -3474,7 +3474,7 @@ export default {
   .order-confirm-container .period-selection .period-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
-    gap: 8px !important;
+    gap: 8px;
   }
 }
 
@@ -3482,7 +3482,7 @@ export default {
   .order-confirm-container .period-selection .period-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
-    gap: 8px !important;
+    gap: 8px;
   }
 }
 
@@ -3496,7 +3496,7 @@ export default {
 
     grid-template-columns: repeat(2, 1fr) !important;
 
-    gap: 8px !important;
+    gap: 8px;
   }
 }
 
@@ -3506,7 +3506,7 @@ export default {
 
     grid-template-columns: repeat(2, 1fr) !important;
 
-    gap: 8px !important;
+    gap: 8px;
   }
 }
 
@@ -3515,7 +3515,7 @@ export default {
 
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
 
-  gap: 16px !important;
+  gap: 16px;
 
   width: 100% !important;
 }
@@ -3524,7 +3524,7 @@ export default {
   :deep(.period-cards) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
-    gap: 8px !important;
+    gap: 8px;
   }
 }
 
@@ -3532,7 +3532,7 @@ export default {
   :deep(.period-cards) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
-    gap: 8px !important;
+    gap: 8px;
   }
 }
 </style>

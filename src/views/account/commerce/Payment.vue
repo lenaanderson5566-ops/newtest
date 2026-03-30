@@ -1372,8 +1372,8 @@ export default {
   }
 
   .section-wrapper.payment-methods-section {
-    padding: 0 !important;
-    margin-bottom: 4px !important;
+    padding: 0;
+    margin-bottom: 4px;
     background: var(--card-bg-color);
     border: 1px solid var(--border-color);
     box-shadow: none;

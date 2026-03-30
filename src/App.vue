@@ -582,11 +582,11 @@ export default {
     }
 
     .dashboard-card {
-      padding: 8px !important;
+      padding: 8px;
     }
 
     .card-header {
-      padding: 8px 8px !important;
+      padding: 8px 8px;
       min-height: auto !important;
 
       .card-title,
@@ -598,7 +598,7 @@ export default {
     }
 
     .card-body {
-      padding: 8px 8px !important;
+      padding: 8px 8px;
       font-size: $font-size-md !important;
       line-height: 1.45 !important;
     }
@@ -606,7 +606,7 @@ export default {
     .cards-grid,
     .quick-grid,
     .dashboard-grid {
-      gap: 8px !important;
+      gap: 8px;
     }
   }
 
@@ -615,17 +615,17 @@ export default {
 /* 统一窄屏容器规则：仅最外层保留 2px，内层容器全部归零，最大化可用宽度 */
 @media (max-width: 1200px) {
   .content-layout-shell {
-    padding-inline: var(--page-edge-gap, 2px) !important;
+    padding-inline: var(--page-edge-gap, 2px);
   }
 
   .content-layout-shell > * {
-    padding-inline: 0 !important;
+    padding-inline: 0;
   }
 
   .content-layout-shell > * > [class$="-inner"],
   .content-layout-shell > * > [class*="-inner "],
   .content-layout-shell > * > .my-center-inner {
-    padding-inline: 0 !important;
+    padding-inline: 0;
   }
 }
 
