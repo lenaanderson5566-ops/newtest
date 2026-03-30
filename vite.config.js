@@ -86,16 +86,11 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'static',
     sourcemap: false,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      },
-      format: {
-        comments: false,
-        ascii_only: true
-      }
+    minify: 'esbuild',
+    esbuild: {
+      drop: ['console', 'debugger'],
+      legalComments: 'none',
+      charset: 'ascii'
     }
   },
   server: {
