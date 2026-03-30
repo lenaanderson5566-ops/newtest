@@ -181,7 +181,10 @@
         <div class="right-column">
           <!-- 订单摘要 -->
 
-          <div class="section-wrapper order-summary-section">
+          <OrderSummaryCard
+            section-class="order-summary-section"
+            :show-header="false"
+          >
             <div class="order-summary glassmorphism">
               <div class="summary-header-block">
                 <div class="summary-title">{{ $t("order.order_summary") }}</div>
@@ -318,7 +321,7 @@
                 </button>
               </div>
             </div>
-          </div>
+          </OrderSummaryCard>
 
           <!-- 操作按钮 -->
 
@@ -394,6 +397,7 @@ import {
 import { getUserInfo, getSubscribe } from "@/api/overview/dashboard";
 import { fetchOrderList } from "@/api/account/orderlist";
 import QrcodeVue from "qrcode.vue";
+import OrderSummaryCard from "@/components/commerce/OrderSummaryCard.vue";
 
 import {
   IconCheck,
@@ -426,6 +430,7 @@ export default {
 
     IconCreditCard,
     QrcodeVue,
+    OrderSummaryCard,
   },
 
   setup() {

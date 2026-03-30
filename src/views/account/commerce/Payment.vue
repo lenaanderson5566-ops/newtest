@@ -136,10 +136,10 @@
         <!-- 右侧内容：支付方式 -->
         <div class="right-column">
           <!-- 订单金额摘要 -->
-          <div class="section-wrapper order-amount-section">
-            <div class="section-title">
-              <span>{{ $t("payment.order_info") }}</span>
-            </div>
+          <OrderSummaryCard
+            section-class="order-amount-section"
+            :title="$t('payment.order_info')"
+          >
 
             <div class="order-info" v-if="!loading.order">
               <div class="summary-amounts">
@@ -217,7 +217,7 @@
                 <span>{{ $t("payment.pay_now") }}</span>
               </button>
             </div>
-          </div>
+          </OrderSummaryCard>
 
           <!-- 按钮区域 -->
           <div class="action-buttons">
@@ -454,6 +454,7 @@ import {
 import { PAYMENT_CONFIG } from "@/utils/baseConfig";
 import QrcodeVue from "qrcode.vue";
 import ConfettiExplosion from "vue-confetti-explosion";
+import OrderSummaryCard from "@/components/commerce/OrderSummaryCard.vue";
 import {
   IconCheck,
   IconX,
@@ -489,6 +490,7 @@ export default {
     IconArrowLeft,
     QrcodeVue,
     ConfettiExplosion,
+    OrderSummaryCard,
     IconClock,
     IconLoader2,
     IconHelp,
