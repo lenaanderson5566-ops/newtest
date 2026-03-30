@@ -1,0 +1,97 @@
+@mixin styles {
+  .pending-order-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pending-order-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+  }
+
+  .pending-order-dialog {
+    position: relative;
+    width: min(92vw, 460px);
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 16px;
+    z-index: 1;
+  }
+
+  .payment-dialog {
+    width: min(92vw, 520px);
+  }
+
+  .pending-order-header {
+    text-align: center;
+
+    h3 {
+      margin: 0 0 8px;
+      color: var(--text-primary);
+    }
+
+    p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+
+    .payment-amount-hint {
+      margin-top: 4px;
+      font-size: var(--view-font-size-base);
+      font-weight: 500;
+    }
+  }
+
+  .pending-order-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+
+    .cancel-btn,
+    .confirm-btn {
+      flex: 1;
+    }
+  }
+
+  .pending-order-modal.payment-modal .pending-order-actions .btn-confirm-cancel {
+    background: var(--theme-color);
+    border-color: var(--theme-color);
+    color: var(--text-on-dark-primary);
+  }
+
+  .pending-order-modal.payment-modal .pending-order-actions .btn-confirm-cancel:hover {
+    background: color-mix(in srgb, var(--theme-color) 88%, black);
+    border-color: color-mix(in srgb, var(--theme-color) 88%, black);
+  }
+
+  .payment-qrcode-wrap {
+    margin: 8px 0 16px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .payment-link-wrap {
+    margin: 8px 0 16px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: rgba(var(--theme-color-rgb), 0.06);
+    word-break: break-all;
+  }
+
+  .modal-fade-enter-active,
+  .modal-fade-leave-active {
+    transition: opacity 0.2s ease;
+  }
+
+  .modal-fade-enter-from,
+  .modal-fade-leave-to {
+    opacity: 0;
+  }
+}
