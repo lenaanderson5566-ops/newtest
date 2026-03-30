@@ -2098,11 +2098,9 @@ $space-2: map.get($spacers, 2);
       .usage-percent {
         line-height: 1;
         font-size: $font-size-xl;
-        font-weight: $font-weight-semibold;
 
         &.compact {
           font-size: $font-size-xl;
-          font-weight: $font-weight-semibold;
         }
       }
 
