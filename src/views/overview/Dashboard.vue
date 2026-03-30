@@ -2506,29 +2506,29 @@ $space-2: map.get($spacers, 2);
   flex-direction: column;
 
   h3 {
+    @extend %typo-page-title;
     margin: 18px 0 18px;
-    font-size: clamp(40px, 3.6vw, 62px);
-    line-height: 1.2;
-    color: #1f2a44;
+    font-size: clamp(26px, 2.1vw, 34px);
+    line-height: 1.3;
     letter-spacing: 0.5px;
   }
 
   p {
+    @extend %typo-body-text;
     margin: 0;
-    font-size: clamp(28px, 2vw, 34px);
-    line-height: 1.65;
-    color: #4d5b78;
+    font-size: clamp(15px, 1.05vw, 17px);
+    line-height: 1.75;
+    color: #55627f;
   }
 }
 
 .no-plan-badge {
+  @extend %typo-item-title;
   display: inline-flex;
   align-items: center;
   width: fit-content;
   padding: 9px 18px;
   border-radius: 12px;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
   color: var(--text-on-dark-primary);
   background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
 }
@@ -2540,6 +2540,7 @@ $space-2: map.get($spacers, 2);
   gap: 14px;
 
   .no-plan-cta {
+    @extend %typo-item-title;
     justify-content: center;
     display: inline-flex;
     align-items: center;
@@ -2548,8 +2549,7 @@ $space-2: map.get($spacers, 2);
     max-width: 100%;
     border-radius: 14px;
     padding: 14px 18px;
-    font-size: clamp(24px, 1.55vw, 28px);
-    font-weight: $font-weight-semibold;
+    font-size: clamp(16px, 1.02vw, 18px);
   }
 
   .no-plan-cta.primary {
@@ -2569,16 +2569,16 @@ $space-2: map.get($spacers, 2);
   border-top: 1px solid #e8ebf4;
 
   p {
+    @extend %typo-item-title;
     margin: 0;
     color: #526489;
-    font-size: clamp(28px, 1.85vw, 34px);
-    font-weight: 600;
+    font-size: clamp(16px, 1.02vw, 18px);
   }
 
   .platform-text {
+    @extend %typo-label-text;
     margin-top: 14px;
-    font-size: clamp(33px, 2.1vw, 38px);
-    font-weight: 500;
+    font-size: clamp(14px, 0.95vw, 16px);
     color: #7688af;
   }
 
@@ -2659,13 +2659,13 @@ button.no-plan-step {
   }
 
   .no-plan-flow-aside h3 {
-    font-size: 34px;
+    font-size: 24px;
   }
 
   .no-plan-flow-aside p,
   .no-plan-platforms p,
   .no-plan-platforms .platform-text {
-    font-size: $font-size-lg;
+    font-size: $font-size-md;
   }
 
   .no-plan-cta-group .no-plan-cta {
