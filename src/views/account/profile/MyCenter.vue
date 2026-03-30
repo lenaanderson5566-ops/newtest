@@ -216,6 +216,7 @@
       </div>
 
       <div v-show="activeSection === 'benefits'" class="benefits-stack">
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.levelBenefitsTitle') }}</h3>
         <section v-if="hasTierInfo" class="tier-panel section-block dashboard-like-card">
           <div class="tier-header">
             <div>
@@ -240,7 +241,6 @@
           </div>
         </section>
 
-        <h3 class="section-title section-title-outside">{{ $t('myCenter.levelBenefitsTitle') }}</h3>
         <section class="section-block dashboard-like-card">
           <div class="tier-intro-list">
             <div class="tier-intro-card">

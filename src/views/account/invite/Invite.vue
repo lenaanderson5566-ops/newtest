@@ -321,7 +321,7 @@
       
       <div class="dashboard-card referral-kpi-card" v-if="!loading.inviteData">
         <div class="card-header">
-          <h2 class="card-title">{{ $t('invite.title') }}</h2>
+          <h2 class="card-title">{{ $t('invite.statsTitle') }}</h2>
         </div>
         <div class="referral-kpi-grid">
           <div class="kpi-item">
