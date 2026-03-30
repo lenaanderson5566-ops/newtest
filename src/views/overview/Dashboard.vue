@@ -30,22 +30,50 @@
         </template>
 
         <template v-else-if="!hasPlan">
-          <!-- 没有订阅时显示的提示卡片 -->
-          <InfoCard class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
-               style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;">
-            <template #icon>
-              <div class="no-plan-icon">
-                <IconShoppingCart :size="45" class="icon-cart"/>
+          <section
+            class="dashboard-card stats-card no-plan-flow-card"
+            :class="{ 'card-animate': !loading.userStats }"
+            style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;"
+          >
+            <div class="no-plan-flow-layout">
+              <aside class="no-plan-flow-aside">
+                <span class="no-plan-badge">新用户引导</span>
+                <h3>开始使用前，<br>先完成订阅开通</h3>
+                <p>{{ $t('dashboard.noPlanPrompt') }}</p>
+
+                <div class="no-plan-platforms">
+                  <p>支持多平台 · 几分钟完成配置</p>
+                  <p class="platform-text">Windows / macOS / Android / iPhone</p>
+                  <div class="platform-icons">
+                    <IconBrandWindows :size="18" />
+                    <IconBrandApple :size="18" />
+                    <IconDeviceDesktop :size="18" />
+                    <IconBrandAndroid :size="18" />
+                  </div>
+                </div>
+              </aside>
+
+              <div class="no-plan-steps">
+                <button class="no-plan-step no-plan-step-primary" @click="goToShop">
+                  <IconShoppingCart :size="34" />
+                  <span class="step-title">1. {{ $t('dashboard.purchasePlan') }}</span>
+                  <span class="step-desc">{{ $t('quickStartPage.status.newDesc') }}</span>
+                </button>
+
+                <button class="no-plan-step no-plan-step-secondary" @click="goToDocs">
+                  <IconDeviceDesktop :size="34" />
+                  <span class="step-title">2. {{ $t('quickStartPage.step2Title') }}</span>
+                  <span class="step-desc">{{ $t('quickStartPage.step2Tip') }}</span>
+                </button>
+
+                <div class="no-plan-step no-plan-step-success">
+                  <IconRocket :size="34" />
+                  <span class="step-title">3. {{ $t('quickStartPage.step3Title') }}</span>
+                  <span class="step-desc">{{ $t('quickStartPage.connectHint') }}</span>
+                </div>
               </div>
-            </template>
-            <template #title>{{ $t('dashboard.noPlanPrompt') }}</template>
-            <template #action>
-              <button class="action-button primary btn btn-primary" @click="goToShop">
-                <IconShoppingBag :size="18" class="btn-icon"/>
-                <span>{{ $t('dashboard.purchasePlan') }}</span>
-              </button>
-            </template>
-          </InfoCard>
+            </div>
+          </section>
         </template>
 
         <template v-else>
@@ -319,7 +347,6 @@ import {
   IconPlus
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
-import InfoCard from '@/components/common/InfoCard.vue';
 import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
 import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
@@ -364,7 +391,6 @@ export default {
     IconCoins,
     IconEye,
     IconAlertTriangle,
-    InfoCard,
     IconX,
     IconCalendarPlus,
     IconPlus,
@@ -440,6 +466,10 @@ export default {
 
     const goToShop = () => {
       router.push('/shop');
+    };
+
+    const goToDocs = () => {
+      router.push('/docs');
     };
 
     const userPlanId = ref(null);
@@ -1279,6 +1309,7 @@ export default {
       userPlan,
       loading,
       goToShop,
+      goToDocs,
       hasPendingItems,
       goToOrders,
       router,
@@ -2440,6 +2471,148 @@ $space-2: map.get($spacers, 2);
   );
   animation: shimmer 2s infinite;
   z-index: 1;
+}
+
+.no-plan-flow-card {
+  background: #fff;
+  border: 1px solid #e8ebf4;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.no-plan-flow-layout {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 16px;
+}
+
+.no-plan-flow-aside {
+  border-radius: 12px;
+  padding: 24px 22px;
+  border: 1px solid #edf0f8;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    @extend %typo-page-title;
+    margin: 18px 0 18px;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+  }
+
+  p {
+    @extend %typo-body-text;
+    margin: 0;
+    line-height: 1.75;
+  }
+}
+
+.no-plan-badge {
+  @extend %typo-item-title;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 9px 18px;
+  border-radius: 12px;
+  @extend %typo-dark-primary;
+  background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
+}
+
+.no-plan-platforms {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid #e8ebf4;
+
+  p {
+    @extend %typo-item-title;
+    margin: 0;
+  }
+
+  .platform-text {
+    @extend %typo-label-text;
+    margin-top: 14px;
+  }
+
+  .platform-icons {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: #8ca0d8;
+
+    :deep(svg) {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+.no-plan-steps {
+  display: grid;
+  gap: 14px;
+}
+
+.no-plan-step {
+  border: none;
+  width: 100%;
+  border-radius: 16px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+  .step-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+  }
+
+  .step-desc {
+    font-size: $font-size-sm;
+    opacity: 0.92;
+    line-height: 1.5;
+  }
+}
+
+button.no-plan-step {
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.no-plan-step-primary {
+  background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
+}
+
+.no-plan-step-secondary {
+  background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%);
+}
+
+.no-plan-step-success {
+  background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%);
+}
+
+@media (max-width: 768px) {
+  .no-plan-flow-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .no-plan-flow-card {
+    padding: 16px;
+  }
+
+  .no-plan-step {
+    padding: 20px 16px;
+  }
 }
 
 
