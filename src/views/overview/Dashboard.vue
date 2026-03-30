@@ -33,7 +33,7 @@
           <section
             class="dashboard-card stats-card no-plan-flow-card"
             :class="{ 'card-animate': !loading.userStats }"
-            style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;"
+            style="animation-delay: 0.5s;"
           >
             <div class="no-plan-flow-layout">
               <aside class="no-plan-flow-aside">
@@ -78,7 +78,7 @@
           <section
             class="dashboard-card stats-card service-support-card"
             :class="{ 'card-animate': !loading.userStats }"
-            style="animation-delay: 0.6s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;"
+            style="animation-delay: 0.6s;"
           >
             <div class="service-support-header">
               <h3>服务支持</h3>
@@ -1476,13 +1476,6 @@ $space-2: map.get($spacers, 2);
     }
   }
 
-  @media (min-width: #{$bp-md-up}) {
-    &.is-no-plan {
-      height: calc(100vh - var(--app-top-bar-height, 56px) - var(--page-content-top-gap, 8px));
-      overflow-y: hidden;
-    }
-  }
-
   .dashboard-inner {
     .overview-grid {
     display: grid;
@@ -2518,15 +2511,12 @@ $space-2: map.get($spacers, 2);
   z-index: 1;
 }
 
-.no-plan-flow-card {
-  background: #fff;
-  border: 1px solid #e8ebf4;
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 0 !important;
-}
-
+.no-plan-flow-card,
 .service-support-card {
+  grid-column: 1 / -1;
+  margin: 0 auto !important;
+  max-width: var(--page-content-max-width);
+  width: 100%;
   background: #fff;
   border: 1px solid #e8ebf4;
   border-radius: 14px;
