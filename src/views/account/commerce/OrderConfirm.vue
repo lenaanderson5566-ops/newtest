@@ -1758,8 +1758,10 @@ export default {
 @use "@/assets/styles/base/variables.scss" as *;
 @use "@/assets/styles/base/typography.scss" as *;
 @use "@/assets/styles/components/qr-payment-modal.scss" as qrPaymentModal;
+@use "@/assets/styles/components/payment-summary-action.scss" as paymentSummaryAction;
 
 @include qrPaymentModal.styles;
+@include paymentSummaryAction.styles;
 
 .order-confirm-container {
   padding: 0;
@@ -3000,46 +3002,6 @@ export default {
   .order-summary-section {
     margin-top: 0;
     margin-bottom: 0;
-  }
-
-  .order-summary .summary-submit-action {
-    width: 100%;
-    margin-top: 8px;
-    height: 40px;
-    padding: 0 24px;
-    border-radius: $border-radius-sm;
-    background-color: var(--theme-color);
-    color: var(--text-on-dark-primary);
-    font-size: $font-size-md;
-    font-weight: $font-weight-medium;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: none;
-
-    &:hover:not(:disabled) {
-      background-color: color-mix(in srgb, var(--theme-color) 85%, black) !important;
-      transform: translateY(-2px);
-      box-shadow: none;
-    }
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .loader {
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s linear infinite;
-    }
   }
 
 }

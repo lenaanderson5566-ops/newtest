@@ -204,7 +204,7 @@
               v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && !paymentSuccessful && orderDetail.total_amount > 0"
             >
               <button
-                class="btn-pay main-action full-width"
+                class="btn-order summary-submit-action full-width"
                 @click="processPayment"
                 :disabled="
                   (orderDetail.total_amount > 0 && !selectedMethod) ||
@@ -1144,8 +1144,10 @@ export default {
 @use "@/assets/styles/base/variables.scss" as *;
 @use "@/assets/styles/base/typography.scss" as *;
 @use "@/assets/styles/components/qr-payment-modal.scss" as qrPaymentModal;
+@use "@/assets/styles/components/payment-summary-action.scss" as paymentSummaryAction;
 
 @include qrPaymentModal.styles;
+@include paymentSummaryAction.styles;
 
 .payment-container {
   padding: 0;
@@ -1433,39 +1435,6 @@ export default {
 
     .order-amount-actions {
       margin-top: 16px;
-
-      .btn-pay {
-        width: 100%;
-        height: 44px;
-        border-radius: $border-radius-sm;
-        background-color: var(--theme-color);
-        color: var(--text-on-dark-primary);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: none;
-        border: none;
-
-        &:hover:not(:disabled) {
-          background-color: color-mix(in srgb, var(--theme-color) 88%, black) !important;
-          box-shadow: none;
-          transform: none;
-        }
-
-        svg,
-        span {
-          display: inline-flex;
-          align-items: center;
-          line-height: 1;
-        }
-
-        svg {
-          flex-shrink: 0;
-          vertical-align: middle;
-        }
-      }
     }
   }
 
