@@ -2531,6 +2531,7 @@ $space-2: map.get($spacers, 2);
 
 .no-plan-steps {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -2598,6 +2599,10 @@ button.no-plan-step {
 
   .no-plan-flow-card {
     padding: 16px;
+  }
+
+  .no-plan-steps {
+    grid-template-columns: 1fr;
   }
 
   .no-plan-step {
