@@ -220,7 +220,7 @@ export default {
         permanent: '永久',
         none: '无',
         days: '天',
-        noPlanPrompt: '您是新注册用户，当前还没有开通任何套餐，先前往商店购买订阅激活账号，再下载客户端并导入即可开始使用。',
+        noPlanPrompt: '当前账号尚未激活服务，开通订阅后即可下载客户端，一键导入配置并快速开始使用。',
         importSubscription: '添加配置',
         purchasePlan: '购买订阅',
         resetTraffic: '重置流量',

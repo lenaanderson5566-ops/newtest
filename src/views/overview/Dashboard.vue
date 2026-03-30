@@ -37,8 +37,8 @@
           >
             <div class="no-plan-flow-layout">
               <aside class="no-plan-flow-aside">
-                <span class="no-plan-badge">{{ $t('dashboard.welcome') }}</span>
-                <h3>{{ $t('quickStartPage.status.newTitle') }}</h3>
+                <span class="no-plan-badge">新用户引导</span>
+                <h3>开始使用前，<br>先完成订阅开通</h3>
                 <p>{{ $t('dashboard.noPlanPrompt') }}</p>
 
                 <div class="no-plan-cta-group">
@@ -48,16 +48,17 @@
                   </button>
                   <button class="no-plan-cta secondary btn btn-outline" @click="goToDocs">
                     <IconChevronRight :size="16" />
-                    <span>{{ $t('dashboard.viewHelp') }}</span>
+                    <span>查看使用教程</span>
                   </button>
                 </div>
 
                 <div class="no-plan-platforms">
-                  <p>Windows / macOS / Android / iPhone</p>
+                  <p>支持多平台 · 几分钟完成配置</p>
+                  <p class="platform-text">Windows / macOS / Android / iPhone</p>
                   <div class="platform-icons">
                     <IconBrandWindows :size="18" />
                     <IconBrandApple :size="18" />
-                    <IconBrandFinder :size="18" />
+                    <IconDeviceDesktop :size="18" />
                     <IconBrandAndroid :size="18" />
                   </div>
                 </div>
@@ -2484,38 +2485,39 @@ $space-2: map.get($spacers, 2);
 }
 
 .no-plan-flow-card {
-  background: var(--surface-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 20px;
+  background: #fff;
+  border: 1px solid #e8ebf4;
+  border-radius: 14px;
+  padding: 18px;
 }
 
 .no-plan-flow-layout {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 18px;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 16px;
 }
 
 .no-plan-flow-aside {
-  border-radius: 16px;
-  padding: 18px;
-  border: 1px solid var(--theme-border-soft);
-  background: linear-gradient(180deg, rgba(91, 124, 255, 0.06), rgba(91, 124, 255, 0.01));
+  border-radius: 12px;
+  padding: 24px 22px;
+  border: 1px solid #edf0f8;
+  background: #fff;
   display: flex;
   flex-direction: column;
 
   h3 {
-    margin: 14px 0 10px;
-    font-size: clamp(28px, 3vw, 44px);
-    line-height: 1.25;
-    color: var(--text-primary);
+    margin: 18px 0 18px;
+    font-size: clamp(40px, 3.6vw, 62px);
+    line-height: 1.2;
+    color: #1f2a44;
+    letter-spacing: 0.5px;
   }
 
   p {
     margin: 0;
-    font-size: $font-size-lg;
-    line-height: 1.75;
-    color: var(--text-secondary);
+    font-size: clamp(28px, 2vw, 34px);
+    line-height: 1.65;
+    color: #4d5b78;
   }
 }
 
@@ -2523,56 +2525,74 @@ $space-2: map.get($spacers, 2);
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  padding: 6px 14px;
-  border-radius: 10px;
-  font-size: $font-size-sm;
+  padding: 9px 18px;
+  border-radius: 12px;
+  font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   color: var(--text-on-dark-primary);
   background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
 }
 
 .no-plan-cta-group {
-  margin-top: 24px;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 
   .no-plan-cta {
     justify-content: center;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    width: 300px;
+    width: 360px;
     max-width: 100%;
-    border-radius: 12px;
-    padding: 11px 14px;
-    font-size: $font-size-md;
+    border-radius: 14px;
+    padding: 14px 18px;
+    font-size: clamp(24px, 1.55vw, 28px);
     font-weight: $font-weight-semibold;
   }
 
+  .no-plan-cta.primary {
+    box-shadow: 0 8px 18px rgba(63, 94, 255, 0.25);
+  }
+
   .no-plan-cta.secondary {
-    border-color: var(--theme-border-soft);
-    color: var(--text-secondary);
+    border-color: #d8deed;
+    color: #5f6f93;
+    background: #fff;
   }
 }
 
 .no-plan-platforms {
   margin-top: auto;
-  padding-top: 20px;
-  border-top: 1px solid var(--theme-border-soft);
+  padding-top: 24px;
+  border-top: 1px solid #e8ebf4;
 
   p {
     margin: 0;
-    color: var(--text-secondary);
-    font-size: $font-size-lg;
+    color: #526489;
+    font-size: clamp(28px, 1.85vw, 34px);
+    font-weight: 600;
+  }
+
+  .platform-text {
+    margin-top: 14px;
+    font-size: clamp(33px, 2.1vw, 38px);
+    font-weight: 500;
+    color: #7688af;
   }
 
   .platform-icons {
-    margin-top: 10px;
+    margin-top: 14px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 18px;
     color: #8ca0d8;
+
+    :deep(svg) {
+      width: 30px;
+      height: 30px;
+    }
   }
 }
 
@@ -2639,12 +2659,19 @@ button.no-plan-step {
   }
 
   .no-plan-flow-aside h3 {
-    font-size: $font-size-xl;
+    font-size: 34px;
   }
 
   .no-plan-flow-aside p,
-  .no-plan-platforms p {
+  .no-plan-platforms p,
+  .no-plan-platforms .platform-text {
+    font-size: $font-size-lg;
+  }
+
+  .no-plan-cta-group .no-plan-cta {
+    width: 100%;
     font-size: $font-size-md;
+    padding: 11px 14px;
   }
 
   .no-plan-step {
