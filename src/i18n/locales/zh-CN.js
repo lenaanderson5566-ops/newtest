@@ -835,6 +835,7 @@ profile: {
         handling_fee: '手续费',
         total_with_fee: '合计',
         pay_now: '立即支付',
+        continue_pay: '继续支付',
         scan_qrcode: '请扫描二维码完成支付',
         pay_success: '支付成功',
         pay_processing: '正在处理支付...',

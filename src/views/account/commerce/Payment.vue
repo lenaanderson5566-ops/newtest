@@ -16,7 +16,7 @@
               >
                 <IconX v-if="!loading.cancelling" :size="14" />
                 <div v-else class="loader"></div>
-                <span>{{ $t("payment.cancel_order") }}</span>
+                <span>{{ $t("payment.back_to_shop") }}</span>
               </button>
             </div>
 
@@ -213,7 +213,7 @@
               >
                 <IconCreditCard v-if="!loading.paying" :size="18" />
                 <div v-else class="loader"></div>
-                <span>{{ $t("payment.pay_now") }}</span>
+                <span>{{ $t("payment.continue_pay") }}</span>
               </button>
             </div>
           </OrderSummaryCard>
@@ -272,7 +272,7 @@
                 >
                   <IconX v-if="!loading.cancelling" :size="18" />
                   <div v-else class="loader"></div>
-                  <span>{{ $t("payment.cancel_order") }}</span>
+                  <span>{{ $t("payment.back_to_shop") }}</span>
                 </button>
 
                 <!-- 右侧激活按钮 -->

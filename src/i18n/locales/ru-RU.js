@@ -839,6 +839,7 @@ profile: {
     handling_fee: 'Комиссия за обработку',
     total_with_fee: 'Итого с комиссией',
     pay_now: 'Оплатить сейчас',
+    continue_pay: 'Продолжить оплату',
     scan_qrcode: 'Отсканируйте QR-код для оплаты',
     pay_success: 'Оплата успешна',
     pay_processing: 'Обработка платежа...',

@@ -839,6 +839,7 @@ profile: {
     handling_fee: '手續費',
     total_with_fee: '含手續費總額',
     pay_now: '立即支付',
+    continue_pay: '繼續支付',
     scan_qrcode: '請掃描二維碼完成支付',
     pay_success: '支付成功',
     pay_processing: '正在處理支付...',

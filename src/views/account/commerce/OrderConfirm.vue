@@ -908,7 +908,7 @@ export default {
 
     const payActionLabel = computed(() => {
       if (totalWithFee.value <= 0) return t("payment.activate");
-      return t("payment.pay_now");
+      return t("payment.continue_pay");
     });
     const selectedOrderDisplay = computed(() => {
       const planName = plan.value?.name || "-";

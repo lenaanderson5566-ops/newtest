@@ -839,6 +839,7 @@ profile: {
     handling_fee: '手数料',
     total_with_fee: '手数料込み合計',
     pay_now: '今すぐ支払う',
+    continue_pay: '支払いを続ける',
     scan_qrcode: 'QRコードをスキャンして支払い',
     pay_success: '支払い成功',
     pay_processing: '支払い処理中...',

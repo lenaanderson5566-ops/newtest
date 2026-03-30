@@ -834,6 +834,7 @@ profile: {
         handling_fee: 'Handling Fee',
         total_with_fee: 'Total Including Fee',
         pay_now: 'Pay Now',
+        continue_pay: 'Continue Payment',
         scan_qrcode: 'Please scan the QR code to complete payment',
         pay_success: 'Payment successful',
         pay_processing: 'Processing payment...',
