@@ -2,10 +2,11 @@
   <div class="user-avatar-container" ref="avatarContainer">
     <div class="avatar-wrapper" :class="{ 'is-active': isDropdownOpen }" @click="toggleDropdown">
       <img 
-        v-if="avatarUrl" 
+        v-if="avatarUrl && !avatarLoadFailed" 
         :src="avatarUrl" 
         alt="User Avatar" 
         class="avatar-image"
+        @error="handleAvatarError"
       />
       <div v-else-if="loading" class="avatar-loading" aria-label="loading">
         <span class="loading-spinner"></span>
@@ -39,7 +40,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
@@ -74,6 +75,7 @@ export default {
     const { showToast } = useToast();
     const isDropdownOpen = ref(false);
     const avatarContainer = ref(null);
+    const avatarLoadFailed = ref(false);
     const avatarInitial = computed(() => {
       const rawEmail = (props.email || '').trim();
       if (!rawEmail) return 'U';
@@ -87,6 +89,10 @@ export default {
     
     const toggleDropdown = () => {
       isDropdownOpen.value = !isDropdownOpen.value;
+    };
+
+    const handleAvatarError = () => {
+      avatarLoadFailed.value = true;
     };
     
     const navigateTo = (path) => {
@@ -123,6 +129,13 @@ export default {
     onUnmounted(() => {
       document.removeEventListener('click', handleClickOutside);
     });
+
+    watch(
+      () => props.avatarUrl,
+      () => {
+        avatarLoadFailed.value = false;
+      }
+    );
     
     return {
       isDropdownOpen,
@@ -130,7 +143,9 @@ export default {
       navigateTo,
       logout,
       avatarContainer,
-      avatarInitial
+      avatarInitial,
+      avatarLoadFailed,
+      handleAvatarError
     };
   }
 };
