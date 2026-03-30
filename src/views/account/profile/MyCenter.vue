@@ -16,7 +16,7 @@
       <div v-show="activeSection === 'overview'" class="overview-panels">
         <h3 class="section-title section-title-outside">{{ $t('myCenter.summaryTitle') }}</h3>
         <p class="section-subtitle">{{ $t('myCenter.summaryDesc') }}</p>
-        <section class="summary-panel section-block dashboard-like-card">
+        <section class="summary-panel section-block dashboard-like-card dashboard-like-card--accent">
           <div class="summary-grid">
             <div class="summary-item">
               <span class="label">{{ $t('myCenter.email') }}</span>
