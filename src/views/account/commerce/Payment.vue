@@ -16,7 +16,7 @@
               >
                 <IconX v-if="!loading.cancelling" :size="14" />
                 <div v-else class="loader"></div>
-                <span>{{ $t("payment.back_to_shop") }}</span>
+                <span>{{ $t("payment.cancel_order") }}</span>
               </button>
             </div>
 
@@ -272,7 +272,7 @@
                 >
                   <IconX v-if="!loading.cancelling" :size="18" />
                   <div v-else class="loader"></div>
-                  <span>{{ $t("payment.back_to_shop") }}</span>
+                  <span>{{ $t("payment.cancel_order") }}</span>
                 </button>
 
                 <!-- 右侧激活按钮 -->
@@ -1630,6 +1630,18 @@ export default {
 
         .btn-pay {
           flex: 2;
+        }
+
+        .btn-back.secondary-action {
+          background: transparent;
+          border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+          color: var(--theme-color);
+
+          &:hover:not(:disabled) {
+            background-color: rgba(var(--theme-color-rgb), 0.08);
+            box-shadow: none;
+            transform: none;
+          }
         }
       }
     }
