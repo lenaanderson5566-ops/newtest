@@ -1877,12 +1877,10 @@ $space-2: map.get($spacers, 2);
         }
 
         .usage-percent {
+          @extend %typo-metric-md;
           writing-mode: horizontal-tb;
           text-orientation: mixed;
-          font-size: var(--dashboard-value-size);
           line-height: 1;
-          font-weight: $font-weight-bold;
-          color: var(--text-primary);
 
           &.compact {
             font-size: $font-size-xl;
@@ -2096,13 +2094,11 @@ $space-2: map.get($spacers, 2);
       gap: 8px;
 
       .usage-percent {
+        @extend %typo-metric-md;
         line-height: 1;
-        font-size: $font-size-xl;
-        font-weight: $font-weight-bold;
 
         &.compact {
           font-size: $font-size-xl;
-          font-weight: $font-weight-bold;
         }
       }
 
