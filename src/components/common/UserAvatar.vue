@@ -8,7 +8,7 @@
         class="avatar-image"
       />
       <div v-else class="avatar-placeholder">
-        <IconUserCircle class="user-icon" />
+        <span class="avatar-letter">{{ avatarInitial }}</span>
       </div>
     </div>
     
@@ -36,18 +36,17 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
-import { IconUserCircle, IconMessageCircle } from '@tabler/icons-vue';
+import { IconMessageCircle } from '@tabler/icons-vue';
 import IconUser from '@/components/icons/IconUser.vue';
 import IconLogout from '@/components/icons/IconLogout.vue';
 
 export default {
   name: 'UserAvatar',
   components: {
-    IconUserCircle,
     IconMessageCircle,
     IconUser,
     IconLogout
@@ -62,12 +61,24 @@ export default {
       default: ''
     }
   },
-  setup() {
+  setup(props) {
     const router = useRouter();
     const { t } = useI18n();
     const { showToast } = useToast();
     const isDropdownOpen = ref(false);
     const avatarContainer = ref(null);
+    const avatarInitial = computed(() => {
+      const rawUsername = (props.username || '').trim();
+      if (!rawUsername) return 'U';
+
+      const localPart = rawUsername.includes('@')
+        ? rawUsername.split('@')[0]
+        : rawUsername;
+      const fallbackTarget = localPart || rawUsername;
+      const firstChar = [...fallbackTarget][0] || 'U';
+
+      return firstChar.toUpperCase();
+    });
     
     const toggleDropdown = () => {
       isDropdownOpen.value = !isDropdownOpen.value;
@@ -113,7 +124,8 @@ export default {
       toggleDropdown,
       navigateTo,
       logout,
-      avatarContainer
+      avatarContainer,
+      avatarInitial
     };
   }
 };
@@ -162,11 +174,13 @@ export default {
     justify-content: center;
     width: 100%;
     height: 100%;
-    
-    .user-icon {
-      width: 20px;
-      height: 20px;
+
+    .avatar-letter {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      line-height: 1;
       color: rgba(var(--theme-color-rgb), 0.9);
+      user-select: none;
     }
   }
 }
