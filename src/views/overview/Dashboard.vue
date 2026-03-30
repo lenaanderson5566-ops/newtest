@@ -18,7 +18,7 @@
         <button class="banner-action btn btn-primary" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
       </div>
 
-      <div class="stats-grid">
+      <div class="stats-grid" :class="{ 'no-plan-grid': !hasPlan }">
         <template v-if="loading.userStats">
           <div v-for="i in 4" :key="i" class="stats-card skeleton-card">
             <div class="skeleton-icon"></div>
@@ -1483,6 +1483,10 @@ $space-2: map.get($spacers, 2);
     grid-auto-flow: row dense;
     margin-bottom: var(--dashboard-section-margin);
 
+    &.no-plan-grid {
+      margin-bottom: 0;
+    }
+
     > .stats-card.traffic-board-total {
       grid-column: 1 / -1;
     }
@@ -2457,6 +2461,7 @@ $space-2: map.get($spacers, 2);
   border: 1px solid #e8ebf4;
   border-radius: 14px;
   padding: 16px;
+  margin-bottom: 0 !important;
 }
 
 .no-plan-flow-layout {
