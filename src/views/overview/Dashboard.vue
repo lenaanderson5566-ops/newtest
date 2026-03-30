@@ -2508,7 +2508,6 @@ $space-2: map.get($spacers, 2);
   h3 {
     @extend %typo-page-title;
     margin: 18px 0 18px;
-    font-size: clamp(26px, 2.1vw, 34px);
     line-height: 1.3;
     letter-spacing: 0.5px;
   }
@@ -2516,9 +2515,7 @@ $space-2: map.get($spacers, 2);
   p {
     @extend %typo-body-text;
     margin: 0;
-    font-size: clamp(15px, 1.05vw, 17px);
     line-height: 1.75;
-    color: #55627f;
   }
 }
 
@@ -2529,7 +2526,7 @@ $space-2: map.get($spacers, 2);
   width: fit-content;
   padding: 9px 18px;
   border-radius: 12px;
-  color: var(--text-on-dark-primary);
+  @extend %typo-dark-primary;
   background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
 }
 
@@ -2549,7 +2546,6 @@ $space-2: map.get($spacers, 2);
     max-width: 100%;
     border-radius: 14px;
     padding: 14px 18px;
-    font-size: clamp(16px, 1.02vw, 18px);
   }
 
   .no-plan-cta.primary {
@@ -2571,15 +2567,11 @@ $space-2: map.get($spacers, 2);
   p {
     @extend %typo-item-title;
     margin: 0;
-    color: #526489;
-    font-size: clamp(16px, 1.02vw, 18px);
   }
 
   .platform-text {
     @extend %typo-label-text;
     margin-top: 14px;
-    font-size: clamp(14px, 0.95vw, 16px);
-    color: #7688af;
   }
 
   .platform-icons {
@@ -2658,19 +2650,8 @@ button.no-plan-step {
     padding: 16px;
   }
 
-  .no-plan-flow-aside h3 {
-    font-size: 24px;
-  }
-
-  .no-plan-flow-aside p,
-  .no-plan-platforms p,
-  .no-plan-platforms .platform-text {
-    font-size: $font-size-md;
-  }
-
   .no-plan-cta-group .no-plan-cta {
     width: 100%;
-    font-size: $font-size-md;
     padding: 11px 14px;
   }
 
