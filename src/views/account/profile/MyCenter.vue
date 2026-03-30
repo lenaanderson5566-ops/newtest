@@ -661,8 +661,8 @@ $space-2: map.get($spacers, 2);
   position: absolute;
   inset: 0 auto auto 0;
   width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.92), rgba(var(--theme-color-rgb), 0.35));
+  height: 5px;
+  background: var(--site-accent-gradient, linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%));
   pointer-events: none;
 }
 

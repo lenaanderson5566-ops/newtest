@@ -339,6 +339,7 @@ export default {
 
 .app-root-shell {
   min-height: 100dvh;
+  --site-accent-gradient: linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
 }
 
 /* 隐藏左下角版本号（若存在于运行时注入/主题组件中） */
@@ -400,6 +401,17 @@ export default {
   padding: 0 8px;
   z-index: 120;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: var(--site-accent-gradient);
+    pointer-events: none;
+  }
 }
 
 
