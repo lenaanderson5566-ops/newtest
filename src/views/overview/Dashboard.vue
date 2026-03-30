@@ -30,22 +30,36 @@
         </template>
 
         <template v-else-if="!hasPlan">
-          <!-- 没有订阅时显示的提示卡片 -->
-          <InfoCard class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
-               style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;">
-            <template #icon>
-              <div class="no-plan-icon">
-                <IconShoppingCart :size="45" class="icon-cart"/>
-              </div>
-            </template>
-            <template #title>{{ $t('dashboard.noPlanPrompt') }}</template>
-            <template #action>
-              <button class="action-button primary btn btn-primary" @click="goToShop">
-                <IconShoppingBag :size="18" class="btn-icon"/>
-                <span>{{ $t('dashboard.purchasePlan') }}</span>
+          <section
+            class="dashboard-card stats-card no-plan-flow-card"
+            :class="{ 'card-animate': !loading.userStats }"
+            style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;"
+          >
+            <header class="no-plan-flow-header">
+              <h3>{{ $t('quickStartPage.status.newTitle') }}</h3>
+              <p>{{ $t('dashboard.noPlanPrompt') }}</p>
+            </header>
+
+            <div class="no-plan-steps">
+              <button class="no-plan-step no-plan-step-primary" @click="goToShop">
+                <IconShoppingCart :size="34" />
+                <span class="step-title">1. {{ $t('dashboard.purchasePlan') }}</span>
+                <span class="step-desc">{{ $t('quickStartPage.status.newDesc') }}</span>
               </button>
-            </template>
-          </InfoCard>
+
+              <button class="no-plan-step no-plan-step-secondary" @click="goToDocs">
+                <IconDeviceDesktop :size="34" />
+                <span class="step-title">2. {{ $t('quickStartPage.step2Title') }}</span>
+                <span class="step-desc">{{ $t('quickStartPage.step2Tip') }}</span>
+              </button>
+
+              <div class="no-plan-step no-plan-step-success">
+                <IconRocket :size="34" />
+                <span class="step-title">3. {{ $t('quickStartPage.step3Title') }}</span>
+                <span class="step-desc">{{ $t('quickStartPage.connectHint') }}</span>
+              </div>
+            </div>
+          </section>
         </template>
 
         <template v-else>
@@ -319,7 +333,6 @@ import {
   IconPlus
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
-import InfoCard from '@/components/common/InfoCard.vue';
 import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
 import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
@@ -364,7 +377,6 @@ export default {
     IconCoins,
     IconEye,
     IconAlertTriangle,
-    InfoCard,
     IconX,
     IconCalendarPlus,
     IconPlus,
@@ -440,6 +452,10 @@ export default {
 
     const goToShop = () => {
       router.push('/shop');
+    };
+
+    const goToDocs = () => {
+      router.push('/docs');
     };
 
     const userPlanId = ref(null);
@@ -1279,6 +1295,7 @@ export default {
       userPlan,
       loading,
       goToShop,
+      goToDocs,
       hasPendingItems,
       goToOrders,
       router,
@@ -2440,6 +2457,100 @@ $space-2: map.get($spacers, 2);
   );
   animation: shimmer 2s infinite;
   z-index: 1;
+}
+
+.no-plan-flow-card {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.no-plan-flow-header {
+  text-align: center;
+  margin-bottom: 20px;
+
+  h3 {
+    margin: 0;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
+  }
+
+  p {
+    margin: 10px auto 0;
+    max-width: 720px;
+    font-size: $font-size-md;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+}
+
+.no-plan-steps {
+  display: grid;
+  gap: 14px;
+}
+
+.no-plan-step {
+  border: none;
+  width: 100%;
+  border-radius: 16px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+  .step-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+  }
+
+  .step-desc {
+    font-size: $font-size-sm;
+    opacity: 0.92;
+    line-height: 1.5;
+  }
+}
+
+button.no-plan-step {
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.no-plan-step-primary {
+  background: linear-gradient(135deg, #5b7cff, #6b74e6);
+}
+
+.no-plan-step-secondary {
+  background: linear-gradient(135deg, #5d7df8, #5f90ff);
+}
+
+.no-plan-step-success {
+  background: linear-gradient(135deg, #49d89c, #59cf66);
+}
+
+@media (max-width: 768px) {
+  .no-plan-flow-card {
+    padding: 16px;
+  }
+
+  .no-plan-flow-header h3 {
+    font-size: $font-size-lg;
+  }
+
+  .no-plan-step {
+    padding: 20px 16px;
+  }
 }
 
 
