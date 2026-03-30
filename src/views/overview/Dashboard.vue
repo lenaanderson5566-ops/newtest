@@ -1537,6 +1537,19 @@ $space-2: map.get($spacers, 2);
 
     &.no-plan-grid {
       margin-bottom: 0;
+
+      > .no-plan-flow-card,
+      > .service-support-card {
+        display: block;
+        align-items: initial;
+        min-height: auto;
+        height: auto;
+      }
+
+      @media (min-width: #{$bp-md-up}) {
+        grid-template-rows: auto;
+        align-items: start;
+      }
     }
 
     > .stats-card.traffic-board-total {
