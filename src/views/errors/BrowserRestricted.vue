@@ -782,8 +782,6 @@ export default {
 
         font-weight: $font-weight-medium;
 
-        text-decoration: none;
-
         
 
         transition: transform 0.2s ease, background-color 0.2s ease;

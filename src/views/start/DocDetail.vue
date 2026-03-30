@@ -1957,8 +1957,6 @@ onUnmounted(() => {
 
     color: rgba(var(--theme-color-rgb), 1);
 
-    text-decoration: none;
-
     transition: color 0.2s ease;
 
     font-weight: $font-weight-medium;
