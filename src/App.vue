@@ -20,7 +20,7 @@
         >
           <IconGift :size="18" />
         </button>
-        <UserAvatar :email="email" :avatarUrl="avatarUrl" />
+        <UserAvatar :email="email" :avatarUrl="avatarUrl" :loading="isUserInfoLoading" />
         </div>
       </div>
 
@@ -154,6 +154,7 @@ export default {
 
     const email = computed(() => store.userInfo?.email || '');
     const avatarUrl = computed(() => store.avatarUrl || '');
+    const isUserInfoLoading = ref(false);
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
 
@@ -187,6 +188,7 @@ export default {
 
     const loadCurrentUserInfo = async () => {
       if (!route.meta.requiresAuth) return;
+      isUserInfoLoading.value = true;
       try {
         const response = await getAccountUserInfo();
         const userData = response?.data?.email
@@ -197,6 +199,8 @@ export default {
         }
       } catch (error) {
         console.error('加载用户信息失败:', error);
+      } finally {
+        isUserInfoLoading.value = false;
       }
     };
 
@@ -316,6 +320,7 @@ export default {
     return {
       email,
       avatarUrl,
+      isUserInfoLoading,
       siteConfig,
       PROFILE_CONFIG,
       cachedRoutes,

@@ -7,6 +7,9 @@
         alt="User Avatar" 
         class="avatar-image"
       />
+      <div v-else-if="loading" class="avatar-loading" aria-label="loading">
+        <span class="loading-spinner"></span>
+      </div>
       <div v-else class="avatar-placeholder">
         <span class="avatar-letter">{{ avatarInitial }}</span>
       </div>
@@ -59,6 +62,10 @@ export default {
     avatarUrl: {
       type: String,
       default: ''
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
@@ -182,6 +189,34 @@ export default {
       color: var(--text-on-dark-primary);
       user-select: none;
     }
+  }
+
+  .avatar-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: rgba(var(--theme-color-rgb), 0.12);
+
+    .loading-spinner {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid rgba(var(--theme-color-rgb), 0.25);
+      border-top-color: rgba(var(--theme-color-rgb), 0.95);
+      animation: avatar-spin 0.8s linear infinite;
+    }
+  }
+}
+
+@keyframes avatar-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
