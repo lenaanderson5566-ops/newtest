@@ -1,0 +1,87 @@
+@use "../base/variables.scss" as *;
+
+$auth-toolbar-offset: 20px !default;
+$auth-toolbar-offset-mobile: 10px !default;
+$auth-input-height: 45px !default;
+$auth-icon-offset: 12px !default;
+$auth-control-side-padding: 40px !default;
+
+@mixin auth-toolbar($position: fixed) {
+  position: $position;
+  top: $auth-toolbar-offset;
+  right: $auth-toolbar-offset;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+
+  @media (max-width: #{$bp-lg}) {
+    top: $auth-toolbar-offset-mobile;
+    right: $auth-toolbar-offset-mobile;
+  }
+}
+
+@mixin auth-required-marker {
+  color: var(--error-color);
+  margin-left: 4px;
+  font-size: $font-size-md;
+  vertical-align: middle;
+}
+
+@mixin auth-input-with-icon {
+  position: relative;
+  width: 100%;
+
+  .input-icon {
+    position: absolute;
+    left: $auth-icon-offset;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    width: 20px;
+    height: 20px;
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: $auth-icon-offset;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--theme-color);
+    }
+  }
+
+  .form-control {
+    padding-left: $auth-control-side-padding;
+    height: $auth-input-height;
+    border-radius: $border-radius-sm;
+    border: 1px solid var(--input-border-color, transparent);
+    background-color: var(--input-bg-color, #f9f9f9);
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+
+    &[type="password"],
+    &[type="text"] {
+      padding-right: $auth-control-side-padding;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--theme-color);
+      box-shadow: none;
+      background-color: var(--input-focus-bg-color, #fff);
+    }
+
+    &::placeholder {
+      color: var(--placeholder-color, #aaa);
+    }
+  }
+}

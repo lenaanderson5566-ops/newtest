@@ -5,6 +5,7 @@
 @use "sass:map";
 @use "../base/variables.scss" as *;
 @use "../base/typography.scss" as *;
+@use "./auth-shared" as authShared;
 
 .auth-container {
   min-height: 100vh;
@@ -18,12 +19,7 @@
   z-index: 1;
 
   .top-toolbar {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 10px;
-    z-index: 10;
+    @include authShared.auth-toolbar(fixed);
   }
 }
 
@@ -73,69 +69,11 @@
   margin-bottom: 1.5rem;
 
   .required {
-    color: var(--error-color);
-    margin-left: 4px;
-    font-size: $font-size-md;
-    vertical-align: middle;
+    @include authShared.auth-required-marker;
   }
 
   .input-with-icon {
-    position: relative;
-    width: 100%;
-
-    .input-icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-tertiary);
-      width: 20px;
-      height: 20px;
-    }
-
-    .password-toggle {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-tertiary);
-      cursor: pointer;
-      padding: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: color 0.2s ease;
-
-      &:hover {
-        color: var(--theme-color);
-      }
-    }
-
-    .form-control {
-      padding-left: 40px;
-      height: 45px;
-      border-radius: 8px;
-      border: 1px solid var(--input-border-color, transparent);
-      background-color: var(--input-bg-color, #f9f9f9);
-      transition: all 0.3s ease;
-      color: var(--text-primary);
-
-      &[type="password"],
-      &[type="text"] {
-        padding-right: 40px;
-      }
-
-      &:focus {
-        outline: none;
-        border-color: var(--theme-color);
-        box-shadow: none;
-        background-color: var(--input-focus-bg-color, #fff);
-      }
-
-      &::placeholder {
-        color: var(--placeholder-color, #aaa);
-      }
-    }
+    @include authShared.auth-input-with-icon;
   }
 }
 
