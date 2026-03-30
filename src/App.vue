@@ -84,6 +84,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { SITE_CONFIG, PROFILE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
+import { getUserInfo as getAccountUserInfo } from '@/api/account/user';
 import { getUnreadNoticeCount } from '@/api/account/notice';
 import { handleRedirectPath } from '@/utils/redirectHandler';
 import Toast from '@/components/common/Toast.vue';
@@ -184,6 +185,18 @@ export default {
       }
     };
 
+    const loadCurrentUserInfo = async () => {
+      if (!route.meta.requiresAuth) return;
+      try {
+        const response = await getAccountUserInfo();
+        if (response?.data && typeof response.data === 'object') {
+          store.setUser(response.data);
+        }
+      } catch (error) {
+        console.error('加载用户信息失败:', error);
+      }
+    };
+
     const languageChangedSignal = ref(0);
 
     const onLanguageChanged = () => {
@@ -203,6 +216,9 @@ export default {
         loadUnreadNoticeCount();
 
         checkUserLoginStatus().then(result => {
+          if (result.isLoggedIn === true) {
+            loadCurrentUserInfo();
+          }
           if (result.isLoggedIn === false && result.message) {
             if (showToast) {
               showToast(result.message, 'warning');
@@ -251,6 +267,9 @@ export default {
       document.addEventListener('visibilitychange', handleVisibilityChange);
 
       checkUserLoginStatus().then(result => {
+        if (result.isLoggedIn === true) {
+          loadCurrentUserInfo();
+        }
         if (result.isLoggedIn === false && result.message) {
           if (showToast) {
             showToast(result.message, 'warning');
