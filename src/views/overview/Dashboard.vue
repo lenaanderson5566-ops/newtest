@@ -34,20 +34,32 @@
             :class="{ 'card-animate': !loading.userStats }"
           >
             <div class="no-plan-flow-layout">
-              <aside class="no-plan-flow-aside">
-                <span class="no-plan-badge">新用户引导</span>
-                <h3 class="no-plan-title">开始使用前，<br>先完成订阅开通</h3>
-              </aside>
+              <section class="no-plan-hero">
+                <div class="hero-copy">
+                  <span class="no-plan-badge">订单待完成</span>
+                  <h3 class="no-plan-title">继续完成支付，激活服务</h3>
+                  <p class="no-plan-subtitle">完成支付后即可下载客户端并开始使用</p>
+                  <div class="hero-actions">
+                    <button class="hero-btn primary" @click="goToOrders">继续支付</button>
+                    <button class="hero-btn secondary" @click="goToDocs">查看教程</button>
+                  </div>
+                  <div class="hero-helper">支持多平台 · 一键导入配置</div>
+                </div>
+                <div class="hero-visual" aria-hidden="true">
+                  <div class="line-device laptop"></div>
+                  <div class="line-device tablet"></div>
+                  <div class="line-device phone"></div>
+                </div>
+              </section>
 
               <div class="no-plan-steps">
                 <button class="no-plan-step no-plan-step-primary" @click="goToShop">
-                  <IconShoppingCart :size="34" />
                   <span class="step-title">1. {{ $t('dashboard.purchasePlan') }}</span>
                   <span class="step-desc">{{ $t('quickStartPage.status.newDesc') }}</span>
+                  <span class="step-action">立即购买</span>
                 </button>
 
                 <button class="no-plan-step no-plan-step-secondary" @click="goToDocs">
-                  <IconDeviceDesktop :size="34" />
                   <span class="step-title">2. {{ $t('quickStartPage.step2Title') }}</span>
                   <span class="step-desc">{{ $t('quickStartPage.step2Tip') }}</span>
                   <div class="platform-icons">
@@ -56,12 +68,13 @@
                     <IconDeviceDesktop :size="18" />
                     <IconBrandAndroid :size="18" />
                   </div>
+                  <span class="step-action">下载客户端</span>
                 </button>
 
                 <div class="no-plan-step no-plan-step-success">
-                  <IconRocket :size="34" />
                   <span class="step-title">3. {{ $t('quickStartPage.step3Title') }}</span>
                   <span class="step-desc">{{ $t('quickStartPage.connectHint') }}</span>
+                  <span class="step-action">查看教程</span>
                 </div>
               </div>
             </div>
@@ -324,12 +337,10 @@ import {
   IconHelpCircle,
   IconMoon,
   IconPackage,
-  IconRocket,
   IconRouter,
   IconSend,
   IconShare,
   IconShoppingBag,
-  IconShoppingCart,
   IconTransferVertical,
   IconUserPlus,
   IconWallet,
@@ -355,7 +366,6 @@ export default {
     IconSend,
     IconCalendar,
     IconUserPlus,
-    IconShoppingCart,
     IconFileText,
     IconWallet,
     IconBrandApple,
@@ -368,7 +378,6 @@ export default {
     IconShare,
     IconChevronLeft,
     IconChevronRight,
-        IconRocket,
     IconWaveSine,
     IconDeviceDesktop,
     IconCrosshair,
@@ -2475,9 +2484,9 @@ $space-2: map.get($spacers, 2);
   margin: 0 auto;
   max-width: var(--page-content-max-width);
   width: 100%;
-  background: #fff;
-  border: 1px solid #e8ebf4;
-  border-radius: 14px;
+  background: var(--card-background);
+  border: 1px solid var(--dashboard-border-color);
+  border-radius: var(--dashboard-radius);
   padding: 16px;
   margin-bottom: 0;
 }
@@ -2488,21 +2497,37 @@ $space-2: map.get($spacers, 2);
   gap: 16px;
 }
 
-.no-plan-flow-aside {
-  position: relative;
-  border-radius: 12px;
-  padding: 24px 24px;
-  border: 1px solid #edf0f8;
-  background: #fff;
+.no-plan-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 20px;
+  border-radius: 14px;
+  padding: 22px;
+  border: 1px solid rgba(var(--theme-color-rgb), 0.16);
+  background:
+    radial-gradient(circle at 82% 18%, rgba(59, 130, 246, 0.16), transparent 40%),
+    radial-gradient(circle at 18% 78%, rgba(99, 102, 241, 0.1), transparent 46%),
+    linear-gradient(118deg, #f4f7ff 0%, #f9fbff 100%);
+}
+
+.hero-copy {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .no-plan-title {
   @extend %typo-page-title;
-  margin: 16px 0 16px;
-  line-height: 1.3;
-  letter-spacing: 0.5px;
+  margin: 10px 0 8px;
+  line-height: 1.24;
+  letter-spacing: 0.2px;
+}
+
+.no-plan-subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: $font-size-lg;
 }
 
 .no-plan-badge {
@@ -2510,22 +2535,107 @@ $space-2: map.get($spacers, 2);
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  padding: 8px 16px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.32);
+  background: rgba(245, 158, 11, 0.14);
+}
+
+.hero-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hero-btn {
+  min-width: 144px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+}
+
+.hero-btn.primary {
+  color: var(--text-on-dark-primary);
+  background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
+}
+
+.hero-btn.secondary {
+  color: var(--neutral-strong);
+  border-color: rgba(148, 163, 184, 0.3);
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.hero-helper {
+  margin-top: 10px;
+  font-size: $font-size-md;
+  color: var(--text-tertiary);
+}
+
+.hero-visual {
+  min-height: 210px;
+  position: relative;
   border-radius: 12px;
-  @extend %typo-dark-primary;
-  background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background:
+    radial-gradient(circle at 30% 75%, rgba(99, 102, 241, 0.1), transparent 45%),
+    radial-gradient(circle at 84% 20%, rgba(59, 130, 246, 0.15), transparent 40%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.65), rgba(241, 245, 255, 0.9));
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.13) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.13) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+}
+
+.line-device {
+  position: absolute;
+  border-radius: 10px;
+  border: 2px solid rgba(79, 70, 229, 0.2);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.line-device.laptop {
+  width: 188px;
+  height: 118px;
+  right: 16%;
+  top: 28%;
+}
+
+.line-device.tablet {
+  width: 108px;
+  height: 80px;
+  right: 8%;
+  top: 20%;
+}
+
+.line-device.phone {
+  width: 52px;
+  height: 94px;
+  right: 14%;
+  top: 50%;
 }
 
 .platform-icons {
-  margin-top: 10px;
+  margin-top: 6px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  color: #8ca0d8;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.88);
 
   :deep(svg) {
-    width: 30px;
-    height: 30px;
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -2539,15 +2649,15 @@ $space-2: map.get($spacers, 2);
   border: none;
   width: 100%;
   border-radius: 16px;
-  padding: 24px 16px;
+  padding: 22px 18px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
   color: #fff;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  text-align: left;
+  box-shadow: none;
 
 }
 
@@ -2558,17 +2668,27 @@ $space-2: map.get($spacers, 2);
 
 .step-desc {
   font-size: $font-size-sm;
-  opacity: 0.92;
+  opacity: 0.9;
   line-height: 1.5;
+}
+
+.step-action {
+  margin-top: 6px;
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.86);
+  color: #1e293b;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
 }
 
 button.no-plan-step {
   cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease;
+  transition: transform .2s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
   }
 }
 
@@ -2593,8 +2713,13 @@ button.no-plan-step {
 }
 
 @media (max-width: 768px) {
-  .no-plan-flow-layout {
+  .no-plan-hero {
     grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .hero-visual {
+    min-height: 170px;
   }
 
   .no-plan-flow-card {
