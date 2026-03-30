@@ -2636,6 +2636,7 @@ button.no-plan-step {
 <style lang="scss">
 @use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 @use '@/assets/styles/no-plan-card' as *;
 
 $space-2: map.get($spacers, 2);
