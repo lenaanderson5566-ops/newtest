@@ -119,7 +119,6 @@
                   <img v-else :src="method.icon" :alt="method.name" />
                 </div>
               </div>
-              <div class="payment-security-note">{{ $t("payment.payment_processing") }}</div>
             </div>
 
             <!-- 支付方式骨架屏 -->
@@ -1543,19 +1542,6 @@ export default {
       }
     }
 
-    .payment-security-note {
-      padding: 4px 8px 8px;
-      border-top: 1px solid var(--border-color);
-      font-size: $font-size-sm;
-      color: var(--text-tertiary);
-      line-height: 1.4;
-      background: #fff;
-    }
-  }
-
-  .right-column .payment-methods .payment-security-note {
-    background: var(--right-card-bg) !important;
-    color: var(--right-card-text) !important;
   }
 
   .free-notice {
