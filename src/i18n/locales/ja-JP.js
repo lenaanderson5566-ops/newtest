@@ -390,7 +390,6 @@ export default {
     cycle: '周期',
     totalAmount: '金額',
     pricingCurrency: 'Currency',
-    pricingCurrency: 'Currency',
     statusLabel: '状態',
     actions: '操作',
     viewDetail: '詳細を見る',
@@ -518,8 +517,6 @@ export default {
         passwordManagementDesc: 'Change login password to improve account security',
         redeemGiftCard: 'ギフトカード交換',
         changePassword: 'パスワード変更',
-        passwordManagement: 'Password Management',
-        passwordManagementDesc: 'Change login password to improve account security',
         giftCardRuleTitle: '交換ルール',
         giftCardRuleType1: 'タイプ1：残高チャージ（value 単位：セント）',
         giftCardRuleType2: 'タイプ2：有効期限延長（value 単位：日）',
@@ -592,8 +589,6 @@ profile: {
     security: 'セキュリティ設定',
     securityCenter: 'Security Center',
     securityCenterSubtitle: 'Manage account security and config management',
-    configManagement: 'Config Management',
-    configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     configManagement: 'Config Management',
     configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     changePassword: 'パスワード変更',
@@ -1000,6 +995,12 @@ profile: {
   quickStartPage: {
     step1Title: 'システムを選択',
     step1Tip: '現在使用しているデバイスのOSを選択してください',
+    platform: {
+      windows: 'Windows',
+      macos: 'macOS',
+      android: 'Android',
+      ios: 'iOS'
+    },
     step2Title: 'ダウンロードとインポート',
     step2Tip: '推奨クライアントをダウンロードしてサブスクリプションをインポートします',
     recommended: 'おすすめ',

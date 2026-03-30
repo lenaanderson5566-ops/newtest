@@ -390,7 +390,6 @@ export default {
     cycle: 'دوره',
     totalAmount: 'مبلغ کل',
     pricingCurrency: 'Currency',
-    pricingCurrency: 'Currency',
     statusLabel: 'وضعیت',
     actions: 'عملیات',
     viewDetail: 'نمایش جزئیات',
@@ -518,8 +517,6 @@ export default {
         passwordManagementDesc: 'Change login password to improve account security',
         redeemGiftCard: 'استفاده از گیفت‌کارت',
         changePassword: 'تغییر رمز عبور',
-        passwordManagement: 'Password Management',
-        passwordManagementDesc: 'Change login password to improve account security',
         giftCardRuleTitle: 'قوانین استفاده',
         giftCardRuleType1: 'نوع 1: شارژ موجودی (value بر حسب سنت)',
         giftCardRuleType2: 'نوع 2: تمدید اعتبار (value بر حسب روز)',
@@ -592,8 +589,6 @@ profile: {
     security: 'تنظیمات امنیت',
     securityCenter: 'Security Center',
     securityCenterSubtitle: 'Manage account security and config management',
-    configManagement: 'Config Management',
-    configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     configManagement: 'Config Management',
     configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     changePassword: 'تغییر پسورد',
@@ -1000,6 +995,12 @@ profile: {
   quickStartPage: {
     step1Title: 'انتخاب سیستم',
     step1Tip: 'سیستم‌عامل دستگاه فعلی خود را انتخاب کنید',
+    platform: {
+      windows: 'Windows',
+      macos: 'macOS',
+      android: 'Android',
+      ios: 'iOS'
+    },
     step2Title: 'دانلود و وارد کردن',
     step2Tip: 'کلاینت پیشنهادی را دانلود کرده و اشتراک را وارد کنید',
     recommended: 'پیشنهادی',

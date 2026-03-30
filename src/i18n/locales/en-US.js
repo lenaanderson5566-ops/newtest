@@ -990,6 +990,12 @@ profile: {
     quickStartPage: {
         step1Title: 'Choose System',
         step1Tip: 'Choose the operating system of your current device',
+        platform: {
+            windows: 'Windows',
+            macos: 'macOS',
+            android: 'Android',
+            ios: 'iOS'
+        },
         step2Title: 'Download & Import',
         step2Tip: 'Download a recommended client and import your subscription',
         recommended: 'Recommended',

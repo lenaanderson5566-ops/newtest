@@ -203,9 +203,6 @@ export default {
     tierCurrentPoints: 'Current points: {points}',
     tierNextLevel: 'Next tier: {tier}',
     tierNeedPoints: 'Points needed: {points}',
-    tierCurrentPoints: 'Current points: {points}',
-    tierNextLevel: 'Next tier: {tier}',
-    tierNeedPoints: 'Points needed: {points}',
     nextTierHint: '距離 {tier} 還需 {points} 成長值',
     resetHint: '重置日：{day}',
     resetTimeLabel: '重置時間',
@@ -520,8 +517,6 @@ export default {
         passwordManagement: 'Password Management',
         passwordManagementDesc: 'Change login password to improve account security',
         changePassword: '修改密碼',
-        passwordManagement: 'Password Management',
-        passwordManagementDesc: 'Change login password to improve account security',
         giftCardRuleTitle: '兌換說明',
         giftCardRuleType1: '類型 1：餘額儲值（value 單位：分）',
         giftCardRuleType2: '類型 2：延長有效期（value 單位：天）',
@@ -1000,6 +995,12 @@ profile: {
   quickStartPage: {
     step1Title: '選擇系統',
     step1Tip: '選擇你目前使用的裝置系統',
+    platform: {
+      windows: 'Windows',
+      macos: 'macOS',
+      android: 'Android',
+      ios: 'iOS'
+    },
     step2Title: '下載並匯入',
     step2Tip: '下載推薦客戶端並完成訂閱匯入',
     recommended: '推薦',

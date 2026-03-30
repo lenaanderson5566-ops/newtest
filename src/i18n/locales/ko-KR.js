@@ -518,8 +518,6 @@ export default {
         passwordManagementDesc: 'Change login password to improve account security',
         redeemGiftCard: '기프트카드 교환',
         changePassword: '비밀번호 변경',
-        passwordManagement: 'Password Management',
-        passwordManagementDesc: 'Change login password to improve account security',
         giftCardRuleTitle: '교환 규칙',
         giftCardRuleType1: '유형 1: 잔액 충전 (value 단위: 센트)',
         giftCardRuleType2: '유형 2: 유효기간 연장 (value 단위: 일)',
@@ -592,8 +590,6 @@ profile: {
     security: '보안 설정',
     securityCenter: 'Security Center',
     securityCenterSubtitle: 'Manage account security and config management',
-    configManagement: 'Config Management',
-    configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     configManagement: 'Config Management',
     configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     changePassword: '비밀번호 변경',
@@ -1000,6 +996,12 @@ profile: {
   quickStartPage: {
     step1Title: '시스템 선택',
     step1Tip: '현재 사용 중인 기기 운영체제를 선택하세요',
+    platform: {
+      windows: 'Windows',
+      macos: 'macOS',
+      android: 'Android',
+      ios: 'iOS'
+    },
     step2Title: '다운로드 및 가져오기',
     step2Tip: '추천 클라이언트를 다운로드하고 구독을 가져오세요',
     recommended: '추천',

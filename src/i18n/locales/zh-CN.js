@@ -991,6 +991,12 @@ profile: {
     quickStartPage: {
         step1Title: '选择系统',
         step1Tip: '选择你当前使用的设备系统',
+        platform: {
+            windows: 'Windows',
+            macos: 'macOS',
+            android: 'Android',
+            ios: 'iOS'
+        },
         step2Title: '下载并导入',
         step2Tip: '下载推荐客户端并完成订阅导入',
         recommended: '推荐',

@@ -178,10 +178,10 @@ const selectedPlatform = ref('windows');
 const selectedClientName = ref('');
 
 const quickStartPlatforms = computed(() => [
-  { id: 'windows', label: 'Windows', icon: IconBrandWindows, visible: clientConfig.showWindows },
-  { id: 'macos', label: 'macOS', icon: IconBrandFinder, visible: clientConfig.showMacOS },
-  { id: 'android', label: 'Android', icon: IconBrandAndroid, visible: clientConfig.showAndroid },
-  { id: 'ios', label: 'iOS', icon: IconBrandApple, visible: clientConfig.showIOS }
+  { id: 'windows', label: t('quickStartPage.platform.windows'), icon: IconBrandWindows, visible: clientConfig.showWindows },
+  { id: 'macos', label: t('quickStartPage.platform.macos'), icon: IconBrandFinder, visible: clientConfig.showMacOS },
+  { id: 'android', label: t('quickStartPage.platform.android'), icon: IconBrandAndroid, visible: clientConfig.showAndroid },
+  { id: 'ios', label: t('quickStartPage.platform.ios'), icon: IconBrandApple, visible: clientConfig.showIOS }
 ].filter((item) => item.visible));
 
 const clientIconMap = Object.freeze({

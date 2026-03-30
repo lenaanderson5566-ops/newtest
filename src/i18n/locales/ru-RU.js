@@ -390,7 +390,6 @@ export default {
     cycle: 'Цикл',
     totalAmount: 'Сумма',
     pricingCurrency: 'Currency',
-    pricingCurrency: 'Currency',
     statusLabel: 'Статус',
     actions: 'Действия',
     viewDetail: 'Посмотреть детали',
@@ -518,8 +517,6 @@ export default {
         passwordManagementDesc: 'Change login password to improve account security',
         redeemGiftCard: 'Активировать подарочную карту',
         changePassword: 'Сменить пароль',
-        passwordManagement: 'Password Management',
-        passwordManagementDesc: 'Change login password to improve account security',
         giftCardRuleTitle: 'Правила активации',
         giftCardRuleType1: 'Тип 1: пополнение баланса (value в центах)',
         giftCardRuleType2: 'Тип 2: продление срока действия (value в днях)',
@@ -592,8 +589,6 @@ profile: {
     security: 'Настройки безопасности',
     securityCenter: 'Security Center',
     securityCenterSubtitle: 'Manage account security and config management',
-    configManagement: 'Config Management',
-    configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     configManagement: 'Config Management',
     configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     changePassword: 'Изменить пароль',
@@ -1000,6 +995,12 @@ profile: {
   quickStartPage: {
     step1Title: 'Выбор системы',
     step1Tip: 'Выберите ОС устройства, которое вы используете',
+    platform: {
+      windows: 'Windows',
+      macos: 'macOS',
+      android: 'Android',
+      ios: 'iOS'
+    },
     step2Title: 'Скачать и импортировать',
     step2Tip: 'Скачайте рекомендуемый клиент и импортируйте подписку',
     recommended: 'Рекомендуется',
