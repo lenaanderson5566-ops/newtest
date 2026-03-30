@@ -402,34 +402,9 @@ export default {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
-.login-view-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
 
-  @media (max-width: #{$bp-lg}) {
-    overflow-y: auto;
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-}
 
-.auth-split-container {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
+
 
 .auth-split-left {
   flex: 1;
@@ -495,59 +470,11 @@ export default {
   }
 }
 
-.auth-split-right {
-  flex: 0.8;
-  min-width: 320px;
-  max-width: 520px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  background-color: var(--background-color);
-  overflow-y: auto;
-  height: 100%;
 
-  @media (max-width: #{$bp-lg}) {
-    width: 100%;
-    max-width: none;
-    flex: 1;
-    justify-content: center;
-    overflow-y: visible;
-    display: flex;
-    padding: 60px 0;
-    min-height: 100vh;
-  }
-}
 
-.top-toolbar {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  gap: 10px;
-  z-index: 10;
 
-  @media (max-width: #{$bp-lg}) {
-    top: 10px;
-    right: 10px;
-  }
-}
 
-.auth-form-container {
-  padding: 40px 40px;
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 
-  @media (max-width: #{$bp-lg}) {
-    padding: 20px;
-    margin: auto;
-    width: 100%;
-  }
-}
 
 .auth-header {
   margin-bottom: 2rem;
@@ -579,71 +506,9 @@ export default {
   }
 }
 
-.required {
-  color: var(--error-color);
-  margin-left: 4px;
-  font-size: $font-size-md;
-  vertical-align: middle;
-}
 
-.input-with-icon {
-  position: relative;
-  width: 100%;
 
-  .input-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-tertiary);
-    width: 20px;
-    height: 20px;
-  }
 
-  .password-toggle {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-tertiary);
-    cursor: pointer;
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: var(--theme-color);
-    }
-  }
-
-  .form-control {
-    padding-left: 40px;
-    height: 45px;
-    border-radius: 8px;
-    border: 1px solid var(--input-border-color, transparent);
-    background-color: var(--input-bg-color, #f9f9f9);
-    transition: all 0.3s ease;
-    color: var(--text-primary);
-
-    &[type="password"],
-    &[type="text"] {
-      padding-right: 40px;
-    }
-
-    &:focus {
-      outline: none;
-      border-color: var(--theme-color);
-      box-shadow: none;
-      background-color: var(--input-focus-bg-color, #fff);
-    }
-
-    &::placeholder {
-      color: var(--placeholder-color, #aaa);
-    }
-  }
-}
 
 .form-options {
   display: flex;

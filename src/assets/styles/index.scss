@@ -16,6 +16,7 @@
 
 // 导入布局样式
 @use "./layouts/auth.scss" as *;
+@use "./layouts/auth-split.scss" as *;
 
 // 全局基础样式变量（布局 + 卡片 + 订单/支付节奏）
 :root {
