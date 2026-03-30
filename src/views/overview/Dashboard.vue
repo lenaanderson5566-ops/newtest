@@ -35,28 +35,52 @@
             :class="{ 'card-animate': !loading.userStats }"
             style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;"
           >
-            <header class="no-plan-flow-header">
-              <h3>{{ $t('quickStartPage.status.newTitle') }}</h3>
-              <p>{{ $t('dashboard.noPlanPrompt') }}</p>
-            </header>
+            <div class="no-plan-flow-layout">
+              <aside class="no-plan-flow-aside">
+                <span class="no-plan-badge">{{ $t('dashboard.welcome') }}</span>
+                <h3>{{ $t('quickStartPage.status.newTitle') }}</h3>
+                <p>{{ $t('dashboard.noPlanPrompt') }}</p>
 
-            <div class="no-plan-steps">
-              <button class="no-plan-step no-plan-step-primary" @click="goToShop">
-                <IconShoppingCart :size="34" />
-                <span class="step-title">1. {{ $t('dashboard.purchasePlan') }}</span>
-                <span class="step-desc">{{ $t('quickStartPage.status.newDesc') }}</span>
-              </button>
+                <div class="no-plan-cta-group">
+                  <button class="no-plan-cta primary btn btn-primary" @click="goToShop">
+                    <IconShoppingCart :size="18" />
+                    <span>{{ $t('dashboard.purchasePlan') }}</span>
+                  </button>
+                  <button class="no-plan-cta secondary btn btn-outline" @click="goToDocs">
+                    <IconChevronRight :size="16" />
+                    <span>{{ $t('dashboard.viewHelp') }}</span>
+                  </button>
+                </div>
 
-              <button class="no-plan-step no-plan-step-secondary" @click="goToDocs">
-                <IconDeviceDesktop :size="34" />
-                <span class="step-title">2. {{ $t('quickStartPage.step2Title') }}</span>
-                <span class="step-desc">{{ $t('quickStartPage.step2Tip') }}</span>
-              </button>
+                <div class="no-plan-platforms">
+                  <p>Windows / macOS / Android / iPhone</p>
+                  <div class="platform-icons">
+                    <IconBrandWindows :size="18" />
+                    <IconBrandApple :size="18" />
+                    <IconBrandFinder :size="18" />
+                    <IconBrandAndroid :size="18" />
+                  </div>
+                </div>
+              </aside>
 
-              <div class="no-plan-step no-plan-step-success">
-                <IconRocket :size="34" />
-                <span class="step-title">3. {{ $t('quickStartPage.step3Title') }}</span>
-                <span class="step-desc">{{ $t('quickStartPage.connectHint') }}</span>
+              <div class="no-plan-steps">
+                <button class="no-plan-step no-plan-step-primary" @click="goToShop">
+                  <IconShoppingCart :size="34" />
+                  <span class="step-title">1. {{ $t('dashboard.purchasePlan') }}</span>
+                  <span class="step-desc">{{ $t('quickStartPage.status.newDesc') }}</span>
+                </button>
+
+                <button class="no-plan-step no-plan-step-secondary" @click="goToDocs">
+                  <IconDeviceDesktop :size="34" />
+                  <span class="step-title">2. {{ $t('quickStartPage.step2Title') }}</span>
+                  <span class="step-desc">{{ $t('quickStartPage.step2Tip') }}</span>
+                </button>
+
+                <div class="no-plan-step no-plan-step-success">
+                  <IconRocket :size="34" />
+                  <span class="step-title">3. {{ $t('quickStartPage.step3Title') }}</span>
+                  <span class="step-desc">{{ $t('quickStartPage.connectHint') }}</span>
+                </div>
               </div>
             </div>
           </section>
@@ -2466,23 +2490,89 @@ $space-2: map.get($spacers, 2);
   padding: 20px;
 }
 
-.no-plan-flow-header {
-  text-align: center;
-  margin-bottom: 20px;
+.no-plan-flow-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 18px;
+}
+
+.no-plan-flow-aside {
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid var(--theme-border-soft);
+  background: linear-gradient(180deg, rgba(91, 124, 255, 0.06), rgba(91, 124, 255, 0.01));
+  display: flex;
+  flex-direction: column;
 
   h3 {
-    margin: 0;
-    font-size: $font-size-xl;
-    font-weight: $font-weight-semibold;
+    margin: 14px 0 10px;
+    font-size: clamp(28px, 3vw, 44px);
+    line-height: 1.25;
     color: var(--text-primary);
   }
 
   p {
-    margin: 10px auto 0;
-    max-width: 720px;
-    font-size: $font-size-md;
-    line-height: 1.7;
+    margin: 0;
+    font-size: $font-size-lg;
+    line-height: 1.75;
     color: var(--text-secondary);
+  }
+}
+
+.no-plan-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: var(--text-on-dark-primary);
+  background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
+}
+
+.no-plan-cta-group {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .no-plan-cta {
+    justify-content: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: 300px;
+    max-width: 100%;
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+  }
+
+  .no-plan-cta.secondary {
+    border-color: var(--theme-border-soft);
+    color: var(--text-secondary);
+  }
+}
+
+.no-plan-platforms {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--theme-border-soft);
+
+  p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: $font-size-lg;
+  }
+
+  .platform-icons {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #8ca0d8;
   }
 }
 
@@ -2540,12 +2630,21 @@ button.no-plan-step {
 }
 
 @media (max-width: 768px) {
+  .no-plan-flow-layout {
+    grid-template-columns: 1fr;
+  }
+
   .no-plan-flow-card {
     padding: 16px;
   }
 
-  .no-plan-flow-header h3 {
-    font-size: $font-size-lg;
+  .no-plan-flow-aside h3 {
+    font-size: $font-size-xl;
+  }
+
+  .no-plan-flow-aside p,
+  .no-plan-platforms p {
+    font-size: $font-size-md;
   }
 
   .no-plan-step {
