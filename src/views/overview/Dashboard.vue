@@ -37,16 +37,6 @@
               <aside class="no-plan-flow-aside">
                 <span class="no-plan-badge">新用户引导</span>
                 <h3 class="no-plan-title">开始使用前，<br>先完成订阅开通</h3>
-                <div class="no-plan-illustration" aria-hidden="true">
-                  <span class="device-outline device-desktop"></span>
-                  <span class="device-outline device-laptop"></span>
-                  <span class="device-outline device-phone"></span>
-                  <span class="connect-line line-one"></span>
-                  <span class="connect-line line-two"></span>
-                  <span class="connect-node node-a"></span>
-                  <span class="connect-node node-b"></span>
-                  <span class="connect-node node-c"></span>
-                </div>
               </aside>
 
               <div class="no-plan-steps">
@@ -2526,111 +2516,6 @@ $space-2: map.get($spacers, 2);
   background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
 }
 
-.no-plan-illustration {
-  margin-top: 16px;
-  margin-left: auto;
-  width: min(230px, 78%);
-  height: 128px;
-  position: relative;
-  opacity: 0.32;
-  pointer-events: none;
-  filter: saturate(0.78);
-}
-
-.device-outline {
-  position: absolute;
-  border: 1.5px solid rgba(74, 114, 202, 0.5);
-  border-radius: 8px;
-  background: rgba(131, 160, 230, 0.06);
-}
-
-.device-desktop {
-  width: 124px;
-  height: 76px;
-  top: 4px;
-  left: 12px;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 36px;
-    height: 4px;
-    border-radius: 999px;
-    background: rgba(80, 118, 203, 0.5);
-  }
-}
-
-.device-laptop {
-  width: 102px;
-  height: 62px;
-  top: 24px;
-  right: 18px;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -6px;
-    left: -8px;
-    width: calc(100% + 16px);
-    height: 4px;
-    border-radius: 999px;
-    background: rgba(80, 118, 203, 0.42);
-  }
-}
-
-.device-phone {
-  width: 28px;
-  height: 54px;
-  right: 2px;
-  top: 50px;
-  border-radius: 7px;
-}
-
-.connect-line {
-  position: absolute;
-  border-top: 1px dashed rgba(80, 118, 203, 0.42);
-}
-
-.line-one {
-  width: 88px;
-  top: 18px;
-  left: 126px;
-  transform: rotate(-8deg);
-}
-
-.line-two {
-  width: 74px;
-  top: 96px;
-  left: 84px;
-  transform: rotate(14deg);
-}
-
-.connect-node {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(72, 110, 198, 0.55);
-}
-
-.node-a {
-  top: 12px;
-  right: 8px;
-}
-
-.node-b {
-  top: 94px;
-  left: 72px;
-}
-
-.node-c {
-  bottom: 10px;
-  right: 54px;
-}
-
 .platform-icons {
   margin-top: 10px;
   display: flex;
@@ -2719,11 +2604,6 @@ button.no-plan-step {
     padding: 16px 16px;
   }
 
-  .no-plan-illustration {
-    width: min(210px, 88%);
-    height: 112px;
-    opacity: 0.26;
-  }
 }
 
 
