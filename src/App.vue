@@ -189,8 +189,11 @@ export default {
       if (!route.meta.requiresAuth) return;
       try {
         const response = await getAccountUserInfo();
-        if (response?.data && typeof response.data === 'object') {
-          store.setUser(response.data);
+        const userData = response?.data?.email
+          ? response.data
+          : response?.data?.data;
+        if (userData && typeof userData === 'object') {
+          store.setUser(userData);
         }
       } catch (error) {
         console.error('加载用户信息失败:', error);
@@ -214,11 +217,9 @@ export default {
       if (!document.hidden) {
         checkAuthAndReloadMessages();
         loadUnreadNoticeCount();
+        loadCurrentUserInfo();
 
         checkUserLoginStatus().then(result => {
-          if (result.isLoggedIn === true) {
-            loadCurrentUserInfo();
-          }
           if (result.isLoggedIn === false && result.message) {
             if (showToast) {
               showToast(result.message, 'warning');
@@ -263,13 +264,11 @@ export default {
 
       checkAuthAndReloadMessages();
       loadUnreadNoticeCount();
+      loadCurrentUserInfo();
 
       document.addEventListener('visibilitychange', handleVisibilityChange);
 
       checkUserLoginStatus().then(result => {
-        if (result.isLoggedIn === true) {
-          loadCurrentUserInfo();
-        }
         if (result.isLoggedIn === false && result.message) {
           if (showToast) {
             showToast(result.message, 'warning');
