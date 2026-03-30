@@ -527,7 +527,7 @@ export default {
         orderHistory: '订单记录',
         orderDesc: '查看历史订单与支付状态',
         referral: '邀请返利',
-        referralDesc: '查看邀请进度与佣金明细',
+        referralDesc: '查看邀请进度与返利明细',
         settingsTitle: '通知设置',
         expireReminder: '到期提醒',
         expireReminderDesc: '订阅即将到期时发送邮件提醒',
@@ -862,16 +862,17 @@ profile: {
         }
     },
     invite: {
-        title: '我的返佣',
-        description: '邀请好友注册使用，获取佣金收入',
+        title: '如何邀请返利',
+        statsTitle: '邀请统计',
+        description: '邀请好友注册使用，获取返利收入',
         stats: {
             registeredUsers: '已注册用户数',
-            pendingCommission: '确认中的佣金',
-            availableCommission: '累计获得佣金',
-            commissionRate: '佣金比例'
+            pendingCommission: '确认中的返利',
+            availableCommission: '累计获得返利',
+            commissionRate: '返利比例'
         },
         rules: {
-            title: '返佣规则',
+            title: '返利规则',
             share: {
                 title: '1. 分享',
                 desc: '分享邀请链接'
@@ -885,39 +886,39 @@ profile: {
                 desc: '好友购买订阅'
             },
             commission: {
-                title: '4. 返佣',
-                desc: '获得{rate}%返佣'
+                title: '4. 返利',
+                desc: '获得{rate}%返利'
             }
         },
         balance: {
-            title: '佣金余额',
-            available: '可用佣金',
-            description: '邀请好友获得的佣金，可以直接划转到消费余额',
+            title: '返利余额',
+            available: '可用返利',
+            description: '邀请好友获得的返利，可以直接划转到消费余额',
             transferToBalance: '划转到余额',
             withdraw: '提现'
         },
         transfer: {
-            title: '划转佣金',
+            title: '划转返利',
             warning: '注意',
             warningDesc: '划转后的余额仅用于消费使用，无法提现',
             amount: '划转金额',
             amountPlaceholder: '请输入划转金额',
-            availableCommission: '可用佣金',
+            availableCommission: '可用返利',
             confirm: '确认划转',
             processing: '处理中...',
             success: '划转成功',
             failure: '划转失败',
-            insufficientFunds: '可用佣金不足',
+            insufficientFunds: '可用返利不足',
             invalidAmount: '请输入有效的金额'
         },
         withdraw: {
-            title: '提现佣金',
+            title: '提现返利',
             platform: '提现平台',
             account: '提现账号',
             accountPlaceholder: '请输入提现账号',
             amount: '提现金额',
             amountPlaceholder: '请输入提现金额',
-            availableCommission: '可提现佣金',
+            availableCommission: '可提现返利',
             noPlatforms: '没有可用提现平台',
             confirm: '确认提现',
             processing: '处理中...',
@@ -925,7 +926,7 @@ profile: {
             failure: '提现申请失败',
             tip: '提示',
             invalidAmount: '请输入有效的金额',
-            insufficientFunds: '可用佣金不足',
+            insufficientFunds: '可用返利不足',
             belowMinAmount: '提现金额不能低于{amount}',
             minWithdrawAmount: '最低提现金额'
         },
@@ -957,10 +958,10 @@ profile: {
             shareDescription: '我正在使用这个服务，推荐您也来体验'
         },
         records: {
-            title: '返佣记录',
-            empty: '暂无返佣记录',
+            title: '返利记录',
+            empty: '暂无返利记录',
             date: '时间',
-            commission: '佣金',
+            commission: '返利',
             details: '详情',
             user: '用户',
             registerTime: '注册时间',
@@ -982,8 +983,8 @@ profile: {
                 unknown: '未知'
             },
             types: {
-                confirmed_commission: '已确认佣金',
-                pending_commission: '确认中佣金',
+                confirmed_commission: '已确认返利',
+                pending_commission: '确认中返利',
                 all: '全部'
             }
         }

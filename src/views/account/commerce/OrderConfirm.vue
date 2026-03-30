@@ -2867,11 +2867,6 @@ export default {
       padding: 0;
       margin-top: 0;
       font-size: $font-size-xs;
-
-      &.inline {
-        margin-top: 0;
-        font-size: $font-size-xs;
-      }
     }
 
     .payable-block {

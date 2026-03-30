@@ -16,7 +16,7 @@
       <div v-show="activeSection === 'overview'" class="overview-panels">
         <h3 class="section-title section-title-outside">{{ $t('myCenter.summaryTitle') }}</h3>
         <p class="section-subtitle">{{ $t('myCenter.summaryDesc') }}</p>
-        <section class="summary-panel section-block dashboard-like-card">
+        <section class="summary-panel section-block dashboard-like-card dashboard-like-card--accent">
           <div class="summary-grid">
             <div class="summary-item">
               <span class="label">{{ $t('myCenter.email') }}</span>
@@ -216,6 +216,7 @@
       </div>
 
       <div v-show="activeSection === 'benefits'" class="benefits-stack">
+        <h3 class="section-title section-title-outside">{{ $t('myCenter.levelBenefitsTitle') }}</h3>
         <section v-if="hasTierInfo" class="tier-panel section-block dashboard-like-card">
           <div class="tier-header">
             <div>
@@ -240,7 +241,6 @@
           </div>
         </section>
 
-        <h3 class="section-title section-title-outside">{{ $t('myCenter.levelBenefitsTitle') }}</h3>
         <section class="section-block dashboard-like-card">
           <div class="tier-intro-list">
             <div class="tier-intro-card">
@@ -661,8 +661,8 @@ $space-2: map.get($spacers, 2);
   position: absolute;
   inset: 0 auto auto 0;
   width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.92), rgba(var(--theme-color-rgb), 0.35));
+  height: 5px;
+  background: var(--site-accent-gradient, linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%));
   pointer-events: none;
 }
 

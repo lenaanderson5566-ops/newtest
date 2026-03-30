@@ -92,7 +92,7 @@ export default {
 
   width: 100%;
 
-  padding: 0 0 calc(2px + env(safe-area-inset-bottom, 0px));
+  padding: 0;
 
   box-sizing: border-box;
 

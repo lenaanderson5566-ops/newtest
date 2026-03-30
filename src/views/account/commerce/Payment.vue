@@ -1217,11 +1217,6 @@ export default {
     transition: all 0.3s ease;
     position: relative;
 
-    &:hover {
-      box-shadow: none;
-      border-color: var(--border-color);
-    }
-
     .card-header {
       display: flex;
       justify-content: space-between;
@@ -2067,20 +2062,10 @@ export default {
     }
 
     .right-column {
-      margin-bottom: 64px;
       max-width: none;
     }
   }
-
-  @media (max-width: #{$bp-md}) {
-    padding-bottom: 64px;
-  }
   @media (max-width: #{$bp-xs}) {
-    padding-bottom: 64px;
-
-    .right-column {
-      margin-bottom: 64px;
-    }
 
     .action-buttons {
       .btn-group {
