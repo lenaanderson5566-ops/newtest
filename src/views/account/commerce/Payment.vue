@@ -1607,6 +1607,7 @@ export default {
         gap: 6px;
 
         .method-name {
+          font-size: $font-size-md;
           font-weight: $font-weight-semibold;
           color: var(--text-primary);
           line-height: 1.2;
