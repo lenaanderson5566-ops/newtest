@@ -221,14 +221,14 @@ export default {
   .menu-item {
     display: flex;
     align-items: center;
-    padding: 12px 16px;
+    padding: 8px 16px;
     cursor: pointer;
     transition: all 0.3s ease;
     
     .menu-icon {
       width: 18px;
       height: 18px;
-      margin-right: 10px;
+      margin-right: 8px;
       color: var(--text-primary);
       transition: color 0.3s ease;
     }

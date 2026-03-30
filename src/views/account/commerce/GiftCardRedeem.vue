@@ -107,7 +107,7 @@ const goBack = () => {
 @use "@/assets/styles/base/typography.scss" as *;
 .gift-card-page {
   .gift-card-inner {
-    gap: 12px;
+    gap: 8px;
   }
 }
 
@@ -139,16 +139,16 @@ const goBack = () => {
 }
 
 .redeem-form {
-  margin-top: 12px;
+  margin-top: 8px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
 
   input {
     flex: 1;
     min-width: 0;
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    padding: 0 12px;
+    padding: 0 8px;
     height: 42px;
   }
 }
@@ -163,7 +163,7 @@ const goBack = () => {
 .result-title {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   @extend %typo-item-title;
 }
 </style>

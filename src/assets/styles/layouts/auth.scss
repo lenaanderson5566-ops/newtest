@@ -12,7 +12,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem 1rem;
+  padding: 24px 16px;
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -25,23 +25,23 @@
   border-radius: $border-radius-sm;
   box-shadow: none;
   border: 1px solid rgba(15, 23, 42, 0.08);
-  padding: 2.5rem;
+  padding: 48px;
   position: relative;
   z-index: 2;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
   @media (min-width: map.get($breakpoints, md)) {
-    padding: 3rem;
+    padding: 48px;
   }
 }
 
 .auth-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 24px;
 
   .auth-logo {
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
     img {
       height: 60px;
@@ -51,7 +51,7 @@
 
   .auth-title {
     @extend %typo-page-title;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
   }
 
   .auth-subtitle {
@@ -61,17 +61,17 @@
 }
 
 .auth-form {
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 }
 
 .auth-footer {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 24px;
 
   .auth-links {
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem;
+    margin-top: 16px;
 
     a {
       color: var(--text-tertiary);
@@ -87,7 +87,7 @@
 .auth-divider {
   display: flex;
   align-items: center;
-  margin: 1.5rem 0;
+  margin: 24px 0;
 
   &::before,
   &::after {
@@ -98,7 +98,7 @@
   }
 
   .auth-divider-text {
-    padding: 0 1rem;
+    padding: 0 16px;
     @extend %typo-label-text;
   }
 }

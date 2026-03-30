@@ -168,7 +168,7 @@ export default {
   justify-content: center;
   min-width: 120px;
   height: 36px;
-  padding: 6px 10px;
+  padding: 4px 8px;
   border-radius: $border-radius-sm;
   background: transparent;
   border: 1px solid transparent;
@@ -189,7 +189,7 @@ export default {
   .language-btn-text {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     line-height: 1;
@@ -218,7 +218,7 @@ export default {
 }
 
 .language-item {
-  padding: 10px 14px;
+  padding: 8px 16px;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;

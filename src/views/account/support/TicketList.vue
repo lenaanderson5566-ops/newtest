@@ -928,7 +928,7 @@ onUnmounted(() => {
 
   box-shadow: none;
 
-  padding: 20px;
+  padding: 16px;
 
   border: 1px solid var(--border-color);
 
@@ -947,7 +947,7 @@ onUnmounted(() => {
 
     align-items: center;
 
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 
     .card-title {
       @extend %typo-section-title;
@@ -996,21 +996,21 @@ onUnmounted(() => {
 }
 
 .ticket-header {
-  padding: 1rem;
+  padding: 16px;
 
   border-bottom: 1px solid var(--border-color);
 
   .search-box {
     position: relative;
 
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 
     input {
       width: 100%;
 
       height: 40px;
 
-      padding: 0 1rem 0 2.5rem;
+      padding: 0 16px 0 48px;
 
       border: 1px solid var(--border-color);
 
@@ -1118,11 +1118,11 @@ onUnmounted(() => {
 
   overflow-y: auto;
 
-  padding: 0.5rem;
+  padding: 8px;
 }
 
 .ticket-item {
-  padding: 1rem;
+  padding: 16px;
 
   border-radius: 8px;
 
@@ -1130,7 +1130,7 @@ onUnmounted(() => {
 
   transition: all 0.3s ease;
 
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
 
   position: relative;
 
@@ -1149,7 +1149,7 @@ onUnmounted(() => {
 
     font-size: $font-size-sm;
 
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
 
     color: var(--text-primary);
   }
@@ -1170,7 +1170,7 @@ onUnmounted(() => {
     .ticket-status {
       display: flex;
 
-      gap: 0.5rem;
+      gap: 8px;
     }
   }
 }
@@ -1183,7 +1183,7 @@ onUnmounted(() => {
 
   justify-content: center;
 
-  padding: 0.25rem 0.5rem;
+  padding: 4px 8px;
 
   border-radius: 4px;
 
@@ -1233,7 +1233,7 @@ onUnmounted(() => {
 }
 
 .ticket-detail-header {
-  padding: 1rem;
+  padding: 16px;
 
   border-bottom: 1px solid var(--border-color);
 
@@ -1247,7 +1247,7 @@ onUnmounted(() => {
     h2 {
       margin: 0;
 
-      margin-bottom: 0.5rem;
+      margin-bottom: 8px;
 
       font-size: $font-size-lg;
     }
@@ -1257,14 +1257,14 @@ onUnmounted(() => {
 
       align-items: center;
 
-      gap: 0.5rem;
+      gap: 8px;
 
       font-size: $font-size-sm;
 
       color: var(--text-quaternary);
 
       .ticket-time {
-        margin-left: 0.5rem;
+        margin-left: 8px;
       }
     }
   }
@@ -1275,9 +1275,9 @@ onUnmounted(() => {
 
       align-items: center;
 
-      gap: 0.5rem;
+      gap: 8px;
 
-      padding: 0.5rem 0.75rem;
+      padding: 8px 8px;
 
       border-radius: 6px;
 
@@ -1303,7 +1303,7 @@ onUnmounted(() => {
 
   overflow-y: auto;
 
-  padding: 1.5rem;
+  padding: 24px;
 
   background-color: var(--bg-secondary);
 
@@ -1325,11 +1325,11 @@ onUnmounted(() => {
 
   flex-direction: column;
 
-  gap: 0.5rem;
+  gap: 8px;
 
   flex: 1;
 
-  padding-bottom: 1rem;
+  padding-bottom: 16px;
 
   .message-date-separator {
     display: flex;
@@ -1338,7 +1338,7 @@ onUnmounted(() => {
 
     justify-content: center;
 
-    margin: 1.5rem 0;
+    margin: 24px 0;
 
     position: relative;
 
@@ -1354,7 +1354,7 @@ onUnmounted(() => {
     }
 
     .separator-date {
-      padding: 0.25rem 0.75rem;
+      padding: 4px 8px;
 
       background-color: rgba(var(--theme-color-rgb), 0.1);
 
@@ -1362,7 +1362,7 @@ onUnmounted(() => {
 
       font-size: $font-size-xs;
 
-      margin: 0 0.75rem;
+      margin: 0 8px;
 
       color: var(--text-quaternary);
     }
@@ -1372,7 +1372,7 @@ onUnmounted(() => {
 .message-item {
   display: flex;
 
-  margin-bottom: 1.25rem;
+  margin-bottom: 16px;
 
   align-items: flex-end;
 
@@ -1489,7 +1489,7 @@ onUnmounted(() => {
   .message-content {
     max-width: 85%;
 
-    padding: 0.85rem 1.1rem;
+    padding: 16px 16px;
 
     border-radius: 18px;
 
@@ -1503,14 +1503,14 @@ onUnmounted(() => {
 
       flex-direction: column;
 
-      margin-bottom: 0.4rem;
+      margin-bottom: 8px;
 
       .message-sender {
         font-size: $font-size-sm;
 
         font-weight: $font-weight-medium;
 
-        margin-bottom: 3px;
+        margin-bottom: 4px;
       }
 
       .message-time {
@@ -1549,13 +1549,13 @@ onUnmounted(() => {
 }
 
 .reply-container {
-  padding: 1.25rem;
+  padding: 16px;
 
   border-top: 1px solid var(--border-color);
 
   display: flex;
 
-  gap: 1rem;
+  gap: 16px;
 
   align-items: flex-start;
 
@@ -1565,7 +1565,7 @@ onUnmounted(() => {
   textarea {
     flex: 1;
 
-    padding: 1rem 1.25rem;
+    padding: 16px 16px;
 
     border: 1px solid var(--border-color);
 
@@ -1612,9 +1612,9 @@ onUnmounted(() => {
 
     justify-content: center;
 
-    gap: 0.5rem;
+    gap: 8px;
 
-    padding: 0 1.5rem;
+    padding: 0 24px;
 
     height: 40px;
 
@@ -1700,7 +1700,7 @@ onUnmounted(() => {
 
   .no-selection-icon,
   .no-messages-icon {
-    margin-bottom: 1.2rem;
+    margin-bottom: 16px;
 
     opacity: 0.6;
 
@@ -1713,7 +1713,7 @@ onUnmounted(() => {
 
     text-align: center;
 
-    margin-top: 0.8rem;
+    margin-top: 16px;
   }
 }
 
@@ -1730,10 +1730,10 @@ onUnmounted(() => {
 
   color: var(--text-quaternary);
 
-  padding: 2rem;
+  padding: 24px;
 
   .empty-icon {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 
     opacity: 0.5;
   }
@@ -1855,7 +1855,7 @@ onUnmounted(() => {
 }
 
 .modal-header {
-  padding: 1.25rem 1.5rem;
+  padding: 16px 24px;
 
   border-bottom: 1px solid var(--border-color);
 
@@ -1907,15 +1907,15 @@ onUnmounted(() => {
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 24px;
 
   .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
     label {
       display: block;
 
-      margin-bottom: 0.75rem;
+      margin-bottom: 8px;
 
       color: var(--text-primary);
 
@@ -1928,7 +1928,7 @@ onUnmounted(() => {
     textarea {
       width: 100%;
 
-      padding: 0.85rem 1rem;
+      padding: 16px 16px;
 
       border: 1px solid var(--border-color);
 
@@ -1970,7 +1970,7 @@ onUnmounted(() => {
     .level-tags {
       display: flex;
 
-      gap: 10px;
+      gap: 8px;
 
       flex-wrap: wrap;
 
@@ -1979,9 +1979,9 @@ onUnmounted(() => {
 
         align-items: center;
 
-        gap: 6px;
+        gap: 4px;
 
-        padding: 8px 14px;
+        padding: 8px 16px;
 
         border-radius: 8px;
 
@@ -2042,7 +2042,7 @@ onUnmounted(() => {
 }
 
 .modal-footer {
-  padding: 1.25rem 1.5rem;
+  padding: 16px 24px;
 
   border-top: 1px solid var(--border-color);
 
@@ -2050,7 +2050,7 @@ onUnmounted(() => {
 
   justify-content: flex-end;
 
-  gap: 1rem;
+  gap: 16px;
 
   button {
     height: 40px;
@@ -2190,12 +2190,12 @@ onUnmounted(() => {
 
   justify-content: center;
 
-  padding: 2rem;
+  padding: 24px;
 
   height: 100%;
 
   p {
-    margin-top: 1rem;
+    margin-top: 16px;
 
     color: var(--text-quaternary);
 
@@ -2224,7 +2224,7 @@ onUnmounted(() => {
 
   z-index: 1000;
 
-  padding: 1.5rem;
+  padding: 24px;
 
   animation: fadeIn 0.4s ease;
 
@@ -2237,7 +2237,7 @@ onUnmounted(() => {
 
     background-color: var(--card-bg);
 
-    padding: 2.5rem;
+    padding: 48px;
 
     border-radius: 16px;
 
@@ -2254,7 +2254,7 @@ onUnmounted(() => {
     transform-origin: center;
 
     h2 {
-      margin: 1.25rem 0;
+      margin: 16px 0;
 
       font-size: $font-size-2xl;
 
@@ -2266,7 +2266,7 @@ onUnmounted(() => {
     p {
       color: var(--text-quaternary);
 
-      margin-bottom: 2rem;
+      margin-bottom: 24px;
 
       font-size: $font-size-md;
 
@@ -2274,7 +2274,7 @@ onUnmounted(() => {
     }
 
     .switch-btn {
-      padding: 0.85rem 1.75rem;
+      padding: 16px 24px;
 
       border-radius: 10px;
 
@@ -2296,7 +2296,7 @@ onUnmounted(() => {
 
       align-items: center;
 
-      gap: 0.75rem;
+      gap: 8px;
 
       box-shadow: none;
 
@@ -2348,7 +2348,7 @@ onUnmounted(() => {
   padding: 24px 0;
   text-align: center;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 8px;
   transition: border-color 0.2s, background 0.2s;
   position: relative;
   .upload-icon {
@@ -2367,13 +2367,13 @@ onUnmounted(() => {
       display: block;
       font-size: $font-size-sm;
       color: var(--text-tertiary);
-      margin-top: 2px;
+      margin-top: 0;
     }
     .upload-method {
       display: block;
       font-size: $font-size-sm;
       color: var(--info-color);
-      margin-top: 2px;
+      margin-top: 0;
       a {
         color: var(--info-color);
         text-decoration: underline;
@@ -2389,7 +2389,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column; /* 竖排按钮 */
   align-items: stretch; /* 按钮宽度撑满容器（与输入框对齐） */
-  gap: 0.5rem;
+  gap: 8px;
 }
 .reply-tools .send-reply-btn {
   width: 100%; /* 按钮填满右侧容器宽度 */
@@ -2416,34 +2416,34 @@ onUnmounted(() => {
 }
 
 .ticket-sidebar {
-  padding: 12px;
+  padding: 8px;
 }
 
 .ticket-header {
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .ticket-item {
   border-radius: 10px;
-  padding: 10px;
+  padding: 8px;
   margin-bottom: 8px;
 }
 
 .ticket-content {
-  padding: 12px;
+  padding: 8px;
 }
 
 .ticket-detail-header {
-  padding: 10px 12px;
+  padding: 8px 8px;
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 
   .ticket-subject-info {
     h2 {
       font-size: $font-size-md;
-      margin-bottom: 0.35rem;
+      margin-bottom: 4px;
     }
 
     .ticket-detail-meta {
@@ -2455,14 +2455,14 @@ onUnmounted(() => {
 .messages-container {
   border-radius: 12px;
   border: 1px solid var(--border-color);
-  padding: 10px;
+  padding: 8px;
 }
 
 .reply-container {
-  margin-top: 10px;
+  margin-top: 8px;
   border-radius: 12px;
   border: 1px solid var(--border-color);
-  padding: 10px;
+  padding: 8px;
 
   textarea {
     font-size: $font-size-sm;
@@ -2492,7 +2492,7 @@ onUnmounted(() => {
 .message-item .message-content .message-text h6 {
   font-size: $font-size-xs;
   line-height: 1.35;
-  margin: 0.35rem 0;
+  margin: 4px 0;
 }
 
 .message-item .message-content .message-text strong {

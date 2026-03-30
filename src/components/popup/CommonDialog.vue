@@ -187,7 +187,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
   box-sizing: border-box;
   backdrop-filter: blur(4px);
 
@@ -205,7 +205,7 @@ export default {
     animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
     .dialog-header {
-      padding: 20px;
+      padding: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -228,7 +228,7 @@ export default {
         align-items: center;
         justify-content: center;
         padding: 8px;
-        margin: -8px;
+        margin: 0;
         border-radius: 50%;
         transition: all 0.3s ease;
 
@@ -241,13 +241,13 @@ export default {
     }
 
     .dialog-content {
-      padding: 20px;
+      padding: 16px;
       overflow-y: auto;
       flex: 1;
       background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
 
       :deep(p) {
-        margin: 12px 0;
+        margin: 8px 0;
         line-height: 1.6;
         color: var(--text-primary);
       }
@@ -268,14 +268,14 @@ export default {
     }
 
     .dialog-footer {
-      padding: 15px 20px;
+      padding: 16px 16px;
       border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: flex-end;
-      gap: 10px;
+      gap: 8px;
 
       .dialog-btn {
-        padding: 8px 20px;
+        padding: 8px 16px;
         border: none;
         border-radius: 8px;
         font-size: $font-size-md;
@@ -337,14 +337,14 @@ export default {
 
 @media (max-width: 768px) {
   .dialog-overlay {
-    padding: 15px;
+    padding: 16px;
 
     .dialog-container {
       max-width: 100%;
       max-height: 85vh;
 
       .dialog-header {
-        padding: 15px;
+        padding: 16px;
 
         .dialog-title {
           font-size: $font-size-md;
@@ -352,11 +352,11 @@ export default {
       }
 
       .dialog-content {
-        padding: 15px;
+        padding: 16px;
       }
 
       .dialog-footer {
-        padding: 12px 15px;
+        padding: 8px 16px;
         flex-direction: column-reverse;
 
         .dialog-btn {

@@ -485,7 +485,7 @@ export default {
 
   display: flex;
 
-  gap: 12px;
+  gap: 8px;
 
   z-index: 100;
 
@@ -503,7 +503,7 @@ export default {
 
   text-align: center;
 
-  padding: 0 20px;
+  padding: 0 16px;
 
   max-width: 800px;
 
@@ -514,7 +514,7 @@ export default {
 .site-title {
   @extend %typo-section-title;
 
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 
   background: linear-gradient(to right, var(--theme-color), #a78bfa);
 
@@ -534,7 +534,7 @@ export default {
 
   justify-content: center;
 
-  gap: 15px;
+  gap: 16px;
 
   
 
@@ -560,7 +560,7 @@ export default {
 
   line-height: 1.5;
 
-  margin-bottom: 2rem;
+  margin-bottom: 24px;
 
   color: var(--text-primary);
 

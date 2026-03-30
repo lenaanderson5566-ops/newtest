@@ -75,7 +75,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 12px;
+  gap: 8px;
   pointer-events: none;
   width: 400px;
   
@@ -95,11 +95,11 @@ export default {
   background-color: var(--card-background);
   color: var(--text-primary);
   border-radius: 12px;
-  padding: 14px 16px;
+  padding: 16px 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   opacity: 0;
   transform: translateX(100%);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);

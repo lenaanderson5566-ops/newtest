@@ -358,7 +358,7 @@ export default {
 
   max-width: 320px;
 
-  padding: 40px 20px;
+  padding: 48px 16px;
 
   border-radius: 24px;
 
@@ -376,10 +376,10 @@ export default {
 
   align-items: center;
 
-  gap: 30px;
+  gap: 24px;
 
   .loading-animation {
-    margin: 10px 0;
+    margin: 8px 0;
 
     .progress-ring {
       position: relative;
@@ -442,7 +442,7 @@ export default {
       @extend %typo-section-title;
       font-weight: $font-weight-medium;
 
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .status-progress {
@@ -456,7 +456,7 @@ export default {
   .validation-container {
     max-width: 85%;
 
-    padding: 30px 20px;
+    padding: 24px 16px;
   }
 }
 

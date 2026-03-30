@@ -514,7 +514,7 @@ export default {
     justify-content: center;
     overflow-y: visible;
     display: flex;
-    padding: 60px 0;
+    padding: 64px 0;
     min-height: 100vh;
   }
 }
@@ -524,7 +524,7 @@ export default {
   top: 20px;
   right: 20px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   z-index: 10;
 
   @media (max-width: #{$bp-lg}) {
@@ -534,7 +534,7 @@ export default {
 }
 
 .auth-form-container {
-  padding: 40px 40px;
+  padding: 48px 48px;
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
@@ -543,14 +543,14 @@ export default {
   justify-content: center;
 
   @media (max-width: #{$bp-lg}) {
-    padding: 20px;
+    padding: 16px;
     margin: auto;
     width: 100%;
   }
 }
 
 .auth-header {
-  margin-bottom: 2rem;
+  margin-bottom: 24px;
   text-align: center;
 
   @media (min-width: 993px) {
@@ -560,7 +560,7 @@ export default {
   .auth-title {
     font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
     color: var(--text-primary);
 
     @media (min-width: 993px) {
@@ -571,7 +571,7 @@ export default {
   .auth-subtitle {
     font-size: $font-size-md;
     color: var(--text-tertiary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
     @media (min-width: 993px) {
       text-align: left;
@@ -619,7 +619,7 @@ export default {
   }
 
   .form-control {
-    padding-left: 40px;
+    padding-left: 48px;
     height: 45px;
     border-radius: 8px;
     border: 1px solid var(--input-border-color, transparent);
@@ -629,7 +629,7 @@ export default {
 
     &[type="password"],
     &[type="text"] {
-      padding-right: 40px;
+      padding-right: 48px;
     }
 
     &:focus {
@@ -649,13 +649,13 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 
   .remember-me .checkbox-container {
     display: flex;
     align-items: center;
     position: relative;
-    padding-left: 30px;
+    padding-left: 24px;
     cursor: pointer;
     user-select: none;
 
@@ -752,18 +752,18 @@ export default {
   display: block;
   color: var(--error-color);
   font-size: $font-size-xs;
-  margin-top: 0.3rem;
+  margin-top: 4px;
 }
 
 
 @media (max-width: #{$bp-sm}) {
   .auth-form-container {
-    padding: 30px 20px;
+    padding: 24px 16px;
     margin: auto;
   }
 
   .auth-split-right {
-    padding: 20px 0;
+    padding: 16px 0;
   }
 
   .form-options {
@@ -771,7 +771,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 8px;
 
     .remember-me {
       flex: 0 0 auto;
@@ -787,7 +787,7 @@ export default {
 
 @media (min-width: #{$bp-sm}) and (max-width: #{$bp-lg}) {
   .auth-split-right {
-    padding: 2rem;
+    padding: 24px;
   }
 }
 
@@ -865,7 +865,7 @@ export default {
 }
 
 .auth-logo {
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
   text-align: center;
 
   @media (min-width: 993px) {

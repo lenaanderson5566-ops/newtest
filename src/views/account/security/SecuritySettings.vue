@@ -414,7 +414,7 @@ onMounted(() => {
 }
 
 .card-header {
-  padding: 16px 20px;
+  padding: 16px 16px;
   border-bottom: 1px solid var(--border-color);
 
   h3 {
@@ -424,13 +424,13 @@ onMounted(() => {
 }
 
 .settings-content {
-  padding: 16px 20px;
+  padding: 16px 16px;
 }
 
 .action-btn {
   border: 1px solid var(--border-color);
   background: var(--card-bg-color);
-  padding: 8px 12px;
+  padding: 8px 8px;
   border-radius: 8px;
   display: inline-flex;
   gap: 8px;
@@ -441,7 +441,7 @@ onMounted(() => {
 .action-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
 }
 
 .action-btn:disabled,
@@ -462,8 +462,8 @@ onMounted(() => {
 
 .device-item {
   display: flex;
-  gap: 12px;
-  padding: 10px 0;
+  gap: 8px;
+  padding: 8px 0;
   border-bottom: 1px solid var(--border-color);
 
   &:last-child {
@@ -485,7 +485,7 @@ onMounted(() => {
 .current-session-badge {
   display: inline-flex;
   align-items: center;
-  padding: 2px 8px;
+  padding: 0 8px;
   border-radius: 999px;
   font-size: $font-size-sm;
   color: var(--theme-color);
@@ -499,14 +499,14 @@ onMounted(() => {
   background: transparent;
   color: var(--error-color);
   border-radius: 8px;
-  padding: 6px 10px;
+  padding: 4px 8px;
   cursor: pointer;
   white-space: nowrap;
 }
 
 .device-meta {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   font-size: $font-size-sm;
   color: var(--text-tertiary);
 }
@@ -521,14 +521,14 @@ onMounted(() => {
   border: 1px solid var(--border-color);
   background: transparent;
   border-radius: 8px;
-  padding: 6px 10px;
+  padding: 4px 8px;
   cursor: pointer;
 }
 
 .session-skeleton {
   display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .session-skeleton-icon {
@@ -581,7 +581,7 @@ onMounted(() => {
 }
 
 .modal-header {
-  padding: 16px 20px;
+  padding: 16px 16px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
@@ -614,7 +614,7 @@ onMounted(() => {
 }
 
 .modal-body {
-  padding: 20px;
+  padding: 16px;
 
   .form-group {
     margin-bottom: 16px;
@@ -633,7 +633,7 @@ onMounted(() => {
 
     input {
       width: 100%;
-      padding: 10px 12px;
+      padding: 8px 8px;
       border: 1px solid var(--border-color);
       border-radius: 8px;
       background-color: var(--bg-secondary);
@@ -649,7 +649,7 @@ onMounted(() => {
     }
 
     .error-text {
-      margin-top: 6px;
+      margin-top: 4px;
       color: var(--error-color);
       font-size: $font-size-sm;
     }
@@ -657,11 +657,11 @@ onMounted(() => {
 }
 
 .modal-footer {
-  padding: 16px 20px;
+  padding: 16px 16px;
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 8px;
 
   button {
     padding: 8px 16px;

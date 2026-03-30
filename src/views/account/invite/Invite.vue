@@ -737,8 +737,8 @@ export default {
             <style lang="scss">
 @use "@/assets/styles/base/variables.scss" as *;
               :root { --font-size-sm: 14px; --font-size-base: 16px; --font-size-lg: 20px; }
-              body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-              img { max-width: 100%; height: auto; margin-bottom: 20px; }
+              body { font-family: Arial, sans-serif; text-align: center; padding: 16px; }
+              img { max-width: 100%; height: auto; margin-bottom: 16px; }
               h2 { color: var(--text-primary); }
               p { color: var(--text-tertiary); }
             
@@ -752,10 +752,10 @@ export default {
   }
 
   .dashboard-card {
-    padding: 22px;
+    padding: 24px;
 
     .card-header {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .card-title {
@@ -772,13 +772,13 @@ export default {
   .stats-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 
     .stats-card {
       min-height: 112px;
-      padding: 20px;
+      padding: 16px;
       align-items: flex-start;
-      gap: 12px;
+      gap: 8px;
 
       .stats-icon {
         width: 44px;
@@ -796,7 +796,7 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-        gap: 6px;
+        gap: 4px;
 
         .stats-value {
           font-size: $font-size-xl;
@@ -816,13 +816,13 @@ export default {
   .compact-stepper {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
+    gap: 8px;
 
     .rule-item {
       position: relative;
       border-radius: 12px;
-      padding: 12px 12px 12px 44px;
-      gap: 10px;
+      padding: 8px 8px 8px 48px;
+      gap: 8px;
       min-height: 96px;
 
       .rule-step-index {
@@ -848,7 +848,7 @@ export default {
       .rule-content {
         h3 {
           font-size: $font-size-md;
-          margin-bottom: 3px;
+          margin-bottom: 4px;
         }
 
         p {
@@ -871,7 +871,7 @@ export default {
       }
 
       .balance-value {
-        margin-bottom: 6px;
+        margin-bottom: 4px;
       }
     }
 
@@ -883,32 +883,32 @@ export default {
       .btn-primary {
         min-width: 0;
         height: 40px;
-        padding: 0 14px;
+        padding: 0 16px;
       }
     }
   }
 
   .referral-kpi-card {
-    padding: 16px 20px;
+    padding: 16px 16px;
   }
 
   .referral-kpi-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
+    gap: 8px;
   }
 
   .kpi-item {
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    padding: 12px;
+    padding: 8px;
     background: rgba(var(--theme-color-rgb), 0.03);
   }
 
   .kpi-label {
     font-size: $font-size-sm;
     color: var(--text-tertiary);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .kpi-value {
@@ -918,7 +918,7 @@ export default {
   }
 
   .invite-cards-container {
-    margin: 16px 0 10px;
+    margin: 16px 0 8px;
     padding: 0;
   }
 
@@ -927,11 +927,11 @@ export default {
   }
 
   .invite-card-inner {
-    padding: 14px;
+    padding: 16px;
   }
 
   .invite-card-header {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .invite-card-body {
@@ -940,7 +940,7 @@ export default {
 
   .invite-code-display {
     font-size: $font-size-xl;
-    padding: 8px 12px;
+    padding: 8px 8px;
   }
 }
 
@@ -972,13 +972,13 @@ export default {
 @media (max-width: #{$bp-md}) {
   .account-container {
     .dashboard-card {
-      padding: 20px;
+      padding: 16px;
     }
 
     .stats-grid,
     .compact-stepper {
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 8px;
     }
 
     .balance-container {
@@ -994,7 +994,7 @@ export default {
 
     .referral-kpi-grid {
       grid-template-columns: 1fr;
-      gap: 10px;
+      gap: 8px;
     }
   }
 }
@@ -1531,14 +1531,14 @@ export default {
 .account-inner {
   width: 100%;
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .dashboard-card {
   background: var(--card-bg-color);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 12px;
+  padding: 8px;
 }
 
 .card-header {
@@ -1556,7 +1556,7 @@ export default {
 
 .balance-container {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .balance-value {
@@ -1574,7 +1574,7 @@ export default {
   .btn-primary {
     width: auto;
     min-width: 0;
-    padding: 0 14px;
+    padding: 0 16px;
   }
 }
 
@@ -1587,8 +1587,8 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 0 10px;
+  gap: 4px;
+  padding: 0 8px;
 }
 
 .modal-footer .btn-cancel {
@@ -1614,7 +1614,7 @@ export default {
 
 .referral-kpi-card {
   .card-header {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
 }
 
@@ -1635,14 +1635,14 @@ export default {
 
 .invite-codes-wrapper {
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .invite-cards-container {
   display: grid;
   grid-template-columns: 30px 1fr 30px;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   min-width: 0;
 
   &.single-card {
@@ -1692,25 +1692,25 @@ export default {
 .invite-card-title {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-weight: $font-weight-bold;
 }
 
 .invite-code-display {
-  margin-top: 10px;
+  margin-top: 8px;
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
 }
 
 .invite-link-preview {
-  margin-top: 10px;
+  margin-top: 8px;
   width: 100%;
   display: block;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: rgba(255, 255, 255, 0.08);
-  padding: 10px 12px;
+  padding: 8px 8px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1726,7 +1726,7 @@ export default {
 }
 
 .invite-card-footer {
-  margin-top: 10px;
+  margin-top: 8px;
   font-size: $font-size-sm;
   color: rgba(255, 255, 255, 0.72);
 }
@@ -1734,7 +1734,7 @@ export default {
 .invite-cards-indicators {
   display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .indicator {
@@ -1757,13 +1757,13 @@ export default {
   .btn-outline {
     width: auto;
     min-width: 104px;
-    padding: 0 12px;
+    padding: 0 8px;
   }
 }
 
 .invite-link-card {
   .card-header {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
 
   .invite-main-title {
@@ -1772,7 +1772,7 @@ export default {
 
   .card-actions .btn-action {
     width: auto;
-    padding: 0 10px;
+    padding: 0 8px;
   }
 
   .invite-cards-wrapper {
@@ -1783,7 +1783,7 @@ export default {
 
 @media (max-width: 480px) {
   .invite-step-header {
-    gap: 10px;
+    gap: 8px;
 
     .invite-step-create-btn {
       width: 100%;
@@ -1801,27 +1801,27 @@ export default {
   }
 
   .invite-card-inner {
-    padding: 12px;
+    padding: 8px;
   }
 }
 
 .invite-steps {
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 
 .invite-step {
   background: #f8faff;
   border: 1px solid rgba(var(--theme-color-rgb), 0.1);
   border-radius: 12px;
-  padding: 14px;
+  padding: 16px;
 }
 
 .invite-step-header {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 8px;
+  margin-bottom: 8px;
 
   h3 {
     margin: 0;
@@ -1838,12 +1838,12 @@ export default {
     margin-left: auto;
     width: auto;
     min-width: 0;
-    padding: 0 10px;
+    padding: 0 8px;
     height: 34px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 4px;
 
     .loading-icon {
       width: 14px;
@@ -1905,7 +1905,7 @@ export default {
 .records-table th,
 .records-table td {
   border-bottom: 1px solid var(--border-color);
-  padding: 8px 6px;
+  padding: 8px 4px;
   white-space: nowrap;
   text-align: left;
   vertical-align: middle;
@@ -1935,7 +1935,7 @@ export default {
 }
 
 .modal-header {
-  padding: 16px 20px;
+  padding: 16px 16px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
@@ -1946,7 +1946,7 @@ export default {
     @extend %typo-section-title;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 
     &::before {
       content: '';
@@ -1984,16 +1984,16 @@ export default {
 }
 
 .modal-body {
-  padding: 16px 20px;
+  padding: 16px 16px;
 }
 
 .alert {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   border-radius: 12px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
+  padding: 8px 16px;
+  margin-bottom: 16px;
 
   &.alert-warning {
     background: rgba(245, 158, 11, 0.1);
@@ -2009,7 +2009,7 @@ export default {
   .alert-title {
     @extend %typo-item-title;
     color: rgba(180, 83, 9, 0.95);
-    margin-bottom: 2px;
+    margin-bottom: 0;
   }
 
   .alert-desc {
@@ -2021,7 +2021,7 @@ export default {
 .transfer-form,
 .withdraw-form {
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 
 .form-group {
@@ -2049,7 +2049,7 @@ export default {
 
 .input-prefix {
   min-width: 64px;
-  padding: 0 12px;
+  padding: 0 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2064,7 +2064,7 @@ export default {
   height: 52px;
   border: none;
   background: transparent;
-  padding: 0 14px;
+  padding: 0 16px;
   color: var(--text-primary);
   @extend %typo-body-text;
 
@@ -2079,7 +2079,7 @@ export default {
 }
 
 .modal-footer {
-  padding: 14px 20px 16px;
+  padding: 16px 16px 16px;
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;
@@ -2102,7 +2102,7 @@ export default {
 
 @media (min-width: 900px) {
   .account-container {
-    padding: 14px;
+    padding: 16px;
   }
 
   .balance-value {

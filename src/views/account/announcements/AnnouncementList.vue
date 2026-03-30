@@ -83,8 +83,8 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 12px;
-    margin-bottom: 10px;
+    gap: 8px;
+    margin-bottom: 8px;
 
     h3 {
       margin: 0;

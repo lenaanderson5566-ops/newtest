@@ -147,7 +147,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
   box-sizing: border-box;
   backdrop-filter: blur(4px);
 
@@ -165,7 +165,7 @@ export default {
     animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
     .auth-popup-header {
-      padding: 20px;
+      padding: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -188,7 +188,7 @@ export default {
         align-items: center;
         justify-content: center;
         padding: 8px;
-        margin: -8px;
+        margin: 0;
         border-radius: 50%;
         transition: all 0.3s ease;
 
@@ -206,13 +206,13 @@ export default {
     }
 
     .auth-popup-content {
-      padding: 20px;
+      padding: 16px;
       overflow-y: auto;
       flex: 1;
       background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
 
       :deep(p) {
-        margin: 12px 0;
+        margin: 8px 0;
         line-height: 1.6;
         color: var(--text-primary);
       }
@@ -233,13 +233,13 @@ export default {
     }
 
     .auth-popup-footer {
-      padding: 15px 20px;
+      padding: 16px 16px;
       border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: flex-end;
 
       .popup-action-btn {
-        padding: 8px 20px;
+        padding: 8px 16px;
         background-color: var(--theme-color);
         color: var(--text-on-dark-primary);
         border: none;
@@ -321,14 +321,14 @@ export default {
 
 @media (max-width: 768px) {
   .auth-popup-overlay {
-    padding: 15px;
+    padding: 16px;
 
     .auth-popup-container {
       max-width: 100%;
       max-height: 85vh;
 
       .auth-popup-header {
-        padding: 15px;
+        padding: 16px;
 
         .popup-title {
           font-size: $font-size-md;
@@ -336,11 +336,11 @@ export default {
       }
 
       .auth-popup-content {
-        padding: 15px;
+        padding: 16px;
       }
 
       .auth-popup-footer {
-        padding: 12px 15px;
+        padding: 8px 16px;
       }
     }
   }

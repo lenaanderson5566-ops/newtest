@@ -989,7 +989,7 @@ export default {
 
   .shop-inner {
     width: 100%;
-    gap: 12px;
+    gap: 8px;
 
       }
 
@@ -1010,7 +1010,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
       flex-wrap: wrap;
 
       p {
@@ -1046,7 +1046,7 @@ export default {
 
       align-items: flex-start;
 
-      margin-bottom: 15px;
+      margin-bottom: 16px;
 
       .card-title {
         @extend %typo-section-title;
@@ -1061,7 +1061,7 @@ export default {
 
         flex: 1;
 
-        padding-right: 10px;
+        padding-right: 8px;
       }
 
   .current-plan-meta {
@@ -1084,7 +1084,7 @@ export default {
     background: rgba(var(--theme-color-rgb), 0.1);
     border: 1px solid rgba(var(--theme-color-rgb), 0.26);
     border-radius: 999px;
-    padding: 5px 10px;
+    padding: 4px 8px;
     white-space: nowrap;
     box-shadow: none;
   }
@@ -1094,7 +1094,7 @@ export default {
 
         align-items: center;
 
-        padding: 4px 12px;
+        padding: 4px 8px;
 
         border-radius: 20px;
 
@@ -1200,7 +1200,7 @@ export default {
 
       border-radius: 4px;
 
-      margin-bottom: 20px;
+      margin-bottom: 16px;
 
       width: 60%;
     }
@@ -1226,7 +1226,7 @@ export default {
 
           border-radius: 4px;
 
-          margin-bottom: 12px;
+          margin-bottom: 8px;
 
           &:nth-child(1) {
             width: 90%;
@@ -1324,7 +1324,7 @@ export default {
 
       box-shadow: none;
 
-      padding: 10px;
+      padding: 8px;
 
       border: 1px solid var(--border-color);
 
@@ -1383,7 +1383,7 @@ export default {
         justify-content: center;
         align-items: flex-start;
         min-height: 116px;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
         padding-top: 0;
 
         .desktop-plan-hero {
@@ -1394,7 +1394,7 @@ export default {
 
           .desktop-plan-gradient {
             min-height: 86px;
-            padding: 14px 16px;
+            padding: 16px 16px;
             border-radius: 10px;
             color: var(--text-on-dark-primary);
             display: flex;
@@ -1422,7 +1422,7 @@ export default {
           flex-direction: column;
           align-items: flex-start;
           text-align: left;
-          gap: 2px;
+          gap: 0;
         }
 
         .card-title {
@@ -1457,7 +1457,7 @@ export default {
           border-radius: 50%;
           color: var(--theme-color);
           background: var(--card-background);
-          padding: 3px;
+          padding: 4px;
           flex-shrink: 0;
         }
 
@@ -1469,7 +1469,7 @@ export default {
 
           align-items: center;
 
-          padding: 4px 12px;
+          padding: 4px 8px;
 
           border-radius: 20px;
 
@@ -1539,7 +1539,7 @@ export default {
     }
 
     .plan-price {
-      margin: 8px 0 10px;
+      margin: 8px 0 8px;
 
       padding: 0 4px;
       text-align: center;
@@ -1549,9 +1549,9 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 6px;
+        gap: 4px;
         text-align: center;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
 
         .price-main-line {
           align-items: baseline;
@@ -1559,7 +1559,7 @@ export default {
           display: inline-flex;
           align-items: baseline;
           justify-content: center;
-          gap: 6px;
+          gap: 4px;
         }
 
         .currency {
@@ -1592,7 +1592,7 @@ export default {
 
     .plan-features {
       width: 100%;
-      margin: 14px 0 8px 0;
+      margin: 16px 0 8px 0;
 
       padding: 0 4px;
 
@@ -1601,7 +1601,7 @@ export default {
 
         align-items: flex-start; // 改为 flex-start 以便长文本时对齐更好
 
-        margin-bottom: 12px;
+        margin-bottom: 8px;
 
         .feature-icon {
           width: 20px;
@@ -1616,7 +1616,7 @@ export default {
 
           flex-shrink: 0; // 防止图标被压缩
 
-          margin-top: 1px; // 微调垂直对齐
+          margin-top: 0; // 微调垂直对齐
 
           &.enabled {
             color: var(--theme-color);
@@ -1725,7 +1725,7 @@ export default {
 
   .shop-title-header {
     align-items: center !important;
-    gap: 14px;
+    gap: 16px;
   }
 
   .filter-toggle-container {
@@ -1743,7 +1743,7 @@ export default {
       display: inline-flex;
       align-items: center;
       gap: 0;
-      padding: 3px;
+      padding: 4px;
       border-radius: 12px;
       border: 1px solid var(--border-color);
       background: var(--surface-subtle);
@@ -1768,7 +1768,7 @@ export default {
         background: transparent;
         min-width: 60px;
         height: 30px;
-        padding: 0 10px;
+        padding: 0 8px;
         border-radius: 9px;
         cursor: pointer;
         transition: all 0.22s ease;
@@ -1800,7 +1800,7 @@ export default {
 
 
     .btn-reset-filter {
-      padding: 8px 20px;
+      padding: 8px 16px;
 
       background-color: var(--theme-color);
 
@@ -1912,9 +1912,9 @@ export default {
   .shop-container {
   --shop-card-radius: var(--radius-lg);
 
-    padding: 15px;
+    padding: 16px;
 
-    padding-bottom: 80px;
+    padding-bottom: 64px;
 
     .plans-wrapper {
       grid-template-columns: 1fr;
@@ -1928,13 +1928,13 @@ export default {
       .mobile-plan-layout {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 8px;
       }
 
       .mobile-plan-selector {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 10px;
+        gap: 8px;
         align-items: stretch;
         padding-top: 0;
       }
@@ -1988,7 +1988,7 @@ export default {
         overflow: hidden;
         justify-content: center;
         align-items: flex-start;
-        padding: 10px;
+        padding: 8px;
 
         &.active {
           border-color: rgba(var(--theme-color-rgb), 0.65);
@@ -2008,7 +2008,7 @@ export default {
         }
 
         &.current-plan-chip {
-          padding-top: 34px;
+          padding-top: 24px;
         }
 
       }
@@ -2055,15 +2055,15 @@ export default {
         border: 1px solid var(--border-color);
         background: var(--card-bg-color);
         border-radius: 12px;
-        padding: 10px 14px;
+        padding: 8px 16px;
       }
 
       .mobile-detail-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 12px;
-        padding: 10px 0;
+        gap: 8px;
+        padding: 8px 0;
         border-bottom: 1px solid var(--border-color);
       }
 
@@ -2108,7 +2108,7 @@ export default {
   .shop-container .shop-title-header {
     align-items: flex-start !important;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 
     .card-title {
       padding-right: 0;
@@ -2118,7 +2118,7 @@ export default {
   .shop-container .filter-toggle-container {
     width: fit-content;
     margin-left: auto;
-    gap: 6px;
+    gap: 4px;
 
     .filter-toggle-wrapper {
       border: 1px solid var(--border-color);
@@ -2140,12 +2140,12 @@ export default {
   }
 
   .shop-container .filter-toggle-container .filter-toggle-wrapper {
-    padding: 2px;
+    padding: 0;
 
     .filter-option {
       min-width: 56px;
       height: 28px;
-      padding: 0 9px;
+      padding: 0 8px;
 
       .option-text {
         font-size: $font-size-xs;

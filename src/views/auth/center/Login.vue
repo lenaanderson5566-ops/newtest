@@ -629,7 +629,7 @@ export default {
 
   display: flex;
 
-  gap: 10px;
+  gap: 8px;
 
   z-index: 10;
 
@@ -717,7 +717,7 @@ export default {
 
   .form-control {
 
-    padding-left: 40px;
+    padding-left: 48px;
 
     height: 45px;
 
@@ -737,7 +737,7 @@ export default {
 
     &[type="text"] {
 
-      padding-right: 40px;
+      padding-right: 48px;
 
     }
 
@@ -777,7 +777,7 @@ export default {
 
   align-items: center;
 
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 
 
 
@@ -789,7 +789,7 @@ export default {
 
     position: relative;
 
-    padding-left: 30px;
+    padding-left: 24px;
 
     cursor: pointer;
 
@@ -983,7 +983,7 @@ export default {
 
   font-size: $font-size-xs;
 
-  margin-top: 0.3rem;
+  margin-top: 4px;
 
 }
 
@@ -995,7 +995,7 @@ export default {
 
   .auth-card {
 
-    padding: 1.5rem;
+    padding: 24px;
 
   }
 
@@ -1011,7 +1011,7 @@ export default {
 
     flex-wrap: wrap;
 
-    gap: 0.5rem;
+    gap: 8px;
 
 
 
@@ -1043,7 +1043,7 @@ export default {
 
   .auth-container {
 
-    padding: 2rem;
+    padding: 24px;
 
   }
 
@@ -1236,7 +1236,7 @@ export default {
 
 .auth-logo {
 
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 
   text-align: center;
 

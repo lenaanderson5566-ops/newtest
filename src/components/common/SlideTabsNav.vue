@@ -125,7 +125,7 @@ export default {
 @use "@/assets/styles/base/variables.scss" as *;
 
 .slide-tabs-container {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   position: fixed;
   top: 108px;
   left: var(--left-nav-gap, 10px);
@@ -136,7 +136,7 @@ export default {
   .slide-tabs-wrapper {
     background: #fff;
     border-radius: $border-radius-sm;
-    padding: 2px;
+    padding: 0;
     box-shadow: none;
     border: 1px solid rgba(15, 23, 42, 0.08);
     overflow: hidden;
@@ -145,10 +145,10 @@ export default {
   .slide-tabs-nav {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
 
     .nav-item {
-      padding: 8px 10px;
+      padding: 8px 8px;
       border-radius: $border-radius-sm;
       font-weight: $font-weight-medium;
       font-size: $font-size-sm;
@@ -218,7 +218,7 @@ export default {
       width: 100%;
       display: block;
       border-radius: $border-radius-sm;
-      padding: 3px;
+      padding: 4px;
     }
 
     .slide-tabs-nav {
@@ -227,17 +227,17 @@ export default {
       flex-wrap: nowrap;
       overflow: hidden;
       gap: 0;
-      padding: 2px;
+      padding: 0;
       justify-content: space-between;
 
       .nav-item {
         flex: 1 1 0;
         min-width: 0;
-        padding: 6px 8px;
+        padding: 4px 8px;
         justify-content: center;
         font-size: $font-size-sm;
         flex-direction: row;
-        gap: 6px;
+        gap: 4px;
         height: 50px;
 
         .nav-icon {
@@ -288,7 +288,7 @@ export default {
       .nav-item {
         flex: 1 1 0;
         min-width: 0;
-        padding: 5px 6px;
+        padding: 4px 4px;
         font-size: $font-size-sm;
         height: 46px;
 

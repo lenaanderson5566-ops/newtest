@@ -161,7 +161,7 @@ export default {
 
   position: relative;
 
-  padding: 20px;
+  padding: 16px;
 
   
 
@@ -262,7 +262,7 @@ export default {
 .error-title {
   @extend %typo-section-title;
 
-  margin: 10px 0 20px;
+  margin: 8px 0 16px;
 
 }
 
@@ -274,7 +274,7 @@ export default {
 
   line-height: 1.6;
 
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 
 }
 
@@ -288,7 +288,7 @@ export default {
 
   justify-content: center;
 
-  gap: 10px;
+  gap: 8px;
 
   background-color: var(--theme-color);
 
@@ -298,7 +298,7 @@ export default {
 
   border-radius: 10px;
 
-  padding: 12px 24px;
+  padding: 8px 24px;
 
   @extend %typo-item-title;
 

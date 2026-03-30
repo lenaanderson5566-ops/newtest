@@ -455,7 +455,7 @@ export default {
 
   min-height: 100vh;
 
-  padding: 20px;
+  padding: 16px;
 
   background-color: var(--bg-color);
 
@@ -495,7 +495,7 @@ export default {
 
   .card-header {
 
-    padding: 25px 30px;
+    padding: 24px 24px;
 
     border-bottom: 1px solid var(--border-color);
 
@@ -509,7 +509,7 @@ export default {
       @extend %typo-section-title;
       color: var(--theme-color);
 
-      margin-bottom: 10px;
+      margin-bottom: 8px;
 
     }
 
@@ -530,7 +530,7 @@ export default {
 
   .card-body {
 
-    padding: 30px;
+    padding: 24px;
 
     display: flex;
 
@@ -546,7 +546,7 @@ export default {
 
       opacity: 0.8;
 
-      margin-bottom: 20px;
+      margin-bottom: 16px;
 
     }
 
@@ -560,7 +560,7 @@ export default {
 
       text-align: center;
 
-      margin-bottom: 25px;
+      margin-bottom: 24px;
 
       color: var(--text-primary);
 
@@ -572,11 +572,11 @@ export default {
 
       background-color: rgba(var(--theme-color-rgb), 0.05);
 
-      padding: 15px 20px;
+      padding: 16px 16px;
 
       border-radius: 10px;
 
-      margin-bottom: 25px;
+      margin-bottom: 24px;
 
       width: 100%;
 
@@ -602,11 +602,11 @@ export default {
 
       background-color: rgba(var(--theme-color-rgb), 0.05);
 
-      padding: 15px 20px;
+      padding: 16px 16px;
 
       border-radius: 10px;
 
-      margin-bottom: 25px;
+      margin-bottom: 24px;
 
       
 
@@ -629,7 +629,7 @@ export default {
 
         border-radius: 8px;
 
-        padding: 10px 15px;
+        padding: 8px 16px;
 
         border: 1px solid rgba(var(--theme-color-rgb), 0.1);
 
@@ -675,7 +675,7 @@ export default {
 
           cursor: pointer;
 
-          margin-left: 10px;
+          margin-left: 8px;
 
           transition: background-color 0.2s ease, transform 0.2s ease;
 
@@ -725,7 +725,7 @@ export default {
 
       width: 100%;
 
-      margin-bottom: 25px;
+      margin-bottom: 24px;
 
       display: flex;
 
@@ -738,7 +738,7 @@ export default {
       .recommend-title {
         @extend %typo-section-title;
 
-        margin-bottom: 15px;
+        margin-bottom: 16px;
 
         text-align: center;
 
@@ -752,11 +752,11 @@ export default {
 
         flex-wrap: wrap;
 
-        gap: 15px;
+        gap: 16px;
 
         justify-content: center;
 
-        margin-bottom: 20px;
+        margin-bottom: 16px;
 
         width: 100%;
 
@@ -774,7 +774,7 @@ export default {
 
         gap: 8px;
 
-        padding: 12px 20px;
+        padding: 8px 16px;
 
         border-radius: 10px;
 
@@ -838,18 +838,18 @@ export default {
 
         width: 100%;
 
-        margin-top: 20px;
+        margin-top: 16px;
 
         border-top: 1px solid rgba(var(--theme-color-rgb), 0.1);
 
-        padding-top: 20px;
+        padding-top: 16px;
 
         
 
         .supported-title {
           @extend %typo-section-title;
 
-          margin-bottom: 15px;
+          margin-bottom: 16px;
 
           text-align: center;
 
@@ -863,7 +863,7 @@ export default {
 
           flex-wrap: wrap;
 
-          gap: 10px;
+          gap: 8px;
 
           justify-content: center;
 
@@ -877,7 +877,7 @@ export default {
 
             gap: 8px;
 
-            padding: 8px 15px;
+            padding: 8px 16px;
 
             border-radius: 8px;
 
@@ -913,7 +913,7 @@ export default {
 
       width: 100%;
 
-      margin-bottom: 20px;
+      margin-bottom: 16px;
 
       
 
@@ -923,7 +923,7 @@ export default {
 
         border-radius: 10px;
 
-        padding: 15px;
+        padding: 16px;
 
         
 
@@ -933,7 +933,7 @@ export default {
 
           cursor: pointer;
 
-          padding: 5px 0;
+          padding: 4px 0;
 
           outline: none;
 
@@ -945,7 +945,7 @@ export default {
 
         p {
 
-          margin-top: 10px;
+          margin-top: 8px;
 
           font-size: $font-size-md;
 
@@ -991,7 +991,7 @@ export default {
 
     .card-header {
 
-      padding: 20px;
+      padding: 16px;
 
       
 
@@ -1015,7 +1015,7 @@ export default {
 
     .card-body {
 
-      padding: 20px;
+      padding: 16px;
 
       
 
@@ -1029,7 +1029,7 @@ export default {
 
       .current-url-container {
 
-        padding: 15px;
+        padding: 16px;
 
         
 
@@ -1043,7 +1043,7 @@ export default {
 
         .url-copy-container {
 
-          padding: 8px 12px;
+          padding: 8px 8px;
 
           
 
@@ -1117,7 +1117,7 @@ export default {
 
             .supported-browser-item {
 
-              padding: 6px 12px;
+              padding: 4px 8px;
 
               font-size: $font-size-sm;
 

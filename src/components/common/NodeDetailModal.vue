@@ -769,7 +769,7 @@ watchEffect(() => {
 
   justify-content: center;
 
-  padding: 20px;
+  padding: 16px;
 
   box-sizing: border-box;
 
@@ -831,7 +831,7 @@ watchEffect(() => {
 
 .node-detail-modal-header {
 
-  padding: 16px 20px;
+  padding: 16px 16px;
 
   display: flex;
 
@@ -879,7 +879,7 @@ watchEffect(() => {
 
     padding: 8px;
 
-    margin: -8px;
+    margin: 0;
 
     border-radius: 50%;
 
@@ -905,7 +905,7 @@ watchEffect(() => {
 
 .node-detail-modal-body {
 
-  padding: 20px;
+  padding: 16px;
 
   overflow-y: auto; 
 
@@ -931,7 +931,7 @@ watchEffect(() => {
 
   flex-direction: column;
 
-  gap: 12px;
+  gap: 8px;
 
   
 
@@ -1005,7 +1005,7 @@ watchEffect(() => {
 
     align-items: center;
 
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 
     
 
@@ -1037,7 +1037,7 @@ watchEffect(() => {
 
         gap: 4px;
 
-        padding: 6px 10px;
+        padding: 4px 8px;
 
         background-color: rgba(var(--theme-color-rgb), 0.05);
 
@@ -1089,7 +1089,7 @@ watchEffect(() => {
 
     border-radius: $border-radius-sm;
 
-    padding: 12px;
+    padding: 8px;
 
     position: relative;
 
@@ -1115,7 +1115,7 @@ watchEffect(() => {
 
       color: var(--text-primary);
 
-      margin-bottom: 36px; 
+      margin-bottom: 24px; 
 
       max-height: 200px; 
 
@@ -1141,7 +1141,7 @@ watchEffect(() => {
 
       border-radius: $border-radius-sm;
 
-      padding: 8px 12px;
+      padding: 8px 8px;
 
       font-size: $font-size-sm;
 
@@ -1243,7 +1243,7 @@ watchEffect(() => {
 
       align-items: center;
 
-      gap: 12px;
+      gap: 8px;
 
       
 
@@ -1275,7 +1275,7 @@ watchEffect(() => {
 
         border-radius: 4px;
 
-        padding: 6px 10px;
+        padding: 4px 8px;
 
         font-size: $font-size-sm;
 
@@ -1343,7 +1343,7 @@ watchEffect(() => {
 
   border-radius: $border-radius-sm;
 
-  padding: 10px 16px;
+  padding: 8px 16px;
 
   font-size: $font-size-md;
 
@@ -1391,7 +1391,7 @@ watchEffect(() => {
 
   .node-detail-modal-overlay {
 
-    padding: 10px; 
+    padding: 8px; 
 
     align-items: center; 
 
@@ -1465,7 +1465,7 @@ watchEffect(() => {
 
       align-items: flex-start;
 
-      gap: 10px;
+      gap: 8px;
 
       
 
@@ -1495,7 +1495,7 @@ watchEffect(() => {
 
         font-size: $font-size-sm; 
 
-        margin-bottom: 40px; 
+        margin-bottom: 48px; 
 
       }
 
@@ -1507,7 +1507,7 @@ watchEffect(() => {
 
   .page-nav-btn {
 
-    padding: 10px 16px; 
+    padding: 8px 16px; 
 
   }
 

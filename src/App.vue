@@ -397,7 +397,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 0 8px;
   z-index: 120;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -410,7 +410,7 @@ export default {
   letter-spacing: -0.5px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 
   .site-logo-img {
     height: 20px;
@@ -425,7 +425,7 @@ export default {
 
 .top-toolbar {
   --toolbar-control-height: 34px;
-  --toolbar-control-padding: 5px 8px;
+  --toolbar-control-padding: 4px 8px;
   --toolbar-control-radius: #{$border-radius-sm};
   --toolbar-control-border: transparent;
   --toolbar-control-bg: transparent;
@@ -435,7 +435,7 @@ export default {
   position: static;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
   z-index: 110;
 
   .gift-btn {
@@ -504,8 +504,8 @@ export default {
 .app-content-wrapper {
   width: 100%;
   box-sizing: border-box;
-  --page-edge-gap: 2px;
-  --left-nav-gap: 10px;
+  --page-edge-gap: 0;
+  --left-nav-gap: 8px;
   --left-nav-occupy: 220px;
   --mobile-bottom-nav-space: 0px;
 
@@ -553,7 +553,7 @@ export default {
 
 @media (max-width: 768px) {
   .app-content-wrapper.with-top-bar {
-    --page-content-top-gap: 6px;
+    --page-content-top-gap: 4px;
   }
 
   .site-logo {
@@ -567,7 +567,7 @@ export default {
   }
 
   .top-toolbar {
-    gap: 3px;
+    gap: 4px;
     flex-wrap: nowrap;
     justify-content: flex-end;
   }
@@ -582,11 +582,11 @@ export default {
     }
 
     .dashboard-card {
-      padding: 12px !important;
+      padding: 8px;
     }
 
     .card-header {
-      padding: 10px 12px !important;
+      padding: 8px 8px;
       min-height: auto !important;
 
       .card-title,
@@ -598,7 +598,7 @@ export default {
     }
 
     .card-body {
-      padding: 10px 12px !important;
+      padding: 8px 8px;
       font-size: $font-size-md !important;
       line-height: 1.45 !important;
     }
@@ -606,7 +606,7 @@ export default {
     .cards-grid,
     .quick-grid,
     .dashboard-grid {
-      gap: 8px !important;
+      gap: 8px;
     }
   }
 
@@ -615,17 +615,17 @@ export default {
 /* 统一窄屏容器规则：仅最外层保留 2px，内层容器全部归零，最大化可用宽度 */
 @media (max-width: 1200px) {
   .content-layout-shell {
-    padding-inline: var(--page-edge-gap, 2px) !important;
+    padding-inline: var(--page-edge-gap, 2px);
   }
 
   .content-layout-shell > * {
-    padding-inline: 0 !important;
+    padding-inline: 0;
   }
 
   .content-layout-shell > * > [class$="-inner"],
   .content-layout-shell > * > [class*="-inner "],
   .content-layout-shell > * > .my-center-inner {
-    padding-inline: 0 !important;
+    padding-inline: 0;
   }
 }
 

@@ -136,10 +136,10 @@
         <!-- 右侧内容：支付方式 -->
         <div class="right-column">
           <!-- 订单金额摘要 -->
-          <div class="section-wrapper order-amount-section">
-            <div class="section-title">
-              <span>{{ $t("payment.order_info") }}</span>
-            </div>
+          <OrderSummaryCard
+            section-class="order-amount-section"
+            :title="$t('payment.order_info')"
+          >
 
             <div class="order-info" v-if="!loading.order">
               <div class="summary-amounts">
@@ -217,7 +217,7 @@
                 <span>{{ $t("payment.pay_now") }}</span>
               </button>
             </div>
-          </div>
+          </OrderSummaryCard>
 
           <!-- 按钮区域 -->
           <div class="action-buttons">
@@ -454,6 +454,7 @@ import {
 import { PAYMENT_CONFIG } from "@/utils/baseConfig";
 import QrcodeVue from "qrcode.vue";
 import ConfettiExplosion from "vue-confetti-explosion";
+import OrderSummaryCard from "@/components/commerce/OrderSummaryCard.vue";
 import {
   IconCheck,
   IconX,
@@ -489,6 +490,7 @@ export default {
     IconArrowLeft,
     QrcodeVue,
     ConfettiExplosion,
+    OrderSummaryCard,
     IconClock,
     IconLoader2,
     IconHelp,
@@ -1202,7 +1204,7 @@ export default {
       }
 
   .title-card {
-    margin-top: 20px;
+    margin-top: 16px;
     margin-bottom: 24px;
   }
 
@@ -1224,7 +1226,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 16px;
 
       .card-title {
         @extend %typo-section-title;
@@ -1242,7 +1244,7 @@ export default {
 
   .content-wrapper {
     display: flex;
-    gap: 25px;
+    gap: 24px;
 
     @media (max-width: #{$bp-md}) {
       flex-direction: column;
@@ -1268,13 +1270,13 @@ export default {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
     box-shadow: none;
-    padding: 20px;
+    padding: 16px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
 
     &:last-child {
-      margin-bottom: 40px;
+      margin-bottom: 48px;
     }
 
     &:hover {
@@ -1294,7 +1296,7 @@ export default {
         flex: 1;
         height: 1px;
         background-color: var(--border-color);
-        margin-left: 12px;
+        margin-left: 8px;
       }
 
       &.with-status {
@@ -1308,7 +1310,7 @@ export default {
 
     .overview-cancel-btn {
       height: 30px;
-      padding: 0 10px;
+      padding: 0 8px;
       border-radius: $border-radius-sm;
       border: 1px solid rgba(var(--theme-color-rgb), 0.38);
       background: transparent;
@@ -1348,17 +1350,17 @@ export default {
     .overview-divider {
       height: 1px;
       background-color: var(--border-color);
-      margin: 10px 0 8px;
+      margin: 8px 0 8px;
     }
 
     .product-info .info-row {
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .inline-status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
     }
 
     .overview-cancel-btn .loader {
@@ -1372,8 +1374,8 @@ export default {
   }
 
   .section-wrapper.payment-methods-section {
-    padding: 0 !important;
-    margin-bottom: 6px !important;
+    padding: 0;
+    margin-bottom: 4px;
     background: var(--card-bg-color);
     border: 1px solid var(--border-color);
     box-shadow: none;
@@ -1381,7 +1383,7 @@ export default {
     .section-title {
       margin-bottom: 0;
       font-size: $font-size-md;
-      padding: 10px 12px 8px;
+      padding: 8px 8px 8px;
       color: var(--text-primary);
 
       &::after {
@@ -1459,6 +1461,8 @@ export default {
           .summary-value.final {
             color: var(--theme-color);
             font-weight: $font-weight-bold;
+            font-size: $font-size-3xl;
+            line-height: 1.1;
           }
         }
       }
@@ -1469,17 +1473,17 @@ export default {
         margin: 16px 0;
 
         &.strong {
-          margin: 6px 0 10px;
+          margin: 4px 0 8px;
         }
 
         &.compact {
-          margin: 8px 0 6px;
+          margin: 8px 0 4px;
         }
       }
     }
 
     .order-amount-actions {
-      margin-top: 14px;
+      margin-top: 16px;
 
       .btn-pay {
         width: 100%;
@@ -1541,7 +1545,7 @@ export default {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 12px;
+      padding: 8px 8px;
       min-height: 38px;
       border-radius: 0;
       cursor: pointer;
@@ -1571,7 +1575,7 @@ export default {
         flex-shrink: 0;
 
         &.left-check {
-          margin-right: 2px;
+          margin-right: 0;
         }
       }
 
@@ -1604,7 +1608,7 @@ export default {
         min-width: 0;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 4px;
 
         .method-name {
           font-size: $font-size-md;
@@ -1622,7 +1626,7 @@ export default {
     }
 
     .payment-security-note {
-      padding: 6px 12px 8px;
+      padding: 4px 8px 8px;
       border-top: 1px solid var(--border-color);
       font-size: $font-size-sm;
       color: var(--text-tertiary);
@@ -1639,13 +1643,13 @@ export default {
   .free-notice {
     display: flex;
     align-items: center;
-    padding: 20px;
+    padding: 16px;
     background-color: rgba(76, 175, 80, 0.1);
     border-radius: $border-radius-sm;
     border: 1px solid rgba(76, 175, 80, 0.2);
 
     .notice-icon {
-      margin-right: 20px;
+      margin-right: 16px;
       color: var(--success-color);
 
       &.success {
@@ -1672,18 +1676,18 @@ export default {
   .action-buttons {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-top: 30px;
-    margin-bottom: 20px;
+    gap: 16px;
+    margin-top: 24px;
+    margin-bottom: 16px;
 
     .btn-group {
       display: flex;
-      gap: 15px;
+      gap: 16px;
       width: 100%;
 
       @media (max-width: #{$bp-xs}) {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
 
         .btn-back,
         .btn-pay,
@@ -1692,7 +1696,7 @@ export default {
           width: 100%;
           height: 48px;
           min-height: 48px;
-          padding: 10px 24px;
+          padding: 8px 24px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1709,7 +1713,7 @@ export default {
       }
 
       &.pay-row {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
 
       &.action-row {
@@ -1783,7 +1787,7 @@ export default {
       }
 
       &.full-width {
-        margin-top: 5px;
+        margin-top: 4px;
         max-width: 100%;
         justify-content: center;
       }
@@ -1839,7 +1843,7 @@ export default {
       height: 20px;
       background-color: rgba(0, 0, 0, 0.05);
       border-radius: 4px;
-      margin-bottom: 15px;
+      margin-bottom: 16px;
       position: relative;
       overflow: hidden;
 
@@ -1905,7 +1909,7 @@ export default {
     .success-animation {
       text-align: center;
       color: var(--text-on-dark-primary);
-      padding: 30px;
+      padding: 24px;
       max-width: 500px;
       z-index: 1001;
 
@@ -2063,25 +2067,25 @@ export default {
     }
 
     .right-column {
-      margin-bottom: 60px;
+      margin-bottom: 64px;
       max-width: none;
     }
   }
 
   @media (max-width: #{$bp-md}) {
-    padding-bottom: 100px;
+    padding-bottom: 64px;
   }
   @media (max-width: #{$bp-xs}) {
-    padding-bottom: 120px;
+    padding-bottom: 64px;
 
     .right-column {
-      margin-bottom: 90px;
+      margin-bottom: 64px;
     }
 
     .action-buttons {
       .btn-group {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
 
         .main-action,
         .secondary-action {
@@ -2115,7 +2119,7 @@ export default {
       position: relative;
       width: 100%;
       max-width: 400px;
-      margin: 20px;
+      margin: 16px;
       will-change: transform, opacity;
     }
 
@@ -2158,13 +2162,13 @@ export default {
       }
 
       .modal-header {
-        padding: 28px 24px 20px;
+        padding: 24px 24px 16px;
         text-align: center;
 
         .icon-wrapper {
           width: 64px;
           height: 64px;
-          margin: 0 auto 20px;
+          margin: 0 auto 16px;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -2193,7 +2197,7 @@ export default {
         h3 {
           font-size: $font-size-xl;
           font-weight: $font-weight-semibold;
-          margin: 0 0 12px;
+          margin: 0 0 8px;
           color: var(--text-primary);
         }
 
@@ -2211,7 +2215,7 @@ export default {
           width: 100%;
           display: flex;
           justify-content: center;
-          margin: 10px 0 20px;
+          margin: 8px 0 16px;
 
           canvas,
           svg {
@@ -2224,7 +2228,7 @@ export default {
           margin-top: 16px;
 
           .btn-link {
-            padding: 10px 16px;
+            padding: 8px 16px;
             background-color: transparent;
             border: 1px solid var(--border-color);
             border-radius: $border-radius-sm;
@@ -2245,7 +2249,7 @@ export default {
       }
 
       .modal-footer {
-        padding: 16px 24px 28px;
+        padding: 16px 24px 24px;
         display: flex;
         gap: 16px;
 
@@ -2416,7 +2420,7 @@ export default {
     h3 {
       font-size: $font-size-xl;
       font-weight: $font-weight-semibold;
-      margin: 0 0 12px;
+      margin: 0 0 8px;
       color: var(--text-primary);
     }
 
@@ -2430,12 +2434,12 @@ export default {
 
   .cancel-modal-actions {
     display: flex;
-    padding: 0 16px 20px;
-    gap: 12px;
+    padding: 0 16px 16px;
+    gap: 8px;
 
     button {
       flex: 1;
-      padding: 10px 0;
+      padding: 8px 0;
       border-radius: $border-radius-sm;
       font-size: $font-size-md;
       font-weight: $font-weight-medium;
@@ -2501,9 +2505,9 @@ export default {
 .inline-status-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 4px 8px;
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
   border: 1px solid transparent;

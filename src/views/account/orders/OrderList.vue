@@ -362,7 +362,7 @@ watch(locale, () => {
   
   @media (min-width: #{$bp-md}) {
     padding: 0;
-    padding-bottom: 2px; 
+    padding-bottom: 0; 
   }
 }
 
@@ -387,13 +387,13 @@ watch(locale, () => {
 .orders-filter-bar {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .filter-switch {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 8px;
   @extend %typo-body-text;
 
   .switch-input {
@@ -438,7 +438,7 @@ watch(locale, () => {
 }
 
 .orders-empty-inline {
-  padding: 18px 14px;
+  padding: 16px 16px;
   color: var(--text-tertiary);
   text-align: center;
 }
@@ -454,7 +454,7 @@ watch(locale, () => {
   
   th, td {
     border-bottom: 1px solid var(--border-color);
-    padding: 8px 6px;
+    padding: 8px 4px;
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
@@ -482,7 +482,7 @@ watch(locale, () => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.24rem 0.56rem;
+    padding: 4px 8px;
     border-radius: 999px; 
     font-size: $font-size-xs;
     font-weight: $font-weight-medium;
@@ -520,15 +520,15 @@ watch(locale, () => {
   
   .actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 8px;
     flex-wrap: wrap;
     
     .action-button {
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: 4px;
       justify-content: center;
-      padding: 0.3rem 0.48rem;
+      padding: 4px 8px;
       height: 30px;
       min-width: 56px;
       flex: 0 0 56px;
@@ -572,16 +572,16 @@ watch(locale, () => {
 @media (max-width: #{$bp-md}) {
   .order-table {
     th, td {
-      padding: 8px 6px;
+      padding: 8px 4px;
     }
 
     .actions {
-      gap: 0.25rem;
+      gap: 4px;
 
       .action-button {
         min-width: 48px;
         height: 28px;
-        padding: 0 6px;
+        padding: 0 4px;
         flex: 0 0 auto;
       }
 
@@ -591,7 +591,7 @@ watch(locale, () => {
     }
 
     .status-badge {
-      padding: 0.16rem 0.24rem;
+      padding: 4px 4px;
       line-height: 1.05;
     }
   }
@@ -605,11 +605,11 @@ watch(locale, () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 1rem;
+  padding: 48px 16px;
   text-align: center;
   
   p {
-    margin-top: 1rem;
+    margin-top: 16px;
     color: rgba(var(--theme-color-rgb), 0.68);
     font-size: $font-size-lg;
   }
@@ -623,7 +623,7 @@ watch(locale, () => {
 
 .retry-button,
 .shop-button {
-  margin-top: 1.5rem;
+  margin-top: 24px;
   height: 40px;
   min-width: 120px;
   padding: 0 16px;
@@ -705,7 +705,7 @@ watch(locale, () => {
 }
 
 .modal-header {
-  padding: 1rem 1.25rem;
+  padding: 16px 16px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
@@ -723,7 +723,7 @@ watch(locale, () => {
     border: none;
     color: rgba(var(--theme-color-rgb), 0.68);
     cursor: pointer;
-    padding: 0.25rem;
+    padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -738,23 +738,23 @@ watch(locale, () => {
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 24px;
   
   p {
-    margin: 0 0 1.5rem;
+    margin: 0 0 24px;
     color: var(--text-primary);
   }
 }
 
 .modal-footer {
-  padding: 1rem 1.5rem;
+  padding: 16px 24px;
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
+  gap: 16px;
   
   button {
-    padding: 0.6rem 1.25rem;
+    padding: 8px 16px;
     border-radius: 8px;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
@@ -777,7 +777,7 @@ watch(locale, () => {
       color: var(--text-on-dark-primary);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 8px;
       
       &:hover {
         background-color: rgba(var(--theme-color-rgb), 0.98);
