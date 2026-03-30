@@ -68,7 +68,25 @@ export default {
     const isDropdownOpen = ref(false);
     const avatarContainer = ref(null);
     const avatarInitial = computed(() => {
-      const rawUsername = (props.username || '').trim();
+      const propUsername = (props.username || '').trim();
+      let fallbackUsername = '';
+
+      if (!propUsername) {
+        try {
+          const localUserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+          fallbackUsername = (
+            localUserInfo.email
+            || localUserInfo.username
+            || localUserInfo.name
+            || localUserInfo.user_email
+            || ''
+          ).trim();
+        } catch (error) {
+          fallbackUsername = '';
+        }
+      }
+
+      const rawUsername = propUsername || fallbackUsername;
       if (!rawUsername) return 'U';
 
       const localPart = rawUsername.includes('@')
@@ -174,12 +192,14 @@ export default {
     justify-content: center;
     width: 100%;
     height: 100%;
+    border-radius: inherit;
+    background: rgba(var(--theme-color-rgb), 0.95);
 
     .avatar-letter {
       font-size: $font-size-md;
       font-weight: $font-weight-semibold;
       line-height: 1;
-      color: rgba(var(--theme-color-rgb), 0.9);
+      color: var(--text-on-dark-primary);
       user-select: none;
     }
   }
