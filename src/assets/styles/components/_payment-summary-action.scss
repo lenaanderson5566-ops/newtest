@@ -1,7 +1,7 @@
 @use "@/assets/styles/base/variables.scss" as *;
 
 @mixin styles {
-  .order-summary .summary-submit-action {
+  .summary-submit-action {
     width: 100%;
     margin-top: 8px;
     height: 40px;
