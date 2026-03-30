@@ -1433,7 +1433,7 @@ $space-2: map.get($spacers, 2);
 
   @media (min-width: #{$bp-md-up}) {
     &.is-no-plan {
-      min-height: calc(100vh - var(--app-top-bar-height, 56px) - var(--page-content-top-gap, 8px));
+      height: calc(100vh - var(--app-top-bar-height, 56px) - var(--page-content-top-gap, 8px));
       overflow-y: hidden;
     }
   }
