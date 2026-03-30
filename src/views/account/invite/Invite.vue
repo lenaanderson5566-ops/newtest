@@ -211,12 +211,12 @@
               </header>
               <template v-if="inviteCodes.length > 0">
                 <div class="invite-codes-wrapper">
-                  <div class="invite-cards-container">
-                    <div class="invite-cards-nav prev" @click="prevInviteCode" v-if="inviteCodes.length > 1">
+                  <div class="invite-cards-container" :class="{ 'single-card': !hasMultipleInviteCodes }">
+                    <div class="invite-cards-nav prev" @click="prevInviteCode" v-if="hasMultipleInviteCodes">
                       <IconChevronLeft />
                     </div>
                     <div class="invite-cards-wrapper">
-                      <div class="invite-cards" :style="{ transform: `translateX(-${selectedCodeIndex * 100}%)` }">
+                      <div class="invite-cards" :style="{ transform: `translateX(-${carouselTranslateX}%)` }">
                         <div
                           v-for="(code, index) in inviteCodes"
                           :key="code.id || 'invite-code-' + index"
@@ -243,12 +243,12 @@
                         </div>
                       </div>
                     </div>
-                    <div class="invite-cards-nav next" @click="nextInviteCode" v-if="inviteCodes.length > 1">
+                    <div class="invite-cards-nav next" @click="nextInviteCode" v-if="hasMultipleInviteCodes">
                       <IconChevronRight />
                     </div>
                   </div>
 
-                  <div class="invite-cards-indicators" v-if="inviteCodes.length > 1">
+                  <div class="invite-cards-indicators" v-if="hasMultipleInviteCodes">
                     <span
                       v-for="(code, index) in inviteCodes"
                       :key="code.id"
@@ -552,6 +552,13 @@ export default {
     
     const inviteCodes = ref([]);
     const selectedCodeIndex = ref(0);
+    const hasMultipleInviteCodes = computed(() => inviteCodes.value.length > 1);
+    const carouselTranslateX = computed(() => {
+      if (inviteCodes.value.length <= 1) {
+        return 0;
+      }
+      return selectedCodeIndex.value * 100;
+    });
     
     const inviteStats = reactive({
       registeredUsers: 0,
@@ -1072,6 +1079,11 @@ export default {
         const res = await getInviteData();
         if (res.data) {
           inviteCodes.value = res.data.codes || [];
+          if (inviteCodes.value.length === 0) {
+            selectedCodeIndex.value = 0;
+          } else if (selectedCodeIndex.value >= inviteCodes.value.length) {
+            selectedCodeIndex.value = inviteCodes.value.length - 1;
+          }
           if (res.data.stat) {
             inviteStats.registeredUsers = res.data.stat[0] || 0;
             inviteStats.validCommission = ((res.data.stat[1] || 0) / 100).toFixed(2); 
@@ -1444,6 +1456,8 @@ export default {
       creatingCode,
       inviteCodes,
       selectedCodeIndex,
+      hasMultipleInviteCodes,
+      carouselTranslateX,
       inviteStats,
       inviteRecords,
       inviteLink,
@@ -1637,6 +1651,10 @@ export default {
   align-items: center;
   gap: 12px;
   min-width: 0;
+
+  &.single-card {
+    grid-template-columns: 1fr;
+  }
 }
 
 .invite-cards-nav {
