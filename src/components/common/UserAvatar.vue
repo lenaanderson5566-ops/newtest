@@ -134,9 +134,9 @@ export default {
 }
 
 .avatar-wrapper {
-  width: 36px;
-  height: 36px;
-  border-radius: $border-radius-sm;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
   cursor: pointer;
   overflow: hidden;
   background: transparent;
