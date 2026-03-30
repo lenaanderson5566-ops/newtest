@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-container page-shell">
+  <div ref="dashboardContainerRef" class="dashboard-container page-shell">
     <div class="dashboard-inner page-inner page-stack">
       <div class="overview-grid">
       <!-- 通知区域 -->
@@ -400,6 +400,7 @@ export default {
     const {t, locale} = useI18n();
     const router = useRouter();
     const { showToast } = useToast();
+    const dashboardContainerRef = ref(null);
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
     const userStats = reactive({
@@ -1247,7 +1248,22 @@ export default {
     });
 
     onUnmounted(() => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', syncNoPlanScrollLock);
+        window.removeEventListener('orientationchange', syncNoPlanScrollLock);
+        document.body.classList.remove(NO_PLAN_SCROLL_LOCK_CLASS);
+      }
       cleanupResources(timers, listeners);
+    });
+
+    onMounted(() => {
+      if (typeof window !== 'undefined') {
+        window.addEventListener('resize', syncNoPlanScrollLock);
+        window.addEventListener('orientationchange', syncNoPlanScrollLock);
+        nextTick(() => {
+          syncNoPlanScrollLock();
+        });
+      }
     });
 
     const needRefreshData = ref(false);
@@ -1302,6 +1318,42 @@ export default {
       return `${baseDelay + trafficBoardSections.value.length * step}s`;
     });
 
+    const NO_PLAN_SCROLL_LOCK_CLASS = 'dashboard-no-plan-scroll-lock';
+
+    const syncNoPlanScrollLock = () => {
+      if (typeof window === 'undefined') return;
+
+      const body = document.body;
+      const container = dashboardContainerRef.value;
+      if (!body || !container) return;
+
+      const shouldHandle = window.innerWidth <= 991 && !hasPlan.value && !loading.userStats;
+      if (!shouldHandle) {
+        body.classList.remove(NO_PLAN_SCROLL_LOCK_CLASS);
+        return;
+      }
+
+      const rootStyles = getComputedStyle(document.documentElement);
+      const appTop = parseFloat(rootStyles.getPropertyValue('--app-top-bar-height')) || 56;
+      const topGap = parseFloat(rootStyles.getPropertyValue('--page-content-top-gap')) || 8;
+      const bottomSpace = parseFloat(rootStyles.getPropertyValue('--mobile-bottom-nav-space')) || 86;
+      const availableHeight = window.innerHeight - appTop - topGap;
+      const contentHeight = container.scrollHeight + bottomSpace;
+      const shouldLock = contentHeight <= availableHeight + 1;
+
+      body.classList.toggle(NO_PLAN_SCROLL_LOCK_CLASS, shouldLock);
+    };
+
+    watch(
+      () => [hasPlan.value, loading.userStats, hasPendingItems.value],
+      () => {
+        nextTick(() => {
+          syncNoPlanScrollLock();
+        });
+      },
+      { immediate: true }
+    );
+
     return {
       userStats,
       userBalance,
@@ -1349,6 +1401,7 @@ export default {
       trafficTrendError,
       todayTrafficStats,
       todayTrafficAnimationDelay,
+      dashboardContainerRef,
       allowNewPeriod,
       showTrafficPackageModal,
       trafficPackageLoading,
@@ -2621,6 +2674,11 @@ button.no-plan-step {
 @use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 @use '@/assets/styles/no-plan-card' as *;
+
+:global(body.dashboard-no-plan-scroll-lock) {
+  overflow-y: hidden;
+  overscroll-behavior-y: none;
+}
 
 $space-2: map.get($spacers, 2);
 
