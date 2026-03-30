@@ -1,14 +1,11 @@
 ﻿<template>
   <div class="user-avatar-container" ref="avatarContainer">
     <div class="avatar-wrapper" :class="{ 'is-active': isDropdownOpen }" @click="toggleDropdown">
-      <img 
-        v-if="avatarUrl" 
-        :src="avatarUrl" 
-        alt="User Avatar" 
-        class="avatar-image"
-      />
+      <div v-if="loading" class="avatar-loading" aria-label="loading">
+        <span class="loading-spinner"></span>
+      </div>
       <div v-else class="avatar-placeholder">
-        <IconUserCircle class="user-icon" />
+        <span class="avatar-letter">{{ avatarInitial }}</span>
       </div>
     </div>
     
@@ -36,38 +33,47 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
-import { IconUserCircle, IconMessageCircle } from '@tabler/icons-vue';
+import { IconMessageCircle } from '@tabler/icons-vue';
 import IconUser from '@/components/icons/IconUser.vue';
 import IconLogout from '@/components/icons/IconLogout.vue';
 
 export default {
   name: 'UserAvatar',
   components: {
-    IconUserCircle,
     IconMessageCircle,
     IconUser,
     IconLogout
   },
   props: {
-    username: {
+    email: {
       type: String,
       default: ''
     },
-    avatarUrl: {
-      type: String,
-      default: ''
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
-  setup() {
+  setup(props) {
     const router = useRouter();
     const { t } = useI18n();
     const { showToast } = useToast();
     const isDropdownOpen = ref(false);
     const avatarContainer = ref(null);
+    const avatarInitial = computed(() => {
+      const rawEmail = (props.email || '').trim();
+      if (!rawEmail) return 'U';
+
+      const localPart = rawEmail.split('@')[0] || rawEmail;
+      const fallbackTarget = localPart || rawEmail;
+      const firstChar = [...fallbackTarget][0] || 'U';
+
+      return firstChar.toUpperCase();
+    });
     
     const toggleDropdown = () => {
       isDropdownOpen.value = !isDropdownOpen.value;
@@ -107,13 +113,14 @@ export default {
     onUnmounted(() => {
       document.removeEventListener('click', handleClickOutside);
     });
-    
+
     return {
       isDropdownOpen,
       toggleDropdown,
       navigateTo,
       logout,
-      avatarContainer
+      avatarContainer,
+      avatarInitial
     };
   }
 };
@@ -127,9 +134,9 @@ export default {
 }
 
 .avatar-wrapper {
-  width: 36px;
-  height: 36px;
-  border-radius: $border-radius-sm;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
   cursor: pointer;
   overflow: hidden;
   background: transparent;
@@ -149,25 +156,50 @@ export default {
     background: #f5f7fa;
   }
 
-  .avatar-image {
-    width: 100%;
-    height: 100%;
-    border-radius: $border-radius-sm;
-    object-fit: cover;
-  }
-  
   .avatar-placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
-    
-    .user-icon {
-      width: 20px;
-      height: 20px;
-      color: rgba(var(--theme-color-rgb), 0.9);
+    border-radius: inherit;
+    background: rgba(var(--theme-color-rgb), 0.95);
+
+    .avatar-letter {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      line-height: 1;
+      color: var(--text-on-dark-primary);
+      user-select: none;
     }
+  }
+
+  .avatar-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: rgba(var(--theme-color-rgb), 0.12);
+
+    .loading-spinner {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid rgba(var(--theme-color-rgb), 0.25);
+      border-top-color: rgba(var(--theme-color-rgb), 0.95);
+      animation: avatar-spin 0.8s linear infinite;
+    }
+  }
+}
+
+@keyframes avatar-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 

@@ -11,7 +11,7 @@
 
         <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
         <div class="top-toolbar">
-        <ServiceNoticeButton :has-unread="hasUnreadNotice" aria-label="查看公告通知" />
+        <ServiceNoticeButton :has-unread="hasUnreadNotice" :aria-label="$t('menu.announcement')" />
         <LanguageSelector />
         <button
           v-if="PROFILE_CONFIG.showGiftCardRedeem"
@@ -20,7 +20,7 @@
         >
           <IconGift :size="18" />
         </button>
-        <UserAvatar :username="username" :avatarUrl="avatarUrl" />
+        <UserAvatar :email="email" :loading="isUserInfoLoading" />
         </div>
       </div>
 
@@ -84,6 +84,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { SITE_CONFIG, PROFILE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
 import { checkUserLoginStatus } from '@/api/auth';
+import { getUserInfo as getAccountUserInfo } from '@/api/account/user';
 import { getUnreadNoticeCount } from '@/api/account/notice';
 import { handleRedirectPath } from '@/utils/redirectHandler';
 import Toast from '@/components/common/Toast.vue';
@@ -151,8 +152,8 @@ export default {
       handleRedirectParam();
     });
 
-    const username = computed(() => store.username);
-    const avatarUrl = computed(() => store.avatarUrl || '');
+    const email = computed(() => store.userInfo?.email || '');
+    const isUserInfoLoading = ref(false);
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
 
@@ -184,6 +185,24 @@ export default {
       }
     };
 
+    const loadCurrentUserInfo = async () => {
+      if (!route.meta.requiresAuth) return;
+      isUserInfoLoading.value = true;
+      try {
+        const response = await getAccountUserInfo();
+        const userData = response?.data?.email
+          ? response.data
+          : response?.data?.data;
+        if (userData && typeof userData === 'object') {
+          store.setUser(userData);
+        }
+      } catch (error) {
+        console.error('加载用户信息失败:', error);
+      } finally {
+        isUserInfoLoading.value = false;
+      }
+    };
+
     const languageChangedSignal = ref(0);
 
     const onLanguageChanged = () => {
@@ -201,6 +220,7 @@ export default {
       if (!document.hidden) {
         checkAuthAndReloadMessages();
         loadUnreadNoticeCount();
+        loadCurrentUserInfo();
 
         checkUserLoginStatus().then(result => {
           if (result.isLoggedIn === false && result.message) {
@@ -247,6 +267,7 @@ export default {
 
       checkAuthAndReloadMessages();
       loadUnreadNoticeCount();
+      loadCurrentUserInfo();
 
       document.addEventListener('visibilitychange', handleVisibilityChange);
 
@@ -296,8 +317,8 @@ export default {
     );
 
     return {
-      username,
-      avatarUrl,
+      email,
+      isUserInfoLoading,
       siteConfig,
       PROFILE_CONFIG,
       cachedRoutes,

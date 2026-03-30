@@ -318,7 +318,6 @@ export default {
         orders: 'Orders',
         lines: 'Lines',
         wallet: 'Wallet',
-        billing: 'Billing',
         traffic: 'Traffic',
         profile: 'Profile',
         more: 'More',
@@ -678,6 +677,7 @@ profile: {
         description: 'Choose the subscription service that suits you',
         loading: 'Loading subscriptions...',
         billingPeriodAria: 'Billing period switcher',
+        maxSavingsTip: 'Save up to {percent}%',
         filter: {
             all: 'All',
             recurring: 'Recurring',
@@ -930,7 +930,7 @@ profile: {
         },
         inviteLink: {
             title: 'Invite Link',
-            createCode: 'Create Invite Code',
+            createCode: 'Create Invite Link',
             creating: 'Generating...',
             inviteCode: 'Invite Code',
             registeredCount: 'Registered',
@@ -939,8 +939,8 @@ profile: {
             placeholder: 'Generated invite link will appear here',
             copyLink: 'Copy Link',
             copied: 'Copied',
-            noInviteCode: 'No invite code available',
-            created: 'Invite code generated successfully, share with friends'
+            noInviteCode: 'No invite link available',
+            created: 'Invite link created successfully, share with friends'
         },
         share: {
             wechat: 'WeChat',
@@ -965,7 +965,7 @@ profile: {
             registerTime: 'Registration Time',
             amount: 'Spending Amount',
             userPlaceholder: 'User',
-            noRecords: 'You have no invite records, generate an invite code and share with friends!',
+            noRecords: 'You have no invite records, create an invite link and share with friends!',
             refresh: 'Refresh',
             refreshing: 'Refreshing...',
             refreshingData: 'Refreshing data...',
@@ -990,6 +990,12 @@ profile: {
     quickStartPage: {
         step1Title: 'Choose System',
         step1Tip: 'Choose the operating system of your current device',
+        platform: {
+            windows: 'Windows',
+            macos: 'macOS',
+            android: 'Android',
+            ios: 'iOS'
+        },
         step2Title: 'Download & Import',
         step2Tip: 'Download a recommended client and import your subscription',
         recommended: 'Recommended',

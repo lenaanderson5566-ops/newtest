@@ -49,9 +49,9 @@
                 :src="resolveClientIcon(client.icon)"
                 :alt="client.name"
                 class="client-icon-large"
-                :class="{ grayscale: !client.recommended }"
+                :class="{ grayscale: selectedClient?.name !== client.name }"
               />
-              <IconApps v-else :size="20" class="fallback-icon-large" :class="{ grayscale: !client.recommended }" />
+              <IconApps v-else :size="20" class="fallback-icon-large" :class="{ grayscale: selectedClient?.name !== client.name }" />
               <div class="client-text">
                 <span class="client-name">{{ client.name }}</span>
                 <small v-if="client.recommended" class="recommend-inline">{{ $t('quickStartPage.recommended') }}</small>
@@ -178,10 +178,10 @@ const selectedPlatform = ref('windows');
 const selectedClientName = ref('');
 
 const quickStartPlatforms = computed(() => [
-  { id: 'windows', label: 'Windows', icon: IconBrandWindows, visible: clientConfig.showWindows },
-  { id: 'macos', label: 'macOS', icon: IconBrandFinder, visible: clientConfig.showMacOS },
-  { id: 'android', label: 'Android', icon: IconBrandAndroid, visible: clientConfig.showAndroid },
-  { id: 'ios', label: 'iOS', icon: IconBrandApple, visible: clientConfig.showIOS }
+  { id: 'windows', label: t('quickStartPage.platform.windows'), icon: IconBrandWindows, visible: clientConfig.showWindows },
+  { id: 'macos', label: t('quickStartPage.platform.macos'), icon: IconBrandFinder, visible: clientConfig.showMacOS },
+  { id: 'android', label: t('quickStartPage.platform.android'), icon: IconBrandAndroid, visible: clientConfig.showAndroid },
+  { id: 'ios', label: t('quickStartPage.platform.ios'), icon: IconBrandApple, visible: clientConfig.showIOS }
 ].filter((item) => item.visible));
 
 const clientIconMap = Object.freeze({
@@ -515,6 +515,29 @@ onMounted(fetchUserStatus);
     top: 10px;
     right: 10px;
     color: var(--theme-color);
+  }
+}
+
+@media (max-width: #{$bp-md}) {
+  .system-item {
+    padding: map.get($spacers, 2) 34px map.get($spacers, 2) map.get($spacers, 2);
+    min-height: 62px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+
+    :deep(svg) {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+    }
+
+    strong {
+      flex: 1;
+      min-width: 0;
+    }
   }
 }
 

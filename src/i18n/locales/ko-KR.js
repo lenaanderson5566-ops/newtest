@@ -200,6 +200,9 @@ export default {
     packageUsageNote: '구독 트래픽을 모두 사용하면 트래픽 패키지 할당량이 자동으로 사용됩니다.',
     memberTier: '회원 등급',
     tierPointsProgress: '성장 포인트 {points} / {total}',
+    tierCurrentPoints: 'Current points: {points}',
+    tierNextLevel: 'Next tier: {tier}',
+    tierNeedPoints: 'Points needed: {points}',
     nextTierHint: '{tier} 등급까지 {points} 성장 포인트 필요',
     resetHint: '리셋일: {day}',
     resetTimeLabel: '리셋 시간',
@@ -302,6 +305,7 @@ export default {
   menu: {
     dashboard: '대시보드',
     overview: '개요',
+    announcement: 'Announcement',
     region: '지역',
     usage: '사용',
     start: '지원 및 도움말',
@@ -318,7 +322,6 @@ export default {
     lines: '노드',
     traffic: '트래픽',
     wallet: '지갑',
-    billing: '청구서',
     profile: '프로필',
     more: '더 보기',
     commission: '커미션',
@@ -386,6 +389,7 @@ export default {
     createdAt: '생성 시간',
     cycle: '주기',
     totalAmount: '금액',
+    pricingCurrency: 'Currency',
     statusLabel: '상태',
     actions: '작업',
     viewDetail: '자세히 보기',
@@ -510,6 +514,8 @@ export default {
         accessPrivacy: '접근 및 개인정보 보호',
         changeSubscription: '구독 변경',
         billRecords: '청구 내역',
+        passwordManagement: 'Password Management',
+        passwordManagementDesc: 'Change login password to improve account security',
         redeemGiftCard: '기프트카드 교환',
         changePassword: '비밀번호 변경',
         giftCardRuleTitle: '교환 규칙',
@@ -582,6 +588,10 @@ profile: {
     trafficRemindDesc: '트래픽 소진 알림 이메일 수신',
     autoRenewalDesc: '만료 시 구독 자동 갱신',
     security: '보안 설정',
+    securityCenter: 'Security Center',
+    securityCenterSubtitle: 'Manage account security and config management',
+    configManagement: 'Config Management',
+    configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     changePassword: '비밀번호 변경',
     changePasswordTitle: '계정 비밀번호 변경',
     oldPassword: '현재 비밀번호',
@@ -673,6 +683,7 @@ profile: {
     description: '사용 가능한 플랜을 확인하고 구매하세요',
     loading: '구독 로딩 중...',
     billingPeriodAria: '청구 주기 전환',
+    maxSavingsTip: '최대 {percent}% 절약',
     filter: {
       all: '전체',
       recurring: '주기적',
@@ -925,7 +936,7 @@ profile: {
     },
     inviteLink: {
       title: '초대 링크',
-      createCode: '초대 코드 생성',
+      createCode: '초대 링크 생성',
       creating: '생성 중...',
       inviteCode: '초대 코드',
       registeredCount: '등록됨',
@@ -934,8 +945,8 @@ profile: {
       placeholder: '생성된 초대 링크가 여기에 표시됩니다',
       copyLink: '링크 복사',
       copied: '복사됨',
-      noInviteCode: '사용 가능한 초대 코드 없음',
-      created: '초대 코드 생성 성공, 친구와 공유하세요'
+      noInviteCode: '사용 가능한 초대 링크 없음',
+      created: '초대 링크 생성 성공, 친구와 공유하세요'
     },
     share: {
       wechat: 'WeChat',
@@ -960,7 +971,7 @@ profile: {
       registerTime: '등록 시간',
       amount: '소비 금액',
       userPlaceholder: '사용자',
-      noRecords: '초대 기록이 없습니다. 초대 코드를 생성하여 친구와 공유하세요!',
+      noRecords: '초대 기록이 없습니다. 초대 링크를 생성하여 친구와 공유하세요!',
       refresh: '새로고침',
       refreshing: '새로고침 중...',
       refreshingData: '데이터 새로고침 중...',
@@ -985,6 +996,12 @@ profile: {
   quickStartPage: {
     step1Title: '시스템 선택',
     step1Tip: '현재 사용 중인 기기 운영체제를 선택하세요',
+    platform: {
+      windows: 'Windows',
+      macos: 'macOS',
+      android: 'Android',
+      ios: 'iOS'
+    },
     step2Title: '다운로드 및 가져오기',
     step2Tip: '추천 클라이언트를 다운로드하고 구독을 가져오세요',
     recommended: '추천',

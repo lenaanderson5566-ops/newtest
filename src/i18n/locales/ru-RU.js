@@ -200,6 +200,9 @@ export default {
     packageUsageNote: 'Когда трафик подписки закончится, автоматически будет использована квота пакета трафика.',
     memberTier: 'Уровень участника',
     tierPointsProgress: 'Очки роста {points} / {total}',
+    tierCurrentPoints: 'Current points: {points}',
+    tierNextLevel: 'Next tier: {tier}',
+    tierNeedPoints: 'Points needed: {points}',
     nextTierHint: 'До уровня {tier} осталось {points} очков роста',
     resetHint: 'День сброса: {day}',
     resetTimeLabel: 'Время сброса',
@@ -302,6 +305,7 @@ export default {
   menu: {
     dashboard: 'Панель управления',
     overview: 'Обзор',
+    announcement: 'Announcement',
     region: 'Регион',
     usage: 'Использование',
     start: 'Помощь и поддержка',
@@ -318,7 +322,6 @@ export default {
     lines: 'Узлы',
     traffic: 'Трафик',
     wallet: 'Кошелек',
-    billing: 'Биллинг',
     profile: 'Профиль',
     more: 'Еще',
     commission: 'Комиссия',
@@ -386,6 +389,7 @@ export default {
     createdAt: 'Дата создания',
     cycle: 'Цикл',
     totalAmount: 'Сумма',
+    pricingCurrency: 'Currency',
     statusLabel: 'Статус',
     actions: 'Действия',
     viewDetail: 'Посмотреть детали',
@@ -509,6 +513,8 @@ export default {
         accessPrivacy: 'Доступ и конфиденциальность',
         changeSubscription: 'Изменить подписку',
         billRecords: 'История счетов',
+        passwordManagement: 'Password Management',
+        passwordManagementDesc: 'Change login password to improve account security',
         redeemGiftCard: 'Активировать подарочную карту',
         changePassword: 'Сменить пароль',
         giftCardRuleTitle: 'Правила активации',
@@ -581,6 +587,10 @@ profile: {
     trafficRemindDesc: 'Получать письма об исчерпании трафика',
     autoRenewalDesc: 'Автоматически продлевать подписка при истечении',
     security: 'Настройки безопасности',
+    securityCenter: 'Security Center',
+    securityCenterSubtitle: 'Manage account security and config management',
+    configManagement: 'Config Management',
+    configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     changePassword: 'Изменить пароль',
     changePasswordTitle: 'Изменить пароль аккаунта',
     oldPassword: 'Текущий пароль',
@@ -672,6 +682,7 @@ profile: {
     description: 'Просмотрите и купите доступные планы',
     loading: 'Загрузка подписок...',
     billingPeriodAria: 'Переключение расчётного периода',
+    maxSavingsTip: 'Экономия до {percent}%',
     filter: {
       all: 'Все',
       recurring: 'Периодические',
@@ -924,7 +935,7 @@ profile: {
     },
     inviteLink: {
       title: 'Ссылка приглашения',
-      createCode: 'Создать код приглашения',
+      createCode: 'Создать ссылку-приглашение',
       creating: 'Генерация...',
       inviteCode: 'Код приглашения',
       registeredCount: 'Зарегистрировано',
@@ -933,8 +944,8 @@ profile: {
       placeholder: 'Сгенерированная ссылка появится здесь',
       copyLink: 'Копировать ссылку',
       copied: 'Скопировано',
-      noInviteCode: 'Нет доступного кода приглашения',
-      created: 'Код приглашения создан, поделитесь с друзьями'
+      noInviteCode: 'Нет доступной ссылки-приглашения',
+      created: 'Ссылка-приглашение создана, поделитесь с друзьями'
     },
     share: {
       wechat: 'WeChat',
@@ -959,7 +970,7 @@ profile: {
       registerTime: 'Время регистрации',
       amount: 'Сумма расходов',
       userPlaceholder: 'Пользователь',
-      noRecords: 'У вас нет записей, создайте код приглашения и поделитесь!',
+      noRecords: 'У вас нет записей, создайте ссылку-приглашение и поделитесь!',
       refresh: 'Обновить',
       refreshing: 'Обновление...',
       refreshingData: 'Обновление данных...',
@@ -984,6 +995,12 @@ profile: {
   quickStartPage: {
     step1Title: 'Выбор системы',
     step1Tip: 'Выберите ОС устройства, которое вы используете',
+    platform: {
+      windows: 'Windows',
+      macos: 'macOS',
+      android: 'Android',
+      ios: 'iOS'
+    },
     step2Title: 'Скачать и импортировать',
     step2Tip: 'Скачайте рекомендуемый клиент и импортируйте подписку',
     recommended: 'Рекомендуется',

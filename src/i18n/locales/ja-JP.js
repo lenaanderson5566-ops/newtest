@@ -200,6 +200,9 @@ export default {
     packageUsageNote: 'サブスクリプションの通信量を使い切ると、トラフィックパッケージ容量が自動で使用されます。',
     memberTier: '会員ランク',
     tierPointsProgress: '成長値 {points} / {total}',
+    tierCurrentPoints: 'Current points: {points}',
+    tierNextLevel: 'Next tier: {tier}',
+    tierNeedPoints: 'Points needed: {points}',
     nextTierHint: '{tier} まであと {points} 成長値',
     resetHint: 'リセット日: {day}',
     resetTimeLabel: 'リセット時刻',
@@ -302,6 +305,7 @@ export default {
   menu: {
     dashboard: 'ダッシュボード',
     overview: '概要',
+    announcement: 'Announcement',
     region: 'エリア',
     usage: '利用',
     start: 'ヘルプとサポート',
@@ -318,7 +322,6 @@ export default {
     lines: 'ノード',
     traffic: 'トラフィック',
     wallet: 'ウォレット',
-    billing: '請求書',
     profile: 'プロフィール',
     more: 'もっと見る',
     commission: 'リベート',
@@ -386,6 +389,7 @@ export default {
     createdAt: '作成日',
     cycle: '周期',
     totalAmount: '金額',
+    pricingCurrency: 'Currency',
     statusLabel: '状態',
     actions: '操作',
     viewDetail: '詳細を見る',
@@ -509,6 +513,8 @@ export default {
         accessPrivacy: 'アクセスとプライバシー',
         changeSubscription: 'サブスクリプション変更',
         billRecords: '請求履歴',
+        passwordManagement: 'Password Management',
+        passwordManagementDesc: 'Change login password to improve account security',
         redeemGiftCard: 'ギフトカード交換',
         changePassword: 'パスワード変更',
         giftCardRuleTitle: '交換ルール',
@@ -581,6 +587,10 @@ profile: {
     trafficRemindDesc: '流量使い切りのリマインダーメールを受信',
     autoRenewalDesc: '有効期限切れ時に自動的にサブスクリプションを更新',
     security: 'セキュリティ設定',
+    securityCenter: 'Security Center',
+    securityCenterSubtitle: 'Manage account security and config management',
+    configManagement: 'Config Management',
+    configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     changePassword: 'パスワード変更',
     changePasswordTitle: 'アカウントパスワード変更',
     oldPassword: '現在のパスワード',
@@ -672,6 +682,7 @@ profile: {
     description: '利用可能なプランを表示・購入',
     loading: 'サブスクリプション読み込み中...',
     billingPeriodAria: '請求周期の切り替え',
+    maxSavingsTip: '最大 {percent}% お得',
     filter: {
       all: 'すべて',
       recurring: '定期',
@@ -924,7 +935,7 @@ profile: {
     },
     inviteLink: {
       title: '招待リンク',
-      createCode: '招待コード作成',
+      createCode: '招待リンク作成',
       creating: '生成中...',
       inviteCode: '招待コード',
       registeredCount: '登録済み',
@@ -933,8 +944,8 @@ profile: {
       placeholder: '生成された招待リンクがここに表示されます',
       copyLink: 'リンクコピー',
       copied: 'コピー済み',
-      noInviteCode: '利用可能な招待コードなし',
-      created: '招待コード生成成功。友達と共有してください'
+      noInviteCode: '利用可能な招待リンクなし',
+      created: '招待リンク作成成功。友達と共有してください'
     },
     share: {
       wechat: 'WeChat',
@@ -959,7 +970,7 @@ profile: {
       registerTime: '登録時間',
       amount: '消費金額',
       userPlaceholder: 'ユーザー',
-      noRecords: '招待記録がありません。招待コードを生成して友達に共有してください！',
+      noRecords: '招待記録がありません。招待リンクを作成して友達に共有してください！',
       refresh: '更新',
       refreshing: '更新中...',
       refreshingData: 'データ更新中...',
@@ -984,6 +995,12 @@ profile: {
   quickStartPage: {
     step1Title: 'システムを選択',
     step1Tip: '現在使用しているデバイスのOSを選択してください',
+    platform: {
+      windows: 'Windows',
+      macos: 'macOS',
+      android: 'Android',
+      ios: 'iOS'
+    },
     step2Title: 'ダウンロードとインポート',
     step2Tip: '推奨クライアントをダウンロードしてサブスクリプションをインポートします',
     recommended: 'おすすめ',

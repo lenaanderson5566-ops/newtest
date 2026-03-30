@@ -200,6 +200,9 @@ export default {
     packageUsageNote: 'پس از اتمام ترافیک پلن، سهمیه بسته ترافیک به‌صورت خودکار استفاده می‌شود.',
     memberTier: 'سطح عضویت',
     tierPointsProgress: 'امتیاز رشد {points} / {total}',
+    tierCurrentPoints: 'Current points: {points}',
+    tierNextLevel: 'Next tier: {tier}',
+    tierNeedPoints: 'Points needed: {points}',
     nextTierHint: 'برای رسیدن به {tier} به {points} امتیاز رشد نیاز دارید',
     resetHint: 'روز ریست: {day}',
     resetTimeLabel: 'زمان ریست',
@@ -302,6 +305,7 @@ export default {
   menu: {
     dashboard: 'داشبورد',
     overview: 'نمای کلی',
+    announcement: 'Announcement',
     region: 'منطقه',
     usage: 'استفاده',
     start: 'راهنما و پشتیبانی',
@@ -318,7 +322,6 @@ export default {
     lines: 'نودها',
     traffic: 'ترافیک',
     wallet: 'کیف پول',
-    billing: 'صورتحساب',
     profile: 'پروفایل',
     more: 'بیشتر',
     commission: 'کمیسیون',
@@ -386,6 +389,7 @@ export default {
     createdAt: 'زمان ایجاد',
     cycle: 'دوره',
     totalAmount: 'مبلغ کل',
+    pricingCurrency: 'Currency',
     statusLabel: 'وضعیت',
     actions: 'عملیات',
     viewDetail: 'نمایش جزئیات',
@@ -509,6 +513,8 @@ export default {
         accessPrivacy: 'دسترسی و حریم خصوصی',
         changeSubscription: 'تغییر اشتراک',
         billRecords: 'سوابق صورتحساب',
+        passwordManagement: 'Password Management',
+        passwordManagementDesc: 'Change login password to improve account security',
         redeemGiftCard: 'استفاده از گیفت‌کارت',
         changePassword: 'تغییر رمز عبور',
         giftCardRuleTitle: 'قوانین استفاده',
@@ -581,6 +587,10 @@ profile: {
     trafficRemindDesc: 'دریافت ایمیل یادآوری ترافیک تمام شده',
     autoRenewalDesc: 'تمدید خودکار اشتراک هنگام انقضا',
     security: 'تنظیمات امنیت',
+    securityCenter: 'Security Center',
+    securityCenterSubtitle: 'Manage account security and config management',
+    configManagement: 'Config Management',
+    configManagementSubtitle: 'Manage configuration actions like reset subscription address',
     changePassword: 'تغییر پسورد',
     changePasswordTitle: 'تغییر پسورد حساب',
     oldPassword: 'پسورد فعلی',
@@ -672,6 +682,7 @@ profile: {
     description: 'بسته های موجود را ببینید و خریداری کنید',
     loading: 'در حال بارگذاری اشتراک ها...',
     billingPeriodAria: 'تغییر دوره صورتحساب',
+    maxSavingsTip: 'تا {percent}% صرفه‌جویی',
     filter: {
       all: 'همه',
       recurring: 'دوره ای',
@@ -924,7 +935,7 @@ profile: {
     },
     inviteLink: {
       title: 'لینک دعوت',
-      createCode: 'ایجاد کد دعوت',
+      createCode: 'ایجاد لینک دعوت',
       creating: 'در حال ایجاد...',
       inviteCode: 'کد دعوت',
       registeredCount: 'ثبت شده',
@@ -933,8 +944,8 @@ profile: {
       placeholder: 'لینک دعوت اینجا نمایش داده می شود',
       copyLink: 'کپی لینک',
       copied: 'کپی شد',
-      noInviteCode: 'کد دعوتی موجود نیست',
-      created: 'کد دعوت ایجاد شد، با دوستان اشتراک گذاری کنید'
+      noInviteCode: 'لینک دعوتی موجود نیست',
+      created: 'لینک دعوت ایجاد شد، با دوستان اشتراک گذاری کنید'
     },
     share: {
       wechat: 'WeChat',
@@ -959,7 +970,7 @@ profile: {
       registerTime: 'زمان ثبت نام',
       amount: 'مبلغ مصرف',
       userPlaceholder: 'کاربر',
-      noRecords: 'هنوز رکوردی ندارید، کد دعوت ایجاد کنید و با دوستان اشتراک گذاری کنید',
+      noRecords: 'هنوز رکوردی ندارید، لینک دعوت ایجاد کنید و با دوستان اشتراک گذاری کنید',
       refresh: 'تازه سازی',
       refreshing: 'در حال تازه سازی...',
       refreshingData: 'در حال تازه سازی داده ها...',
@@ -984,6 +995,12 @@ profile: {
   quickStartPage: {
     step1Title: 'انتخاب سیستم',
     step1Tip: 'سیستم‌عامل دستگاه فعلی خود را انتخاب کنید',
+    platform: {
+      windows: 'Windows',
+      macos: 'macOS',
+      android: 'Android',
+      ios: 'iOS'
+    },
     step2Title: 'دانلود و وارد کردن',
     step2Tip: 'کلاینت پیشنهادی را دانلود کرده و اشتراک را وارد کنید',
     recommended: 'پیشنهادی',

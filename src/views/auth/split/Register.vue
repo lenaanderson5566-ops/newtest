@@ -2293,6 +2293,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 .register-view-container {
 
   width: 100%;
@@ -2398,16 +2399,13 @@ export default {
 
 
   .site-name {
+    @extend %typo-page-title;
 
     position: absolute;
 
     top: 30px;
 
     left: 30px;
-
-    font-size: $font-size-2xl;
-
-    font-weight: $font-weight-bold;
 
     z-index: 2;
 
@@ -2618,14 +2616,9 @@ export default {
 
 
   .auth-title {
-
-    font-size: $font-size-2xl;
-
-    font-weight: $font-weight-bold;
+    @extend %typo-page-title;
 
     margin-bottom: 0.5rem;
-
-    color: var(--text-primary);
 
 
 
@@ -2734,15 +2727,9 @@ export default {
 
 
 .optional {
-
-  color: var(--text-quaternary);
+  @extend %typo-meta-text;
 
   margin-left: 4px;
-
-  font-size: $font-size-sm;
-
-  font-weight: $font-weight-normal;
-
   vertical-align: baseline;
 
 }

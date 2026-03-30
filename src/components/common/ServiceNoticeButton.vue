@@ -11,7 +11,9 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { IconBell } from '@tabler/icons-vue';
 
 const props = defineProps({
@@ -21,11 +23,13 @@ const props = defineProps({
   },
   ariaLabel: {
     type: String,
-    default: '查看公告'
+    default: ''
   }
 });
 
 const router = useRouter();
+const { t } = useI18n();
+const ariaLabel = computed(() => props.ariaLabel || t('menu.announcement'));
 
 const goToAnnouncements = () => {
   router.push('/announcements');

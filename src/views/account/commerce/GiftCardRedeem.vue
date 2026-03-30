@@ -24,17 +24,6 @@
         </div>
       </section>
 
-      <section class="dashboard-card rule-card">
-        <h3>{{ $t('myCenter.giftCardRuleTitle') }}</h3>
-        <ul>
-          <li>{{ $t('myCenter.giftCardRuleType1') }}</li>
-          <li>{{ $t('myCenter.giftCardRuleType2') }}</li>
-          <li>{{ $t('myCenter.giftCardRuleType3') }}</li>
-          <li>{{ $t('myCenter.giftCardRuleType4') }}</li>
-          <li>{{ $t('myCenter.giftCardRuleType5') }}</li>
-        </ul>
-      </section>
-
       <section v-if="lastResult" class="dashboard-card result-card">
         <div class="result-title">
           <IconCheck :size="18" />
@@ -134,7 +123,6 @@ const goBack = () => {
 }
 
 .redeem-hero,
-.rule-card,
 .result-card {
   padding: 16px;
 }
@@ -170,21 +158,6 @@ const goBack = () => {
   border-radius: 10px;
   padding: 0 16px;
   height: 42px;
-}
-
-.rule-card {
-  h3 {
-    margin: 0 0 8px;
-    @extend %typo-item-title;
-  }
-
-  ul {
-    margin: 0;
-    padding-left: 18px;
-    display: grid;
-    gap: 6px;
-    color: var(--text-tertiary);
-  }
 }
 
 .result-title {

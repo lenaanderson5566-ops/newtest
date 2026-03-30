@@ -43,11 +43,13 @@
 <script setup>
 import { inject, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { IconChevronLeft } from '@tabler/icons-vue';
 import { resetSecurity as apiResetSecurity } from '@/api/account/user';
 
 const $toast = inject('$toast');
 const router = useRouter();
+const { t } = useI18n();
 const showResetModal = ref(false);
 const resetting = ref(false);
 const goBackToAccount = () => {
@@ -65,10 +67,10 @@ const handleResetSecurity = async () => {
   try {
     await apiResetSecurity();
     showResetModal.value = false;
-    $toast?.success('重置成功，请重新导入订阅。');
+    $toast?.success(t('profile.resetSuccess'));
   } catch (err) {
     console.error('Failed to reset security:', err);
-    $toast?.error('重置失败，请稍后重试');
+    $toast?.error(t('errors.serverError'));
   } finally {
     resetting.value = false;
   }

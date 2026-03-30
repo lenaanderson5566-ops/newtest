@@ -85,11 +85,6 @@ export function createPreloadComponentsConfig(authLayoutType, loaders) {
         { path: 'TicketList', name: 'TicketList', priority: 1, component: ticketListComponent },
         { path: 'Dashboard', name: 'Dashboard', priority: 2, component: dashboardComponent }
       ],
-      '/billing': [
-        { path: 'OrderList', name: 'OrderList', priority: 1, component: orderListComponent },
-        { path: 'Deposit', name: 'Deposit', priority: 2, component: walletDepositComponent },
-        { path: 'Dashboard', name: 'Dashboard', priority: 3, component: dashboardComponent }
-      ],
       '/orders': [
         { path: 'Shop', name: 'Shop', priority: 1, component: shopComponent },
         { path: 'Payment', name: 'Payment', priority: 2, component: paymentComponent },
