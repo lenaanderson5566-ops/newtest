@@ -1943,7 +1943,7 @@ export default {
 
   h3 {
     margin: 0;
-    @extend %typo-section-title;
+    @extend %typo-modal-title;
     display: inline-flex;
     align-items: center;
     gap: 10px;

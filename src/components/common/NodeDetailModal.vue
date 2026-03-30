@@ -674,6 +674,7 @@ watchEffect(() => {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .fade-enter-active, .fade-leave-active {
 
@@ -850,12 +851,7 @@ watchEffect(() => {
   .modal-title {
 
     margin: 0;
-
-    font-size: $font-size-xl;
-
-    font-weight: $font-weight-semibold;
-
-    color: var(--text-primary);
+    @extend %typo-modal-title;
 
   }
 

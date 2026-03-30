@@ -175,6 +175,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/base/variables.scss" as *;
+@use "@/assets/styles/base/typography.scss" as *;
 
 .dialog-overlay {
   position: fixed;
@@ -214,9 +215,7 @@ export default {
 
       .dialog-title {
         margin: 0;
-        font-size: $font-size-xl;
-        font-weight: $font-weight-semibold;
-        color: var(--text-primary);
+        @extend %typo-modal-title;
       }
 
       .dialog-close-btn {
@@ -368,4 +367,3 @@ export default {
   }
 }
 </style>
-

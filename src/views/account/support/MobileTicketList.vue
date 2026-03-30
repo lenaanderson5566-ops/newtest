@@ -1689,12 +1689,7 @@ fetchTickets();
 
   h3 {
     margin: 0;
-
-    font-size: $font-size-xl;
-
-    font-weight: $font-weight-semibold;
-
-    color: var(--text-primary);
+    @extend %typo-modal-title;
   }
 
   .close-btn {

@@ -2726,9 +2726,7 @@ $space-2: map.get($spacers, 2);
 
     h3 {
       margin: 0;
-      color: var(--text-primary);
-      font-size: $font-size-xl;
-      font-weight: $font-weight-semibold;
+      @extend %typo-modal-title;
     }
 
     .close-button {

@@ -11,6 +11,7 @@
 %typo-section-title { @include text-token($font-size-xl, $font-weight-bold, var(--text-primary)); }
 %typo-card-title { @include text-token($font-size-lg, $font-weight-bold, var(--text-primary)); }
 %typo-item-title { @include text-token($font-size-md, $font-weight-semibold, var(--text-primary)); }
+%typo-modal-title { @include text-token($font-size-xl, $font-weight-semibold, var(--text-primary)); }
 %typo-body-text { @include text-token($font-size-sm, $font-weight-normal, var(--text-tertiary)); }
 %typo-label-text { @include text-token($font-size-sm, $font-weight-medium, var(--text-tertiary)); }
 %typo-meta-text { @include text-token($font-size-xs, $font-weight-normal, var(--text-quaternary)); }
@@ -31,4 +32,3 @@
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2);
 }
-
