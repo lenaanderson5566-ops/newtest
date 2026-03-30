@@ -20,7 +20,7 @@
         >
           <IconGift :size="18" />
         </button>
-        <UserAvatar :email="email" :avatarUrl="avatarUrl" :loading="isUserInfoLoading" />
+        <UserAvatar :email="email" :loading="isUserInfoLoading" />
         </div>
       </div>
 
@@ -153,7 +153,6 @@ export default {
     });
 
     const email = computed(() => store.userInfo?.email || '');
-    const avatarUrl = computed(() => store.avatarUrl || '');
     const isUserInfoLoading = ref(false);
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
@@ -319,7 +318,6 @@ export default {
 
     return {
       email,
-      avatarUrl,
       isUserInfoLoading,
       siteConfig,
       PROFILE_CONFIG,

@@ -1,14 +1,7 @@
 ﻿<template>
   <div class="user-avatar-container" ref="avatarContainer">
     <div class="avatar-wrapper" :class="{ 'is-active': isDropdownOpen }" @click="toggleDropdown">
-      <img 
-        v-if="avatarUrl && !avatarLoadFailed" 
-        :src="avatarUrl" 
-        alt="User Avatar" 
-        class="avatar-image"
-        @error="handleAvatarError"
-      />
-      <div v-else-if="loading" class="avatar-loading" aria-label="loading">
+      <div v-if="loading" class="avatar-loading" aria-label="loading">
         <span class="loading-spinner"></span>
       </div>
       <div v-else class="avatar-placeholder">
@@ -40,7 +33,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
@@ -60,10 +53,6 @@ export default {
       type: String,
       default: ''
     },
-    avatarUrl: {
-      type: String,
-      default: ''
-    },
     loading: {
       type: Boolean,
       default: false
@@ -75,7 +64,6 @@ export default {
     const { showToast } = useToast();
     const isDropdownOpen = ref(false);
     const avatarContainer = ref(null);
-    const avatarLoadFailed = ref(false);
     const avatarInitial = computed(() => {
       const rawEmail = (props.email || '').trim();
       if (!rawEmail) return 'U';
@@ -89,10 +77,6 @@ export default {
     
     const toggleDropdown = () => {
       isDropdownOpen.value = !isDropdownOpen.value;
-    };
-
-    const handleAvatarError = () => {
-      avatarLoadFailed.value = true;
     };
     
     const navigateTo = (path) => {
@@ -130,22 +114,13 @@ export default {
       document.removeEventListener('click', handleClickOutside);
     });
 
-    watch(
-      () => props.avatarUrl,
-      () => {
-        avatarLoadFailed.value = false;
-      }
-    );
-    
     return {
       isDropdownOpen,
       toggleDropdown,
       navigateTo,
       logout,
       avatarContainer,
-      avatarInitial,
-      avatarLoadFailed,
-      handleAvatarError
+      avatarInitial
     };
   }
 };
@@ -181,13 +156,6 @@ export default {
     background: #f5f7fa;
   }
 
-  .avatar-image {
-    width: 100%;
-    height: 100%;
-    border-radius: $border-radius-sm;
-    object-fit: cover;
-  }
-  
   .avatar-placeholder {
     display: flex;
     align-items: center;
