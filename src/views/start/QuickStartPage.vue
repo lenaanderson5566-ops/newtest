@@ -518,6 +518,29 @@ onMounted(fetchUserStatus);
   }
 }
 
+@media (max-width: #{$bp-md}) {
+  .system-item {
+    padding: map.get($spacers, 2) 34px map.get($spacers, 2) map.get($spacers, 2);
+    min-height: 62px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+
+    :deep(svg) {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+    }
+
+    strong {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+}
+
 .client-grid {
   margin-top: 12px;
   display: grid;
