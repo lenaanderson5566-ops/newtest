@@ -585,7 +585,7 @@ onMounted(async () => {
 $space-2: map.get($spacers, 2);
 
 .my-center {
-  padding: 0 0 2px;
+  padding: 0 0 0;
   background: #f5f5f7;
 }
 
@@ -609,7 +609,7 @@ $space-2: map.get($spacers, 2);
 .top-nav-item {
   position: relative;
   flex: 0 0 auto;
-  padding: 12px 16px;
+  padding: 8px 16px;
   border: none;
   background: transparent;
   color: var(--text-tertiary);
@@ -678,7 +678,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .recent-login-state {
-  padding: 14px 2px 4px;
+  padding: 16px 0 4px;
   @extend %typo-meta-text;
 }
 
@@ -687,7 +687,7 @@ $space-2: map.get($spacers, 2);
   align-items: center;
   justify-content: space-between;
   gap: #{$space-2};
-  padding: 10px 0;
+  padding: 8px 0;
 }
 
 .recent-login-item + .recent-login-item {
@@ -697,7 +697,7 @@ $space-2: map.get($spacers, 2);
 .recent-login-main {
   min-width: 0;
   display: grid;
-  gap: 3px;
+  gap: 4px;
 }
 
 .recent-login-main strong {
@@ -723,7 +723,7 @@ $space-2: map.get($spacers, 2);
 
 
 .tier-panel {
-  padding: 1rem;
+  padding: 16px;
   background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.25), transparent 35%),
     linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%);
   color: var(--text-on-dark-primary);
@@ -779,7 +779,7 @@ $space-2: map.get($spacers, 2);
   .tier-level {
     font-size: $font-size-sm;
     font-weight: $font-weight-bold;
-    padding: 4px 10px;
+    padding: 4px 8px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.18);
   }
@@ -814,25 +814,25 @@ $space-2: map.get($spacers, 2);
 }
 
 .summary-actions {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .summary-nav-row {
   border: 1px solid rgba(var(--text-color-rgb), 0.08);
   border-radius: $border-radius-sm;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .summary-item {
-  padding: 12px;
+  padding: 8px;
   border: 1px solid rgba(var(--text-color-rgb), 0.08);
   border-radius: $border-radius-sm;
   background: linear-gradient(180deg, rgba(var(--card-background-rgb), 0.96), rgba(var(--card-background-rgb), 0.9));
 
   .label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     font-size: $font-size-sm;
     color: var(--text-tertiary);
   }
@@ -861,12 +861,12 @@ $space-2: map.get($spacers, 2);
 }
 
 .section-title-outside {
-  padding: 0 2px;
+  padding: 0 0;
 }
 
 .section-subtitle {
   margin: 0;
-  padding: 0 2px;
+  padding: 0 0;
   @extend %typo-body-text;
 }
 
@@ -913,7 +913,7 @@ $space-2: map.get($spacers, 2);
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 10px;
+  gap: 8px;
 }
 
 .balance-currency {
@@ -929,7 +929,7 @@ $space-2: map.get($spacers, 2);
 .settings-row,
 .nav-row {
   min-height: 62px;
-  padding: 12px 16px;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -950,7 +950,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .row-main p {
-  margin: 3px 0 0;
+  margin: 4px 0 0;
   font-size: $font-size-xs;
   color: var(--text-tertiary);
 }
@@ -958,17 +958,17 @@ $space-2: map.get($spacers, 2);
 .tier-intro-list {
   display: grid;
   gap: #{$space-2};
-  padding: 12px;
+  padding: 8px;
 }
 
 .tier-intro-card {
   border: 1px solid rgba(var(--text-color-rgb), 0.08);
   border-radius: 12px;
   background: rgba(var(--card-background-rgb), 0.7);
-  padding: 12px;
+  padding: 8px;
 
   p {
-    margin: 6px 0 0;
+    margin: 4px 0 0;
     font-size: $font-size-sm;
     line-height: 1.6;
     color: var(--text-tertiary);
@@ -1046,7 +1046,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 }
 
 .modal-header {
-  padding: 16px 20px;
+  padding: 16px 16px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
@@ -1080,7 +1080,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 }
 
 .modal-body {
-  padding: 20px;
+  padding: 16px;
 }
 
 .form-group {
@@ -1100,7 +1100,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
   input {
     width: 100%;
-    padding: 10px 12px;
+    padding: 8px 8px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     background-color: var(--bg-secondary);
@@ -1117,13 +1117,13 @@ input:checked + .slider:before { transform: translateX(18px); }
 }
 
 .error-text {
-  margin-top: 6px;
+  margin-top: 4px;
   color: var(--error-color);
   font-size: $font-size-sm;
 }
 
 .modal-footer {
-  padding: 16px 20px;
+  padding: 16px 16px;
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;
@@ -1204,16 +1204,16 @@ input:checked + .slider:before { transform: translateX(18px); }
   }
 
   .top-nav-item {
-    padding: 14px 12px 12px;
+    padding: 16px 8px 8px;
     font-size: $font-size-md;
   }
 
   .overview-panels { gap: #{$space-2}; }
-  .summary-panel { padding: 14px; }
+  .summary-panel { padding: 16px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .summary-item { padding: 10px; }
-  .section-block > .section-title { padding: 14px 14px 8px; font-size: $font-size-xl; }
+  .summary-item { padding: 8px; }
+  .section-block > .section-title { padding: 16px 16px 8px; font-size: $font-size-xl; }
   .settings-row,
-  .nav-row { min-height: 62px; padding: 12px 14px; }
+  .nav-row { min-height: 62px; padding: 8px 16px; }
 }
 </style>

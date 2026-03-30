@@ -1991,7 +1991,7 @@ export default {
 
     display: flex;
 
-    padding: 60px 0;
+    padding: 64px 0;
 
     min-height: 100vh;
 
@@ -2025,7 +2025,7 @@ export default {
 
   display: flex;
 
-  gap: 10px;
+  gap: 8px;
 
   z-index: 10;
 
@@ -2045,7 +2045,7 @@ export default {
 
 .auth-form-container {
 
-  padding: 40px 40px;
+  padding: 48px 48px;
 
   width: 100%;
 
@@ -2063,7 +2063,7 @@ export default {
 
   @media (max-width: #{$bp-lg}) {
 
-    padding: 20px;
+    padding: 16px;
 
     margin: auto;
 
@@ -2077,7 +2077,7 @@ export default {
 
 .auth-header {
 
-  margin-bottom: 2rem;
+  margin-bottom: 24px;
 
   text-align: center;
 
@@ -2097,7 +2097,7 @@ export default {
 
     font-weight: $font-weight-bold;
 
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
 
     color: var(--text-primary);
 
@@ -2119,7 +2119,7 @@ export default {
 
     color: var(--text-tertiary);
 
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
 
 
@@ -2263,7 +2263,7 @@ export default {
 
   .form-control {
 
-    padding-left: 40px;
+    padding-left: 48px;
 
     height: 45px;
 
@@ -2283,7 +2283,7 @@ export default {
 
     &[type="text"] {
 
-      padding-right: 40px;
+      padding-right: 48px;
 
     }
 
@@ -2357,7 +2357,7 @@ export default {
 
     border-bottom-right-radius: 8px;
 
-    padding: 0 15px;
+    padding: 0 16px;
 
     min-width: 100px;
 
@@ -2431,7 +2431,7 @@ export default {
 
     .icon-left {
 
-      margin-right: 5px;
+      margin-right: 4px;
 
     }
 
@@ -2581,7 +2581,7 @@ export default {
 
     .captcha-modal-header {
 
-      padding: 16px 20px;
+      padding: 16px 16px;
 
       display: flex;
 
@@ -2647,7 +2647,7 @@ export default {
 
     .captcha-modal-body {
 
-      padding: 20px;
+      padding: 16px;
 
 
 
@@ -2895,7 +2895,7 @@ export default {
 
 .auth-logo {
 
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 
   text-align: center;
 
@@ -2939,7 +2939,7 @@ export default {
 
   .auth-split-right {
 
-    padding: 20px 0;
+    padding: 16px 0;
 
   }
 
@@ -2947,7 +2947,7 @@ export default {
 
   .auth-form-container {
 
-    padding: 30px 20px;
+    padding: 24px 16px;
 
     margin: auto;
 
@@ -2957,7 +2957,7 @@ export default {
 
   .auth-header {
 
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
 
 

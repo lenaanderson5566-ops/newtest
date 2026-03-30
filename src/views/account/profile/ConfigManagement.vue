@@ -81,7 +81,7 @@ const handleResetSecurity = async () => {
 @use "@/assets/styles/base/variables.scss" as *;
 @use "@/assets/styles/base/typography.scss" as *;
 .config-management {
-  padding-bottom: 2px;
+  padding-bottom: 0;
 }
 
 .account-back-btn {
@@ -110,7 +110,7 @@ const handleResetSecurity = async () => {
 }
 
 .desc {
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   @extend %typo-body-text;
 }
 
@@ -118,7 +118,7 @@ const handleResetSecurity = async () => {
   border: 1px solid var(--border-color);
   background: #fff;
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 8px 16px;
   cursor: pointer;
 
   &.danger {
@@ -146,7 +146,7 @@ const handleResetSecurity = async () => {
 }
 
 .modal-header {
-  padding: 14px 16px;
+  padding: 16px 16px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
@@ -167,7 +167,7 @@ const handleResetSecurity = async () => {
 .modal-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 8px;
   padding: 0 16px 16px;
 }
 

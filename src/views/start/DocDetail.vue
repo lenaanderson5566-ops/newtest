@@ -695,7 +695,7 @@ const buildNoAccessCardHtml = () => {
   const buyText = t('dashboard.purchasePlan');
   const supportText = t('dashboard.ticketSupport');
   return `
-    <div class="dashboard-card stats-card no-plan-card card-animate" style="margin: 12px 0;">
+    <div class="dashboard-card stats-card no-plan-card card-animate" style="margin: 8px 0;">
       <div class="no-plan-content">
         <div class="no-plan-icon" aria-hidden="true"></div>
         <div class="no-plan-message">
@@ -1237,7 +1237,7 @@ onUnmounted(() => {
 
     padding: 0;
 
-    padding-bottom: 2px; 
+    padding-bottom: 0; 
 
   }
 
@@ -1259,7 +1259,7 @@ onUnmounted(() => {
 
   align-items: center;
 
-  padding: 0.5rem 1rem;
+  padding: 8px 16px;
 
   background: none;
 
@@ -1271,7 +1271,7 @@ onUnmounted(() => {
 
   cursor: pointer;
 
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 
   border-radius: 8px;
 
@@ -1299,7 +1299,7 @@ onUnmounted(() => {
 
   span {
 
-    margin-left: 0.5rem;
+    margin-left: 8px;
 
   }
 
@@ -1317,7 +1317,7 @@ onUnmounted(() => {
 
   justify-content: center;
 
-  padding: 4rem 1rem;
+  padding: 64px 16px;
 
   text-align: center;
 
@@ -1325,7 +1325,7 @@ onUnmounted(() => {
 
   p {
 
-    margin-top: 1rem;
+    margin-top: 16px;
 
     color: var(--text-quaternary);
 
@@ -1349,7 +1349,7 @@ onUnmounted(() => {
 
   justify-content: center;
 
-  padding: 2rem 1rem;
+  padding: 24px 16px;
 
   text-align: center;
 
@@ -1365,7 +1365,7 @@ onUnmounted(() => {
 
     border-radius: 16px;
 
-    padding: 2rem;
+    padding: 24px;
 
     box-shadow: none;
 
@@ -1421,7 +1421,7 @@ onUnmounted(() => {
 
     background: rgba(var(--error-color-rgb), 0.1);
 
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
     
 
@@ -1437,7 +1437,7 @@ onUnmounted(() => {
 
   .error-title {
     @extend %typo-section-title;
-    margin-bottom: 0.75rem;
+    margin-bottom: 8px;
   }
 
   
@@ -1448,7 +1448,7 @@ onUnmounted(() => {
 
     font-size: $font-size-md;
 
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
     line-height: 1.6;
 
@@ -1468,7 +1468,7 @@ onUnmounted(() => {
 
   justify-content: center;
 
-  padding: 0.75rem 2rem;
+  padding: 8px 24px;
 
   border-radius: 30px;
 
@@ -1492,7 +1492,7 @@ onUnmounted(() => {
 
   .retry-text {
 
-    margin-right: 0.5rem;
+    margin-right: 8px;
 
   }
 
@@ -1542,7 +1542,7 @@ onUnmounted(() => {
 
   border-radius: 16px;
 
-  padding: 1.5rem;
+  padding: 24px;
 
   box-shadow: none;
 
@@ -1556,7 +1556,7 @@ onUnmounted(() => {
 
   @media (min-width: #{$bp-md}) {
 
-    padding: 2rem;
+    padding: 24px;
 
   }
 
@@ -1576,9 +1576,9 @@ onUnmounted(() => {
 
 .doc-header {
 
-  margin-bottom: 2rem;
+  margin-bottom: 24px;
 
-  padding-bottom: 1.25rem;
+  padding-bottom: 16px;
 
   border-bottom: 1px solid rgba(var(--theme-color-rgb), 0.1);
 
@@ -1586,7 +1586,7 @@ onUnmounted(() => {
 
   .doc-title {
     @extend %typo-page-title;
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
     line-height: 1.3;
 
     
@@ -1607,7 +1607,7 @@ onUnmounted(() => {
 
     flex-wrap: wrap;
 
-    gap: 1rem;
+    gap: 16px;
 
     @extend %typo-meta-text;
 
@@ -1615,7 +1615,7 @@ onUnmounted(() => {
 
     .doc-category {
 
-      padding: 0.3rem 0.7rem;
+      padding: 4px 8px;
 
       background-color: rgba(var(--theme-color-rgb), 0.1);
 
@@ -1665,9 +1665,9 @@ onUnmounted(() => {
 
   :deep(h1), :deep(h2), :deep(h3), :deep(h4), :deep(h5), :deep(h6) {
 
-    margin-top: 2rem;
+    margin-top: 24px;
 
-    margin-bottom: 1.2rem;
+    margin-bottom: 16px;
 
     font-weight: $font-weight-semibold;
 
@@ -1687,9 +1687,9 @@ onUnmounted(() => {
 
     font-size: $font-size-3xl;
 
-    margin-top: 2.8rem;
+    margin-top: 48px;
 
-    padding-bottom: 0.6rem;
+    padding-bottom: 8px;
 
     border-bottom: 1px solid var(--border-color);
 
@@ -1701,9 +1701,9 @@ onUnmounted(() => {
 
     font-size: $font-size-2xl;
 
-    padding-bottom: 0.5rem;
+    padding-bottom: 8px;
 
-    margin-top: 2.2rem;
+    margin-top: 24px;
 
     border-bottom: 1px solid var(--border-color);
 
@@ -1715,7 +1715,7 @@ onUnmounted(() => {
 
     font-size: $font-size-2xl;
 
-    margin-top: 1.8rem;
+    margin-top: 24px;
 
   }
 
@@ -1755,7 +1755,7 @@ onUnmounted(() => {
 
   :deep(p) {
 
-    margin-bottom: 1.4rem;
+    margin-bottom: 24px;
 
     letter-spacing: 0.01rem;
 
@@ -1765,15 +1765,15 @@ onUnmounted(() => {
 
   :deep(ul), :deep(ol) {
 
-    margin-bottom: 1.4rem;
+    margin-bottom: 24px;
 
-    padding-left: 1.8rem;
+    padding-left: 24px;
 
     
 
     li {
 
-      margin-bottom: 0.8rem;
+      margin-bottom: 16px;
 
       position: relative;
 
@@ -1845,7 +1845,7 @@ onUnmounted(() => {
 
     border-radius: 6px;
 
-    margin: 1.8rem auto;
+    margin: 24px auto;
 
     display: block;
 
@@ -1879,7 +1879,7 @@ onUnmounted(() => {
 
     background-color: var(--code-bg);
 
-    padding: 0.2rem 0.5rem;
+    padding: 4px 8px;
 
     border-radius: 4px;
 
@@ -1891,7 +1891,7 @@ onUnmounted(() => {
 
     transition: background-color 0.2s ease;
 
-    margin: 0 2px;
+    margin: 0 0;
 
   }
 
@@ -1901,13 +1901,13 @@ onUnmounted(() => {
 
     background-color: var(--code-bg);
 
-    padding: 1.2rem;
+    padding: 16px;
 
     border-radius: 6px;
 
     overflow-x: auto;
 
-    margin: 1.8rem 0;
+    margin: 24px 0;
 
     border: 1px solid var(--border-color);
 
@@ -1985,7 +1985,7 @@ onUnmounted(() => {
 
     margin-right: 0;
 
-    margin-bottom: 1.8rem;
+    margin-bottom: 24px;
 
     color: var(--text-quaternary);
 
@@ -1993,7 +1993,7 @@ onUnmounted(() => {
 
     background-color: rgba(var(--theme-color-rgb), 0.05);
 
-    padding: 1.2rem 1.5rem;
+    padding: 16px 24px;
 
     border-radius: 0 6px 6px 0;
 
@@ -2013,7 +2013,7 @@ onUnmounted(() => {
 
     p {
 
-      margin-bottom: 0.8rem;
+      margin-bottom: 16px;
 
       
 
@@ -2039,7 +2039,7 @@ onUnmounted(() => {
 
     border-spacing: 0;
 
-    margin: 1.8rem 0;
+    margin: 24px 0;
 
     overflow-x: auto;
 
@@ -2091,7 +2091,7 @@ onUnmounted(() => {
 
     th, td {
 
-      padding: 0.8rem 1rem;
+      padding: 16px 16px;
 
       border: 1px solid var(--border-color);
 
@@ -2147,7 +2147,7 @@ onUnmounted(() => {
 
     background-color: var(--border-color);
 
-    margin: 2rem 0;
+    margin: 24px 0;
 
   }
 
@@ -2177,7 +2177,7 @@ onUnmounted(() => {
 
   :deep(input[type="checkbox"]) {
 
-    margin-right: 0.5rem;
+    margin-right: 8px;
 
   }
 
@@ -2187,9 +2187,9 @@ onUnmounted(() => {
 
   :deep(.footnotes) {
 
-    margin-top: 2rem;
+    margin-top: 24px;
 
-    padding-top: 1rem;
+    padding-top: 16px;
 
     border-top: 1px solid var(--border-color);
 
@@ -2205,9 +2205,9 @@ onUnmounted(() => {
 
   :deep(.access-content) {
 
-    margin: 2rem 0;
+    margin: 24px 0;
 
-    padding: 1.5rem;
+    padding: 24px;
 
     border-radius: 6px;
 
@@ -2251,7 +2251,7 @@ onUnmounted(() => {
 
       background-color: rgba(var(--theme-color-rgb), 0.1);
 
-      padding: 0.2rem 0.8rem;
+      padding: 4px 16px;
 
       border-radius: 20px;
 
@@ -2331,7 +2331,7 @@ onUnmounted(() => {
 
   i, .icon, svg {
 
-    margin-right: 6px !important;
+    margin-right: 4px !important;
 
     display: inline-flex !important;
 

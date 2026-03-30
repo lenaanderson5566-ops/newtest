@@ -2150,7 +2150,7 @@ export default {
 
   display: flex;
 
-  gap: 10px;
+  gap: 8px;
 
   z-index: 10;
 
@@ -2186,7 +2186,7 @@ export default {
 
     animation: spin 1s linear infinite;
 
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 
   }
 
@@ -2340,7 +2340,7 @@ export default {
 
     align-items: center;
 
-    padding: 0 12px;
+    padding: 0 8px;
 
     min-width: 130px;
 
@@ -2492,7 +2492,7 @@ export default {
 
       .suffix-option {
 
-        padding: 10px 16px;
+        padding: 8px 16px;
 
         cursor: pointer;
 
@@ -2634,7 +2634,7 @@ export default {
 
   .form-control {
 
-    padding-left: 40px;
+    padding-left: 48px;
 
     height: 45px;
 
@@ -2654,7 +2654,7 @@ export default {
 
     &[type="text"] {
 
-      padding-right: 40px;
+      padding-right: 48px;
 
     }
 
@@ -2728,7 +2728,7 @@ export default {
 
     border-bottom-right-radius: 8px;
 
-    padding: 0 15px;
+    padding: 0 16px;
 
     min-width: 100px;
 
@@ -2800,7 +2800,7 @@ export default {
 
     .icon-left {
 
-      margin-right: 5px;
+      margin-right: 4px;
 
     }
 
@@ -2904,7 +2904,7 @@ export default {
 
 .agreement-checkbox {
 
-  margin-top: 1.5rem;
+  margin-top: 24px;
 
 
 
@@ -2916,7 +2916,7 @@ export default {
 
     position: relative;
 
-    padding-left: 30px;
+    padding-left: 24px;
 
     cursor: pointer;
 
@@ -3066,7 +3066,7 @@ export default {
 
   font-size: $font-size-xs;
 
-  margin-top: 0.3rem;
+  margin-top: 4px;
 
 }
 
@@ -3078,7 +3078,7 @@ export default {
 
   .auth-card {
 
-    padding: 1.5rem;
+    padding: 24px;
 
   }
 
@@ -3086,7 +3086,7 @@ export default {
 
   .auth-header {
 
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
 
 
@@ -3158,7 +3158,7 @@ export default {
 
   .auth-container {
 
-    padding: 2rem;
+    padding: 24px;
 
   }
 
@@ -3357,7 +3357,7 @@ export default {
 
 .auth-logo {
 
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 
   text-align: center;
 
@@ -3393,7 +3393,7 @@ export default {
 
   justify-content: center;
 
-  margin: 10px 0;
+  margin: 8px 0;
 
 
 
@@ -3405,7 +3405,7 @@ export default {
 
     justify-content: center;
 
-    margin: 10px 0;
+    margin: 8px 0;
 
     min-height: 78px;
 
@@ -3531,7 +3531,7 @@ export default {
 
       justify-content: space-between;
 
-      padding: 16px 20px;
+      padding: 16px 16px;
 
       border-bottom: 1px solid var(--border-color);
 
@@ -3595,7 +3595,7 @@ export default {
 
     .captcha-modal-body {
 
-      padding: 20px;
+      padding: 16px;
 
 
 
@@ -3619,7 +3619,7 @@ export default {
 
         justify-content: center;
 
-        margin: 15px 0;
+        margin: 16px 0;
 
         min-height: 78px;
 

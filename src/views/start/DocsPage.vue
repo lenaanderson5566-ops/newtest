@@ -293,7 +293,7 @@ onMounted(() => {
 
     padding: 0;
 
-    padding-bottom: 2px; 
+    padding-bottom: 0; 
 
   }
 
@@ -323,14 +323,14 @@ onMounted(() => {
 
 .docs-header {
 
-  margin-bottom: 2rem;
+  margin-bottom: 24px;
 
   
 
   .docs-title {
     @extend %typo-page-title;
 
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
     background: linear-gradient(45deg, var(--theme-color), var(--secondary-color));
 
@@ -350,7 +350,7 @@ onMounted(() => {
 
 .search-wrapper {
 
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 
 }
 
@@ -386,7 +386,7 @@ onMounted(() => {
 
     width: 100%;
 
-    padding: 0.85rem 2.5rem;
+    padding: 16px 48px;
 
     border-radius: $border-radius-sm;
 
@@ -446,7 +446,7 @@ onMounted(() => {
 
     cursor: pointer;
 
-    padding: 0.25rem;
+    padding: 4px;
 
     display: flex;
 
@@ -480,7 +480,7 @@ onMounted(() => {
 
   flex-direction: column;
 
-  gap: 2rem;
+  gap: 24px;
 
   
   width: 100%;
@@ -497,9 +497,9 @@ onMounted(() => {
 
     font-weight: $font-weight-semibold;
 
-    margin-bottom: 1.25rem;
+    margin-bottom: 16px;
 
-    padding-bottom: 0.75rem;
+    padding-bottom: 8px;
 
     border-bottom: 1px solid rgba(var(--theme-color-rgb), 0.1);
 
@@ -517,7 +517,7 @@ onMounted(() => {
 
   flex-direction: column;
 
-  gap: 0.75rem;
+  gap: 8px;
 
 }
 
@@ -529,7 +529,7 @@ onMounted(() => {
 
   align-items: center;
 
-  padding: 1rem 1.25rem;
+  padding: 16px 16px;
 
   border-radius: $border-radius-sm;
 
@@ -571,7 +571,7 @@ onMounted(() => {
 
       font-weight: $font-weight-semibold;
 
-      margin-bottom: 0.35rem;
+      margin-bottom: 4px;
 
       color: var(--text-primary);
 
@@ -609,7 +609,7 @@ onMounted(() => {
 
     color: var(--text-quaternary);
 
-    margin-left: 1rem;
+    margin-left: 16px;
 
     transition: all 0.3s ease;
 
@@ -647,7 +647,7 @@ onMounted(() => {
 
   justify-content: center;
 
-  padding: 3rem 1rem;
+  padding: 48px 16px;
 
   text-align: center;
 
@@ -655,7 +655,7 @@ onMounted(() => {
 
   p {
 
-    margin-top: 1rem;
+    margin-top: 16px;
 
     color: var(--text-quaternary);
 
@@ -681,7 +681,7 @@ onMounted(() => {
 
 .retry-button {
 
-  margin-top: 1.5rem;
+  margin-top: 24px;
 
   height: 40px;
 
@@ -755,7 +755,7 @@ onMounted(() => {
 
     grid-template-columns: repeat(2, 1fr);
 
-    gap: 1rem;
+    gap: 16px;
 
   }
 
@@ -781,9 +781,9 @@ onMounted(() => {
 
   align-items: center;
 
-  margin-top: 0.5rem;
+  margin-top: 8px;
 
-  padding: 0.75rem 1rem;
+  padding: 8px 16px;
 
   background-color: rgba(var(--theme-color-rgb), 0.05);
 
@@ -797,7 +797,7 @@ onMounted(() => {
 
     color: var(--theme-color);
 
-    margin-right: 0.5rem;
+    margin-right: 8px;
 
     flex-shrink: 0;
 

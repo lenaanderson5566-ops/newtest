@@ -299,7 +299,7 @@ onMounted(() => {
   padding: 0;
   display: flex;
   justify-content: center;
-  padding-bottom: 80px;
+  padding-bottom: 64px;
   
   .deposit-inner {
     width: 100%;
@@ -347,7 +347,7 @@ onMounted(() => {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 16px;
       
       .card-title {
         @extend %typo-section-title;
@@ -374,8 +374,8 @@ onMounted(() => {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 20px;
-      gap: 14px;
+      padding: 16px;
+      gap: 16px;
     }
     
     .balance-display {
@@ -387,14 +387,14 @@ onMounted(() => {
         display: flex;
         flex-direction: column;
         gap: 8px;
-        margin: 2px auto 8px;
+        margin: 0 auto 8px;
       }
 
       .wallet-balance-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 8px 12px;
+        padding: 8px 8px;
         border-radius: $border-radius-sm;
         border: 1px solid var(--border-color);
         background: var(--card-background);
@@ -423,7 +423,7 @@ onMounted(() => {
       .skeleton-balance-value {
         height: 3.5rem;
         width: 200px;
-        margin: 0 auto 12px;
+        margin: 0 auto 8px;
         background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
         border-radius: 10px;
         position: relative;
@@ -465,8 +465,8 @@ onMounted(() => {
     .deposit-notice {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 12px;
+      gap: 8px;
+      padding: 8px;
       background-color: rgba(var(--theme-color-rgb), 0.08);
       border-radius: $border-radius-sm;
       
@@ -481,13 +481,13 @@ onMounted(() => {
     
     
     .amount-selection {
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       width: 100%;
       
       .period-cards {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 10px;
+        gap: 8px;
         width: 100%;
         
         .period-card {
@@ -522,7 +522,7 @@ onMounted(() => {
           }
           
           .period-card-inner {
-            padding: 12px 8px;
+            padding: 8px 8px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -540,7 +540,7 @@ onMounted(() => {
               font-size: $font-size-md;
               font-weight: $font-weight-semibold;
               color: var(--text-primary);
-              margin-right: 2px;
+              margin-right: 0;
             }
             
             .amount {
@@ -554,13 +554,13 @@ onMounted(() => {
     }
     
     .custom-amount {
-      margin-top: 12px;
+      margin-top: 8px;
       
       label {
         display: block;
         font-size: $font-size-sm;
         color: var(--text-tertiary);
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         font-weight: $font-weight-medium;
       }
       
@@ -584,7 +584,7 @@ onMounted(() => {
           border: 1px solid var(--border-color);
           border-radius: $border-radius-sm;
           background-color: var(--input-bg, rgba(0, 0, 0, 0.02));
-          padding: 0 15px 0 35px;
+          padding: 0 16px 0 24px;
           font-size: $font-size-lg;
           color: var(--text-primary);
           transition: all 0.3s ease;
@@ -615,7 +615,7 @@ onMounted(() => {
     
     
     .deposit-actions {
-      margin-top: 25px;
+      margin-top: 24px;
       display: flex;
       justify-content: center;
       
@@ -623,12 +623,12 @@ onMounted(() => {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 8px;
         background-color: var(--theme-color);
         color: var(--text-on-dark-primary);
         border: none;
         border-radius: $border-radius-sm;
-        padding: 0 30px;
+        padding: 0 24px;
         height: 50px;
         font-size: $font-size-lg;
         font-weight: $font-weight-semibold;
@@ -705,52 +705,52 @@ onMounted(() => {
   }
 
   .deposit-container {
-    padding: 10px;
-    padding-bottom: 84px;
+    padding: 8px;
+    padding-bottom: 64px;
 
     .dashboard-card {
-      padding: 14px;
+      padding: 16px;
     }
     
     .balance-card {
       .card-body {
-        padding: 14px;
-        gap: 10px;
+        padding: 16px;
+        gap: 8px;
       }
     }
     
     .deposit-card {
       .deposit-notice {
-        padding: 8px 10px;
+        padding: 8px 8px;
         gap: 8px;
       }
 
       .amount-selection {
-        margin-bottom: 6px;
+        margin-bottom: 4px;
 
         .period-cards {
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 10px;
+          gap: 8px;
 
           .period-card .period-card-inner {
-            padding: 12px 8px;
+            padding: 8px 8px;
           }
         }
       }
 
       .custom-amount {
-        margin-top: 10px;
+        margin-top: 8px;
       }
 
       .deposit-actions {
-        margin-top: 14px;
+        margin-top: 16px;
 
         .btn-order {
           min-width: 0;
           width: 100%;
           height: 44px;
           font-size: $font-size-md;
-          padding: 0 18px;
+          padding: 0 16px;
         }
       }
     }

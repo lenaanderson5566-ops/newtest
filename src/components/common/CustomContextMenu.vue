@@ -174,13 +174,13 @@ export default {
 .menu-items {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
-  padding: 10px 14px;
+  padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -220,7 +220,7 @@ export default {
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  margin-right: 12px;
+  margin-right: 8px;
   background-color: rgba(var(--theme-color-rgb), 0.08);
   color: var(--text-primary);
   transition: all 0.3s ease;

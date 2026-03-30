@@ -256,13 +256,13 @@ onMounted(() => {
   margin-top: 24px;
   .card-body {
     display: grid;
-    gap: 14px;
+    gap: 16px;
   }
 
   .platform-selector {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
     margin-top: 0;
   }
 
@@ -270,7 +270,7 @@ onMounted(() => {
     border: 1px solid var(--border-color);
     background: var(--card-background);
     border-radius: 999px;
-    padding: 10px 18px;
+    padding: 8px 16px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -285,7 +285,7 @@ onMounted(() => {
   }
 
   .platform-section {
-    margin-top: 14px;
+    margin-top: 16px;
 
     .platform-title {
       font-size: $font-size-md;
@@ -295,13 +295,13 @@ onMounted(() => {
     .platform-options {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
+      gap: 8px;
     }
 
     .platform-option {
       border: 1px solid var(--border-color);
       border-radius: 14px;
-      padding: 12px 14px;
+      padding: 8px 16px;
       background: var(--card-background);
       cursor: pointer;
       display: inline-flex;
@@ -327,7 +327,7 @@ onMounted(() => {
     }
 
     .no-clients-tip {
-      padding: 12px;
+      padding: 8px;
       border: 1px dashed var(--border-color);
       border-radius: 10px;
       color: var(--text-tertiary);

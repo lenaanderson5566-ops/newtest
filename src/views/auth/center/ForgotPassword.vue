@@ -1636,7 +1636,7 @@ export default {
 
   display: flex;
 
-  gap: 10px;
+  gap: 8px;
 
   z-index: 10;
 
@@ -1724,7 +1724,7 @@ export default {
 
   .form-control {
 
-    padding-left: 40px;
+    padding-left: 48px;
 
     height: 45px;
 
@@ -1744,7 +1744,7 @@ export default {
 
     &[type="text"] {
 
-      padding-right: 40px;
+      padding-right: 48px;
 
     }
 
@@ -1818,7 +1818,7 @@ export default {
 
     border-bottom-right-radius: 8px;
 
-    padding: 0 15px;
+    padding: 0 16px;
 
     min-width: 100px;
 
@@ -1892,7 +1892,7 @@ export default {
 
     .icon-left {
 
-      margin-right: 5px;
+      margin-right: 4px;
 
     }
 
@@ -2042,7 +2042,7 @@ export default {
 
     .captcha-modal-header {
 
-      padding: 16px 20px;
+      padding: 16px 16px;
 
       display: flex;
 
@@ -2108,7 +2108,7 @@ export default {
 
     .captcha-modal-body {
 
-      padding: 20px;
+      padding: 16px;
 
 
 
@@ -2284,7 +2284,7 @@ export default {
 
   .auth-card {
 
-    padding: 1.5rem;
+    padding: 24px;
 
   }
 
@@ -2318,7 +2318,7 @@ export default {
 
   .auth-container {
 
-    padding: 2rem;
+    padding: 24px;
 
   }
 
@@ -2409,7 +2409,7 @@ export default {
 
 .auth-logo {
 
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 
   text-align: center;
 

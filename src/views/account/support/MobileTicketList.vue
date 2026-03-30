@@ -778,7 +778,7 @@ fetchTickets();
 
   padding: 0;
 
-  padding-bottom: 90px;
+  padding-bottom: 64px;
 
   position: relative;
 }
@@ -790,7 +790,7 @@ fetchTickets();
 
   box-shadow: none;
 
-  padding: 20px;
+  padding: 16px;
 
   border: 1px solid var(--border-color);
 
@@ -809,7 +809,7 @@ fetchTickets();
 
     align-items: center;
 
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 
     .card-title {
       @extend %typo-section-title;
@@ -832,7 +832,7 @@ fetchTickets();
 .create-ticket-wrapper {
   padding: 0;
 
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 
   background-color: var(--theme-color);
 
@@ -840,7 +840,7 @@ fetchTickets();
 
   box-shadow: none;
 
-  margin: 0 0 1.5rem;
+  margin: 0 0 24px;
 
   transition: all 0.3s ease;
 
@@ -861,9 +861,9 @@ fetchTickets();
 
     justify-content: center;
 
-    gap: 0.75rem;
+    gap: 8px;
 
-    padding: 0.85rem;
+    padding: 16px;
 
     background-color: transparent;
 
@@ -903,13 +903,13 @@ fetchTickets();
 
   justify-content: center;
 
-  padding: 3rem 1.5rem;
+  padding: 48px 24px;
 
   text-align: center;
 
   color: var(--text-quaternary);
 
-  margin: 1rem 0;
+  margin: 16px 0;
 
   background-color: var(--card-bg);
 
@@ -918,7 +918,7 @@ fetchTickets();
   border: 1px dashed var(--border-color);
 
   p {
-    margin: 1.25rem 0;
+    margin: 16px 0;
 
     font-size: $font-size-md;
 
@@ -926,9 +926,9 @@ fetchTickets();
   }
 
   .create-ticket-btn {
-    margin-top: 1rem;
+    margin-top: 16px;
 
-    padding: 0.75rem 1.75rem;
+    padding: 8px 24px;
 
     border-radius: 8px;
 
@@ -952,7 +952,7 @@ fetchTickets();
 
     align-items: center;
 
-    gap: 0.5rem;
+    gap: 8px;
 
     &:hover {
       background-color: rgba(var(--theme-color-rgb), 0.9);
@@ -971,9 +971,9 @@ fetchTickets();
 .tickets-content {
   padding: 0;
 
-  margin-top: 0.5rem;
+  margin-top: 8px;
 
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
 }
 
 .ticket-item {
@@ -983,9 +983,9 @@ fetchTickets();
 
   border-radius: 10px;
 
-  padding: 1.25rem;
+  padding: 16px;
 
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
 
   cursor: pointer;
 
@@ -1012,7 +1012,7 @@ fetchTickets();
 
     align-items: flex-start;
 
-    margin-bottom: 0.75rem;
+    margin-bottom: 8px;
 
     .ticket-subject {
       font-weight: $font-weight-semibold;
@@ -1021,7 +1021,7 @@ fetchTickets();
 
       flex: 1;
 
-      margin-right: 1rem;
+      margin-right: 16px;
 
       font-size: $font-size-md;
 
@@ -1031,7 +1031,7 @@ fetchTickets();
     .ticket-status {
       font-size: $font-size-xs;
 
-      padding: 0.35rem 0.75rem;
+      padding: 4px 8px;
 
       border-radius: 6px;
 
@@ -1062,7 +1062,7 @@ fetchTickets();
 
     color: var(--text-quaternary);
 
-    padding-top: 0.5rem;
+    padding-top: 8px;
 
     border-top: 1px dashed rgba(var(--border-color-rgb), 0.5);
   }
@@ -1103,7 +1103,7 @@ fetchTickets();
 }
 
 .detail-header {
-  padding: 1rem;
+  padding: 16px;
 
   background-color: var(--card-bg);
 
@@ -1113,7 +1113,7 @@ fetchTickets();
 
   align-items: center;
 
-  gap: 1rem;
+  gap: 16px;
 
   position: sticky;
 
@@ -1121,7 +1121,7 @@ fetchTickets();
 
   z-index: 10;
 
-  margin-top: 70px;
+  margin-top: 64px;
 
   backdrop-filter: blur(10px);
 
@@ -1134,7 +1134,7 @@ fetchTickets();
 
     color: var(--text-primary);
 
-    padding: 0.5rem;
+    padding: 8px;
 
     border-radius: 8px;
 
@@ -1167,7 +1167,7 @@ fetchTickets();
 
       font-size: $font-size-lg;
 
-      margin-bottom: 0.5rem;
+      margin-bottom: 8px;
 
       white-space: nowrap;
 
@@ -1183,7 +1183,7 @@ fetchTickets();
     .meta-info {
       display: flex;
 
-      gap: 0.5rem;
+      gap: 8px;
 
       flex-wrap: wrap;
     }
@@ -1196,7 +1196,7 @@ fetchTickets();
 
     color: var(--error-color);
 
-    padding: 0.5rem;
+    padding: 8px;
 
     border-radius: 8px;
 
@@ -1220,7 +1220,7 @@ fetchTickets();
 .level-badge {
   display: inline-block;
 
-  padding: 0.35rem 0.75rem;
+  padding: 4px 8px;
 
   border-radius: 6px;
 
@@ -1268,7 +1268,7 @@ fetchTickets();
 
   overflow-y: auto;
 
-  padding: 1.25rem;
+  padding: 16px;
 
   display: flex;
 
@@ -1287,13 +1287,13 @@ fetchTickets();
 
     justify-content: center;
 
-    padding: 3rem 1.5rem;
+    padding: 48px 24px;
 
     text-align: center;
 
     color: var(--text-primary);
 
-    margin: 1rem 0;
+    margin: 16px 0;
 
     background-color: var(--card-bg);
 
@@ -1304,7 +1304,7 @@ fetchTickets();
     box-shadow: none;
 
     p {
-      margin: 1.25rem 0;
+      margin: 16px 0;
 
       font-size: $font-size-md;
 
@@ -1328,7 +1328,7 @@ fetchTickets();
 
   color: var(--text-quaternary);
 
-  padding: 2.5rem;
+  padding: 48px;
 
   text-align: center;
 
@@ -1338,12 +1338,12 @@ fetchTickets();
 
   border: 1px dashed var(--border-color);
 
-  margin: 1rem 0;
+  margin: 16px 0;
 
   box-shadow: none;
 
   .icon {
-    margin-bottom: 1.25rem;
+    margin-bottom: 16px;
 
     opacity: 0.7;
   }
@@ -1360,17 +1360,17 @@ fetchTickets();
 
   flex-direction: column;
 
-  gap: 1.25rem;
+  gap: 16px;
 
-  padding-bottom: 1rem;
+  padding-bottom: 16px;
 
-  margin-top: 0.5rem;
+  margin-top: 8px;
 }
 
 .message-item {
   display: flex;
 
-  gap: 0.75rem;
+  gap: 8px;
 
   max-width: 85%;
 
@@ -1441,7 +1441,7 @@ fetchTickets();
 }
 
 .message-content {
-  padding: 1rem;
+  padding: 16px;
 
   border-radius: 12px;
 
@@ -1454,7 +1454,7 @@ fetchTickets();
 
     align-items: center;
 
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
 
     font-size: $font-size-sm;
 
@@ -1479,7 +1479,7 @@ fetchTickets();
 }
 
 .reply-box {
-  padding: 1.25rem;
+  padding: 16px;
 
   background-color: var(--card-bg);
 
@@ -1489,9 +1489,9 @@ fetchTickets();
 
   flex-direction: column;
 
-  gap: 1rem;
+  gap: 16px;
 
-  margin-bottom: 80px;
+  margin-bottom: 64px;
 
   position: relative;
 
@@ -1504,7 +1504,7 @@ fetchTickets();
   textarea {
     width: 100%;
 
-    padding: 1rem;
+    padding: 16px;
 
     border: 1px solid var(--border-color);
 
@@ -1538,9 +1538,9 @@ fetchTickets();
 
     align-items: center;
 
-    gap: 0.75rem;
+    gap: 8px;
 
-    padding: 0.75rem 1.5rem;
+    padding: 8px 24px;
 
     border-radius: 8px;
 
@@ -1595,7 +1595,7 @@ fetchTickets();
 }
 
 .ticket-closed-notice {
-  padding: 1.25rem;
+  padding: 16px;
 
   background-color: var(--card-bg);
 
@@ -1607,13 +1607,13 @@ fetchTickets();
 
   justify-content: center;
 
-  gap: 0.75rem;
+  gap: 8px;
 
   color: var(--text-quaternary);
 
   font-size: $font-size-md;
 
-  margin-bottom: 80px;
+  margin-bottom: 64px;
 
   position: relative;
 
@@ -1649,7 +1649,7 @@ fetchTickets();
 
   animation: fadeIn 0.3s ease;
 
-  padding: 1rem;
+  padding: 16px;
 }
 
 .modal-content {
@@ -1675,7 +1675,7 @@ fetchTickets();
 }
 
 .modal-header {
-  padding: 1.5rem;
+  padding: 24px;
 
   border-bottom: 1px solid var(--border-color);
 
@@ -1706,7 +1706,7 @@ fetchTickets();
 
     cursor: pointer;
 
-    padding: 0.5rem;
+    padding: 8px;
 
     display: flex;
 
@@ -1727,7 +1727,7 @@ fetchTickets();
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 24px;
 
   background-color: var(--bg-color);
 
@@ -1738,16 +1738,16 @@ fetchTickets();
 
     line-height: 1.6;
 
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
   }
 
   .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
     label {
       display: block;
 
-      margin-bottom: 0.75rem;
+      margin-bottom: 8px;
 
       font-weight: $font-weight-medium;
 
@@ -1760,7 +1760,7 @@ fetchTickets();
     textarea {
       width: 100%;
 
-      padding: 0.85rem 1rem;
+      padding: 16px 16px;
 
       border: 1px solid var(--border-color);
 
@@ -1797,12 +1797,12 @@ fetchTickets();
   .priority-selector {
     display: flex;
 
-    gap: 0.75rem;
+    gap: 8px;
 
     .priority-btn {
       flex: 1;
 
-      padding: 0.85rem;
+      padding: 16px;
 
       border: 1px solid var(--border-color);
 
@@ -1842,7 +1842,7 @@ fetchTickets();
 }
 
 .modal-footer {
-  padding: 1.5rem;
+  padding: 24px;
 
   border-top: 1px solid var(--border-color);
 
@@ -1850,12 +1850,12 @@ fetchTickets();
 
   justify-content: flex-end;
 
-  gap: 1rem;
+  gap: 16px;
 
   background-color: var(--bg-color);
 
   button {
-    padding: 0.85rem 1.75rem;
+    padding: 16px 24px;
 
     border-radius: 10px;
 
@@ -1894,7 +1894,7 @@ fetchTickets();
 
       justify-content: center;
 
-      gap: 0.75rem;
+      gap: 8px;
 
       box-shadow: none;
 
@@ -2072,7 +2072,7 @@ fetchTickets();
 
   z-index: 1000;
 
-  padding: 1.5rem;
+  padding: 24px;
 
   animation: fadeIn 0.4s ease;
 
@@ -2081,7 +2081,7 @@ fetchTickets();
 
     background-color: var(--card-bg);
 
-    padding: 2.5rem;
+    padding: 48px;
 
     border-radius: 16px;
 
@@ -2096,7 +2096,7 @@ fetchTickets();
     animation: scaleIn 0.5s ease;
 
     h2 {
-      margin: 1.25rem 0;
+      margin: 16px 0;
 
       font-size: $font-size-2xl;
 
@@ -2108,7 +2108,7 @@ fetchTickets();
     p {
       color: var(--text-quaternary);
 
-      margin-bottom: 2rem;
+      margin-bottom: 24px;
 
       font-size: $font-size-md;
 
@@ -2116,7 +2116,7 @@ fetchTickets();
     }
 
     .switch-btn {
-      padding: 0.85rem 1.75rem;
+      padding: 16px 24px;
 
       border-radius: 10px;
 
@@ -2138,7 +2138,7 @@ fetchTickets();
 
       align-items: center;
 
-      gap: 0.75rem;
+      gap: 8px;
 
       box-shadow: none;
 
@@ -2184,7 +2184,7 @@ fetchTickets();
 
   justify-content: center;
 
-  gap: 6px;
+  gap: 4px;
 
   .spinner {
     display: inline-block;
@@ -2212,13 +2212,13 @@ fetchTickets();
 
   background: rgba(33, 150, 243, 0.03);
 
-  padding: 18px 0;
+  padding: 16px 0;
 
   text-align: center;
 
   cursor: pointer;
 
-  margin-top: 10px;
+  margin-top: 8px;
 
   transition: border-color 0.2s, background 0.2s;
 
@@ -2252,7 +2252,7 @@ fetchTickets();
 
   color: var(--text-tertiary);
 
-  margin-top: 2px;
+  margin-top: 0;
 }
 
 .uploaded-images-list {

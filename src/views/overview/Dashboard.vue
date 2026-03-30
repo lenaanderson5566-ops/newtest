@@ -1375,7 +1375,7 @@ $space-2: map.get($spacers, 2);
 .dashboard-container {
   display: flex;
   justify-content: center;
-  --dashboard-card-padding: 12px;
+  --dashboard-card-padding: 8px;
   --dashboard-radius: #{$border-radius-sm};
   --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
@@ -1561,7 +1561,7 @@ $space-2: map.get($spacers, 2);
 
         .stats-value {
           font-size: $font-size-md;
-          margin-bottom: 2px;
+          margin-bottom: 0;
         }
 
         .stats-label {
@@ -1573,7 +1573,7 @@ $space-2: map.get($spacers, 2);
           z-index: 5;
           display: inline-flex;
           align-items: center;
-          gap: 6px;
+          gap: 4px;
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
@@ -1645,12 +1645,12 @@ $space-2: map.get($spacers, 2);
           display: flex;
           flex-direction: column;
           gap: #{$space-2};
-          margin-top: 6px;
+          margin-top: 4px;
           overflow: visible;
 
           .expired-status-strip {
             border-radius: var(--dashboard-radius);
-            padding: 9px 12px;
+            padding: 8px 8px;
             font-size: $font-size-sm;
             font-weight: $font-weight-semibold;
             color: var(--plan-expired-strip-text);
@@ -1662,7 +1662,7 @@ $space-2: map.get($spacers, 2);
             border: none;
             border-radius: var(--dashboard-radius);
             background: var(--theme-surface-soft);
-            padding: 10px 12px;
+            padding: 8px 8px;
             overflow: visible;
           }
 
@@ -1686,7 +1686,7 @@ $space-2: map.get($spacers, 2);
           }
 
           .plan-summary-section-meta {
-            padding: 10px 12px;
+            padding: 8px 8px;
           }
 
           .plan-status-hero {
@@ -1724,8 +1724,8 @@ $space-2: map.get($spacers, 2);
 
           .plan-summary-section-actions {
             border: none;
-            padding-top: 12px;
-            padding-bottom: 12px;
+            padding-top: 8px;
+            padding-bottom: 8px;
           }
 
           .plan-summary-row {
@@ -1733,7 +1733,7 @@ $space-2: map.get($spacers, 2);
             align-items: center;
             justify-content: space-between;
             gap: #{$space-2};
-            padding: 2px 0;
+            padding: 0 0;
           }
 
           .plan-summary-label {
@@ -1743,7 +1743,7 @@ $space-2: map.get($spacers, 2);
             &.with-tooltip {
               display: inline-flex;
               align-items: center;
-              gap: 6px;
+              gap: 4px;
             }
           }
 
@@ -1767,7 +1767,7 @@ $space-2: map.get($spacers, 2);
             display: inline-flex;
             align-items: center;
             border-radius: 999px;
-            padding: 2px 8px;
+            padding: 0 8px;
             font-size: $font-size-sm;
             font-weight: $font-weight-semibold;
             color: var(--text-on-dark-primary);
@@ -1802,7 +1802,7 @@ $space-2: map.get($spacers, 2);
             .plan-action-btn {
               flex: 1;
               border-radius: var(--dashboard-button-radius);
-              padding: 10px 14px;
+              padding: 8px 16px;
               font-size: $font-size-sm;
               font-weight: $font-weight-semibold;
               letter-spacing: 0.2px;
@@ -1811,7 +1811,7 @@ $space-2: map.get($spacers, 2);
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                gap: 6px;
+                gap: 4px;
                 width: 100%;
               }
 
@@ -1822,7 +1822,7 @@ $space-2: map.get($spacers, 2);
           }
 
           .plan-action-helper-text {
-            margin-top: 10px;
+            margin-top: 8px;
             font-size: $font-size-sm;
             color: var(--text-tertiary);
             text-align: center;
@@ -2115,7 +2115,7 @@ $space-2: map.get($spacers, 2);
     gap: #{$space-2};
 
     .today-card-title {
-      margin-bottom: 2px;
+      margin-bottom: 0;
     }
 
     .today-traffic-total-main {
@@ -2172,7 +2172,7 @@ $space-2: map.get($spacers, 2);
       left: 50%;
       bottom: calc(100% + 8px);
       width: min(220px, calc(100vw - 32px));
-      padding: 8px 10px;
+      padding: 8px 8px;
       border-radius: 6px;
       background: rgba(15, 23, 42, 0.96);
       color: var(--text-on-dark-primary);
@@ -2216,7 +2216,7 @@ $space-2: map.get($spacers, 2);
 
   /* 流量趋势图卡片 */
   .usage-trend-card {
-    padding: 10px;
+    padding: 8px;
 
     .card-header {
       margin-bottom: 4px;
@@ -2244,7 +2244,7 @@ $space-2: map.get($spacers, 2);
     margin-bottom: var(--dashboard-section-margin);
     min-height: 44px;
     max-height: 48px;
-    padding: 6px 12px;
+    padding: 4px 8px;
     border-radius: var(--dashboard-radius);
     border: 1px solid rgba(var(--warning-color-rgb), 0.4);
     background: var(--warning-background);
@@ -2280,7 +2280,7 @@ $space-2: map.get($spacers, 2);
     .banner-action {
       border-radius: 8px;
       height: 30px;
-      padding: 0 12px;
+      padding: 0 8px;
       font-size: $font-size-sm;
       font-weight: $font-weight-semibold;
       flex-shrink: 0;
@@ -2303,14 +2303,14 @@ $space-2: map.get($spacers, 2);
 @media (max-width: #{$bp-xl}) {
   .dashboard-container {
     padding: 0;
-    padding-bottom: 74px;
+    padding-bottom: 64px;
   }
 }
 
 @media (max-width: #{$bp-md}) {
   .dashboard-container {
-    padding-bottom: 74px;
-    --dashboard-card-padding: 12px;
+    padding-bottom: 64px;
+    --dashboard-card-padding: 8px;
   }
 
   .stats-grid {
@@ -2328,8 +2328,8 @@ $space-2: map.get($spacers, 2);
       min-width: 0;
       min-height: auto;
       height: auto;
-      padding: 10px;
-      gap: 5px;
+      padding: 8px;
+      gap: 4px;
 
       .usage-percent {
         font-size: $font-size-xl;
@@ -2344,11 +2344,11 @@ $space-2: map.get($spacers, 2);
       }
 
       .usage-kpis {
-        gap: 6px;
+        gap: 4px;
       }
 
       .usage-kpi {
-        padding: 6px;
+        padding: 4px;
       }
 
     }
@@ -2358,7 +2358,7 @@ $space-2: map.get($spacers, 2);
     padding: 8px;
 
     .card-header {
-      margin-bottom: 2px;
+      margin-bottom: 0;
     }
 
     .card-body {
@@ -2477,7 +2477,7 @@ $space-2: map.get($spacers, 2);
   background: #fff;
   border: 1px solid #e8ebf4;
   border-radius: 14px;
-  padding: 18px;
+  padding: 16px;
 }
 
 .no-plan-flow-layout {
@@ -2488,7 +2488,7 @@ $space-2: map.get($spacers, 2);
 
 .no-plan-flow-aside {
   border-radius: 12px;
-  padding: 24px 22px;
+  padding: 24px 24px;
   border: 1px solid #edf0f8;
   background: #fff;
   display: flex;
@@ -2496,7 +2496,7 @@ $space-2: map.get($spacers, 2);
 
   h3 {
     @extend %typo-page-title;
-    margin: 18px 0 18px;
+    margin: 16px 0 16px;
     line-height: 1.3;
     letter-spacing: 0.5px;
   }
@@ -2513,7 +2513,7 @@ $space-2: map.get($spacers, 2);
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  padding: 9px 18px;
+  padding: 8px 16px;
   border-radius: 12px;
   @extend %typo-dark-primary;
   background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
@@ -2531,14 +2531,14 @@ $space-2: map.get($spacers, 2);
 
   .platform-text {
     @extend %typo-label-text;
-    margin-top: 14px;
+    margin-top: 16px;
   }
 
   .platform-icons {
-    margin-top: 14px;
+    margin-top: 16px;
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 16px;
     color: #8ca0d8;
 
     :deep(svg) {
@@ -2550,19 +2550,19 @@ $space-2: map.get($spacers, 2);
 
 .no-plan-steps {
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .no-plan-step {
   border: none;
   width: 100%;
   border-radius: 16px;
-  padding: 24px 20px;
+  padding: 24px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   color: #fff;
   text-align: center;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
@@ -2611,7 +2611,7 @@ button.no-plan-step {
   }
 
   .no-plan-step {
-    padding: 20px 16px;
+    padding: 16px 16px;
   }
 }
 
@@ -2720,7 +2720,7 @@ $space-2: map.get($spacers, 2);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 20px;
+    padding: 16px 16px;
     border-bottom: 1px solid var(--border-color);
     background-color: rgba(var(--theme-color-rgb), 0.03);
 
@@ -2748,12 +2748,12 @@ $space-2: map.get($spacers, 2);
 
   .modal-body {
     display: block;
-    padding: 20px;
+    padding: 16px;
     overflow-y: auto;
   }
 
   .modal-footer {
-    padding: 15px 20px;
+    padding: 16px 16px;
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: flex-end;
@@ -2765,7 +2765,7 @@ $space-2: map.get($spacers, 2);
   }
 
   .traffic-package-desc {
-    margin: 0 0 14px;
+    margin: 0 0 16px;
     color: var(--text-tertiary);
     font-size: $font-size-md;
     line-height: 1.5;
@@ -2781,7 +2781,7 @@ $space-2: map.get($spacers, 2);
     display: flex;
     flex-direction: column;
     gap: #{$space-2};
-    padding: 14px;
+    padding: 16px;
     border: 1px solid var(--border-color);
     border-radius: var(--dashboard-radius);
     background: linear-gradient(

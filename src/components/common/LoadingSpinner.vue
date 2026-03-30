@@ -59,7 +59,7 @@ export default {
   }
   
   &-text {
-    margin-top: 1.5rem;
+    margin-top: 24px;
     color: var(--text-primary);
     font-size: $font-size-sm;
   }

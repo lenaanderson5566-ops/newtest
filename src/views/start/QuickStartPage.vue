@@ -419,7 +419,7 @@ onMounted(fetchUserStatus);
   padding-bottom: calc(2px + 64px);
 
   @media (min-width: #{$bp-md}) {
-    padding-bottom: 2px;
+    padding-bottom: 0;
   }
 }
 
@@ -449,8 +449,8 @@ onMounted(fetchUserStatus);
   .step-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
+    gap: 8px;
+    margin-bottom: 16px;
 
     h2 {
       margin: 0;
@@ -479,23 +479,23 @@ onMounted(fetchUserStatus);
 }
 
 .system-grid {
-  margin-top: 14px;
+  margin-top: 16px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
+  gap: 8px;
 }
 
 .system-item {
   border: 1px solid var(--border-color);
   border-radius: $border-radius-sm;
   background: #fff;
-  padding: 12px;
+  padding: 8px;
   min-height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
   position: relative;
 
   &:hover {
@@ -520,7 +520,7 @@ onMounted(fetchUserStatus);
 
 @media (max-width: #{$bp-md}) {
   .system-item {
-    padding: map.get($spacers, 2) 34px map.get($spacers, 2) map.get($spacers, 2);
+    padding: map.get($spacers, 2) 24px map.get($spacers, 2) map.get($spacers, 2);
     min-height: 62px;
     flex-direction: row;
     justify-content: flex-start;
@@ -542,17 +542,17 @@ onMounted(fetchUserStatus);
 }
 
 .client-grid {
-  margin-top: 12px;
+  margin-top: 8px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 .client-item {
   border: 1px solid var(--border-color);
   background: #fff;
   border-radius: $border-radius-sm;
-  padding: map.get($spacers, 2) 34px map.get($spacers, 2) map.get($spacers, 2);
+  padding: map.get($spacers, 2) 24px map.get($spacers, 2) map.get($spacers, 2);
   min-height: 62px;
   display: flex;
   align-items: center;
@@ -566,7 +566,7 @@ onMounted(fetchUserStatus);
     flex: 1;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
   }
 
   .client-name {
@@ -591,7 +591,7 @@ onMounted(fetchUserStatus);
     line-height: 1;
     background: rgba(240, 140, 46, 0.14);
     border-radius: 999px;
-    padding: 2px 6px;
+    padding: 0 4px;
     flex: 0 0 auto;
   }
 
@@ -618,10 +618,10 @@ onMounted(fetchUserStatus);
 }
 
 .action-row {
-  margin-top: 12px;
+  margin-top: 8px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 .action-btn,
@@ -635,7 +635,7 @@ onMounted(fetchUserStatus);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
 
   &.primary {
     background: #3f72e8;
@@ -644,7 +644,7 @@ onMounted(fetchUserStatus);
 }
 
 .help-btn {
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 .qrcode-modal-overlay {
@@ -667,7 +667,7 @@ onMounted(fetchUserStatus);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
 
   .close-btn {

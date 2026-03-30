@@ -1785,7 +1785,7 @@ export default {
 
     box-shadow: none;
 
-    padding: 20px;
+    padding: 16px;
 
     border: 1px solid var(--border-color);
 
@@ -1804,7 +1804,7 @@ export default {
 
       align-items: center;
 
-      margin-bottom: 15px;
+      margin-bottom: 16px;
 
       .card-title {
         font-size: $font-size-xl;
@@ -1831,7 +1831,7 @@ export default {
   .content-wrapper {
     display: flex;
 
-    gap: 30px;
+    gap: 24px;
 
     .left-column {
       flex: 1.45;
@@ -1853,12 +1853,12 @@ export default {
   }
 
   .section-wrapper {
-    margin-bottom: 25px;
+    margin-bottom: 24px;
 
     .section-title {
       @extend %typo-section-title;
 
-      margin-bottom: 15px;
+      margin-bottom: 16px;
 
       color: var(--text-primary);
 
@@ -1867,7 +1867,7 @@ export default {
       align-items: center;
       justify-content: space-between;
 
-      padding-left: 14px;
+      padding-left: 16px;
 
       &::before {
         content: "";
@@ -1898,7 +1898,7 @@ export default {
 
       .btn-unlock-selection {
         height: 30px;
-        padding: 0 10px;
+        padding: 0 8px;
         border: 1px solid rgba(var(--theme-color-rgb), 0.38);
         border-radius: $border-radius-sm;
         background: transparent;
@@ -1920,7 +1920,7 @@ export default {
   .plan-selector-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
+    gap: 8px;
   }
 
   .plan-selector-btn {
@@ -1929,7 +1929,7 @@ export default {
     border-radius: $border-radius;
     background: var(--card-background);
     min-height: 110px;
-    padding: 12px;
+    padding: 8px;
     text-align: left;
     display: flex;
     align-items: flex-start;
@@ -1983,7 +1983,7 @@ export default {
   }
 
   .selector-name {
-    margin-top: 30px;
+    margin-top: 24px;
     font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
     line-height: 1.2;
@@ -2044,7 +2044,7 @@ export default {
 
     padding: 24px;
 
-    margin-bottom: 25px;
+    margin-bottom: 24px;
 
     border: 1px solid var(--border-color);
 
@@ -2067,7 +2067,7 @@ export default {
 
       align-items: center;
 
-      margin-bottom: 20px;
+      margin-bottom: 16px;
 
       .card-title {
         font-size: $font-size-xl;
@@ -2086,7 +2086,7 @@ export default {
 
         align-items: center;
 
-        padding: 4px 12px;
+        padding: 4px 8px;
 
         border-radius: $border-radius-sm;
 
@@ -2144,14 +2144,14 @@ export default {
 
           align-items: center;
 
-          margin-bottom: 14px;
+          margin-bottom: 16px;
 
           .feature-icon {
             width: 20px;
 
             height: 20px;
 
-            margin-right: 10px;
+            margin-right: 8px;
 
             &.enabled {
               color: var(--theme-color);
@@ -2257,7 +2257,7 @@ export default {
 
       grid-template-columns: repeat(3, minmax(0, 1fr));
 
-      gap: 15px;
+      gap: 16px;
 
       width: 100%;
 
@@ -2330,7 +2330,7 @@ export default {
         .period-card-inner {
           background-color: #ffffff !important;
 
-          padding: 16px 12px !important;
+          padding: 16px 8px !important;
 
           min-height: 90px !important;
 
@@ -2362,9 +2362,9 @@ export default {
             background-color: var(--error-color);
             color: var(--text-on-dark-primary);
             font-size: $font-size-sm;
-            padding: 2px 4px;
+            padding: 0 4px;
             border-radius: 4px;
-            margin-left: 5px;
+            margin-left: 4px;
             vertical-align: middle;
           }
         }
@@ -2394,7 +2394,7 @@ export default {
             text-decoration: line-through;
             color: var(--text-tertiary);
             font-size: $font-size-sm;
-            margin-left: 5px;
+            margin-left: 4px;
           }
         }
 
@@ -2410,7 +2410,7 @@ export default {
 
     gap: 8px;
 
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 
     flex-wrap: wrap;
 
@@ -2421,7 +2421,7 @@ export default {
 
       height: 40px;
 
-      padding: 0 14px;
+      padding: 0 16px;
 
       border-radius: $border-radius-sm;
 
@@ -2464,7 +2464,7 @@ export default {
     .btn-verify {
       height: 36px;
 
-      padding: 0 14px;
+      padding: 0 16px;
 
       border-radius: $border-radius-sm;
 
@@ -2523,7 +2523,7 @@ export default {
 
     .coupon-applied-tag {
       height: 40px;
-      padding: 0 12px;
+      padding: 0 8px;
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
@@ -2538,7 +2538,7 @@ export default {
 
     .btn-remove-text {
       height: 40px;
-      padding: 0 12px;
+      padding: 0 8px;
       border-radius: $border-radius-sm;
       border: 1px solid var(--border-color);
       background: rgba(148, 163, 184, 0.08);
@@ -2556,7 +2556,7 @@ export default {
   }
 
   .coupon-merge-block {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 
     .coupon-input {
       margin-bottom: 0;
@@ -2565,13 +2565,13 @@ export default {
 
   .coupon-light-row {
     min-height: 38px;
-    padding: 0 10px;
+    padding: 0 8px;
     border: 1px solid var(--border-color);
     border-radius: $border-radius-sm;
     background: rgba(var(--theme-color-rgb), 0.03);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     justify-content: space-between;
     flex-wrap: nowrap;
 
@@ -2613,7 +2613,7 @@ export default {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 12px;
+      padding: 8px 8px;
       min-height: 38px;
       border-radius: 0;
       cursor: pointer;
@@ -2643,7 +2643,7 @@ export default {
         flex-shrink: 0;
 
         &.left-check {
-          margin-right: 2px;
+          margin-right: 0;
         }
       }
 
@@ -2676,7 +2676,7 @@ export default {
         min-width: 0;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 4px;
 
         .method-name {
           font-size: $font-size-md;
@@ -2730,7 +2730,7 @@ export default {
     }
 
     .summary-header-block {
-      margin-bottom: 14px;
+      margin-bottom: 16px;
 
       .summary-title {
         @extend %typo-card-title;
@@ -2751,7 +2751,7 @@ export default {
     }
 
     .coupon-merge-block.compact {
-      margin-bottom: 14px;
+      margin-bottom: 16px;
 
       .coupon-input {
         display: flex;
@@ -2784,7 +2784,7 @@ export default {
 
     .summary-amounts {
       display: grid;
-      gap: 6px;
+      gap: 4px;
     }
 
     .summary-row {
@@ -2820,7 +2820,7 @@ export default {
         &.summary-label-with-action {
           display: inline-flex;
           align-items: center;
-          gap: 6px;
+          gap: 4px;
         }
       }
 
@@ -2849,18 +2849,18 @@ export default {
       margin: 16px 0;
 
       &.strong {
-        margin: 6px 0 10px;
+        margin: 4px 0 8px;
       }
 
       &.compact {
-        margin: 8px 0 6px;
+        margin: 8px 0 4px;
       }
     }
 
     .summary-detail-toggle {
       justify-self: flex-start;
       padding: 0;
-      margin-top: -2px;
+      margin-top: 0;
       font-size: $font-size-xs;
 
       &.inline {
@@ -2873,7 +2873,7 @@ export default {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
 
       .payable-label {
         @extend %typo-label-text;
@@ -2921,7 +2921,7 @@ export default {
   }
 
   .coupon-verify-section .coupon-input {
-    padding: 14px;
+    padding: 16px;
     margin-bottom: 0;
   }
 
@@ -3001,7 +3001,7 @@ export default {
 
   .order-summary .summary-submit-action {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 8px;
     height: 40px;
     padding: 0 24px;
     border-radius: $border-radius-sm;
@@ -3061,7 +3061,7 @@ export default {
 
     border-radius: $border-radius-sm;
 
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 
     position: relative;
 
@@ -3095,7 +3095,7 @@ export default {
 
         border-radius: $border-radius-sm;
 
-        margin-bottom: 12px;
+        margin-bottom: 8px;
 
         position: relative;
 
@@ -3209,7 +3209,7 @@ export default {
   background: var(--card-background);
   border: 1px solid var(--border-color);
   border-radius: 14px;
-  padding: 18px 18px 16px;
+  padding: 16px 16px 16px;
   z-index: 1;
 }
 
@@ -3236,14 +3236,14 @@ export default {
 }
 
 .payment-qrcode-wrap {
-  margin: 12px 0 14px;
+  margin: 8px 0 16px;
   display: flex;
   justify-content: center;
 }
 
 .payment-link-wrap {
-  margin: 12px 0 14px;
-  padding: 10px 12px;
+  margin: 8px 0 16px;
+  padding: 8px 8px;
   border-radius: 10px;
   border: 1px solid var(--border-color);
   background: rgba(var(--theme-color-rgb), 0.06);
@@ -3258,7 +3258,7 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 14px;
+  padding: 8px 16px;
   border-radius: 10px;
   background: rgba(22, 163, 74, 0.95);
   color: #fff;
@@ -3286,7 +3286,7 @@ export default {
 @media (max-width: 991px) {
   .order-confirm-container {
     .content-wrapper {
-      gap: 25px;
+      gap: 24px;
     }
   }
 }
@@ -3302,7 +3302,7 @@ export default {
     }
 
     .welcome-card {
-      padding: 15px;
+      padding: 16px;
 
       .card-header .card-title {
         font-size: $font-size-lg;
@@ -3337,7 +3337,7 @@ export default {
 
     .plan-selector-btn {
       min-height: 96px;
-      padding: 10px;
+      padding: 8px;
     }
 
     .selector-current-badge {
@@ -3346,7 +3346,7 @@ export default {
     }
 
     .selector-name {
-      margin-top: 28px;
+      margin-top: 24px;
       font-size: $font-size-lg;
     }
 
@@ -3363,18 +3363,18 @@ export default {
     .period-selection .period-cards {
       grid-template-columns: repeat(2, minmax(0, 1fr));
 
-      gap: 12px;
+      gap: 8px;
 
       .period-card {
         .period-card-inner {
-          padding: 12px 8px !important;
+          padding: 8px 8px !important;
 
           min-height: 80px !important;
 
           .period-type {
             font-size: $font-size-sm;
 
-            margin-bottom: 6px !important;
+            margin-bottom: 4px !important;
           }
 
           .period-price {
@@ -3398,7 +3398,7 @@ export default {
     .section-title {
       font-size: $font-size-md;
 
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .coupon-input {
@@ -3417,7 +3417,7 @@ export default {
       .btn-verify {
         width: auto;
 
-        padding: 0 15px;
+        padding: 0 16px;
 
         justify-content: center;
 
@@ -3428,13 +3428,13 @@ export default {
 
     .plan-card,
     .order-summary {
-      padding: 18px;
+      padding: 16px;
     }
 
     .period-selection .period-cards {
       grid-template-columns: repeat(2, minmax(0, 1fr));
 
-      gap: 10px;
+      gap: 8px;
 
       .period-card {
         .period-card-inner {
@@ -3474,7 +3474,7 @@ export default {
   .order-confirm-container .period-selection .period-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
-    gap: 12px !important;
+    gap: 8px !important;
   }
 }
 
@@ -3482,7 +3482,7 @@ export default {
   .order-confirm-container .period-selection .period-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
-    gap: 10px !important;
+    gap: 8px !important;
   }
 }
 
@@ -3496,7 +3496,7 @@ export default {
 
     grid-template-columns: repeat(2, 1fr) !important;
 
-    gap: 12px !important;
+    gap: 8px !important;
   }
 }
 
@@ -3506,7 +3506,7 @@ export default {
 
     grid-template-columns: repeat(2, 1fr) !important;
 
-    gap: 10px !important;
+    gap: 8px !important;
   }
 }
 
@@ -3515,7 +3515,7 @@ export default {
 
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
 
-  gap: 15px !important;
+  gap: 16px !important;
 
   width: 100% !important;
 }
@@ -3524,7 +3524,7 @@ export default {
   :deep(.period-cards) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
-    gap: 12px !important;
+    gap: 8px !important;
   }
 }
 
@@ -3532,7 +3532,7 @@ export default {
   :deep(.period-cards) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
-    gap: 10px !important;
+    gap: 8px !important;
   }
 }
 </style>

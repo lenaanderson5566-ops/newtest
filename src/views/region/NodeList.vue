@@ -340,7 +340,7 @@ onMounted(() => {
 
     padding: 0;
 
-    padding-bottom: 2px; 
+    padding-bottom: 0; 
 
   }
 
@@ -392,7 +392,7 @@ onMounted(() => {
 
     align-items: center;
 
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 
     
 
@@ -427,9 +427,9 @@ onMounted(() => {
 
 .welcome-card {
   .quick-actions {
-    margin-top: 12px;
+    margin-top: 8px;
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
   }
 
@@ -438,7 +438,7 @@ onMounted(() => {
     background: #fff;
     color: var(--text-primary);
     border-radius: $border-radius-sm;
-    padding: 10px 18px;
+    padding: 8px 16px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -468,7 +468,7 @@ onMounted(() => {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
 
       h3 { margin: 0; font-size: $font-size-xl; }
     }
@@ -476,11 +476,11 @@ onMounted(() => {
     .import-action {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 14px;
+      gap: 8px;
+      padding: 16px;
       border-radius: $border-radius-sm;
       background: #f6f7fb;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       cursor: pointer;
     }
 
@@ -500,7 +500,7 @@ onMounted(() => {
 
     .platform-selector {
       display: flex;
-      gap: 12px;
+      gap: 8px;
       margin: 16px 0;
       flex-wrap: wrap;
     }
@@ -509,7 +509,7 @@ onMounted(() => {
       border: 1px solid var(--border-color);
       background: #f7f7fb;
       border-radius: 999px;
-      padding: 8px 18px;
+      padding: 8px 16px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -524,19 +524,19 @@ onMounted(() => {
 
     .platform-title {
       @extend %typo-item-title;
-      margin: 8px 0 12px;
+      margin: 8px 0 8px;
     }
 
     .platform-options {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
+      gap: 8px;
     }
 
     .platform-option {
       border: 1px solid var(--border-color);
       border-radius: $border-radius-sm;
-      padding: 22px 14px;
+      padding: 24px 16px;
       background: #f5f7fb;
       font-size: $font-size-md;
       font-weight: $font-weight-medium;
@@ -545,7 +545,7 @@ onMounted(() => {
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
 
       .platform-option-icon {
         opacity: 0.9;
@@ -580,7 +580,7 @@ onMounted(() => {
       background: #fff;
       border-radius: $border-radius-sm;
       width: min(90vw, 320px);
-      padding: 14px;
+      padding: 16px;
 
       &.reset-modal {
         width: min(90vw, 380px);
@@ -591,7 +591,7 @@ onMounted(() => {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .qrcode-content {
@@ -604,7 +604,7 @@ onMounted(() => {
     .reset-modal-text {
       color: var(--text-primary);
       font-size: $font-size-md;
-      margin: 0 0 12px;
+      margin: 0 0 8px;
       line-height: 1.6;
     }
 
@@ -632,7 +632,7 @@ onMounted(() => {
 
   .no-plan-head {
     text-align: center;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 
     h2 {
       margin: 0;
@@ -652,7 +652,7 @@ onMounted(() => {
     position: relative;
     height: 240px;
     border-radius: $border-radius-sm;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     border: 1px solid rgba(var(--theme-color-rgb), 0.22);
     background:
       radial-gradient(circle at 20% 30%, rgba(var(--theme-color-rgb), 0.22), transparent 35%),
@@ -717,8 +717,8 @@ onMounted(() => {
   .region-lock-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-    margin-bottom: 18px;
+    gap: 8px;
+    margin-bottom: 16px;
 
     @media (max-width: 1080px) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -731,12 +731,12 @@ onMounted(() => {
     .region-lock-card {
       border: 1px solid var(--border-color);
       border-radius: $border-radius-sm;
-      padding: 14px;
+      padding: 16px;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.96));
       position: relative;
 
       h3 {
-        margin: 0 0 6px;
+        margin: 0 0 4px;
         font-size: $font-size-md;
       }
 
@@ -747,12 +747,12 @@ onMounted(() => {
       }
 
       .unlock-tip-btn {
-        margin-top: 12px;
+        margin-top: 8px;
         border: 1px solid rgba(var(--theme-color-rgb), 0.3);
         background: rgba(var(--theme-color-rgb), 0.08);
         color: rgba(var(--theme-color-rgb), 0.95);
         border-radius: 999px;
-        padding: 6px 12px;
+        padding: 4px 8px;
         font-size: $font-size-sm;
         font-weight: $font-weight-semibold;
         float: right;
@@ -763,12 +763,12 @@ onMounted(() => {
   .no-plan-cta {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 8px;
     flex-wrap: wrap;
 
     .cta-btn {
       min-width: 168px;
-      padding: 10px 18px;
+      padding: 8px 16px;
       border-radius: $border-radius-sm;
       font-size: $font-size-md;
       font-weight: $font-weight-bold;
@@ -801,7 +801,7 @@ onMounted(() => {
 
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  gap: 0.9rem;
+  gap: 16px;
 
 }
 
@@ -815,7 +815,7 @@ onMounted(() => {
 
   align-items: center;
 
-  padding: 0.9rem 1.05rem;
+  padding: 16px 16px;
 
   border-radius: $border-radius-sm;
 
@@ -845,7 +845,7 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-right: 10px;
+    margin-right: 8px;
     padding: 0 8px;
     font-size: $font-size-xs;
     font-weight: $font-weight-bold;
@@ -918,7 +918,7 @@ onMounted(() => {
         height: 18px;
         line-height: 18px;
         font-size: $font-size-xs;
-        padding: 0 6px;
+        padding: 0 4px;
         border-radius: 999px;
         background-color: rgba(190, 24, 93, 0.1);
         color: var(--text-secondary);
@@ -938,7 +938,7 @@ onMounted(() => {
 
     align-items: center;
 
-    gap: 6px;
+    gap: 4px;
 
     margin-left: 8px;
     min-width: 24px;
@@ -980,7 +980,7 @@ onMounted(() => {
 
   justify-content: center;
 
-  padding: 3rem 1rem;
+  padding: 48px 16px;
 
   text-align: center;
 
@@ -988,7 +988,7 @@ onMounted(() => {
 
   p {
 
-    margin-top: 1rem;
+    margin-top: 16px;
 
     color: var(--text-tertiary);
 
@@ -1014,7 +1014,7 @@ onMounted(() => {
 
 .retry-button {
 
-  margin-top: 1.5rem;
+  margin-top: 24px;
 
   height: 40px;
 

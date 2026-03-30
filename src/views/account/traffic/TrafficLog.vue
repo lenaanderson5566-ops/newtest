@@ -813,7 +813,7 @@ onUnmounted(() => {
 
   padding: 0;
 
-  padding-bottom: 80px; 
+  padding-bottom: 64px; 
 
   display: flex;
 
@@ -853,12 +853,12 @@ onUnmounted(() => {
 
   .chart-toggle-buttons {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 
     button {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       background-color: rgba(var(--theme-color-rgb), 0.05);
       border: 1px solid var(--border-color);
       border-radius: 20px;
@@ -894,7 +894,7 @@ onUnmounted(() => {
 
     box-shadow: none;
 
-    padding: 20px;
+    padding: 16px;
 
     border: 1px solid var(--border-color);
 
@@ -918,10 +918,10 @@ onUnmounted(() => {
 
       align-items: center;
 
-      margin-bottom: 15px;
+      margin-bottom: 16px;
 
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 4px;
 
       .card-title {
         @extend %typo-section-title;
@@ -942,7 +942,7 @@ onUnmounted(() => {
 
     border-radius: 8px;
 
-    padding: 12px 16px;
+    padding: 8px 16px;
 
     margin-top: 16px;
 
@@ -983,7 +983,7 @@ onUnmounted(() => {
 
     justify-content: center;
 
-    padding: 40px 0;
+    padding: 48px 0;
 
     
 
@@ -1075,7 +1075,7 @@ onUnmounted(() => {
 
     overflow-x: auto;
 
-    margin-top: 12px;
+    margin-top: 8px;
 
     -webkit-overflow-scrolling: touch; 
 
@@ -1093,7 +1093,7 @@ onUnmounted(() => {
 
       th, td {
 
-        padding: 12px 16px;
+        padding: 8px 16px;
 
         text-align: left;
 
@@ -1137,7 +1137,7 @@ onUnmounted(() => {
 
         th, td {
 
-          padding: 8px 6px;
+          padding: 8px 4px;
 
           font-size: $font-size-sm;
 

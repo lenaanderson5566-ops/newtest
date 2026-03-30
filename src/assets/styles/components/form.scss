@@ -7,7 +7,7 @@
 
 // 表单组
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
   
   &:last-child {
     margin-bottom: 0;
@@ -17,7 +17,7 @@
 // 表单标签
 .form-label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
   font-weight: $font-weight-medium;
   color: var(--text-primary);
 }
@@ -26,7 +26,7 @@
 .form-control {
   display: block;
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 8px 16px;
   font-size: $font-size-md;
   line-height: 1.5;
   color: var(--text-primary);
@@ -57,7 +57,7 @@
 // 表单帮助文本
 .form-text {
   display: block;
-  margin-top: 0.5rem;
+  margin-top: 8px;
   font-size: $font-size-sm;
   color: var(--text-tertiary);
 }
@@ -65,7 +65,7 @@
 // 表单错误文本
 .form-error {
   display: block;
-  margin-top: 0.5rem;
+  margin-top: 8px;
   font-size: $font-size-sm;
   color: var(--error-color);
 }
@@ -78,7 +78,7 @@
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
-  padding: 0.75rem 1.5rem;
+  padding: 8px 24px;
   font-size: $font-size-md;
   line-height: 1.5;
   border-radius: $border-radius;
@@ -148,7 +148,7 @@
   color: var(--theme-color);
   background-color: transparent;
   border: none;
-  padding: 0.5rem;
+  padding: 8px;
   
   &:hover, &:focus {
     color: var(--theme-hover-color, rgba(var(--theme-color-rgb), 0.8));
@@ -166,12 +166,12 @@
 .form-row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -0.5rem;
-  margin-left: -0.5rem;
+  margin-right: 0;
+  margin-left: 0;
   
   > .form-group {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
+    padding-right: 8px;
+    padding-left: 8px;
     flex: 0 0 100%;
     max-width: 100%;
     

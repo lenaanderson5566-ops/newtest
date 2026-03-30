@@ -2515,7 +2515,7 @@ export default {
 
     display: flex;
 
-    padding: 60px 0;
+    padding: 64px 0;
 
     min-height: 100vh;
 
@@ -2549,7 +2549,7 @@ export default {
 
   display: flex;
 
-  gap: 10px;
+  gap: 8px;
 
   z-index: 10;
 
@@ -2569,7 +2569,7 @@ export default {
 
 .auth-form-container {
 
-  padding: 40px 40px;
+  padding: 48px 48px;
 
   width: 100%;
 
@@ -2587,7 +2587,7 @@ export default {
 
   @media (max-width: #{$bp-lg}) {
 
-    padding: 20px;
+    padding: 16px;
 
     margin: auto;
 
@@ -2601,7 +2601,7 @@ export default {
 
 .auth-header {
 
-  margin-bottom: 2rem;
+  margin-bottom: 24px;
 
   text-align: center;
 
@@ -2618,7 +2618,7 @@ export default {
   .auth-title {
     @extend %typo-page-title;
 
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
 
 
 
@@ -2638,7 +2638,7 @@ export default {
 
     color: var(--text-tertiary);
 
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
 
 
@@ -2842,7 +2842,7 @@ export default {
 
     align-items: center;
 
-    padding: 0 12px;
+    padding: 0 8px;
 
     min-width: 130px;
 
@@ -2994,7 +2994,7 @@ export default {
 
       .suffix-option {
 
-        padding: 10px 16px;
+        padding: 8px 16px;
 
         cursor: pointer;
 
@@ -3136,7 +3136,7 @@ export default {
 
   .form-control {
 
-    padding-left: 40px;
+    padding-left: 48px;
 
     height: 45px;
 
@@ -3156,7 +3156,7 @@ export default {
 
     &[type="text"] {
 
-      padding-right: 40px;
+      padding-right: 48px;
 
     }
 
@@ -3230,7 +3230,7 @@ export default {
 
     border-bottom-right-radius: 8px;
 
-    padding: 0 15px;
+    padding: 0 16px;
 
     min-width: 100px;
 
@@ -3302,7 +3302,7 @@ export default {
 
     .icon-left {
 
-      margin-right: 5px;
+      margin-right: 4px;
 
     }
 
@@ -3406,7 +3406,7 @@ export default {
 
 .agreement-checkbox {
 
-  margin-top: 1.5rem;
+  margin-top: 24px;
 
 
 
@@ -3418,7 +3418,7 @@ export default {
 
     position: relative;
 
-    padding-left: 30px;
+    padding-left: 24px;
 
     cursor: pointer;
 
@@ -3568,7 +3568,7 @@ export default {
 
   font-size: $font-size-xs;
 
-  margin-top: 0.3rem;
+  margin-top: 4px;
 
 }
 
@@ -3580,7 +3580,7 @@ export default {
 
   .auth-split-right {
 
-    padding: 20px 0;
+    padding: 16px 0;
 
   }
 
@@ -3588,7 +3588,7 @@ export default {
 
   .auth-form-container {
 
-    padding: 30px 20px;
+    padding: 24px 16px;
 
     margin: auto;
 
@@ -3598,7 +3598,7 @@ export default {
 
   .auth-header {
 
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
 
 
@@ -3670,7 +3670,7 @@ export default {
 
   .auth-split-right {
 
-    padding: 2rem;
+    padding: 24px;
 
   }
 
@@ -3869,7 +3869,7 @@ export default {
 
 .auth-logo {
 
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 
   text-align: center;
 
@@ -3913,7 +3913,7 @@ export default {
 
   justify-content: center;
 
-  margin: 10px 0;
+  margin: 8px 0;
 
 
 
@@ -3925,7 +3925,7 @@ export default {
 
     justify-content: center;
 
-    margin: 10px 0;
+    margin: 8px 0;
 
     min-height: 78px;
 
@@ -4051,7 +4051,7 @@ export default {
 
       justify-content: space-between;
 
-      padding: 16px 20px;
+      padding: 16px 16px;
 
       border-bottom: 1px solid var(--border-color);
 
@@ -4115,7 +4115,7 @@ export default {
 
     .captcha-modal-body {
 
-      padding: 20px;
+      padding: 16px;
 
 
 
@@ -4139,7 +4139,7 @@ export default {
 
         justify-content: center;
 
-        margin: 15px 0;
+        margin: 16px 0;
 
         min-height: 78px;
 
