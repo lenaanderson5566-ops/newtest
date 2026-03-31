@@ -45,11 +45,11 @@
             <div class="no-plan-flow-layout">
               <section class="no-plan-hero">
                 <div class="hero-copy">
-                  <span class="no-plan-badge">订单待完成</span>
-                  <h3 class="no-plan-title">继续完成支付，激活服务</h3>
-                  <p class="no-plan-subtitle">完成支付后即可下载客户端并开始使用</p>
+                  <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
+                  <h3 class="no-plan-title">{{ noPlanHeroTitle }}</h3>
+                  <p class="no-plan-subtitle">{{ noPlanHeroSubtitle }}</p>
                   <div class="hero-actions">
-                    <button class="hero-btn primary" @click="goToOrders">继续支付</button>
+                    <button class="hero-btn primary" @click="handleNoPlanPrimaryAction">{{ noPlanPrimaryActionText }}</button>
                     <button class="hero-btn secondary" @click="goToDocs">查看教程</button>
                   </div>
                   <div class="hero-helper">支持多平台 · 一键导入配置</div>
@@ -948,6 +948,23 @@ export default {
       return userStats.pendingOrders > 0;
     });
 
+    const noPlanHeroBadge = computed(() => (hasPendingItems.value ? '订单待完成' : '尚未下单'));
+    const noPlanHeroTitle = computed(() => (hasPendingItems.value ? '继续完成支付，激活服务' : '先下单并完成支付，激活服务'));
+    const noPlanHeroSubtitle = computed(() => (
+      hasPendingItems.value
+        ? '完成支付后即可下载客户端并开始使用'
+        : '当前还没有有效订单，先下单并支付后即可开始使用。'
+    ));
+    const noPlanPrimaryActionText = computed(() => (hasPendingItems.value ? '继续支付' : '立即下单'));
+
+    const handleNoPlanPrimaryAction = () => {
+      if (hasPendingItems.value) {
+        goToOrders();
+        return;
+      }
+      goToShop();
+    };
+
     const goToOrders = () => {
       router.push('/orders');
     };
@@ -1352,6 +1369,11 @@ export default {
       goToShop,
       goToDocs,
       hasPendingItems,
+      noPlanHeroBadge,
+      noPlanHeroTitle,
+      noPlanHeroSubtitle,
+      noPlanPrimaryActionText,
+      handleNoPlanPrimaryAction,
       goToOrders,
       router,
       formatTraffic,
@@ -2293,7 +2315,7 @@ $space-2: map.get($spacers, 2);
   }
   /* 待支付横幅卡片 */
   .account-welcome-banner {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     padding: 14px 16px;
     border-radius: var(--dashboard-radius);
     border: 1px solid var(--theme-border-color);
@@ -2800,7 +2822,7 @@ button.no-plan-step {
   }
 
   .hero-visual {
-    min-height: 170px;
+    display: none;
   }
 
   .no-plan-flow-card {
