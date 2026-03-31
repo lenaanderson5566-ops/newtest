@@ -22,25 +22,37 @@
 <script>
 import { computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRoute } from 'vue-router';
+import { useAppStore } from '@/store';
 import IconDashboard from '@/components/icons/IconDashboard.vue';
 import IconUser from '@/components/icons/IconUser.vue';
 import IconSubscription from '@/components/icons/IconSubscription.vue';
 import { IconServer } from '@tabler/icons-vue';
+import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
 
 export default {
   name: 'SlideTabsNav',
   setup() {
     const route = useRoute();
+    const store = useAppStore();
     const SIDEBAR_WIDTH = 220;
     const SIDEBAR_BREAKPOINT = 992;
     let mediaQueryList = null;
 
-    const navItems = [
+    const subscriptionStatus = computed(() => resolveSubscriptionStatus(store.userInfo || {}));
+    const hasActiveSubscription = computed(() => subscriptionStatus.value === SUBSCRIPTION_STATUS.ACTIVE);
+
+    const secondaryNavItem = computed(() => (
+      hasActiveSubscription.value
+        ? { path: '/nodes', name: 'Nodes', icon: 'IconServer', i18nKey: 'region' }
+        : { path: '/shop', name: 'Shop', icon: 'IconSubscription', i18nKey: 'subscription' }
+    ));
+
+    const navItems = computed(() => ([
       { path: '/dashboard', name: 'Dashboard', icon: 'IconDashboard', i18nKey: 'overview' },
-      { path: '/nodes', name: 'Nodes', icon: 'IconServer', i18nKey: 'region' },
+      secondaryNavItem.value,
       { path: '/quick-start', name: 'QuickStart', icon: 'IconSubscription', i18nKey: 'quickStart' },
       { path: '/profile', name: 'Profile', icon: 'IconUser', i18nKey: 'my' }
-    ];
+    ]));
 
     const getIcon = (iconName) => {
       switch (iconName) {
@@ -77,13 +89,19 @@ export default {
       if (regionRoutes.has(routeName)) return 'Nodes';
       if (quickStartRoutes.has(routeName)) return 'QuickStart';
       if (docsRoutes.has(routeName)) return 'QuickStart';
+      if (routeName === 'Shop' || routeName === 'OrderConfirm' || routeName === 'Payment') {
+        return hasActiveSubscription.value ? 'Profile' : 'Shop';
+      }
       if (profileRoutes.has(routeName)) return 'Profile';
       return 'Dashboard';
     };
 
     const activeNavName = computed(() => {
       if (route.meta?.activeNav) {
-        return route.meta.activeNav === 'Shop' ? 'Profile' : route.meta.activeNav;
+        if (route.meta.activeNav === 'Shop') {
+          return hasActiveSubscription.value ? 'Profile' : 'Shop';
+        }
+        return route.meta.activeNav;
       }
 
       return getFallbackActiveNav(route.name);
