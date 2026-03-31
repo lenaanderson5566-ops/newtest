@@ -6,9 +6,8 @@
       <!-- 待支付订单提醒条 -->
       <div
         v-if="hasPendingItems"
-        class="pending-order-banner"
+        class="pending-order-banner delay-01"
         :class="{'card-animate': !loading.userStats}"
-        style="animation-delay: 0.1s"
         @click="goToOrders"
       >
         <div class="banner-main">
@@ -31,70 +30,56 @@
 
         <template v-else-if="!hasPlan">
           <section
-            class="dashboard-card stats-card no-plan-flow-card"
+            class="dashboard-card stats-card no-plan-flow-card delay-05"
             :class="{ 'card-animate': !loading.userStats }"
-            style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;"
           >
             <div class="no-plan-flow-layout">
-              <aside class="no-plan-flow-aside">
-                <span class="no-plan-badge">新用户引导</span>
-                <h3>开始使用前，<br>先完成订阅开通</h3>
-                <p>{{ $t('dashboard.noPlanPrompt') }}</p>
+              <section class="no-plan-hero">
+                <div class="hero-copy">
+                  <span class="no-plan-badge">订单待完成</span>
+                  <h3 class="no-plan-title">继续完成支付，激活服务</h3>
+                  <p class="no-plan-subtitle">完成支付后即可下载客户端并开始使用</p>
+                  <div class="hero-actions">
+                    <button class="hero-btn primary" @click="goToOrders">继续支付</button>
+                    <button class="hero-btn secondary" @click="goToDocs">查看教程</button>
+                  </div>
+                  <div class="hero-helper">支持多平台 · 一键导入配置</div>
+                </div>
+                <div class="hero-visual" aria-hidden="true">
+                  <div class="line-device laptop"></div>
+                  <div class="line-device tablet"></div>
+                  <div class="line-device phone"></div>
+                </div>
+              </section>
 
-                <div class="no-plan-platforms">
-                  <p>支持多平台 · 几分钟完成配置</p>
-                  <p class="platform-text">Windows / macOS / Android / iPhone</p>
+              <div class="no-plan-steps">
+                <button class="no-plan-step no-plan-step-primary" @click="goToShop">
+                  <span class="step-title">1. {{ $t('dashboard.purchasePlan') }}</span>
+                  <span class="step-desc">{{ $t('quickStartPage.status.newDesc') }}</span>
+                  <span class="step-action">立即购买</span>
+                </button>
+
+                <button class="no-plan-step no-plan-step-secondary" @click="goToDocs">
+                  <span class="step-title">2. {{ $t('quickStartPage.step2Title') }}</span>
+                  <span class="step-desc">{{ $t('quickStartPage.step2Tip') }}</span>
                   <div class="platform-icons">
                     <IconBrandWindows :size="18" />
                     <IconBrandApple :size="18" />
                     <IconDeviceDesktop :size="18" />
                     <IconBrandAndroid :size="18" />
                   </div>
-                </div>
-              </aside>
-
-              <div class="no-plan-steps">
-                <button class="no-plan-step no-plan-step-primary" @click="goToShop">
-                  <IconShoppingCart :size="34" />
-                  <span class="step-title">1. {{ $t('dashboard.purchasePlan') }}</span>
-                  <span class="step-desc">{{ $t('quickStartPage.status.newDesc') }}</span>
-                </button>
-
-                <button class="no-plan-step no-plan-step-secondary" @click="goToDocs">
-                  <IconDeviceDesktop :size="34" />
-                  <span class="step-title">2. {{ $t('quickStartPage.step2Title') }}</span>
-                  <span class="step-desc">{{ $t('quickStartPage.step2Tip') }}</span>
+                  <span class="step-action">下载客户端</span>
                 </button>
 
                 <div class="no-plan-step no-plan-step-success">
-                  <IconRocket :size="34" />
                   <span class="step-title">3. {{ $t('quickStartPage.step3Title') }}</span>
                   <span class="step-desc">{{ $t('quickStartPage.connectHint') }}</span>
+                  <span class="step-action">查看教程</span>
                 </div>
               </div>
             </div>
           </section>
 
-          <section
-            class="dashboard-card stats-card service-support-card"
-            :class="{ 'card-animate': !loading.userStats }"
-            style="animation-delay: 0.6s; grid-column: span 4; margin: 0 auto; max-width: var(--page-content-max-width); width: 100%;"
-          >
-            <div class="service-support-header">
-              <h3>服务支持</h3>
-              <p>支持常见流媒体与社交平台业务场景</p>
-            </div>
-            <div class="service-support-grid">
-              <div
-                v-for="service in serviceSupportItems"
-                :key="service.key"
-                class="service-support-item"
-              >
-                <img :src="service.icon" :alt="service.name" loading="lazy" decoding="async" />
-                <span>{{ service.name }}</span>
-              </div>
-            </div>
-          </section>
         </template>
 
         <template v-else>
@@ -352,12 +337,10 @@ import {
   IconHelpCircle,
   IconMoon,
   IconPackage,
-  IconRocket,
   IconRouter,
   IconSend,
   IconShare,
   IconShoppingBag,
-  IconShoppingCart,
   IconTransferVertical,
   IconUserPlus,
   IconWallet,
@@ -373,17 +356,6 @@ import { getTrafficLog } from '@/api/account/trafficLog';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import {fetchPlans} from '@/api/account/shop';
-import iconFacebook from '@/assets/images/service-icons/facebook.svg';
-import iconYoutubePremium from '@/assets/images/service-icons/youtube-premium.svg';
-import iconChatgpt from '@/assets/images/service-icons/chatgpt.svg';
-import iconDisneyPlus from '@/assets/images/service-icons/disney-plus.svg';
-import iconYoutube from '@/assets/images/service-icons/youtube.svg';
-import iconTiktok from '@/assets/images/service-icons/tiktok.svg';
-import iconClaude from '@/assets/images/service-icons/claude.svg';
-import iconNetflix from '@/assets/images/service-icons/netflix.svg';
-import iconGoogle from '@/assets/images/service-icons/google.svg';
-import iconInstagram from '@/assets/images/service-icons/instagram.svg';
-
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 
@@ -394,7 +366,6 @@ export default {
     IconSend,
     IconCalendar,
     IconUserPlus,
-    IconShoppingCart,
     IconFileText,
     IconWallet,
     IconBrandApple,
@@ -407,7 +378,6 @@ export default {
     IconShare,
     IconChevronLeft,
     IconChevronRight,
-        IconRocket,
     IconWaveSine,
     IconDeviceDesktop,
     IconCrosshair,
@@ -1333,19 +1303,6 @@ export default {
       return `${baseDelay + trafficBoardSections.value.length * step}s`;
     });
 
-    const serviceSupportItems = [
-      { key: 'youtube', name: 'YouTube', icon: iconYoutube },
-      { key: 'youtube-premium', name: 'YouTube Premium', icon: iconYoutubePremium },
-      { key: 'chatgpt', name: 'ChatGPT', icon: iconChatgpt },
-      { key: 'claude', name: 'Claude', icon: iconClaude },
-      { key: 'netflix', name: 'Netflix', icon: iconNetflix },
-      { key: 'disney-plus', name: 'Disney+', icon: iconDisneyPlus },
-      { key: 'tiktok', name: 'TikTok', icon: iconTiktok },
-      { key: 'instagram', name: 'Instagram', icon: iconInstagram },
-      { key: 'facebook', name: 'Facebook', icon: iconFacebook },
-      { key: 'google', name: 'Google', icon: iconGoogle }
-    ];
-
     return {
       userStats,
       userBalance,
@@ -1393,7 +1350,6 @@ export default {
       trafficTrendError,
       todayTrafficStats,
       todayTrafficAnimationDelay,
-      serviceSupportItems,
       allowNewPeriod,
       showTrafficPackageModal,
       trafficPackageLoading,
@@ -1476,13 +1432,6 @@ $space-2: map.get($spacers, 2);
     }
   }
 
-  @media (min-width: #{$bp-md-up}) {
-    &.is-no-plan {
-      height: calc(100vh - var(--app-top-bar-height, 56px) - var(--page-content-top-gap, 8px));
-      overflow-y: hidden;
-    }
-  }
-
   .dashboard-inner {
     .overview-grid {
     display: grid;
@@ -1547,6 +1496,18 @@ $space-2: map.get($spacers, 2);
 
     &.no-plan-grid {
       margin-bottom: 0;
+
+      > .no-plan-flow-card {
+        display: block;
+        align-items: initial;
+        min-height: auto;
+        height: auto;
+      }
+
+      @media (min-width: #{$bp-md-up}) {
+        grid-template-rows: auto;
+        align-items: start;
+      }
     }
 
     > .stats-card.traffic-board-total {
@@ -2519,95 +2480,54 @@ $space-2: map.get($spacers, 2);
 }
 
 .no-plan-flow-card {
-  background: #fff;
-  border: 1px solid #e8ebf4;
-  border-radius: 14px;
+  grid-column: 1 / -1;
+  margin: 0 auto;
+  max-width: var(--page-content-max-width);
+  width: 100%;
+  background: var(--card-background);
+  border: 1px solid var(--dashboard-border-color);
+  border-radius: var(--dashboard-radius);
   padding: 16px;
-  margin-bottom: 0 !important;
-}
-
-.service-support-card {
-  background: #fff;
-  border: 1px solid #e8ebf4;
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 0 !important;
-}
-
-.service-support-header {
-  margin-bottom: 12px;
-
-  h3 {
-    margin: 0;
-    font-size: $font-size-md;
-    font-weight: $font-weight-semibold;
-    color: var(--text-primary);
-  }
-
-  p {
-    margin: 6px 0 0;
-    font-size: $font-size-sm;
-    color: var(--text-tertiary);
-  }
-}
-
-.service-support-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.service-support-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 8px;
-  border-radius: 10px;
-  background: #f8fafc;
-  border: 1px solid #e8ebf4;
-
-  img {
-    width: 22px;
-    height: 22px;
-    object-fit: contain;
-  }
-
-  span {
-    font-size: $font-size-xs;
-    color: var(--text-secondary);
-    text-align: center;
-    line-height: 1.2;
-  }
+  margin-bottom: 0;
 }
 
 .no-plan-flow-layout {
   display: grid;
-  grid-template-columns: 1.35fr 1fr;
+  grid-template-columns: 1fr;
   gap: 16px;
 }
 
-.no-plan-flow-aside {
-  border-radius: 12px;
-  padding: 24px 24px;
-  border: 1px solid #edf0f8;
-  background: #fff;
+.no-plan-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 20px;
+  border-radius: 14px;
+  padding: 22px;
+  border: 1px solid rgba(var(--theme-color-rgb), 0.16);
+  background:
+    radial-gradient(circle at 82% 18%, rgba(59, 130, 246, 0.16), transparent 40%),
+    radial-gradient(circle at 18% 78%, rgba(99, 102, 241, 0.1), transparent 46%),
+    linear-gradient(118deg, #f4f7ff 0%, #f9fbff 100%);
+}
+
+.hero-copy {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
 
-  h3 {
-    @extend %typo-page-title;
-    margin: 16px 0 16px;
-    line-height: 1.3;
-    letter-spacing: 0.5px;
-  }
+.no-plan-title {
+  @extend %typo-page-title;
+  margin: 10px 0 8px;
+  line-height: 1.24;
+  letter-spacing: 0.2px;
+}
 
-  p {
-    @extend %typo-body-text;
-    margin: 0;
-    line-height: 1.75;
-  }
+.no-plan-subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: $font-size-lg;
 }
 
 .no-plan-badge {
@@ -2615,43 +2535,113 @@ $space-2: map.get($spacers, 2);
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  padding: 8px 16px;
-  border-radius: 12px;
-  @extend %typo-dark-primary;
-  background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%);
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.32);
+  background: rgba(245, 158, 11, 0.14);
 }
 
-.no-plan-platforms {
-  margin-top: auto;
-  padding-top: 24px;
-  border-top: 1px solid #e8ebf4;
+.hero-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
-  p {
-    @extend %typo-item-title;
-    margin: 0;
+.hero-btn {
+  min-width: 144px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+}
+
+.hero-btn.primary {
+  color: var(--text-on-dark-primary);
+  background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
+}
+
+.hero-btn.secondary {
+  color: var(--neutral-strong);
+  border-color: rgba(148, 163, 184, 0.3);
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.hero-helper {
+  margin-top: 10px;
+  font-size: $font-size-md;
+  color: var(--text-tertiary);
+}
+
+.hero-visual {
+  min-height: 210px;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background:
+    radial-gradient(circle at 30% 75%, rgba(99, 102, 241, 0.1), transparent 45%),
+    radial-gradient(circle at 84% 20%, rgba(59, 130, 246, 0.15), transparent 40%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.65), rgba(241, 245, 255, 0.9));
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.13) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.13) 1px, transparent 1px);
+    background-size: 28px 28px;
   }
+}
 
-  .platform-text {
-    @extend %typo-label-text;
-    margin-top: 16px;
-  }
+.line-device {
+  position: absolute;
+  border-radius: 10px;
+  border: 2px solid rgba(79, 70, 229, 0.2);
+  background: rgba(255, 255, 255, 0.35);
+}
 
-  .platform-icons {
-    margin-top: 16px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    color: #8ca0d8;
+.line-device.laptop {
+  width: 188px;
+  height: 118px;
+  right: 16%;
+  top: 28%;
+}
 
-    :deep(svg) {
-      width: 30px;
-      height: 30px;
-    }
+.line-device.tablet {
+  width: 108px;
+  height: 80px;
+  right: 8%;
+  top: 20%;
+}
+
+.line-device.phone {
+  width: 52px;
+  height: 94px;
+  right: 14%;
+  top: 50%;
+}
+
+.platform-icons {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.88);
+
+  :deep(svg) {
+    width: 18px;
+    height: 18px;
   }
 }
 
 .no-plan-steps {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -2659,35 +2649,46 @@ $space-2: map.get($spacers, 2);
   border: none;
   width: 100%;
   border-radius: 16px;
-  padding: 24px 16px;
+  padding: 22px 18px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
   color: #fff;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  text-align: left;
+  box-shadow: none;
 
-  .step-title {
-    font-size: $font-size-lg;
-    font-weight: $font-weight-semibold;
-  }
+}
 
-  .step-desc {
-    font-size: $font-size-sm;
-    opacity: 0.92;
-    line-height: 1.5;
-  }
+.step-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+}
+
+.step-desc {
+  font-size: $font-size-sm;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.step-action {
+  margin-top: 6px;
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.86);
+  color: #1e293b;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
 }
 
 button.no-plan-step {
   cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease;
+  transition: transform .2s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
   }
 }
 
@@ -2703,22 +2704,36 @@ button.no-plan-step {
   background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%);
 }
 
+.delay-01 {
+  animation-delay: 0.1s;
+}
+
+.delay-05 {
+  animation-delay: 0.5s;
+}
+
 @media (max-width: 768px) {
-  .no-plan-flow-layout {
+  .no-plan-hero {
     grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .hero-visual {
+    min-height: 170px;
   }
 
   .no-plan-flow-card {
     padding: 16px;
   }
 
-  .service-support-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .no-plan-steps {
+    grid-template-columns: 1fr;
   }
 
   .no-plan-step {
     padding: 16px 16px;
   }
+
 }
 
 

@@ -908,7 +908,9 @@ export default {
 
     const payActionLabel = computed(() => {
       if (totalWithFee.value <= 0) return t("payment.activate");
-      return t("payment.pay_now");
+      return isContinuePaymentMode.value
+        ? t("payment.continue_pay")
+        : t("payment.pay_now");
     });
     const selectedOrderDisplay = computed(() => {
       const planName = plan.value?.name || "-";
@@ -1757,6 +1759,11 @@ export default {
 @use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 @use "@/assets/styles/base/typography.scss" as *;
+@use "@/assets/styles/components/qr-payment-modal.scss" as qrPaymentModal;
+@use "@/assets/styles/components/payment-summary-action.scss" as paymentSummaryAction;
+
+@include qrPaymentModal.styles;
+@include paymentSummaryAction.styles;
 
 .order-confirm-container {
   padding: 0;
@@ -2999,46 +3006,6 @@ export default {
     margin-bottom: 0;
   }
 
-  .order-summary .summary-submit-action {
-    width: 100%;
-    margin-top: 8px;
-    height: 40px;
-    padding: 0 24px;
-    border-radius: $border-radius-sm;
-    background-color: var(--theme-color);
-    color: var(--text-on-dark-primary);
-    font-size: $font-size-md;
-    font-weight: $font-weight-medium;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: none;
-
-    &:hover:not(:disabled) {
-      background-color: color-mix(in srgb, var(--theme-color) 85%, black) !important;
-      transform: translateY(-2px);
-      box-shadow: none;
-    }
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .loader {
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s linear infinite;
-    }
-  }
-
 }
 
 .skeleton-card {
@@ -3188,68 +3155,6 @@ export default {
   }
 }
 
-.pending-order-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 1300;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pending-order-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.55);
-}
-
-.pending-order-dialog {
-  position: relative;
-  width: min(92vw, 460px);
-  background: var(--card-background);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  padding: 16px 16px 16px;
-  z-index: 1;
-}
-
-.payment-dialog {
-  width: min(92vw, 520px);
-}
-
-.pending-order-modal.payment-modal .pending-order-header .payment-amount-hint {
-  margin-top: 4px;
-  font-size: $font-size-md;
-  color: var(--text-secondary);
-  font-weight: $font-weight-medium;
-}
-
-.pending-order-modal.payment-modal .pending-order-actions .btn-confirm-cancel {
-  background: var(--theme-color);
-  border-color: var(--theme-color);
-  color: var(--text-on-dark-primary);
-}
-
-.pending-order-modal.payment-modal .pending-order-actions .btn-confirm-cancel:hover {
-  background: color-mix(in srgb, var(--theme-color) 88%, black);
-  border-color: color-mix(in srgb, var(--theme-color) 88%, black);
-}
-
-.payment-qrcode-wrap {
-  margin: 8px 0 16px;
-  display: flex;
-  justify-content: center;
-}
-
-.payment-link-wrap {
-  margin: 8px 0 16px;
-  padding: 8px 8px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: rgba(var(--theme-color-rgb), 0.06);
-  word-break: break-all;
-}
-
 .payment-success-toast {
   position: fixed;
   right: 20px;
@@ -3267,15 +3172,11 @@ export default {
   box-shadow: 0 12px 30px rgba(22, 163, 74, 0.25);
 }
 
-.modal-fade-enter-active,
-.modal-fade-leave-active,
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease;
 }
 
-.modal-fade-enter-from,
-.modal-fade-leave-to,
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

@@ -841,6 +841,7 @@ profile: {
         handling_fee: 'Phí xử lý',
         total_with_fee: 'Tổng Phí',
         pay_now: 'Thanh toán ngay',
+        continue_pay: 'Tiếp tục thanh toán',
         scan_qrcode: 'Vui lòng quét mã QR để hoàn thành thanh toán',
         pay_success: 'Thanh toán thành công',
         pay_processing: 'Đang xử lý thanh toán...',

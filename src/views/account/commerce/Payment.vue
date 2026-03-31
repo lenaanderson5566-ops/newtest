@@ -119,7 +119,6 @@
                   <img v-else :src="method.icon" :alt="method.name" />
                 </div>
               </div>
-              <div class="payment-security-note">{{ $t("payment.payment_processing") }}</div>
             </div>
 
             <!-- 支付方式骨架屏 -->
@@ -204,7 +203,7 @@
               v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && !paymentSuccessful && orderDetail.total_amount > 0"
             >
               <button
-                class="btn-pay main-action full-width"
+                class="btn-order summary-submit-action full-width"
                 @click="processPayment"
                 :disabled="
                   (orderDetail.total_amount > 0 && !selectedMethod) ||
@@ -214,7 +213,7 @@
               >
                 <IconCreditCard v-if="!loading.paying" :size="18" />
                 <div v-else class="loader"></div>
-                <span>{{ $t("payment.pay_now") }}</span>
+                <span>{{ summaryPayActionLabel }}</span>
               </button>
             </div>
           </OrderSummaryCard>
@@ -354,76 +353,40 @@
     </transition>
 
     <!-- 支付二维码弹窗 -->
-    <transition name="modal">
-      <div class="modal-wrapper" v-if="showPaymentModal">
-        <div class="modal-backdrop" @click="closePaymentModal"></div>
-        <div class="modal-container">
-          <div class="modal-card">
-            <button class="close-button" @click="closePaymentModal">×</button>
-            <div class="modal-header">
-              <div class="icon-wrapper payment">
-                <IconCreditCard :size="32" />
-              </div>
-              <h3>
-                {{
-                  selectedMethod
-                    ? getSelectedMethodName()
-                    : $t("payment.payment_method")
-                }}
-              </h3>
-
-              <!-- 添加Safari浏览器特定提示 -->
-              <p
-                v-if="
-                  detectBrowser() === 'Safari' &&
-                  PAYMENT_CONFIG.useSafariPaymentModal &&
-                  paymentLink
-                "
-              >
-                {{ $t("payment.safari_payment_notice") }}
-              </p>
-              <p v-else>
-                {{ $t("payment.scan_qrcode") }}
-              </p>
-
-              <div class="qrcode-container" v-if="paymentQRCode">
-                <QrcodeVue
-                  :value="paymentQRCode"
-                  :size="PAYMENT_CONFIG.qrcodeSize"
-                  :background="PAYMENT_CONFIG.qrcodeBackground"
-                  :foreground="PAYMENT_CONFIG.qrcodeColor"
-                  level="H"
-                  render-as="svg"
-                />
-              </div>
-
-              <div class="payment-link" v-if="paymentLink">
-                <button class="btn-link" @click="openPaymentLink">
-                  <IconExternalLink :size="18" />
-                  <span
-                    v-if="
-                      detectBrowser() === 'Safari' &&
-                      PAYMENT_CONFIG.useSafariPaymentModal
-                    "
-                  >
-                    {{ $t("payment.safari_payment_button") }}
-                  </span>
-                  <span v-else>
-                    {{ $t("payment.open_in_new_tab") }}
-                  </span>
-                </button>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button class="btn-secondary" @click="closePaymentModal">
-                <IconX :size="18" />
-                <span>{{ $t("common.cancel") }}</span>
-              </button>
-              <button class="btn-primary" @click="checkPayment">
-                <IconRefresh :size="18" />
-                <span>{{ $t("payment.check_payment") }}</span>
-              </button>
-            </div>
+    <transition name="modal-fade">
+      <div v-if="showPaymentModal" class="pending-order-modal payment-modal">
+        <div class="pending-order-overlay" @click="closePaymentModal"></div>
+        <div class="pending-order-dialog payment-dialog" role="dialog" aria-modal="true">
+          <div class="pending-order-header">
+            <h3>{{ paymentQRCode ? $t("payment.scan_qrcode") : $t("payment.payment_method") }}</h3>
+            <p v-if="paymentQRCode">{{ $t("payment.payment_method") }}：{{ getSelectedMethodName() }}</p>
+            <p v-if="paymentQRCode && qrPaymentAmountHint" class="payment-amount-hint">
+              {{ $t("payment.total_with_fee") }}：{{ qrPaymentAmountHint }}
+            </p>
+            <p v-else-if="paymentLink">{{ $t("payment.open_in_new_tab") }}</p>
+          </div>
+          <div class="payment-qrcode-wrap" v-if="paymentQRCode">
+            <QrcodeVue
+              :value="paymentQRCode"
+              :size="PAYMENT_CONFIG.qrcodeSize"
+              :background="PAYMENT_CONFIG.qrcodeBackground"
+              :foreground="PAYMENT_CONFIG.qrcodeColor"
+              level="H"
+              render-as="svg"
+            />
+          </div>
+          <div class="payment-link-wrap" v-if="paymentLink">
+            <a :href="paymentLink" target="_blank" rel="noopener noreferrer">
+              {{ paymentLink }}
+            </a>
+          </div>
+          <div class="pending-order-actions">
+            <button class="btn-return-orders cancel-btn" @click="closePaymentModal">
+              {{ paymentQRCode ? $t("common.close") : $t("common.cancel") }}
+            </button>
+            <button class="btn-confirm-cancel confirm-btn" @click="checkPayment">
+              {{ $t("payment.check_payment") }}
+            </button>
           </div>
         </div>
       </div>
@@ -465,7 +428,6 @@ import {
   IconArrowRight,
   IconAlertTriangle,
   IconRefresh,
-  IconExternalLink,
   IconArrowLeft,
   IconClock,
   IconLoader2,
@@ -486,7 +448,6 @@ export default {
     IconArrowRight,
     IconAlertTriangle,
     IconRefresh,
-    IconExternalLink,
     IconArrowLeft,
     QrcodeVue,
     ConfettiExplosion,
@@ -573,6 +534,34 @@ export default {
         return 0;
       }
       return orderDetail.value.total_amount + handleFeeAmount.value;
+    });
+
+    const summaryPayActionLabel = computed(() =>
+      fromOrderList.value ? t("payment.continue_pay") : t("payment.pay_now")
+    );
+
+    const qrPaymentAmountHint = computed(() => {
+      if (!paymentQRCode.value) {
+        return "";
+      }
+
+      const orderAmount = Number(totalWithFee.value);
+      const orderCurrency = String(orderDetail.value?.pricing_currency || displayCurrency.value || "").toUpperCase();
+      const paymentAmount = Number(orderDetail.value?.payment_amount);
+      const paymentCurrency = String(orderDetail.value?.payment_currency || "").toUpperCase();
+
+      if (!Number.isFinite(orderAmount) || orderAmount < 0 || !orderCurrency) {
+        return "";
+      }
+
+      const formatWithCurrency = (amount, currencyCode) =>
+        `${currencyCode} ${(Number(amount) / 100).toFixed(2)}`;
+
+      if (Number.isFinite(paymentAmount) && paymentAmount > 0 && paymentCurrency) {
+        return `${formatWithCurrency(orderAmount, orderCurrency)} ≈ ${formatWithCurrency(paymentAmount, paymentCurrency)}`;
+      }
+
+      return formatWithCurrency(orderAmount, orderCurrency);
     });
 
     const fetchOrderDetail = async () => {
@@ -992,41 +981,6 @@ export default {
       }
     };
 
-    const openPaymentLink = () => {
-      if (paymentLink.value) {
-        try {
-          const isSafari = detectBrowser() === "Safari";
-
-          if (
-            PAYMENT_CONFIG.openPaymentInNewTab ||
-            (isSafari && PAYMENT_CONFIG.useSafariPaymentModal)
-          ) {
-            const tempLink = document.createElement("a");
-            tempLink.href = paymentLink.value;
-            tempLink.target = "_blank";
-            tempLink.rel = "noopener noreferrer";
-            document.body.appendChild(tempLink);
-            tempLink.click();
-            document.body.removeChild(tempLink);
-          } else {
-            const tempLink = document.createElement("a");
-            tempLink.href = paymentLink.value;
-            tempLink.rel = "noopener noreferrer";
-            document.body.appendChild(tempLink);
-            tempLink.click();
-            document.body.removeChild(tempLink);
-          }
-        } catch (e) {
-          console.error("Failed to open payment link:", e);
-          if (PAYMENT_CONFIG.openPaymentInNewTab) {
-            window.open(paymentLink.value, "_blank");
-          } else {
-            window.location.href = paymentLink.value;
-          }
-        }
-      }
-    };
-
     const confirmCancel = async () => {
       loading.cancelling = true;
       showCancelConfirm.value = false;
@@ -1168,10 +1122,11 @@ export default {
       PAYMENT_CONFIG,
       getSelectedMethodName,
       processPayment,
-      openPaymentLink,
       closePaymentModal,
       handleFeeAmount,
       totalWithFee,
+      summaryPayActionLabel,
+      qrPaymentAmountHint,
       couponDiscountAmount,
       userDiscountAmount,
       discountAmount,
@@ -1192,6 +1147,11 @@ export default {
 @use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 @use "@/assets/styles/base/typography.scss" as *;
+@use "@/assets/styles/components/qr-payment-modal.scss" as qrPaymentModal;
+@use "@/assets/styles/components/payment-summary-action.scss" as paymentSummaryAction;
+
+@include qrPaymentModal.styles;
+@include paymentSummaryAction.styles;
 
 .payment-container {
   padding: 0;
@@ -1479,39 +1439,6 @@ export default {
 
     .order-amount-actions {
       margin-top: 16px;
-
-      .btn-pay {
-        width: 100%;
-        height: 44px;
-        border-radius: $border-radius-sm;
-        background-color: var(--theme-color);
-        color: var(--text-on-dark-primary);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: none;
-        border: none;
-
-        &:hover:not(:disabled) {
-          background-color: color-mix(in srgb, var(--theme-color) 88%, black) !important;
-          box-shadow: none;
-          transform: none;
-        }
-
-        svg,
-        span {
-          display: inline-flex;
-          align-items: center;
-          line-height: 1;
-        }
-
-        svg {
-          flex-shrink: 0;
-          vertical-align: middle;
-        }
-      }
     }
   }
 
@@ -1620,19 +1547,6 @@ export default {
       }
     }
 
-    .payment-security-note {
-      padding: 4px 8px 8px;
-      border-top: 1px solid var(--border-color);
-      font-size: $font-size-sm;
-      color: var(--text-tertiary);
-      line-height: 1.4;
-      background: #fff;
-    }
-  }
-
-  .right-column .payment-methods .payment-security-note {
-    background: var(--right-card-bg) !important;
-    color: var(--right-card-text) !important;
   }
 
   .free-notice {
@@ -1721,6 +1635,18 @@ export default {
 
         .btn-pay {
           flex: 2;
+        }
+
+        .btn-back.secondary-action {
+          background: transparent;
+          border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+          color: var(--theme-color);
+
+          &:hover:not(:disabled) {
+            background-color: rgba(var(--theme-color-rgb), 0.08);
+            box-shadow: none;
+            transform: none;
+          }
         }
       }
     }
@@ -2081,266 +2007,6 @@ export default {
     }
   }
 
-  .modal-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    will-change: opacity;
-
-    .modal-backdrop {
-      position: absolute;
-      inset: 0;
-      background-color: rgba(var(--text-color-rgb), 0.45);
-      will-change: opacity;
-    }
-
-    .modal-container {
-      position: relative;
-      width: 100%;
-      max-width: 400px;
-      margin: 16px;
-      will-change: transform, opacity;
-    }
-
-    .modal-card {
-      position: relative;
-      background-color: var(--card-background);
-      border-radius: $border-radius-sm;
-      box-shadow: none;
-      border: 1px solid rgba(var(--theme-color-rgb), 0.1);
-      overflow: hidden;
-      transform: translateZ(0);
-      backface-visibility: hidden;
-
-      .close-button {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        height: 44px;
-        width: 44px;
-        padding: 0;
-        border-radius: $border-radius-sm;
-        background-color: transparent;
-        color: var(--text-primary);
-        font-size: $font-size-xl;
-        font-weight: $font-weight-medium;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid var(--border-color);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: none;
-        z-index: 10;
-
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.05);
-          transform: none;
-          box-shadow: none;
-        }
-      }
-
-      .modal-header {
-        padding: 24px 24px 16px;
-        text-align: center;
-
-        .icon-wrapper {
-          width: 64px;
-          height: 64px;
-          margin: 0 auto 16px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-          &.warning {
-            background-color: rgba(255, 152, 0, 0.15);
-            color: var(--warning-color);
-
-            svg {
-              filter: none;
-            }
-          }
-
-          &.payment {
-            background-color: rgba(var(--theme-color-rgb), 0.15);
-            color: var(--theme-color);
-
-            svg {
-              filter: none;
-            }
-          }
-        }
-
-        h3 {
-          font-size: $font-size-xl;
-          font-weight: $font-weight-semibold;
-          margin: 0 0 8px;
-          color: var(--text-primary);
-        }
-
-        p {
-          font-size: $font-size-md;
-          line-height: 1.6;
-          margin: 0 0 24px;
-          color: var(--text-tertiary);
-          max-width: 300px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .qrcode-container {
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          margin: 8px 0 16px;
-
-          canvas,
-          svg {
-            border-radius: $border-radius-sm;
-            box-shadow: none;
-          }
-        }
-
-        .payment-link {
-          margin-top: 16px;
-
-          .btn-link {
-            padding: 8px 16px;
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: $border-radius-sm;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: $font-size-md;
-            color: var(--theme-color);
-            cursor: pointer;
-            transition: all 0.2s ease;
-
-            &:hover {
-              background-color: rgba(var(--theme-color-rgb), 0.05);
-              border-color: var(--theme-color);
-            }
-          }
-        }
-      }
-
-      .modal-footer {
-        padding: 16px 24px 24px;
-        display: flex;
-        gap: 16px;
-
-        button {
-          flex: 1;
-          height: 46px;
-          border-radius: $border-radius-sm;
-          border: none;
-          font-size: $font-size-md;
-          font-weight: $font-weight-semibold;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          cursor: pointer;
-          transition: all 0.25s cubic-bezier(0.3, 0.7, 0.4, 1.5);
-          position: relative;
-          overflow: hidden;
-
-          &::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.5s ease-out;
-          }
-
-          &:active::before {
-            transform: translate(-50%, -50%) scale(1.5);
-            opacity: 0;
-            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
-          }
-        }
-
-        .btn-secondary {
-          background-color: transparent;
-          border: 1px solid var(--border-color);
-          color: var(--text-primary);
-          box-shadow: none;
-          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-          &:hover {
-            background-color: var(--hover-color);
-            transform: none;
-            box-shadow: none;
-          }
-
-          &:active {
-            transform: translateY(0);
-            box-shadow: none;
-            transition-duration: 0.1s;
-          }
-        }
-
-        .btn-primary {
-          background-color: var(--theme-color);
-          color: var(--text-on-dark-primary);
-          box-shadow: none;
-          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-          &:hover {
-            background-color: var(--primary-color-hover);
-            transform: none;
-            box-shadow: none;
-          }
-
-          &:active {
-            transform: translateY(0);
-            box-shadow: none;
-            transition-duration: 0.1s;
-          }
-        }
-      }
-    }
-  }
-
-  .modal-enter-active {
-    transition: opacity 0.3s ease-out;
-
-    .modal-container {
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-  }
-
-  .modal-leave-active {
-    transition: opacity 0.2s ease-in;
-
-    .modal-container {
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-  }
-
-  .modal-enter-from,
-  .modal-leave-to {
-    opacity: 0;
-
-    .modal-container {
-      opacity: 0;
-      transform: scale(0.95) translateY(10px);
-    }
-  }
 }
 
 .payment-container .overview-section {

@@ -839,6 +839,7 @@ profile: {
     handling_fee: 'کارمزد',
     total_with_fee: 'جمع کل با کارمزد',
     pay_now: 'اکنون پرداخت کنید',
+    continue_pay: 'ادامه پرداخت',
     scan_qrcode: 'QR کد را اسکن کنید و پرداخت را کامل کنید',
     pay_success: 'پرداخت موفق',
     pay_processing: 'پرداخت در حال پردازش...',

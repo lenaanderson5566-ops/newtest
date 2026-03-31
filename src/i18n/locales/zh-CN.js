@@ -835,6 +835,7 @@ profile: {
         handling_fee: '手续费',
         total_with_fee: '合计',
         pay_now: '立即支付',
+        continue_pay: '继续支付',
         scan_qrcode: '请扫描二维码完成支付',
         pay_success: '支付成功',
         pay_processing: '正在处理支付...',
@@ -999,7 +1000,7 @@ profile: {
             ios: 'iOS'
         },
         step2Title: '下载并导入',
-        step2Tip: '下载推荐客户端并完成订阅导入',
+        step2Tip: '下载推荐客户端并完成配置导入',
         recommended: '推荐',
         quickImport: '一键导入',
         copySubscription: '复制订阅',
@@ -1020,9 +1021,9 @@ profile: {
             newTitle: '尚未开通服务 · 请先购买订阅',
             expiredTitle: '订阅已到期 · 请及时续费',
             activeTitle: '服务已开通 · 可开始连接',
-            newDesc: '完成订阅后即可下载客户端并导入订阅使用。',
-            expiredDesc: '续费后下载客户端并导入订阅即可恢复使用。',
-            activeDesc: '下载客户端并导入订阅后即可使用。'
+            newDesc: '完成订阅后即可下载客户端并导入配置使用。',
+            expiredDesc: '续费后下载客户端并导入配置即可恢复使用。',
+            activeDesc: '下载客户端并导入配置后即可使用。'
         }
     },
     docs: {

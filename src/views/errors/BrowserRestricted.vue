@@ -1140,35 +1140,14 @@ export default {
 
 
 @media (hover: none) {
-
-  .browser-button {
-
-    &:hover {
-
-      
-
-      transform: none !important;
-
-      box-shadow: none !important;
-
-    }
-
+  .browser-button:hover {
+    transform: none;
+    box-shadow: none;
   }
 
-  
-
-  .copy-button {
-
-    &:hover {
-
-      
-
-      transform: none !important;
-
-    }
-
+  .copy-button:hover {
+    transform: none;
   }
-
 }
 
 </style> 

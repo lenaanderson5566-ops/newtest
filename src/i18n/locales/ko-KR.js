@@ -840,6 +840,7 @@ profile: {
     handling_fee: '수수료',
     total_with_fee: '수수료 포함 총액',
     pay_now: '지금 결제',
+    continue_pay: '결제 계속하기',
     scan_qrcode: 'QR 코드를 스캔하여 결제를 완료하세요',
     pay_success: '결제 성공',
     pay_processing: '결제 처리 중...',

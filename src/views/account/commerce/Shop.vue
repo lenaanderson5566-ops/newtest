@@ -1724,7 +1724,7 @@ export default {
 
 
   .shop-title-header {
-    align-items: center !important;
+    align-items: center;
     gap: 16px;
   }
 
@@ -2106,7 +2106,7 @@ export default {
   }
 
   .shop-container .shop-title-header {
-    align-items: flex-start !important;
+    align-items: flex-start;
     flex-direction: column;
     gap: 8px;
 
