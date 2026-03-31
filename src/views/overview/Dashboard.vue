@@ -583,11 +583,22 @@ export default {
 
     const isPlanExpired = computed(() => hasPlan.value && isExpired.value);
 
+    const formatDisplayName = (rawValue) => {
+      const normalized = String(rawValue || '').trim();
+      if (!normalized) return '用户';
+
+      const firstSegment = normalized.split(/[._-]+/).find((segment) => segment && segment.trim()) || '';
+      if (!firstSegment) return '用户';
+
+      const lowerValue = firstSegment.toLowerCase();
+      return lowerValue.charAt(0).toUpperCase() + lowerValue.slice(1);
+    };
+
     const emailPrefix = computed(() => {
       const email = String(userStats.userEmail || '').trim();
       if (!email) return '用户';
       const prefix = email.split('@')[0]?.trim();
-      return prefix || '用户';
+      return formatDisplayName(prefix);
     });
 
     const welcomeHeadline = computed(() => {
