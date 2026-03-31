@@ -247,7 +247,9 @@
         <div class="card-body">
           <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
-          <div v-else-if="!trafficTrendData.length" class="trend-state">{{ $t('trafficLog.noTrafficData') }}</div>
+          <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
+            <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
+          </div>
           <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
         </div>
       </div>
@@ -366,6 +368,8 @@ import {fetchPlans} from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
+
+const noTrafficDataImage = new URL('../../assets/images/dashboard/no-traffic-data.svg', import.meta.url).href;
 
 export default {
   name: 'UserDashboard',
@@ -1371,6 +1375,7 @@ export default {
       trafficTrendData,
       trafficTrendLoading,
       trafficTrendError,
+      noTrafficDataImage,
       todayTrafficStats,
       todayTrafficAnimationDelay,
       allowNewPeriod,
@@ -2264,6 +2269,19 @@ $space-2: map.get($spacers, 2);
       @extend %typo-body-text;
     }
 
+    .trend-state-illustration {
+      padding: 8px;
+    }
+
+    .trend-empty-image {
+      width: 180px;
+      max-width: 100%;
+      height: auto;
+      opacity: 0.96;
+      pointer-events: none;
+      user-select: none;
+    }
+
     .usage-trend-chart {
       width: 100%;
       height: 156px;
@@ -2426,6 +2444,10 @@ $space-2: map.get($spacers, 2);
 
     .trend-state {
       min-height: 68px;
+    }
+
+    .trend-empty-image {
+      width: 136px;
     }
 
     .usage-trend-chart {
