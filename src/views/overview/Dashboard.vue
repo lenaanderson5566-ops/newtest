@@ -2293,7 +2293,7 @@ $space-2: map.get($spacers, 2);
   }
   /* 待支付横幅卡片 */
   .account-welcome-banner {
-    margin-bottom: var(--dashboard-section-margin);
+    margin-bottom: 8px;
     padding: 14px 16px;
     border-radius: var(--dashboard-radius);
     border: 1px solid var(--theme-border-color);
