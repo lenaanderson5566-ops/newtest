@@ -563,23 +563,7 @@ export default {
         loading.userInfo = false;
       }
     };
-    const isExpiringSoon = computed(() => {
-      if (userStats.isRemainingDaysPermanent) return false;
-
-      const days = parseInt(userStats.remainingDays, 10);
-      return !isNaN(days) && days > 0 && days <= 7;
-    });
-
-    const isExpired = computed(() => {
-      if (userPlan.value.isExpireDatePermanent) return false;
-
-      const expiredAt = Number(userPlan.value.expiredAt || 0);
-      if (!expiredAt) return false;
-
-      return expiredAt * 1000 <= Date.now();
-    });
-
-    const isPlanExpired = computed(() => hasPlan.value && isExpired.value);
+    const isPlanExpired = computed(() => accountStatus.value === SUBSCRIPTION_STATUS.EXPIRED);
 
     const emailPrefix = computed(() => {
       const email = String(userStats.userEmail || '').trim();
@@ -597,7 +581,6 @@ export default {
 
     const subscriptionStatus = computed(() => {
       if (isPlanExpired.value) return 'expired';
-      if (isExpiringSoon.value) return 'expiring';
       return 'active';
     });
 
@@ -613,7 +596,6 @@ export default {
 
     const primaryPlanActionLabel = computed(() => {
       if (isPlanExpired.value) return t('dashboard.planAction.restoreNow');
-      if (isExpiringSoon.value) return t('dashboard.planAction.renewNow');
       return t('dashboard.planAction.manageSubscription');
     });
 
@@ -1360,8 +1342,6 @@ export default {
       handlePopupClose,
       handlePopupConfirm,
       showPopup,
-      isExpiringSoon,
-      isExpired,
       isPlanExpired,
       subscriptionStatus,
       subscriptionStatusLabel,
@@ -1460,8 +1440,6 @@ $space-2: map.get($spacers, 2);
   --plan-expired-strip-border: rgba(239, 68, 68, 0.32);
   --status-active-text: #15803d;
   --status-active-bg: rgba(34, 197, 94, 0.15);
-  --status-expiring-text: #b45309;
-  --status-expiring-bg: rgba(245, 158, 11, 0.16);
   --status-expired-text: #dc2626;
   --status-expired-bg: rgba(220, 38, 38, 0.1);
 
