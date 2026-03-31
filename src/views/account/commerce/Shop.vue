@@ -276,6 +276,7 @@ import { fetchPlans, getCommConfig } from "@/api/account/shop";
 import { getSubscribe } from "@/api/overview/dashboard";
 
 import { SHOP_CONFIG } from "@/utils/baseConfig";
+import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from "@/utils/subscriptionStatus";
 
 
 import {
@@ -436,11 +437,10 @@ export default {
         const response = await getSubscribe();
         const subscribe = response?.data || {};
         currentPlanId.value = subscribe.plan_id || subscribe.plan?.id || null;
-        const expiredAt = Number(subscribe?.expired_at || 0);
+        const subscriptionStatus = resolveSubscriptionStatus(subscribe);
         isCurrentSubscriptionExpired.value =
-          Number.isFinite(expiredAt) && expiredAt > 0
-            ? expiredAt * 1000 <= Date.now()
-            : false;
+          subscriptionStatus === SUBSCRIPTION_STATUS.EXPIRED ||
+          subscriptionStatus === SUBSCRIPTION_STATUS.BANNED;
       } catch (error) {
         console.error('Failed to fetch current subscription:', error);
         currentPlanId.value = null;
