@@ -2315,7 +2315,7 @@ $space-2: map.get($spacers, 2);
 
     .welcome-title {
       margin: 0;
-      font-size: $font-size-base;
+      font-size: $font-size-md;
       font-weight: $font-weight-semibold;
       color: var(--theme-text-primary);
     }
