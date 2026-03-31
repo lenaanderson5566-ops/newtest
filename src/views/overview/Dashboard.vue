@@ -23,7 +23,6 @@
         :class="`is-${accountStatus}`"
       >
         <h3 class="welcome-title">{{ welcomeHeadline }}</h3>
-        <p class="welcome-desc">{{ welcomeDescription }}</p>
       </div>
 
       <div class="stats-grid" :class="{ 'no-plan-grid': !hasPlan }">
@@ -594,19 +593,6 @@ export default {
         return `你好，${emailPrefix.value}，欢迎使用`;
       }
       return `你好，${emailPrefix.value}，欢迎回来`;
-    });
-
-    const welcomeDescription = computed(() => {
-      if (accountStatus.value === SUBSCRIPTION_STATUS.NEW) {
-        return '当前账号尚未开通订阅，完成订阅后即可开始使用。';
-      }
-      if (accountStatus.value === SUBSCRIPTION_STATUS.ACTIVE) {
-        return '你的服务当前可用，可以继续导入配置或管理订阅。';
-      }
-      if (accountStatus.value === SUBSCRIPTION_STATUS.EXPIRED) {
-        return '你的订阅已过期，续费后即可继续导入配置并恢复使用。';
-      }
-      return '当前账号状态异常，部分功能暂不可用。如有疑问，请联系支持处理。';
     });
 
     const subscriptionStatus = computed(() => {
@@ -1393,7 +1379,6 @@ export default {
       handleSecondaryPlanAction,
       accountStatus,
       welcomeHeadline,
-      welcomeDescription,
       hasPlan,
       renewPlan,
       isXiaoPanel,
@@ -2336,12 +2321,6 @@ $space-2: map.get($spacers, 2);
       color: var(--theme-text-primary);
     }
 
-    .welcome-desc {
-      margin: 6px 0 0;
-      font-size: $font-size-sm;
-      color: var(--theme-text-secondary);
-      line-height: 1.6;
-    }
   }
 
   .pending-order-banner {
