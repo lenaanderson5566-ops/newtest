@@ -137,7 +137,7 @@
           <!-- 订单金额摘要 -->
           <OrderSummaryCard
             section-class="order-amount-section"
-            :title="$t('payment.order_info')"
+            :title="$t('order.order_summary')"
           >
 
             <div class="order-info" v-if="!loading.order">
@@ -1985,6 +1985,7 @@ export default {
   @media (max-width: #{$bp-md}) {
     .content-wrapper {
       flex-direction: column;
+      gap: 8px;
     }
 
     .right-column {

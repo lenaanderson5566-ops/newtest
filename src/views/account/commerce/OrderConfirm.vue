@@ -183,13 +183,9 @@
 
           <OrderSummaryCard
             section-class="order-summary-section"
-            :show-header="false"
+            :title="$t('order.order_summary')"
           >
             <div class="order-summary glassmorphism">
-              <div class="summary-header-block">
-                <div class="summary-title">{{ $t("order.order_summary") }}</div>
-              </div>
-
               <div v-if="showCouponInputSection" class="coupon-merge-block compact">
                 <template v-if="!effectiveCouponApplied">
                   <div class="coupon-input">
@@ -1995,10 +1991,14 @@ export default {
   }
 
   .selector-name {
-    margin-top: 24px;
+    margin-top: 0;
     font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
     line-height: 1.2;
+  }
+
+  .plan-selector-btn.is-current .selector-name {
+    margin-top: 24px;
   }
 
   .selector-check {
@@ -3247,8 +3247,12 @@ export default {
     }
 
     .selector-name {
-      margin-top: 24px;
+      margin-top: 0;
       font-size: $font-size-lg;
+    }
+
+    .plan-selector-btn.is-current .selector-name {
+      margin-top: 24px;
     }
 
     .content-wrapper {
