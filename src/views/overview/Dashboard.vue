@@ -1486,6 +1486,7 @@ $space-2: map.get($spacers, 2);
       margin-bottom: 0;
     }
 
+    > .account-welcome-banner,
     > .stats-grid,
     > .usage-trend-card {
       grid-column: 1 / -1;
