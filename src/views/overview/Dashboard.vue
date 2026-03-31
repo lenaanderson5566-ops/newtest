@@ -47,7 +47,6 @@
                 <div class="hero-copy">
                   <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
                   <h3 class="no-plan-title">{{ noPlanHeroTitle }}</h3>
-                  <p class="no-plan-subtitle">{{ noPlanHeroSubtitle }}</p>
                   <div class="hero-actions">
                     <button class="hero-btn primary" @click="handleNoPlanPrimaryAction">{{ noPlanPrimaryActionText }}</button>
                     <button class="hero-btn secondary" @click="goToDocs">查看教程</button>
@@ -950,11 +949,6 @@ export default {
 
     const noPlanHeroBadge = computed(() => (hasPendingItems.value ? '订单待完成' : '尚未下单'));
     const noPlanHeroTitle = computed(() => (hasPendingItems.value ? '继续完成支付，激活服务' : '先下单并完成支付，激活服务'));
-    const noPlanHeroSubtitle = computed(() => (
-      hasPendingItems.value
-        ? '完成支付后即可下载客户端并开始使用'
-        : '当前还没有有效订单，先下单并支付后即可开始使用。'
-    ));
     const noPlanPrimaryActionText = computed(() => (hasPendingItems.value ? '继续支付' : '立即下单'));
 
     const handleNoPlanPrimaryAction = () => {
@@ -1371,7 +1365,6 @@ export default {
       hasPendingItems,
       noPlanHeroBadge,
       noPlanHeroTitle,
-      noPlanHeroSubtitle,
       noPlanPrimaryActionText,
       handleNoPlanPrimaryAction,
       goToOrders,
