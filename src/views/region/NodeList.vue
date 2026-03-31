@@ -148,6 +148,7 @@ import { getUserInfo } from '@/api/account/user';
 
 
 import { NODES_CONFIG } from '@/utils/baseConfig';
+import { hasActiveSubscription } from '@/utils/subscriptionStatus';
 
 
 
@@ -237,14 +238,7 @@ const countryBadgeClass = (countryTag) => {
 
 const hasActivePlan = computed(() => {
   if (!userInfo.value) return false;
-
-  const planId = Number(userInfo.value.plan_id || userInfo.value.planId || userInfo.value.plan?.id || 0);
-  if (!planId) return false;
-
-  const expiredAt = Number(userInfo.value.expired_at || userInfo.value.expiredAt || 0);
-  if (!expiredAt) return true;
-
-  return expiredAt * 1000 > Date.now();
+  return hasActiveSubscription(userInfo.value);
 });
 
 const lockedRegions = computed(() => [

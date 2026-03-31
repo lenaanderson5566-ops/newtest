@@ -138,6 +138,7 @@ import {
 import { CLIENT_CONFIG } from '@/utils/baseConfig';
 import { getSubscribe } from '@/api/overview/dashboard';
 import { useToast } from '@/composables/useToast';
+import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
 import QRCode from 'qrcode';
 import stashIconImg from '@/assets/images/client-img-ios/stash.png';
 import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
@@ -164,13 +165,7 @@ const toast = {
   error: (message) => ($toast?.error ? $toast.error(message) : showToast.error(message))
 };
 
-const USER_STATUS = Object.freeze({
-  NEW: 'new',
-  ACTIVE: 'active',
-  EXPIRED: 'expired'
-});
-
-const userStatus = ref(USER_STATUS.NEW);
+const userStatus = ref(SUBSCRIPTION_STATUS.NEW);
 const subscriptionUrl = ref('');
 const showQrCode = ref(false);
 const qrCodeUrl = ref('');
@@ -202,14 +197,14 @@ const clientIconMap = Object.freeze({
 });
 
 const statusStripText = computed(() => {
-  if (userStatus.value === USER_STATUS.NEW) return t('quickStartPage.status.newTitle');
-  if (userStatus.value === USER_STATUS.EXPIRED) return t('quickStartPage.status.expiredTitle');
+  if (userStatus.value === SUBSCRIPTION_STATUS.NEW) return t('quickStartPage.status.newTitle');
+  if (userStatus.value === SUBSCRIPTION_STATUS.EXPIRED || userStatus.value === SUBSCRIPTION_STATUS.BANNED) return t('quickStartPage.status.expiredTitle');
   return t('quickStartPage.status.activeTitle');
 });
 
 const statusStripDesc = computed(() => {
-  if (userStatus.value === USER_STATUS.NEW) return t('quickStartPage.status.newDesc');
-  if (userStatus.value === USER_STATUS.EXPIRED) return t('quickStartPage.status.expiredDesc');
+  if (userStatus.value === SUBSCRIPTION_STATUS.NEW) return t('quickStartPage.status.newDesc');
+  if (userStatus.value === SUBSCRIPTION_STATUS.EXPIRED || userStatus.value === SUBSCRIPTION_STATUS.BANNED) return t('quickStartPage.status.expiredDesc');
   return t('quickStartPage.status.activeDesc');
 });
 
@@ -384,26 +379,12 @@ const fetchUserStatus = async () => {
   try {
     const response = await getSubscribe();
     const subscribe = response?.data || {};
-    const planId = subscribe?.plan_id || subscribe?.plan?.id || null;
-    const expiredAt = Number(subscribe?.expired_at || 0);
 
     subscriptionUrl.value = subscribe?.subscribe_url || '';
-
-    if (!planId) {
-      userStatus.value = USER_STATUS.NEW;
-      return;
-    }
-
-    if (expiredAt > 0) {
-      const now = Math.floor(Date.now() / 1000);
-      userStatus.value = expiredAt < now ? USER_STATUS.EXPIRED : USER_STATUS.ACTIVE;
-      return;
-    }
-
-    userStatus.value = USER_STATUS.ACTIVE;
+    userStatus.value = resolveSubscriptionStatus(subscribe);
   } catch (err) {
     console.error('Failed to fetch user status:', err);
-    userStatus.value = USER_STATUS.NEW;
+    userStatus.value = SUBSCRIPTION_STATUS.NEW;
   }
 };
 
