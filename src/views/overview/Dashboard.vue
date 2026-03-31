@@ -130,13 +130,13 @@
               <div class="plan-summary-section plan-summary-section-traffic">
                 <div class="plan-summary-row monthly-traffic-row">
                   <span class="plan-summary-label">{{ $t('dashboard.subscriptionMonthlyTraffic') }}</span>
-                  <strong class="plan-summary-value">{{ formatPackageRemaining(isPlanExpired ? 0 : subscriptionTrafficSummary.remaining) }}</strong>
+                  <strong class="plan-summary-value">{{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.remaining)) }}</strong>
                 </div>
                 <div class="section-progress-track in-plan-card">
-                  <div class="section-progress-fill" :style="{ width: `${isPlanExpired ? 0 : subscriptionTrafficSummary.remainingPercentage}%` }"></div>
+                  <div class="section-progress-fill" :style="{ width: `${applyPlanStatus(subscriptionTrafficSummary.remainingPercentage)}%` }"></div>
                 </div>
                 <div class="usage-summary-line in-plan-card">
-                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(isPlanExpired ? 0 : subscriptionTrafficSummary.used) }} / {{ formatPackageRemaining(subscriptionTrafficSummary.total) }}
+                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.used)) }} / {{ formatPackageRemaining(subscriptionTrafficSummary.total) }}
                 </div>
                 <div class="usage-reset-hint in-plan-card">
                   {{ $t('dashboard.resetTimeLabel') }} {{ userPlan.resetDateTime || '-' }}
@@ -187,7 +187,7 @@
               </template>
               <template v-else>
                 <template v-if="card.key === 'subscription'">
-                  <span class="usage-percent compact">{{ formatPackageRemaining(isPlanExpired ? 0 : card.remaining) }}</span>
+                  <span class="usage-percent compact">{{ formatPackageRemaining(applyPlanStatus(card.remaining)) }}</span>
                   <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 </template>
                 <template v-else>
@@ -197,12 +197,12 @@
               </template>
             </div>
             <div v-if="card.key !== 'package' && card.key !== 'total'" class="section-progress-track">
-              <div class="section-progress-fill" :style="{ width: `${card.key === 'subscription' && isPlanExpired ? 0 : card.remainingPercentage}%` }"></div>
+              <div class="section-progress-fill" :style="{ width: `${card.key === 'subscription' ? applyPlanStatus(card.remainingPercentage) : card.remainingPercentage}%` }"></div>
             </div>
             <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
               <template v-if="card.key === 'subscription'">
                 <div class="usage-summary-line persist-visible">
-                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(isPlanExpired ? 0 : card.used) }} / {{ formatPackageRemaining(card.total) }}
+                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(applyPlanStatus(card.used)) }} / {{ formatPackageRemaining(card.total) }}
                 </div>
               </template>
               <template v-else>
@@ -590,17 +590,11 @@ export default {
       isSubscriptionActive.value ? 'active' : 'expired'
     ));
 
-    const subscriptionStatusLabel = computed(() => {
-      switch (accountStatus.value) {
-        case SUBSCRIPTION_STATUS.ACTIVE:
-          return t('dashboard.subscriptionStatus.active');
-        case SUBSCRIPTION_STATUS.EXPIRED:
-        case SUBSCRIPTION_STATUS.BANNED:
-        case SUBSCRIPTION_STATUS.NEW:
-        default:
-          return t('dashboard.subscriptionStatus.expired');
-      }
-    });
+    const subscriptionStatusLabel = computed(() => (
+      isSubscriptionActive.value
+        ? t('dashboard.subscriptionStatus.active')
+        : t('dashboard.subscriptionStatus.expired')
+    ));
 
     const planExpireMetaText = computed(() => {
       if (userPlan.value.isExpireDatePermanent) {
@@ -648,6 +642,7 @@ export default {
     const isRenewAction = (label) =>
       [t('dashboard.planAction.renewNow'), t('dashboard.planAction.renew'), t('dashboard.planAction.restoreNow')].includes(label);
     const isReselectAction = (label) => label === t('dashboard.planAction.reselectPlan');
+    const applyPlanStatus = (value) => (isPlanExpired.value ? 0 : value);
 
     const handlePrimaryPlanAction = () => {
       if (isSubscriptionActive.value) {
@@ -1371,6 +1366,7 @@ export default {
       isManageAction,
       isRenewAction,
       isReselectAction,
+      applyPlanStatus,
       handlePrimaryPlanAction,
       handleSecondaryPlanAction,
       accountStatus,

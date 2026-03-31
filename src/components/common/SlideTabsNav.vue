@@ -80,10 +80,7 @@ export default {
         'SecuritySettings',
         'TicketList',
         'MobileTickets',
-        'TrafficLog',
-        'Shop',
-        'OrderConfirm',
-        'Payment'
+        'TrafficLog'
       ]);
 
       if (regionRoutes.has(routeName)) return 'Nodes';
