@@ -17,6 +17,15 @@
         <button class="banner-action btn btn-primary" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
       </div>
 
+      <div
+        v-if="!loading.userInfo"
+        class="account-welcome-banner"
+        :class="`is-${accountStatus}`"
+      >
+        <h3 class="welcome-title">{{ welcomeHeadline }}</h3>
+        <p class="welcome-desc">{{ welcomeDescription }}</p>
+      </div>
+
       <div class="stats-grid" :class="{ 'no-plan-grid': !hasPlan }">
         <template v-if="loading.userStats">
           <div v-for="i in 4" :key="i" class="stats-card skeleton-card">
@@ -358,6 +367,7 @@ import {useToast} from '@/composables/useToast';
 import {fetchPlans} from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
+import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
 
 export default {
   name: 'UserDashboard',
@@ -424,6 +434,7 @@ export default {
       expiredAt: null
     });
     const allowNewPeriod = ref('');
+    const accountStatus = ref(SUBSCRIPTION_STATUS.NEW);
 
         const trafficMetrics = reactive({
       totalTrafficBytes: 0,
@@ -509,6 +520,7 @@ export default {
         if (response.data) {
           const info = response.data;
 
+          accountStatus.value = resolveSubscriptionStatus(info);
           userPlanId.value = info.plan_id;
 
           hasPlan.value = info.plan_id !== null && info.plan_id !== undefined;
@@ -548,6 +560,7 @@ export default {
         }
       } catch (error) {
         console.error('获取用户信息失败:', error);
+        accountStatus.value = SUBSCRIPTION_STATUS.NEW;
       } finally {
         loading.userInfo = false;
       }
@@ -569,6 +582,33 @@ export default {
     });
 
     const isPlanExpired = computed(() => hasPlan.value && isExpired.value);
+
+    const emailPrefix = computed(() => {
+      const email = String(userStats.userEmail || '').trim();
+      if (!email) return '用户';
+      const prefix = email.split('@')[0]?.trim();
+      return prefix || '用户';
+    });
+
+    const welcomeHeadline = computed(() => {
+      if (accountStatus.value === SUBSCRIPTION_STATUS.NEW) {
+        return `你好，${emailPrefix.value}，欢迎使用`;
+      }
+      return `你好，${emailPrefix.value}，欢迎回来`;
+    });
+
+    const welcomeDescription = computed(() => {
+      if (accountStatus.value === SUBSCRIPTION_STATUS.NEW) {
+        return '当前账号尚未开通订阅，完成订阅后即可开始使用。';
+      }
+      if (accountStatus.value === SUBSCRIPTION_STATUS.ACTIVE) {
+        return '你的服务当前可用，可以继续导入配置或管理订阅。';
+      }
+      if (accountStatus.value === SUBSCRIPTION_STATUS.EXPIRED) {
+        return '你的订阅已过期，续费后即可继续导入配置并恢复使用。';
+      }
+      return '当前账号状态异常，部分功能暂不可用。如有疑问，请联系支持处理。';
+    });
 
     const subscriptionStatus = computed(() => {
       if (isPlanExpired.value) return 'expired';
@@ -1336,6 +1376,9 @@ export default {
       isReselectAction,
       handlePrimaryPlanAction,
       handleSecondaryPlanAction,
+      accountStatus,
+      welcomeHeadline,
+      welcomeDescription,
       hasPlan,
       renewPlan,
       isXiaoPanel,
@@ -2248,6 +2291,43 @@ $space-2: map.get($spacers, 2);
     }
   }
   /* 待支付横幅卡片 */
+  .account-welcome-banner {
+    margin-bottom: var(--dashboard-section-margin);
+    padding: 14px 16px;
+    border-radius: var(--dashboard-radius);
+    border: 1px solid var(--theme-border-color);
+    background: var(--theme-surface-elevated);
+
+    &.is-active {
+      border-color: rgba(var(--success-color-rgb), 0.35);
+      background: color-mix(in srgb, var(--success-background) 24%, var(--theme-surface-elevated) 76%);
+    }
+
+    &.is-expired {
+      border-color: rgba(var(--warning-color-rgb), 0.4);
+      background: color-mix(in srgb, var(--warning-background) 28%, var(--theme-surface-elevated) 72%);
+    }
+
+    &.is-banned {
+      border-color: rgba(var(--danger-color-rgb), 0.4);
+      background: color-mix(in srgb, rgba(var(--danger-color-rgb), 0.12) 46%, var(--theme-surface-elevated) 54%);
+    }
+
+    .welcome-title {
+      margin: 0;
+      font-size: $font-size-base;
+      font-weight: $font-weight-semibold;
+      color: var(--theme-text-primary);
+    }
+
+    .welcome-desc {
+      margin: 6px 0 0;
+      font-size: $font-size-sm;
+      color: var(--theme-text-secondary);
+      line-height: 1.6;
+    }
+  }
+
   .pending-order-banner {
     margin-bottom: var(--dashboard-section-margin);
     min-height: 44px;
