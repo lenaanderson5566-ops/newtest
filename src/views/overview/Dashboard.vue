@@ -567,7 +567,10 @@ export default {
         loading.userInfo = false;
       }
     };
-    const isPlanExpired = computed(() => accountStatus.value === SUBSCRIPTION_STATUS.EXPIRED);
+    const isSubscriptionActive = computed(() => accountStatus.value === SUBSCRIPTION_STATUS.ACTIVE);
+    const isSubscriptionExpired = computed(() => accountStatus.value === SUBSCRIPTION_STATUS.EXPIRED);
+    const isSubscriptionBanned = computed(() => accountStatus.value === SUBSCRIPTION_STATUS.BANNED);
+    const isPlanExpired = computed(() => isSubscriptionExpired.value || isSubscriptionBanned.value);
 
     const emailPrefix = computed(() => {
       const email = String(userStats.userEmail || '').trim();
@@ -583,12 +586,21 @@ export default {
       return `你好，${emailPrefix.value}，欢迎回来`;
     });
 
-    const subscriptionStatus = computed(() => {
-      if (isPlanExpired.value) return 'expired';
-      return 'active';
-    });
+    const subscriptionStatus = computed(() => (
+      isSubscriptionActive.value ? 'active' : 'expired'
+    ));
 
-    const subscriptionStatusLabel = computed(() => t(`dashboard.subscriptionStatus.${subscriptionStatus.value}`));
+    const subscriptionStatusLabel = computed(() => {
+      switch (accountStatus.value) {
+        case SUBSCRIPTION_STATUS.ACTIVE:
+          return t('dashboard.subscriptionStatus.active');
+        case SUBSCRIPTION_STATUS.EXPIRED:
+        case SUBSCRIPTION_STATUS.BANNED:
+        case SUBSCRIPTION_STATUS.NEW:
+        default:
+          return t('dashboard.subscriptionStatus.expired');
+      }
+    });
 
     const planExpireMetaText = computed(() => {
       if (userPlan.value.isExpireDatePermanent) {
@@ -638,7 +650,7 @@ export default {
     const isReselectAction = (label) => label === t('dashboard.planAction.reselectPlan');
 
     const handlePrimaryPlanAction = () => {
-      if (subscriptionStatus.value === 'active') {
+      if (isSubscriptionActive.value) {
         goToShop();
         return;
       }
@@ -646,7 +658,7 @@ export default {
     };
 
     const handleSecondaryPlanAction = () => {
-      if (subscriptionStatus.value === 'active') {
+      if (isSubscriptionActive.value) {
         renewPlan();
         return;
       }
