@@ -587,7 +587,7 @@ export default {
       const email = String(userStats.userEmail || '').trim();
       if (!email) return '用户';
       const prefix = email.split('@')[0]?.trim();
-      return prefix || '用户';
+      return prefix ? prefix.toUpperCase() : '用户';
     });
 
     const welcomeHeadline = computed(() => {
