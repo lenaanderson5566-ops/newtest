@@ -2350,6 +2350,9 @@ $space-2: map.get($spacers, 2);
       max-width: 100%;
       height: auto;
       opacity: 0.96;
+      background: transparent;
+      border: none;
+      box-shadow: none;
       pointer-events: none;
       user-select: none;
     }
