@@ -2195,7 +2195,7 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
-    background: linear-gradient(135deg, rgba(34, 89, 170, 0.14) 0%, rgba(90, 57, 216, 0.08) 42%, #ffffff 100%);
+    background: linear-gradient(315deg, rgba(34, 89, 170, 0.14) 0%, rgba(90, 57, 216, 0.08) 42%, #ffffff 100%);
     min-width: 0;
     z-index: 2;
     align-items: flex-start;
@@ -2245,7 +2245,7 @@ $space-2: map.get($spacers, 2);
   }
 
   .stats-grid .stats-card.traffic-board-package {
-    background: linear-gradient(135deg, rgba(234, 29, 44, 0.2) 0%, rgba(234, 29, 44, 0.12) 40%, rgba(255, 245, 246, 1) 100%);
+    background: linear-gradient(315deg, rgba(234, 29, 44, 0.16) 0%, rgba(234, 29, 44, 0.08) 38%, #ffffff 100%);
   }
 
   .info-tooltip {
