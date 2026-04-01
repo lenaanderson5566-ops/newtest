@@ -1784,7 +1784,11 @@ $space-2: map.get($spacers, 2);
           .plan-status-hero {
             display: flex;
             flex-direction: column;
+            justify-content: center;
             gap: 8px;
+            position: relative;
+            min-height: 64px;
+            padding-right: 96px;
           }
 
           .plan-name-main {
@@ -1797,7 +1801,7 @@ $space-2: map.get($spacers, 2);
           .plan-expire-meta {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             gap: 8px;
             flex-wrap: wrap;
             font-size: $font-size-sm;
@@ -1868,6 +1872,10 @@ $space-2: map.get($spacers, 2);
             color: var(--text-on-dark-primary);
             border: 1px solid rgba(255, 255, 255, 0.26);
             background: rgba(255, 255, 255, 0.2);
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
           }
 
           .plan-summary-desc {
