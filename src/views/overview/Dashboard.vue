@@ -1455,7 +1455,7 @@ $space-2: map.get($spacers, 2);
   --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
   --dashboard-shadow-compact: none;
-  --dashboard-border-color: rgba(148, 163, 184, 0.22);
+  --dashboard-border-color: rgba(148, 163, 184, 0.12);
   --dashboard-title-size: 14px;
   --dashboard-subtitle-color: var(--text-tertiary);
   --dashboard-value-size: 30px;
@@ -1476,7 +1476,7 @@ $space-2: map.get($spacers, 2);
   --theme-text-emphasis: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
-  --theme-border-soft: #e5e7eb;
+  --theme-border-soft: #edf1f6;
   --theme-white: #ffffff;
   --quota-label-color: var(--text-tertiary);
   --quota-value-color: var(--text-primary);
@@ -1913,6 +1913,7 @@ $space-2: map.get($spacers, 2);
               &.btn-outline,
               &.btn-secondary {
                 background: transparent;
+                border-color: rgba(148, 163, 184, 0.2);
               }
             }
           }
@@ -2154,7 +2155,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &:hover {
-        border-color: rgba(148, 163, 184, 0.3);
+        border-color: rgba(148, 163, 184, 0.2);
         box-shadow: none;
       }
     }
