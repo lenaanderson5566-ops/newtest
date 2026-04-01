@@ -2168,12 +2168,14 @@ $space-2: map.get($spacers, 2);
     padding: var(--dashboard-card-padding);
   }
 
-  .stats-grid .stats-card.traffic-board-card,
+  .stats-grid .stats-card.traffic-board-subscription,
+  .stats-grid .stats-card.traffic-board-package,
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
     background: var(--traffic-card-bg, var(--saas-card-bg));
     border: 1px solid transparent;
     border-radius: var(--dashboard-radius);
+    box-shadow: var(--shadow-md);
   }
 
   /* 概览卡片左上角标题统一样式（今日流量 / 订阅流量 / 流量额度包 / 用量记录） */
