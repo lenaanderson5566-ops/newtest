@@ -46,6 +46,7 @@
                 <div class="hero-copy">
                   <div class="hero-status">
                     <IconAlertTriangle :size="16" />
+                    <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
                   </div>
                   <h3 class="no-plan-title">{{ noPlanHeroTitle }}</h3>
                   <div class="hero-actions">
@@ -929,6 +930,7 @@ export default {
       return userStats.pendingOrders > 0;
     });
 
+    const noPlanHeroBadge = computed(() => (hasPendingItems.value ? '订单待完成' : '尚未下单'));
     const noPlanHeroTitle = computed(() => (hasPendingItems.value ? '继续完成支付，激活服务' : '先下单并完成支付，激活服务'));
     const noPlanPrimaryActionText = computed(() => (hasPendingItems.value ? '继续支付' : '立即下单'));
 
@@ -1370,6 +1372,7 @@ export default {
       goToShop,
       goToDocs,
       hasPendingItems,
+      noPlanHeroBadge,
       noPlanHeroTitle,
       noPlanPrimaryActionText,
       handleNoPlanPrimaryAction,
@@ -2661,6 +2664,18 @@ $space-2: map.get($spacers, 2);
   align-items: center;
   gap: 8px;
   color: #b45309;
+}
+
+.no-plan-badge {
+  @extend %typo-item-title;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.32);
+  background: rgba(245, 158, 11, 0.14);
 }
 
 .no-plan-title {
