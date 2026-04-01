@@ -414,7 +414,7 @@ export default {
   bottom: 0;
   overflow: hidden;
 
-  @media (max-width: #{$bp-lg}) {
+  @media (max-width: 992px) {
     overflow-y: auto;
     position: relative;
     min-height: 100vh;
@@ -440,7 +440,7 @@ export default {
   justify-content: center;
   height: 100%;
 
-  @media (max-width: #{$bp-lg}) {
+  @media (max-width: 992px) {
     display: none;
   }
 
@@ -507,7 +507,7 @@ export default {
   overflow-y: auto;
   height: 100%;
 
-  @media (max-width: #{$bp-lg}) {
+  @media (max-width: 992px) {
     width: 100%;
     max-width: none;
     flex: 1;
@@ -527,7 +527,7 @@ export default {
   gap: 8px;
   z-index: 10;
 
-  @media (max-width: #{$bp-lg}) {
+  @media (max-width: 992px) {
     top: 10px;
     right: 10px;
   }
@@ -542,7 +542,7 @@ export default {
   flex-direction: column;
   justify-content: center;
 
-  @media (max-width: #{$bp-lg}) {
+  @media (max-width: 992px) {
     padding: 16px;
     margin: auto;
     width: 100%;
@@ -785,7 +785,7 @@ export default {
 }
 
 
-@media (min-width: 577px) and (max-width: #{$bp-lg}) {
+@media (min-width: 577px) and (max-width: 992px) {
   .auth-split-right {
     padding: 24px;
   }
