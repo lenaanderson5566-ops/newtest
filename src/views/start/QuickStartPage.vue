@@ -1,9 +1,11 @@
 <template>
   <div class="quick-start-container page-shell">
     <div class="quick-start-inner page-inner page-stack">
-      <section class="status-strip">
-        <p class="status-main">{{ statusStripText }}</p>
-        <p class="status-sub">{{ statusStripDesc }}</p>
+      <section class="status-strip" :class="`is-${statusStripVariant}`">
+        <div class="status-main-row">
+          <component :is="statusStripIcon" :size="18" class="status-icon" />
+          <p class="status-main">{{ statusStripText }}</p>
+        </div>
       </section>
 
       <section class="step-card">
@@ -127,6 +129,7 @@ import {
   IconBrandFinder,
   IconBrandWindows,
   IconApps,
+  IconAlertTriangle,
   IconCheck,
   IconDownload,
   IconBolt,
@@ -202,10 +205,16 @@ const statusStripText = computed(() => {
   return t('quickStartPage.status.activeTitle');
 });
 
-const statusStripDesc = computed(() => {
-  if (userStatus.value === SUBSCRIPTION_STATUS.NEW) return t('quickStartPage.status.newDesc');
-  if (userStatus.value === SUBSCRIPTION_STATUS.EXPIRED || userStatus.value === SUBSCRIPTION_STATUS.BANNED) return t('quickStartPage.status.expiredDesc');
-  return t('quickStartPage.status.activeDesc');
+const statusStripVariant = computed(() => {
+  if (userStatus.value === SUBSCRIPTION_STATUS.NEW) return 'new';
+  if (userStatus.value === SUBSCRIPTION_STATUS.EXPIRED || userStatus.value === SUBSCRIPTION_STATUS.BANNED) return 'expired';
+  return 'active';
+});
+
+const statusStripIcon = computed(() => {
+  if (statusStripVariant.value === 'new') return IconAlertTriangle;
+  if (statusStripVariant.value === 'expired') return IconX;
+  return IconCheck;
 });
 
 const resolveClientIcon = (iconKey) => clientIconMap[iconKey] || '';
@@ -410,14 +419,29 @@ onMounted(fetchUserStatus);
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2);
 
-  .status-main {
-    margin: 0;
-    @extend %typo-item-title;
+  .status-main-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  .status-sub {
-    margin: 4px 0 0;
+  .status-icon {
+    color: rgba(var(--theme-color-rgb), 0.9);
+    flex-shrink: 0;
+  }
+
+  .status-main {
+    margin: 0;
     @extend %typo-body-text;
+    font-weight: $font-weight-semibold;
+  }
+
+  &.is-expired .status-icon {
+    color: var(--error-color);
+  }
+
+  &.is-active .status-icon {
+    color: var(--success-color);
   }
 }
 
