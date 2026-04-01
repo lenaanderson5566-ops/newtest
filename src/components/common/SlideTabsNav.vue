@@ -203,7 +203,6 @@ export default {
       &.active {
         color: var(--text-primary);
         background: rgba(var(--theme-color-rgb), 0.12);
-        box-shadow: inset 2px 0 0 rgba(var(--theme-color-rgb), 0.65);
 
         .nav-icon svg {
           color: var(--theme-color);
