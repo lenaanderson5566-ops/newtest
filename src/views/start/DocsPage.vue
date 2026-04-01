@@ -400,7 +400,6 @@ onMounted(() => {
 
       border-color: var(--theme-color);
 
-      box-shadow: none;
 
       
 
@@ -531,7 +530,6 @@ onMounted(() => {
 
   transition: all 0.25s ease;
 
-  box-shadow: none;
 
   border: 1px solid var(--border-color);
 
@@ -541,7 +539,6 @@ onMounted(() => {
 
     transform: translateY(-2px);
 
-    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -701,7 +698,6 @@ onMounted(() => {
 
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
-  box-shadow: none;
 
   cursor: pointer;
 
@@ -717,7 +713,6 @@ onMounted(() => {
 
     transform: translateY(-2px);
 
-    box-shadow: none;
 
     background-color: rgba(var(--theme-color-rgb), 0.95);
 
@@ -729,7 +724,6 @@ onMounted(() => {
 
     transform: translateY(0);
 
-    box-shadow: none;
 
   }
 

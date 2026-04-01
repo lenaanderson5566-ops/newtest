@@ -2768,7 +2768,6 @@ export default {
 
     border-color: var(--theme-color);
 
-    box-shadow: none;
 
     background-color: var(--input-focus-bg-color, #fff);
 
@@ -2802,7 +2801,6 @@ export default {
 
       &:focus {
 
-        box-shadow: none;
 
       }
 
@@ -2938,7 +2936,6 @@ export default {
 
       border-radius: 8px;
 
-      box-shadow: none;
 
       z-index: 100;
 
@@ -3168,7 +3165,6 @@ export default {
 
       border-color: var(--theme-color);
 
-      box-shadow: none;
 
       background-color: var(--input-focus-bg-color, #fff);
 
@@ -3284,7 +3280,6 @@ export default {
 
       transform: translateY(0);
 
-      box-shadow: none;
 
 
 
@@ -3292,7 +3287,6 @@ export default {
 
         transform: translateY(-2px);
 
-        box-shadow: none;
 
       }
 
@@ -4017,7 +4011,6 @@ export default {
 
     border-radius: 12px;
 
-    box-shadow: none;
 
     z-index: 1001;
 

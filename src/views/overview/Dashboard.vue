@@ -1525,14 +1525,12 @@ $space-2: map.get($spacers, 2);
 
   .dashboard-card {
     background-color: var(--saas-card-bg);
-    box-shadow: none;
     padding: var(--dashboard-card-padding);
     border: 1px solid var(--dashboard-border-color);
     border-radius: var(--dashboard-radius);
     transition: box-shadow 0.2s ease;
 
     &:hover {
-      box-shadow: none;
       transform: none;
     }
 
@@ -1627,7 +1625,6 @@ $space-2: map.get($spacers, 2);
       z-index: 1;
       background-color: var(--saas-card-bg);
       border-radius: var(--dashboard-radius);
-      box-shadow: none;
       display: flex;
       align-items: center;
       gap: #{$space-2};
@@ -1696,7 +1693,6 @@ $space-2: map.get($spacers, 2);
             justify-content: center;
             color: var(--theme-white);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-            box-shadow: none;
             cursor: pointer;
           }
         }
@@ -2048,7 +2044,6 @@ $space-2: map.get($spacers, 2);
       &.traffic-board-subscription {
         --traffic-card-bg: linear-gradient(135deg, rgba(148, 163, 184, 0.12) 0%, rgba(148, 163, 184, 0.24) 100%);
         border: 1px solid var(--dashboard-border-color);
-        box-shadow: none;
 
         .usage-card-title,
         .usage-percent,
@@ -2078,7 +2073,6 @@ $space-2: map.get($spacers, 2);
       &.traffic-board-total {
         --traffic-card-bg: linear-gradient(135deg, rgba(148, 163, 184, 0.1) 0%, rgba(148, 163, 184, 0.2) 100%);
         border: 1px solid var(--dashboard-border-color);
-        box-shadow: none;
 
         .usage-card-title {
           color: var(--text-primary);
@@ -2155,7 +2149,6 @@ $space-2: map.get($spacers, 2);
 
       &:hover {
         border-color: var(--card-border-hover);
-        box-shadow: none;
       }
     }
   }
@@ -2166,7 +2159,6 @@ $space-2: map.get($spacers, 2);
   .overview-card--traffic-quota {
     border-radius: var(--dashboard-radius);
     background: var(--saas-card-bg);
-    box-shadow: none;
     border: 1px solid var(--dashboard-border-color);
   }
 
@@ -2182,7 +2174,6 @@ $space-2: map.get($spacers, 2);
     background: var(--traffic-card-bg, var(--saas-card-bg));
     border: 1px solid transparent;
     border-radius: var(--dashboard-radius);
-    box-shadow: none;
   }
 
   /* 概览卡片左上角标题统一样式（今日流量 / 订阅流量 / 流量额度包 / 用量记录） */
@@ -2270,7 +2261,6 @@ $space-2: map.get($spacers, 2);
       font-size: $font-size-sm;
       line-height: 1.4;
       font-weight: $font-weight-medium;
-      box-shadow: none;
       opacity: 0;
       visibility: hidden;
       transform: translate(-50%, 4px);
@@ -2646,7 +2636,6 @@ $space-2: map.get($spacers, 2);
   padding: 16px;
   animation: none;
   background-color: var(--card-bg-color);
-  box-shadow: none;
   border: 1px solid var(--border-color);
   position: relative;
 }
@@ -2849,7 +2838,6 @@ $space-2: map.get($spacers, 2);
   gap: 8px;
   color: #fff;
   text-align: left;
-  box-shadow: none;
 
 }
 
@@ -2947,7 +2935,6 @@ $space-2: map.get($spacers, 2);
   &.warning-card,
   &.danger-card {
     border-color: rgba(var(--stats-alert-rgb), 0.42);
-    box-shadow: none;
 
     .stats-icon {
       background-color: rgba(var(--stats-alert-rgb), 0.1);
@@ -3005,7 +2992,6 @@ $space-2: map.get($spacers, 2);
   max-height: calc(100vh - 32px);
   border-radius: var(--dashboard-radius);
   overflow: hidden;
-  box-shadow: none;
 }
 
 .traffic-package-modal-card-global {
@@ -3016,7 +3002,6 @@ $space-2: map.get($spacers, 2);
   background-color: var(--card-background);
   border: 1px solid rgba(var(--theme-color-rgb), 0.15);
   border-radius: 16px;
-  box-shadow: none;
 
   .modal-header {
     display: flex;

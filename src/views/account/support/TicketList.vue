@@ -926,7 +926,6 @@ onUnmounted(() => {
 
   border-radius: 12px;
 
-  box-shadow: none;
 
   padding: 16px;
 
@@ -935,7 +934,6 @@ onUnmounted(() => {
   transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
   }
@@ -1024,14 +1022,12 @@ onUnmounted(() => {
 
       transition: all 0.3s ease;
 
-      box-shadow: none;
 
       &:focus {
         outline: none;
 
         border-color: rgba(var(--theme-color-rgb), 0.5);
 
-        box-shadow: none;
       }
 
       &::placeholder {
@@ -1095,12 +1091,10 @@ onUnmounted(() => {
 
     border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
-    box-shadow: none;
 
     &:hover {
       transform: translateY(-2px);
 
-      box-shadow: none;
 
       background-color: rgba(var(--theme-color-rgb), 0.95);
     }
@@ -1108,7 +1102,6 @@ onUnmounted(() => {
     &:active {
       transform: translateY(0);
 
-      box-shadow: none;
     }
   }
 }
@@ -1445,7 +1438,6 @@ onUnmounted(() => {
 
     flex-shrink: 0;
 
-    box-shadow: none;
 
     position: relative;
 
@@ -1493,7 +1485,6 @@ onUnmounted(() => {
 
     border-radius: 18px;
 
-    box-shadow: none;
 
     position: relative;
 
@@ -1583,7 +1574,6 @@ onUnmounted(() => {
 
     transition: all 0.3s ease;
 
-    box-shadow: none;
 
     min-height: 90px;
 
@@ -1592,7 +1582,6 @@ onUnmounted(() => {
 
       border-color: var(--theme-color);
 
-      box-shadow: none;
 
       transform: translateY(-2px);
     }
@@ -1634,7 +1623,6 @@ onUnmounted(() => {
 
     font-weight: $font-weight-medium;
 
-    box-shadow: none;
 
     backdrop-filter: blur(8px);
 
@@ -1645,7 +1633,6 @@ onUnmounted(() => {
     &:hover:not(:disabled) {
       transform: translateY(-2px);
 
-      box-shadow: none;
 
       background-color: rgba(var(--theme-color-rgb), 0.95);
     }
@@ -1653,7 +1640,6 @@ onUnmounted(() => {
     &:active:not(:disabled) {
       transform: translateY(0);
 
-      box-shadow: none;
     }
 
     &:disabled {
@@ -1812,7 +1798,6 @@ onUnmounted(() => {
 
   overflow-y: auto;
 
-  box-shadow: none;
 
   animation: modal-appear 0.3s cubic-bezier(0.21, 1.02, 0.73, 1);
 
@@ -1942,14 +1927,12 @@ onUnmounted(() => {
 
       transition: all 0.2s ease;
 
-      box-shadow: none;
 
       &:focus {
         outline: none;
 
         border-color: rgba(var(--theme-color-rgb), 0.5);
 
-        box-shadow: none;
       }
 
       &::placeholder {
@@ -2102,7 +2085,6 @@ onUnmounted(() => {
 
       color: var(--text-on-dark-primary);
 
-      box-shadow: none;
 
       backdrop-filter: blur(8px);
 
@@ -2111,7 +2093,6 @@ onUnmounted(() => {
       &:hover:not(:disabled) {
         transform: translateY(-2px);
 
-        box-shadow: none;
 
         background-color: rgba(var(--theme-color-rgb), 0.95);
       }
@@ -2119,7 +2100,6 @@ onUnmounted(() => {
       &:active:not(:disabled) {
         transform: translateY(0);
 
-        box-shadow: none;
       }
 
       &:disabled {
@@ -2241,7 +2221,6 @@ onUnmounted(() => {
 
     border-radius: 16px;
 
-    box-shadow: none;
 
     max-width: 90%;
 
@@ -2298,20 +2277,17 @@ onUnmounted(() => {
 
       gap: 8px;
 
-      box-shadow: none;
 
       &:hover {
         background-color: rgba(var(--theme-color-rgb), 0.9);
 
         transform: translateY(-1px);
 
-        box-shadow: none;
       }
 
       &:active {
         transform: translateY(-1px);
 
-        box-shadow: none;
       }
     }
   }
@@ -2412,7 +2388,6 @@ onUnmounted(() => {
   border: 1px solid var(--border-color);
   border-radius: 14px;
   background: var(--card-bg-color);
-  box-shadow: none;
 }
 
 .ticket-sidebar {

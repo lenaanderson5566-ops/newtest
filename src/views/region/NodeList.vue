@@ -348,7 +348,6 @@ onMounted(() => {
 
   border-radius: $border-radius-sm;
 
-  box-shadow: none;
 
   padding: map.get($spacers, 3);
 
@@ -362,7 +361,6 @@ onMounted(() => {
 
   &:hover {
 
-    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -614,7 +612,6 @@ onMounted(() => {
   border: 1px solid var(--border-color);
   border-radius: $border-radius-sm;
   padding: 24px;
-  box-shadow: none;
 
   .no-plan-head {
     text-align: center;
@@ -690,7 +687,6 @@ onMounted(() => {
       font-weight: $font-weight-bold;
       color: var(--text-on-dark-primary);
       background: radial-gradient(circle at center, rgba(var(--theme-color-rgb), 0.95), rgba(var(--theme-color-rgb), 0.35));
-      box-shadow: none;
       animation: regionPulse 2.8s ease-in-out infinite;
     }
 
@@ -765,7 +761,6 @@ onMounted(() => {
     .primary {
       color: var(--text-on-dark-primary);
       background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-      box-shadow: none;
     }
 
     .secondary {
@@ -809,7 +804,6 @@ onMounted(() => {
 
   transition: all 0.25s ease;
 
-  box-shadow: none;
 
   border: 1px solid var(--border-color);
 
@@ -819,7 +813,6 @@ onMounted(() => {
 
     transform: translateY(-1px);
 
-    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -838,7 +831,6 @@ onMounted(() => {
     color: var(--text-on-dark-primary);
     letter-spacing: 0.2px;
     background: linear-gradient(135deg, #d90429, #9d174d);
-    box-shadow: none;
 
     &.is-red { background: linear-gradient(135deg, #d90429, #9d174d); }
     &.is-pink { background: linear-gradient(135deg, #db2777, #be185d); }
@@ -1028,7 +1020,6 @@ onMounted(() => {
 
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
 
-  box-shadow: none;
 
   cursor: pointer;
 
@@ -1044,7 +1035,6 @@ onMounted(() => {
 
     transform: translateY(-2px);
 
-    box-shadow: none;
 
     background-color: rgba(var(--theme-color-rgb), 0.95);
 
@@ -1056,7 +1046,6 @@ onMounted(() => {
 
     transform: translateY(0);
 
-    box-shadow: none;
 
   }
 
@@ -1070,19 +1059,16 @@ onMounted(() => {
 
   0% {
 
-    box-shadow: none;
 
   }
 
   70% {
 
-    box-shadow: none;
 
   }
 
   100% {
 
-    box-shadow: none;
 
   }
 

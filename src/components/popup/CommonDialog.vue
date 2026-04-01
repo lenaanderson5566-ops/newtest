@@ -196,7 +196,6 @@ export default {
     max-width: 500px;
     background-color: #fff;
     border-radius: $border-radius-sm;
-    box-shadow: none;
     border: 1px solid rgba(15, 23, 42, 0.08);
     overflow: hidden;
     display: flex;

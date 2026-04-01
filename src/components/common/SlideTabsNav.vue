@@ -152,7 +152,6 @@ export default {
     background: #fff;
     border-radius: $border-radius-sm;
     padding: 0;
-    box-shadow: none;
     border: 1px solid rgba(15, 23, 42, 0.08);
     overflow: hidden;
   }

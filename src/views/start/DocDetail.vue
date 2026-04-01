@@ -1359,7 +1359,6 @@ onUnmounted(() => {
 
     padding: 24px;
 
-    box-shadow: none;
 
     border: 1px solid rgba(var(--theme-color-rgb), 0.1);
 
@@ -1478,7 +1477,6 @@ onUnmounted(() => {
 
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  box-shadow: none;
 
   
 
@@ -1502,7 +1500,6 @@ onUnmounted(() => {
 
     transform: translateY(-3px);
 
-    box-shadow: none;
 
     
 
@@ -1520,7 +1517,6 @@ onUnmounted(() => {
 
     transform: translateY(-1px);
 
-    box-shadow: none;
 
   }
 
@@ -1536,7 +1532,6 @@ onUnmounted(() => {
 
   padding: 24px;
 
-  box-shadow: none;
 
   border: 1px solid var(--border-color);
 
@@ -1556,7 +1551,6 @@ onUnmounted(() => {
 
   &:hover {
 
-    box-shadow: none;
 
     border-color: rgba(var(--theme-color-rgb), 0.2);
 
@@ -1845,7 +1839,6 @@ onUnmounted(() => {
 
     border: 1px solid var(--border-color);
 
-    box-shadow: none;
 
     
 
@@ -1853,7 +1846,6 @@ onUnmounted(() => {
 
       transform: scale(1.01);
 
-      box-shadow: none;
 
       border-color: var(--theme-color);
 
@@ -1903,7 +1895,6 @@ onUnmounted(() => {
 
     border: 1px solid var(--border-color);
 
-    box-shadow: none;
 
     position: relative;
 
@@ -1915,7 +1906,6 @@ onUnmounted(() => {
 
       border-color: var(--theme-color);
 
-      box-shadow: none;
 
     }
 
@@ -2039,7 +2029,6 @@ onUnmounted(() => {
 
     border-radius: 6px;
 
-    box-shadow: none;
 
     border: 1px solid var(--border-color);
 
@@ -2049,7 +2038,6 @@ onUnmounted(() => {
 
     &:hover {
 
-      box-shadow: none;
 
       border-color: rgba(var(--theme-color-rgb), 0.2);
 
@@ -2207,7 +2195,6 @@ onUnmounted(() => {
 
     border: 1px solid rgba(var(--theme-color-rgb), 0.15);
 
-    box-shadow: none;
 
     position: relative;
 
@@ -2219,7 +2206,6 @@ onUnmounted(() => {
 
     &:hover {
 
-      box-shadow: none;
 
       border-color: rgba(var(--theme-color-rgb), 0.3);
 
@@ -2301,7 +2287,6 @@ onUnmounted(() => {
 
   text-align: center !important;
 
-  box-shadow: none !important;
 
   border-color: transparent !important;
 
@@ -2339,7 +2324,6 @@ onUnmounted(() => {
 
     transform: translateY(-1px) !important;
 
-    box-shadow: none !important;
 
     border-bottom: none !important;
 
@@ -2357,7 +2341,6 @@ onUnmounted(() => {
 
     transform: translateY(0) !important;
 
-    box-shadow: none !important;
 
   }
 
@@ -2367,7 +2350,6 @@ onUnmounted(() => {
 
     outline: none !important;
 
-    box-shadow: none !important;
 
   }
 

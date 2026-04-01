@@ -1795,7 +1795,6 @@ export default {
 
     border-radius: $border-radius-sm;
 
-    box-shadow: none;
 
     padding: 16px;
 
@@ -1804,7 +1803,6 @@ export default {
     transition: all 0.3s ease;
 
     &:hover {
-      box-shadow: none;
 
       border-color: rgba(var(--theme-color-rgb), 0.3);
     }
@@ -2018,7 +2016,6 @@ export default {
   .section-wrapper.period-section {
     background-color: var(--background-color) !important;
     border: none !important;
-    box-shadow: none !important;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
   }
@@ -2026,7 +2023,6 @@ export default {
   .section-wrapper.subscription-intro-section {
     background-color: var(--background-color) !important;
     border: none !important;
-    box-shadow: none !important;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
   }
@@ -2034,7 +2030,6 @@ export default {
   .section-wrapper.payment-methods-section {
     background-color: var(--background-color) !important;
     border: none !important;
-    box-shadow: none !important;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
   }
@@ -2052,7 +2047,6 @@ export default {
 
     border-radius: $border-radius-sm;
 
-    box-shadow: none;
 
     padding: 24px;
 
@@ -2286,14 +2280,12 @@ export default {
 
         position: relative;
 
-        box-shadow: none;
 
         &.active {
           border-color: var(--theme-color);
 
           transform: translateY(-3px);
 
-          box-shadow: none;
 
           .period-card-inner {
             background-color: #ffffff !important;
@@ -2317,14 +2309,12 @@ export default {
 
           border-color: rgba(var(--theme-color-rgb), 0.3);
 
-          box-shadow: none;
         }
 
         &.is-locked,
         &.is-locked:hover {
           cursor: not-allowed;
           transform: none;
-          box-shadow: none;
         }
 
         &.is-dimmed {
@@ -2449,7 +2439,6 @@ export default {
 
       transition: all 0.3s ease;
 
-      box-shadow: none;
 
       min-width: 0;
 
@@ -2461,7 +2450,6 @@ export default {
       &:focus {
         border-color: rgba(var(--theme-color-rgb), 0.5);
 
-        box-shadow: none;
 
         transform: translateY(-1px);
       }
@@ -2497,7 +2485,6 @@ export default {
 
       transition: all 0.3s ease;
 
-      box-shadow: none;
 
       white-space: nowrap;
 
@@ -2509,7 +2496,6 @@ export default {
 
         transform: translateY(-2px);
 
-        box-shadow: none;
       }
 
       &:disabled {
@@ -2642,7 +2628,6 @@ export default {
       &.active {
         border-color: var(--theme-color);
         background-color: rgba(var(--theme-color-rgb), 0.14);
-        box-shadow: none;
       }
 
       .method-check {
@@ -2725,7 +2710,6 @@ export default {
 
     border-radius: $border-radius-sm;
 
-    box-shadow: none;
 
     padding: map.get($spacers, 3);
 
@@ -2908,14 +2892,12 @@ export default {
     background: var(--card-bg-color);
     border: 1px solid var(--border-color);
     border-radius: $border-radius-sm;
-    box-shadow: none;
     color: var(--text-primary);
   }
 
   .right-column .order-summary-section .order-summary {
     background: var(--right-card-bg) !important;
     border: 1px solid var(--right-card-border) !important;
-    box-shadow: none !important;
     color: var(--right-card-text) !important;
   }
 

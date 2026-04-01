@@ -1173,7 +1173,6 @@ export default {
   .dashboard-card {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
-    box-shadow: none;
     padding: map.get($spacers, 3);
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
@@ -1226,7 +1225,6 @@ export default {
   .section-wrapper {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
-    box-shadow: none;
     padding: 16px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
@@ -1237,7 +1235,6 @@ export default {
     }
 
     &:hover {
-      box-shadow: none;
       border-color: var(--border-color);
     }
 
@@ -1331,7 +1328,6 @@ export default {
     margin: 8px 0;
     background: var(--background-color) !important;
     border: none !important;
-    box-shadow: none !important;
 
     .section-title {
       background-color: var(--background-color);
@@ -1344,7 +1340,6 @@ export default {
   .right-column .section-wrapper.payment-methods-section {
     background: var(--right-card-bg) !important;
     border: 1px solid var(--right-card-border) !important;
-    box-shadow: none !important;
   }
 
   .right-column .section-wrapper.payment-methods-section .section-title {
@@ -1354,7 +1349,6 @@ export default {
   .order-amount-section {
     background: var(--card-bg-color);
     border: 1px solid var(--border-color);
-    box-shadow: none;
 
     .summary-header-block {
       margin-bottom: 12px;
@@ -1450,7 +1444,6 @@ export default {
   .right-column .order-amount-section {
     background: var(--right-card-bg) !important;
     border: 1px solid var(--right-card-border) !important;
-    box-shadow: none !important;
   }
 
   .right-column .order-amount-section .section-title,
@@ -1490,7 +1483,6 @@ export default {
       &.active {
         border-color: var(--theme-color);
         background-color: rgba(var(--theme-color-rgb), 0.14);
-        box-shadow: none;
       }
 
       .method-check {
@@ -1650,7 +1642,6 @@ export default {
 
           &:hover:not(:disabled) {
             background-color: rgba(var(--theme-color-rgb), 0.08);
-            box-shadow: none;
             transform: none;
           }
         }
@@ -1678,7 +1669,6 @@ export default {
         opacity: 0.6;
         cursor: not-allowed;
         transform: none !important;
-        box-shadow: none !important;
       }
 
       @include down(xs) {
@@ -1700,17 +1690,14 @@ export default {
       color: var(--text-primary);
       flex: 1;
       border: 1px solid var(--border-color);
-      box-shadow: none;
 
       &:hover:not(:disabled) {
         background-color: var(--hover-color);
         transform: none;
-        box-shadow: none;
       }
 
       &:active:not(:disabled) {
         transform: translateY(0);
-        box-shadow: none;
       }
 
       &.full-width {
@@ -1725,12 +1712,10 @@ export default {
       background-color: var(--theme-color);
       color: var(--text-on-dark-primary);
       flex: 2;
-      box-shadow: none;
 
       &:hover:not(:disabled) {
         background-color: var(--primary-color-hover);
         transform: none;
-        box-shadow: none;
       }
     }
 
@@ -1739,12 +1724,10 @@ export default {
       color: var(--text-primary);
       flex: 1;
       border: 1px solid var(--border-color);
-      box-shadow: none;
 
       &:hover:not(:disabled) {
         background-color: var(--card-bg-color);
         transform: none;
-        box-shadow: none;
       }
     }
 
@@ -1853,7 +1836,6 @@ export default {
           justify-content: center;
           margin: 0 auto;
           animation: zoomIn 0.5s ease, pulse 2s infinite ease-in-out;
-          box-shadow: none;
 
           .check-icon {
             color: var(--text-on-dark-primary);
@@ -1947,13 +1929,10 @@ export default {
 
   @keyframes pulse {
     0% {
-      box-shadow: none;
     }
     50% {
-      box-shadow: none;
     }
     100% {
-      box-shadow: none;
     }
   }
 
@@ -2067,7 +2046,6 @@ export default {
     background-color: var(--card-background);
     border-radius: $border-radius-sm;
     overflow: hidden;
-    box-shadow: none;
     transform: translateZ(0);
 
     @media (prefers-color-scheme: dark) {
@@ -2125,17 +2103,14 @@ export default {
       background-color: transparent;
       border: 1px solid var(--border-color);
       color: var(--text-primary);
-      box-shadow: none;
 
       &:hover {
         background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
         transform: none;
-        box-shadow: none;
       }
 
       &:active {
         transform: none;
-        box-shadow: none;
       }
     }
 

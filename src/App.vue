@@ -360,7 +360,6 @@ export default {
 .modal-content {
   background-color: #ffffff !important;
   border-radius: $border-radius-sm !important;
-  box-shadow: none !important;
   border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
@@ -389,7 +388,6 @@ export default {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: none;
   display: flex;
   align-items: center;
   justify-content: space-between;

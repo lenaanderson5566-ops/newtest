@@ -479,7 +479,6 @@ export default {
 
   
 
-  box-shadow: none;
 
   overflow: hidden;
 
@@ -812,7 +811,6 @@ export default {
 
             
 
-            box-shadow: none;
 
           }
 
@@ -824,7 +822,6 @@ export default {
 
             transform: translateY(0);
 
-            box-shadow: none;
 
           }
 
@@ -985,7 +982,6 @@ export default {
 
     
 
-    box-shadow: none;
 
     
 
@@ -1142,7 +1138,6 @@ export default {
 @media (hover: none) {
   .browser-button:hover {
     transform: none;
-    box-shadow: none;
   }
 
   .copy-button:hover {

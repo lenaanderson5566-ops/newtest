@@ -892,7 +892,6 @@ onUnmounted(() => {
 
     border-radius: 12px;
 
-    box-shadow: none;
 
     padding: 16px;
 

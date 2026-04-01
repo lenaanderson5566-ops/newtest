@@ -307,17 +307,14 @@
 .pending-order-modal .pending-order-actions .btn-return-orders {
   background: transparent;
   color: var(--text-primary);
-  box-shadow: none;
 
   &:hover {
     background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
     transform: none;
-    box-shadow: none;
   }
 
   &:active {
     transform: none;
-    box-shadow: none;
   }
 }
 

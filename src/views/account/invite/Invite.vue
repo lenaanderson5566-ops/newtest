@@ -1931,7 +1931,6 @@ export default {
   background: var(--card-background);
   border-radius: 12px;
   border: 1px solid var(--border-color);
-  box-shadow: none;
 }
 
 .modal-header {
