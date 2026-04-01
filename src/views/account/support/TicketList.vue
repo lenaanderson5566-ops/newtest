@@ -2499,7 +2499,7 @@ onUnmounted(() => {
   font-weight: $font-weight-medium;
 }
 
-@media (max-width: 1320px) {
+@include down(xl) {
   .ticket-list-container {
     grid-template-columns: 280px minmax(0, 1fr);
   }

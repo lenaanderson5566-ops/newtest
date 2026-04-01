@@ -755,7 +755,7 @@ onMounted(() => {
 
 
 
-@media (min-width: 1024px) {
+@include up(lg) {
 
   .doc-items {
 

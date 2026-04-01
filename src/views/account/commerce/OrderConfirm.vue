@@ -3184,7 +3184,7 @@ export default {
 
 
 
-@media (max-width: 991px) {
+@include down(lg) {
   .order-confirm-container {
     .content-wrapper {
       gap: 24px;

@@ -908,7 +908,7 @@ export default {
   }
 }
 
-@media (min-width: 993px) and (max-height: 700px) {
+@media (min-width: 992px) and (max-height: 700px) {
   .auth-split-right {
     justify-content: flex-start;
   }

@@ -2527,7 +2527,7 @@ export default {
 
 
 
-@media (min-width: 993px) and (max-height: 1050px) {
+@media (min-width: 992px) and (max-height: 1050px) {
 
   .auth-split-right {
 
