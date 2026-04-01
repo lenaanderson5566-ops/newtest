@@ -7,7 +7,7 @@
           <!-- 订单概览 -->
           <div class="section-wrapper overview-section">
             <div class="section-title with-status">
-              <span>{{ $t("order.order_summary") }}</span>
+              <span>{{ $t("payment.order_info") }}</span>
               <button
                 v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
                 class="overview-cancel-btn"
@@ -1245,25 +1245,33 @@ export default {
     }
 
     .section-title {
-      @extend %typo-item-title;
+      @extend %typo-section-title;
       margin-bottom: 16px;
       color: var(--text-primary);
+      position: relative;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      padding-left: 16px;
 
-      &::after {
+      &::before {
         content: "";
-        flex: 1;
-        height: 1px;
-        background-color: var(--border-color);
-        margin-left: 8px;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 18px;
+        background-color: var(--theme-color);
+        border-radius: 2px;
       }
 
       &.with-status {
         justify-content: space-between;
 
-        &::after {
-          display: none;
+        &::before {
+          top: 15px;
+          transform: none;
         }
       }
     }

@@ -790,7 +790,7 @@ profile: {
             deposit: '充值'
         },
         traffic: '流量',
-        order_info: '订单信息',
+        order_info: '订单详情',
         trade_no: '订单号',
         created_at: '创建时间',
         total_price: '套餐金额',
