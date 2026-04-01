@@ -408,7 +408,7 @@ onMounted(fetchUserStatus);
 .quick-start-container {
   padding-bottom: calc(2px + 64px);
 
-  @media (min-width: #{$bp-md-up}) {
+  @media (min-width: 769px) {
     padding-bottom: 0;
   }
 }

@@ -3154,7 +3154,7 @@ export default {
 
 
 
-@media (min-width: #{$bp-sm-up}) and (max-width: #{$bp-lg}) {
+@media (min-width: 577px) and (max-width: #{$bp-lg}) {
 
   .auth-container {
 

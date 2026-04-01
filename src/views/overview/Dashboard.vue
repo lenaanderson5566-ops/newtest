@@ -1570,7 +1570,7 @@ $space-2: map.get($spacers, 2);
         height: auto;
       }
 
-      @media (min-width: #{$bp-md-up}) {
+      @media (min-width: 769px) {
         grid-template-rows: auto;
         align-items: start;
       }
@@ -1590,7 +1590,7 @@ $space-2: map.get($spacers, 2);
       grid-row: 2 / 3;
     }
 
-    @media (min-width: #{$bp-md-up}) {
+    @media (min-width: 769px) {
       grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
       grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
       align-items: stretch;
