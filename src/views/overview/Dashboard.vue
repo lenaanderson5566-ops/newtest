@@ -1701,7 +1701,6 @@ $space-2: map.get($spacers, 2);
           }
         }
         &.quota-card-muted {
-          background: var(--theme-surface-muted);
           border-color: var(--theme-border-soft);
         }
 
