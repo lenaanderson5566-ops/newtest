@@ -1476,7 +1476,6 @@ $space-2: map.get($spacers, 2);
   --theme-text-emphasis: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
-  --subscription-card-bg: #eef2f6;
   --theme-border-soft: #e5e7eb;
   --theme-white: #ffffff;
   --quota-label-color: var(--text-tertiary);
@@ -2042,11 +2041,6 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-subscription {
-        background: var(--subscription-card-bg);
-      }
-
-      &.traffic-board-subscription {
-        background: var(--subscription-card-bg);
         border: 1px solid var(--dashboard-border-color);
         box-shadow: none;
 
@@ -2060,7 +2054,7 @@ $space-2: map.get($spacers, 2);
         }
 
         .usage-kpi {
-          background: var(--theme-surface-soft);
+          background: transparent;
         }
 
         .section-progress-track {
@@ -2123,7 +2117,7 @@ $space-2: map.get($spacers, 2);
             gap: 4px;
             padding: 8px;
             border-radius: var(--dashboard-radius);
-            background: var(--theme-surface-soft);
+            background: transparent;
           }
 
           .usage-kpi-label {
@@ -2247,10 +2241,6 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid .stats-card.traffic-board-package {
     background: linear-gradient(315deg, rgba(234, 29, 44, 0.16) 0%, rgba(234, 29, 44, 0.08) 38%, #ffffff 100%);
-  }
-
-  .stats-grid .stats-card.traffic-board-subscription {
-    background: var(--subscription-card-bg);
   }
 
   .info-tooltip {
