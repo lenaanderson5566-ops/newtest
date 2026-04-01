@@ -1303,7 +1303,11 @@ export default {
 
   .overview-header {
     background-color: var(--background-color);
-    margin: 8px 0 12px;
+    margin: 8px 0;
+
+    .overview-cancel-btn {
+      margin-left: auto;
+    }
   }
 
   .overview-cancel-btn {
@@ -1332,9 +1336,7 @@ export default {
     .section-title {
       background-color: var(--background-color);
       margin-top: 8px;
-      margin-bottom: 0;
-      font-size: $font-size-md;
-      padding: 8px 8px 8px;
+      margin-bottom: 8px;
       color: var(--text-primary);
 
       &::after {
