@@ -1455,7 +1455,7 @@ $space-2: map.get($spacers, 2);
   --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
   --dashboard-shadow-compact: none;
-  --dashboard-border-color: rgba(148, 163, 184, 0.1);
+  --dashboard-border-color: var(--card-border-subtle);
   --dashboard-title-size: 14px;
   --dashboard-subtitle-color: var(--text-tertiary);
   --dashboard-value-size: 30px;
@@ -2154,7 +2154,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &:hover {
-        border-color: rgba(148, 163, 184, 0.14);
+        border-color: var(--card-border-hover);
         box-shadow: none;
       }
     }
