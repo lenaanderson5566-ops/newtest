@@ -2046,6 +2046,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-subscription {
+        --traffic-card-bg: transparent;
         border: 1px solid var(--dashboard-border-color);
         box-shadow: none;
 
@@ -2068,13 +2069,14 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-package {
+        --traffic-card-bg: linear-gradient(315deg, rgba(234, 29, 44, 0.16) 0%, rgba(234, 29, 44, 0.08) 38%, #ffffff 100%);
         min-height: auto;
         height: auto;
         z-index: 8;
       }
 
       &.traffic-board-total {
-        background: var(--saas-card-bg);
+        --traffic-card-bg: var(--saas-card-bg);
         border: 1px solid var(--dashboard-border-color);
         box-shadow: none;
 
@@ -2177,7 +2179,7 @@ $space-2: map.get($spacers, 2);
   .stats-grid .stats-card.traffic-board-card,
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
-    background: var(--saas-card-bg);
+    background: var(--traffic-card-bg, var(--saas-card-bg));
     border: 1px solid var(--dashboard-border-color);
     border-radius: var(--dashboard-radius);
     box-shadow: none;
@@ -2242,10 +2244,6 @@ $space-2: map.get($spacers, 2);
         font-weight: $font-weight-semibold;
       }
     }
-  }
-
-  .stats-grid .stats-card.traffic-board-package {
-    background: linear-gradient(315deg, rgba(234, 29, 44, 0.16) 0%, rgba(234, 29, 44, 0.08) 38%, #ffffff 100%);
   }
 
   .info-tooltip {
