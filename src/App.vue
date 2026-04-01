@@ -564,6 +564,10 @@ export default {
 }
 
 @media (max-width: 991px) {
+  .global-copyright {
+    display: none;
+  }
+
   .app-content-wrapper.with-left-nav {
     --mobile-bottom-nav-space: calc(86px + env(safe-area-inset-bottom, 0px));
   }
