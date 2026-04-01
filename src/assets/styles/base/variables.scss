@@ -56,6 +56,12 @@ $bp-md: map.get($breakpoints, md);
 $bp-lg: map.get($breakpoints, lg);
 $bp-xl: map.get($breakpoints, xl);
 
+// 非重叠区间的起始断点（避免在边界像素同时命中 min/max）
+$bp-sm-up: 577px;
+$bp-md-up: 769px;
+$bp-lg-up: 993px;
+$bp-xl-up: 1201px;
+
 // 间距变量
 $spacer: 1rem;
 $spacers: (

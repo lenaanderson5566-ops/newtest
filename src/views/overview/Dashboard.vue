@@ -1437,7 +1437,7 @@ export default {
 @use "@/assets/styles/base/variables.scss" as *;
 @use "@/assets/styles/base/typography.scss" as *;
 
-$bp-md-up: $bp-md + 1px;
+
 $space-2: map.get($spacers, 2);
 
 .dashboard-container {
