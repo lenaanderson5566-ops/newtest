@@ -2042,7 +2042,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-subscription {
-        --traffic-card-bg: linear-gradient(135deg, rgba(148, 163, 184, 0.12) 0%, rgba(148, 163, 184, 0.24) 100%);
+        --traffic-card-bg: linear-gradient(315deg, rgba(34, 89, 170, 0.16) 0%, rgba(34, 89, 170, 0.08) 38%, #ffffff 100%);
         border: 1px solid var(--dashboard-border-color);
 
         .usage-card-title,
