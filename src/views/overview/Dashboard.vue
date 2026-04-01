@@ -1752,7 +1752,7 @@ $space-2: map.get($spacers, 2);
           .plan-summary-section {
             border: none;
             border-radius: var(--dashboard-radius);
-            background: var(--theme-surface-soft);
+            background: transparent;
             padding: 8px 8px;
             overflow: visible;
           }
@@ -1908,6 +1908,11 @@ $space-2: map.get($spacers, 2);
 
               .plan-action-icon {
                 flex-shrink: 0;
+              }
+
+              &.btn-outline,
+              &.btn-secondary {
+                background: transparent;
               }
             }
           }
