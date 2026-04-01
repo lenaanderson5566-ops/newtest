@@ -248,6 +248,7 @@ export default {
 
         pendingOrderBanner: '你有 {count} 个待支付订单，请尽快完成支付以激活服务。',
         payNow: '去支付',
+        goToQuickStart: '前往快速开始',
         currentExitRegion: '当前出口地区',
         smoothStatusNormal: '流畅状态：正常',
         serviceReference: '服务参考',

@@ -247,6 +247,7 @@ export default {
 
         pendingOrderBanner: 'You have {count} pending order(s). Please complete payment to activate the service.',
         payNow: 'Pay Now',
+        goToQuickStart: 'Go to Quick Start',
         currentExitRegion: 'Current Exit Region',
         smoothStatusNormal: 'Connection status: normal',
         serviceReference: 'Service Reference',

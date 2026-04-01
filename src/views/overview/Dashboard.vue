@@ -249,7 +249,12 @@
           <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
             <div class="trend-empty-block">
               <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
-              <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
+              <div class="trend-empty-content">
+                <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
+                <button class="trend-empty-action btn btn-primary" @click="goToQuickStart">
+                  {{ $t('dashboard.goToQuickStart') }}
+                </button>
+              </div>
             </div>
           </div>
           <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
@@ -487,6 +492,10 @@ export default {
 
     const goToDocs = () => {
       router.push('/docs');
+    };
+
+    const goToQuickStart = () => {
+      router.push('/quick-start');
     };
 
     const userPlanId = ref(null);
@@ -1370,6 +1379,7 @@ export default {
       loading,
       goToShop,
       goToDocs,
+      goToQuickStart,
       hasPendingItems,
       noPlanHeroBadge,
       noPlanHeroTitle,
@@ -2308,21 +2318,34 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-state-illustration {
-      padding: 8px;
+      padding: 10px;
     }
 
     .trend-empty-block {
       width: 100%;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 18px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.92));
+    }
+
+    .trend-empty-content {
+      flex: 1;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      gap: 6px;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      gap: 12px;
     }
 
     .trend-empty-image {
-      width: 240px;
+      width: 280px;
+      flex: 0 0 auto;
       max-width: 100%;
       height: auto;
       opacity: 0.96;
@@ -2333,6 +2356,12 @@ $space-2: map.get($spacers, 2);
     .trend-empty-title {
       @extend %typo-item-title;
       color: var(--text-primary);
+      font-size: $font-size-xl;
+    }
+
+    .trend-empty-action {
+      min-width: 180px;
+      padding-inline: 18px;
     }
 
     .usage-trend-chart {
@@ -2500,11 +2529,23 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-image {
-      width: 180px;
+      width: 150px;
     }
 
     .trend-empty-title {
       font-size: $font-size-md;
+    }
+
+    .trend-empty-block {
+      flex-direction: column;
+      text-align: center;
+      gap: 10px;
+      padding: 10px 12px;
+    }
+
+    .trend-empty-content {
+      text-align: center;
+      gap: 8px;
     }
 
     .usage-trend-chart {
