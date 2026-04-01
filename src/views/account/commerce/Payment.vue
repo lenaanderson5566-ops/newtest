@@ -1370,6 +1370,7 @@ export default {
 
       .summary-title {
         @extend %typo-card-title;
+        @extend %typo-dark-primary;
         margin: 0;
         color: var(--text-primary);
       }
@@ -1462,6 +1463,7 @@ export default {
   }
 
   .right-column .order-amount-section .section-title,
+  .right-column .order-amount-section .summary-title,
   .right-column .order-amount-section .summary-label,
   .right-column .order-amount-section .summary-value {
     color: var(--right-card-text) !important;
@@ -2003,6 +2005,7 @@ export default {
 
     .right-column {
       max-width: none;
+      margin-top: 0;
     }
 
     .left-column .section-wrapper {
@@ -2011,7 +2014,12 @@ export default {
 
     .left-column .section-wrapper:last-child,
     .left-column .section-wrapper.payment-methods-section {
-      margin-bottom: 0;
+      margin-bottom: 0 !important;
+    }
+
+    .right-column .section-wrapper,
+    .right-column .order-amount-section {
+      margin-top: 0 !important;
     }
   }
   @media (max-width: #{$bp-xs}) {
