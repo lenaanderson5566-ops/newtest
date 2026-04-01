@@ -1590,23 +1590,23 @@ $space-2: map.get($spacers, 2);
       grid-row: 2 / 3;
     }
 
-    @include between(md, xl) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      grid-template-rows: minmax(0, 1fr);
+    @include up(md) {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
       align-items: stretch;
 
       > .stats-card.traffic-board-total {
         grid-column: 1 / 2;
-        grid-row: 1 / 2;
+        grid-row: 1 / 3;
       }
 
       > .stats-card.traffic-board-package {
         grid-column: 2 / 3;
-        grid-row: 1 / 2;
+        grid-row: 2 / 3;
       }
 
       > .stats-card.today-traffic-card {
-        grid-column: 3 / 4;
+        grid-column: 2 / 3;
         grid-row: 1 / 2;
       }
     }

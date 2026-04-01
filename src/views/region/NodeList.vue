@@ -706,7 +706,7 @@ onMounted(() => {
     gap: 8px;
     margin-bottom: 16px;
 
-    @include down(lg) {
+    @include down(md) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
