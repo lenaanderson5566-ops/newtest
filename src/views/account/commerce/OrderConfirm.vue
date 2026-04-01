@@ -806,8 +806,13 @@ export default {
         }
       });
 
-      // 与订阅计划页保持一致：有周期套餐时，不展示 onetime
-      if (!hasRecurringPrice(plan.value) && hasPeriodPrice(plan.value, "onetime_price")) {
+      const routePeriod = String(route.query.period || "");
+      const lockedPeriod = String(lockedPendingOrder.value?.period || "");
+      const shouldExposeOnetime =
+        !hasRecurringPrice(plan.value) ||
+        routePeriod === "onetime_price" ||
+        lockedPeriod === "onetime_price";
+      if (shouldExposeOnetime && hasPeriodPrice(plan.value, "onetime_price")) {
         prices.onetime_price = normalizePriceValue(plan.value, "onetime_price");
       }
 
@@ -816,9 +821,9 @@ export default {
 
     const displayPlanOptions = computed(() => {
       if (planOptions.value.length) {
-        return planOptions.value.filter((item) => !isOnetimeOnly(item));
+        return planOptions.value;
       }
-      if (plan.value && !isOnetimeOnly(plan.value)) {
+      if (plan.value) {
         return [plan.value];
       }
       return [];
@@ -1439,7 +1444,7 @@ export default {
         try {
           const plansResponse = await fetchPlans(locale.value);
           if (Array.isArray(plansResponse?.data)) {
-            planOptions.value = plansResponse.data.filter((item) => !isOnetimeOnly(item));
+            planOptions.value = plansResponse.data;
           }
         } catch (planListError) {
           console.warn("Failed to fetch plan list for selector:", planListError);
