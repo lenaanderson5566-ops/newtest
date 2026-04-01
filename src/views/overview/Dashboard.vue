@@ -2046,7 +2046,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-subscription {
-        --traffic-card-bg: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+        --traffic-card-bg: linear-gradient(135deg, #f8fafc 0%, #e5ebf3 100%);
         border: 1px solid var(--dashboard-border-color);
         box-shadow: none;
 
@@ -2076,7 +2076,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-total {
-        --traffic-card-bg: linear-gradient(135deg, #eef2f7 0%, #c4cedd 100%);
+        --traffic-card-bg: linear-gradient(135deg, #f6f9fc 0%, #dfe7f1 100%);
         border: 1px solid var(--dashboard-border-color);
         box-shadow: none;
 
