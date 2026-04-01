@@ -1295,7 +1295,7 @@ export default {
 
     margin-bottom: 24px;
 
-    @include down(md) {
+    @include down(lg) {
       grid-template-columns: 1fr;
     }
 
@@ -1900,7 +1900,7 @@ export default {
   color: var(--text-tertiary);
 }
 
-@include down(md) {
+@include down(lg) {
   .back-label {
     display: none;
   }
