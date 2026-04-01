@@ -26,12 +26,16 @@
   --card-border-soft: #e5e7eb;
   --card-border-hover: rgba(148, 163, 184, 0.14);
   --shadow-color: rgba(15, 23, 42, 0.08);
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.12);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
-  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
-  --shadow-dialog: 0 4px 20px rgba(0, 0, 0, 0.15);
+  /* 阴影主类型：neutral / theme。其余为语义别名，避免散落定义。 */
   --shadow-neutral-sm: 0 4px 10px rgba(0, 0, 0, 0.1);
+  --shadow-neutral-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-neutral-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --shadow-neutral-dialog: 0 4px 20px rgba(0, 0, 0, 0.15);
   --shadow-theme-sm: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
+  --shadow-sm: var(--shadow-neutral-sm);
+  --shadow-md: var(--shadow-neutral-md);
+  --shadow-lg: var(--shadow-neutral-lg);
+  --shadow-dialog: var(--shadow-neutral-dialog);
 
   --success-color: #16a34a;
   --success-background: #eafaf0;
