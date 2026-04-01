@@ -1241,33 +1241,6 @@ export default {
       border-color: var(--border-color);
     }
 
-    .section-title {
-      @extend %typo-section-title;
-      margin-bottom: 16px;
-      color: var(--text-primary);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-left: 16px;
-
-      &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 4px;
-        height: 18px;
-        background-color: var(--theme-color);
-        border-radius: 2px;
-      }
-
-      &.with-status {
-        justify-content: space-between;
-      }
-    }
-
     .overview-plan-block {
       margin-bottom: 4px;
     }
@@ -1301,6 +1274,33 @@ export default {
 
   }
 
+  .section-title {
+    @extend %typo-section-title;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 16px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 18px;
+      background-color: var(--theme-color);
+      border-radius: 2px;
+    }
+
+    &.with-status {
+      justify-content: space-between;
+    }
+  }
+
   .overview-header {
     background-color: var(--background-color);
     margin: 8px 0;
@@ -1328,9 +1328,9 @@ export default {
 
   .section-wrapper.payment-methods-section {
     padding: 0;
-    margin-bottom: 4px;
-    background: var(--card-bg-color);
-    border: 1px solid var(--border-color);
+    margin: 8px 0;
+    background: var(--background-color);
+    border: none;
     box-shadow: none;
 
     .section-title {
@@ -1338,10 +1338,6 @@ export default {
       margin-top: 8px;
       margin-bottom: 8px;
       color: var(--text-primary);
-
-      &::after {
-        background-color: var(--border-color);
-      }
     }
   }
 
