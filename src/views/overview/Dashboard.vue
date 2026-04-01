@@ -2175,7 +2175,7 @@ $space-2: map.get($spacers, 2);
     background: var(--traffic-card-bg, var(--saas-card-bg));
     border: 1px solid transparent;
     border-radius: var(--dashboard-radius);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
   }
 
   /* 概览卡片左上角标题统一样式（今日流量 / 订阅流量 / 流量额度包 / 用量记录） */
