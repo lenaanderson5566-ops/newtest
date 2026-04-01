@@ -56,9 +56,6 @@
             </keep-alive>
           </transition>
         </router-view>
-        <footer class="global-copyright" v-if="$route.meta.requiresAuth">
-          © 2019–{{ currentYear }} {{ siteConfig.siteName }} · All rights reserved
-        </footer>
       </div>
     </div>
 
@@ -124,7 +121,6 @@ export default {
     const { applyTheme } = useTheme();
     const { showToast } = useToast();
     const siteConfig = ref(SITE_CONFIG);
-    const currentYear = computed(() => new Date().getFullYear());
     const cachedRoutes = computed(() => pageCache.getCachedRoutes());
     const topFixedBarRef = ref(null);
     const appContentWrapperRef = ref(null);
@@ -324,7 +320,6 @@ export default {
       email,
       isUserInfoLoading,
       siteConfig,
-      currentYear,
       PROFILE_CONFIG,
       cachedRoutes,
       hasUnreadNotice,
@@ -544,19 +539,6 @@ export default {
   max-width: var(--page-content-max-width);
   margin: 0 auto;
   padding-inline: var(--page-edge-gap, 2px);
-}
-
-.global-copyright {
-  position: fixed;
-  left: 10px;
-  bottom: calc(6px + env(safe-area-inset-bottom, 0px));
-  z-index: 90;
-  text-align: left;
-  color: var(--text-quaternary);
-  font-size: $font-size-xs;
-  line-height: 1.4;
-  padding: 0;
-  pointer-events: none;
 }
 
 @media (min-width: 992px) {
