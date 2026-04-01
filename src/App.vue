@@ -547,10 +547,16 @@ export default {
 }
 
 .global-copyright {
-  text-align: center;
-  color: var(--text-tertiary);
+  position: fixed;
+  left: 10px;
+  bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+  z-index: 90;
+  text-align: left;
+  color: var(--text-quaternary);
   font-size: $font-size-xs;
-  padding: 10px 0 calc(12px + env(safe-area-inset-bottom, 0px));
+  line-height: 1.4;
+  padding: 0;
+  pointer-events: none;
 }
 
 @media (min-width: 992px) {
