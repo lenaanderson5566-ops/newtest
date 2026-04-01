@@ -295,7 +295,7 @@ export default {
 
         &:hover {
           background-color: var(--text-tertiary);
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          box-shadow: var(--shadow-neutral-sm);
         }
       }
 
@@ -304,7 +304,7 @@ export default {
         color: var(--text-on-dark-primary);
 
         &:hover {
-          box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
+          box-shadow: var(--shadow-theme-sm);
         }
       }
     }
@@ -368,4 +368,3 @@ export default {
   }
 }
 </style>
-

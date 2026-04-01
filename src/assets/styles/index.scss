@@ -249,7 +249,7 @@
   color: var(--text-primary);
   border-radius: $border-radius-sm;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-dialog);
   display: flex;
   flex-direction: column;
   gap: 0;

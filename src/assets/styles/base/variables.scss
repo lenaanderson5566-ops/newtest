@@ -26,6 +26,12 @@
   --card-border-soft: #e5e7eb;
   --card-border-hover: rgba(148, 163, 184, 0.3);
   --shadow-color: rgba(15, 23, 42, 0.08);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --shadow-dialog: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --shadow-neutral-sm: 0 4px 10px rgba(0, 0, 0, 0.1);
+  --shadow-theme-sm: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
 
   --success-color: #16a34a;
   --success-background: #eafaf0;
