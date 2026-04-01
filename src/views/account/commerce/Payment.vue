@@ -2029,6 +2029,19 @@ export default {
       margin-top: 0 !important;
     }
   }
+  @media (max-width: #{$bp-lg}) {
+    .content-wrapper {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .left-column,
+    .right-column {
+      flex: none;
+      width: 100%;
+      max-width: none;
+    }
+  }
   @media (max-width: #{$bp-xs}) {
 
     .action-buttons {
