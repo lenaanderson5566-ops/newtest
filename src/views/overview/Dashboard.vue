@@ -8,13 +8,13 @@
         v-if="hasPendingItems"
         class="pending-order-banner delay-01"
         :class="{'card-animate': !loading.userStats}"
-        @click="goToOrders"
+        @click="goToLatestPendingOrderPayment"
       >
         <div class="banner-main">
           <IconAlertTriangle :size="16" class="banner-icon" />
           <span class="banner-text text-ellipsis">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
         </div>
-        <button class="banner-action btn btn-primary" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
+        <button class="banner-action btn btn-primary" @click.stop="goToLatestPendingOrderPayment">{{ $t('dashboard.payNow') }}</button>
       </div>
 
       <div
@@ -44,13 +44,15 @@
             <div class="no-plan-flow-layout">
               <section class="no-plan-hero">
                 <div class="hero-copy">
-                  <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
+                  <div class="hero-status">
+                    <IconAlertTriangle :size="16" />
+                    <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
+                  </div>
                   <h3 class="no-plan-title">{{ noPlanHeroTitle }}</h3>
                   <div class="hero-actions">
                     <button class="hero-btn primary" @click="handleNoPlanPrimaryAction">{{ noPlanPrimaryActionText }}</button>
                     <button class="hero-btn secondary" @click="goToDocs">查看教程</button>
                   </div>
-                  <div class="hero-helper">支持多平台 · 一键导入配置</div>
                 </div>
                 <div class="hero-visual" aria-hidden="true">
                   <div class="line-device laptop"></div>
@@ -63,7 +65,6 @@
                 <button class="no-plan-step no-plan-step-primary" @click="goToShop">
                   <span class="step-title">1. {{ $t('dashboard.purchasePlan') }}</span>
                   <span class="step-desc">{{ $t('quickStartPage.status.newDesc') }}</span>
-                  <span class="step-action">立即购买</span>
                 </button>
 
                 <button class="no-plan-step no-plan-step-secondary" @click="goToDocs">
@@ -75,13 +76,11 @@
                     <IconDeviceDesktop :size="18" />
                     <IconBrandAndroid :size="18" />
                   </div>
-                  <span class="step-action">下载客户端</span>
                 </button>
 
                 <div class="no-plan-step no-plan-step-success">
                   <span class="step-title">3. {{ $t('quickStartPage.step3Title') }}</span>
                   <span class="step-desc">{{ $t('quickStartPage.connectHint') }}</span>
-                  <span class="step-action">查看教程</span>
                 </div>
               </div>
             </div>
@@ -248,7 +247,11 @@
           <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
           <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
-            <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
+            <div class="trend-empty-block">
+              <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
+              <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
+              <div class="trend-empty-desc">{{ $t('trafficLog.emptyDesc') }}</div>
+            </div>
           </div>
           <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
         </div>
@@ -362,6 +365,7 @@ import {
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
 import { getTrafficLog } from '@/api/account/trafficLog';
+import { fetchOrderList } from '@/api/account/orderlist';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import {fetchPlans} from '@/api/account/shop';
@@ -932,7 +936,7 @@ export default {
 
     const handleNoPlanPrimaryAction = () => {
       if (hasPendingItems.value) {
-        goToOrders();
+        goToLatestPendingOrderPayment();
         return;
       }
       goToShop();
@@ -942,6 +946,32 @@ export default {
       router.push('/orders');
     };
 
+    const goToLatestPendingOrderPayment = async () => {
+      try {
+        const response = await fetchOrderList();
+        const orders = Array.isArray(response?.data)
+          ? response.data
+          : Array.isArray(response?.data?.data)
+            ? response.data.data
+            : [];
+
+        const latestPendingOrder = orders
+          .filter((order) => Number(order?.status) === 0 && order?.trade_no)
+          .sort((a, b) => Number(b?.created_at || 0) - Number(a?.created_at || 0))[0];
+
+        if (latestPendingOrder?.trade_no) {
+          router.push({
+            path: '/payment',
+            query: { trade_no: latestPendingOrder.trade_no, from: 'dashboard' }
+          });
+          return;
+        }
+      } catch (error) {
+        console.warn('Failed to fetch pending orders, fallback to order list page:', error);
+      }
+
+      goToOrders();
+    };
 
     const formatResetDateTime = (date) => {
       if (!(date instanceof Date) || Number.isNaN(date.getTime())) return null;
@@ -1347,6 +1377,7 @@ export default {
       noPlanPrimaryActionText,
       handleNoPlanPrimaryAction,
       goToOrders,
+      goToLatestPendingOrderPayment,
       router,
       formatTraffic,
       formatPackageRemaining,
@@ -1406,7 +1437,7 @@ export default {
 @use "@/assets/styles/base/variables.scss" as *;
 @use "@/assets/styles/base/typography.scss" as *;
 
-$bp-md-up: $bp-md + 1px;
+
 $space-2: map.get($spacers, 2);
 
 .dashboard-container {
@@ -1539,7 +1570,7 @@ $space-2: map.get($spacers, 2);
         height: auto;
       }
 
-      @media (min-width: #{$bp-md-up}) {
+      @include up(md) {
         grid-template-rows: auto;
         align-items: start;
       }
@@ -1559,7 +1590,7 @@ $space-2: map.get($spacers, 2);
       grid-row: 2 / 3;
     }
 
-    @media (min-width: #{$bp-md-up}) {
+    @include up(md) {
       grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
       grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
       align-items: stretch;
@@ -2281,13 +2312,33 @@ $space-2: map.get($spacers, 2);
       padding: 8px;
     }
 
+    .trend-empty-block {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 6px;
+    }
+
     .trend-empty-image {
-      width: 180px;
+      width: 240px;
       max-width: 100%;
       height: auto;
       opacity: 0.96;
       pointer-events: none;
       user-select: none;
+    }
+
+    .trend-empty-title {
+      @extend %typo-item-title;
+      color: var(--text-primary);
+    }
+
+    .trend-empty-desc {
+      @extend %typo-meta-text;
+      color: var(--text-tertiary);
     }
 
     .usage-trend-chart {
@@ -2387,13 +2438,13 @@ $space-2: map.get($spacers, 2);
 
 
 
-@media (max-width: #{$bp-xl}) {
+@include down(xl) {
   .dashboard-container {
     padding: 0;
   }
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .dashboard-container {
     --dashboard-card-padding: 8px;
   }
@@ -2455,7 +2506,15 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-image {
-      width: 136px;
+      width: 180px;
+    }
+
+    .trend-empty-title {
+      font-size: $font-size-md;
+    }
+
+    .trend-empty-desc {
+      font-size: $font-size-xs;
     }
 
     .usage-trend-chart {
@@ -2600,17 +2659,11 @@ $space-2: map.get($spacers, 2);
   align-items: flex-start;
 }
 
-.no-plan-title {
-  @extend %typo-page-title;
-  margin: 10px 0 8px;
-  line-height: 1.24;
-  letter-spacing: 0.2px;
-}
-
-.no-plan-subtitle {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: $font-size-lg;
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #b45309;
 }
 
 .no-plan-badge {
@@ -2623,6 +2676,19 @@ $space-2: map.get($spacers, 2);
   color: #b45309;
   border: 1px solid rgba(245, 158, 11, 0.32);
   background: rgba(245, 158, 11, 0.14);
+}
+
+.no-plan-title {
+  @extend %typo-card-title;
+  margin: 10px 0 8px;
+  line-height: 1.24;
+  letter-spacing: 0.2px;
+}
+
+.no-plan-subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: $font-size-lg;
 }
 
 .hero-actions {
@@ -2651,12 +2717,6 @@ $space-2: map.get($spacers, 2);
   color: var(--neutral-strong);
   border-color: rgba(148, 163, 184, 0.3);
   background: rgba(255, 255, 255, 0.76);
-}
-
-.hero-helper {
-  margin-top: 10px;
-  font-size: $font-size-md;
-  color: var(--text-tertiary);
 }
 
 .hero-visual {
@@ -2736,8 +2796,8 @@ $space-2: map.get($spacers, 2);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 8px;
   color: #fff;
   text-align: left;
   box-shadow: none;
@@ -2753,17 +2813,6 @@ $space-2: map.get($spacers, 2);
   font-size: $font-size-sm;
   opacity: 0.9;
   line-height: 1.5;
-}
-
-.step-action {
-  margin-top: 6px;
-  align-self: flex-end;
-  background: rgba(255, 255, 255, 0.86);
-  color: #1e293b;
-  border-radius: 10px;
-  padding: 8px 14px;
-  font-size: $font-size-md;
-  font-weight: $font-weight-semibold;
 }
 
 button.no-plan-step {
@@ -2795,7 +2844,7 @@ button.no-plan-step {
   animation-delay: 0.5s;
 }
 
-@media (max-width: 768px) {
+@include down(md) {
   .no-plan-hero {
     grid-template-columns: 1fr;
     padding: 16px;

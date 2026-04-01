@@ -699,7 +699,7 @@ onMounted(() => {
     transform: translateX(100%);
   }
 }
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .back-label {
     display: none;
   }

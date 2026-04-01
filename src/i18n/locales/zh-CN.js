@@ -790,7 +790,7 @@ profile: {
             deposit: '充值'
         },
         traffic: '流量',
-        order_info: '订单信息',
+        order_info: '订单详情',
         trade_no: '订单号',
         created_at: '创建时间',
         total_price: '套餐金额',
@@ -1087,6 +1087,8 @@ profile: {
         formula: '计算公式',
         formulaContent: '(实际上行 + 实际下行) × 倍率 = 扣除流量',
         noTrafficData: '暂无流量使用记录',
+        emptyTitle: '暂无用量记录',
+        emptyDesc: '开始使用后，这里会展示近期流量趋势',
         loadingTraffic: '正在加载流量数据...',
         errorLoadingTraffic: '加载流量数据失败',
         retry: '重试',

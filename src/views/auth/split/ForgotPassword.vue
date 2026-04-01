@@ -1829,7 +1829,7 @@ export default {
 
 
 
-  @media (max-width: #{$bp-lg}) {
+  @include down(lg) {
 
     overflow-y: auto;
 
@@ -1881,7 +1881,7 @@ export default {
 
 
 
-  @media (max-width: #{$bp-lg}) {
+  @include down(lg) {
 
     display: none;
 
@@ -1977,7 +1977,7 @@ export default {
 
 
 
-  @media (max-width: #{$bp-lg}) {
+  @include down(lg) {
 
     width: 100%;
 
@@ -2003,7 +2003,7 @@ export default {
 
 
 
-@media (min-width: 993px) and (max-height: 850px) {
+@media (min-width: 992px) and (max-height: 850px) {
 
   .auth-split-right {
 
@@ -2031,7 +2031,7 @@ export default {
 
 
 
-  @media (max-width: #{$bp-lg}) {
+  @include down(lg) {
 
     top: 10px;
 
@@ -2061,7 +2061,7 @@ export default {
 
 
 
-  @media (max-width: #{$bp-lg}) {
+  @include down(lg) {
 
     padding: 16px;
 
@@ -2083,7 +2083,7 @@ export default {
 
 
 
-  @media (min-width: 993px) {
+  @include up(lg) {
 
     text-align: left;
 
@@ -2103,7 +2103,7 @@ export default {
 
 
 
-    @media (min-width: 993px) {
+    @include up(lg) {
 
       text-align: left;
 
@@ -2123,7 +2123,7 @@ export default {
 
 
 
-    @media (min-width: 993px) {
+    @include up(lg) {
 
       text-align: left;
 
@@ -2901,7 +2901,7 @@ export default {
 
 
 
-  @media (min-width: 993px) {
+  @include up(lg) {
 
     text-align: left;
 
@@ -2935,7 +2935,7 @@ export default {
 
 
 
-@media (max-width: #{$bp-sm}) {
+@include down(sm) {
 
   .auth-split-right {
 
@@ -2983,7 +2983,7 @@ export default {
 
 
 
-@media (min-width: #{$bp-sm}) and (max-width: #{$bp-lg}) {
+@include between(sm, lg) {
 
   .auth-split-right {
 

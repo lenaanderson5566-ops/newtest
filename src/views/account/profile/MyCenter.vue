@@ -1178,7 +1178,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: #{$bp-xl}) {
+@include down(xl) {
   .overview-panels {
     grid-template-columns: 1fr;
   }
@@ -1186,7 +1186,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .my-center {
     background: #f3f3f5;
   }

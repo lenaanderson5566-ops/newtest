@@ -706,11 +706,11 @@ onMounted(() => {
     gap: 8px;
     margin-bottom: 16px;
 
-    @media (max-width: 1080px) {
+    @include down(md) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    @media (max-width: 640px) {
+    @include down(sm) {
       grid-template-columns: 1fr;
     }
 
@@ -1092,7 +1092,7 @@ onMounted(() => {
 
 
 
-@media (max-width: 860px) {
+@include down(md) {
 
   .node-items {
 

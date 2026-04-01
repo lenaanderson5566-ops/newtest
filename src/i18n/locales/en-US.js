@@ -1085,6 +1085,8 @@ profile: {
         formula: 'Calculation Formula',
         formulaContent: '(Actual Upload + Actual Download) × Rate = Deducted Traffic',
         noTrafficData: 'No traffic usage records',
+        emptyTitle: 'No usage records yet',
+        emptyDesc: 'After you start using the service, recent traffic trends will appear here.',
         loadingTraffic: 'Loading traffic data...',
         errorLoadingTraffic: 'Failed to load traffic data',
         retry: 'Retry',
