@@ -245,7 +245,11 @@
           <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
           <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
-            <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
+            <div class="trend-empty-block">
+              <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
+              <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
+              <div class="trend-empty-desc">{{ $t('trafficLog.emptyDesc') }}</div>
+            </div>
           </div>
           <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
         </div>
@@ -2278,13 +2282,33 @@ $space-2: map.get($spacers, 2);
       padding: 8px;
     }
 
+    .trend-empty-block {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 6px;
+    }
+
     .trend-empty-image {
-      width: 180px;
+      width: 240px;
       max-width: 100%;
       height: auto;
       opacity: 0.96;
       pointer-events: none;
       user-select: none;
+    }
+
+    .trend-empty-title {
+      @extend %typo-item-title;
+      color: var(--text-primary);
+    }
+
+    .trend-empty-desc {
+      @extend %typo-meta-text;
+      color: var(--text-tertiary);
     }
 
     .usage-trend-chart {
@@ -2452,7 +2476,15 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-image {
-      width: 136px;
+      width: 180px;
+    }
+
+    .trend-empty-title {
+      font-size: $font-size-md;
+    }
+
+    .trend-empty-desc {
+      font-size: $font-size-xs;
     }
 
     .usage-trend-chart {
