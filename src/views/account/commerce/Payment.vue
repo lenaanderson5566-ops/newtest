@@ -2000,10 +2000,6 @@ export default {
   }
 
   @media (max-width: #{$bp-lg}) {
-    &.page-shell {
-      min-height: auto;
-    }
-
     .content-wrapper {
       flex-direction: column;
       gap: 8px;

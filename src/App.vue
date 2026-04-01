@@ -561,7 +561,7 @@ export default {
   }
 
   .app-content-wrapper.with-left-nav .page-shell {
-    min-height: calc(100dvh - var(--app-top-bar-height, 56px) - var(--page-content-top-gap, 8px));
+    min-height: auto;
     padding-bottom: var(--mobile-bottom-nav-space);
     box-sizing: border-box;
   }
