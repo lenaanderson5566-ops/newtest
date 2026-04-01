@@ -1455,7 +1455,7 @@ $space-2: map.get($spacers, 2);
   --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
   --dashboard-shadow-compact: none;
-  --dashboard-border-color: var(--card-border-subtle);
+  --dashboard-border-color: rgba(148, 163, 184, 0.1);
   --dashboard-title-size: 14px;
   --dashboard-subtitle-color: var(--text-tertiary);
   --dashboard-value-size: 30px;
@@ -1752,8 +1752,8 @@ $space-2: map.get($spacers, 2);
           .plan-summary-section {
             border: none;
             border-radius: var(--dashboard-radius);
-            background: transparent;
-            padding: 8px 8px;
+            background: rgba(255, 255, 255, 0.58);
+            padding: 10px 10px;
             overflow: visible;
           }
 
@@ -2154,7 +2154,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &:hover {
-        border-color: var(--card-border-hover);
+        border-color: rgba(148, 163, 184, 0.14);
         box-shadow: none;
       }
     }
@@ -2180,7 +2180,7 @@ $space-2: map.get($spacers, 2);
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
     background: var(--traffic-card-bg, var(--saas-card-bg));
-    border: 1px solid var(--dashboard-border-color);
+    border: 1px solid transparent;
     border-radius: var(--dashboard-radius);
     box-shadow: none;
   }
