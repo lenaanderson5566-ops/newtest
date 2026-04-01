@@ -930,8 +930,8 @@ export default {
       return userStats.pendingOrders > 0;
     });
 
-    const noPlanHeroBadge = computed(() => (hasPendingItems.value ? '订单待完成' : '尚未下单'));
-    const noPlanHeroTitle = computed(() => (hasPendingItems.value ? '继续完成支付，激活服务' : '先下单并完成支付，激活服务'));
+    const noPlanHeroBadge = computed(() => (hasPendingItems.value ? '待完成支付' : '未开通服务'));
+    const noPlanHeroTitle = computed(() => (hasPendingItems.value ? '完成支付后即可激活服务' : '先选择订阅并完成支付，即可开始使用'));
     const noPlanPrimaryActionText = computed(() => (hasPendingItems.value ? '继续支付' : '立即下单'));
 
     const handleNoPlanPrimaryAction = () => {
