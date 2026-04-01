@@ -352,17 +352,18 @@ export default {
 }
 
 
-.card,
-.dashboard-card,
-.stats-card,
-.profile-card,
-.info-card,
-.section-wrapper,
-.plan-card,
-.auth-card,
-.dialog-content,
-.pending-order-dialog,
-.modal-content {
+.app-content-wrapper.with-left-nav :where(
+  .card,
+  .dashboard-card,
+  .stats-card,
+  .profile-card,
+  .info-card,
+  .section-wrapper,
+  .plan-card,
+  .dialog-content,
+  .pending-order-dialog,
+  .modal-content
+) {
   background-color: #ffffff !important;
   border-radius: $border-radius-sm !important;
   box-shadow: none !important;
