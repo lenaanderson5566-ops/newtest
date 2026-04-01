@@ -23,7 +23,6 @@
         :class="`is-${accountStatus}`"
       >
         <h3 class="welcome-title">{{ welcomeHeadline }}</h3>
-        <p class="welcome-desc">{{ welcomeDescription }}</p>
       </div>
 
       <div class="stats-grid" :class="{ 'no-plan-grid': !hasPlan }">
@@ -47,7 +46,6 @@
                 <div class="hero-copy">
                   <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
                   <h3 class="no-plan-title">{{ noPlanHeroTitle }}</h3>
-                  <p class="no-plan-subtitle">{{ noPlanHeroSubtitle }}</p>
                   <div class="hero-actions">
                     <button class="hero-btn primary" @click="handleNoPlanPrimaryAction">{{ noPlanPrimaryActionText }}</button>
                     <button class="hero-btn secondary" @click="goToDocs">查看教程</button>
@@ -132,13 +130,13 @@
               <div class="plan-summary-section plan-summary-section-traffic">
                 <div class="plan-summary-row monthly-traffic-row">
                   <span class="plan-summary-label">{{ $t('dashboard.subscriptionMonthlyTraffic') }}</span>
-                  <strong class="plan-summary-value">{{ formatPackageRemaining(isPlanExpired ? 0 : subscriptionTrafficSummary.remaining) }}</strong>
+                  <strong class="plan-summary-value">{{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.remaining)) }}</strong>
                 </div>
                 <div class="section-progress-track in-plan-card">
-                  <div class="section-progress-fill" :style="{ width: `${isPlanExpired ? 0 : subscriptionTrafficSummary.remainingPercentage}%` }"></div>
+                  <div class="section-progress-fill" :style="{ width: `${applyPlanStatus(subscriptionTrafficSummary.remainingPercentage)}%` }"></div>
                 </div>
                 <div class="usage-summary-line in-plan-card">
-                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(isPlanExpired ? 0 : subscriptionTrafficSummary.used) }} / {{ formatPackageRemaining(subscriptionTrafficSummary.total) }}
+                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.used)) }} / {{ formatPackageRemaining(subscriptionTrafficSummary.total) }}
                 </div>
                 <div class="usage-reset-hint in-plan-card">
                   {{ $t('dashboard.resetTimeLabel') }} {{ userPlan.resetDateTime || '-' }}
@@ -189,7 +187,7 @@
               </template>
               <template v-else>
                 <template v-if="card.key === 'subscription'">
-                  <span class="usage-percent compact">{{ formatPackageRemaining(isPlanExpired ? 0 : card.remaining) }}</span>
+                  <span class="usage-percent compact">{{ formatPackageRemaining(applyPlanStatus(card.remaining)) }}</span>
                   <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 </template>
                 <template v-else>
@@ -199,12 +197,12 @@
               </template>
             </div>
             <div v-if="card.key !== 'package' && card.key !== 'total'" class="section-progress-track">
-              <div class="section-progress-fill" :style="{ width: `${card.key === 'subscription' && isPlanExpired ? 0 : card.remainingPercentage}%` }"></div>
+              <div class="section-progress-fill" :style="{ width: `${card.key === 'subscription' ? applyPlanStatus(card.remainingPercentage) : card.remainingPercentage}%` }"></div>
             </div>
             <div class="usage-kpis" v-if="card.key !== 'package' && card.key !== 'total'">
               <template v-if="card.key === 'subscription'">
                 <div class="usage-summary-line persist-visible">
-                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(isPlanExpired ? 0 : card.used) }} / {{ formatPackageRemaining(card.total) }}
+                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(applyPlanStatus(card.used)) }} / {{ formatPackageRemaining(card.total) }}
                 </div>
               </template>
               <template v-else>
@@ -249,7 +247,9 @@
         <div class="card-body">
           <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
-          <div v-else-if="!trafficTrendData.length" class="trend-state">{{ $t('trafficLog.noTrafficData') }}</div>
+          <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
+            <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
+          </div>
           <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
         </div>
       </div>
@@ -368,6 +368,8 @@ import {fetchPlans} from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
+
+const noTrafficDataImage = new URL('../../assets/images/dashboard/no-traffic-data.svg', import.meta.url).href;
 
 export default {
   name: 'UserDashboard',
@@ -565,23 +567,10 @@ export default {
         loading.userInfo = false;
       }
     };
-    const isExpiringSoon = computed(() => {
-      if (userStats.isRemainingDaysPermanent) return false;
-
-      const days = parseInt(userStats.remainingDays, 10);
-      return !isNaN(days) && days > 0 && days <= 7;
-    });
-
-    const isExpired = computed(() => {
-      if (userPlan.value.isExpireDatePermanent) return false;
-
-      const expiredAt = Number(userPlan.value.expiredAt || 0);
-      if (!expiredAt) return false;
-
-      return expiredAt * 1000 <= Date.now();
-    });
-
-    const isPlanExpired = computed(() => hasPlan.value && isExpired.value);
+    const isSubscriptionActive = computed(() => accountStatus.value === SUBSCRIPTION_STATUS.ACTIVE);
+    const isSubscriptionExpired = computed(() => accountStatus.value === SUBSCRIPTION_STATUS.EXPIRED);
+    const isSubscriptionBanned = computed(() => accountStatus.value === SUBSCRIPTION_STATUS.BANNED);
+    const isPlanExpired = computed(() => isSubscriptionExpired.value || isSubscriptionBanned.value);
 
     const emailPrefix = computed(() => {
       const email = String(userStats.userEmail || '').trim();
@@ -597,26 +586,15 @@ export default {
       return `你好，${emailPrefix.value}，欢迎回来`;
     });
 
-    const welcomeDescription = computed(() => {
-      if (accountStatus.value === SUBSCRIPTION_STATUS.NEW) {
-        return '当前账号尚未开通订阅，完成订阅后即可开始使用。';
-      }
-      if (accountStatus.value === SUBSCRIPTION_STATUS.ACTIVE) {
-        return '你的服务当前可用，可以继续导入配置或管理订阅。';
-      }
-      if (accountStatus.value === SUBSCRIPTION_STATUS.EXPIRED) {
-        return '你的订阅已过期，续费后即可继续导入配置并恢复使用。';
-      }
-      return '当前账号状态异常，部分功能暂不可用。如有疑问，请联系支持处理。';
-    });
+    const subscriptionStatus = computed(() => (
+      isSubscriptionActive.value ? 'active' : 'expired'
+    ));
 
-    const subscriptionStatus = computed(() => {
-      if (isPlanExpired.value) return 'expired';
-      if (isExpiringSoon.value) return 'expiring';
-      return 'active';
-    });
-
-    const subscriptionStatusLabel = computed(() => t(`dashboard.subscriptionStatus.${subscriptionStatus.value}`));
+    const subscriptionStatusLabel = computed(() => (
+      isSubscriptionActive.value
+        ? t('dashboard.subscriptionStatus.active')
+        : t('dashboard.subscriptionStatus.expired')
+    ));
 
     const planExpireMetaText = computed(() => {
       if (userPlan.value.isExpireDatePermanent) {
@@ -628,7 +606,6 @@ export default {
 
     const primaryPlanActionLabel = computed(() => {
       if (isPlanExpired.value) return t('dashboard.planAction.restoreNow');
-      if (isExpiringSoon.value) return t('dashboard.planAction.renewNow');
       return t('dashboard.planAction.manageSubscription');
     });
 
@@ -665,9 +642,10 @@ export default {
     const isRenewAction = (label) =>
       [t('dashboard.planAction.renewNow'), t('dashboard.planAction.renew'), t('dashboard.planAction.restoreNow')].includes(label);
     const isReselectAction = (label) => label === t('dashboard.planAction.reselectPlan');
+    const applyPlanStatus = (value) => (isPlanExpired.value ? 0 : value);
 
     const handlePrimaryPlanAction = () => {
-      if (subscriptionStatus.value === 'active') {
+      if (isSubscriptionActive.value) {
         goToShop();
         return;
       }
@@ -675,7 +653,7 @@ export default {
     };
 
     const handleSecondaryPlanAction = () => {
-      if (subscriptionStatus.value === 'active') {
+      if (isSubscriptionActive.value) {
         renewPlan();
         return;
       }
@@ -950,11 +928,6 @@ export default {
 
     const noPlanHeroBadge = computed(() => (hasPendingItems.value ? '订单待完成' : '尚未下单'));
     const noPlanHeroTitle = computed(() => (hasPendingItems.value ? '继续完成支付，激活服务' : '先下单并完成支付，激活服务'));
-    const noPlanHeroSubtitle = computed(() => (
-      hasPendingItems.value
-        ? '完成支付后即可下载客户端并开始使用'
-        : '当前还没有有效订单，先下单并支付后即可开始使用。'
-    ));
     const noPlanPrimaryActionText = computed(() => (hasPendingItems.value ? '继续支付' : '立即下单'));
 
     const handleNoPlanPrimaryAction = () => {
@@ -1371,7 +1344,6 @@ export default {
       hasPendingItems,
       noPlanHeroBadge,
       noPlanHeroTitle,
-      noPlanHeroSubtitle,
       noPlanPrimaryActionText,
       handleNoPlanPrimaryAction,
       goToOrders,
@@ -1381,8 +1353,6 @@ export default {
       handlePopupClose,
       handlePopupConfirm,
       showPopup,
-      isExpiringSoon,
-      isExpired,
       isPlanExpired,
       subscriptionStatus,
       subscriptionStatusLabel,
@@ -1396,11 +1366,11 @@ export default {
       isManageAction,
       isRenewAction,
       isReselectAction,
+      applyPlanStatus,
       handlePrimaryPlanAction,
       handleSecondaryPlanAction,
       accountStatus,
       welcomeHeadline,
-      welcomeDescription,
       hasPlan,
       renewPlan,
       isXiaoPanel,
@@ -1413,6 +1383,7 @@ export default {
       trafficTrendData,
       trafficTrendLoading,
       trafficTrendError,
+      noTrafficDataImage,
       todayTrafficStats,
       todayTrafficAnimationDelay,
       allowNewPeriod,
@@ -1482,8 +1453,6 @@ $space-2: map.get($spacers, 2);
   --plan-expired-strip-border: rgba(239, 68, 68, 0.32);
   --status-active-text: #15803d;
   --status-active-bg: rgba(34, 197, 94, 0.15);
-  --status-expiring-text: #b45309;
-  --status-expiring-bg: rgba(245, 158, 11, 0.16);
   --status-expired-text: #dc2626;
   --status-expired-bg: rgba(220, 38, 38, 0.1);
 
@@ -2308,6 +2277,19 @@ $space-2: map.get($spacers, 2);
       @extend %typo-body-text;
     }
 
+    .trend-state-illustration {
+      padding: 8px;
+    }
+
+    .trend-empty-image {
+      width: 180px;
+      max-width: 100%;
+      height: auto;
+      opacity: 0.96;
+      pointer-events: none;
+      user-select: none;
+    }
+
     .usage-trend-chart {
       width: 100%;
       height: 156px;
@@ -2343,12 +2325,6 @@ $space-2: map.get($spacers, 2);
       color: var(--theme-text-primary);
     }
 
-    .welcome-desc {
-      margin: 6px 0 0;
-      font-size: $font-size-sm;
-      color: var(--theme-text-secondary);
-      line-height: 1.6;
-    }
   }
 
   .pending-order-banner {
@@ -2476,6 +2452,10 @@ $space-2: map.get($spacers, 2);
 
     .trend-state {
       min-height: 68px;
+    }
+
+    .trend-empty-image {
+      width: 136px;
     }
 
     .usage-trend-chart {
