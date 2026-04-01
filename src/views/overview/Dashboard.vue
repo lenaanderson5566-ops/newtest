@@ -2040,8 +2040,7 @@ $space-2: map.get($spacers, 2);
         }
       }
 
-      &.traffic-board-subscription,
-      &.traffic-board-package {
+      &.traffic-board-subscription {
         background: var(--saas-card-bg);
       }
 
@@ -2072,7 +2071,6 @@ $space-2: map.get($spacers, 2);
         min-height: auto;
         height: auto;
         z-index: 8;
-        background: var(--saas-card-bg);
       }
 
       &.traffic-board-total {
@@ -2247,7 +2245,7 @@ $space-2: map.get($spacers, 2);
   }
 
   .stats-grid .stats-card.traffic-board-package {
-    background: linear-gradient(135deg, rgba(234, 29, 44, 0.16) 0%, rgba(234, 29, 44, 0.08) 38%, #ffffff 100%);
+    background: linear-gradient(135deg, rgba(234, 29, 44, 0.2) 0%, rgba(234, 29, 44, 0.12) 40%, rgba(255, 245, 246, 1) 100%);
   }
 
   .info-tooltip {
