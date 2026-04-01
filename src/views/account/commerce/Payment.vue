@@ -5,21 +5,20 @@
         <!-- 左侧内容：产品信息 -->
         <div class="left-column">
           <!-- 订单概览 -->
+          <div class="section-title with-status overview-header">
+            <span>{{ $t("payment.order_info") }}</span>
+            <button
+              v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
+              class="overview-cancel-btn"
+              @click="cancelCurrentOrder"
+              :disabled="loading.cancelling"
+            >
+              <IconX v-if="!loading.cancelling" :size="14" />
+              <div v-else class="loader"></div>
+              <span>{{ $t("payment.cancel_order") }}</span>
+            </button>
+          </div>
           <div class="section-wrapper overview-section">
-            <div class="section-title with-status">
-              <span>{{ $t("payment.order_info") }}</span>
-              <button
-                v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
-                class="overview-cancel-btn"
-                @click="cancelCurrentOrder"
-                :disabled="loading.cancelling"
-              >
-                <IconX v-if="!loading.cancelling" :size="14" />
-                <div v-else class="loader"></div>
-                <span>{{ $t("payment.cancel_order") }}</span>
-              </button>
-            </div>
-
             <div class="product-info" v-if="!loading.order">
               <!-- 充值订单时显示简化信息 -->
               <div class="overview-divider"></div>
@@ -1276,30 +1275,6 @@ export default {
       }
     }
 
-    .overview-cancel-btn {
-      height: 30px;
-      padding: 0 8px;
-      border-radius: $border-radius-sm;
-      border: 1px solid rgba(var(--theme-color-rgb), 0.38);
-      background: transparent;
-      color: var(--theme-color);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      &:hover:not(:disabled) {
-        background-color: rgba(var(--theme-color-rgb), 0.08);
-      }
-
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-    }
-
     .overview-plan-block {
       margin-bottom: 4px;
     }
@@ -1341,6 +1316,35 @@ export default {
     }
   }
 
+  .overview-header {
+    background-color: var(--background-color);
+    margin: 8px 0;
+  }
+
+  .overview-cancel-btn {
+    height: 30px;
+    padding: 0 8px;
+    border-radius: $border-radius-sm;
+    border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+    background: transparent;
+    color: var(--theme-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(var(--theme-color-rgb), 0.08);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
   .section-wrapper.payment-methods-section {
     padding: 0;
     margin-bottom: 4px;
@@ -1349,6 +1353,8 @@ export default {
     box-shadow: none;
 
     .section-title {
+      background-color: var(--background-color);
+      margin-top: 8px;
       margin-bottom: 0;
       font-size: $font-size-md;
       padding: 8px 8px 8px;
