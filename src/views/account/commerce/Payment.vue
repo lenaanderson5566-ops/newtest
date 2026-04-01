@@ -9,7 +9,7 @@
             <span>{{ $t("payment.order_info") }}</span>
             <button
               v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
-              class="overview-cancel-btn"
+              class="overview-cancel-btn btn-unlock-selection"
               @click="cancelCurrentOrder"
               :disabled="loading.cancelling"
             >
@@ -1267,11 +1267,6 @@ export default {
 
       &.with-status {
         justify-content: space-between;
-
-        &::before {
-          top: 15px;
-          transform: none;
-        }
       }
     }
 
@@ -1318,7 +1313,7 @@ export default {
 
   .overview-header {
     background-color: var(--background-color);
-    margin: 8px 0;
+    margin: 8px 0 12px;
   }
 
   .overview-cancel-btn {
@@ -1328,6 +1323,7 @@ export default {
     border: 1px solid rgba(var(--theme-color-rgb), 0.38);
     background: transparent;
     color: var(--theme-color);
+    font-size: $font-size-sm;
     display: inline-flex;
     align-items: center;
     justify-content: center;
