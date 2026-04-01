@@ -1546,7 +1546,7 @@ onUnmounted(() => {
 
   
 
-  @media (min-width: #{$bp-md}) {
+  @include up(md) {
 
     padding: 24px;
 
@@ -1583,7 +1583,7 @@ onUnmounted(() => {
 
     
 
-    @media (min-width: #{$bp-md}) {
+    @include up(md) {
 
       font-size: $font-size-2xl;
 
@@ -2057,7 +2057,7 @@ onUnmounted(() => {
 
     
 
-    @media (min-width: #{$bp-md}) {
+    @include up(md) {
 
       display: table;
 

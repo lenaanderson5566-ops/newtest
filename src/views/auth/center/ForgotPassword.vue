@@ -2280,7 +2280,7 @@ export default {
 
 
 
-@media (max-width: #{$bp-sm}) {
+@include down(sm) {
 
   .auth-card {
 
@@ -2314,7 +2314,7 @@ export default {
 
 
 
-@media (min-width: #{$bp-sm}) and (max-width: #{$bp-lg}) {
+@include between(sm, lg) {
 
   .auth-container {
 

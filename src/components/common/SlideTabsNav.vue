@@ -203,7 +203,6 @@ export default {
       &.active {
         color: var(--text-primary);
         background: rgba(var(--theme-color-rgb), 0.12);
-        box-shadow: inset 2px 0 0 rgba(var(--theme-color-rgb), 0.65);
 
         .nav-icon svg {
           color: var(--theme-color);
@@ -219,7 +218,7 @@ export default {
   }
 }
 
-@media (max-width: 991px) {
+@include down(lg) {
   .slide-tabs-container {
     top: auto;
     bottom: 20px;
@@ -290,7 +289,7 @@ export default {
   }
 }
 
-@media (max-width: 480px) {
+@include down(xs) {
   .slide-tabs-container {
     bottom: 12px;
     width: 94%;

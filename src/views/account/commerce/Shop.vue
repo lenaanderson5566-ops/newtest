@@ -1295,11 +1295,7 @@ export default {
 
     margin-bottom: 24px;
 
-    @media (max-width: #{$bp-xl}) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (max-width: #{$bp-md}) {
+    @include down(md) {
       grid-template-columns: 1fr;
     }
 
@@ -1904,7 +1900,7 @@ export default {
   color: var(--text-tertiary);
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .back-label {
     display: none;
   }
@@ -2134,7 +2130,7 @@ export default {
   }
 }
 
-@media (max-width: #{$bp-xs}) {
+@include down(xs) {
   .shop-container .plans-wrapper .mobile-plan-selector {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

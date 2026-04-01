@@ -330,7 +330,7 @@ export default {
 
 
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
 
   .error-code {
 
