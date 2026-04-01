@@ -13,8 +13,6 @@
               @click="cancelCurrentOrder"
               :disabled="loading.cancelling"
             >
-              <IconX v-if="!loading.cancelling" :size="14" />
-              <div v-else class="loader"></div>
               <span>{{ $t("payment.cancel_order") }}</span>
             </button>
           </div>
@@ -1301,14 +1299,6 @@ export default {
       gap: 4px;
     }
 
-    .overview-cancel-btn .loader {
-      width: 14px;
-      height: 14px;
-      border: 2px solid rgba(0, 0, 0, 0.2);
-      border-top-color: var(--text-primary);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
   }
 
   .overview-header {
@@ -1319,21 +1309,12 @@ export default {
   .overview-cancel-btn {
     height: 30px;
     padding: 0 8px;
-    border-radius: $border-radius-sm;
     border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+    border-radius: $border-radius-sm;
     background: transparent;
     color: var(--theme-color);
     font-size: $font-size-sm;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
     cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover:not(:disabled) {
-      background-color: rgba(var(--theme-color-rgb), 0.08);
-    }
 
     &:disabled {
       opacity: 0.6;
