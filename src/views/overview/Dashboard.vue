@@ -1752,8 +1752,8 @@ $space-2: map.get($spacers, 2);
           .plan-summary-section {
             border: none;
             border-radius: var(--dashboard-radius);
-            background: rgba(255, 255, 255, 0.58);
-            padding: 10px 10px;
+            background: transparent;
+            padding: 8px 8px;
             overflow: visible;
           }
 
