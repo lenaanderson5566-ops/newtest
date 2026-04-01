@@ -2008,10 +2008,13 @@ export default {
       margin-top: 0;
     }
 
-    .left-column .section-wrapper {
-      margin-bottom: 8px;
+    .left-column {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
+    .left-column .section-wrapper,
     .left-column .section-wrapper:last-child,
     .left-column .section-wrapper.payment-methods-section {
       margin-bottom: 0 !important;
