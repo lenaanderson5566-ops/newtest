@@ -63,7 +63,6 @@
                 <button class="no-plan-step no-plan-step-primary" @click="goToShop">
                   <span class="step-title">1. {{ $t('dashboard.purchasePlan') }}</span>
                   <span class="step-desc">{{ $t('quickStartPage.status.newDesc') }}</span>
-                  <span class="step-action">立即购买</span>
                 </button>
 
                 <button class="no-plan-step no-plan-step-secondary" @click="goToDocs">
@@ -75,13 +74,11 @@
                     <IconDeviceDesktop :size="18" />
                     <IconBrandAndroid :size="18" />
                   </div>
-                  <span class="step-action">下载客户端</span>
                 </button>
 
                 <div class="no-plan-step no-plan-step-success">
                   <span class="step-title">3. {{ $t('quickStartPage.step3Title') }}</span>
                   <span class="step-desc">{{ $t('quickStartPage.connectHint') }}</span>
-                  <span class="step-action">查看教程</span>
                 </div>
               </div>
             </div>
@@ -2736,8 +2733,8 @@ $space-2: map.get($spacers, 2);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 8px;
   color: #fff;
   text-align: left;
   box-shadow: none;
@@ -2753,17 +2750,6 @@ $space-2: map.get($spacers, 2);
   font-size: $font-size-sm;
   opacity: 0.9;
   line-height: 1.5;
-}
-
-.step-action {
-  margin-top: 6px;
-  align-self: flex-end;
-  background: rgba(255, 255, 255, 0.86);
-  color: #1e293b;
-  border-radius: 10px;
-  padding: 8px 14px;
-  font-size: $font-size-md;
-  font-weight: $font-weight-semibold;
 }
 
 button.no-plan-step {
