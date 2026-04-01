@@ -3192,7 +3192,7 @@ export default {
   }
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .order-confirm-container {
     margin-top: 0;
 
@@ -3294,7 +3294,7 @@ export default {
   }
 }
 
-@media (max-width: #{$bp-xs}) {
+@include down(xs) {
   .order-confirm-container {
     .section-title {
       font-size: $font-size-md;
@@ -3371,7 +3371,7 @@ export default {
   }
 }
 
-@media screen and (max-width: #{$bp-md}) {
+@include down(md) {
   .order-confirm-container .period-selection .period-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
@@ -3379,7 +3379,7 @@ export default {
   }
 }
 
-@media screen and (max-width: #{$bp-xs}) {
+@include down(xs) {
   .order-confirm-container .period-selection .period-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
@@ -3391,7 +3391,7 @@ export default {
   display: grid !important;
 }
 
-@media screen and (max-width: #{$bp-md}) {
+@include down(md) {
   .period-cards {
     display: grid !important;
 
@@ -3401,7 +3401,7 @@ export default {
   }
 }
 
-@media screen and (max-width: #{$bp-xs}) {
+@include down(xs) {
   .period-cards {
     display: grid !important;
 
@@ -3421,7 +3421,7 @@ export default {
   width: 100% !important;
 }
 
-@media screen and (max-width: #{$bp-md}) {
+@include down(md) {
   :deep(.period-cards) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
@@ -3429,7 +3429,7 @@ export default {
   }
 }
 
-@media screen and (max-width: #{$bp-xs}) {
+@include down(xs) {
   :deep(.period-cards) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 

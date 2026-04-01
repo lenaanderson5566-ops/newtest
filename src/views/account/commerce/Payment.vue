@@ -1203,7 +1203,7 @@ export default {
     display: flex;
     gap: 24px;
 
-    @media (max-width: #{$bp-md}) {
+    @include down(md) {
       flex-direction: column;
     }
 
@@ -1600,7 +1600,7 @@ export default {
       gap: 16px;
       width: 100%;
 
-      @media (max-width: #{$bp-xs}) {
+      @include down(xs) {
         flex-direction: column;
         gap: 8px;
 
@@ -1681,7 +1681,7 @@ export default {
         box-shadow: none !important;
       }
 
-      @media (max-width: #{$bp-xs}) {
+      @include down(xs) {
         width: 100%;
         height: 48px;
         min-height: 48px;
@@ -1988,7 +1988,7 @@ export default {
     }
   }
 
-  @media (max-width: #{$bp-lg}) {
+  @include down(lg) {
     .content-wrapper {
       flex-direction: column;
       gap: 8px;
@@ -2014,7 +2014,7 @@ export default {
       margin-bottom: 0;
     }
   }
-  @media (max-width: #{$bp-xs}) {
+  @include down(xs) {
 
     .action-buttons {
       .btn-group {

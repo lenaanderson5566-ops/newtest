@@ -565,7 +565,7 @@ watch(locale, () => {
   }
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .order-table {
     th, td {
       padding: 8px 4px;
@@ -818,7 +818,7 @@ watch(locale, () => {
 
 
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .orders-container {
     padding-bottom: calc(2px + 56px);
   }

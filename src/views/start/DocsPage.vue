@@ -739,7 +739,7 @@ onMounted(() => {
 
 
 
-@media (min-width: #{$bp-md}) {
+@include up(md) {
 
   .doc-items {
 
