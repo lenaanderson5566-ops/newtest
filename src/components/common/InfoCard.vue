@@ -75,7 +75,7 @@ const variantClass = computed(() => `info-card--${props.variant}`);
   border-radius: var(--info-card-radius);
   border: 1px solid var(--info-card-border);
   background: var(--info-card-bg);
-  box-shadow: var(--shadow-card-sm);
+  box-shadow: var(--shadow-md);
   padding: var(--info-card-padding);
   display: flex;
   align-items: flex-start;
@@ -138,7 +138,7 @@ const variantClass = computed(() => `info-card--${props.variant}`);
   &:hover {
     transform: translateY(-1px);
     border-color: rgba(var(--theme-color-rgb), 0.28);
-    box-shadow: var(--shadow-card-md);
+    box-shadow: var(--shadow-md);
   }
 }
 </style>

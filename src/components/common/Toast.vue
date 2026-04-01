@@ -116,7 +116,7 @@ export default {
     max-width: none;
     transform: translateY(-100%);
     border-radius: 10px;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
     
     &.toast-show {
       transform: translateY(0);
@@ -124,7 +124,7 @@ export default {
     
     &:hover {
       transform: translateY(0);
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
     }
   }
   
@@ -135,7 +135,7 @@ export default {
   
   &:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
     
     .toast-progress-bar {
       animation-play-state: paused;
