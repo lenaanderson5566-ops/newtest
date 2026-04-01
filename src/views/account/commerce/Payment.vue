@@ -1329,9 +1329,9 @@ export default {
   .section-wrapper.payment-methods-section {
     padding: 0;
     margin: 8px 0;
-    background: var(--background-color);
-    border: none;
-    box-shadow: none;
+    background: var(--background-color) !important;
+    border: none !important;
+    box-shadow: none !important;
 
     .section-title {
       background-color: var(--background-color);
