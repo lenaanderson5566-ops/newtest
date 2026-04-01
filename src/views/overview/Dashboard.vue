@@ -44,13 +44,15 @@
             <div class="no-plan-flow-layout">
               <section class="no-plan-hero">
                 <div class="hero-copy">
-                  <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
+                  <div class="hero-status">
+                    <IconAlertTriangle :size="16" />
+                    <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
+                  </div>
                   <h3 class="no-plan-title">{{ noPlanHeroTitle }}</h3>
                   <div class="hero-actions">
                     <button class="hero-btn primary" @click="handleNoPlanPrimaryAction">{{ noPlanPrimaryActionText }}</button>
                     <button class="hero-btn secondary" @click="goToDocs">查看教程</button>
                   </div>
-                  <div class="hero-helper">支持多平台 · 一键导入配置</div>
                 </div>
                 <div class="hero-visual" aria-hidden="true">
                   <div class="line-device laptop"></div>
@@ -2629,8 +2631,15 @@ $space-2: map.get($spacers, 2);
   align-items: flex-start;
 }
 
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #b45309;
+}
+
 .no-plan-title {
-  @extend %typo-page-title;
+  @extend %typo-card-title;
   margin: 10px 0 8px;
   line-height: 1.24;
   letter-spacing: 0.2px;
@@ -2680,12 +2689,6 @@ $space-2: map.get($spacers, 2);
   color: var(--neutral-strong);
   border-color: rgba(148, 163, 184, 0.3);
   background: rgba(255, 255, 255, 0.76);
-}
-
-.hero-helper {
-  margin-top: 10px;
-  font-size: $font-size-md;
-  color: var(--text-tertiary);
 }
 
 .hero-visual {
