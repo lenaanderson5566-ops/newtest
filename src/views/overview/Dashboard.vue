@@ -250,6 +250,7 @@
               <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
               <div class="trend-empty-content">
                 <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
+                <div class="trend-empty-desc">{{ $t('trafficLog.emptyDesc') }}</div>
                 <button class="trend-empty-action btn btn-primary" @click="goToQuickStart">
                   {{ $t('dashboard.goToQuickStart') }}
                 </button>
@@ -2358,6 +2359,12 @@ $space-2: map.get($spacers, 2);
       font-size: $font-size-xl;
     }
 
+    .trend-empty-desc {
+      @extend %typo-meta-text;
+      color: var(--text-tertiary);
+      max-width: 420px;
+    }
+
     .trend-empty-action {
       min-width: 180px;
       padding-inline: 18px;
@@ -2528,11 +2535,15 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-image {
-      width: 150px;
+      display: none;
     }
 
     .trend-empty-title {
       font-size: $font-size-md;
+    }
+
+    .trend-empty-desc {
+      font-size: $font-size-xs;
     }
 
     .trend-empty-block {
