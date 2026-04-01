@@ -1039,7 +1039,7 @@ export default {
 
 
 
-@media (min-width: #{$bp-sm}) and (max-width: #{$bp-lg}) {
+@media (min-width: #{$bp-sm + 1px}) and (max-width: #{$bp-lg}) {
 
   .auth-container {
 
