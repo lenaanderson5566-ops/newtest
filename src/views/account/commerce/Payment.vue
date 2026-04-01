@@ -2004,11 +2004,15 @@ export default {
     }
 
     .right-column {
+      flex: none;
+      width: 100%;
       max-width: none;
       margin-top: 0;
     }
 
     .left-column {
+      flex: none;
+      width: 100%;
       display: flex;
       flex-direction: column;
       gap: 8px;
