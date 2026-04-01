@@ -218,7 +218,7 @@ export default {
   }
 }
 
-@media (max-width: 991px) {
+@include down(lg) {
   .slide-tabs-container {
     top: auto;
     bottom: 20px;
@@ -289,7 +289,7 @@ export default {
   }
 }
 
-@media (max-width: 480px) {
+@include down(xs) {
   .slide-tabs-container {
     bottom: 12px;
     width: 94%;

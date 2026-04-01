@@ -414,7 +414,7 @@ export default {
   bottom: 0;
   overflow: hidden;
 
-  @media (max-width: 992px) {
+  @include down(lg) {
     overflow-y: auto;
     position: relative;
     min-height: 100vh;
@@ -440,7 +440,7 @@ export default {
   justify-content: center;
   height: 100%;
 
-  @media (max-width: 992px) {
+  @include down(lg) {
     display: none;
   }
 
@@ -507,7 +507,7 @@ export default {
   overflow-y: auto;
   height: 100%;
 
-  @media (max-width: 992px) {
+  @include down(lg) {
     width: 100%;
     max-width: none;
     flex: 1;
@@ -527,7 +527,7 @@ export default {
   gap: 8px;
   z-index: 10;
 
-  @media (max-width: 992px) {
+  @include down(lg) {
     top: 10px;
     right: 10px;
   }
@@ -542,7 +542,7 @@ export default {
   flex-direction: column;
   justify-content: center;
 
-  @media (max-width: 992px) {
+  @include down(lg) {
     padding: 16px;
     margin: auto;
     width: 100%;
@@ -553,7 +553,7 @@ export default {
   margin-bottom: 24px;
   text-align: center;
 
-  @media (min-width: 993px) {
+  @include up(lg) {
     text-align: left;
   }
 
@@ -563,7 +563,7 @@ export default {
     margin-bottom: 8px;
     color: var(--text-primary);
 
-    @media (min-width: 993px) {
+    @include up(lg) {
       text-align: left;
     }
   }
@@ -573,7 +573,7 @@ export default {
     color: var(--text-tertiary);
     margin-bottom: 24px;
 
-    @media (min-width: 993px) {
+    @include up(lg) {
       text-align: left;
     }
   }
@@ -756,7 +756,7 @@ export default {
 }
 
 
-@media (max-width: #{$bp-sm}) {
+@include down(sm) {
   .auth-form-container {
     padding: 24px 16px;
     margin: auto;
@@ -785,7 +785,7 @@ export default {
 }
 
 
-@media (min-width: 577px) and (max-width: 992px) {
+@include between(sm, lg) {
   .auth-split-right {
     padding: 24px;
   }
@@ -868,7 +868,7 @@ export default {
   margin-bottom: 24px;
   text-align: center;
 
-  @media (min-width: 993px) {
+  @include up(lg) {
     text-align: left;
   }
 

@@ -2318,7 +2318,7 @@ export default {
 
 
 
-  @media (max-width: 992px) {
+  @include down(lg) {
 
     overflow-y: auto;
 
@@ -2370,7 +2370,7 @@ export default {
 
 
 
-  @media (max-width: 992px) {
+  @include down(lg) {
 
     display: none;
 
@@ -2501,7 +2501,7 @@ export default {
 
 
 
-  @media (max-width: 992px) {
+  @include down(lg) {
 
     width: 100%;
 
@@ -2555,7 +2555,7 @@ export default {
 
 
 
-  @media (max-width: 992px) {
+  @include down(lg) {
 
     top: 10px;
 
@@ -2585,7 +2585,7 @@ export default {
 
 
 
-  @media (max-width: 992px) {
+  @include down(lg) {
 
     padding: 16px;
 
@@ -2607,7 +2607,7 @@ export default {
 
 
 
-  @media (min-width: 993px) {
+  @include up(lg) {
 
     text-align: left;
 
@@ -2622,7 +2622,7 @@ export default {
 
 
 
-    @media (min-width: 993px) {
+    @include up(lg) {
 
       text-align: left;
 
@@ -2642,7 +2642,7 @@ export default {
 
 
 
-    @media (min-width: 993px) {
+    @include up(lg) {
 
       text-align: left;
 
@@ -3576,7 +3576,7 @@ export default {
 
 
 
-@media (max-width: #{$bp-sm}) {
+@include down(sm) {
 
   .auth-split-right {
 
@@ -3666,7 +3666,7 @@ export default {
 
 
 
-@media (min-width: 577px) and (max-width: 992px) {
+@include between(sm, lg) {
 
   .auth-split-right {
 
@@ -3875,7 +3875,7 @@ export default {
 
 
 
-  @media (min-width: 993px) {
+  @include up(lg) {
 
     text-align: left;
 

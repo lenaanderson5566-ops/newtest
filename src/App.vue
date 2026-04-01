@@ -549,7 +549,7 @@ export default {
   pointer-events: none;
 }
 
-@media (min-width: 992px) {
+@include up(lg) {
   .app-content-wrapper.with-left-nav {
     padding-left: calc(var(--left-nav-occupy, 220px) + var(--left-nav-gap, 10px));
   }
@@ -563,7 +563,7 @@ export default {
 
 }
 
-@media (max-width: 991px) {
+@include down(lg) {
   .global-copyright {
     display: none;
   }
@@ -580,7 +580,7 @@ export default {
 }
 
 
-@media (max-width: 768px) {
+@include down(md) {
   .app-content-wrapper.with-top-bar {
     --page-content-top-gap: 4px;
   }
@@ -642,7 +642,7 @@ export default {
 }
 
 /* 统一窄屏容器规则：仅最外层保留 2px，内层容器全部归零，最大化可用宽度 */
-@media (max-width: 1200px) {
+@include down(xl) {
   .content-layout-shell {
     padding-inline: var(--page-edge-gap, 2px);
   }

@@ -408,7 +408,7 @@ onMounted(fetchUserStatus);
 .quick-start-container {
   padding-bottom: calc(2px + 64px);
 
-  @media (min-width: 769px) {
+  @include up(md) {
     padding-bottom: 0;
   }
 }
@@ -523,7 +523,7 @@ onMounted(fetchUserStatus);
   }
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .system-item {
     padding: map.get($spacers, 2) 24px map.get($spacers, 2) map.get($spacers, 2);
     min-height: 62px;

@@ -1570,7 +1570,7 @@ $space-2: map.get($spacers, 2);
         height: auto;
       }
 
-      @media (min-width: 769px) {
+      @include up(md) {
         grid-template-rows: auto;
         align-items: start;
       }
@@ -1590,7 +1590,7 @@ $space-2: map.get($spacers, 2);
       grid-row: 2 / 3;
     }
 
-    @media (min-width: 769px) {
+    @include up(md) {
       grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
       grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
       align-items: stretch;
@@ -2438,13 +2438,13 @@ $space-2: map.get($spacers, 2);
 
 
 
-@media (max-width: #{$bp-xl}) {
+@include down(xl) {
   .dashboard-container {
     padding: 0;
   }
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .dashboard-container {
     --dashboard-card-padding: 8px;
   }
@@ -2844,7 +2844,7 @@ button.no-plan-step {
   animation-delay: 0.5s;
 }
 
-@media (max-width: 768px) {
+@include down(md) {
   .no-plan-hero {
     grid-template-columns: 1fr;
     padding: 16px;
