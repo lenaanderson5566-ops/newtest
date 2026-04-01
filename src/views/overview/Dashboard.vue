@@ -2046,7 +2046,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-subscription {
-        --traffic-card-bg: transparent;
+        --traffic-card-bg: linear-gradient(315deg, rgba(34, 89, 170, 0.14) 0%, rgba(234, 29, 44, 0.1) 100%);
         border: 1px solid var(--dashboard-border-color);
         box-shadow: none;
 
