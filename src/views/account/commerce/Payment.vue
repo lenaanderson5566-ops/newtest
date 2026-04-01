@@ -1997,42 +1997,10 @@ export default {
     }
   }
 
-  @media (max-width: #{$bp-md}) {
-    .content-wrapper {
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .right-column {
-      flex: none;
-      width: 100%;
-      max-width: none;
-      margin-top: 0;
-    }
-
-    .left-column {
-      flex: none;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .left-column .section-wrapper,
-    .left-column .section-wrapper:last-child,
-    .left-column .section-wrapper.payment-methods-section {
-      margin-bottom: 0 !important;
-    }
-
-    .right-column .section-wrapper,
-    .right-column .order-amount-section {
-      margin-top: 0 !important;
-    }
-  }
   @media (max-width: #{$bp-lg}) {
     .content-wrapper {
       flex-direction: column;
-      gap: 0;
+      gap: 8px;
     }
 
     .left-column,
@@ -2040,6 +2008,19 @@ export default {
       flex: none;
       width: 100%;
       max-width: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .left-column .section-wrapper,
+    .right-column .section-wrapper {
+      margin: 0 !important;
+    }
+
+    .right-column .action-buttons {
+      margin-top: 8px;
+      margin-bottom: 0;
     }
   }
   @media (max-width: #{$bp-xs}) {
