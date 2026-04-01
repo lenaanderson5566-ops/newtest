@@ -8,13 +8,13 @@
         v-if="hasPendingItems"
         class="pending-order-banner delay-01"
         :class="{'card-animate': !loading.userStats}"
-        @click="goToOrders"
+        @click="goToLatestPendingOrderPayment"
       >
         <div class="banner-main">
           <IconAlertTriangle :size="16" class="banner-icon" />
           <span class="banner-text text-ellipsis">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
         </div>
-        <button class="banner-action btn btn-primary" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
+        <button class="banner-action btn btn-primary" @click.stop="goToLatestPendingOrderPayment">{{ $t('dashboard.payNow') }}</button>
       </div>
 
       <div
@@ -46,7 +46,6 @@
                 <div class="hero-copy">
                   <div class="hero-status">
                     <IconAlertTriangle :size="16" />
-                    <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
                   </div>
                   <h3 class="no-plan-title">{{ noPlanHeroTitle }}</h3>
                   <div class="hero-actions">
@@ -365,6 +364,7 @@ import {
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
 import { getTrafficLog } from '@/api/account/trafficLog';
+import { fetchOrderList } from '@/api/account/orderlist';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import {fetchPlans} from '@/api/account/shop';
@@ -929,13 +929,12 @@ export default {
       return userStats.pendingOrders > 0;
     });
 
-    const noPlanHeroBadge = computed(() => (hasPendingItems.value ? '订单待完成' : '尚未下单'));
     const noPlanHeroTitle = computed(() => (hasPendingItems.value ? '继续完成支付，激活服务' : '先下单并完成支付，激活服务'));
     const noPlanPrimaryActionText = computed(() => (hasPendingItems.value ? '继续支付' : '立即下单'));
 
     const handleNoPlanPrimaryAction = () => {
       if (hasPendingItems.value) {
-        goToOrders();
+        goToLatestPendingOrderPayment();
         return;
       }
       goToShop();
@@ -945,6 +944,32 @@ export default {
       router.push('/orders');
     };
 
+    const goToLatestPendingOrderPayment = async () => {
+      try {
+        const response = await fetchOrderList();
+        const orders = Array.isArray(response?.data)
+          ? response.data
+          : Array.isArray(response?.data?.data)
+            ? response.data.data
+            : [];
+
+        const latestPendingOrder = orders
+          .filter((order) => Number(order?.status) === 0 && order?.trade_no)
+          .sort((a, b) => Number(b?.created_at || 0) - Number(a?.created_at || 0))[0];
+
+        if (latestPendingOrder?.trade_no) {
+          router.push({
+            path: '/payment',
+            query: { trade_no: latestPendingOrder.trade_no, from: 'dashboard' }
+          });
+          return;
+        }
+      } catch (error) {
+        console.warn('Failed to fetch pending orders, fallback to order list page:', error);
+      }
+
+      goToOrders();
+    };
 
     const formatResetDateTime = (date) => {
       if (!(date instanceof Date) || Number.isNaN(date.getTime())) return null;
@@ -1345,11 +1370,11 @@ export default {
       goToShop,
       goToDocs,
       hasPendingItems,
-      noPlanHeroBadge,
       noPlanHeroTitle,
       noPlanPrimaryActionText,
       handleNoPlanPrimaryAction,
       goToOrders,
+      goToLatestPendingOrderPayment,
       router,
       formatTraffic,
       formatPackageRemaining,
@@ -2649,18 +2674,6 @@ $space-2: map.get($spacers, 2);
   margin: 0;
   color: var(--text-secondary);
   font-size: $font-size-lg;
-}
-
-.no-plan-badge {
-  @extend %typo-item-title;
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  padding: 6px 12px;
-  border-radius: 999px;
-  color: #b45309;
-  border: 1px solid rgba(245, 158, 11, 0.32);
-  background: rgba(245, 158, 11, 0.14);
 }
 
 .hero-actions {
