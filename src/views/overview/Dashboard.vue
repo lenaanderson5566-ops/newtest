@@ -45,7 +45,6 @@
               <section class="no-plan-hero">
                 <div class="hero-copy">
                   <div class="hero-status">
-                    <IconAlertTriangle :size="16" />
                     <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
                   </div>
                   <h3 class="no-plan-title">{{ noPlanHeroTitle }}</h3>
