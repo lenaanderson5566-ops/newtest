@@ -224,16 +224,6 @@
             :class="{ 'card-animate': !loading.userStats }"
             :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
-            <div class="today-traffic-decor" aria-hidden="true">
-              <div class="mini-trend-line">
-                <span class="trend-dot dot-1"></span>
-                <span class="trend-dot dot-2"></span>
-                <span class="trend-dot dot-3"></span>
-              </div>
-              <span class="data-icon">
-                <IconWaveSine :size="14" />
-              </span>
-            </div>
             <div class="usage-card-title today-card-title">{{ $t('dashboard.todayTrafficTitle') }}</div>
             <div class="today-traffic-total-main">
               <span class="usage-percent compact">{{ todayTrafficStats.totalGb }} GB</span>
@@ -371,7 +361,6 @@ import {
   IconUserPlus,
   IconWallet,
   IconWaveSawTool,
-  IconWaveSine,
   IconX,
   IconCalendarPlus,
   IconPlus
@@ -408,7 +397,6 @@ export default {
     IconShare,
     IconChevronLeft,
     IconChevronRight,
-    IconWaveSine,
     IconDeviceDesktop,
     IconCrosshair,
     IconPackage,
@@ -2214,68 +2202,6 @@ $space-2: map.get($spacers, 2);
       margin-bottom: 0;
     }
 
-    .today-traffic-decor {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: rgba(var(--theme-color-rgb), 0.72);
-
-      .mini-trend-line {
-        position: relative;
-        width: 92px;
-        height: 22px;
-        border-bottom: 2px solid rgba(var(--theme-color-rgb), 0.24);
-        border-radius: 999px;
-        transform: skewX(-10deg);
-
-        &::before {
-          content: '';
-          position: absolute;
-          left: 6px;
-          right: 6px;
-          top: 4px;
-          height: 2px;
-          border-radius: 999px;
-          background: linear-gradient(90deg, rgba(var(--theme-color-rgb), 0.25), rgba(var(--theme-color-rgb), 0.7));
-          transform: rotate(-9deg);
-        }
-      }
-
-      .trend-dot {
-        position: absolute;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: rgba(var(--theme-color-rgb), 0.85);
-      }
-
-      .dot-1 {
-        left: 8px;
-        top: 13px;
-      }
-
-      .dot-2 {
-        left: 38px;
-        top: 7px;
-      }
-
-      .dot-3 {
-        right: 10px;
-        top: 11px;
-      }
-
-      .data-icon {
-        width: 24px;
-        height: 24px;
-        border-radius: 8px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(var(--theme-color-rgb), 0.12);
-      }
-    }
-
     .today-traffic-total-main {
       display: inline-flex;
       align-items: baseline;
@@ -2555,10 +2481,6 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid {
     .stats-card.today-traffic-card {
-      .today-traffic-decor {
-        margin-bottom: 2px;
-      }
-
       .today-traffic-total-main {
         .usage-percent {
           &.compact {
