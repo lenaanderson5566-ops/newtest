@@ -2249,6 +2249,10 @@ $space-2: map.get($spacers, 2);
     background: linear-gradient(315deg, rgba(234, 29, 44, 0.16) 0%, rgba(234, 29, 44, 0.08) 38%, #ffffff 100%);
   }
 
+  .stats-grid .stats-card.traffic-board-subscription {
+    background: var(--subscription-card-bg);
+  }
+
   .info-tooltip {
     position: relative;
     z-index: 12;
