@@ -551,6 +551,7 @@ export default {
 
 @include up(lg) {
   .app-content-wrapper.with-left-nav {
+    --left-nav-gap: 14px;
     padding-left: calc(var(--left-nav-occupy, 220px) + var(--left-nav-gap, 10px));
   }
 
