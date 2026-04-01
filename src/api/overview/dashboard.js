@@ -2,7 +2,6 @@
 
 
 export function getUserInfo() {
-
     return request({
 
         url: '/user/info',
@@ -15,7 +14,6 @@ export function getUserInfo() {
 
 
 export function getSubscribe() {
-
     return request({
 
         url: '/user/getSubscribe',
@@ -54,7 +52,6 @@ export function getUserStats() {
 
 
 export function getUserConfig() {
-
     return request({
 
         url: '/user/comm/config',
@@ -76,5 +73,3 @@ export function setNextPeriod() {
     });
 
 }
-
-
