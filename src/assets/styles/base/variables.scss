@@ -32,10 +32,11 @@
   --shadow-neutral-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
   --shadow-neutral-dialog: 0 4px 20px rgba(0, 0, 0, 0.15);
   --shadow-theme-sm: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
-  --shadow-sm: var(--shadow-neutral-sm);
+  --shadow-theme-md: 0 8px 24px rgba(var(--theme-color-rgb), 0.24);
+  --shadow-sm: var(--shadow-neutral-md);
   --shadow-md: var(--shadow-neutral-md);
-  --shadow-lg: var(--shadow-neutral-lg);
-  --shadow-dialog: var(--shadow-neutral-dialog);
+  --shadow-lg: var(--shadow-neutral-md);
+  --shadow-dialog: var(--shadow-neutral-md);
 
   --success-color: #16a34a;
   --success-background: #eafaf0;
