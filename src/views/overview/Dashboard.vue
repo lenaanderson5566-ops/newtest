@@ -1476,6 +1476,7 @@ $space-2: map.get($spacers, 2);
   --theme-text-emphasis: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
+  --subscription-card-bg: #eef2f6;
   --theme-border-soft: #e5e7eb;
   --theme-white: #ffffff;
   --quota-label-color: var(--text-tertiary);
@@ -2041,11 +2042,11 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-subscription {
-        background: var(--saas-card-bg);
+        background: var(--subscription-card-bg);
       }
 
       &.traffic-board-subscription {
-        background: var(--saas-card-bg);
+        background: var(--subscription-card-bg);
         border: 1px solid var(--dashboard-border-color);
         box-shadow: none;
 
