@@ -137,8 +137,11 @@
           <!-- 订单金额摘要 -->
           <OrderSummaryCard
             section-class="order-amount-section"
-            :title="$t('payment.order_info')"
+            :show-header="false"
           >
+            <div class="summary-header-block">
+              <div class="summary-title">{{ $t("order.order_summary") }}</div>
+            </div>
 
             <div class="order-info" v-if="!loading.order">
               <div class="summary-amounts">
@@ -1362,6 +1365,16 @@ export default {
     border: 1px solid var(--border-color);
     box-shadow: none;
 
+    .summary-header-block {
+      margin-bottom: 12px;
+
+      .summary-title {
+        @extend %typo-card-title;
+        margin: 0;
+        color: var(--text-primary);
+      }
+    }
+
     .section-title {
       color: var(--text-primary);
 
@@ -1985,10 +1998,20 @@ export default {
   @media (max-width: #{$bp-md}) {
     .content-wrapper {
       flex-direction: column;
+      gap: 8px;
     }
 
     .right-column {
       max-width: none;
+    }
+
+    .left-column .section-wrapper {
+      margin-bottom: 8px;
+    }
+
+    .left-column .section-wrapper:last-child,
+    .left-column .section-wrapper.payment-methods-section {
+      margin-bottom: 0;
     }
   }
   @media (max-width: #{$bp-xs}) {
