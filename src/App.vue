@@ -347,21 +347,6 @@ export default {
   --site-accent-gradient: linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
 }
 
-/* 隐藏左下角版本号（若存在于运行时注入/主题组件中） */
-.app-root-shell .site-version,
-.app-root-shell .app-version,
-.app-root-shell .version-text,
-.app-root-shell .version-badge,
-.app-root-shell [data-version] {
-  display: none !important;
-}
-
-.app-root-shell [class*="version"],
-.app-root-shell [id*="version"] {
-  display: none !important;
-}
-
-
 .card,
 .dashboard-card,
 .stats-card,
