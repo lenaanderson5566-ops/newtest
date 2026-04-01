@@ -1164,7 +1164,9 @@ export default {
 
   .payment-inner {
     width: 100%;
-      }
+    display: block;
+    gap: 0;
+  }
 
   .title-card {
     margin-top: 16px;
@@ -1998,6 +2000,10 @@ export default {
   }
 
   @media (max-width: #{$bp-lg}) {
+    &.page-shell {
+      min-height: auto;
+    }
+
     .content-wrapper {
       flex-direction: column;
       gap: 8px;
