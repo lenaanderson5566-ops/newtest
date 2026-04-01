@@ -511,7 +511,7 @@ export default {
 .app-content-wrapper {
   width: 100%;
   box-sizing: border-box;
-  --page-edge-gap: 0;
+  --page-edge-gap: 4px;
   --left-nav-gap: 8px;
   --left-nav-occupy: 220px;
   --mobile-bottom-nav-space: 0px;
