@@ -2318,7 +2318,7 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-state-illustration {
-      padding: 10px;
+      padding: 4px 0 0;
     }
 
     .trend-empty-block {
@@ -2327,10 +2327,11 @@ $space-2: map.get($spacers, 2);
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      padding: 14px 18px;
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.92));
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     .trend-empty-content {
@@ -2549,8 +2550,8 @@ $space-2: map.get($spacers, 2);
     .trend-empty-block {
       flex-direction: column;
       text-align: center;
-      gap: 10px;
-      padding: 10px 12px;
+      gap: 8px;
+      padding: 0;
     }
 
     .trend-empty-content {
