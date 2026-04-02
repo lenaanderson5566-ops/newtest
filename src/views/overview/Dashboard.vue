@@ -946,7 +946,8 @@ export default {
           path: '/payment',
           query: {
             trade_no: createdTradeNo,
-            from: 'dashboard'
+            // 使用与账单记录（订单列表）一致的支付页上下文，确保页面布局与交互保持一致
+            from: 'orders'
           }
         });
       } catch (error) {
@@ -991,7 +992,8 @@ export default {
         if (latestPendingOrder?.trade_no) {
           router.push({
             path: '/payment',
-            query: { trade_no: latestPendingOrder.trade_no, from: 'dashboard' }
+            // 统一走订单列表支付上下文，避免展示与账单记录入口不一致
+            query: { trade_no: latestPendingOrder.trade_no, from: 'orders' }
           });
           return;
         }
