@@ -1829,7 +1829,7 @@ export default {
 
 
 
-  @media (max-width: #{$bp-lg}) {
+  @include down(lg) {
 
     overflow-y: auto;
 
@@ -1881,7 +1881,7 @@ export default {
 
 
 
-  @media (max-width: #{$bp-lg}) {
+  @include down(lg) {
 
     display: none;
 
@@ -1977,7 +1977,7 @@ export default {
 
 
 
-  @media (max-width: #{$bp-lg}) {
+  @include down(lg) {
 
     width: 100%;
 
@@ -2003,7 +2003,7 @@ export default {
 
 
 
-@media (min-width: 993px) and (max-height: 850px) {
+@media (min-width: 992px) and (max-height: 850px) {
 
   .auth-split-right {
 
@@ -2031,7 +2031,7 @@ export default {
 
 
 
-  @media (max-width: #{$bp-lg}) {
+  @include down(lg) {
 
     top: 10px;
 
@@ -2061,7 +2061,7 @@ export default {
 
 
 
-  @media (max-width: #{$bp-lg}) {
+  @include down(lg) {
 
     padding: 16px;
 
@@ -2083,7 +2083,7 @@ export default {
 
 
 
-  @media (min-width: 993px) {
+  @include up(lg) {
 
     text-align: left;
 
@@ -2103,7 +2103,7 @@ export default {
 
 
 
-    @media (min-width: 993px) {
+    @include up(lg) {
 
       text-align: left;
 
@@ -2123,7 +2123,7 @@ export default {
 
 
 
-    @media (min-width: 993px) {
+    @include up(lg) {
 
       text-align: left;
 
@@ -2295,7 +2295,6 @@ export default {
 
       border-color: var(--theme-color);
 
-      box-shadow: none;
 
       background-color: var(--input-focus-bg-color, #fff);
 
@@ -2413,7 +2412,6 @@ export default {
 
       transform: translateY(0);
 
-      box-shadow: none;
 
 
 
@@ -2421,7 +2419,6 @@ export default {
 
         transform: translateY(-2px);
 
-        box-shadow: none;
 
       }
 
@@ -2561,7 +2558,6 @@ export default {
 
     border-radius: 12px;
 
-    box-shadow: none;
 
     width: 90%;
 
@@ -2901,7 +2897,7 @@ export default {
 
 
 
-  @media (min-width: 993px) {
+  @include up(lg) {
 
     text-align: left;
 
@@ -2935,7 +2931,7 @@ export default {
 
 
 
-@media (max-width: #{$bp-sm}) {
+@include down(sm) {
 
   .auth-split-right {
 
@@ -2983,7 +2979,7 @@ export default {
 
 
 
-@media (min-width: #{$bp-sm}) and (max-width: #{$bp-lg}) {
+@include between(sm, lg) {
 
   .auth-split-right {
 

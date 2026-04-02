@@ -22,7 +22,13 @@
   --text-on-dark-disabled: rgba(255, 255, 255, 0.38);
 
   --border-color: #d8e0ec;
+  --card-border-subtle: rgba(148, 163, 184, 0.1);
+  --card-border-soft: #e5e7eb;
+  --card-border-hover: rgba(148, 163, 184, 0.14);
   --shadow-color: rgba(15, 23, 42, 0.08);
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 3px 10px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.06);
 
   --success-color: #16a34a;
   --success-background: #eafaf0;
@@ -55,6 +61,24 @@ $bp-sm: map.get($breakpoints, sm);
 $bp-md: map.get($breakpoints, md);
 $bp-lg: map.get($breakpoints, lg);
 $bp-xl: map.get($breakpoints, xl);
+
+@mixin up($name) {
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+@mixin down($name) {
+  @media (max-width: calc(map.get($breakpoints, $name) - 0.02px)) {
+    @content;
+  }
+}
+
+@mixin between($min, $max) {
+  @media (min-width: map.get($breakpoints, $min)) and (max-width: calc(map.get($breakpoints, $max) - 0.02px)) {
+    @content;
+  }
+}
 
 // 间距变量
 $spacer: 1rem;

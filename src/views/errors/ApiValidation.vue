@@ -366,7 +366,6 @@ export default {
 
   backdrop-filter: blur(10px);
 
-  box-shadow: none;
 
   text-align: center;
 
@@ -452,7 +451,7 @@ export default {
   }
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .validation-container {
     max-width: 85%;
 
@@ -481,7 +480,6 @@ export default {
   .validation-container {
     background-color: var(--card-background, rgba(30, 32, 35, 0.6));
 
-    box-shadow: none;
 
     .progress-ring-bg {
       stroke: var(--border-color, rgba(255, 255, 255, 0.1));

@@ -96,7 +96,7 @@ export default {
   color: var(--text-primary);
   border-radius: 12px;
   padding: 16px 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-md);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -116,7 +116,7 @@ export default {
     max-width: none;
     transform: translateY(-100%);
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
     
     &.toast-show {
       transform: translateY(0);
@@ -124,7 +124,7 @@ export default {
     
     &:hover {
       transform: translateY(0);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: var(--shadow-md);
     }
   }
   
@@ -135,7 +135,7 @@ export default {
   
   &:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
     
     .toast-progress-bar {
       animation-play-state: paused;

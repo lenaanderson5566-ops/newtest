@@ -572,7 +572,6 @@ onMounted(() => {
 .modal-content {
   background-color: var(--card-background);
   border-radius: 12px;
-  box-shadow: none;
   width: 90%;
   max-width: 480px;
   overflow: hidden;
@@ -644,7 +643,6 @@ onMounted(() => {
       &:focus {
         outline: none;
         border-color: var(--theme-color);
-        box-shadow: none;
       }
     }
 
@@ -730,7 +728,7 @@ onMounted(() => {
   }
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .back-label {
     display: none;
   }

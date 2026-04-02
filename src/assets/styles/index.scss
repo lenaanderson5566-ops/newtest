@@ -249,7 +249,7 @@
   color: var(--text-primary);
   border-radius: $border-radius-sm;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -307,17 +307,14 @@
 .pending-order-modal .pending-order-actions .btn-return-orders {
   background: transparent;
   color: var(--text-primary);
-  box-shadow: none;
 
   &:hover {
     background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
     transform: none;
-    box-shadow: none;
   }
 
   &:active {
     transform: none;
-    box-shadow: none;
   }
 }
 

@@ -565,7 +565,7 @@ watch(locale, () => {
   }
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .order-table {
     th, td {
       padding: 8px 4px;
@@ -633,7 +633,6 @@ watch(locale, () => {
   font-weight: $font-weight-medium;
   font-size: $font-size-md;
   border: 1px solid rgba(var(--theme-color-rgb), 0.3);
-  box-shadow: none;
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(8px);
@@ -641,13 +640,11 @@ watch(locale, () => {
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: none;
     background-color: rgba(var(--theme-color-rgb), 0.95);
   }
   
   &:active {
     transform: translateY(0);
-    box-shadow: none;
   }
 }
 
@@ -688,7 +685,6 @@ watch(locale, () => {
 .modal-content {
   background-color: var(--card-background);
   border-radius: $border-radius-sm;
-  box-shadow: none;
   width: 90%;
   max-width: 480px;
   overflow: hidden;
@@ -818,7 +814,7 @@ watch(locale, () => {
 
 
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .orders-container {
     padding-bottom: calc(2px + 56px);
   }

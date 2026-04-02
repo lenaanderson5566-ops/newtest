@@ -568,7 +568,7 @@ export default {
 
   
 
-  @media (max-width: #{$bp-md}) {
+  @include down(md) {
 
     font-size: $font-size-xl;
 
@@ -576,7 +576,7 @@ export default {
 
   
 
-  @media (max-width: #{$bp-xs}) {
+  @include down(xs) {
 
     font-size: $font-size-md;
 
@@ -715,7 +715,7 @@ export default {
 
 
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
 
   .scroll-arrow-container {
 

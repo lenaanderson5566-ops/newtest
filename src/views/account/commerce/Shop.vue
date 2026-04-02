@@ -996,7 +996,6 @@ export default {
   .welcome-card {
     border: none;
     border-radius: var(--shop-card-radius);
-    box-shadow: none;
     background: transparent;
     background-color: transparent;
     padding: map.get($spacers, 3);
@@ -1023,7 +1022,6 @@ export default {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
 
-    box-shadow: none;
 
     padding: map.get($spacers, 3);
 
@@ -1034,7 +1032,6 @@ export default {
     position: relative;
 
     &:hover {
-      box-shadow: none;
 
       border-color: rgba(var(--theme-color-rgb), 0.3);
     }
@@ -1086,7 +1083,6 @@ export default {
     border-radius: 999px;
     padding: 4px 8px;
     white-space: nowrap;
-    box-shadow: none;
   }
 
       .card-badge {
@@ -1295,11 +1291,7 @@ export default {
 
     margin-bottom: 24px;
 
-    @media (max-width: #{$bp-xl}) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (max-width: #{$bp-md}) {
+    @include down(lg) {
       grid-template-columns: 1fr;
     }
 
@@ -1316,13 +1308,11 @@ export default {
     .plan-card {
       border-radius: var(--shop-card-radius);
       border: 1px solid var(--border-color);
-      box-shadow: none;
 
       background-color: #fff;
 
       border-radius: 16px;
 
-      box-shadow: none;
 
       padding: 8px;
 
@@ -1359,14 +1349,12 @@ export default {
       }
 
       &:hover {
-        box-shadow: none;
 
         border-color: rgba(var(--theme-color-rgb), 0.3);
       }
 
       &.current-plan-card {
         border-color: var(--border-color);
-        box-shadow: none;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
       }
@@ -1678,7 +1666,6 @@ export default {
     margin-top: 4px;
     align-self: flex-start;
     background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
-    box-shadow: none;
 
     &.glassmorphism {
       backdrop-filter: none;
@@ -1688,19 +1675,16 @@ export default {
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: none;
       filter: brightness(1.03);
     }
 
     &.btn-disabled {
       background: var(--button-disabled-bg);
       cursor: not-allowed;
-      box-shadow: none;
       border: 1px solid var(--button-disabled-bg);
 
       &:hover {
         transform: none;
-        box-shadow: none;
         filter: none;
       }
     }
@@ -1747,7 +1731,6 @@ export default {
       border-radius: 12px;
       border: 1px solid var(--border-color);
       background: var(--surface-subtle);
-      box-shadow: none;
 
       .filter-highlight {
         position: absolute;
@@ -1756,7 +1739,6 @@ export default {
         bottom: 3px;
         border-radius: 9px;
         background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
-        box-shadow: none;
         transition: transform 0.22s ease, width 0.22s ease;
         pointer-events: none;
       }
@@ -1904,7 +1886,7 @@ export default {
   color: var(--text-tertiary);
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(lg) {
   .back-label {
     display: none;
   }
@@ -2134,7 +2116,7 @@ export default {
   }
 }
 
-@media (max-width: #{$bp-xs}) {
+@include down(xs) {
   .shop-container .plans-wrapper .mobile-plan-selector {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

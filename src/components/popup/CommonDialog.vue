@@ -196,7 +196,6 @@ export default {
     max-width: 500px;
     background-color: #fff;
     border-radius: $border-radius-sm;
-    box-shadow: none;
     border: 1px solid rgba(15, 23, 42, 0.08);
     overflow: hidden;
     display: flex;
@@ -295,7 +294,7 @@ export default {
 
         &:hover {
           background-color: var(--text-tertiary);
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          box-shadow: var(--shadow-md);
         }
       }
 
@@ -304,7 +303,7 @@ export default {
         color: var(--text-on-dark-primary);
 
         &:hover {
-          box-shadow: 0 4px 10px rgba(var(--theme-color-rgb), 0.3);
+          box-shadow: var(--shadow-md);
         }
       }
     }
@@ -368,4 +367,3 @@ export default {
   }
 }
 </style>
-

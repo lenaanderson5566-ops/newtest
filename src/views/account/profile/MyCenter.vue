@@ -642,11 +642,9 @@ $space-2: map.get($spacers, 2);
   border-radius: $border-radius-sm;
   background-color: var(--card-background);
   border: 1px solid rgba(15, 23, 42, 0.15);
-  box-shadow: none;
   transition: box-shadow 0.22s ease, border-color 0.22s ease;
 
   &:hover {
-    box-shadow: none;
     border-color: rgba(var(--theme-color-rgb), 0.22);
   }
 }
@@ -766,7 +764,6 @@ $space-2: map.get($spacers, 2);
     border-radius: 999px;
     font-size: $font-size-sm;
     font-weight: $font-weight-bold;
-    box-shadow: none;
 
     &.is-bronze { background: linear-gradient(135deg, #b27241, #d39d63); }
     &.is-silver { background: linear-gradient(135deg, #8ea0bf, #d4deef); color: var(--text-secondary); }
@@ -846,7 +843,6 @@ $space-2: map.get($spacers, 2);
   &.is-highlight {
     border-color: rgba(var(--theme-color-rgb), 0.32);
     background: linear-gradient(130deg, rgba(var(--theme-color-rgb), 0.14), rgba(var(--theme-color-rgb), 0.05));
-    box-shadow: none;
   }
 }
 
@@ -1037,7 +1033,6 @@ input:checked + .slider:before { transform: translateX(18px); }
 .modal-content {
   background-color: var(--card-background);
   border-radius: 12px;
-  box-shadow: none;
   width: 90%;
   max-width: 480px;
   overflow: hidden;
@@ -1111,7 +1106,6 @@ input:checked + .slider:before { transform: translateX(18px); }
     &:focus {
       outline: none;
       border-color: var(--theme-color);
-      box-shadow: none;
     }
   }
 }
@@ -1178,7 +1172,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: #{$bp-xl}) {
+@include down(xl) {
   .overview-panels {
     grid-template-columns: 1fr;
   }
@@ -1186,7 +1180,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .my-center {
     background: #f3f3f5;
   }

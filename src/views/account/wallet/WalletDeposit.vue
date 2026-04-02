@@ -326,13 +326,11 @@ onMounted(() => {
   .dashboard-card {
     background-color: var(--card-bg);
     border-radius: $border-radius-sm;
-    box-shadow: none;
     padding: map.get($spacers, 3);
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     
     &:hover {
-      box-shadow: none;
       border-color: rgba(var(--theme-color-rgb), 0.3);
     }
     
@@ -497,11 +495,9 @@ onMounted(() => {
           border: 1px solid var(--border-color);
           transition: all 0.3s ease;
           position: relative;
-          box-shadow: none;
           
           &.active {
             border-color: var(--theme-color);
-            box-shadow: none;
             
             .period-card-inner {
               background-color: rgba(var(--theme-color-rgb), 0.1);
@@ -518,7 +514,6 @@ onMounted(() => {
           &:hover {
             border-color: rgba(var(--theme-color-rgb), 0.5);
             transform: translateY(-2px);
-            box-shadow: none;
           }
           
           .period-card-inner {
@@ -596,7 +591,6 @@ onMounted(() => {
           &:focus {
             outline: none;
             border-color: var(--theme-color);
-            box-shadow: none;
           }
           
           &::placeholder {
@@ -635,23 +629,19 @@ onMounted(() => {
         cursor: pointer;
         transition: all 0.3s ease;
         min-width: 200px;
-        box-shadow: none;
         
         &:hover {
           transform: translateY(-2px);
-          box-shadow: none;
         }
         
         &:active {
           transform: translateY(0);
-          box-shadow: none;
         }
         
         &:disabled {
           background-color: var(--disabled-bg, #cccccc);
           cursor: not-allowed;
           transform: none;
-          box-shadow: none;
         }
         
         .loader {
@@ -681,13 +671,10 @@ onMounted(() => {
 
 @keyframes pulse {
   0% {
-    box-shadow: none;
   }
   70% {
-    box-shadow: none;
   }
   100% {
-    box-shadow: none;
   }
 }
 
@@ -699,7 +686,7 @@ onMounted(() => {
     transform: translateX(100%);
   }
 }
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .back-label {
     display: none;
   }
@@ -791,7 +778,6 @@ onMounted(() => {
   
   &:hover {
     transform: none;
-    box-shadow: none;
   }
 }
 .skeleton-input {

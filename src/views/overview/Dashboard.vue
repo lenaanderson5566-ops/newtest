@@ -8,13 +8,13 @@
         v-if="hasPendingItems"
         class="pending-order-banner delay-01"
         :class="{'card-animate': !loading.userStats}"
-        @click="goToOrders"
+        @click="goToLatestPendingOrderPayment"
       >
         <div class="banner-main">
           <IconAlertTriangle :size="16" class="banner-icon" />
           <span class="banner-text text-ellipsis">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
         </div>
-        <button class="banner-action btn btn-primary" @click.stop="goToOrders">{{ $t('dashboard.payNow') }}</button>
+        <button class="banner-action btn btn-primary" @click.stop="goToLatestPendingOrderPayment">{{ $t('dashboard.payNow') }}</button>
       </div>
 
       <div
@@ -44,13 +44,14 @@
             <div class="no-plan-flow-layout">
               <section class="no-plan-hero">
                 <div class="hero-copy">
-                  <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
+                  <div class="hero-status">
+                    <span class="no-plan-badge">{{ noPlanHeroBadge }}</span>
+                  </div>
                   <h3 class="no-plan-title">{{ noPlanHeroTitle }}</h3>
                   <div class="hero-actions">
                     <button class="hero-btn primary" @click="handleNoPlanPrimaryAction">{{ noPlanPrimaryActionText }}</button>
                     <button class="hero-btn secondary" @click="goToDocs">查看教程</button>
                   </div>
-                  <div class="hero-helper">支持多平台 · 一键导入配置</div>
                 </div>
                 <div class="hero-visual" aria-hidden="true">
                   <div class="line-device laptop"></div>
@@ -63,7 +64,6 @@
                 <button class="no-plan-step no-plan-step-primary" @click="goToShop">
                   <span class="step-title">1. {{ $t('dashboard.purchasePlan') }}</span>
                   <span class="step-desc">{{ $t('quickStartPage.status.newDesc') }}</span>
-                  <span class="step-action">立即购买</span>
                 </button>
 
                 <button class="no-plan-step no-plan-step-secondary" @click="goToDocs">
@@ -75,13 +75,11 @@
                     <IconDeviceDesktop :size="18" />
                     <IconBrandAndroid :size="18" />
                   </div>
-                  <span class="step-action">下载客户端</span>
                 </button>
 
                 <div class="no-plan-step no-plan-step-success">
                   <span class="step-title">3. {{ $t('quickStartPage.step3Title') }}</span>
                   <span class="step-desc">{{ $t('quickStartPage.connectHint') }}</span>
-                  <span class="step-action">查看教程</span>
                 </div>
               </div>
             </div>
@@ -248,7 +246,16 @@
           <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
           <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
-            <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
+            <div class="trend-empty-block">
+              <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
+              <div class="trend-empty-content">
+                <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
+                <div class="trend-empty-desc">{{ $t('trafficLog.emptyDesc') }}</div>
+                <button class="trend-empty-action btn btn-primary" @click="goToQuickStart">
+                  {{ $t('dashboard.goToQuickStart') }}
+                </button>
+              </div>
+            </div>
           </div>
           <div v-else ref="trafficTrendChartRef" class="usage-trend-chart"></div>
         </div>
@@ -354,7 +361,6 @@ import {
   IconUserPlus,
   IconWallet,
   IconWaveSawTool,
-  IconWaveSine,
   IconX,
   IconCalendarPlus,
   IconPlus
@@ -362,9 +368,10 @@ import {
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
 import { getTrafficLog } from '@/api/account/trafficLog';
+import { fetchOrderList } from '@/api/account/orderlist';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
-import {fetchPlans} from '@/api/account/shop';
+import { fetchPlans, submitOrder } from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
@@ -390,7 +397,6 @@ export default {
     IconShare,
     IconChevronLeft,
     IconChevronRight,
-    IconWaveSine,
     IconDeviceDesktop,
     IconCrosshair,
     IconPackage,
@@ -484,6 +490,10 @@ export default {
 
     const goToDocs = () => {
       router.push('/docs');
+    };
+
+    const goToQuickStart = () => {
+      router.push('/quick-start');
     };
 
     const userPlanId = ref(null);
@@ -907,32 +917,55 @@ export default {
       }
     };
 
-    const purchaseTrafficPackage = (plan) => {
+    const purchaseTrafficPackage = async (plan) => {
       if (isTrafficPackageSoldOut(plan)) {
         showToast(t('shop.plan.stock.sold_out'), 'error');
         return;
       }
-      showTrafficPackageModal.value = false;
-      router.push({
-        path: '/order-confirm',
-        query: {
-          id: plan.id,
+
+      const planId = Number(plan?.id || 0);
+      if (!planId) {
+        showToast(t('order.no_plan_selected'), 'error');
+        return;
+      }
+
+      try {
+        const response = await submitOrder({
+          plan_id: planId,
           period: 'onetime_price'
+        });
+
+        const createdTradeNo = String(response?.data || '');
+        if (!createdTradeNo) {
+          throw new Error(response?.message || 'Failed to create traffic package order');
         }
-      });
+
+        showTrafficPackageModal.value = false;
+        showToast(response?.message || t('order.order_success'), 'success');
+        await router.push({
+          path: '/payment',
+          query: {
+            trade_no: createdTradeNo,
+            from: 'dashboard'
+          }
+        });
+      } catch (error) {
+        console.error('Failed to create traffic package order:', error);
+        showToast(error?.response?.message || error?.message || t('order.failed_to_fetch_plan'), 'error');
+      }
     };
 
     const hasPendingItems = computed(() => {
       return userStats.pendingOrders > 0;
     });
 
-    const noPlanHeroBadge = computed(() => (hasPendingItems.value ? '订单待完成' : '尚未下单'));
-    const noPlanHeroTitle = computed(() => (hasPendingItems.value ? '继续完成支付，激活服务' : '先下单并完成支付，激活服务'));
+    const noPlanHeroBadge = computed(() => (hasPendingItems.value ? '待完成支付' : '未开通服务'));
+    const noPlanHeroTitle = computed(() => (hasPendingItems.value ? '完成支付后即可激活服务' : '先选择订阅并完成支付，即可开始使用'));
     const noPlanPrimaryActionText = computed(() => (hasPendingItems.value ? '继续支付' : '立即下单'));
 
     const handleNoPlanPrimaryAction = () => {
       if (hasPendingItems.value) {
-        goToOrders();
+        goToLatestPendingOrderPayment();
         return;
       }
       goToShop();
@@ -942,6 +975,32 @@ export default {
       router.push('/orders');
     };
 
+    const goToLatestPendingOrderPayment = async () => {
+      try {
+        const response = await fetchOrderList();
+        const orders = Array.isArray(response?.data)
+          ? response.data
+          : Array.isArray(response?.data?.data)
+            ? response.data.data
+            : [];
+
+        const latestPendingOrder = orders
+          .filter((order) => Number(order?.status) === 0 && order?.trade_no)
+          .sort((a, b) => Number(b?.created_at || 0) - Number(a?.created_at || 0))[0];
+
+        if (latestPendingOrder?.trade_no) {
+          router.push({
+            path: '/payment',
+            query: { trade_no: latestPendingOrder.trade_no, from: 'dashboard' }
+          });
+          return;
+        }
+      } catch (error) {
+        console.warn('Failed to fetch pending orders, fallback to order list page:', error);
+      }
+
+      goToOrders();
+    };
 
     const formatResetDateTime = (date) => {
       if (!(date instanceof Date) || Number.isNaN(date.getTime())) return null;
@@ -1341,12 +1400,14 @@ export default {
       loading,
       goToShop,
       goToDocs,
+      goToQuickStart,
       hasPendingItems,
       noPlanHeroBadge,
       noPlanHeroTitle,
       noPlanPrimaryActionText,
       handleNoPlanPrimaryAction,
       goToOrders,
+      goToLatestPendingOrderPayment,
       router,
       formatTraffic,
       formatPackageRemaining,
@@ -1406,7 +1467,7 @@ export default {
 @use "@/assets/styles/base/variables.scss" as *;
 @use "@/assets/styles/base/typography.scss" as *;
 
-$bp-md-up: $bp-md + 1px;
+
 $space-2: map.get($spacers, 2);
 
 .dashboard-container {
@@ -1417,7 +1478,7 @@ $space-2: map.get($spacers, 2);
   --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
   --dashboard-shadow-compact: none;
-  --dashboard-border-color: rgba(148, 163, 184, 0.22);
+  --dashboard-border-color: var(--card-border-subtle);
   --dashboard-title-size: 14px;
   --dashboard-subtitle-color: var(--text-tertiary);
   --dashboard-value-size: 30px;
@@ -1438,7 +1499,7 @@ $space-2: map.get($spacers, 2);
   --theme-text-emphasis: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
-  --theme-border-soft: #e5e7eb;
+  --theme-border-soft: var(--card-border-soft);
   --theme-white: #ffffff;
   --quota-label-color: var(--text-tertiary);
   --quota-value-color: var(--text-primary);
@@ -1487,14 +1548,12 @@ $space-2: map.get($spacers, 2);
 
   .dashboard-card {
     background-color: var(--saas-card-bg);
-    box-shadow: none;
     padding: var(--dashboard-card-padding);
     border: 1px solid var(--dashboard-border-color);
     border-radius: var(--dashboard-radius);
     transition: box-shadow 0.2s ease;
 
     &:hover {
-      box-shadow: none;
       transform: none;
     }
 
@@ -1539,7 +1598,7 @@ $space-2: map.get($spacers, 2);
         height: auto;
       }
 
-      @media (min-width: #{$bp-md-up}) {
+      @include up(md) {
         grid-template-rows: auto;
         align-items: start;
       }
@@ -1559,7 +1618,7 @@ $space-2: map.get($spacers, 2);
       grid-row: 2 / 3;
     }
 
-    @media (min-width: #{$bp-md-up}) {
+    @include up(md) {
       grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
       grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
       align-items: stretch;
@@ -1589,7 +1648,6 @@ $space-2: map.get($spacers, 2);
       z-index: 1;
       background-color: var(--saas-card-bg);
       border-radius: var(--dashboard-radius);
-      box-shadow: none;
       display: flex;
       align-items: center;
       gap: #{$space-2};
@@ -1658,12 +1716,10 @@ $space-2: map.get($spacers, 2);
             justify-content: center;
             color: var(--theme-white);
             background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
-            box-shadow: none;
             cursor: pointer;
           }
         }
         &.quota-card-muted {
-          background: var(--theme-surface-muted);
           border-color: var(--theme-border-soft);
         }
 
@@ -1715,7 +1771,7 @@ $space-2: map.get($spacers, 2);
           .plan-summary-section {
             border: none;
             border-radius: var(--dashboard-radius);
-            background: var(--theme-surface-soft);
+            background: transparent;
             padding: 8px 8px;
             overflow: visible;
           }
@@ -1746,11 +1802,15 @@ $space-2: map.get($spacers, 2);
           .plan-status-hero {
             display: flex;
             flex-direction: column;
+            justify-content: center;
             gap: 8px;
+            position: relative;
+            min-height: 64px;
+            padding-right: 96px;
           }
 
           .plan-name-main {
-            font-size: $font-size-xl;
+            font-size: $font-size-2xl;
             line-height: 1.2;
             font-weight: $font-weight-bold;
             color: var(--heading-color);
@@ -1759,7 +1819,7 @@ $space-2: map.get($spacers, 2);
           .plan-expire-meta {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             gap: 8px;
             flex-wrap: wrap;
             font-size: $font-size-sm;
@@ -1820,13 +1880,20 @@ $space-2: map.get($spacers, 2);
           .plan-status-tag {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             border-radius: 999px;
-            padding: 0 8px;
-            font-size: $font-size-sm;
+            min-height: 30px;
+            padding: 0 10px;
+            line-height: 1;
+            font-size: $font-size-md;
             font-weight: $font-weight-semibold;
             color: var(--text-on-dark-primary);
             border: 1px solid rgba(255, 255, 255, 0.26);
             background: rgba(255, 255, 255, 0.2);
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
           }
 
           .plan-summary-desc {
@@ -1860,6 +1927,11 @@ $space-2: map.get($spacers, 2);
 
               .plan-action-icon {
                 flex-shrink: 0;
+              }
+
+              &.btn-outline,
+              &.btn-secondary {
+                background: transparent;
               }
             }
           }
@@ -1984,23 +2056,17 @@ $space-2: map.get($spacers, 2);
 
       &.quota-traffic-card {
         .usage-percent {
-          font-size: $font-size-xl;
+          font-size: $font-size-2xl;
 
           &.compact {
-            font-size: $font-size-xl;
+            font-size: $font-size-2xl;
           }
         }
       }
 
-      &.traffic-board-subscription,
-      &.traffic-board-package {
-        background: var(--saas-card-bg);
-      }
-
       &.traffic-board-subscription {
-        background: var(--saas-card-bg);
+        --traffic-card-bg: linear-gradient(315deg, rgba(34, 89, 170, 0.16) 0%, rgba(34, 89, 170, 0.08) 38%, #ffffff 100%);
         border: 1px solid var(--dashboard-border-color);
-        box-shadow: none;
 
         .usage-card-title,
         .usage-percent,
@@ -2012,7 +2078,7 @@ $space-2: map.get($spacers, 2);
         }
 
         .usage-kpi {
-          background: var(--theme-surface-soft);
+          background: transparent;
         }
 
         .section-progress-track {
@@ -2021,16 +2087,15 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-package {
+        --traffic-card-bg: linear-gradient(315deg, rgba(234, 29, 44, 0.16) 0%, rgba(234, 29, 44, 0.08) 38%, #ffffff 100%);
         min-height: auto;
         height: auto;
         z-index: 8;
-        background: var(--saas-card-bg);
       }
 
       &.traffic-board-total {
-        background: var(--saas-card-bg);
+        --traffic-card-bg: linear-gradient(135deg, rgba(148, 163, 184, 0.1) 0%, rgba(148, 163, 184, 0.2) 100%);
         border: 1px solid var(--dashboard-border-color);
-        box-shadow: none;
 
         .usage-card-title {
           color: var(--text-primary);
@@ -2076,7 +2141,7 @@ $space-2: map.get($spacers, 2);
             gap: 4px;
             padding: 8px;
             border-radius: var(--dashboard-radius);
-            background: var(--theme-surface-soft);
+            background: transparent;
           }
 
           .usage-kpi-label {
@@ -2106,8 +2171,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &:hover {
-        border-color: rgba(148, 163, 184, 0.3);
-        box-shadow: none;
+        border-color: var(--card-border-hover);
       }
     }
   }
@@ -2118,7 +2182,6 @@ $space-2: map.get($spacers, 2);
   .overview-card--traffic-quota {
     border-radius: var(--dashboard-radius);
     background: var(--saas-card-bg);
-    box-shadow: none;
     border: 1px solid var(--dashboard-border-color);
   }
 
@@ -2128,13 +2191,14 @@ $space-2: map.get($spacers, 2);
     padding: var(--dashboard-card-padding);
   }
 
-  .stats-grid .stats-card.traffic-board-card,
+  .stats-grid .stats-card.traffic-board-subscription,
+  .stats-grid .stats-card.traffic-board-package,
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
-    background: var(--saas-card-bg);
-    border: 1px solid var(--dashboard-border-color);
+    background: var(--traffic-card-bg, var(--saas-card-bg));
+    border: 1px solid transparent;
     border-radius: var(--dashboard-radius);
-    box-shadow: none;
+    box-shadow: var(--shadow-sm);
   }
 
   /* 概览卡片左上角标题统一样式（今日流量 / 订阅流量 / 流量额度包 / 用量记录） */
@@ -2149,7 +2213,7 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
-    background: var(--saas-card-bg);
+    background: linear-gradient(315deg, rgba(34, 89, 170, 0.14) 0%, rgba(90, 57, 216, 0.08) 42%, #ffffff 100%);
     min-width: 0;
     z-index: 2;
     align-items: flex-start;
@@ -2172,7 +2236,7 @@ $space-2: map.get($spacers, 2);
         line-height: 1;
 
         &.compact {
-          font-size: $font-size-xl;
+          font-size: $font-size-2xl;
         }
       }
 
@@ -2222,7 +2286,6 @@ $space-2: map.get($spacers, 2);
       font-size: $font-size-sm;
       line-height: 1.4;
       font-weight: $font-weight-medium;
-      box-shadow: none;
       opacity: 0;
       visibility: hidden;
       transform: translate(-50%, 4px);
@@ -2278,16 +2341,60 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-state-illustration {
-      padding: 8px;
+      padding: 4px 0 0;
+    }
+
+    .trend-empty-block {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .trend-empty-content {
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      gap: 12px;
     }
 
     .trend-empty-image {
-      width: 180px;
+      width: 280px;
+      flex: 0 0 auto;
       max-width: 100%;
       height: auto;
       opacity: 0.96;
+      background: transparent;
+      border: none;
+      box-shadow: none;
       pointer-events: none;
       user-select: none;
+    }
+
+    .trend-empty-title {
+      @extend %typo-item-title;
+      color: var(--text-primary);
+      font-size: $font-size-xl;
+    }
+
+    .trend-empty-desc {
+      @extend %typo-meta-text;
+      color: var(--text-tertiary);
+      max-width: 420px;
+    }
+
+    .trend-empty-action {
+      min-width: 180px;
+      padding-inline: 18px;
     }
 
     .usage-trend-chart {
@@ -2387,13 +2494,13 @@ $space-2: map.get($spacers, 2);
 
 
 
-@media (max-width: #{$bp-xl}) {
+@include down(xl) {
   .dashboard-container {
     padding: 0;
   }
 }
 
-@media (max-width: #{$bp-md}) {
+@include down(md) {
   .dashboard-container {
     --dashboard-card-padding: 8px;
   }
@@ -2403,7 +2510,7 @@ $space-2: map.get($spacers, 2);
       .today-traffic-total-main {
         .usage-percent {
           &.compact {
-            font-size: $font-size-xl;
+            font-size: $font-size-2xl;
           }
         }
       }
@@ -2417,10 +2524,10 @@ $space-2: map.get($spacers, 2);
       gap: 4px;
 
       .usage-percent {
-        font-size: $font-size-xl;
+        font-size: $font-size-2xl;
 
         &.compact {
-          font-size: $font-size-xl;
+          font-size: $font-size-2xl;
         }
       }
 
@@ -2455,7 +2562,27 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-image {
-      width: 136px;
+      display: none;
+    }
+
+    .trend-empty-title {
+      font-size: $font-size-md;
+    }
+
+    .trend-empty-desc {
+      font-size: $font-size-xs;
+    }
+
+    .trend-empty-block {
+      flex-direction: column;
+      text-align: center;
+      gap: 8px;
+      padding: 0;
+    }
+
+    .trend-empty-content {
+      text-align: center;
+      gap: 8px;
     }
 
     .usage-trend-chart {
@@ -2538,7 +2665,6 @@ $space-2: map.get($spacers, 2);
   padding: 16px;
   animation: none;
   background-color: var(--card-bg-color);
-  box-shadow: none;
   border: 1px solid var(--border-color);
   position: relative;
 }
@@ -2600,17 +2726,11 @@ $space-2: map.get($spacers, 2);
   align-items: flex-start;
 }
 
-.no-plan-title {
-  @extend %typo-page-title;
-  margin: 10px 0 8px;
-  line-height: 1.24;
-  letter-spacing: 0.2px;
-}
-
-.no-plan-subtitle {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: $font-size-lg;
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #b45309;
 }
 
 .no-plan-badge {
@@ -2623,6 +2743,19 @@ $space-2: map.get($spacers, 2);
   color: #b45309;
   border: 1px solid rgba(245, 158, 11, 0.32);
   background: rgba(245, 158, 11, 0.14);
+}
+
+.no-plan-title {
+  @extend %typo-card-title;
+  margin: 10px 0 8px;
+  line-height: 1.24;
+  letter-spacing: 0.2px;
+}
+
+.no-plan-subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: $font-size-lg;
 }
 
 .hero-actions {
@@ -2651,12 +2784,6 @@ $space-2: map.get($spacers, 2);
   color: var(--neutral-strong);
   border-color: rgba(148, 163, 184, 0.3);
   background: rgba(255, 255, 255, 0.76);
-}
-
-.hero-helper {
-  margin-top: 10px;
-  font-size: $font-size-md;
-  color: var(--text-tertiary);
 }
 
 .hero-visual {
@@ -2736,11 +2863,10 @@ $space-2: map.get($spacers, 2);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 8px;
   color: #fff;
   text-align: left;
-  box-shadow: none;
 
 }
 
@@ -2753,17 +2879,6 @@ $space-2: map.get($spacers, 2);
   font-size: $font-size-sm;
   opacity: 0.9;
   line-height: 1.5;
-}
-
-.step-action {
-  margin-top: 6px;
-  align-self: flex-end;
-  background: rgba(255, 255, 255, 0.86);
-  color: #1e293b;
-  border-radius: 10px;
-  padding: 8px 14px;
-  font-size: $font-size-md;
-  font-weight: $font-weight-semibold;
 }
 
 button.no-plan-step {
@@ -2795,7 +2910,7 @@ button.no-plan-step {
   animation-delay: 0.5s;
 }
 
-@media (max-width: 768px) {
+@include down(md) {
   .no-plan-hero {
     grid-template-columns: 1fr;
     padding: 16px;
@@ -2849,7 +2964,6 @@ $space-2: map.get($spacers, 2);
   &.warning-card,
   &.danger-card {
     border-color: rgba(var(--stats-alert-rgb), 0.42);
-    box-shadow: none;
 
     .stats-icon {
       background-color: rgba(var(--stats-alert-rgb), 0.1);
@@ -2907,7 +3021,6 @@ $space-2: map.get($spacers, 2);
   max-height: calc(100vh - 32px);
   border-radius: var(--dashboard-radius);
   overflow: hidden;
-  box-shadow: none;
 }
 
 .traffic-package-modal-card-global {
@@ -2918,7 +3031,6 @@ $space-2: map.get($spacers, 2);
   background-color: var(--card-background);
   border: 1px solid rgba(var(--theme-color-rgb), 0.15);
   border-radius: 16px;
-  box-shadow: none;
 
   .modal-header {
     display: flex;

@@ -5,21 +5,18 @@
         <!-- 左侧内容：产品信息 -->
         <div class="left-column">
           <!-- 订单概览 -->
+          <div class="section-title with-status overview-header">
+            <span>{{ $t("payment.order_info") }}</span>
+            <button
+              v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
+              class="overview-cancel-btn btn-unlock-selection"
+              @click="cancelCurrentOrder"
+              :disabled="loading.cancelling"
+            >
+              <span>{{ $t("payment.cancel_order") }}</span>
+            </button>
+          </div>
           <div class="section-wrapper overview-section">
-            <div class="section-title with-status">
-              <span>{{ $t("order.order_summary") }}</span>
-              <button
-                v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
-                class="overview-cancel-btn"
-                @click="cancelCurrentOrder"
-                :disabled="loading.cancelling"
-              >
-                <IconX v-if="!loading.cancelling" :size="14" />
-                <div v-else class="loader"></div>
-                <span>{{ $t("payment.cancel_order") }}</span>
-              </button>
-            </div>
-
             <div class="product-info" v-if="!loading.order">
               <!-- 充值订单时显示简化信息 -->
               <div class="overview-divider"></div>
@@ -137,8 +134,11 @@
           <!-- 订单金额摘要 -->
           <OrderSummaryCard
             section-class="order-amount-section"
-            :title="$t('payment.order_info')"
+            :show-header="false"
           >
+            <div class="summary-header-block">
+              <div class="summary-title">{{ $t("order.order_summary") }}</div>
+            </div>
 
             <div class="order-info" v-if="!loading.order">
               <div class="summary-amounts">
@@ -1161,7 +1161,9 @@ export default {
 
   .payment-inner {
     width: 100%;
-      }
+    display: block;
+    gap: 0;
+  }
 
   .title-card {
     margin-top: 16px;
@@ -1171,7 +1173,6 @@ export default {
   .dashboard-card {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
-    box-shadow: none;
     padding: map.get($spacers, 3);
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
@@ -1201,7 +1202,7 @@ export default {
     display: flex;
     gap: 24px;
 
-    @media (max-width: #{$bp-md}) {
+    @include down(md) {
       flex-direction: column;
     }
 
@@ -1224,7 +1225,6 @@ export default {
   .section-wrapper {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
-    box-shadow: none;
     padding: 16px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
@@ -1235,56 +1235,7 @@ export default {
     }
 
     &:hover {
-      box-shadow: none;
       border-color: var(--border-color);
-    }
-
-    .section-title {
-      @extend %typo-item-title;
-      margin-bottom: 16px;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-
-      &::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background-color: var(--border-color);
-        margin-left: 8px;
-      }
-
-      &.with-status {
-        justify-content: space-between;
-
-        &::after {
-          display: none;
-        }
-      }
-    }
-
-    .overview-cancel-btn {
-      height: 30px;
-      padding: 0 8px;
-      border-radius: $border-radius-sm;
-      border: 1px solid rgba(var(--theme-color-rgb), 0.38);
-      background: transparent;
-      color: var(--theme-color);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      &:hover:not(:disabled) {
-        background-color: rgba(var(--theme-color-rgb), 0.08);
-      }
-
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
     }
 
     .overview-plan-block {
@@ -1318,39 +1269,77 @@ export default {
       gap: 4px;
     }
 
-    .overview-cancel-btn .loader {
-      width: 14px;
-      height: 14px;
-      border: 2px solid rgba(0, 0, 0, 0.2);
-      border-top-color: var(--text-primary);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
+  }
+
+  .section-title {
+    @extend %typo-section-title;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 16px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 18px;
+      background-color: var(--theme-color);
+      border-radius: 2px;
+    }
+
+    &.with-status {
+      justify-content: space-between;
+    }
+  }
+
+  .overview-header {
+    background-color: var(--background-color);
+    margin: 8px 0;
+
+    .overview-cancel-btn {
+      margin-left: auto;
+    }
+  }
+
+  .overview-cancel-btn {
+    height: 30px;
+    padding: 0 8px;
+    border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+    border-radius: $border-radius-sm;
+    background: transparent;
+    color: var(--theme-color);
+    font-size: $font-size-sm;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
   }
 
   .section-wrapper.payment-methods-section {
     padding: 0;
-    margin-bottom: 4px;
-    background: var(--card-bg-color);
-    border: 1px solid var(--border-color);
-    box-shadow: none;
+    margin: 8px 0;
+    background: var(--background-color) !important;
+    border: none !important;
 
     .section-title {
-      margin-bottom: 0;
-      font-size: $font-size-md;
-      padding: 8px 8px 8px;
+      background-color: var(--background-color);
+      margin-top: 8px;
+      margin-bottom: 8px;
       color: var(--text-primary);
-
-      &::after {
-        background-color: var(--border-color);
-      }
     }
   }
 
   .right-column .section-wrapper.payment-methods-section {
     background: var(--right-card-bg) !important;
     border: 1px solid var(--right-card-border) !important;
-    box-shadow: none !important;
   }
 
   .right-column .section-wrapper.payment-methods-section .section-title {
@@ -1360,7 +1349,17 @@ export default {
   .order-amount-section {
     background: var(--card-bg-color);
     border: 1px solid var(--border-color);
-    box-shadow: none;
+
+    .summary-header-block {
+      margin-bottom: 12px;
+
+      .summary-title {
+        @extend %typo-card-title;
+        @extend %typo-dark-primary;
+        margin: 0;
+        color: var(--text-primary);
+      }
+    }
 
     .section-title {
       color: var(--text-primary);
@@ -1445,10 +1444,10 @@ export default {
   .right-column .order-amount-section {
     background: var(--right-card-bg) !important;
     border: 1px solid var(--right-card-border) !important;
-    box-shadow: none !important;
   }
 
   .right-column .order-amount-section .section-title,
+  .right-column .order-amount-section .summary-title,
   .right-column .order-amount-section .summary-label,
   .right-column .order-amount-section .summary-value {
     color: var(--right-card-text) !important;
@@ -1484,7 +1483,6 @@ export default {
       &.active {
         border-color: var(--theme-color);
         background-color: rgba(var(--theme-color-rgb), 0.14);
-        box-shadow: none;
       }
 
       .method-check {
@@ -1594,7 +1592,7 @@ export default {
       gap: 16px;
       width: 100%;
 
-      @media (max-width: #{$bp-xs}) {
+      @include down(xs) {
         flex-direction: column;
         gap: 8px;
 
@@ -1644,7 +1642,6 @@ export default {
 
           &:hover:not(:disabled) {
             background-color: rgba(var(--theme-color-rgb), 0.08);
-            box-shadow: none;
             transform: none;
           }
         }
@@ -1672,10 +1669,9 @@ export default {
         opacity: 0.6;
         cursor: not-allowed;
         transform: none !important;
-        box-shadow: none !important;
       }
 
-      @media (max-width: #{$bp-xs}) {
+      @include down(xs) {
         width: 100%;
         height: 48px;
         min-height: 48px;
@@ -1694,17 +1690,14 @@ export default {
       color: var(--text-primary);
       flex: 1;
       border: 1px solid var(--border-color);
-      box-shadow: none;
 
       &:hover:not(:disabled) {
         background-color: var(--hover-color);
         transform: none;
-        box-shadow: none;
       }
 
       &:active:not(:disabled) {
         transform: translateY(0);
-        box-shadow: none;
       }
 
       &.full-width {
@@ -1719,12 +1712,10 @@ export default {
       background-color: var(--theme-color);
       color: var(--text-on-dark-primary);
       flex: 2;
-      box-shadow: none;
 
       &:hover:not(:disabled) {
         background-color: var(--primary-color-hover);
         transform: none;
-        box-shadow: none;
       }
     }
 
@@ -1733,12 +1724,10 @@ export default {
       color: var(--text-primary);
       flex: 1;
       border: 1px solid var(--border-color);
-      box-shadow: none;
 
       &:hover:not(:disabled) {
         background-color: var(--card-bg-color);
         transform: none;
-        box-shadow: none;
       }
     }
 
@@ -1847,7 +1836,6 @@ export default {
           justify-content: center;
           margin: 0 auto;
           animation: zoomIn 0.5s ease, pulse 2s infinite ease-in-out;
-          box-shadow: none;
 
           .check-icon {
             color: var(--text-on-dark-primary);
@@ -1941,13 +1929,10 @@ export default {
 
   @keyframes pulse {
     0% {
-      box-shadow: none;
     }
     50% {
-      box-shadow: none;
     }
     100% {
-      box-shadow: none;
     }
   }
 
@@ -1982,16 +1967,33 @@ export default {
     }
   }
 
-  @media (max-width: #{$bp-md}) {
+  @include down(lg) {
     .content-wrapper {
       flex-direction: column;
+      gap: 8px;
     }
 
+    .left-column,
     .right-column {
+      flex: none;
+      width: 100%;
       max-width: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .left-column .section-wrapper,
+    .right-column .section-wrapper {
+      margin: 0 !important;
+    }
+
+    .right-column .action-buttons {
+      margin-top: 8px;
+      margin-bottom: 0;
     }
   }
-  @media (max-width: #{$bp-xs}) {
+  @include down(xs) {
 
     .action-buttons {
       .btn-group {
@@ -2044,7 +2046,6 @@ export default {
     background-color: var(--card-background);
     border-radius: $border-radius-sm;
     overflow: hidden;
-    box-shadow: none;
     transform: translateZ(0);
 
     @media (prefers-color-scheme: dark) {
@@ -2102,17 +2103,14 @@ export default {
       background-color: transparent;
       border: 1px solid var(--border-color);
       color: var(--text-primary);
-      box-shadow: none;
 
       &:hover {
         background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
         transform: none;
-        box-shadow: none;
       }
 
       &:active {
         transform: none;
-        box-shadow: none;
       }
     }
 

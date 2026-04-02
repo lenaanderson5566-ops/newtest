@@ -56,6 +56,9 @@
             </keep-alive>
           </transition>
         </router-view>
+        <footer class="global-copyright" v-if="$route.meta.requiresAuth">
+          © 2019–{{ currentYear }} {{ siteConfig.siteName }} · All rights reserved
+        </footer>
       </div>
     </div>
 
@@ -121,6 +124,7 @@ export default {
     const { applyTheme } = useTheme();
     const { showToast } = useToast();
     const siteConfig = ref(SITE_CONFIG);
+    const currentYear = computed(() => new Date().getFullYear());
     const cachedRoutes = computed(() => pageCache.getCachedRoutes());
     const topFixedBarRef = ref(null);
     const appContentWrapperRef = ref(null);
@@ -320,6 +324,7 @@ export default {
       email,
       isUserInfoLoading,
       siteConfig,
+      currentYear,
       PROFILE_CONFIG,
       cachedRoutes,
       hasUnreadNotice,
@@ -342,16 +347,6 @@ export default {
   --site-accent-gradient: linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
 }
 
-/* 隐藏左下角版本号（若存在于运行时注入/主题组件中） */
-.app-root-shell .site-version,
-.app-root-shell .app-version,
-.app-root-shell .version-text,
-.app-root-shell .version-badge,
-.app-root-shell [data-version] {
-  display: none !important;
-}
-
-
 .card,
 .dashboard-card,
 .stats-card,
@@ -365,7 +360,6 @@ export default {
 .modal-content {
   background-color: #ffffff !important;
   border-radius: $border-radius-sm !important;
-  box-shadow: none !important;
   border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
@@ -394,7 +388,6 @@ export default {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -516,7 +509,7 @@ export default {
 .app-content-wrapper {
   width: 100%;
   box-sizing: border-box;
-  --page-edge-gap: 0;
+  --page-edge-gap: 4px;
   --left-nav-gap: 8px;
   --left-nav-occupy: 220px;
   --mobile-bottom-nav-space: 0px;
@@ -541,8 +534,22 @@ export default {
   padding-inline: var(--page-edge-gap, 2px);
 }
 
-@media (min-width: 992px) {
+.global-copyright {
+  position: fixed;
+  left: 10px;
+  bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+  z-index: 90;
+  text-align: left;
+  color: var(--text-quaternary);
+  font-size: $font-size-xs;
+  line-height: 1.4;
+  padding: 0;
+  pointer-events: none;
+}
+
+@include up(lg) {
   .app-content-wrapper.with-left-nav {
+    --left-nav-gap: 14px;
     padding-left: calc(var(--left-nav-occupy, 220px) + var(--left-nav-gap, 10px));
   }
 
@@ -555,20 +562,24 @@ export default {
 
 }
 
-@media (max-width: 991px) {
+@include down(lg) {
+  .global-copyright {
+    display: none;
+  }
+
   .app-content-wrapper.with-left-nav {
     --mobile-bottom-nav-space: calc(86px + env(safe-area-inset-bottom, 0px));
   }
 
   .app-content-wrapper.with-left-nav .page-shell {
-    min-height: calc(100dvh - var(--app-top-bar-height, 56px) - var(--page-content-top-gap, 8px));
+    min-height: auto;
     padding-bottom: var(--mobile-bottom-nav-space);
     box-sizing: border-box;
   }
 }
 
 
-@media (max-width: 768px) {
+@include down(md) {
   .app-content-wrapper.with-top-bar {
     --page-content-top-gap: 4px;
   }
@@ -630,7 +641,7 @@ export default {
 }
 
 /* 统一窄屏容器规则：仅最外层保留 2px，内层容器全部归零，最大化可用宽度 */
-@media (max-width: 1200px) {
+@include down(xl) {
   .content-layout-shell {
     padding-inline: var(--page-edge-gap, 2px);
   }

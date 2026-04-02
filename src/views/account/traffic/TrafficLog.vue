@@ -842,7 +842,7 @@ onUnmounted(() => {
 
       
 
-      @media (max-width: #{$bp-md}) {
+      @include down(md) {
 
         height: 300px;
 
@@ -892,7 +892,6 @@ onUnmounted(() => {
 
     border-radius: 12px;
 
-    box-shadow: none;
 
     padding: 16px;
 
@@ -1133,7 +1132,7 @@ onUnmounted(() => {
 
       
 
-      @media (max-width: #{$bp-md}) {
+      @include down(md) {
 
         th, td {
 
