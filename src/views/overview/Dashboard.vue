@@ -419,12 +419,6 @@ export default {
     const {t, locale} = useI18n();
     const router = useRouter();
     const { showToast } = useToast();
-    const devError = (...args) => {
-      if (import.meta.env.DEV) console.error(...args);
-    };
-    const devWarn = (...args) => {
-      if (import.meta.env.DEV) console.warn(...args);
-    };
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
     const userStats = reactive({
@@ -522,7 +516,6 @@ export default {
           showPopup.value = false;
         }
       } catch (error) {
-        devError('Failed to activate next period early:', error);
         showToast(t('dashboard.nextPeriodError'), 'error');
       }
 
@@ -577,7 +570,6 @@ export default {
           }
         }
       } catch (error) {
-        devError('Failed to fetch user info:', error);
         accountStatus.value = SUBSCRIPTION_STATUS.NEW;
       } finally {
         loading.userInfo = false;
@@ -812,8 +804,7 @@ export default {
             userStats.isRemainingDaysPermanent = true;
           }
         }
-      } catch (error) {
-        devError('Failed to fetch subscription info:', error);
+      } catch (_) {
       } finally {
         loading.subscribe = false;
       }
@@ -830,8 +821,7 @@ export default {
           userStats.pendingOrders = stats[0];
           userStats.pendingTickets = stats[1];
         }
-      } catch (error) {
-        devError('Failed to fetch user stats:', error);
+      } catch (_) {
       } finally {
         loading.userStats = false;
       }
@@ -949,8 +939,7 @@ export default {
           });
           return;
         }
-      } catch (error) {
-        devWarn('Failed to check pending traffic package orders:', error);
+      } catch (_) {
       }
 
       showTrafficPackageModal.value = true;
@@ -1012,7 +1001,6 @@ export default {
           }
         });
       } catch (error) {
-        devError('Failed to create traffic package order:', error);
         showToast(error?.response?.message || error?.message || t('order.failed_to_fetch_plan'), 'error');
       }
     };
@@ -1057,8 +1045,7 @@ export default {
           });
           return;
         }
-      } catch (error) {
-        devWarn('Failed to fetch pending orders, fallback to order list page:', error);
+      } catch (_) {
       }
 
       goToOrders();
@@ -1152,8 +1139,7 @@ export default {
             }
           }
         }
-      } catch (error) {
-        devError('Failed to fetch user config:', error);
+      } catch (_) {
       }
     };
 
@@ -1214,8 +1200,7 @@ export default {
             totalGb: Number((uploadGb + downloadGb).toFixed(2))
           };
         });
-      } catch (e) {
-        devError('Failed to fetch traffic trend data:', e);
+      } catch (_) {
         trafficTrendError.value = true;
         trafficTrendData.value = [];
         todayTrafficStats.uploadGb = '0.00';

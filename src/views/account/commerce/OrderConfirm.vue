@@ -421,12 +421,6 @@ export default {
     const route = useRoute();
 
     const router = useRouter();
-    const devError = (...args) => {
-      if (import.meta.env.DEV) console.error(...args);
-    };
-    const devWarn = (...args) => {
-      if (import.meta.env.DEV) console.warn(...args);
-    };
 
     const loading = reactive({
       plan: true,
@@ -1116,7 +1110,6 @@ export default {
           showToast(response.message || t("order.coupon_invalid"), "error");
         }
       } catch (error) {
-        devError("Failed to verify coupon:", error);
 
         couponApplied.value = false;
 
@@ -1153,7 +1146,6 @@ export default {
           await cancelOrderByTradeNo(String(order.trade_no));
         }
       } catch (error) {
-        devError("Failed to cancel pending traffic package orders:", error);
         throw error;
       }
     };
@@ -1178,8 +1170,7 @@ export default {
           }
         }
         return pendingOrders[0] || null;
-      } catch (err) {
-        devError("Failed to fetch pending orders:", err);
+      } catch (_) {
         return null;
       }
     };
@@ -1195,7 +1186,6 @@ export default {
         const response = await getOrderDetail(tradeNo);
         lockedOrderDetail.value = response?.data || null;
       } catch (err) {
-        devError("Failed to fetch locked order detail:", err);
         lockedOrderDetail.value = null;
         showToast(err?.response?.message || err?.message || t("payment.failed_to_fetch_order"), "error");
       } finally {
@@ -1254,8 +1244,7 @@ export default {
           showToast(t("payment.order_cancelled"), "warning");
           closePaymentModal();
         }
-      } catch (error) {
-        devError("Failed to check payment status:", error);
+      } catch (_) {
       }
     };
 
@@ -1361,7 +1350,6 @@ export default {
         startPaymentCheck(tradeNo);
         showToast(t("payment.scan_qrcode"), "info");
       } catch (checkoutError) {
-        devError("Failed to checkout order:", checkoutError);
         showToast(
           checkoutError?.response?.message ||
             checkoutError?.message ||
@@ -1409,15 +1397,13 @@ export default {
                 trade_no: createdTradeNo,
               },
             });
-          } catch (routeErr) {
-            devWarn("Failed to sync trade_no in route query:", routeErr);
+          } catch (_) {
           }
           await checkoutTradeNo(response.data);
         } else {
           showToast(response.message || t("order.order_failed"), "error");
         }
       } catch (error) {
-        devError("Failed to submit order:", error);
 
         const message = error.response?.message || error.message || t("order.order_failed");
         showToast(message, "error");
@@ -1447,8 +1433,7 @@ export default {
           if (Array.isArray(plansResponse?.data)) {
             planOptions.value = plansResponse.data.filter((item) => !isOnetimeOnly(item));
           }
-        } catch (planListError) {
-          devWarn("Failed to fetch plan list for selector:", planListError);
+        } catch (_) {
           planOptions.value = [];
         }
 
@@ -1471,7 +1456,6 @@ export default {
           router.push("/shop");
         }
       } catch (error) {
-        devError("Failed to fetch plan data:", error);
 
         showToast(
           error.response?.message ||
@@ -1496,7 +1480,6 @@ export default {
           showToast(response.message, "warning");
         }
       } catch (error) {
-        devError("Failed to fetch user info:", error);
 
         showToast(
           error.response?.message ||
@@ -1538,7 +1521,6 @@ export default {
           showToast(response.message, "warning");
         }
       } catch (error) {
-        devError("Failed to fetch system config:", error);
 
         showToast(
           error.response?.message || error.message || t("shop.config_error"),
@@ -1560,7 +1542,6 @@ export default {
           paymentMethods.value = [];
         }
       } catch (error) {
-        devError("Failed to fetch payment methods:", error);
         paymentMethods.value = [];
         showToast(t("payment.failed_to_fetch_methods"), "error");
       } finally {
