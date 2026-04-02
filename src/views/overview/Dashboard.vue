@@ -2117,10 +2117,10 @@ $space-2: map.get($spacers, 2);
 
       &.traffic-board-subscription {
         --traffic-card-bg: linear-gradient(
-          135deg,
-          rgba(34, 89, 170, 0.22) 0%,
-          rgba(66, 133, 244, 0.12) 56%,
-          rgba(255, 255, 255, 0.98) 100%
+          270deg,
+          rgba(255, 255, 255, 0.98) 0%,
+          rgba(66, 133, 244, 0.12) 54%,
+          rgba(34, 89, 170, 0.22) 100%
         );
         background: var(--traffic-card-bg) !important;
         border: 1px solid rgba(34, 89, 170, 0.22);
