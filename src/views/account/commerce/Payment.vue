@@ -8,7 +8,7 @@
           <div class="section-title with-status overview-header">
             <span>{{ $t("payment.order_info") }}</span>
             <button
-              v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
+              v-if="canShowPaymentActions && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
               class="overview-cancel-btn btn-unlock-selection"
               @click="cancelCurrentOrder"
               :disabled="loading.cancelling"
@@ -78,7 +78,7 @@
           <div
             class="section-wrapper payment-methods-section"
             v-if="
-              !resultFromOrderConfirm &&
+              canShowPaymentActions &&
               !loading.order &&
               orderDetail.status === 0 &&
               orderDetail.total_amount > 0
@@ -200,7 +200,7 @@
 
             <div
               class="order-amount-actions"
-              v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && !paymentSuccessful && orderDetail.total_amount > 0"
+              v-if="canShowPaymentActions && !loading.order && orderDetail.status === 0 && !paymentSuccessful && orderDetail.total_amount > 0"
             >
               <button
                 class="btn-order summary-submit-action full-width"
@@ -255,7 +255,7 @@
             <!-- 待支付订单相关按钮 -->
             <template
               v-if="
-                !resultFromOrderConfirm &&
+                canShowPaymentActions &&
                 !loading.order && orderDetail.status === 0 && !paymentSuccessful
               "
             >
@@ -464,6 +464,10 @@ export default {
 
     const fromOrderList = ref(false);
     const resultFromOrderConfirm = ref(false);
+    const isTrafficPackageSource = computed(() => route.query.source === "traffic-package");
+    const canShowPaymentActions = computed(
+      () => !resultFromOrderConfirm.value || isTrafficPackageSource.value
+    );
 
     const loading = reactive({
       order: true,
@@ -1040,7 +1044,7 @@ export default {
       resultFromOrderConfirm.value = route.query.from === "order-confirm";
 
       fetchOrderDetail();
-      if (!resultFromOrderConfirm.value) {
+      if (canShowPaymentActions.value) {
         fetchPaymentMethods();
       }
 
@@ -1103,6 +1107,7 @@ export default {
       showConfettiAnimation,
       fromOrderList,
       resultFromOrderConfirm,
+      canShowPaymentActions,
       formatDate,
       formatAmount,
       formatPeriod,

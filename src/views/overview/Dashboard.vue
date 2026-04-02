@@ -945,7 +945,9 @@ export default {
         await router.push({
           path: '/payment',
           query: {
-            trade_no: createdTradeNo
+            trade_no: createdTradeNo,
+            from: 'order-confirm',
+            source: 'traffic-package'
           }
         });
       } catch (error) {
