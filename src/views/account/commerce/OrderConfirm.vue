@@ -1,11 +1,7 @@
 <template>
   <div class="order-confirm-container page-shell">
     <div class="order-confirm-inner page-inner page-stack">
-      <!-- 内容主体 -->
-
       <div class="content-wrapper">
-        <!-- 左侧内容：订阅信息和周期选择 -->
-
         <div class="left-column">
           <div class="section-wrapper subscription-intro-section" v-if="loading.plan">
             <div class="skeleton-card">
@@ -61,16 +57,12 @@
 
           </div>
 
-          <!-- 周期选择 -->
-
           <div class="section-wrapper period-section" v-if="!loading.plan">
             <div class="section-title">
               <span>{{ $t("order.select_period") }}</span>
             </div>
 
             <div class="period-selection">
-              <!-- 周期卡片 -->
-
               <div class="period-cards">
                 <div
                   v-for="(price, type) in availablePrices"
@@ -157,8 +149,6 @@
             </div>
           </div>
 
-          <!-- 周期选择骨架屏 -->
-
           <div class="section-wrapper period-section" v-else>
             <div class="section-title">
               <span>{{ $t("order.select_period") }}</span>
@@ -176,11 +166,7 @@
           </div>
         </div>
 
-        <!-- 右侧内容：订单信息 -->
-
         <div class="right-column">
-          <!-- 订单摘要 -->
-
           <OrderSummaryCard
             section-class="order-summary-section"
             :show-header="false"
@@ -227,8 +213,6 @@
                 <div v-else-if="couponScopeHint" class="coupon-feedback warning">{{ couponScopeHint }}</div>
               </div>
 
-              <!-- 骨架屏 -->
-
               <div v-if="loading.plan">
                 <div class="summary-row skeleton">
                   <div class="summary-label skeleton-text"></div>
@@ -244,8 +228,6 @@
                   <div class="summary-value skeleton-text"></div>
                 </div>
               </div>
-
-              <!-- 实际内容 -->
 
               <div v-else>
                 <div class="summary-amounts">
@@ -322,8 +304,6 @@
               </div>
             </div>
           </OrderSummaryCard>
-
-          <!-- 操作按钮 -->
 
         </div>
       </div>
@@ -806,7 +786,6 @@ export default {
         }
       });
 
-      // 与订阅计划页保持一致：有周期套餐时，不展示 onetime
       if (!hasRecurringPrice(plan.value) && hasPeriodPrice(plan.value, "onetime_price")) {
         prices.onetime_price = normalizePriceValue(plan.value, "onetime_price");
       }
@@ -1131,7 +1110,6 @@ export default {
           showToast(response.message || t("order.coupon_invalid"), "error");
         }
       } catch (error) {
-        console.error("Failed to verify coupon:", error);
 
         couponApplied.value = false;
 
@@ -1151,12 +1129,33 @@ export default {
       }
     };
 
+    const isTrafficPackageOrder = (order) =>
+      String(order?.period || "") === "onetime_price";
+
+    const cancelPendingTrafficPackageOrders = async () => {
+      try {
+        const resp = await fetchOrderList();
+        const orders = Array.isArray(resp?.data) ? resp.data : [];
+        const pendingTrafficOrders = orders.filter(
+          (item) =>
+            Number(item?.status) === 0 &&
+            isTrafficPackageOrder(item) &&
+            item?.trade_no
+        );
+        for (const order of pendingTrafficOrders) {
+          await cancelOrderByTradeNo(String(order.trade_no));
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
+
     const fetchLatestPendingOrder = async (tradeNo = "") => {
       try {
         const resp = await fetchOrderList();
         const orders = Array.isArray(resp?.data) ? resp.data : [];
         const pendingOrders = orders.filter(
-          (item) => Number(item?.status) === 0
+          (item) => Number(item?.status) === 0 && !isTrafficPackageOrder(item)
         );
         pendingOrders.sort((a, b) => {
           const aTs = new Date(a?.created_at || 0).getTime();
@@ -1171,8 +1170,7 @@ export default {
           }
         }
         return pendingOrders[0] || null;
-      } catch (err) {
-        console.error("Failed to fetch pending orders:", err);
+      } catch (_) {
         return null;
       }
     };
@@ -1188,7 +1186,6 @@ export default {
         const response = await getOrderDetail(tradeNo);
         lockedOrderDetail.value = response?.data || null;
       } catch (err) {
-        console.error("Failed to fetch locked order detail:", err);
         lockedOrderDetail.value = null;
         showToast(err?.response?.message || err?.message || t("payment.failed_to_fetch_order"), "error");
       } finally {
@@ -1247,8 +1244,7 @@ export default {
           showToast(t("payment.order_cancelled"), "warning");
           closePaymentModal();
         }
-      } catch (error) {
-        console.error("Failed to check payment status:", error);
+      } catch (_) {
       }
     };
 
@@ -1354,7 +1350,6 @@ export default {
         startPaymentCheck(tradeNo);
         showToast(t("payment.scan_qrcode"), "info");
       } catch (checkoutError) {
-        console.error("Failed to checkout order:", checkoutError);
         showToast(
           checkoutError?.response?.message ||
             checkoutError?.message ||
@@ -1366,12 +1361,11 @@ export default {
       }
     };
 
-    // 实际的订单提交逻辑
-
     const executeOrderSubmission = async () => {
       loading.submitting = true;
 
       try {
+        await cancelPendingTrafficPackageOrders();
         const orderData = {
           plan_id: Number(plan.value.id),
 
@@ -1403,15 +1397,13 @@ export default {
                 trade_no: createdTradeNo,
               },
             });
-          } catch (routeErr) {
-            console.warn("Failed to sync trade_no in route query:", routeErr);
+          } catch (_) {
           }
           await checkoutTradeNo(response.data);
         } else {
           showToast(response.message || t("order.order_failed"), "error");
         }
       } catch (error) {
-        console.error("Failed to submit order:", error);
 
         const message = error.response?.message || error.message || t("order.order_failed");
         showToast(message, "error");
@@ -1441,8 +1433,7 @@ export default {
           if (Array.isArray(plansResponse?.data)) {
             planOptions.value = plansResponse.data.filter((item) => !isOnetimeOnly(item));
           }
-        } catch (planListError) {
-          console.warn("Failed to fetch plan list for selector:", planListError);
+        } catch (_) {
           planOptions.value = [];
         }
 
@@ -1465,7 +1456,6 @@ export default {
           router.push("/shop");
         }
       } catch (error) {
-        console.error("Failed to fetch plan data:", error);
 
         showToast(
           error.response?.message ||
@@ -1490,7 +1480,6 @@ export default {
           showToast(response.message, "warning");
         }
       } catch (error) {
-        console.error("Failed to fetch user info:", error);
 
         showToast(
           error.response?.message ||
@@ -1532,7 +1521,6 @@ export default {
           showToast(response.message, "warning");
         }
       } catch (error) {
-        console.error("Failed to fetch system config:", error);
 
         showToast(
           error.response?.message || error.message || t("shop.config_error"),
@@ -1554,7 +1542,6 @@ export default {
           paymentMethods.value = [];
         }
       } catch (error) {
-        console.error("Failed to fetch payment methods:", error);
         paymentMethods.value = [];
         showToast(t("payment.failed_to_fetch_methods"), "error");
       } finally {

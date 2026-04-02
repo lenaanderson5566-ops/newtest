@@ -2,13 +2,11 @@
   <div class="payment-container page-shell">
     <div class="payment-inner page-inner page-stack">
       <div class="content-wrapper">
-        <!-- 左侧内容：产品信息 -->
         <div class="left-column">
-          <!-- 订单概览 -->
           <div class="section-title with-status overview-header">
             <span>{{ $t("payment.order_info") }}</span>
             <button
-              v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
+              v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0"
               class="overview-cancel-btn btn-unlock-selection"
               @click="cancelCurrentOrder"
               :disabled="loading.cancelling"
@@ -18,7 +16,6 @@
           </div>
           <div class="section-wrapper overview-section">
             <div class="product-info" v-if="!loading.order">
-              <!-- 充值订单时显示简化信息 -->
               <div class="overview-divider"></div>
 
               <div class="info-row">
@@ -64,7 +61,6 @@
 
             </div>
 
-            <!-- 产品信息骨架屏 -->
             <div class="skeleton-card" v-else>
               <div
                 class="skeleton-text"
@@ -74,7 +70,6 @@
             </div>
           </div>
 
-          <!-- 支付方式 - 仅当订单状态为待支付(0)时显示 -->
           <div
             class="section-wrapper payment-methods-section"
             v-if="
@@ -118,7 +113,6 @@
               </div>
             </div>
 
-            <!-- 支付方式骨架屏 -->
             <div class="skeleton-card methods-skeleton" v-else>
               <div
                 class="skeleton-payment-method"
@@ -129,9 +123,7 @@
           </div>
         </div>
 
-        <!-- 右侧内容：支付方式 -->
         <div class="right-column">
-          <!-- 订单金额摘要 -->
           <OrderSummaryCard
             section-class="order-amount-section"
             :show-header="false"
@@ -218,9 +210,7 @@
             </div>
           </OrderSummaryCard>
 
-          <!-- 按钮区域 -->
           <div class="action-buttons">
-            <!-- 从订单列表进入且订单已完成 - 显示返回上一页按钮 -->
             <div
               class="btn-group pay-row"
               v-if="
@@ -233,7 +223,6 @@
               </button>
             </div>
 
-            <!-- 非订单列表进入 - 支付成功后的按钮，显示前往仪表盘 -->
             <div
               class="btn-group pay-row"
               v-if="
@@ -252,32 +241,18 @@
               </button>
             </div>
 
-            <!-- 待支付订单相关按钮 -->
             <template
               v-if="
                 !resultFromOrderConfirm &&
                 !loading.order && orderDetail.status === 0 && !paymentSuccessful
               "
             >
-              <!-- 免费订单场景 - 修改为取消和激活按钮在同一行 -->
               <div
                 class="btn-group action-row"
                 v-if="orderDetail.total_amount === 0"
               >
-                <!-- 左侧取消按钮 -->
                 <button
-                  class="btn-back secondary-action"
-                  @click="cancelCurrentOrder"
-                  :disabled="loading.cancelling"
-                >
-                  <IconX v-if="!loading.cancelling" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.cancel_order") }}</span>
-                </button>
-
-                <!-- 右侧激活按钮 -->
-                <button
-                  class="btn-pay main-action"
+                  class="btn-pay main-action full-width"
                   @click="checkPayment"
                   :disabled="loading.checking"
                 >
@@ -293,7 +268,6 @@
       </div>
     </div>
 
-    <!-- 支付成功动画 -->
     <transition name="fade">
       <div class="payment-success-overlay" v-if="showSuccessAnimation">
         <div class="success-animation">
@@ -324,7 +298,6 @@
       </div>
     </transition>
 
-    <!-- 取消订单确认弹窗 -->
     <transition name="modal-fade">
       <div class="cancel-modal" v-if="showCancelConfirm">
         <div class="cancel-modal-overlay" @click="closeModal"></div>
@@ -352,7 +325,6 @@
       </div>
     </transition>
 
-    <!-- 支付二维码弹窗 -->
     <transition name="modal-fade">
       <div v-if="showPaymentModal" class="pending-order-modal payment-modal">
         <div class="pending-order-overlay" @click="closePaymentModal"></div>
@@ -605,8 +577,7 @@ export default {
           showToast(t("payment.order_not_found"), "error");
           router.push("/shop");
         }
-      } catch (error) {
-        console.error("Failed to fetch order details:", error);
+      } catch (_) {
         showToast(t("payment.failed_to_fetch_order"), "error");
         router.push("/shop");
       } finally {
@@ -630,8 +601,7 @@ export default {
             }
           }
         }
-      } catch (error) {
-        console.error("Failed to fetch payment methods:", error);
+      } catch (_) {
         showToast(t("payment.failed_to_fetch_methods"), "error");
       } finally {
         loading.methods = false;
@@ -728,8 +698,7 @@ export default {
         showToast(t("payment.payment_processing"), "info");
 
         startPaymentCheck();
-      } catch (error) {
-        console.error("Failed to checkout order:", error);
+      } catch (_) {
         showToast(t("payment.check_failed"), "error");
         loading.checking = false;
       }
@@ -794,8 +763,7 @@ export default {
             }, 5000);
           }
         }
-      } catch (error) {
-        console.error("Failed to check payment status:", error);
+      } catch (_) {
         showToast(t("payment.check_failed"), "error");
         loading.checking = false;
       }
@@ -845,8 +813,7 @@ export default {
           loading.checking = false;
           loading.paying = false;
         }
-      } catch (error) {
-        console.error("Failed to check payment status:", error);
+      } catch (_) {
         if (orderDetail.value.total_amount === 0) {
           loading.checking = false;
           loading.paying = false;
@@ -973,8 +940,7 @@ export default {
 
           startPaymentCheck();
         }
-      } catch (error) {
-        console.error("Failed to start payment:", error);
+      } catch (_) {
         showToast(t("payment.check_failed"), "error");
       } finally {
         loading.paying = false;
@@ -994,8 +960,7 @@ export default {
         }
 
         router.push("/shop");
-      } catch (error) {
-        console.error("Failed to cancel order:", error);
+      } catch (_) {
         showToast(t("payment.cancel_failed"), "error");
       } finally {
         loading.cancelling = false;

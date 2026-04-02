@@ -179,6 +179,9 @@ export default {
     dashboard: {
         welcome: 'Welcome Back',
         welcomeDesc: 'View your services and usage',
+        defaultUser: 'User',
+        welcomeNewUser: 'Hi, {name}. Welcome!',
+        welcomeBackUser: 'Hi, {name}. Welcome back!',
         announcement: 'Announcements',
         siteAnnouncement: 'Site Announcements',
         subscriptionInfo: 'Subscription Info',
@@ -220,6 +223,12 @@ export default {
         none: 'None',
         days: 'Days',
         noPlanPrompt: 'You currently have no active subscription, please purchase a subscription to use the service',
+        noPlanBadgePending: 'Pending payment',
+        noPlanBadgeInactive: 'Service inactive',
+        noPlanTitlePending: 'Complete payment to activate your service',
+        noPlanTitleInactive: 'Choose a subscription and complete payment to get started',
+        noPlanActionPending: 'Continue payment',
+        noPlanActionInactive: 'Create order',
         importSubscription: 'Add Configuration',
         purchasePlan: 'Purchase Subscription',
         resetTraffic: 'Reset Traffic',
@@ -257,6 +266,8 @@ export default {
         serviceNotInRegion: 'Not in regional reference list',
 
         trafficPackageHint: 'Traffic package quota is one-time supplemental traffic. Monthly subscription traffic is consumed first, then traffic package quota is used after subscription quota is exhausted.',
+        trafficPackageSupplementHint: 'Use traffic packages to cover usage beyond your plan quota.',
+        pendingTrafficOrderRedirected: 'A pending traffic package order was found. Redirected to its payment page.',
         subscriptionPausedAfterExpiry: 'Subscription has expired and service is paused',
         renewToRestoreAccess: 'Access will be restored immediately after renewal',
         expiredOnDate: 'Expired on {date}',
@@ -864,6 +875,7 @@ profile: {
     },
     invite: {
         title: 'My Commissions',
+        statsTitle: 'Commission Statistics',
         description: 'Invite friends to register and use, earn commission income.',
         stats: {
             registeredUsers: 'Registered Users',

@@ -2,8 +2,6 @@
   <div class="dashboard-container page-shell" :class="{ 'is-no-plan': !hasPlan }">
     <div class="dashboard-inner page-inner page-stack">
       <div class="overview-grid">
-      <!-- 通知区域 -->
-      <!-- 待支付订单提醒条 -->
       <div
         v-if="hasPendingItems"
         class="pending-order-banner delay-01"
@@ -50,7 +48,7 @@
                   <h3 class="no-plan-title">{{ noPlanHeroTitle }}</h3>
                   <div class="hero-actions">
                     <button class="hero-btn primary" @click="handleNoPlanPrimaryAction">{{ noPlanPrimaryActionText }}</button>
-                    <button class="hero-btn secondary" @click="goToDocs">查看教程</button>
+                    <button class="hero-btn secondary" @click="goToDocs">{{ $t('dashboard.viewHelp') }}</button>
                   </div>
                 </div>
                 <div class="hero-visual" aria-hidden="true">
@@ -194,6 +192,9 @@
                 </template>
               </template>
             </div>
+            <div v-if="card.key === 'package'" class="package-usage-intro">
+              {{ $t('dashboard.trafficPackageSupplementHint') }}
+            </div>
             <div v-if="card.key !== 'package' && card.key !== 'total'" class="section-progress-track">
               <div class="section-progress-fill" :style="{ width: `${card.key === 'subscription' ? applyPlanStatus(card.remainingPercentage) : card.remainingPercentage}%` }"></div>
             </div>
@@ -262,7 +263,6 @@
       </div>
 
     </div>
-    <!-- 弹窗组件 -->
     <CommonDialog
         :show-dialog="showPopup"
         :title="$t('invite.withdraw.tip')"
@@ -368,7 +368,7 @@ import {
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
 import { getTrafficLog } from '@/api/account/trafficLog';
-import { fetchOrderList } from '@/api/account/orderlist';
+import { fetchOrderList, cancelOrder } from '@/api/account/orderlist';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import { fetchPlans, submitOrder } from '@/api/account/shop';
@@ -516,7 +516,6 @@ export default {
           showPopup.value = false;
         }
       } catch (error) {
-        console.error('提前开启下月失败:', error);
         showToast(t('dashboard.nextPeriodError'), 'error');
       }
 
@@ -571,7 +570,6 @@ export default {
           }
         }
       } catch (error) {
-        console.error('获取用户信息失败:', error);
         accountStatus.value = SUBSCRIPTION_STATUS.NEW;
       } finally {
         loading.userInfo = false;
@@ -584,16 +582,16 @@ export default {
 
     const emailPrefix = computed(() => {
       const email = String(userStats.userEmail || '').trim();
-      if (!email) return '用户';
+      if (!email) return t('dashboard.defaultUser');
       const prefix = email.split('@')[0]?.trim();
-      return prefix ? prefix.toUpperCase() : '用户';
+      return prefix ? prefix.toUpperCase() : t('dashboard.defaultUser');
     });
 
     const welcomeHeadline = computed(() => {
       if (accountStatus.value === SUBSCRIPTION_STATUS.NEW) {
-        return `你好，${emailPrefix.value}，欢迎使用`;
+        return t('dashboard.welcomeNewUser', { name: emailPrefix.value });
       }
-      return `你好，${emailPrefix.value}，欢迎回来`;
+      return t('dashboard.welcomeBackUser', { name: emailPrefix.value });
     });
 
     const subscriptionStatus = computed(() => (
@@ -702,7 +700,6 @@ export default {
     };
 
     const fetchSubscribe = async (force = false) => {
-      // 正常的缓存逻辑
       if (!force && loading.subscribe === false && userPlan.value.subscribeUrl) return;
 
       loading.subscribe = true;
@@ -807,8 +804,7 @@ export default {
             userStats.isRemainingDaysPermanent = true;
           }
         }
-      } catch (error) {
-        console.error('获取订阅信息失败:', error);
+      } catch (_) {
       } finally {
         loading.subscribe = false;
       }
@@ -825,8 +821,7 @@ export default {
           userStats.pendingOrders = stats[0];
           userStats.pendingTickets = stats[1];
         }
-      } catch (error) {
-        console.error('获取统计数据失败:', error);
+      } catch (_) {
       } finally {
         loading.userStats = false;
       }
@@ -902,7 +897,51 @@ export default {
       return Number.isFinite(capacity) && capacity === 0;
     };
 
+    const extractOrderList = (response) => {
+      if (Array.isArray(response?.data)) return response.data;
+      if (Array.isArray(response?.data?.data)) return response.data.data;
+      return [];
+    };
+
+    const getOrderTimestamp = (order) => {
+      const createdAt = order?.created_at;
+      if (typeof createdAt === 'number' && Number.isFinite(createdAt)) {
+        return createdAt;
+      }
+      const parsedAt = new Date(createdAt || 0).getTime();
+      if (Number.isFinite(parsedAt)) {
+        return parsedAt;
+      }
+      return Number(order?.id || 0);
+    };
+
+    const findLatestPendingTrafficPackageOrder = (orders) => orders
+      .filter(
+        (order) =>
+          Number(order?.status) === 0 &&
+          String(order?.period || '') === 'onetime_price' &&
+          order?.trade_no
+      )
+      .sort((a, b) => getOrderTimestamp(b) - getOrderTimestamp(a))[0] || null;
+
     const openTrafficPackageModal = async () => {
+      try {
+        const orderResp = await fetchOrderList();
+        const pendingTrafficOrder = findLatestPendingTrafficPackageOrder(extractOrderList(orderResp));
+        if (pendingTrafficOrder?.trade_no) {
+          showToast(t('dashboard.pendingTrafficOrderRedirected'), 'info');
+          await router.push({
+            path: '/payment',
+            query: {
+              trade_no: pendingTrafficOrder.trade_no,
+              from: 'dashboard'
+            }
+          });
+          return;
+        }
+      } catch (_) {
+      }
+
       showTrafficPackageModal.value = true;
       trafficPackageLoading.value = true;
       try {
@@ -930,6 +969,18 @@ export default {
       }
 
       try {
+        const orderResp = await fetchOrderList();
+        const orders = extractOrderList(orderResp);
+        const pendingSubscriptionOrders = orders.filter(
+          (order) =>
+            Number(order?.status) === 0 &&
+            String(order?.period || '') !== 'onetime_price' &&
+            order?.trade_no
+        );
+        for (const order of pendingSubscriptionOrders) {
+          await cancelOrder(String(order.trade_no));
+        }
+
         const response = await submitOrder({
           plan_id: planId,
           period: 'onetime_price'
@@ -950,7 +1001,6 @@ export default {
           }
         });
       } catch (error) {
-        console.error('Failed to create traffic package order:', error);
         showToast(error?.response?.message || error?.message || t('order.failed_to_fetch_plan'), 'error');
       }
     };
@@ -959,9 +1009,9 @@ export default {
       return userStats.pendingOrders > 0;
     });
 
-    const noPlanHeroBadge = computed(() => (hasPendingItems.value ? '待完成支付' : '未开通服务'));
-    const noPlanHeroTitle = computed(() => (hasPendingItems.value ? '完成支付后即可激活服务' : '先选择订阅并完成支付，即可开始使用'));
-    const noPlanPrimaryActionText = computed(() => (hasPendingItems.value ? '继续支付' : '立即下单'));
+    const noPlanHeroBadge = computed(() => (hasPendingItems.value ? t('dashboard.noPlanBadgePending') : t('dashboard.noPlanBadgeInactive')));
+    const noPlanHeroTitle = computed(() => (hasPendingItems.value ? t('dashboard.noPlanTitlePending') : t('dashboard.noPlanTitleInactive')));
+    const noPlanPrimaryActionText = computed(() => (hasPendingItems.value ? t('dashboard.noPlanActionPending') : t('dashboard.noPlanActionInactive')));
 
     const handleNoPlanPrimaryAction = () => {
       if (hasPendingItems.value) {
@@ -986,7 +1036,7 @@ export default {
 
         const latestPendingOrder = orders
           .filter((order) => Number(order?.status) === 0 && order?.trade_no)
-          .sort((a, b) => Number(b?.created_at || 0) - Number(a?.created_at || 0))[0];
+          .sort((a, b) => getOrderTimestamp(b) - getOrderTimestamp(a))[0];
 
         if (latestPendingOrder?.trade_no) {
           router.push({
@@ -995,8 +1045,7 @@ export default {
           });
           return;
         }
-      } catch (error) {
-        console.warn('Failed to fetch pending orders, fallback to order list page:', error);
+      } catch (_) {
       }
 
       goToOrders();
@@ -1090,8 +1139,7 @@ export default {
             }
           }
         }
-      } catch (error) {
-        console.error('获取用户配置失败:', error);
+      } catch (_) {
       }
     };
 
@@ -1152,8 +1200,7 @@ export default {
             totalGb: Number((uploadGb + downloadGb).toFixed(2))
           };
         });
-      } catch (e) {
-        console.error('Failed to fetch traffic trend data:', e);
+      } catch (_) {
         trafficTrendError.value = true;
         trafficTrendData.value = [];
         todayTrafficStats.uploadGb = '0.00';
@@ -1579,7 +1626,6 @@ $space-2: map.get($spacers, 2);
     border-radius: var(--dashboard-button-radius);
   }
 
-  /* 数据统计卡片区域（会员等级 + 流量卡片） */
   .stats-grid {
     position: relative;
     display: grid;
@@ -1656,7 +1702,6 @@ $space-2: map.get($spacers, 2);
       overflow: hidden;
       border: 1px solid var(--dashboard-border-color);
 
-      /* 流量额度包卡片（订阅流量 / 叠加包 / 总览）样式 */
       &.traffic-board-card {
         width: 100%;
         min-height: clamp(156px, 16vw, 208px);
@@ -1749,7 +1794,6 @@ $space-2: map.get($spacers, 2);
           }
         }
 
-        /* 订阅信息卡片（总览卡中的 plan-summary） */
         .plan-summary-card {
           width: 100%;
           display: flex;
@@ -2039,6 +2083,13 @@ $space-2: map.get($spacers, 2);
           font-weight: $font-weight-medium;
         }
 
+        .package-usage-intro {
+          font-size: $font-size-xs;
+          color: var(--text-tertiary);
+          line-height: 1.4;
+          margin-top: -2px;
+        }
+
         .section-progress-track {
           width: 100%;
           height: 14px;
@@ -2065,8 +2116,15 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-subscription {
-        --traffic-card-bg: linear-gradient(315deg, rgba(34, 89, 170, 0.16) 0%, rgba(34, 89, 170, 0.08) 38%, #ffffff 100%);
-        border: 1px solid var(--dashboard-border-color);
+        --traffic-card-bg: linear-gradient(
+          270deg,
+          rgba(255, 255, 255, 0.98) 0%,
+          rgba(66, 133, 244, 0.12) 54%,
+          rgba(34, 89, 170, 0.22) 100%
+        );
+        background: var(--traffic-card-bg) !important;
+        border: 1px solid rgba(34, 89, 170, 0.22);
+        box-shadow: 0 10px 24px rgba(34, 89, 170, 0.1);
 
         .usage-card-title,
         .usage-percent,
@@ -2094,8 +2152,15 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-total {
-        --traffic-card-bg: linear-gradient(135deg, rgba(148, 163, 184, 0.1) 0%, rgba(148, 163, 184, 0.2) 100%);
-        border: 1px solid var(--dashboard-border-color);
+        --traffic-card-bg: linear-gradient(
+          135deg,
+          rgba(34, 89, 170, 0.2) 0%,
+          rgba(90, 57, 216, 0.1) 58%,
+          rgba(255, 255, 255, 0.98) 100%
+        );
+        background: var(--traffic-card-bg) !important;
+        border: 1px solid rgba(34, 89, 170, 0.2);
+        box-shadow: 0 12px 26px rgba(34, 89, 170, 0.1);
 
         .usage-card-title {
           color: var(--text-primary);
@@ -2119,7 +2184,6 @@ $space-2: map.get($spacers, 2);
         }
       }
 
-        /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
         &.traffic-board-subscription {
           .usage-kpis {
             width: 100%;
@@ -2176,7 +2240,6 @@ $space-2: map.get($spacers, 2);
     }
   }
 
-  /* 概览核心卡片统一外观：今日流量 / 流量额度包 */
   .overview-card,
   .overview-card--today-traffic,
   .overview-card--traffic-quota {
@@ -2201,7 +2264,6 @@ $space-2: map.get($spacers, 2);
     box-shadow: var(--shadow-sm);
   }
 
-  /* 概览卡片左上角标题统一样式（今日流量 / 订阅流量 / 流量额度包 / 用量记录） */
   .stats-grid .stats-card.today-traffic-card .usage-card-title,
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
@@ -2320,7 +2382,6 @@ $space-2: map.get($spacers, 2);
     }
   }
 
-  /* 流量趋势图卡片 */
   .usage-trend-card {
     padding: 8px;
 
@@ -2402,7 +2463,6 @@ $space-2: map.get($spacers, 2);
       height: 156px;
     }
   }
-  /* 待支付横幅卡片 */
   .account-welcome-banner {
     margin-bottom: 4px;
     padding: 14px 16px;
@@ -2951,7 +3011,6 @@ button.no-plan-step {
 
 </style>
 
-<!-- 全局样式，不受scoped限制 -->
 <style lang="scss">
 @use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
@@ -2959,7 +3018,6 @@ button.no-plan-step {
 
 $space-2: map.get($spacers, 2);
 
-/* 统计卡片状态样式（全局） */
 .dashboard-container .stats-card {
   &.warning-card,
   &.danger-card {
@@ -3004,7 +3062,6 @@ $space-2: map.get($spacers, 2);
   }
 }
 
-/* 流量包卡片弹窗（全局） */
 .traffic-package-modal-overlay {
   position: fixed;
   inset: 0;
