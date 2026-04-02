@@ -2152,8 +2152,15 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-total {
-        --traffic-card-bg: linear-gradient(135deg, rgba(148, 163, 184, 0.1) 0%, rgba(148, 163, 184, 0.2) 100%);
-        border: 1px solid var(--dashboard-border-color);
+        --traffic-card-bg: linear-gradient(
+          128deg,
+          rgba(34, 89, 170, 0.2) 0%,
+          rgba(90, 57, 216, 0.14) 48%,
+          rgba(255, 255, 255, 0.96) 100%
+        );
+        background: var(--traffic-card-bg) !important;
+        border: 1px solid rgba(34, 89, 170, 0.2);
+        box-shadow: 0 12px 26px rgba(34, 89, 170, 0.1);
 
         .usage-card-title {
           color: var(--text-primary);
