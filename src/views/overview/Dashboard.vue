@@ -2,8 +2,6 @@
   <div class="dashboard-container page-shell" :class="{ 'is-no-plan': !hasPlan }">
     <div class="dashboard-inner page-inner page-stack">
       <div class="overview-grid">
-      <!-- 通知区域 -->
-      <!-- 待支付订单提醒条 -->
       <div
         v-if="hasPendingItems"
         class="pending-order-banner delay-01"
@@ -50,7 +48,7 @@
                   <h3 class="no-plan-title">{{ noPlanHeroTitle }}</h3>
                   <div class="hero-actions">
                     <button class="hero-btn primary" @click="handleNoPlanPrimaryAction">{{ noPlanPrimaryActionText }}</button>
-                    <button class="hero-btn secondary" @click="goToDocs">查看教程</button>
+                    <button class="hero-btn secondary" @click="goToDocs">{{ $t('dashboard.viewHelp') }}</button>
                   </div>
                 </div>
                 <div class="hero-visual" aria-hidden="true">
@@ -265,7 +263,6 @@
       </div>
 
     </div>
-    <!-- 弹窗组件 -->
     <CommonDialog
         :show-dialog="showPopup"
         :title="$t('invite.withdraw.tip')"
@@ -519,7 +516,7 @@ export default {
           showPopup.value = false;
         }
       } catch (error) {
-        console.error('提前开启下月失败:', error);
+        console.error('Failed to activate next period early:', error);
         showToast(t('dashboard.nextPeriodError'), 'error');
       }
 
@@ -574,7 +571,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error('获取用户信息失败:', error);
+        console.error('Failed to fetch user info:', error);
         accountStatus.value = SUBSCRIPTION_STATUS.NEW;
       } finally {
         loading.userInfo = false;
@@ -587,16 +584,16 @@ export default {
 
     const emailPrefix = computed(() => {
       const email = String(userStats.userEmail || '').trim();
-      if (!email) return '用户';
+      if (!email) return t('dashboard.defaultUser');
       const prefix = email.split('@')[0]?.trim();
-      return prefix ? prefix.toUpperCase() : '用户';
+      return prefix ? prefix.toUpperCase() : t('dashboard.defaultUser');
     });
 
     const welcomeHeadline = computed(() => {
       if (accountStatus.value === SUBSCRIPTION_STATUS.NEW) {
-        return `你好，${emailPrefix.value}，欢迎使用`;
+        return t('dashboard.welcomeNewUser', { name: emailPrefix.value });
       }
-      return `你好，${emailPrefix.value}，欢迎回来`;
+      return t('dashboard.welcomeBackUser', { name: emailPrefix.value });
     });
 
     const subscriptionStatus = computed(() => (
@@ -705,7 +702,6 @@ export default {
     };
 
     const fetchSubscribe = async (force = false) => {
-      // 正常的缓存逻辑
       if (!force && loading.subscribe === false && userPlan.value.subscribeUrl) return;
 
       loading.subscribe = true;
@@ -811,7 +807,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error('获取订阅信息失败:', error);
+        console.error('Failed to fetch subscription info:', error);
       } finally {
         loading.subscribe = false;
       }
@@ -829,7 +825,7 @@ export default {
           userStats.pendingTickets = stats[1];
         }
       } catch (error) {
-        console.error('获取统计数据失败:', error);
+        console.error('Failed to fetch user stats:', error);
       } finally {
         loading.userStats = false;
       }
@@ -1019,9 +1015,9 @@ export default {
       return userStats.pendingOrders > 0;
     });
 
-    const noPlanHeroBadge = computed(() => (hasPendingItems.value ? '待完成支付' : '未开通服务'));
-    const noPlanHeroTitle = computed(() => (hasPendingItems.value ? '完成支付后即可激活服务' : '先选择订阅并完成支付，即可开始使用'));
-    const noPlanPrimaryActionText = computed(() => (hasPendingItems.value ? '继续支付' : '立即下单'));
+    const noPlanHeroBadge = computed(() => (hasPendingItems.value ? t('dashboard.noPlanBadgePending') : t('dashboard.noPlanBadgeInactive')));
+    const noPlanHeroTitle = computed(() => (hasPendingItems.value ? t('dashboard.noPlanTitlePending') : t('dashboard.noPlanTitleInactive')));
+    const noPlanPrimaryActionText = computed(() => (hasPendingItems.value ? t('dashboard.noPlanActionPending') : t('dashboard.noPlanActionInactive')));
 
     const handleNoPlanPrimaryAction = () => {
       if (hasPendingItems.value) {
@@ -1151,7 +1147,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error('获取用户配置失败:', error);
+        console.error('Failed to fetch user config:', error);
       }
     };
 
@@ -1639,7 +1635,6 @@ $space-2: map.get($spacers, 2);
     border-radius: var(--dashboard-button-radius);
   }
 
-  /* 数据统计卡片区域（会员等级 + 流量卡片） */
   .stats-grid {
     position: relative;
     display: grid;
@@ -1716,7 +1711,6 @@ $space-2: map.get($spacers, 2);
       overflow: hidden;
       border: 1px solid var(--dashboard-border-color);
 
-      /* 流量额度包卡片（订阅流量 / 叠加包 / 总览）样式 */
       &.traffic-board-card {
         width: 100%;
         min-height: clamp(156px, 16vw, 208px);
@@ -1809,7 +1803,6 @@ $space-2: map.get($spacers, 2);
           }
         }
 
-        /* 订阅信息卡片（总览卡中的 plan-summary） */
         .plan-summary-card {
           width: 100%;
           display: flex;
@@ -2186,7 +2179,6 @@ $space-2: map.get($spacers, 2);
         }
       }
 
-        /* 仅订阅流量卡片使用进度条与用量明细；流量包卡片不包含进度条 */
         &.traffic-board-subscription {
           .usage-kpis {
             width: 100%;
@@ -2243,7 +2235,6 @@ $space-2: map.get($spacers, 2);
     }
   }
 
-  /* 概览核心卡片统一外观：今日流量 / 流量额度包 */
   .overview-card,
   .overview-card--today-traffic,
   .overview-card--traffic-quota {
@@ -2268,7 +2259,6 @@ $space-2: map.get($spacers, 2);
     box-shadow: var(--shadow-sm);
   }
 
-  /* 概览卡片左上角标题统一样式（今日流量 / 订阅流量 / 流量额度包 / 用量记录） */
   .stats-grid .stats-card.today-traffic-card .usage-card-title,
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
@@ -2387,7 +2377,6 @@ $space-2: map.get($spacers, 2);
     }
   }
 
-  /* 流量趋势图卡片 */
   .usage-trend-card {
     padding: 8px;
 
@@ -2469,7 +2458,6 @@ $space-2: map.get($spacers, 2);
       height: 156px;
     }
   }
-  /* 待支付横幅卡片 */
   .account-welcome-banner {
     margin-bottom: 4px;
     padding: 14px 16px;
@@ -3018,7 +3006,6 @@ button.no-plan-step {
 
 </style>
 
-<!-- 全局样式，不受scoped限制 -->
 <style lang="scss">
 @use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
@@ -3026,7 +3013,6 @@ button.no-plan-step {
 
 $space-2: map.get($spacers, 2);
 
-/* 统计卡片状态样式（全局） */
 .dashboard-container .stats-card {
   &.warning-card,
   &.danger-card {
@@ -3071,7 +3057,6 @@ $space-2: map.get($spacers, 2);
   }
 }
 
-/* 流量包卡片弹窗（全局） */
 .traffic-package-modal-overlay {
   position: fixed;
   inset: 0;

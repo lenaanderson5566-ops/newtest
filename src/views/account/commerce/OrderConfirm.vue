@@ -1,11 +1,7 @@
 <template>
   <div class="order-confirm-container page-shell">
     <div class="order-confirm-inner page-inner page-stack">
-      <!-- 内容主体 -->
-
       <div class="content-wrapper">
-        <!-- 左侧内容：订阅信息和周期选择 -->
-
         <div class="left-column">
           <div class="section-wrapper subscription-intro-section" v-if="loading.plan">
             <div class="skeleton-card">
@@ -61,16 +57,12 @@
 
           </div>
 
-          <!-- 周期选择 -->
-
           <div class="section-wrapper period-section" v-if="!loading.plan">
             <div class="section-title">
               <span>{{ $t("order.select_period") }}</span>
             </div>
 
             <div class="period-selection">
-              <!-- 周期卡片 -->
-
               <div class="period-cards">
                 <div
                   v-for="(price, type) in availablePrices"
@@ -157,8 +149,6 @@
             </div>
           </div>
 
-          <!-- 周期选择骨架屏 -->
-
           <div class="section-wrapper period-section" v-else>
             <div class="section-title">
               <span>{{ $t("order.select_period") }}</span>
@@ -176,11 +166,7 @@
           </div>
         </div>
 
-        <!-- 右侧内容：订单信息 -->
-
         <div class="right-column">
-          <!-- 订单摘要 -->
-
           <OrderSummaryCard
             section-class="order-summary-section"
             :show-header="false"
@@ -227,8 +213,6 @@
                 <div v-else-if="couponScopeHint" class="coupon-feedback warning">{{ couponScopeHint }}</div>
               </div>
 
-              <!-- 骨架屏 -->
-
               <div v-if="loading.plan">
                 <div class="summary-row skeleton">
                   <div class="summary-label skeleton-text"></div>
@@ -244,8 +228,6 @@
                   <div class="summary-value skeleton-text"></div>
                 </div>
               </div>
-
-              <!-- 实际内容 -->
 
               <div v-else>
                 <div class="summary-amounts">
@@ -322,8 +304,6 @@
               </div>
             </div>
           </OrderSummaryCard>
-
-          <!-- 操作按钮 -->
 
         </div>
       </div>
@@ -806,7 +786,6 @@ export default {
         }
       });
 
-      // 与订阅计划页保持一致：有周期套餐时，不展示 onetime
       if (!hasRecurringPrice(plan.value) && hasPeriodPrice(plan.value, "onetime_price")) {
         prices.onetime_price = normalizePriceValue(plan.value, "onetime_price");
       }
@@ -1387,8 +1366,6 @@ export default {
         loading.paying = false;
       }
     };
-
-    // 实际的订单提交逻辑
 
     const executeOrderSubmission = async () => {
       loading.submitting = true;
