@@ -8,7 +8,7 @@
           <div class="section-title with-status overview-header">
             <span>{{ $t("payment.order_info") }}</span>
             <button
-              v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0 && orderDetail.total_amount > 0"
+              v-if="!resultFromOrderConfirm && !loading.order && orderDetail.status === 0"
               class="overview-cancel-btn btn-unlock-selection"
               @click="cancelCurrentOrder"
               :disabled="loading.cancelling"
@@ -259,25 +259,14 @@
                 !loading.order && orderDetail.status === 0 && !paymentSuccessful
               "
             >
-              <!-- 免费订单场景 - 修改为取消和激活按钮在同一行 -->
+              <!-- 免费订单场景 -->
               <div
                 class="btn-group action-row"
                 v-if="orderDetail.total_amount === 0"
               >
-                <!-- 左侧取消按钮 -->
+                <!-- 免费激活按钮 -->
                 <button
-                  class="btn-back secondary-action"
-                  @click="cancelCurrentOrder"
-                  :disabled="loading.cancelling"
-                >
-                  <IconX v-if="!loading.cancelling" :size="18" />
-                  <div v-else class="loader"></div>
-                  <span>{{ $t("payment.cancel_order") }}</span>
-                </button>
-
-                <!-- 右侧激活按钮 -->
-                <button
-                  class="btn-pay main-action"
+                  class="btn-pay main-action full-width"
                   @click="checkPayment"
                   :disabled="loading.checking"
                 >
