@@ -368,7 +368,7 @@ import {
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
 import { getTrafficLog } from '@/api/account/trafficLog';
-import { fetchOrderList } from '@/api/account/orderlist';
+import { fetchOrderList, cancelOrder } from '@/api/account/orderlist';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
 import { fetchPlans, submitOrder } from '@/api/account/shop';
@@ -930,6 +930,22 @@ export default {
       }
 
       try {
+        const orderResp = await fetchOrderList();
+        const orders = Array.isArray(orderResp?.data)
+          ? orderResp.data
+          : Array.isArray(orderResp?.data?.data)
+            ? orderResp.data.data
+            : [];
+        const pendingSubscriptionOrders = orders.filter(
+          (order) =>
+            Number(order?.status) === 0 &&
+            String(order?.period || '') !== 'onetime_price' &&
+            order?.trade_no
+        );
+        for (const order of pendingSubscriptionOrders) {
+          await cancelOrder(String(order.trade_no));
+        }
+
         const response = await submitOrder({
           plan_id: planId,
           period: 'onetime_price'

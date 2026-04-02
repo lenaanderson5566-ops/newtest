@@ -1151,12 +1151,34 @@ export default {
       }
     };
 
+    const isTrafficPackageOrder = (order) =>
+      String(order?.period || "") === "onetime_price";
+
+    const cancelPendingTrafficPackageOrders = async () => {
+      try {
+        const resp = await fetchOrderList();
+        const orders = Array.isArray(resp?.data) ? resp.data : [];
+        const pendingTrafficOrders = orders.filter(
+          (item) =>
+            Number(item?.status) === 0 &&
+            isTrafficPackageOrder(item) &&
+            item?.trade_no
+        );
+        for (const order of pendingTrafficOrders) {
+          await cancelOrderByTradeNo(String(order.trade_no));
+        }
+      } catch (error) {
+        console.error("Failed to cancel pending traffic package orders:", error);
+        throw error;
+      }
+    };
+
     const fetchLatestPendingOrder = async (tradeNo = "") => {
       try {
         const resp = await fetchOrderList();
         const orders = Array.isArray(resp?.data) ? resp.data : [];
         const pendingOrders = orders.filter(
-          (item) => Number(item?.status) === 0
+          (item) => Number(item?.status) === 0 && !isTrafficPackageOrder(item)
         );
         pendingOrders.sort((a, b) => {
           const aTs = new Date(a?.created_at || 0).getTime();
@@ -1372,6 +1394,7 @@ export default {
       loading.submitting = true;
 
       try {
+        await cancelPendingTrafficPackageOrders();
         const orderData = {
           plan_id: Number(plan.value.id),
 
