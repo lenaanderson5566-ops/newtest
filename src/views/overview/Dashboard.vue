@@ -2142,6 +2142,17 @@ $space-2: map.get($spacers, 2);
         .section-progress-track {
           background: var(--theme-border-soft);
         }
+
+        &.subscription-card-muted {
+          --traffic-card-bg: linear-gradient(
+            120deg,
+            rgba(244, 247, 252, 0.98) 0%,
+            rgba(184, 197, 220, 0.28) 52%,
+            rgba(156, 166, 196, 0.24) 100%
+          );
+          border: 1px solid rgba(148, 163, 184, 0.34);
+          box-shadow: 0 10px 22px rgba(100, 116, 139, 0.08);
+        }
       }
 
       &.traffic-board-package {
