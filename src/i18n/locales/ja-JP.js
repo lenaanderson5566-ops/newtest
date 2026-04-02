@@ -880,6 +880,7 @@ profile: {
   },
   invite: {
     title: 'マイリベート',
+    statsTitle: '招待統計',
     description: '友達を招待して登録させ、コミッションを獲得。',
     stats: {
       registeredUsers: '登録ユーザー数',
@@ -1102,6 +1103,8 @@ profile: {
     formula: '計算式',
     formulaContent: '(実際のアップロード + 実際のダウンロード) × レート = 扣除流量',
     noTrafficData: '流量使用記録なし',
+    emptyTitle: '利用記録はまだありません',
+    emptyDesc: 'サービス利用開始後、最近のトラフィック推移がここに表示されます。',
     loadingTraffic: '流量データ読み込み中...',
     errorLoadingTraffic: '流量データ読み込み失敗',
     retry: '再試行',

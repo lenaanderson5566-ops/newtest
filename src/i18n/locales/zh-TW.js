@@ -880,6 +880,7 @@ profile: {
   },
   invite: {
     title: '我的返佣',
+    statsTitle: '邀請統計',
     description: '邀請好友註冊使用，獲取佣金收入',
     stats: {
       registeredUsers: '已註冊用戶數',
@@ -1102,6 +1103,8 @@ profile: {
     formula: '計算公式',
     formulaContent: '(實際上行 + 實際下行) × 倍率 = 扣除流量',
     noTrafficData: '暫無流量使用記錄',
+    emptyTitle: '暫無用量記錄',
+    emptyDesc: '開始使用後，這裡會顯示近期流量趨勢。',
     loadingTraffic: '正在載入流量資料...',
     errorLoadingTraffic: '載入流量資料失敗',
     retry: '重試',

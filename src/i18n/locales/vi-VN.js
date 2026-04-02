@@ -882,6 +882,7 @@ profile: {
     },
     invite: {
         title: 'Hoa hồng của tôi',
+        statsTitle: 'Thống kê mời bạn bè',
         description: 'Mời bạn bè đăng ký sử dụng, nhận thu nhập hoa hồng',
         stats: {
             registeredUsers: 'Số người dùng đã đăng ký',
@@ -1104,6 +1105,8 @@ profile: {
         formula: 'Công thức tính',
         formulaContent: '(Tải lên thực tế + Tải xuống thực tế) × Tỷ lệ = Lưu lượng bị trừ',
         noTrafficData: 'Chưa có bản ghi sử dụng lưu lượng',
+        emptyTitle: 'Chưa có bản ghi sử dụng',
+        emptyDesc: 'Sau khi bắt đầu sử dụng dịch vụ, xu hướng lưu lượng gần đây sẽ hiển thị tại đây.',
         loadingTraffic: 'Đang tải dữ liệu lưu lượng...',
         errorLoadingTraffic: 'Tải dữ liệu lưu lượng thất bại',
         retry: 'Thử lại',

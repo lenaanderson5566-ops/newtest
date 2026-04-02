@@ -881,6 +881,7 @@ profile: {
   },
   invite: {
     title: '내 커미션',
+    statsTitle: '초대 통계',
     description: '친구를 초대하여 등록하고 커미션 수익을 얻으세요.',
     stats: {
       registeredUsers: '등록된 사용자 수',
@@ -1103,6 +1104,8 @@ profile: {
     formula: '계산 공식',
     formulaContent: '(실제 업로드 + 실제 다운로드) × 비율 = 차감 트래픽',
     noTrafficData: '트래픽 사용 기록 없음',
+    emptyTitle: '사용 기록이 아직 없습니다',
+    emptyDesc: '서비스를 사용하기 시작하면 최근 트래픽 추이가 여기에 표시됩니다.',
     loadingTraffic: '트래픽 데이터 로딩 중...',
     errorLoadingTraffic: '트래픽 데이터 로드 실패',
     retry: '재시도',

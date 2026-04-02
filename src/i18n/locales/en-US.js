@@ -875,6 +875,7 @@ profile: {
     },
     invite: {
         title: 'My Commissions',
+        statsTitle: 'Commission Statistics',
         description: 'Invite friends to register and use, earn commission income.',
         stats: {
             registeredUsers: 'Registered Users',

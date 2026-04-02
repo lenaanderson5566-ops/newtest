@@ -20,7 +20,7 @@
         </div>
         <div class="menu-item" @click="navigateTo('/tickets')">
           <IconMessageCircle class="menu-icon" />
-          <span>提交反馈</span>
+          <span>{{ $t('dashboard.ticketSupport') }}</span>
         </div>
         <div class="divider"></div>
         <div class="menu-item" @click="logout">
