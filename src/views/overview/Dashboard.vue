@@ -194,6 +194,9 @@
                 </template>
               </template>
             </div>
+            <div v-if="card.key === 'package'" class="package-usage-intro">
+              {{ $t('dashboard.trafficPackageSupplementHint') }}
+            </div>
             <div v-if="card.key !== 'package' && card.key !== 'total'" class="section-progress-track">
               <div class="section-progress-fill" :style="{ width: `${card.key === 'subscription' ? applyPlanStatus(card.remainingPercentage) : card.remainingPercentage}%` }"></div>
             </div>
@@ -2094,6 +2097,13 @@ $space-2: map.get($spacers, 2);
           font-size: var(--dashboard-kpi-size);
           color: var(--dashboard-subtitle-color);
           font-weight: $font-weight-medium;
+        }
+
+        .package-usage-intro {
+          font-size: $font-size-xs;
+          color: var(--text-tertiary);
+          line-height: 1.4;
+          margin-top: -2px;
         }
 
         .section-progress-track {

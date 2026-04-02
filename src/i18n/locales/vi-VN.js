@@ -275,6 +275,7 @@ export default {
 
 
         trafficPackageHint: 'Gói lưu lượng là lưu lượng bổ sung một lần. Lưu lượng gói thuê bao tháng sẽ được dùng trước, sau khi hết mới dùng đến lưu lượng gói bổ sung.',
+        trafficPackageSupplementHint: 'Dùng gói lưu lượng để bù phần lưu lượng vượt giới hạn gói cước.',
         pendingTrafficOrderRedirected: 'Đã phát hiện đơn gói lưu lượng chưa thanh toán, đang chuyển đến trang thanh toán.',
         subscriptionPausedAfterExpiry: 'Gói thuê bao đã hết hạn, dịch vụ đã tạm dừng',
         renewToRestoreAccess: 'Sau khi gia hạn, quyền truy cập node sẽ được khôi phục ngay',

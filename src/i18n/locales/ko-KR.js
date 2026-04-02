@@ -259,6 +259,7 @@ export default {
 
 
     trafficPackageHint: '트래픽 패키지는 1회성 추가 트래픽입니다. 월간 구독 트래픽이 먼저 소모되고, 구독 트래픽 소진 후 패키지 트래픽이 소모됩니다.',
+    trafficPackageSupplementHint: '요금제 한도를 초과한 트래픽은 트래픽 패키지로 보충할 수 있습니다.',
     pendingTrafficOrderRedirected: '미결제 트래픽 패키지 주문이 있어 해당 결제 페이지로 이동했습니다.',
     subscriptionPausedAfterExpiry: '구독이 만료되어 서비스가 일시 중지되었습니다',
     renewToRestoreAccess: '갱신 후 노드 접근이 즉시 복구됩니다',
