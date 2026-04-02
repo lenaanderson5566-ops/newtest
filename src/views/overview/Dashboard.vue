@@ -1786,9 +1786,6 @@ $space-2: map.get($spacers, 2);
         }
 
         &.expired-main-card {
-          background: var(--theme-surface-muted);
-          border-color: var(--quota-expired-border);
-
           .usage-card-title {
             color: var(--text-tertiary);
           }
@@ -2186,6 +2183,11 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-total.expired-main-card {
+        --traffic-card-bg: var(--theme-surface-muted);
+        background: var(--theme-surface-muted) !important;
+        border-color: var(--quota-expired-border);
+        box-shadow: none;
+
         .plan-summary-card {
           .plan-summary-section-meta {
             background: linear-gradient(
@@ -2193,7 +2195,7 @@ $space-2: map.get($spacers, 2);
               rgba(152, 173, 209, 0.92) 0%,
               rgba(164, 171, 211, 0.9) 52%,
               rgba(176, 166, 203, 0.9) 100%
-            ) !important;
+            );
             border: 1px solid rgba(226, 232, 240, 0.5);
 
             .plan-name-main {
