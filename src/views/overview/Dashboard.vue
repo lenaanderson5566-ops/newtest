@@ -2117,10 +2117,10 @@ $space-2: map.get($spacers, 2);
 
       &.traffic-board-subscription {
         --traffic-card-bg: linear-gradient(
-          135deg,
-          rgba(34, 89, 170, 0.22) 0%,
-          rgba(66, 133, 244, 0.16) 42%,
-          rgba(255, 255, 255, 0.96) 100%
+          315deg,
+          rgba(255, 255, 255, 0.98) 0%,
+          rgba(66, 133, 244, 0.12) 44%,
+          rgba(34, 89, 170, 0.22) 100%
         );
         background: var(--traffic-card-bg) !important;
         border: 1px solid rgba(34, 89, 170, 0.22);
@@ -2153,10 +2153,10 @@ $space-2: map.get($spacers, 2);
 
       &.traffic-board-total {
         --traffic-card-bg: linear-gradient(
-          128deg,
-          rgba(34, 89, 170, 0.2) 0%,
-          rgba(90, 57, 216, 0.14) 48%,
-          rgba(255, 255, 255, 0.96) 100%
+          315deg,
+          rgba(255, 255, 255, 0.98) 0%,
+          rgba(90, 57, 216, 0.1) 42%,
+          rgba(34, 89, 170, 0.2) 100%
         );
         background: var(--traffic-card-bg) !important;
         border: 1px solid rgba(34, 89, 170, 0.2);
