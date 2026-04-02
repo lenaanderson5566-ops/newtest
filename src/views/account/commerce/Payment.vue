@@ -433,6 +433,9 @@ export default {
     const { showToast } = useToast();
     const route = useRoute();
     const router = useRouter();
+    const devError = (...args) => {
+      if (import.meta.env.DEV) console.error(...args);
+    };
 
     const fromOrderList = ref(false);
     const resultFromOrderConfirm = ref(false);
@@ -578,7 +581,7 @@ export default {
           router.push("/shop");
         }
       } catch (error) {
-        console.error("Failed to fetch order details:", error);
+        devError("Failed to fetch order details:", error);
         showToast(t("payment.failed_to_fetch_order"), "error");
         router.push("/shop");
       } finally {
@@ -603,7 +606,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error("Failed to fetch payment methods:", error);
+        devError("Failed to fetch payment methods:", error);
         showToast(t("payment.failed_to_fetch_methods"), "error");
       } finally {
         loading.methods = false;
@@ -701,7 +704,7 @@ export default {
 
         startPaymentCheck();
       } catch (error) {
-        console.error("Failed to checkout order:", error);
+        devError("Failed to checkout order:", error);
         showToast(t("payment.check_failed"), "error");
         loading.checking = false;
       }
@@ -767,7 +770,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error("Failed to check payment status:", error);
+        devError("Failed to check payment status:", error);
         showToast(t("payment.check_failed"), "error");
         loading.checking = false;
       }
@@ -818,7 +821,7 @@ export default {
           loading.paying = false;
         }
       } catch (error) {
-        console.error("Failed to check payment status:", error);
+        devError("Failed to check payment status:", error);
         if (orderDetail.value.total_amount === 0) {
           loading.checking = false;
           loading.paying = false;
@@ -946,7 +949,7 @@ export default {
           startPaymentCheck();
         }
       } catch (error) {
-        console.error("Failed to start payment:", error);
+        devError("Failed to start payment:", error);
         showToast(t("payment.check_failed"), "error");
       } finally {
         loading.paying = false;
@@ -967,7 +970,7 @@ export default {
 
         router.push("/shop");
       } catch (error) {
-        console.error("Failed to cancel order:", error);
+        devError("Failed to cancel order:", error);
         showToast(t("payment.cancel_failed"), "error");
       } finally {
         loading.cancelling = false;

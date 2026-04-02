@@ -419,6 +419,12 @@ export default {
     const {t, locale} = useI18n();
     const router = useRouter();
     const { showToast } = useToast();
+    const devError = (...args) => {
+      if (import.meta.env.DEV) console.error(...args);
+    };
+    const devWarn = (...args) => {
+      if (import.meta.env.DEV) console.warn(...args);
+    };
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
     const userStats = reactive({
@@ -516,7 +522,7 @@ export default {
           showPopup.value = false;
         }
       } catch (error) {
-        console.error('Failed to activate next period early:', error);
+        devError('Failed to activate next period early:', error);
         showToast(t('dashboard.nextPeriodError'), 'error');
       }
 
@@ -571,7 +577,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error('Failed to fetch user info:', error);
+        devError('Failed to fetch user info:', error);
         accountStatus.value = SUBSCRIPTION_STATUS.NEW;
       } finally {
         loading.userInfo = false;
@@ -807,7 +813,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error('Failed to fetch subscription info:', error);
+        devError('Failed to fetch subscription info:', error);
       } finally {
         loading.subscribe = false;
       }
@@ -825,7 +831,7 @@ export default {
           userStats.pendingTickets = stats[1];
         }
       } catch (error) {
-        console.error('Failed to fetch user stats:', error);
+        devError('Failed to fetch user stats:', error);
       } finally {
         loading.userStats = false;
       }
@@ -944,7 +950,7 @@ export default {
           return;
         }
       } catch (error) {
-        console.warn('Failed to check pending traffic package orders:', error);
+        devWarn('Failed to check pending traffic package orders:', error);
       }
 
       showTrafficPackageModal.value = true;
@@ -1006,7 +1012,7 @@ export default {
           }
         });
       } catch (error) {
-        console.error('Failed to create traffic package order:', error);
+        devError('Failed to create traffic package order:', error);
         showToast(error?.response?.message || error?.message || t('order.failed_to_fetch_plan'), 'error');
       }
     };
@@ -1052,7 +1058,7 @@ export default {
           return;
         }
       } catch (error) {
-        console.warn('Failed to fetch pending orders, fallback to order list page:', error);
+        devWarn('Failed to fetch pending orders, fallback to order list page:', error);
       }
 
       goToOrders();
@@ -1147,7 +1153,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error('Failed to fetch user config:', error);
+        devError('Failed to fetch user config:', error);
       }
     };
 
@@ -1209,7 +1215,7 @@ export default {
           };
         });
       } catch (e) {
-        console.error('Failed to fetch traffic trend data:', e);
+        devError('Failed to fetch traffic trend data:', e);
         trafficTrendError.value = true;
         trafficTrendData.value = [];
         todayTrafficStats.uploadGb = '0.00';

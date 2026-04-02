@@ -421,6 +421,12 @@ export default {
     const route = useRoute();
 
     const router = useRouter();
+    const devError = (...args) => {
+      if (import.meta.env.DEV) console.error(...args);
+    };
+    const devWarn = (...args) => {
+      if (import.meta.env.DEV) console.warn(...args);
+    };
 
     const loading = reactive({
       plan: true,
@@ -1110,7 +1116,7 @@ export default {
           showToast(response.message || t("order.coupon_invalid"), "error");
         }
       } catch (error) {
-        console.error("Failed to verify coupon:", error);
+        devError("Failed to verify coupon:", error);
 
         couponApplied.value = false;
 
@@ -1147,7 +1153,7 @@ export default {
           await cancelOrderByTradeNo(String(order.trade_no));
         }
       } catch (error) {
-        console.error("Failed to cancel pending traffic package orders:", error);
+        devError("Failed to cancel pending traffic package orders:", error);
         throw error;
       }
     };
@@ -1173,7 +1179,7 @@ export default {
         }
         return pendingOrders[0] || null;
       } catch (err) {
-        console.error("Failed to fetch pending orders:", err);
+        devError("Failed to fetch pending orders:", err);
         return null;
       }
     };
@@ -1189,7 +1195,7 @@ export default {
         const response = await getOrderDetail(tradeNo);
         lockedOrderDetail.value = response?.data || null;
       } catch (err) {
-        console.error("Failed to fetch locked order detail:", err);
+        devError("Failed to fetch locked order detail:", err);
         lockedOrderDetail.value = null;
         showToast(err?.response?.message || err?.message || t("payment.failed_to_fetch_order"), "error");
       } finally {
@@ -1249,7 +1255,7 @@ export default {
           closePaymentModal();
         }
       } catch (error) {
-        console.error("Failed to check payment status:", error);
+        devError("Failed to check payment status:", error);
       }
     };
 
@@ -1355,7 +1361,7 @@ export default {
         startPaymentCheck(tradeNo);
         showToast(t("payment.scan_qrcode"), "info");
       } catch (checkoutError) {
-        console.error("Failed to checkout order:", checkoutError);
+        devError("Failed to checkout order:", checkoutError);
         showToast(
           checkoutError?.response?.message ||
             checkoutError?.message ||
@@ -1404,14 +1410,14 @@ export default {
               },
             });
           } catch (routeErr) {
-            console.warn("Failed to sync trade_no in route query:", routeErr);
+            devWarn("Failed to sync trade_no in route query:", routeErr);
           }
           await checkoutTradeNo(response.data);
         } else {
           showToast(response.message || t("order.order_failed"), "error");
         }
       } catch (error) {
-        console.error("Failed to submit order:", error);
+        devError("Failed to submit order:", error);
 
         const message = error.response?.message || error.message || t("order.order_failed");
         showToast(message, "error");
@@ -1442,7 +1448,7 @@ export default {
             planOptions.value = plansResponse.data.filter((item) => !isOnetimeOnly(item));
           }
         } catch (planListError) {
-          console.warn("Failed to fetch plan list for selector:", planListError);
+          devWarn("Failed to fetch plan list for selector:", planListError);
           planOptions.value = [];
         }
 
@@ -1465,7 +1471,7 @@ export default {
           router.push("/shop");
         }
       } catch (error) {
-        console.error("Failed to fetch plan data:", error);
+        devError("Failed to fetch plan data:", error);
 
         showToast(
           error.response?.message ||
@@ -1490,7 +1496,7 @@ export default {
           showToast(response.message, "warning");
         }
       } catch (error) {
-        console.error("Failed to fetch user info:", error);
+        devError("Failed to fetch user info:", error);
 
         showToast(
           error.response?.message ||
@@ -1532,7 +1538,7 @@ export default {
           showToast(response.message, "warning");
         }
       } catch (error) {
-        console.error("Failed to fetch system config:", error);
+        devError("Failed to fetch system config:", error);
 
         showToast(
           error.response?.message || error.message || t("shop.config_error"),
@@ -1554,7 +1560,7 @@ export default {
           paymentMethods.value = [];
         }
       } catch (error) {
-        console.error("Failed to fetch payment methods:", error);
+        devError("Failed to fetch payment methods:", error);
         paymentMethods.value = [];
         showToast(t("payment.failed_to_fetch_methods"), "error");
       } finally {
