@@ -2143,16 +2143,6 @@ $space-2: map.get($spacers, 2);
           background: var(--theme-border-soft);
         }
 
-        &.subscription-card-muted {
-          --traffic-card-bg: linear-gradient(
-            120deg,
-            rgba(244, 247, 252, 0.98) 0%,
-            rgba(184, 197, 220, 0.28) 52%,
-            rgba(156, 166, 196, 0.24) 100%
-          );
-          border: 1px solid rgba(148, 163, 184, 0.34);
-          box-shadow: 0 10px 22px rgba(100, 116, 139, 0.08);
-        }
       }
 
       &.traffic-board-package {
@@ -2190,6 +2180,35 @@ $space-2: map.get($spacers, 2);
 
             .plan-expire-meta {
               color: var(--text-on-dark-secondary);
+            }
+          }
+        }
+      }
+
+      &.traffic-board-total.expired-main-card {
+        .plan-summary-card {
+          .plan-summary-section-meta {
+            background: linear-gradient(
+              135deg,
+              rgba(82, 108, 156, 0.94) 0%,
+              rgba(105, 108, 156, 0.9) 52%,
+              rgba(116, 106, 145, 0.9) 100%
+            ) !important;
+            border: 1px solid rgba(203, 213, 225, 0.34);
+
+            .plan-name-main {
+              color: rgba(241, 245, 249, 0.96);
+            }
+
+            .plan-expire-meta,
+            .plan-expire-meta .expire-suffix {
+              color: rgba(226, 232, 240, 0.88);
+            }
+
+            .plan-status-tag {
+              color: rgba(241, 245, 249, 0.96);
+              border: 1px solid rgba(226, 232, 240, 0.4);
+              background: rgba(148, 163, 184, 0.2);
             }
           }
         }
