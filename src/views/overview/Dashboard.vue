@@ -371,7 +371,7 @@ import { getTrafficLog } from '@/api/account/trafficLog';
 import { fetchOrderList } from '@/api/account/orderlist';
 import * as echarts from 'echarts';
 import {useToast} from '@/composables/useToast';
-import {fetchPlans} from '@/api/account/shop';
+import { fetchPlans, submitOrder } from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
@@ -917,19 +917,41 @@ export default {
       }
     };
 
-    const purchaseTrafficPackage = (plan) => {
+    const purchaseTrafficPackage = async (plan) => {
       if (isTrafficPackageSoldOut(plan)) {
         showToast(t('shop.plan.stock.sold_out'), 'error');
         return;
       }
-      showTrafficPackageModal.value = false;
-      router.push({
-        path: '/order-confirm',
-        query: {
-          id: plan.id,
+
+      const planId = Number(plan?.id || 0);
+      if (!planId) {
+        showToast(t('order.no_plan_selected'), 'error');
+        return;
+      }
+
+      try {
+        const response = await submitOrder({
+          plan_id: planId,
           period: 'onetime_price'
+        });
+
+        const createdTradeNo = String(response?.data || '');
+        if (!createdTradeNo) {
+          throw new Error(response?.message || 'Failed to create traffic package order');
         }
-      });
+
+        showTrafficPackageModal.value = false;
+        showToast(response?.message || t('order.order_success'), 'success');
+        await router.push({
+          path: '/payment',
+          query: {
+            trade_no: createdTradeNo
+          }
+        });
+      } catch (error) {
+        console.error('Failed to create traffic package order:', error);
+        showToast(error?.response?.message || error?.message || t('order.failed_to_fetch_plan'), 'error');
+      }
     };
 
     const hasPendingItems = computed(() => {

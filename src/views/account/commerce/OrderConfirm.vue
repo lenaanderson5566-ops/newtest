@@ -492,12 +492,6 @@ export default {
     const isOnetimeOnly = (targetPlan) =>
       hasPeriodPrice(targetPlan, "onetime_price") && !hasRecurringPrice(targetPlan);
 
-    const isOnetimePurchaseContext = computed(() => {
-      const routePeriod = String(route.query.period || "");
-      const lockedPeriod = String(lockedPendingOrder.value?.period || "");
-      return routePeriod === "onetime_price" || lockedPeriod === "onetime_price";
-    });
-
     const couponCode = ref("");
 
     const couponApplied = ref(false);
@@ -806,30 +800,25 @@ export default {
 
       const prices = {};
 
-      if (isOnetimePurchaseContext.value) {
-        if (hasPeriodPrice(plan.value, "onetime_price")) {
-          prices.onetime_price = normalizePriceValue(plan.value, "onetime_price");
-        }
-        return prices;
-      }
-
       recurringTypes.forEach((type) => {
         if (hasPeriodPrice(plan.value, type)) {
           prices[type] = normalizePriceValue(plan.value, type);
         }
       });
 
+      // 与订阅计划页保持一致：有周期套餐时，不展示 onetime
+      if (!hasRecurringPrice(plan.value) && hasPeriodPrice(plan.value, "onetime_price")) {
+        prices.onetime_price = normalizePriceValue(plan.value, "onetime_price");
+      }
+
       return prices;
     });
 
     const displayPlanOptions = computed(() => {
-      const shouldKeepPlan = (item) =>
-        isOnetimePurchaseContext.value ? isOnetimeOnly(item) : !isOnetimeOnly(item);
-
       if (planOptions.value.length) {
-        return planOptions.value.filter((item) => shouldKeepPlan(item));
+        return planOptions.value.filter((item) => !isOnetimeOnly(item));
       }
-      if (plan.value && shouldKeepPlan(plan.value)) {
+      if (plan.value && !isOnetimeOnly(plan.value)) {
         return [plan.value];
       }
       return [];
@@ -1450,9 +1439,7 @@ export default {
         try {
           const plansResponse = await fetchPlans(locale.value);
           if (Array.isArray(plansResponse?.data)) {
-            planOptions.value = plansResponse.data.filter((item) =>
-              isOnetimePurchaseContext.value ? isOnetimeOnly(item) : !isOnetimeOnly(item)
-            );
+            planOptions.value = plansResponse.data.filter((item) => !isOnetimeOnly(item));
           }
         } catch (planListError) {
           console.warn("Failed to fetch plan list for selector:", planListError);
