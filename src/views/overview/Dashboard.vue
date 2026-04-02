@@ -2117,14 +2117,14 @@ $space-2: map.get($spacers, 2);
 
       &.traffic-board-subscription {
         --traffic-card-bg: linear-gradient(
-          270deg,
+          90deg,
           rgba(255, 255, 255, 0.98) 0%,
-          rgba(66, 133, 244, 0.12) 54%,
-          rgba(34, 89, 170, 0.22) 100%
+          rgba(66, 133, 244, 0.08) 56%,
+          rgba(34, 89, 170, 0.14) 100%
         );
         background: var(--traffic-card-bg) !important;
-        border: 1px solid rgba(34, 89, 170, 0.22);
-        box-shadow: 0 10px 24px rgba(34, 89, 170, 0.1);
+        border: 1px solid rgba(34, 89, 170, 0.16);
+        box-shadow: 0 10px 24px rgba(34, 89, 170, 0.08);
 
         .usage-card-title,
         .usage-percent,
