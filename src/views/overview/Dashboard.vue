@@ -902,7 +902,39 @@ export default {
       return Number.isFinite(capacity) && capacity === 0;
     };
 
+    const extractOrderList = (response) => {
+      if (Array.isArray(response?.data)) return response.data;
+      if (Array.isArray(response?.data?.data)) return response.data.data;
+      return [];
+    };
+
+    const findLatestPendingTrafficPackageOrder = (orders) => orders
+      .filter(
+        (order) =>
+          Number(order?.status) === 0 &&
+          String(order?.period || '') === 'onetime_price' &&
+          order?.trade_no
+      )
+      .sort((a, b) => Number(b?.created_at || 0) - Number(a?.created_at || 0))[0] || null;
+
     const openTrafficPackageModal = async () => {
+      try {
+        const orderResp = await fetchOrderList();
+        const pendingTrafficOrder = findLatestPendingTrafficPackageOrder(extractOrderList(orderResp));
+        if (pendingTrafficOrder?.trade_no) {
+          await router.push({
+            path: '/payment',
+            query: {
+              trade_no: pendingTrafficOrder.trade_no,
+              from: 'dashboard'
+            }
+          });
+          return;
+        }
+      } catch (error) {
+        console.warn('Failed to check pending traffic package orders:', error);
+      }
+
       showTrafficPackageModal.value = true;
       trafficPackageLoading.value = true;
       try {
@@ -931,11 +963,7 @@ export default {
 
       try {
         const orderResp = await fetchOrderList();
-        const orders = Array.isArray(orderResp?.data)
-          ? orderResp.data
-          : Array.isArray(orderResp?.data?.data)
-            ? orderResp.data.data
-            : [];
+        const orders = extractOrderList(orderResp);
         const pendingSubscriptionOrders = orders.filter(
           (order) =>
             Number(order?.status) === 0 &&
