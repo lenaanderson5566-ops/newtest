@@ -2190,25 +2190,25 @@ $space-2: map.get($spacers, 2);
           .plan-summary-section-meta {
             background: linear-gradient(
               135deg,
-              rgba(82, 108, 156, 0.94) 0%,
-              rgba(105, 108, 156, 0.9) 52%,
-              rgba(116, 106, 145, 0.9) 100%
+              rgba(152, 173, 209, 0.92) 0%,
+              rgba(164, 171, 211, 0.9) 52%,
+              rgba(176, 166, 203, 0.9) 100%
             ) !important;
-            border: 1px solid rgba(203, 213, 225, 0.34);
+            border: 1px solid rgba(226, 232, 240, 0.5);
 
             .plan-name-main {
-              color: rgba(241, 245, 249, 0.96);
+              color: rgba(248, 250, 252, 0.98);
             }
 
             .plan-expire-meta,
             .plan-expire-meta .expire-suffix {
-              color: rgba(226, 232, 240, 0.88);
+              color: rgba(241, 245, 249, 0.92);
             }
 
             .plan-status-tag {
-              color: rgba(241, 245, 249, 0.96);
-              border: 1px solid rgba(226, 232, 240, 0.4);
-              background: rgba(148, 163, 184, 0.2);
+              color: rgba(248, 250, 252, 0.98);
+              border: 1px solid rgba(241, 245, 249, 0.58);
+              background: rgba(148, 163, 184, 0.14);
             }
           }
         }
