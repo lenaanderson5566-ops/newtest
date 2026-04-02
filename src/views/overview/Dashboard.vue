@@ -2116,8 +2116,15 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-subscription {
-        --traffic-card-bg: linear-gradient(315deg, rgba(34, 89, 170, 0.16) 0%, rgba(34, 89, 170, 0.08) 38%, #ffffff 100%);
-        border: 1px solid var(--dashboard-border-color);
+        --traffic-card-bg: linear-gradient(
+          135deg,
+          rgba(34, 89, 170, 0.22) 0%,
+          rgba(66, 133, 244, 0.16) 42%,
+          rgba(255, 255, 255, 0.96) 100%
+        );
+        background: var(--traffic-card-bg) !important;
+        border: 1px solid rgba(34, 89, 170, 0.22);
+        box-shadow: 0 10px 24px rgba(34, 89, 170, 0.1);
 
         .usage-card-title,
         .usage-percent,
