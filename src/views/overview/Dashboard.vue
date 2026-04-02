@@ -908,6 +908,18 @@ export default {
       return [];
     };
 
+    const getOrderTimestamp = (order) => {
+      const createdAt = order?.created_at;
+      if (typeof createdAt === 'number' && Number.isFinite(createdAt)) {
+        return createdAt;
+      }
+      const parsedAt = new Date(createdAt || 0).getTime();
+      if (Number.isFinite(parsedAt)) {
+        return parsedAt;
+      }
+      return Number(order?.id || 0);
+    };
+
     const findLatestPendingTrafficPackageOrder = (orders) => orders
       .filter(
         (order) =>
@@ -915,13 +927,14 @@ export default {
           String(order?.period || '') === 'onetime_price' &&
           order?.trade_no
       )
-      .sort((a, b) => Number(b?.created_at || 0) - Number(a?.created_at || 0))[0] || null;
+      .sort((a, b) => getOrderTimestamp(b) - getOrderTimestamp(a))[0] || null;
 
     const openTrafficPackageModal = async () => {
       try {
         const orderResp = await fetchOrderList();
         const pendingTrafficOrder = findLatestPendingTrafficPackageOrder(extractOrderList(orderResp));
         if (pendingTrafficOrder?.trade_no) {
+          showToast(t('dashboard.pendingTrafficOrderRedirected'), 'info');
           await router.push({
             path: '/payment',
             query: {
@@ -1030,7 +1043,7 @@ export default {
 
         const latestPendingOrder = orders
           .filter((order) => Number(order?.status) === 0 && order?.trade_no)
-          .sort((a, b) => Number(b?.created_at || 0) - Number(a?.created_at || 0))[0];
+          .sort((a, b) => getOrderTimestamp(b) - getOrderTimestamp(a))[0];
 
         if (latestPendingOrder?.trade_no) {
           router.push({

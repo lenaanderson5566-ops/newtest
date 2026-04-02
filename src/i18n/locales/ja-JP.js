@@ -259,6 +259,7 @@ export default {
 
 
     trafficPackageHint: '流量パッケージは一回限りの追加流量です。月間サブスク流量が優先して消費され、使い切った後にパッケージ流量が消費されます。',
+    pendingTrafficOrderRedirected: '未払いの流量パッケージ注文が見つかったため、支払いページへ移動しました。',
     subscriptionPausedAfterExpiry: 'サブスクリプションの有効期限が切れており、サービスは停止中です',
     renewToRestoreAccess: '更新後、ノードアクセスは即時復旧します',
     expiredOnDate: '{date} に期限切れ',

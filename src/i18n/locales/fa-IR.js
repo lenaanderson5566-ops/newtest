@@ -259,6 +259,7 @@ export default {
 
 
     trafficPackageHint: 'بسته ترافیک یک مکمل یک‌باره است؛ ابتدا ترافیک اشتراک ماهانه مصرف می‌شود و پس از اتمام آن، از بسته ترافیک استفاده خواهد شد.',
+    pendingTrafficOrderRedirected: 'یک سفارش پرداخت‌نشده برای بسته ترافیک پیدا شد و به صفحه پرداخت آن منتقل شدید.',
     subscriptionPausedAfterExpiry: 'اشتراک منقضی شده و سرویس متوقف شده است',
     renewToRestoreAccess: 'پس از تمدید، دسترسی نودها بلافاصله بازیابی می‌شود',
     expiredOnDate: 'در {date} منقضی شده است',
