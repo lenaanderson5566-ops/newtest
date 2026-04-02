@@ -2153,14 +2153,14 @@ $space-2: map.get($spacers, 2);
 
       &.traffic-board-total {
         --traffic-card-bg: linear-gradient(
-          135deg,
-          rgba(34, 89, 170, 0.2) 0%,
-          rgba(90, 57, 216, 0.1) 58%,
-          rgba(255, 255, 255, 0.98) 100%
+          90deg,
+          rgba(255, 255, 255, 0.98) 0%,
+          rgba(66, 133, 244, 0.08) 56%,
+          rgba(34, 89, 170, 0.14) 100%
         );
         background: var(--traffic-card-bg) !important;
-        border: 1px solid rgba(34, 89, 170, 0.2);
-        box-shadow: 0 12px 26px rgba(34, 89, 170, 0.1);
+        border: 1px solid rgba(34, 89, 170, 0.16);
+        box-shadow: 0 12px 26px rgba(34, 89, 170, 0.08);
 
         .usage-card-title {
           color: var(--text-primary);
@@ -2170,30 +2170,15 @@ $space-2: map.get($spacers, 2);
       &.traffic-board-total {
         .plan-summary-card {
           .plan-summary-section-meta {
-            background: linear-gradient(
-              90deg,
-              rgba(255, 255, 255, 0.98) 0%,
-              rgba(66, 133, 244, 0.08) 56%,
-              rgba(34, 89, 170, 0.14) 100%
-            );
-            border: 1px solid rgba(34, 89, 170, 0.16);
+            background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
 
             .plan-name-main {
-              color: var(--text-primary);
+              color: var(--text-on-dark-primary);
             }
 
             .plan-expire-meta {
-              color: var(--text-secondary);
-            }
-
-            .expire-suffix {
-              color: var(--text-tertiary);
-            }
-
-            .plan-status-tag {
-              color: var(--button-primary-start);
-              border: 1px solid rgba(34, 89, 170, 0.24);
-              background: rgba(255, 255, 255, 0.72);
+              color: var(--text-on-dark-secondary);
             }
           }
         }
