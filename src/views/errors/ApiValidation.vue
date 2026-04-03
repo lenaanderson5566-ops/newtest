@@ -406,7 +406,7 @@ export default {
       .progress-ring-bg {
         fill: none;
 
-        stroke: var(--border-color, rgba(0, 0, 0, 0.05));
+        stroke: var(--border-default, rgba(0, 0, 0, 0.05));
 
         stroke-width: 4;
       }
@@ -482,7 +482,7 @@ export default {
 
 
     .progress-ring-bg {
-      stroke: var(--border-color, rgba(255, 255, 255, 0.1));
+      stroke: var(--border-default, rgba(255, 255, 255, 0.1));
     }
 
     .progress-text {

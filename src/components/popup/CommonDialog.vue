@@ -196,7 +196,7 @@ export default {
     max-width: 500px;
     background-color: #fff;
     border-radius: $border-radius-sm;
-    border: 1px solid rgba(15, 23, 42, 0.08);
+    border: var(--border-width) solid var(--border-subtle);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -208,7 +208,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: var(--border-width) solid var(--border-default);
       background-color: rgba(var(--theme-color-rgb), 0.03);
 
       .dialog-title {
@@ -268,7 +268,7 @@ export default {
 
     .dialog-footer {
       padding: 16px 16px;
-      border-top: 1px solid var(--border-color);
+      border-top: var(--border-width) solid var(--border-default);
       display: flex;
       justify-content: flex-end;
       gap: 8px;
@@ -289,12 +289,12 @@ export default {
       }
 
       .dialog-btn-cancel {
-        background-color: var(--border-color);
+        background-color: var(--border-default);
         color: var(--text-primary);
 
         &:hover {
           background-color: var(--text-tertiary);
-          box-shadow: var(--shadow-md);
+          box-shadow: var(--shadow-sm);
         }
       }
 
@@ -303,7 +303,7 @@ export default {
         color: var(--text-on-dark-primary);
 
         &:hover {
-          box-shadow: var(--shadow-md);
+          box-shadow: var(--shadow-sm);
         }
       }
     }

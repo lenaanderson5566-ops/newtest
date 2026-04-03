@@ -1025,7 +1025,7 @@ export default {
 
     padding: map.get($spacers, 3);
 
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
 
     transition: all 0.3s ease;
 
@@ -1079,7 +1079,7 @@ export default {
     line-height: 1;
     color: var(--theme-color);
     background: rgba(var(--theme-color-rgb), 0.1);
-    border: 1px solid rgba(var(--theme-color-rgb), 0.26);
+    border: var(--border-width) solid var(--border-hover);
     border-radius: 999px;
     padding: 4px 8px;
     white-space: nowrap;
@@ -1109,7 +1109,7 @@ export default {
 
           -webkit-backdrop-filter: blur(8px);
 
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: var(--border-width) solid var(--border-subtle);
 
           will-change: backdrop-filter, background-color, color;
 
@@ -1307,7 +1307,7 @@ export default {
 
     .plan-card {
       border-radius: var(--shop-card-radius);
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
 
       background-color: #fff;
 
@@ -1316,7 +1316,7 @@ export default {
 
       padding: 8px;
 
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
 
       transition: all 0.3s ease;
 
@@ -1354,7 +1354,7 @@ export default {
       }
 
       &.current-plan-card {
-        border-color: var(--border-color);
+        border-color: var(--border-default);
         border-top-left-radius: 0;
         border-top-right-radius: 0;
       }
@@ -1378,7 +1378,7 @@ export default {
           width: 100%;
           border-radius: 12px;
           overflow: hidden;
-          border: 1px solid rgba(var(--theme-color-rgb), 0.16);
+          border: var(--border-width) solid var(--border-subtle);
 
           .desktop-plan-gradient {
             min-height: 86px;
@@ -1476,7 +1476,7 @@ export default {
 
             -webkit-backdrop-filter: blur(8px);
 
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: var(--border-width) solid var(--border-subtle);
 
             will-change: backdrop-filter, background-color, color;
 
@@ -1656,7 +1656,7 @@ export default {
     justify-content: center;
     gap: 8px;
     color: var(--text-on-dark-primary);
-    border: 1px solid transparent;
+    border: var(--border-width) solid transparent;
     border-radius: 10px;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
@@ -1670,7 +1670,7 @@ export default {
     &.glassmorphism {
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
-      border: 1px solid transparent;
+      border: var(--border-width) solid transparent;
     }
 
     &:hover {
@@ -1681,7 +1681,7 @@ export default {
     &.btn-disabled {
       background: var(--button-disabled-bg);
       cursor: not-allowed;
-      border: 1px solid var(--button-disabled-bg);
+      border: var(--border-width) solid var(--border-hover);
 
       &:hover {
         transform: none;
@@ -1729,7 +1729,7 @@ export default {
       gap: 0;
       padding: 4px;
       border-radius: 12px;
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
       background: var(--surface-subtle);
 
       .filter-highlight {
@@ -1956,7 +1956,7 @@ export default {
       .mobile-plan-chip {
         box-sizing: border-box;
         width: 100%;
-        border: 1px solid var(--border-color);
+        border: var(--border-width) solid var(--border-default);
         background: #fff;
         border-radius: 12px;
         padding: 0;
@@ -2034,7 +2034,7 @@ export default {
       }
 
       .mobile-plan-details {
-        border: 1px solid var(--border-color);
+        border: var(--border-width) solid var(--border-default);
         background: var(--card-bg-color);
         border-radius: 12px;
         padding: 8px 16px;
@@ -2046,7 +2046,7 @@ export default {
         align-items: center;
         gap: 8px;
         padding: 8px 0;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: var(--border-width) solid var(--border-default);
       }
 
       .mobile-detail-row:last-child {
@@ -2069,7 +2069,7 @@ export default {
         bottom: max(12px, env(safe-area-inset-bottom));
         width: 100%;
         height: 44px;
-        border: 1px solid transparent;
+        border: var(--border-width) solid transparent;
         border-radius: 10px;
         display: flex;
         align-items: center;
@@ -2103,7 +2103,7 @@ export default {
     gap: 4px;
 
     .filter-toggle-wrapper {
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
       border-radius: 12px;
       background: var(--surface-subtle);
 

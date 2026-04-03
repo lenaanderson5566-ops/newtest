@@ -327,7 +327,7 @@ onMounted(() => {
     background-color: var(--card-bg);
     border-radius: $border-radius-sm;
     padding: map.get($spacers, 3);
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
     transition: all 0.3s ease;
     
     &:hover {
@@ -394,7 +394,7 @@ onMounted(() => {
         align-items: center;
         padding: 8px 8px;
         border-radius: $border-radius-sm;
-        border: 1px solid var(--border-color);
+        border: var(--border-width) solid var(--border-default);
         background: var(--card-background);
         @extend %typo-label-text;
       }
@@ -492,7 +492,7 @@ onMounted(() => {
           cursor: pointer;
           border-radius: $border-radius-sm;
           overflow: hidden;
-          border: 1px solid var(--border-color);
+          border: var(--border-width) solid var(--border-default);
           transition: all 0.3s ease;
           position: relative;
           
@@ -576,7 +576,7 @@ onMounted(() => {
         input {
           width: 100%;
           height: 100%;
-          border: 1px solid var(--border-color);
+          border: var(--border-width) solid var(--border-default);
           border-radius: $border-radius-sm;
           background-color: var(--input-bg, rgba(0, 0, 0, 0.02));
           padding: 0 16px 0 24px;
@@ -745,7 +745,7 @@ onMounted(() => {
 }
 .skeleton-card {
   cursor: default;
-  border: 2px solid var(--border-color);
+  border: 2px solid var(--border-default);
   position: relative;
   overflow: hidden;
   
@@ -788,7 +788,7 @@ onMounted(() => {
   .skeleton-input-field {
     width: 100%;
     height: 100%;
-    border: 2px solid var(--border-color);
+    border: 2px solid var(--border-default);
     border-radius: 12px;
     background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
     position: relative;

@@ -104,7 +104,7 @@ const handleResetSecurity = async () => {
 
 .profile-card {
   background: var(--card-background);
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 12px;
   padding: 16px;
 }
@@ -115,7 +115,7 @@ const handleResetSecurity = async () => {
 }
 
 .action-btn {
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   background: #fff;
   border-radius: 10px;
   padding: 8px 16px;
@@ -142,12 +142,12 @@ const handleResetSecurity = async () => {
   width: min(420px, 92vw);
   border-radius: 12px;
   background: var(--card-background);
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
 }
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-default);
   display: flex;
   align-items: center;
   justify-content: space-between;

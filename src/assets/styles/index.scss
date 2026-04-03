@@ -106,6 +106,26 @@
   margin-bottom: var(--global-card-gap);
 }
 
+.app-content-wrapper :where(
+  .account-container,
+  .announcement-page,
+  .config-management,
+  .deposit-container,
+  .gift-card-page,
+  .mobile-ticket-container,
+  .my-center,
+  .order-confirm-container,
+  .orders-container,
+  .payment-container,
+  .security-container,
+  .shop-container,
+  .ticket-container,
+  .trafficlog-container
+) :where(.dashboard-card, .section-block, .section-wrapper, .profile-card, .order-summary) {
+  box-shadow: var(--shadow-sm);
+}
+
+
 @media (max-width: 1200px) {
   :root {
     --global-card-gap: #{map.get($spacers, 2)};
@@ -172,7 +192,7 @@
 }
 
 .payment-container .section-wrapper .info-row.final-row {
-  border-top: 1px dashed var(--border-color);
+  border-top: 1px dashed var(--border-default);
   padding-top: 8px;
   margin-top: 4px;
   margin-bottom: 0;
@@ -249,7 +269,7 @@
   color: var(--text-primary);
   border-radius: $border-radius-sm;
   overflow: hidden;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -297,7 +317,7 @@
   min-height: 40px;
   padding: 8px 0;
   border-radius: $border-radius-sm;
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   font-size: $font-size-md;
   cursor: pointer;
   font-weight: $font-weight-medium;

@@ -68,14 +68,14 @@ const variantClass = computed(() => `info-card--${props.variant}`);
 .info-card {
   --info-card-padding: var(--space-4);
   --info-card-radius: var(--radius-lg);
-  --info-card-border: var(--border-color);
+  --info-card-border: var(--border-default);
   --info-card-bg: rgba(var(--card-background-rgb), 0.95);
 
   width: 100%;
   border-radius: var(--info-card-radius);
   border: 1px solid var(--info-card-border);
   background: var(--info-card-bg);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
   padding: var(--info-card-padding);
   display: flex;
   align-items: flex-start;
@@ -138,7 +138,7 @@ const variantClass = computed(() => `info-card--${props.variant}`);
   &:hover {
     transform: translateY(-1px);
     border-color: rgba(var(--theme-color-rgb), 0.28);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
   }
 }
 </style>

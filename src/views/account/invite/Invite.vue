@@ -899,7 +899,7 @@ export default {
   }
 
   .kpi-item {
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
     border-radius: 10px;
     padding: 8px;
     background: rgba(var(--theme-color-rgb), 0.03);
@@ -1536,7 +1536,7 @@ export default {
 
 .dashboard-card {
   background: var(--card-bg-color);
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 12px;
   padding: 8px;
 }
@@ -1592,7 +1592,7 @@ export default {
 }
 
 .modal-footer .btn-cancel {
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   background: transparent;
   color: var(--text-primary);
   min-width: 92px;
@@ -1619,7 +1619,7 @@ export default {
 }
 
 .kpi-item {
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 10px;
   padding: 8px;
 }
@@ -1653,7 +1653,7 @@ export default {
 .invite-cards-nav {
   width: 30px;
   height: 30px;
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
@@ -1682,7 +1682,7 @@ export default {
 }
 
 .invite-card-inner {
-  border: 1px solid rgba(var(--theme-color-rgb), 0.2);
+  border: var(--border-width) solid var(--border-hover);
   border-radius: 14px;
   padding: 16px;
   background: linear-gradient(135deg, rgba(43, 46, 124, 0.98), rgba(53, 58, 138, 0.92));
@@ -1708,7 +1708,7 @@ export default {
   width: 100%;
   display: block;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: var(--border-width) solid var(--border-subtle);
   background: rgba(255, 255, 255, 0.08);
   padding: 8px 8px;
   white-space: nowrap;
@@ -1812,7 +1812,7 @@ export default {
 
 .invite-step {
   background: #f8faff;
-  border: 1px solid rgba(var(--theme-color-rgb), 0.1);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: 12px;
   padding: 16px;
 }
@@ -1904,7 +1904,7 @@ export default {
 
 .records-table th,
 .records-table td {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-default);
   padding: 8px 4px;
   white-space: nowrap;
   text-align: left;
@@ -1930,12 +1930,12 @@ export default {
   overflow: auto;
   background: var(--card-background);
   border-radius: 12px;
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
 }
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1996,7 +1996,7 @@ export default {
 
   &.alert-warning {
     background: rgba(245, 158, 11, 0.1);
-    border: 1px solid rgba(245, 158, 11, 0.28);
+    border: var(--border-width) solid var(--border-hover);
     border-left: 4px solid rgba(245, 158, 11, 0.92);
   }
 
@@ -2036,7 +2036,7 @@ export default {
 .input-with-prefix {
   display: grid;
   grid-template-columns: auto 1fr;
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 12px;
   background: var(--card-background);
   overflow: hidden;
@@ -2053,7 +2053,7 @@ export default {
   align-items: center;
   justify-content: center;
   background: rgba(var(--text-color-rgb), 0.04);
-  border-right: 1px solid var(--border-color);
+  border-right: var(--border-width) solid var(--border-default);
   @extend %typo-item-title;
 }
 
@@ -2079,7 +2079,7 @@ export default {
 
 .modal-footer {
   padding: 16px 16px 16px;
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: flex-end;
   gap: 8px;

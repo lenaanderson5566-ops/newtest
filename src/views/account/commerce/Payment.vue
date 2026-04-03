@@ -1139,7 +1139,7 @@ export default {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
     padding: map.get($spacers, 3);
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
     transition: all 0.3s ease;
     position: relative;
 
@@ -1192,7 +1192,7 @@ export default {
     border-radius: $border-radius-sm;
     padding: 16px;
     margin-bottom: 24px;
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
     transition: all 0.3s ease;
 
     &:last-child {
@@ -1200,7 +1200,7 @@ export default {
     }
 
     &:hover {
-      border-color: var(--border-color);
+      border-color: var(--border-default);
     }
 
     .overview-plan-block {
@@ -1220,7 +1220,7 @@ export default {
 
     .overview-divider {
       height: 1px;
-      background-color: var(--border-color);
+      background-color: var(--border-default);
       margin: 8px 0 8px;
     }
 
@@ -1275,7 +1275,7 @@ export default {
   .overview-cancel-btn {
     height: 30px;
     padding: 0 8px;
-    border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+    border: var(--border-width) solid var(--border-active);
     border-radius: $border-radius-sm;
     background: transparent;
     color: var(--theme-color);
@@ -1304,7 +1304,7 @@ export default {
 
   .right-column .section-wrapper.payment-methods-section {
     background: var(--right-card-bg) !important;
-    border: 1px solid var(--right-card-border) !important;
+    border: var(--border-width) solid var(--border-default) !important;
   }
 
   .right-column .section-wrapper.payment-methods-section .section-title {
@@ -1313,7 +1313,7 @@ export default {
 
   .order-amount-section {
     background: var(--card-bg-color);
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
 
     .summary-header-block {
       margin-bottom: 12px;
@@ -1330,7 +1330,7 @@ export default {
       color: var(--text-primary);
 
       &::after {
-        background-color: var(--border-color);
+        background-color: var(--border-default);
       }
     }
 
@@ -1388,7 +1388,7 @@ export default {
 
       .summary-divider {
         height: 1px;
-        background-color: var(--border-color);
+        background-color: var(--border-default);
         margin: 16px 0;
 
         &.strong {
@@ -1408,7 +1408,7 @@ export default {
 
   .right-column .order-amount-section {
     background: var(--right-card-bg) !important;
-    border: 1px solid var(--right-card-border) !important;
+    border: var(--border-width) solid var(--border-default) !important;
   }
 
   .right-column .order-amount-section .section-title,
@@ -1437,7 +1437,7 @@ export default {
       cursor: pointer;
       transition: border-color 0.2s ease, background-color 0.2s ease;
       border: none;
-      border-top: 1px solid rgba(148, 163, 184, 0.32);
+      border-top: var(--border-width) solid var(--border-hover);
       background-color: rgba(255, 255, 255, 0.95);
 
       &:hover {
@@ -1518,7 +1518,7 @@ export default {
     padding: 16px;
     background-color: rgba(76, 175, 80, 0.1);
     border-radius: $border-radius-sm;
-    border: 1px solid rgba(76, 175, 80, 0.2);
+    border: var(--border-width) solid var(--border-hover);
 
     .notice-icon {
       margin-right: 16px;
@@ -1602,7 +1602,7 @@ export default {
 
         .btn-back.secondary-action {
           background: transparent;
-          border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+          border: var(--border-width) solid var(--border-active);
           color: var(--theme-color);
 
           &:hover:not(:disabled) {
@@ -1654,7 +1654,7 @@ export default {
       background-color: transparent;
       color: var(--text-primary);
       flex: 1;
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
 
       &:hover:not(:disabled) {
         background-color: var(--hover-color);
@@ -1688,7 +1688,7 @@ export default {
       background-color: var(--hover-color);
       color: var(--text-primary);
       flex: 1;
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
 
       &:hover:not(:disabled) {
         background-color: var(--card-bg-color);
@@ -2066,7 +2066,7 @@ export default {
 
     .cancel-btn {
       background-color: transparent;
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
       color: var(--text-primary);
 
       &:hover {
@@ -2124,7 +2124,7 @@ export default {
   padding: 4px 8px;
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
-  border: 1px solid transparent;
+  border: var(--border-width) solid transparent;
   transition: all 0.3s ease;
 
   &.status-transition {

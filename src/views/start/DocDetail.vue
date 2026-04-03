@@ -1360,7 +1360,7 @@ onUnmounted(() => {
     padding: 24px;
 
 
-    border: 1px solid rgba(var(--theme-color-rgb), 0.1);
+    border: var(--border-width) solid var(--border-subtle);
 
     animation: errorAppear 0.5s ease-out;
 
@@ -1533,7 +1533,7 @@ onUnmounted(() => {
   padding: 24px;
 
 
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
 
   transition: all 0.3s ease;
 
@@ -1566,7 +1566,7 @@ onUnmounted(() => {
 
   padding-bottom: 16px;
 
-  border-bottom: 1px solid rgba(var(--theme-color-rgb), 0.1);
+  border-bottom: var(--border-width) solid var(--border-subtle);
 
   
 
@@ -1677,7 +1677,7 @@ onUnmounted(() => {
 
     padding-bottom: 8px;
 
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-width) solid var(--border-default);
 
   }
 
@@ -1691,7 +1691,7 @@ onUnmounted(() => {
 
     margin-top: 24px;
 
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-width) solid var(--border-default);
 
   }
 
@@ -1837,7 +1837,7 @@ onUnmounted(() => {
 
     transition: all 0.3s ease;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
 
 
     
@@ -1871,7 +1871,7 @@ onUnmounted(() => {
 
     color: var(--theme-color);
 
-    border: 1px solid rgba(var(--theme-color-rgb), 0.1);
+    border: var(--border-width) solid var(--border-subtle);
 
     transition: background-color 0.2s ease;
 
@@ -1893,7 +1893,7 @@ onUnmounted(() => {
 
     margin: 24px 0;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
 
 
     position: relative;
@@ -2030,7 +2030,7 @@ onUnmounted(() => {
     border-radius: 6px;
 
 
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
 
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
 
@@ -2061,7 +2061,7 @@ onUnmounted(() => {
 
       tr {
 
-        border-bottom: 2px solid var(--border-color);
+        border-bottom: 2px solid var(--border-default);
 
       }
 
@@ -2073,7 +2073,7 @@ onUnmounted(() => {
 
       padding: 16px 16px;
 
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
 
       text-align: left;
 
@@ -2125,7 +2125,7 @@ onUnmounted(() => {
 
     border: none;
 
-    background-color: var(--border-color);
+    background-color: var(--border-default);
 
     margin: 24px 0;
 
@@ -2171,7 +2171,7 @@ onUnmounted(() => {
 
     padding-top: 16px;
 
-    border-top: 1px solid var(--border-color);
+    border-top: var(--border-width) solid var(--border-default);
 
     font-size: $font-size-sm;
 
@@ -2193,7 +2193,7 @@ onUnmounted(() => {
 
     background-color: rgba(var(--theme-color-rgb), 0.05);
 
-    border: 1px solid rgba(var(--theme-color-rgb), 0.15);
+    border: var(--border-width) solid var(--border-subtle);
 
 
     position: relative;

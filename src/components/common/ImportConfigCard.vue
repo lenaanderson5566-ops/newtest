@@ -267,7 +267,7 @@ onMounted(() => {
   }
 
   .platform-button {
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
     background: var(--card-background);
     border-radius: 999px;
     padding: 8px 16px;
@@ -299,7 +299,7 @@ onMounted(() => {
     }
 
     .platform-option {
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
       border-radius: 14px;
       padding: 8px 16px;
       background: var(--card-background);
@@ -328,7 +328,7 @@ onMounted(() => {
 
     .no-clients-tip {
       padding: 8px;
-      border: 1px dashed var(--border-color);
+      border: 1px dashed var(--border-default);
       border-radius: 10px;
       color: var(--text-tertiary);
       font-size: $font-size-sm;

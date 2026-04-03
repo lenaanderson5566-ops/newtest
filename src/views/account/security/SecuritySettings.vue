@@ -409,13 +409,13 @@ onMounted(() => {
 
 .profile-card {
   background: var(--card-bg-color);
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 12px;
 }
 
 .card-header {
   padding: 16px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   h3 {
     margin: 0;
@@ -428,7 +428,7 @@ onMounted(() => {
 }
 
 .action-btn {
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   background: var(--card-bg-color);
   padding: 8px 8px;
   border-radius: 8px;
@@ -464,7 +464,7 @@ onMounted(() => {
   display: flex;
   gap: 8px;
   padding: 8px 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   &:last-child {
     border-bottom: 0;
@@ -490,12 +490,12 @@ onMounted(() => {
   font-size: $font-size-sm;
   color: var(--theme-color);
   background: rgba(var(--theme-color-rgb), 0.12);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.28);
+  border: var(--border-width) solid var(--border-active);
   white-space: nowrap;
 }
 
 .remove-session-btn {
-  border: 1px solid rgba(255, 77, 79, 0.5);
+  border: var(--border-width) solid var(--border-hover);
   background: transparent;
   color: var(--error-color);
   border-radius: 8px;
@@ -518,7 +518,7 @@ onMounted(() => {
 }
 
 .refresh-btn {
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   background: transparent;
   border-radius: 8px;
   padding: 4px 8px;
@@ -581,7 +581,7 @@ onMounted(() => {
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -633,7 +633,7 @@ onMounted(() => {
     input {
       width: 100%;
       padding: 8px 8px;
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
       border-radius: 8px;
       background-color: var(--bg-secondary);
       color: var(--text-primary);
@@ -656,7 +656,7 @@ onMounted(() => {
 
 .modal-footer {
   padding: 16px 16px;
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: flex-end;
   gap: 8px;
@@ -671,7 +671,7 @@ onMounted(() => {
 
     &.btn-cancel {
       background-color: transparent;
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
       color: var(--text-primary);
 
       &:hover {

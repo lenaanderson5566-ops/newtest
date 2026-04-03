@@ -211,8 +211,8 @@ export default {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: $border-radius-sm;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
-  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  border: var(--border-width) solid var(--border-default);
   z-index: 200;
   overflow: hidden;
 }

@@ -212,8 +212,8 @@ export default {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: $border-radius-sm;
-  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
-  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  border: var(--border-width) solid var(--border-default);
   overflow: hidden;
   z-index: 100;
   animation: dropdownFadeIn 0.2s ease;
@@ -267,7 +267,7 @@ export default {
   
   .divider {
     height: 1px;
-    background-color: var(--border-color);
+    background-color: var(--border-default);
     margin: 4px 0;
   }
 }

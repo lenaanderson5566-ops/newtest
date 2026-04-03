@@ -602,7 +602,7 @@ $space-2: map.get($spacers, 2);
   gap: 0;
   overflow-x: auto;
   background: var(--card-bg-color, var(--card-background));
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
 }
 
@@ -641,7 +641,7 @@ $space-2: map.get($spacers, 2);
 .section-block {
   border-radius: $border-radius-sm;
   background-color: var(--card-background);
-  border: 1px solid rgba(15, 23, 42, 0.15);
+  border: var(--border-width) solid var(--border-hover);
   transition: box-shadow 0.22s ease, border-color 0.22s ease;
 
   &:hover {
@@ -672,7 +672,7 @@ $space-2: map.get($spacers, 2);
 
 .recent-login-list {
   margin-top: 0;
-  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-top: var(--border-width) solid var(--border-subtle);
 }
 
 .recent-login-state {
@@ -689,7 +689,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .recent-login-item + .recent-login-item {
-  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-top: var(--border-width) solid var(--border-subtle);
 }
 
 .recent-login-main {
@@ -815,7 +815,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .summary-nav-row {
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
   padding-left: 8px;
   padding-right: 8px;
@@ -823,7 +823,7 @@ $space-2: map.get($spacers, 2);
 
 .summary-item {
   padding: 8px;
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
   background: linear-gradient(180deg, rgba(var(--card-background-rgb), 0.96), rgba(var(--card-background-rgb), 0.9));
 
@@ -919,7 +919,7 @@ $space-2: map.get($spacers, 2);
 
 .settings-list {
   overflow: hidden;
-  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-top: var(--border-width) solid var(--border-subtle);
 }
 
 .settings-row,
@@ -934,7 +934,7 @@ $space-2: map.get($spacers, 2);
 
 .settings-row + .settings-row,
 .nav-row + .nav-row {
-  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-top: var(--border-width) solid var(--border-subtle);
 }
 
 .row-main { min-width: 0; }
@@ -958,7 +958,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .tier-intro-card {
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: 12px;
   background: rgba(var(--card-background-rgb), 0.7);
   padding: 8px;
@@ -1042,7 +1042,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1096,7 +1096,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   input {
     width: 100%;
     padding: 8px 8px;
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
     border-radius: 8px;
     background-color: var(--bg-secondary);
     color: var(--text-primary);
@@ -1118,7 +1118,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 .modal-footer {
   padding: 16px 16px;
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: flex-end;
   gap: #{$space-2};
@@ -1130,7 +1130,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   border-radius: 8px;
   font-size: $font-size-md;
   cursor: pointer;
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   background: transparent;
   color: var(--text-primary);
 }
@@ -1191,8 +1191,8 @@ input:checked + .slider:before { transform: translateX(18px); }
     border-radius: 0;
     border-left: none;
     border-right: none;
-    border-top: 1px solid rgba(15, 23, 42, 0.08);
-    border-bottom: 1px solid rgba(15, 23, 42, 0.12);
+    border-top: var(--border-width) solid var(--border-subtle);
+    border-bottom: var(--border-width) solid var(--border-subtle);
     padding: 0 8px;
     background: #fff;
   }

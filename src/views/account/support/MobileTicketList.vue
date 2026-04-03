@@ -791,7 +791,7 @@ fetchTickets();
 
   padding: 16px;
 
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
 
   transition: all 0.3s ease;
 
@@ -911,7 +911,7 @@ fetchTickets();
 
   border-radius: 12px;
 
-  border: 1px dashed var(--border-color);
+  border: 1px dashed var(--border-default);
 
   p {
     margin: 16px 0;
@@ -973,7 +973,7 @@ fetchTickets();
 .ticket-item {
   background-color: var(--card-bg);
 
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
 
   border-radius: 10px;
 
@@ -1056,7 +1056,7 @@ fetchTickets();
 
     padding-top: 8px;
 
-    border-top: 1px dashed rgba(var(--border-color-rgb), 0.5);
+    border-top: 1px dashed rgba(var(--border-default-rgb), 0.5);
   }
 }
 
@@ -1099,7 +1099,7 @@ fetchTickets();
 
   background-color: var(--card-bg);
 
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1291,7 +1291,7 @@ fetchTickets();
 
     border-radius: 12px;
 
-    border: 1px dashed var(--border-color);
+    border: 1px dashed var(--border-default);
 
 
     p {
@@ -1327,7 +1327,7 @@ fetchTickets();
 
   border-radius: 12px;
 
-  border: 1px dashed var(--border-color);
+  border: 1px dashed var(--border-default);
 
   margin: 16px 0;
 
@@ -1469,7 +1469,7 @@ fetchTickets();
 
   background-color: var(--card-bg);
 
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1492,7 +1492,7 @@ fetchTickets();
 
     padding: 16px;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
 
     border-radius: 12px;
 
@@ -1582,7 +1582,7 @@ fetchTickets();
 
   background-color: var(--card-bg);
 
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1648,7 +1648,7 @@ fetchTickets();
 
   animation: slideIn 0.3s ease;
 
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
 
 
   &.closing {
@@ -1659,7 +1659,7 @@ fetchTickets();
 .modal-header {
   padding: 24px;
 
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1744,7 +1744,7 @@ fetchTickets();
 
       padding: 16px 16px;
 
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
 
       border-radius: 10px;
 
@@ -1785,7 +1785,7 @@ fetchTickets();
 
       padding: 16px;
 
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
 
       border-radius: 10px;
 
@@ -1824,7 +1824,7 @@ fetchTickets();
 .modal-footer {
   padding: 24px;
 
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1850,7 +1850,7 @@ fetchTickets();
     &.cancel-btn {
       background-color: var(--card-bg);
 
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
 
       color: var(--text-primary);
 
@@ -2068,7 +2068,7 @@ fetchTickets();
 
     width: 450px;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
 
     animation: scaleIn 0.5s ease;
 

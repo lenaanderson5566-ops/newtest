@@ -375,8 +375,7 @@ import { fetchPlans, submitOrder } from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
-
-const noTrafficDataImage = new URL('../../assets/images/dashboard/no-traffic-data.svg', import.meta.url).href;
+import noTrafficDataImage from '@/assets/images/dashboard/no-traffic-data.svg';
 
 export default {
   name: 'UserDashboard',
@@ -1228,7 +1227,7 @@ export default {
       const textColor =
         rootStyles.getPropertyValue('--text-primary').trim() ||
         `rgb(${rootStyles.getPropertyValue('--text-color-rgb').trim() || '51, 51, 51'})`;
-      const borderColor = rootStyles.getPropertyValue('--border-color').trim() || '#e8e8e8';
+      const borderColor = rootStyles.getPropertyValue('--border-default').trim() || '#e8e8e8';
       const themeColor = rootStyles.getPropertyValue('--theme-color').trim() || '#6753f6';
       const lightGridColor = 'rgba(148, 163, 184, 0.14)';
       trafficTrendChart = echarts.init(trafficTrendChartRef.value);
@@ -1525,7 +1524,7 @@ $space-2: map.get($spacers, 2);
   --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
   --dashboard-shadow-compact: none;
-  --dashboard-border-color: var(--card-border-subtle);
+  --dashboard-border-color: var(--border-subtle);
   --dashboard-title-size: 14px;
   --dashboard-subtitle-color: var(--text-tertiary);
   --dashboard-value-size: 30px;
@@ -1536,7 +1535,7 @@ $space-2: map.get($spacers, 2);
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
   --saas-text-secondary: var(--text-tertiary);
-  --saas-border-soft: #eef1f5;
+  --saas-border-soft: var(--divider);
   --saas-card-bg: #ffffff;
   --saas-card-shadow: none;
 
@@ -1546,7 +1545,7 @@ $space-2: map.get($spacers, 2);
   --theme-text-emphasis: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
-  --theme-border-soft: var(--card-border-soft);
+  --theme-border-soft: var(--divider);
   --theme-white: #ffffff;
   --quota-label-color: var(--text-tertiary);
   --quota-value-color: var(--text-primary);
@@ -1554,7 +1553,7 @@ $space-2: map.get($spacers, 2);
   --quota-progress-end: #3b82f6;
   --quota-muted-fill: #cbd5e1;
   --quota-total-bg-end: #f8fbff;
-  --quota-expired-border: #d1d5db;
+  --quota-expired-border: var(--border-hover);
   --plan-meta-text: var(--text-tertiary);
   --plan-expired-strip-text: #b91c1c;
   --plan-expired-strip-bg: rgba(248, 113, 113, 0.16);
@@ -1596,7 +1595,7 @@ $space-2: map.get($spacers, 2);
   .dashboard-card {
     background-color: var(--saas-card-bg);
     padding: var(--dashboard-card-padding);
-    border: 1px solid var(--dashboard-border-color);
+    border: var(--border-width) solid var(--border-subtle);
     border-radius: var(--dashboard-radius);
     transition: box-shadow 0.2s ease;
 
@@ -1606,7 +1605,7 @@ $space-2: map.get($spacers, 2);
 
     .card-header {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       margin-bottom: #{$space-2};
 
@@ -1700,7 +1699,7 @@ $space-2: map.get($spacers, 2);
       padding: var(--dashboard-card-padding);
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
-      border: 1px solid var(--dashboard-border-color);
+      border: var(--border-width) solid var(--border-subtle);
 
       &.traffic-board-card {
         width: 100%;
@@ -1786,9 +1785,6 @@ $space-2: map.get($spacers, 2);
         }
 
         &.expired-main-card {
-          background: var(--theme-surface-muted);
-          border-color: var(--quota-expired-border);
-
           .usage-card-title {
             color: var(--text-tertiary);
           }
@@ -1809,7 +1805,7 @@ $space-2: map.get($spacers, 2);
             font-weight: $font-weight-semibold;
             color: var(--plan-expired-strip-text);
             background: var(--plan-expired-strip-bg);
-            border: 1px solid var(--plan-expired-strip-border);
+            border: var(--border-width) solid var(--border-hover);
           }
 
           .plan-summary-section {
@@ -1932,7 +1928,7 @@ $space-2: map.get($spacers, 2);
             font-size: $font-size-md;
             font-weight: $font-weight-semibold;
             color: var(--text-on-dark-primary);
-            border: 1px solid rgba(255, 255, 255, 0.26);
+            border: var(--border-width) solid var(--border-subtle);
             background: rgba(255, 255, 255, 0.2);
             position: absolute;
             right: 0;
@@ -1954,7 +1950,7 @@ $space-2: map.get($spacers, 2);
 
 
             .plan-action-btn {
-              flex: 1;
+              flex: 0 1 auto;
               border-radius: var(--dashboard-button-radius);
               padding: 8px 16px;
               font-size: $font-size-sm;
@@ -2014,7 +2010,7 @@ $space-2: map.get($spacers, 2);
               cursor: pointer;
               inset: 0;
               background-color: var(--surface-subtle);
-              border: 1px solid var(--border-color);
+              border: none;
               transition: 0.4s;
 
               &.loading {
@@ -2117,14 +2113,14 @@ $space-2: map.get($spacers, 2);
 
       &.traffic-board-subscription {
         --traffic-card-bg: linear-gradient(
-          270deg,
+          90deg,
           rgba(255, 255, 255, 0.98) 0%,
-          rgba(66, 133, 244, 0.12) 54%,
-          rgba(34, 89, 170, 0.22) 100%
+          rgba(66, 133, 244, 0.08) 56%,
+          rgba(34, 89, 170, 0.14) 100%
         );
-        background: var(--traffic-card-bg) !important;
-        border: 1px solid rgba(34, 89, 170, 0.22);
-        box-shadow: 0 10px 24px rgba(34, 89, 170, 0.1);
+        background: var(--traffic-card-bg);
+        border: var(--border-width) solid var(--border-subtle);
+        box-shadow: var(--shadow-md);
 
         .usage-card-title,
         .usage-percent,
@@ -2142,6 +2138,7 @@ $space-2: map.get($spacers, 2);
         .section-progress-track {
           background: var(--theme-border-soft);
         }
+
       }
 
       &.traffic-board-package {
@@ -2153,17 +2150,25 @@ $space-2: map.get($spacers, 2);
 
       &.traffic-board-total {
         --traffic-card-bg: linear-gradient(
-          135deg,
-          rgba(34, 89, 170, 0.2) 0%,
-          rgba(90, 57, 216, 0.1) 58%,
-          rgba(255, 255, 255, 0.98) 100%
+          90deg,
+          rgba(255, 255, 255, 0.98) 0%,
+          rgba(66, 133, 244, 0.08) 56%,
+          rgba(34, 89, 170, 0.14) 100%
         );
-        background: var(--traffic-card-bg) !important;
-        border: 1px solid rgba(34, 89, 170, 0.2);
-        box-shadow: 0 12px 26px rgba(34, 89, 170, 0.1);
+        background: var(--traffic-card-bg);
+        border: var(--border-width) solid var(--border-subtle);
+        box-shadow: var(--shadow-md);
 
         .usage-card-title {
           color: var(--text-primary);
+        }
+
+        .plan-summary-card,
+        .plan-summary-section,
+        .plan-summary-section-meta,
+        .plan-summary-actions,
+        .plan-action-btn {
+          box-shadow: none;
         }
       }
 
@@ -2171,7 +2176,8 @@ $space-2: map.get($spacers, 2);
         .plan-summary-card {
           .plan-summary-section-meta {
             background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: none;
+            box-shadow: none;
 
             .plan-name-main {
               color: var(--text-on-dark-primary);
@@ -2179,6 +2185,41 @@ $space-2: map.get($spacers, 2);
 
             .plan-expire-meta {
               color: var(--text-on-dark-secondary);
+            }
+          }
+        }
+      }
+
+      &.traffic-board-total.expired-main-card {
+        --traffic-card-bg: var(--theme-surface-muted);
+        background: var(--theme-surface-muted);
+        border: var(--border-width) solid var(--border-hover);
+        box-shadow: var(--shadow-md);
+
+        .plan-summary-card {
+          .plan-summary-section-meta {
+            background: linear-gradient(
+              135deg,
+              rgba(152, 173, 209, 0.92) 0%,
+              rgba(164, 171, 211, 0.9) 52%,
+              rgba(176, 166, 203, 0.9) 100%
+            );
+            border: none;
+            box-shadow: none;
+
+            .plan-name-main {
+              color: rgba(248, 250, 252, 0.98);
+            }
+
+            .plan-expire-meta,
+            .plan-expire-meta .expire-suffix {
+              color: rgba(241, 245, 249, 0.92);
+            }
+
+            .plan-status-tag {
+              color: rgba(248, 250, 252, 0.98);
+              border: var(--border-width) solid var(--border-hover);
+              background: rgba(148, 163, 184, 0.14);
             }
           }
         }
@@ -2235,7 +2276,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &:hover {
-        border-color: var(--card-border-hover);
+        border-color: var(--border-hover);
       }
     }
   }
@@ -2245,7 +2286,7 @@ $space-2: map.get($spacers, 2);
   .overview-card--traffic-quota {
     border-radius: var(--dashboard-radius);
     background: var(--saas-card-bg);
-    border: 1px solid var(--dashboard-border-color);
+    border: var(--border-width) solid var(--border-subtle);
   }
 
   .stats-grid .stats-card.overview-card,
@@ -2259,9 +2300,15 @@ $space-2: map.get($spacers, 2);
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
     background: var(--traffic-card-bg, var(--saas-card-bg));
-    border: 1px solid transparent;
+    border: var(--border-width) solid var(--border-subtle);
     border-radius: var(--dashboard-radius);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
+  }
+
+  .stats-grid .stats-card.traffic-board-subscription.subscription-card-muted,
+  .stats-grid .stats-card.traffic-board-subscription.quota-card-muted {
+    border-color: var(--theme-border-soft);
+    background: var(--theme-surface-muted);
   }
 
   .stats-grid .stats-card.today-traffic-card .usage-card-title,
@@ -2409,8 +2456,8 @@ $space-2: map.get($spacers, 2);
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+      justify-content: center;
+      gap: 14px;
       padding: 0;
       border: none;
       border-radius: 0;
@@ -2419,17 +2466,17 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-content {
-      flex: 1;
+      flex: 0 1 auto;
       align-items: center;
       justify-content: center;
       display: flex;
       flex-direction: column;
-      text-align: left;
-      gap: 12px;
+      text-align: center;
+      gap: 14px;
     }
 
     .trend-empty-image {
-      width: 280px;
+      width: 220px;
       flex: 0 0 auto;
       max-width: 100%;
       height: auto;
@@ -2450,7 +2497,7 @@ $space-2: map.get($spacers, 2);
     .trend-empty-desc {
       @extend %typo-meta-text;
       color: var(--text-tertiary);
-      max-width: 420px;
+      max-width: 360px;
     }
 
     .trend-empty-action {
@@ -2467,7 +2514,7 @@ $space-2: map.get($spacers, 2);
     margin-bottom: 4px;
     padding: 14px 16px;
     border-radius: var(--dashboard-radius);
-    border: 1px solid var(--theme-border-color);
+    border: none;
     background: var(--theme-surface-elevated);
 
     &.is-active {
@@ -2500,7 +2547,7 @@ $space-2: map.get($spacers, 2);
     max-height: 48px;
     padding: 4px 8px;
     border-radius: var(--dashboard-radius);
-    border: 1px solid rgba(var(--warning-color-rgb), 0.4);
+    border: var(--border-width) solid var(--border-hover);
     background: var(--warning-background);
     display: flex;
     align-items: center;
@@ -2725,7 +2772,7 @@ $space-2: map.get($spacers, 2);
   padding: 16px;
   animation: none;
   background-color: var(--card-bg-color);
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   position: relative;
 }
 
@@ -2754,7 +2801,7 @@ $space-2: map.get($spacers, 2);
   max-width: var(--page-content-max-width);
   width: 100%;
   background: var(--card-background);
-  border: 1px solid var(--dashboard-border-color);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: var(--dashboard-radius);
   padding: 16px;
   margin-bottom: 0;
@@ -2772,7 +2819,7 @@ $space-2: map.get($spacers, 2);
   gap: 20px;
   border-radius: 14px;
   padding: 22px;
-  border: 1px solid rgba(var(--theme-color-rgb), 0.16);
+  border: var(--border-width) solid var(--border-subtle);
   background:
     radial-gradient(circle at 82% 18%, rgba(59, 130, 246, 0.16), transparent 40%),
     radial-gradient(circle at 18% 78%, rgba(99, 102, 241, 0.1), transparent 46%),
@@ -2801,7 +2848,7 @@ $space-2: map.get($spacers, 2);
   padding: 6px 12px;
   border-radius: 999px;
   color: #b45309;
-  border: 1px solid rgba(245, 158, 11, 0.32);
+  border: var(--border-width) solid var(--border-hover);
   background: rgba(245, 158, 11, 0.14);
 }
 
@@ -2827,7 +2874,7 @@ $space-2: map.get($spacers, 2);
 
 .hero-btn {
   min-width: 144px;
-  border: 1px solid transparent;
+  border: var(--border-width) solid transparent;
   border-radius: 10px;
   padding: 10px 18px;
   cursor: pointer;
@@ -2851,7 +2898,7 @@ $space-2: map.get($spacers, 2);
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(148, 163, 184, 0.22);
+  border: var(--border-width) solid var(--border-hover);
   background:
     radial-gradient(circle at 30% 75%, rgba(99, 102, 241, 0.1), transparent 45%),
     radial-gradient(circle at 84% 20%, rgba(59, 130, 246, 0.15), transparent 40%),
@@ -3086,7 +3133,7 @@ $space-2: map.get($spacers, 2);
   max-height: calc(100vh - 32px);
   overflow: hidden;
   background-color: var(--card-background);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.15);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: 16px;
 
   .modal-header {
@@ -3094,7 +3141,7 @@ $space-2: map.get($spacers, 2);
     align-items: center;
     justify-content: space-between;
     padding: 16px 16px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-width) solid var(--border-default);
     background-color: rgba(var(--theme-color-rgb), 0.03);
 
     h3 {
@@ -3127,7 +3174,7 @@ $space-2: map.get($spacers, 2);
 
   .modal-footer {
     padding: 16px 16px;
-    border-top: 1px solid var(--border-color);
+    border-top: var(--border-width) solid var(--border-default);
     display: flex;
     justify-content: flex-end;
     gap: #{$space-2};
@@ -3155,7 +3202,7 @@ $space-2: map.get($spacers, 2);
     flex-direction: column;
     gap: #{$space-2};
     padding: 16px;
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
     border-radius: var(--dashboard-radius);
     background: linear-gradient(
       180deg,

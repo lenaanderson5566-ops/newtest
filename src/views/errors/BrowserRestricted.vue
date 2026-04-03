@@ -482,7 +482,7 @@ export default {
 
   overflow: hidden;
 
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
 
   
 
@@ -496,7 +496,7 @@ export default {
 
     padding: 24px 24px;
 
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-width) solid var(--border-default);
 
     background-color: rgba(var(--theme-color-rgb), 0.05);
 
@@ -630,7 +630,7 @@ export default {
 
         padding: 8px 16px;
 
-        border: 1px solid rgba(var(--theme-color-rgb), 0.1);
+        border: var(--border-width) solid var(--border-subtle);
 
         
 
@@ -837,7 +837,7 @@ export default {
 
         margin-top: 16px;
 
-        border-top: 1px solid rgba(var(--theme-color-rgb), 0.1);
+        border-top: var(--border-width) solid var(--border-subtle);
 
         padding-top: 16px;
 

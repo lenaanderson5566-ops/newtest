@@ -88,9 +88,10 @@
 
           <div v-else-if="!trafficData.length" class="empty-container">
 
-            <IconFileOff :size="48" class="empty-icon" />
-
-            <p>{{ $t('trafficLog.noTrafficData') }}</p>
+            <div class="empty-illustration-row">
+              <img :src="noTrafficDataImage" alt="no-traffic-data" class="empty-illustration-image" />
+              <p>{{ $t('trafficLog.noTrafficData') }}</p>
+            </div>
 
           </div>
 
@@ -152,9 +153,10 @@
 
           <div v-else-if="!trafficData.length" class="empty-container">
 
-            <IconFileOff :size="48" class="empty-icon" />
-
-            <p>{{ $t('trafficLog.noTrafficData') }}</p>
+            <div class="empty-illustration-row">
+              <img :src="noTrafficDataImage" alt="no-traffic-data" class="empty-illustration-image" />
+              <p>{{ $t('trafficLog.noTrafficData') }}</p>
+            </div>
 
           </div>
 
@@ -228,7 +230,7 @@ import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
 
 import { useI18n } from 'vue-i18n';
 
-import { IconAlertCircle, IconFileOff } from '@tabler/icons-vue';
+import { IconAlertCircle } from '@tabler/icons-vue';
 
 import { getTrafficLog } from '@/api/account/trafficLog';
 
@@ -261,6 +263,8 @@ const chartRef = ref(null);
 let chartInstance = null;
 
 const showOriginalData = ref(false); // false: 显示倍率后, true: 显示实际
+
+const noTrafficDataImage = new URL('../../../assets/images/dashboard/no-traffic-data.svg', import.meta.url).href;
 
 
 const fetchTrafficData = async () => {
@@ -488,7 +492,7 @@ const initChart = () => {
 
         lineStyle: {
 
-          color: getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || '#e8e8e8'
+          color: getComputedStyle(document.documentElement).getPropertyValue('--border-default').trim() || '#e8e8e8'
 
         }
 
@@ -498,7 +502,7 @@ const initChart = () => {
 
         lineStyle: {
 
-          color: getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || '#e8e8e8'
+          color: getComputedStyle(document.documentElement).getPropertyValue('--border-default').trim() || '#e8e8e8'
 
         }
 
@@ -532,7 +536,7 @@ const initChart = () => {
 
         lineStyle: {
 
-          color: getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || '#e8e8e8'
+          color: getComputedStyle(document.documentElement).getPropertyValue('--border-default').trim() || '#e8e8e8'
 
         }
 
@@ -542,7 +546,7 @@ const initChart = () => {
 
         lineStyle: {
 
-          color: getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || '#e8e8e8'
+          color: getComputedStyle(document.documentElement).getPropertyValue('--border-default').trim() || '#e8e8e8'
 
         }
 
@@ -860,7 +864,7 @@ onUnmounted(() => {
       align-items: center;
       gap: 4px;
       background-color: rgba(var(--theme-color-rgb), 0.05);
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
       border-radius: 20px;
       padding: 8px 16px;
       font-size: $font-size-md;
@@ -895,7 +899,7 @@ onUnmounted(() => {
 
     padding: 16px;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
 
     transition: all 0.3s ease;
 
@@ -994,6 +998,24 @@ onUnmounted(() => {
 
     }
 
+  }
+
+  .empty-illustration-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .empty-illustration-image {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    opacity: 0.9;
   }
 
   
@@ -1096,7 +1118,7 @@ onUnmounted(() => {
 
         text-align: left;
 
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: var(--border-width) solid var(--border-default);
 
         white-space: nowrap; 
 

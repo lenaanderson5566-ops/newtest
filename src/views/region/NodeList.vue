@@ -351,7 +351,8 @@ onMounted(() => {
 
   padding: map.get($spacers, 3);
 
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
+  box-shadow: var(--shadow-sm);
 
   transition: all 0.3s ease;
 
@@ -418,7 +419,7 @@ onMounted(() => {
   }
 
   .quick-btn {
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
     background: #fff;
     color: var(--text-primary);
     border-radius: $border-radius-sm;
@@ -443,7 +444,7 @@ onMounted(() => {
 
   .import-panel {
     margin-top: 16px;
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
     border-radius: $border-radius-sm;
     padding: 16px;
     background: var(--card-bg);
@@ -490,7 +491,7 @@ onMounted(() => {
     }
 
     .platform-button {
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
       background: #f7f7fb;
       border-radius: 999px;
       padding: 8px 16px;
@@ -518,7 +519,7 @@ onMounted(() => {
     }
 
     .platform-option {
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
       border-radius: $border-radius-sm;
       padding: 24px 16px;
       background: #f5f7fb;
@@ -609,7 +610,7 @@ onMounted(() => {
 
 .nodes-no-plan {
   background: var(--card-background);
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   border-radius: $border-radius-sm;
   padding: 24px;
 
@@ -636,7 +637,7 @@ onMounted(() => {
     height: 240px;
     border-radius: $border-radius-sm;
     margin-bottom: 16px;
-    border: 1px solid rgba(var(--theme-color-rgb), 0.22);
+    border: var(--border-width) solid var(--border-hover);
     background:
       radial-gradient(circle at 20% 30%, rgba(var(--theme-color-rgb), 0.22), transparent 35%),
       radial-gradient(circle at 78% 42%, rgba(99, 102, 241, 0.2), transparent 32%),
@@ -711,7 +712,7 @@ onMounted(() => {
     }
 
     .region-lock-card {
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
       border-radius: $border-radius-sm;
       padding: 16px;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.96));
@@ -730,7 +731,7 @@ onMounted(() => {
 
       .unlock-tip-btn {
         margin-top: 8px;
-        border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+        border: var(--border-width) solid var(--border-active);
         background: rgba(var(--theme-color-rgb), 0.08);
         color: rgba(var(--theme-color-rgb), 0.95);
         border-radius: 999px;
@@ -755,7 +756,7 @@ onMounted(() => {
       font-size: $font-size-md;
       font-weight: $font-weight-bold;
       cursor: pointer;
-      border: 1px solid transparent;
+      border: var(--border-width) solid transparent;
     }
 
     .primary {
@@ -765,7 +766,7 @@ onMounted(() => {
 
     .secondary {
       color: var(--neutral-strong);
-      border-color: var(--border-color);
+      border-color: var(--border-default);
       background: var(--surface-subtle);
     }
   }
@@ -805,7 +806,7 @@ onMounted(() => {
   transition: all 0.25s ease;
 
 
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
 
   
 
@@ -1018,7 +1019,7 @@ onMounted(() => {
 
   font-size: $font-size-md;
 
-  border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+  border: var(--border-width) solid var(--border-active);
 
 
   cursor: pointer;

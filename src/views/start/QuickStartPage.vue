@@ -415,7 +415,7 @@ onMounted(fetchUserStatus);
 
 .status-strip {
   background: rgba(var(--theme-color-rgb), 0.06);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.14);
+  border: var(--border-width) solid var(--divider);
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2);
 
@@ -447,8 +447,9 @@ onMounted(fetchUserStatus);
 
 .step-card {
   background: #f8faff;
-  border: 1px solid rgba(47, 85, 212, 0.08);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
+  box-shadow: var(--shadow-sm);
   padding: map.get($spacers, 3);
 
   .step-header {
@@ -491,7 +492,7 @@ onMounted(fetchUserStatus);
 }
 
 .system-item {
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   border-radius: $border-radius-sm;
   background: #fff;
   padding: 8px;
@@ -502,6 +503,7 @@ onMounted(fetchUserStatus);
   justify-content: center;
   gap: 4px;
   position: relative;
+  box-shadow: var(--shadow-sm);
 
   &:hover {
     border-color: rgba(var(--theme-color-rgb), 0.5);
@@ -554,7 +556,7 @@ onMounted(fetchUserStatus);
 }
 
 .client-item {
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   background: #fff;
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2) 24px map.get($spacers, 2) map.get($spacers, 2);
@@ -565,6 +567,7 @@ onMounted(fetchUserStatus);
   position: relative;
   cursor: pointer;
   text-align: left;
+  box-shadow: var(--shadow-sm);
 
   .client-text {
     min-width: 0;
@@ -631,7 +634,7 @@ onMounted(fetchUserStatus);
 
 .action-btn,
 .help-btn {
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   background: #fff;
   color: var(--info-color);
   border-radius: $border-radius-sm;
@@ -641,6 +644,7 @@ onMounted(fetchUserStatus);
   align-items: center;
   justify-content: center;
   gap: 4px;
+  box-shadow: var(--shadow-sm);
 
   &.primary {
     background: #3f72e8;

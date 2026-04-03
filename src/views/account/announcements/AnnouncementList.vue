@@ -75,7 +75,7 @@ export default {
 
 .announcement-item {
   background: #fff;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: var(--border-width) solid var(--border-hover);
   border-radius: $border-radius-sm;
   padding: 16px;
 
@@ -106,7 +106,7 @@ export default {
 .announcement-loading,
 .announcement-empty {
   background: #fff;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: var(--border-width) solid var(--border-hover);
   border-radius: $border-radius-sm;
   padding: 24px;
   text-align: center;

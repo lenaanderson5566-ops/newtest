@@ -622,7 +622,7 @@ export default {
     padding-left: 48px;
     height: 45px;
     border-radius: 8px;
-    border: 1px solid var(--input-border-color, transparent);
+    border: var(--border-width) solid var(--border-default);
     background-color: var(--input-bg-color, #f9f9f9);
     transition: all 0.3s ease;
     color: var(--text-primary);
@@ -682,7 +682,7 @@ export default {
       height: 20px;
       width: 20px;
       background-color: transparent;
-      border: 2px solid var(--border-color);
+      border: 2px solid var(--border-default);
       border-radius: 4px;
       transition: all 0.2s ease;
 
@@ -812,7 +812,7 @@ export default {
   justify-content: center !important;
   line-height: normal !important;
   color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
   background-color: transparent;
   transition: all 0.3s ease;
 

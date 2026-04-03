@@ -404,7 +404,7 @@ watch(locale, () => {
     width: 32px;
     height: 18px;
     border-radius: 999px;
-    border: 1px solid var(--border-color);
+    border: var(--border-width) solid var(--border-default);
     background: rgba(var(--theme-color-rgb), 0.08);
     transition: all 0.2s ease;
     flex: 0 0 auto;
@@ -418,7 +418,7 @@ watch(locale, () => {
       height: 14px;
       border-radius: 50%;
       background: #fff;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+      box-shadow: var(--shadow-xs);
       transition: transform 0.2s ease;
     }
   }
@@ -449,7 +449,7 @@ watch(locale, () => {
   font-size: $font-size-sm;
   
   th, td {
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-width) solid var(--border-default);
     padding: 8px 4px;
     text-align: left;
     white-space: nowrap;
@@ -632,7 +632,7 @@ watch(locale, () => {
   color: var(--text-on-dark-primary);
   font-weight: $font-weight-medium;
   font-size: $font-size-md;
-  border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+  border: var(--border-width) solid var(--border-active);
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(8px);
@@ -698,7 +698,7 @@ watch(locale, () => {
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -740,7 +740,7 @@ watch(locale, () => {
 
 .modal-footer {
   padding: 16px 24px;
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: flex-end;
   gap: 16px;
@@ -755,7 +755,7 @@ watch(locale, () => {
     
     &.btn-cancel {
       background-color: transparent;
-      border: 1px solid var(--border-color);
+      border: var(--border-width) solid var(--border-default);
       color: var(--text-primary);
       
       &:hover {

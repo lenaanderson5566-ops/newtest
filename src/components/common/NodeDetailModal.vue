@@ -789,9 +789,9 @@ watchEffect(() => {
 
   border-radius: $border-radius-sm;
 
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-sm);
 
-  border: 1px solid var(--border-color);
+  border: var(--border-width) solid var(--border-default);
 
   overflow: hidden;
 
@@ -839,7 +839,7 @@ watchEffect(() => {
 
   align-items: center;
 
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   background-color: rgba(var(--theme-color-rgb), 0.03);
 
@@ -943,7 +943,7 @@ watchEffect(() => {
 
     padding: 8px 0;
 
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-width) solid var(--border-default);
 
     
 

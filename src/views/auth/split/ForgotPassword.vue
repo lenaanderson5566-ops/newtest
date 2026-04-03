@@ -2269,7 +2269,7 @@ export default {
 
     border-radius: 8px;
 
-    border: 1px solid var(--input-border-color, transparent);
+    border: var(--border-width) solid var(--border-default);
 
     background-color: var(--input-bg-color, #f9f9f9);
 
@@ -2585,7 +2585,7 @@ export default {
 
       justify-content: space-between;
 
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: var(--border-width) solid var(--border-default);
 
 
 
@@ -2787,7 +2787,7 @@ export default {
 
   color: var(--text-primary) !important;
 
-  border: 1px solid var(--border-color) !important;
+  border: var(--border-width) solid var(--border-default) !important;
 
   background-color: transparent !important;
 
