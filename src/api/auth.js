@@ -249,11 +249,9 @@ export function register(data) {
     } catch (error) {
     }
     
-    console.log('注册成功，准备重新加载语言文件');
     setTimeout(async () => {
       try {
         const result = await reloadMessages();
-        console.log('注册后重新加载语言包结果:', result);
         
         window.dispatchEvent(new CustomEvent('languageChanged'));
       } catch (error) {
@@ -577,7 +575,6 @@ export const checkUserLoginStatus = async () => {
       window.isUserLoggedIn = true;
       return { isLoggedIn: true };
     } else {
-      console.log('登录已过期或失效，清除登录状态');
       forceLogout();
       
       const currentRoute = window.location.pathname;

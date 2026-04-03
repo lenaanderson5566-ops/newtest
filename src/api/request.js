@@ -128,7 +128,6 @@ request.interceptors.response.use(
       const res = response.data;
 
       if (res && (res.message === "未登录或登陆已过期" || res.message === "Not logged in or session expired")) {
-        console.log("Login expired, forcing logout.");
         const { forceLogout } = require("./auth");
         forceLogout();
         window.location.href = "/#/login";
