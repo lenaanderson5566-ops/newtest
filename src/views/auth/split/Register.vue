@@ -292,9 +292,7 @@
 
               <div v-if="formData.password" class="password-rule-tip">
 
-                <IconCheck v-if="passwordMinLengthMet" class="rule-icon met" />
-
-                <IconCircle v-else class="rule-icon unmet" />
+                <IconCheck class="rule-icon" :class="passwordMinLengthMet ? 'met' : 'unmet'" />
 
                 <span :class="{ met: passwordMinLengthMet }">{{ $t('auth.passwordRuleMinLength') }}</span>
 
@@ -529,8 +527,6 @@ import { useRouter } from 'vue-router';
 
 import { useI18n } from 'vue-i18n';
 
-import { IconCircle } from '@tabler/icons-vue';
-
 import { useToast } from '@/composables/useToast';
 
 
@@ -656,8 +652,6 @@ export default {
     IconChevronDown,
 
     IconCheck,
-
-    IconCircle,
 
     AuthPopup
 
