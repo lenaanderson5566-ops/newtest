@@ -2306,6 +2306,12 @@ $space-2: map.get($spacers, 2);
     box-shadow: var(--shadow-md) !important;
   }
 
+  .stats-grid .stats-card.traffic-board-subscription.subscription-card-muted,
+  .stats-grid .stats-card.traffic-board-subscription.quota-card-muted {
+    border-color: var(--theme-border-soft) !important;
+    background: var(--theme-surface-muted) !important;
+  }
+
   .stats-grid .stats-card.today-traffic-card .usage-card-title,
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
