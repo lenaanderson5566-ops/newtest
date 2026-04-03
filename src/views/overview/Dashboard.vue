@@ -2177,7 +2177,8 @@ $space-2: map.get($spacers, 2);
         .plan-summary-card {
           .plan-summary-section-meta {
             background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: none;
+            box-shadow: none;
 
             .plan-name-main {
               color: var(--text-on-dark-primary);
@@ -2204,7 +2205,8 @@ $space-2: map.get($spacers, 2);
               rgba(164, 171, 211, 0.9) 52%,
               rgba(176, 166, 203, 0.9) 100%
             );
-            border: 1px solid rgba(226, 232, 240, 0.5);
+            border: none;
+            box-shadow: none;
 
             .plan-name-main {
               color: rgba(248, 250, 252, 0.98);
