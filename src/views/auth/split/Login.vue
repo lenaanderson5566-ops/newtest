@@ -812,7 +812,7 @@ export default {
   justify-content: center !important;
   line-height: normal !important;
   color: var(--text-primary);
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   background-color: transparent;
   transition: all 0.3s ease;
 

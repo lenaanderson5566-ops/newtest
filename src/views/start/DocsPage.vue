@@ -382,7 +382,7 @@ onMounted(() => {
 
     border-radius: $border-radius-sm;
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
     background-color: var(--input-bg);
 
@@ -531,7 +531,7 @@ onMounted(() => {
   transition: all 0.25s ease;
 
 
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
 
   
 

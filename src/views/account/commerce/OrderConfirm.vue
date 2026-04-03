@@ -1785,7 +1785,7 @@ export default {
 
     padding: 16px;
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
     transition: all 0.3s ease;
 
@@ -1922,7 +1922,7 @@ export default {
 
   .plan-selector-btn {
     position: relative;
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
     border-radius: $border-radius;
     background: var(--card-background);
     min-height: 110px;
@@ -2039,7 +2039,7 @@ export default {
 
     margin-bottom: 24px;
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
     transition: all 0.3s ease;
 
@@ -2261,7 +2261,7 @@ export default {
 
         overflow: hidden;
 
-        border: var(--border-thin);
+        border: var(--border-width) solid var(--border-default);
 
         transition: all 0.3s ease;
 
@@ -2414,7 +2414,7 @@ export default {
 
       border-radius: $border-radius-sm;
 
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
 
       background-color: var(--input-bg-color);
 
@@ -2510,7 +2510,7 @@ export default {
       height: 40px;
       padding: 0 8px;
       border-radius: $border-radius-sm;
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
       background: rgba(148, 163, 184, 0.08);
       color: var(--text-tertiary);
       font-size: $font-size-sm;
@@ -2525,7 +2525,7 @@ export default {
       height: 40px;
       padding: 0 8px;
       border-radius: $border-radius-sm;
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
       background: rgba(148, 163, 184, 0.08);
       color: var(--text-tertiary);
       font-size: $font-size-sm;
@@ -2551,7 +2551,7 @@ export default {
   .coupon-light-row {
     min-height: 38px;
     padding: 0 8px;
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
     border-radius: $border-radius-sm;
     background: rgba(var(--theme-color-rgb), 0.03);
     display: flex;
@@ -2604,7 +2604,7 @@ export default {
       cursor: pointer;
       transition: border-color 0.2s ease, background-color 0.2s ease;
       border: none;
-      border-top: var(--border-strong);
+      border-top: var(--border-width) solid var(--border-hover);
       background-color: transparent;
 
       &:hover {
@@ -2702,7 +2702,7 @@ export default {
 
     margin: 0;
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
     &.glassmorphism {
       background-color: rgba(var(--card-background-rgb, 255, 255, 255), 0.7);
@@ -2877,7 +2877,7 @@ export default {
   .coupon-verify-section .coupon-input,
   .order-summary-section .order-summary {
     background: var(--card-bg-color);
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
     border-radius: $border-radius-sm;
     color: var(--text-primary);
   }

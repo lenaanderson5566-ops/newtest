@@ -152,7 +152,7 @@ export default {
     background: #fff;
     border-radius: $border-radius-sm;
     padding: 0;
-    border: var(--border-soft);
+    border: var(--border-width) solid var(--border-subtle);
     overflow: hidden;
   }
 

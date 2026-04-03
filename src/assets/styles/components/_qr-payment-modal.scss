@@ -18,7 +18,7 @@
     position: relative;
     width: min(92vw, 460px);
     background: var(--card-background);
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
     border-radius: 14px;
     padding: 16px;
     z-index: 1;
@@ -80,7 +80,7 @@
     margin: 8px 0 16px;
     padding: 8px;
     border-radius: 10px;
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
     background: rgba(var(--theme-color-rgb), 0.06);
     word-break: break-all;
   }

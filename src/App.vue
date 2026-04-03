@@ -360,7 +360,7 @@ export default {
 .modal-content {
   background-color: #ffffff !important;
   border-radius: $border-radius-sm !important;
-  border: var(--border-soft);
+  border: var(--border-width) solid var(--border-subtle);
 }
 
 .page-transitioning {
@@ -387,7 +387,7 @@ export default {
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: var(--border-soft);
+  border-bottom: var(--border-width) solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;

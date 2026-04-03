@@ -929,7 +929,7 @@ onUnmounted(() => {
 
   padding: 16px;
 
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
 
   transition: all 0.3s ease;
 
@@ -978,13 +978,13 @@ onUnmounted(() => {
 
   overflow: hidden;
 
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
 }
 
 .ticket-sidebar {
   width: 320px;
 
-  border-right: var(--border-thin);
+  border-right: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -996,7 +996,7 @@ onUnmounted(() => {
 .ticket-header {
   padding: 16px;
 
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   .search-box {
     position: relative;
@@ -1010,7 +1010,7 @@ onUnmounted(() => {
 
       padding: 0 16px 0 48px;
 
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
 
       border-radius: 8px;
 
@@ -1228,7 +1228,7 @@ onUnmounted(() => {
 .ticket-detail-header {
   padding: 16px;
 
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1542,7 +1542,7 @@ onUnmounted(() => {
 .reply-container {
   padding: 16px;
 
-  border-top: var(--border-thin);
+  border-top: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1558,7 +1558,7 @@ onUnmounted(() => {
 
     padding: 16px 16px;
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
     border-radius: 18px;
 
@@ -1842,7 +1842,7 @@ onUnmounted(() => {
 .modal-header {
   padding: 16px 24px;
 
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1915,7 +1915,7 @@ onUnmounted(() => {
 
       padding: 16px 16px;
 
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
 
       border-radius: 10px;
 
@@ -1972,7 +1972,7 @@ onUnmounted(() => {
 
         transition: all 0.2s ease;
 
-        border: var(--border-thin);
+        border: var(--border-width) solid var(--border-default);
 
         background-color: var(--bg-secondary);
 
@@ -2027,7 +2027,7 @@ onUnmounted(() => {
 .modal-footer {
   padding: 16px 24px;
 
-  border-top: var(--border-thin);
+  border-top: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -2063,7 +2063,7 @@ onUnmounted(() => {
     &.btn-cancel {
       background-color: transparent;
 
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
 
       color: var(--text-primary);
 
@@ -2145,7 +2145,7 @@ onUnmounted(() => {
 
     border-right: none;
 
-    border-bottom: var(--border-thin);
+    border-bottom: var(--border-width) solid var(--border-default);
   }
 
   .ticket-content {
@@ -2226,7 +2226,7 @@ onUnmounted(() => {
 
     width: 450px;
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
     animation: scaleIn 0.5s ease;
 
@@ -2385,7 +2385,7 @@ onUnmounted(() => {
 
 .ticket-sidebar,
 .ticket-content {
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 14px;
   background: var(--card-bg-color);
 }
@@ -2411,7 +2411,7 @@ onUnmounted(() => {
 
 .ticket-detail-header {
   padding: 8px 8px;
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 12px;
   margin-bottom: 8px;
 
@@ -2429,14 +2429,14 @@ onUnmounted(() => {
 
 .messages-container {
   border-radius: 12px;
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   padding: 8px;
 }
 
 .reply-container {
   margin-top: 8px;
   border-radius: 12px;
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   padding: 8px;
 
   textarea {

@@ -3526,7 +3526,7 @@ export default {
 
       padding: 16px 16px;
 
-      border-bottom: var(--border-thin);
+      border-bottom: var(--border-width) solid var(--border-default);
 
 
 

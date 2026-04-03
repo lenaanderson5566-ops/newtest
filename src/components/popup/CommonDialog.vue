@@ -196,7 +196,7 @@ export default {
     max-width: 500px;
     background-color: #fff;
     border-radius: $border-radius-sm;
-    border: var(--border-soft);
+    border: var(--border-width) solid var(--border-subtle);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -208,7 +208,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: var(--border-thin);
+      border-bottom: var(--border-width) solid var(--border-default);
       background-color: rgba(var(--theme-color-rgb), 0.03);
 
       .dialog-title {
@@ -268,7 +268,7 @@ export default {
 
     .dialog-footer {
       padding: 16px 16px;
-      border-top: var(--border-thin);
+      border-top: var(--border-width) solid var(--border-default);
       display: flex;
       justify-content: flex-end;
       gap: 8px;

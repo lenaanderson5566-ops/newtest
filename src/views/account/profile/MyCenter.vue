@@ -672,7 +672,7 @@ $space-2: map.get($spacers, 2);
 
 .recent-login-list {
   margin-top: 0;
-  border-top: var(--border-soft);
+  border-top: var(--border-width) solid var(--border-subtle);
 }
 
 .recent-login-state {
@@ -689,7 +689,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .recent-login-item + .recent-login-item {
-  border-top: var(--border-soft);
+  border-top: var(--border-width) solid var(--border-subtle);
 }
 
 .recent-login-main {
@@ -919,7 +919,7 @@ $space-2: map.get($spacers, 2);
 
 .settings-list {
   overflow: hidden;
-  border-top: var(--border-soft);
+  border-top: var(--border-width) solid var(--border-subtle);
 }
 
 .settings-row,
@@ -934,7 +934,7 @@ $space-2: map.get($spacers, 2);
 
 .settings-row + .settings-row,
 .nav-row + .nav-row {
-  border-top: var(--border-soft);
+  border-top: var(--border-width) solid var(--border-subtle);
 }
 
 .row-main { min-width: 0; }
@@ -1042,7 +1042,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1096,7 +1096,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   input {
     width: 100%;
     padding: 8px 8px;
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
     border-radius: 8px;
     background-color: var(--bg-secondary);
     color: var(--text-primary);
@@ -1118,7 +1118,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 .modal-footer {
   padding: 16px 16px;
-  border-top: var(--border-thin);
+  border-top: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: flex-end;
   gap: #{$space-2};
@@ -1130,7 +1130,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   border-radius: 8px;
   font-size: $font-size-md;
   cursor: pointer;
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   background: transparent;
   color: var(--text-primary);
 }
@@ -1191,8 +1191,8 @@ input:checked + .slider:before { transform: translateX(18px); }
     border-radius: 0;
     border-left: none;
     border-right: none;
-    border-top: var(--border-soft);
-    border-bottom: var(--border-soft);
+    border-top: var(--border-width) solid var(--border-subtle);
+    border-bottom: var(--border-width) solid var(--border-subtle);
     padding: 0 8px;
     background: #fff;
   }

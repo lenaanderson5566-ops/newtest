@@ -146,7 +146,7 @@ const goBack = () => {
   input {
     flex: 1;
     min-width: 0;
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
     border-radius: 10px;
     padding: 0 8px;
     height: 42px;

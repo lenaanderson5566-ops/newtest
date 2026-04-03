@@ -2046,7 +2046,7 @@ export default {
 
       justify-content: space-between;
 
-      border-bottom: var(--border-thin);
+      border-bottom: var(--border-width) solid var(--border-default);
 
 
 

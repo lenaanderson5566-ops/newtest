@@ -482,7 +482,7 @@ export default {
 
   overflow: hidden;
 
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
 
   
 
@@ -496,7 +496,7 @@ export default {
 
     padding: 24px 24px;
 
-    border-bottom: var(--border-thin);
+    border-bottom: var(--border-width) solid var(--border-default);
 
     background-color: rgba(var(--theme-color-rgb), 0.05);
 

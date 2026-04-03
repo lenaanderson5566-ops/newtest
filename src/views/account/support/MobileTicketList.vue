@@ -791,7 +791,7 @@ fetchTickets();
 
   padding: 16px;
 
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
 
   transition: all 0.3s ease;
 
@@ -973,7 +973,7 @@ fetchTickets();
 .ticket-item {
   background-color: var(--card-bg);
 
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
 
   border-radius: 10px;
 
@@ -1099,7 +1099,7 @@ fetchTickets();
 
   background-color: var(--card-bg);
 
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1469,7 +1469,7 @@ fetchTickets();
 
   background-color: var(--card-bg);
 
-  border-top: var(--border-thin);
+  border-top: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1492,7 +1492,7 @@ fetchTickets();
 
     padding: 16px;
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
     border-radius: 12px;
 
@@ -1582,7 +1582,7 @@ fetchTickets();
 
   background-color: var(--card-bg);
 
-  border-top: var(--border-thin);
+  border-top: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1648,7 +1648,7 @@ fetchTickets();
 
   animation: slideIn 0.3s ease;
 
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
 
 
   &.closing {
@@ -1659,7 +1659,7 @@ fetchTickets();
 .modal-header {
   padding: 24px;
 
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1744,7 +1744,7 @@ fetchTickets();
 
       padding: 16px 16px;
 
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
 
       border-radius: 10px;
 
@@ -1785,7 +1785,7 @@ fetchTickets();
 
       padding: 16px;
 
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
 
       border-radius: 10px;
 
@@ -1824,7 +1824,7 @@ fetchTickets();
 .modal-footer {
   padding: 24px;
 
-  border-top: var(--border-thin);
+  border-top: var(--border-width) solid var(--border-default);
 
   display: flex;
 
@@ -1850,7 +1850,7 @@ fetchTickets();
     &.cancel-btn {
       background-color: var(--card-bg);
 
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
 
       color: var(--text-primary);
 
@@ -2068,7 +2068,7 @@ fetchTickets();
 
     width: 450px;
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
     animation: scaleIn 0.5s ease;
 

@@ -860,7 +860,7 @@ onUnmounted(() => {
       align-items: center;
       gap: 4px;
       background-color: rgba(var(--theme-color-rgb), 0.05);
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
       border-radius: 20px;
       padding: 8px 16px;
       font-size: $font-size-md;
@@ -895,7 +895,7 @@ onUnmounted(() => {
 
     padding: 16px;
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
     transition: all 0.3s ease;
 
@@ -1096,7 +1096,7 @@ onUnmounted(() => {
 
         text-align: left;
 
-        border-bottom: var(--border-thin);
+        border-bottom: var(--border-width) solid var(--border-default);
 
         white-space: nowrap; 
 

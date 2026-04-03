@@ -899,7 +899,7 @@ export default {
   }
 
   .kpi-item {
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
     border-radius: 10px;
     padding: 8px;
     background: rgba(var(--theme-color-rgb), 0.03);
@@ -1536,7 +1536,7 @@ export default {
 
 .dashboard-card {
   background: var(--card-bg-color);
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 12px;
   padding: 8px;
 }
@@ -1592,7 +1592,7 @@ export default {
 }
 
 .modal-footer .btn-cancel {
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   background: transparent;
   color: var(--text-primary);
   min-width: 92px;
@@ -1619,7 +1619,7 @@ export default {
 }
 
 .kpi-item {
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 10px;
   padding: 8px;
 }
@@ -1653,7 +1653,7 @@ export default {
 .invite-cards-nav {
   width: 30px;
   height: 30px;
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
@@ -1904,7 +1904,7 @@ export default {
 
 .records-table th,
 .records-table td {
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
   padding: 8px 4px;
   white-space: nowrap;
   text-align: left;
@@ -1930,12 +1930,12 @@ export default {
   overflow: auto;
   background: var(--card-background);
   border-radius: 12px;
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
 }
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2036,7 +2036,7 @@ export default {
 .input-with-prefix {
   display: grid;
   grid-template-columns: auto 1fr;
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 12px;
   background: var(--card-background);
   overflow: hidden;
@@ -2053,7 +2053,7 @@ export default {
   align-items: center;
   justify-content: center;
   background: rgba(var(--text-color-rgb), 0.04);
-  border-right: var(--border-thin);
+  border-right: var(--border-width) solid var(--border-default);
   @extend %typo-item-title;
 }
 
@@ -2079,7 +2079,7 @@ export default {
 
 .modal-footer {
   padding: 16px 16px 16px;
-  border-top: var(--border-thin);
+  border-top: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: flex-end;
   gap: 8px;

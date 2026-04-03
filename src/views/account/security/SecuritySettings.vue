@@ -409,13 +409,13 @@ onMounted(() => {
 
 .profile-card {
   background: var(--card-bg-color);
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   border-radius: 12px;
 }
 
 .card-header {
   padding: 16px 16px;
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   h3 {
     margin: 0;
@@ -428,7 +428,7 @@ onMounted(() => {
 }
 
 .action-btn {
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   background: var(--card-bg-color);
   padding: 8px 8px;
   border-radius: 8px;
@@ -464,7 +464,7 @@ onMounted(() => {
   display: flex;
   gap: 8px;
   padding: 8px 0;
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
 
   &:last-child {
     border-bottom: 0;
@@ -518,7 +518,7 @@ onMounted(() => {
 }
 
 .refresh-btn {
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   background: transparent;
   border-radius: 8px;
   padding: 4px 8px;
@@ -581,7 +581,7 @@ onMounted(() => {
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -633,7 +633,7 @@ onMounted(() => {
     input {
       width: 100%;
       padding: 8px 8px;
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
       border-radius: 8px;
       background-color: var(--bg-secondary);
       color: var(--text-primary);
@@ -656,7 +656,7 @@ onMounted(() => {
 
 .modal-footer {
   padding: 16px 16px;
-  border-top: var(--border-thin);
+  border-top: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: flex-end;
   gap: 8px;
@@ -671,7 +671,7 @@ onMounted(() => {
 
     &.btn-cancel {
       background-color: transparent;
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
       color: var(--text-primary);
 
       &:hover {

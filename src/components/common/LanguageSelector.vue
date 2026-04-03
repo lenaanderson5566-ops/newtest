@@ -212,7 +212,7 @@ export default {
   -webkit-backdrop-filter: blur(10px);
   border-radius: $border-radius-sm;
   box-shadow: var(--shadow-sm);
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
   z-index: 200;
   overflow: hidden;
 }

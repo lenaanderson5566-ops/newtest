@@ -1533,7 +1533,7 @@ onUnmounted(() => {
   padding: 24px;
 
 
-  border: var(--border-thin);
+  border: var(--border-width) solid var(--border-default);
 
   transition: all 0.3s ease;
 
@@ -1677,7 +1677,7 @@ onUnmounted(() => {
 
     padding-bottom: 8px;
 
-    border-bottom: var(--border-thin);
+    border-bottom: var(--border-width) solid var(--border-default);
 
   }
 
@@ -1691,7 +1691,7 @@ onUnmounted(() => {
 
     margin-top: 24px;
 
-    border-bottom: var(--border-thin);
+    border-bottom: var(--border-width) solid var(--border-default);
 
   }
 
@@ -1837,7 +1837,7 @@ onUnmounted(() => {
 
     transition: all 0.3s ease;
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
 
     
@@ -1893,7 +1893,7 @@ onUnmounted(() => {
 
     margin: 24px 0;
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
 
     position: relative;
@@ -2030,7 +2030,7 @@ onUnmounted(() => {
     border-radius: 6px;
 
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
 
@@ -2073,7 +2073,7 @@ onUnmounted(() => {
 
       padding: 16px 16px;
 
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
 
       text-align: left;
 
@@ -2171,7 +2171,7 @@ onUnmounted(() => {
 
     padding-top: 16px;
 
-    border-top: var(--border-thin);
+    border-top: var(--border-width) solid var(--border-default);
 
     font-size: $font-size-sm;
 

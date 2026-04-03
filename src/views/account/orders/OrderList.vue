@@ -404,7 +404,7 @@ watch(locale, () => {
     width: 32px;
     height: 18px;
     border-radius: 999px;
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
     background: rgba(var(--theme-color-rgb), 0.08);
     transition: all 0.2s ease;
     flex: 0 0 auto;
@@ -449,7 +449,7 @@ watch(locale, () => {
   font-size: $font-size-sm;
   
   th, td {
-    border-bottom: var(--border-thin);
+    border-bottom: var(--border-width) solid var(--border-default);
     padding: 8px 4px;
     text-align: left;
     white-space: nowrap;
@@ -698,7 +698,7 @@ watch(locale, () => {
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: var(--border-thin);
+  border-bottom: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -740,7 +740,7 @@ watch(locale, () => {
 
 .modal-footer {
   padding: 16px 24px;
-  border-top: var(--border-thin);
+  border-top: var(--border-width) solid var(--border-default);
   display: flex;
   justify-content: flex-end;
   gap: 16px;
@@ -755,7 +755,7 @@ watch(locale, () => {
     
     &.btn-cancel {
       background-color: transparent;
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
       color: var(--text-primary);
       
       &:hover {

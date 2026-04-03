@@ -327,7 +327,7 @@ onMounted(() => {
     background-color: var(--card-bg);
     border-radius: $border-radius-sm;
     padding: map.get($spacers, 3);
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
     transition: all 0.3s ease;
     
     &:hover {
@@ -394,7 +394,7 @@ onMounted(() => {
         align-items: center;
         padding: 8px 8px;
         border-radius: $border-radius-sm;
-        border: var(--border-thin);
+        border: var(--border-width) solid var(--border-default);
         background: var(--card-background);
         @extend %typo-label-text;
       }
@@ -492,7 +492,7 @@ onMounted(() => {
           cursor: pointer;
           border-radius: $border-radius-sm;
           overflow: hidden;
-          border: var(--border-thin);
+          border: var(--border-width) solid var(--border-default);
           transition: all 0.3s ease;
           position: relative;
           
@@ -576,7 +576,7 @@ onMounted(() => {
         input {
           width: 100%;
           height: 100%;
-          border: var(--border-thin);
+          border: var(--border-width) solid var(--border-default);
           border-radius: $border-radius-sm;
           background-color: var(--input-bg, rgba(0, 0, 0, 0.02));
           padding: 0 16px 0 24px;

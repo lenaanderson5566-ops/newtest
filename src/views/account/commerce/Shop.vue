@@ -1025,7 +1025,7 @@ export default {
 
     padding: map.get($spacers, 3);
 
-    border: var(--border-thin);
+    border: var(--border-width) solid var(--border-default);
 
     transition: all 0.3s ease;
 
@@ -1307,7 +1307,7 @@ export default {
 
     .plan-card {
       border-radius: var(--shop-card-radius);
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
 
       background-color: #fff;
 
@@ -1316,7 +1316,7 @@ export default {
 
       padding: 8px;
 
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
 
       transition: all 0.3s ease;
 
@@ -1729,7 +1729,7 @@ export default {
       gap: 0;
       padding: 4px;
       border-radius: 12px;
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
       background: var(--surface-subtle);
 
       .filter-highlight {
@@ -1956,7 +1956,7 @@ export default {
       .mobile-plan-chip {
         box-sizing: border-box;
         width: 100%;
-        border: var(--border-thin);
+        border: var(--border-width) solid var(--border-default);
         background: #fff;
         border-radius: 12px;
         padding: 0;
@@ -2034,7 +2034,7 @@ export default {
       }
 
       .mobile-plan-details {
-        border: var(--border-thin);
+        border: var(--border-width) solid var(--border-default);
         background: var(--card-bg-color);
         border-radius: 12px;
         padding: 8px 16px;
@@ -2046,7 +2046,7 @@ export default {
         align-items: center;
         gap: 8px;
         padding: 8px 0;
-        border-bottom: var(--border-thin);
+        border-bottom: var(--border-width) solid var(--border-default);
       }
 
       .mobile-detail-row:last-child {
@@ -2103,7 +2103,7 @@ export default {
     gap: 4px;
 
     .filter-toggle-wrapper {
-      border: var(--border-thin);
+      border: var(--border-width) solid var(--border-default);
       border-radius: 12px;
       background: var(--surface-subtle);
 
