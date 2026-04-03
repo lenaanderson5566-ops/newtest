@@ -4364,4 +4364,55 @@ export default {
 
 }
 
+/* Compact spacing tune */
+.auth-form-container {
+  padding: 40px 40px;
+}
+
+.auth-header {
+  margin-bottom: 16px;
+}
+
+.auth-logo {
+  margin-bottom: 10px;
+}
+
+.auth-title {
+  margin-bottom: 6px;
+}
+
+.auth-subtitle {
+  margin-bottom: 12px;
+}
+
+.auth-form .form-group {
+  margin-bottom: 12px;
+}
+
+.auth-footer {
+  margin-top: 16px;
+}
+
+@include down(lg) {
+  .auth-form-container {
+    padding: 20px 16px;
+  }
+
+  .auth-header {
+    margin-bottom: 14px;
+  }
+
+  .auth-subtitle {
+    margin-bottom: 10px;
+  }
+
+  .auth-form .form-group {
+    margin-bottom: 10px;
+  }
+
+  .auth-footer {
+    margin-top: 14px;
+  }
+}
+
 </style>

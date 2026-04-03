@@ -2414,4 +2414,55 @@ export default {
 
 }
 
+/* Compact spacing tune */
+.auth-card {
+  padding: 20px;
+}
+
+.auth-header {
+  margin-bottom: 16px;
+}
+
+.auth-logo {
+  margin-bottom: 10px;
+}
+
+.auth-title {
+  margin-bottom: 6px;
+}
+
+.auth-subtitle {
+  margin-bottom: 12px;
+}
+
+.auth-form .form-group {
+  margin-bottom: 12px;
+}
+
+.auth-footer {
+  margin-top: 16px;
+}
+
+@include down(sm) {
+  .auth-card {
+    padding: 18px;
+  }
+
+  .auth-header {
+    margin-bottom: 14px;
+  }
+
+  .auth-subtitle {
+    margin-bottom: 10px;
+  }
+
+  .auth-form .form-group {
+    margin-bottom: 10px;
+  }
+
+  .auth-footer {
+    margin-top: 14px;
+  }
+}
+
 </style>
