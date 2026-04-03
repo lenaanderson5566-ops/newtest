@@ -2121,7 +2121,7 @@ $space-2: map.get($spacers, 2);
         );
         background: var(--traffic-card-bg) !important;
         border: var(--border-width) solid var(--border-subtle);
-        box-shadow: var(--shadow-sm);
+        box-shadow: var(--shadow-md);
 
         .usage-card-title,
         .usage-percent,
@@ -2158,7 +2158,7 @@ $space-2: map.get($spacers, 2);
         );
         background: var(--traffic-card-bg) !important;
         border: var(--border-width) solid var(--border-subtle) !important;
-        box-shadow: var(--shadow-sm);
+        box-shadow: var(--shadow-md);
 
         .usage-card-title {
           color: var(--text-primary);
@@ -2303,7 +2303,7 @@ $space-2: map.get($spacers, 2);
     background: var(--traffic-card-bg, var(--saas-card-bg));
     border: var(--border-width) solid var(--border-subtle) !important;
     border-radius: var(--dashboard-radius);
-    box-shadow: var(--shadow-sm) !important;
+    box-shadow: var(--shadow-md) !important;
   }
 
   .stats-grid .stats-card.today-traffic-card .usage-card-title,
