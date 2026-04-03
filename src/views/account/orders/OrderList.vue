@@ -449,7 +449,7 @@ watch(locale, () => {
   font-size: $font-size-sm;
   
   th, td {
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-thin);
     padding: 8px 4px;
     text-align: left;
     white-space: nowrap;
@@ -698,7 +698,7 @@ watch(locale, () => {
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -740,7 +740,7 @@ watch(locale, () => {
 
 .modal-footer {
   padding: 16px 24px;
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-thin);
   display: flex;
   justify-content: flex-end;
   gap: 16px;

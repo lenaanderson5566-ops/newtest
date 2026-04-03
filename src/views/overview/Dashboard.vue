@@ -3126,7 +3126,7 @@ $space-2: map.get($spacers, 2);
     align-items: center;
     justify-content: space-between;
     padding: 16px 16px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-thin);
     background-color: rgba(var(--theme-color-rgb), 0.03);
 
     h3 {
@@ -3159,7 +3159,7 @@ $space-2: map.get($spacers, 2);
 
   .modal-footer {
     padding: 16px 16px;
-    border-top: 1px solid var(--border-color);
+    border-top: var(--border-thin);
     display: flex;
     justify-content: flex-end;
     gap: #{$space-2};

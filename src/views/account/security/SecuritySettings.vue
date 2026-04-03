@@ -415,7 +415,7 @@ onMounted(() => {
 
 .card-header {
   padding: 16px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
 
   h3 {
     margin: 0;
@@ -464,7 +464,7 @@ onMounted(() => {
   display: flex;
   gap: 8px;
   padding: 8px 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
 
   &:last-child {
     border-bottom: 0;
@@ -581,7 +581,7 @@ onMounted(() => {
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -656,7 +656,7 @@ onMounted(() => {
 
 .modal-footer {
   padding: 16px 16px;
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-thin);
   display: flex;
   justify-content: flex-end;
   gap: 8px;

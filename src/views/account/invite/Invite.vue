@@ -1904,7 +1904,7 @@ export default {
 
 .records-table th,
 .records-table td {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
   padding: 8px 4px;
   white-space: nowrap;
   text-align: left;
@@ -1935,7 +1935,7 @@ export default {
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2053,7 +2053,7 @@ export default {
   align-items: center;
   justify-content: center;
   background: rgba(var(--text-color-rgb), 0.04);
-  border-right: 1px solid var(--border-color);
+  border-right: var(--border-thin);
   @extend %typo-item-title;
 }
 
@@ -2079,7 +2079,7 @@ export default {
 
 .modal-footer {
   padding: 16px 16px 16px;
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-thin);
   display: flex;
   justify-content: flex-end;
   gap: 8px;

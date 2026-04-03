@@ -2046,7 +2046,7 @@ export default {
         align-items: center;
         gap: 8px;
         padding: 8px 0;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: var(--border-thin);
       }
 
       .mobile-detail-row:last-child {

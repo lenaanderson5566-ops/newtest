@@ -984,7 +984,7 @@ onUnmounted(() => {
 .ticket-sidebar {
   width: 320px;
 
-  border-right: 1px solid var(--border-color);
+  border-right: var(--border-thin);
 
   display: flex;
 
@@ -996,7 +996,7 @@ onUnmounted(() => {
 .ticket-header {
   padding: 16px;
 
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
 
   .search-box {
     position: relative;
@@ -1228,7 +1228,7 @@ onUnmounted(() => {
 .ticket-detail-header {
   padding: 16px;
 
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
 
   display: flex;
 
@@ -1542,7 +1542,7 @@ onUnmounted(() => {
 .reply-container {
   padding: 16px;
 
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-thin);
 
   display: flex;
 
@@ -1842,7 +1842,7 @@ onUnmounted(() => {
 .modal-header {
   padding: 16px 24px;
 
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
 
   display: flex;
 
@@ -2027,7 +2027,7 @@ onUnmounted(() => {
 .modal-footer {
   padding: 16px 24px;
 
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-thin);
 
   display: flex;
 
@@ -2145,7 +2145,7 @@ onUnmounted(() => {
 
     border-right: none;
 
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-thin);
   }
 
   .ticket-content {

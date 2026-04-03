@@ -496,7 +496,7 @@ export default {
 
     padding: 24px 24px;
 
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-thin);
 
     background-color: rgba(var(--theme-color-rgb), 0.05);
 

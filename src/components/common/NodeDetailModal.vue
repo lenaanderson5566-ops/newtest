@@ -839,7 +839,7 @@ watchEffect(() => {
 
   align-items: center;
 
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
 
   background-color: rgba(var(--theme-color-rgb), 0.03);
 
@@ -943,7 +943,7 @@ watchEffect(() => {
 
     padding: 8px 0;
 
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-thin);
 
     
 

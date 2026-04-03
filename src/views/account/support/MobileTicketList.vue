@@ -1099,7 +1099,7 @@ fetchTickets();
 
   background-color: var(--card-bg);
 
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
 
   display: flex;
 
@@ -1469,7 +1469,7 @@ fetchTickets();
 
   background-color: var(--card-bg);
 
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-thin);
 
   display: flex;
 
@@ -1582,7 +1582,7 @@ fetchTickets();
 
   background-color: var(--card-bg);
 
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-thin);
 
   display: flex;
 
@@ -1659,7 +1659,7 @@ fetchTickets();
 .modal-header {
   padding: 24px;
 
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
 
   display: flex;
 
@@ -1824,7 +1824,7 @@ fetchTickets();
 .modal-footer {
   padding: 24px;
 
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-thin);
 
   display: flex;
 

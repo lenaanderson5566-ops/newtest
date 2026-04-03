@@ -1677,7 +1677,7 @@ onUnmounted(() => {
 
     padding-bottom: 8px;
 
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-thin);
 
   }
 
@@ -1691,7 +1691,7 @@ onUnmounted(() => {
 
     margin-top: 24px;
 
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: var(--border-thin);
 
   }
 
@@ -2171,7 +2171,7 @@ onUnmounted(() => {
 
     padding-top: 16px;
 
-    border-top: 1px solid var(--border-color);
+    border-top: var(--border-thin);
 
     font-size: $font-size-sm;
 

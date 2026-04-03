@@ -23,7 +23,7 @@
   max-width: 420px;
   background: #fff;
   border-radius: $border-radius-sm;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border: var(--border-soft);
   padding: 48px;
   position: relative;
   z-index: 2;

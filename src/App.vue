@@ -360,7 +360,7 @@ export default {
 .modal-content {
   background-color: #ffffff !important;
   border-radius: $border-radius-sm !important;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border: var(--border-soft);
 }
 
 .page-transitioning {
@@ -387,7 +387,7 @@ export default {
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: var(--border-soft);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -461,7 +461,7 @@ export default {
     &:hover {
       border-color: rgba(var(--theme-color-rgb), 0.45);
       color: var(--theme-color);
-      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1);
+      box-shadow: var(--shadow-md);
       transform: translateY(-1px);
     }
   }

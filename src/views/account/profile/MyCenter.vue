@@ -1042,7 +1042,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 .modal-header {
   padding: 16px 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: var(--border-thin);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1118,7 +1118,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 .modal-footer {
   padding: 16px 16px;
-  border-top: 1px solid var(--border-color);
+  border-top: var(--border-thin);
   display: flex;
   justify-content: flex-end;
   gap: #{$space-2};
@@ -1191,7 +1191,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     border-radius: 0;
     border-left: none;
     border-right: none;
-    border-top: 1px solid rgba(15, 23, 42, 0.08);
+    border-top: var(--border-soft);
     border-bottom: 1px solid rgba(15, 23, 42, 0.12);
     padding: 0 8px;
     background: #fff;
