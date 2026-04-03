@@ -158,13 +158,13 @@ export default {
 
     const userEmail = computed(() => {
       const user = store.userInfo || {};
-      return String(user.email || user.mail || '').trim();
+      return String(user.email || '').trim();
     });
     const userDisplayName = computed(() => {
       const user = store.userInfo || {};
       return String(user.username || user.name || '').trim();
     });
-    const isUserInfoLoading = ref(false);
+    const isUserInfoLoading = ref(!!route.meta.requiresAuth);
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
 
@@ -200,11 +200,16 @@ export default {
       isUserInfoLoading.value = true;
       try {
         const response = await getAccountUserInfo();
-        const userData = response?.data?.email
-          ? response.data
-          : response?.data?.data;
-        if (userData && typeof userData === 'object') {
-          store.setUser(userData);
+        const apiUserData = response?.data?.data && typeof response.data.data === 'object'
+          ? response.data.data
+          : response?.data;
+
+        if (apiUserData && typeof apiUserData === 'object') {
+          const normalizedUserData = {
+            ...apiUserData,
+            email: String(apiUserData.email || '').trim()
+          };
+          store.setUser(normalizedUserData);
         }
       } catch (error) {
       } finally {
