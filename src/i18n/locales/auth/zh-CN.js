@@ -63,7 +63,7 @@ export default {
     passwordStrengthMedium: '中',
     passwordStrengthStrong: '强',
     passwordRuleMinLength: '至少 8 位',
-    passwordRuleAlphaNumericSuggested: '至少包含字母和数字（建议）',
+    passwordRuleAlphaNumericSuggested: '包含字母和数字（建议）',
     passwordRuleSpecialSuggested: '包含特殊字符（建议）',
     passwordPlaceholder: '请输入密码',
     requiresAuth: '需要登录',
