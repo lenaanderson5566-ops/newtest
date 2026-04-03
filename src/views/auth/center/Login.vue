@@ -387,14 +387,7 @@ export default {
 
         try {
 
-          const tokenLoginResult = await handleTokenLogin({
-
-            onLoginSuccess: () => {
-
-
-            }
-
-          });
+          const tokenLoginResult = await handleTokenLogin();
 
 
 

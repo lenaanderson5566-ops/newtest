@@ -1061,8 +1061,7 @@ export default {
                     window.turnstile.reset();
 
                   } catch (e) {
-
-
+                    // 忽略 reset 失败，后续会重新渲染验证码容器
                   }
 
                 }
@@ -1685,8 +1684,7 @@ export default {
           window.turnstile.reset();
 
         } catch (e) {
-
-
+          // 忽略 reset 失败，后续会重新渲染验证码容器
         }
 
       }
