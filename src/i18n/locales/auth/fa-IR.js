@@ -62,6 +62,7 @@ export default {
     passwordStrengthWeak: 'ضعیف',
     passwordStrengthMedium: 'متوسط',
     passwordStrengthStrong: 'قوی',
+    passwordRuleMinLength: 'حداقل 8 کاراکتر',
     passwordPlaceholder: 'پسورد خود را وارد کنید',
     requiresAuth: 'نیاز به ورود دارد',
     contactAdmin: 'با مدیر تماس بگیرید',

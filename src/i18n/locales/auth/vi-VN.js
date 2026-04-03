@@ -60,6 +60,7 @@ export default {
     passwordStrengthWeak: 'Yếu',
     passwordStrengthMedium: 'Trung bình',
     passwordStrengthStrong: 'Mạnh',
+    passwordRuleMinLength: 'Ít nhất 8 ký tự',
     passwordPlaceholder: 'Vui lòng nhập mật khẩu',
     requiresAuth: 'Yêu cầu đăng nhập',
     contactAdmin: 'Vui lòng liên hệ quản trị viên để được cấp quyền',

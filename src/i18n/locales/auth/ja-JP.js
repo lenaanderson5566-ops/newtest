@@ -62,6 +62,7 @@ export default {
     passwordStrengthWeak: '弱い',
     passwordStrengthMedium: '中',
     passwordStrengthStrong: '強い',
+    passwordRuleMinLength: '8文字以上',
     passwordPlaceholder: 'パスワードを入力してください',
     requiresAuth: 'ログインが必要です',
     contactAdmin: '管理者にお問い合わせして認証を取得してください',

@@ -62,6 +62,7 @@ export default {
     passwordStrengthWeak: '약함',
     passwordStrengthMedium: '보통',
     passwordStrengthStrong: '강함',
+    passwordRuleMinLength: '최소 8자',
     passwordPlaceholder: '비밀번호를 입력하세요',
     requiresAuth: '로그인이 필요합니다',
     contactAdmin: '관리자에게 연락하여 인증을 받으세요',

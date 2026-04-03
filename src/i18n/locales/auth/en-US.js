@@ -62,6 +62,7 @@ export default {
     passwordStrengthWeak: 'Weak',
     passwordStrengthMedium: 'Medium',
     passwordStrengthStrong: 'Strong',
+    passwordRuleMinLength: 'At least 8 characters',
     passwordPlaceholder: 'Enter password',
     requiresAuth: 'Sign-in required',
     contactAdmin: 'Please contact the administrator for authorization',

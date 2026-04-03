@@ -62,6 +62,7 @@ export default {
     passwordStrengthWeak: '弱',
     passwordStrengthMedium: '中',
     passwordStrengthStrong: '强',
+    passwordRuleMinLength: '至少 8 位',
     passwordPlaceholder: '请输入密码',
     requiresAuth: '需要登录',
     contactAdmin: '请联系管理员获取授权',

@@ -62,6 +62,7 @@ export default {
     passwordStrengthWeak: '弱',
     passwordStrengthMedium: '中',
     passwordStrengthStrong: '強',
+    passwordRuleMinLength: '至少 8 位',
     passwordPlaceholder: '請輸入密碼',
     requiresAuth: '需要登錄',
     contactAdmin: '請聯繫管理員獲取授權',

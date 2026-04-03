@@ -290,6 +290,14 @@
 
               <span v-if="errors.password" class="error-message">{{ errors.password }}</span>
 
+              <div class="password-rule-tip" :class="{ met: passwordMinLengthMet }">
+
+                <IconCheck class="rule-icon" />
+
+                <span>{{ $t('auth.passwordRuleMinLength') }}</span>
+
+              </div>
+
               <div v-if="formData.password" class="password-strength">
 
                 <div class="password-strength-label">
@@ -903,6 +911,12 @@ export default {
       if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score += 1;
 
       return score;
+
+    });
+
+    const passwordMinLengthMet = computed(() => {
+
+      return (formData.password || '').length >= 8;
 
     });
 
@@ -2206,6 +2220,8 @@ export default {
       isValidEmail,
 
       showPassword,
+
+      passwordMinLengthMet,
 
       passwordStrengthLevel,
 
@@ -4152,6 +4168,46 @@ export default {
 
 
 
+
+.password-rule-tip {
+
+  margin-top: 8px;
+
+  margin-bottom: 8px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-size: 14px;
+
+  color: var(--text-tertiary);
+
+}
+
+.password-rule-tip .rule-icon {
+
+  width: 16px;
+
+  height: 16px;
+
+  color: var(--text-disabled);
+
+}
+
+.password-rule-tip.met {
+
+  color: var(--text-primary);
+
+}
+
+.password-rule-tip.met .rule-icon {
+
+  color: #22c55e;
+
+}
 
 .password-strength {
 
