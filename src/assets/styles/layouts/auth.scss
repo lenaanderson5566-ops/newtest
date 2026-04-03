@@ -67,6 +67,30 @@
   text-align: center;
   margin-top: 24px;
 
+  a.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    height: 45px;
+    line-height: normal;
+  }
+
+  .btn.btn-secondary.btn-block {
+    color: var(--text-primary);
+    border: var(--border-width) solid var(--border-default);
+    background-color: transparent;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: var(--theme-color);
+      background-color: rgba(var(--theme-color-rgb), 0.05);
+      color: var(--theme-color);
+      -webkit-text-fill-color: var(--theme-color);
+      background-image: none;
+    }
+  }
+
   .auth-links {
     display: flex;
     justify-content: space-between;

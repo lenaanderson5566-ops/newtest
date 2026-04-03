@@ -2001,22 +2001,22 @@ export default {
   }
 
   .section-wrapper.period-section {
-    background-color: var(--background-color) !important;
-    border: none !important;
+    background-color: var(--background-color);
+    border: none;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
   }
 
   .section-wrapper.subscription-intro-section {
-    background-color: var(--background-color) !important;
-    border: none !important;
+    background-color: var(--background-color);
+    border: none;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
   }
 
   .section-wrapper.payment-methods-section {
-    background-color: var(--background-color) !important;
-    border: none !important;
+    background-color: var(--background-color);
+    border: none;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
   }
@@ -2273,11 +2273,6 @@ export default {
 
           transform: translateY(-3px);
 
-
-          .period-card-inner {
-            background-color: #ffffff !important;
-          }
-
           .period-price {
             .currency,
             .amount {
@@ -2312,16 +2307,16 @@ export default {
           transform: none;
 
           .period-card-inner {
-            background: var(--theme-surface-muted) !important;
+            background: var(--theme-surface-muted);
           }
         }
 
         .period-card-inner {
-          background-color: #ffffff !important;
+          background-color: #ffffff;
 
           padding: 16px 8px;
 
-          min-height: 90px !important;
+          min-height: 90px;
 
           display: flex;
 
@@ -2883,9 +2878,9 @@ export default {
   }
 
   .right-column .order-summary-section .order-summary {
-    background: var(--right-card-bg) !important;
-    border: var(--border-width) solid var(--border-default) !important;
-    color: var(--right-card-text) !important;
+    background: var(--right-card-bg);
+    border: var(--border-width) solid var(--border-default);
+    color: var(--right-card-text);
   }
 
   .right-column .order-summary-section .summary-row .summary-label,
@@ -2893,7 +2888,7 @@ export default {
   .right-column .order-summary-section .summary-row.total .summary-label,
   .right-column .order-summary-section .summary-row.total .summary-value,
   .right-column .order-summary-section .coupon-code-label {
-    color: var(--right-card-text) !important;
+    color: var(--right-card-text);
   }
 
   .coupon-verify-section .coupon-input {
@@ -3239,7 +3234,7 @@ export default {
         .period-card-inner {
           padding: 8px 8px;
 
-          min-height: 80px !important;
+          min-height: 80px;
 
           .period-type {
             font-size: $font-size-sm;
@@ -3308,7 +3303,7 @@ export default {
 
       .period-card {
         .period-card-inner {
-          min-height: 70px !important;
+          min-height: 70px;
         }
       }
     }
@@ -3340,69 +3335,4 @@ export default {
   }
 }
 
-@include down(md) {
-  .order-confirm-container .period-selection .period-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-
-    gap: 8px;
-  }
-}
-
-@include down(xs) {
-  .order-confirm-container .period-selection .period-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-
-    gap: 8px;
-  }
-}
-
-.order-confirm-container .period-selection .period-cards {
-  display: grid !important;
-}
-
-@include down(md) {
-  .period-cards {
-    display: grid !important;
-
-    grid-template-columns: repeat(2, 1fr) !important;
-
-    gap: 8px;
-  }
-}
-
-@include down(xs) {
-  .period-cards {
-    display: grid !important;
-
-    grid-template-columns: repeat(2, 1fr) !important;
-
-    gap: 8px;
-  }
-}
-
-:deep(.period-cards) {
-  display: grid !important;
-
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-
-  gap: 16px;
-
-  width: 100% !important;
-}
-
-@include down(md) {
-  :deep(.period-cards) {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-
-    gap: 8px;
-  }
-}
-
-@include down(xs) {
-  :deep(.period-cards) {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-
-    gap: 8px;
-  }
-}
 </style>

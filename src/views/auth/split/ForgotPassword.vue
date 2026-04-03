@@ -2718,33 +2718,6 @@ export default {
 }
 
 
-
-.auth-footer {
-
-  margin-top: 24px;
-
-
-
-  a.btn {
-
-    display: flex !important;
-
-    align-items: center !important;
-
-    justify-content: center !important;
-
-    text-decoration: none;
-
-    height: 45px !important;
-
-    line-height: normal !important;
-
-  }
-
-}
-
-
-
 .forgot-password, .auth-footer a, a {
 
   color: var(--theme-color);
@@ -2770,47 +2743,6 @@ export default {
   }
 
 }
-
-
-
-.btn.btn-secondary.btn-block {
-
-  height: 45px !important;
-
-  display: flex !important;
-
-  align-items: center !important;
-
-  justify-content: center !important;
-
-  line-height: normal !important;
-
-  color: var(--text-primary) !important;
-
-  border: var(--border-width) solid var(--border-default) !important;
-
-  background-color: transparent !important;
-
-  transition: all 0.3s ease !important;
-
-
-
-  &:hover {
-
-    border-color: var(--theme-color) !important;
-
-    background-color: rgba(var(--theme-color-rgb), 0.05) !important;
-
-    color: var(--theme-color) !important;
-
-    -webkit-text-fill-color: var(--theme-color) !important;
-
-    background-image: none !important;
-
-  }
-
-}
-
 
 
 .loading-wrapper {

@@ -1291,8 +1291,8 @@ export default {
   .section-wrapper.payment-methods-section {
     padding: 0;
     margin: 8px 0;
-    background: var(--background-color) !important;
-    border: none !important;
+    background: var(--background-color);
+    border: none;
 
     .section-title {
       background-color: var(--background-color);
@@ -1303,12 +1303,12 @@ export default {
   }
 
   .right-column .section-wrapper.payment-methods-section {
-    background: var(--right-card-bg) !important;
-    border: var(--border-width) solid var(--border-default) !important;
+    background: var(--right-card-bg);
+    border: var(--border-width) solid var(--border-default);
   }
 
   .right-column .section-wrapper.payment-methods-section .section-title {
-    color: var(--right-card-text) !important;
+    color: var(--right-card-text);
   }
 
   .order-amount-section {
@@ -1407,19 +1407,19 @@ export default {
   }
 
   .right-column .order-amount-section {
-    background: var(--right-card-bg) !important;
-    border: var(--border-width) solid var(--border-default) !important;
+    background: var(--right-card-bg);
+    border: var(--border-width) solid var(--border-default);
   }
 
   .right-column .order-amount-section .section-title,
   .right-column .order-amount-section .summary-title,
   .right-column .order-amount-section .summary-label,
   .right-column .order-amount-section .summary-value {
-    color: var(--right-card-text) !important;
+    color: var(--right-card-text);
   }
 
   .right-column .order-amount-section .summary-divider {
-    background-color: rgba(255, 255, 255, 0.18) !important;
+    background-color: rgba(255, 255, 255, 0.18);
   }
 
   .payment-methods {
@@ -1633,7 +1633,7 @@ export default {
       &:disabled {
         opacity: 0.6;
         cursor: not-allowed;
-        transform: none !important;
+        transform: none;
       }
 
       @include down(xs) {
@@ -1950,7 +1950,7 @@ export default {
 
     .left-column .section-wrapper,
     .right-column .section-wrapper {
-      margin: 0 !important;
+      margin: 0;
     }
 
     .right-column .action-buttons {
