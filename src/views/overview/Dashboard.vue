@@ -2157,7 +2157,7 @@ $space-2: map.get($spacers, 2);
           rgba(34, 89, 170, 0.14) 100%
         );
         background: var(--traffic-card-bg) !important;
-        border: none !important;
+        border: var(--border-width) solid var(--border-subtle) !important;
         box-shadow: var(--shadow-sm);
 
         .usage-card-title {
@@ -2194,7 +2194,7 @@ $space-2: map.get($spacers, 2);
       &.traffic-board-total.expired-main-card {
         --traffic-card-bg: var(--theme-surface-muted);
         background: var(--theme-surface-muted) !important;
-        border: none !important;
+        border: var(--border-width) solid var(--border-hover) !important;
         box-shadow: none;
 
         .plan-summary-card {
@@ -2301,7 +2301,7 @@ $space-2: map.get($spacers, 2);
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
     background: var(--traffic-card-bg, var(--saas-card-bg));
-    border: var(--border-width) solid transparent;
+    border: var(--border-width) solid var(--border-subtle);
     border-radius: var(--dashboard-radius);
     box-shadow: var(--shadow-sm);
   }
