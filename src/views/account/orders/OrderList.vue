@@ -418,7 +418,7 @@ watch(locale, () => {
       height: 14px;
       border-radius: 50%;
       background: #fff;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+      box-shadow: var(--shadow-xs);
       transition: transform 0.2s ease;
     }
   }

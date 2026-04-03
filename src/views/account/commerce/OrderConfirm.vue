@@ -3138,7 +3138,7 @@ export default {
   color: #fff;
   font-size: $font-size-sm;
   font-weight: $font-weight-medium;
-  box-shadow: 0 12px 30px rgba(22, 163, 74, 0.25);
+  box-shadow: var(--shadow-md);
 }
 
 .fade-enter-active,
