@@ -4211,12 +4211,6 @@ export default {
 
 }
 
-.password-rule-tip span.met {
-
-  color: var(--text-primary);
-
-}
-
 .password-strength {
 
   margin-top: 8px;
@@ -4225,11 +4219,13 @@ export default {
 
 .password-strength-label {
 
-  font-size: 12px;
+  font-size: 14px;
+
+  font-weight: 500;
 
   color: var(--text-tertiary);
 
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 
 }
 
