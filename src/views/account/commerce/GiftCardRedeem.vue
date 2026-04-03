@@ -86,7 +86,6 @@ const submitRedeem = async () => {
     showToast(t('profile.giftCardSuccess'), 'success');
     giftCode.value = '';
   } catch (err) {
-    console.error('Failed to redeem gift card:', err);
     showToast(t('profile.giftCardError'), 'error');
   } finally {
     redeeming.value = false;

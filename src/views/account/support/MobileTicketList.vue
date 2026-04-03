@@ -553,7 +553,6 @@ const fetchTicketDetail = async (ticketId, isAutoRefresh = false) => {
       }
     }
   } catch (error) {
-    console.error("Failed to fetch ticket details:", error);
 
     showToast(
       error.response?.message || error.message || t("tickets.fetchDetailError"),
@@ -624,7 +623,6 @@ const fetchTickets = async () => {
 
     tickets.value = Array.isArray(result.data) ? result.data : [];
   } catch (error) {
-    console.error("Failed to fetch tickets:", error);
 
     showToast(
       error.response?.message || error.message || t("tickets.fetchError"),
@@ -652,7 +650,6 @@ const sendReply = async () => {
       await fetchTicketDetail(selectedTicket.value.id, true);
     }
   } catch (error) {
-    console.error("Failed to send reply:", error);
 
     showToast(
       error.response?.message || error.message || t("tickets.replyError"),
@@ -707,7 +704,6 @@ const closeSelectedTicket = async () => {
       backToList();
     }
   } catch (error) {
-    console.error("Failed to close ticket:", error);
 
     showToast(
       error.response?.message || error.message || t("tickets.closeError"),
@@ -752,7 +748,6 @@ const submitTicket = async () => {
       };
     }
   } catch (error) {
-    console.error("Failed to create ticket:", error);
 
     showToast(
       error.response?.message || error.message || t("tickets.createError"),

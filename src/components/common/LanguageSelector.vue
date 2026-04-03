@@ -119,7 +119,6 @@ export default {
         const event = new CustomEvent('languageChanged', { detail: langCode });
         window.dispatchEvent(event);
       } catch (error) {
-        console.error('Failed to switch language:', error);
         if (showToast) {
           showToast('Failed to switch language, please try again.', 'error');
         }

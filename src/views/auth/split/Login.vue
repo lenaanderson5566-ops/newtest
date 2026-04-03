@@ -259,18 +259,13 @@ export default {
         loading.value = true;
 
         try {
-          const tokenLoginResult = await handleTokenLogin({
-            onLoginSuccess: () => {
-              console.log('令牌验证登录成功');
-            }
-          });
+          const tokenLoginResult = await handleTokenLogin();
 
 
           if (tokenLoginResult.success) {
             return;
           }
         } catch (error) {
-          console.error('令牌登录过程中出错:', error);
         } finally {
           loading.value = false;
         }
@@ -280,7 +275,6 @@ export default {
       const isJustLoggedOut = urlParams.get('logout') === 'true';
 
       if (isJustLoggedOut) {
-        console.log('检测到用户刚刚登出，清除所有登录状态');
         showToast(t('auth.logoutSuccess'), 'success', 3000);
 
         if (window.history && window.history.replaceState) {
@@ -293,14 +287,12 @@ export default {
 
       try {
         if (window._isLoggingOut === true) {
-          console.log('检测到全局登出标记，跳过登录状态检查');
           return;
         }
 
         const loginStatus = checkLoginStatus();
 
         if (loginStatus) {
-          console.log('用户已登录，准备跳转到控制面板');
           showToast(t('auth.alreadyLoggedIn'), 'info');
           setTimeout(() => {
             router.push('/dashboard');
@@ -309,7 +301,6 @@ export default {
 
         showAuthPopup.value = shouldShowAuthPopup(AUTH_CONFIG.popup);
       } catch (error) {
-        console.error("登录状态检查失败", error);
       }
     });
 
@@ -796,21 +787,21 @@ export default {
   margin-top: 24px;
 
   a.btn {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    height: 45px !important;
-    line-height: normal !important;
+    height: 45px;
+    line-height: normal;
   }
 }
 
 .btn.btn-secondary.btn-block {
-  height: 45px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  line-height: normal !important;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
   color: var(--text-primary);
   border: var(--border-width) solid var(--border-default);
   background-color: transparent;
@@ -819,9 +810,9 @@ export default {
   &:hover {
     border-color: var(--theme-color);
     background-color: rgba(var(--theme-color-rgb), 0.05);
-    color: var(--theme-color) !important;
-    -webkit-text-fill-color: var(--theme-color) !important;
-    background-image: none !important;
+    color: var(--theme-color);
+    -webkit-text-fill-color: var(--theme-color);
+    background-image: none;
   }
 }
 

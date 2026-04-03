@@ -387,15 +387,7 @@ export default {
 
         try {
 
-          const tokenLoginResult = await handleTokenLogin({
-
-            onLoginSuccess: () => {
-
-              console.log('令牌验证登录成功');
-
-            }
-
-          });
+          const tokenLoginResult = await handleTokenLogin();
 
 
 
@@ -409,7 +401,6 @@ export default {
 
         } catch (error) {
 
-          console.error('令牌登录过程中出错:', error);
 
         } finally {
 
@@ -429,7 +420,6 @@ export default {
 
       if (isJustLoggedOut) {
 
-        console.log('检测到用户刚刚登出，清除所有登录状态');
 
         showToast(t('auth.logoutSuccess'), 'success', 3000);
 
@@ -459,7 +449,6 @@ export default {
 
         if (window._isLoggingOut === true) {
 
-          console.log('检测到全局登出标记，跳过登录状态检查');
 
           return;
 
@@ -473,7 +462,6 @@ export default {
 
         if (loginStatus) {
 
-          console.log('用户已登录，准备跳转到控制面板');
 
           showToast(t('auth.alreadyLoggedIn'), 'info');
 
@@ -487,7 +475,6 @@ export default {
 
       } catch (error) {
 
-        console.error("登录状态检查失败", error);
 
       }
 
@@ -1063,17 +1050,17 @@ export default {
 
   a.btn {
 
-    display: flex !important;
+    display: flex;
 
-    align-items: center !important;
+    align-items: center;
 
-    justify-content: center !important;
+    justify-content: center;
 
     text-decoration: none;
 
-    height: 45px !important;
+    height: 45px;
 
-    line-height: normal !important;
+    line-height: normal;
 
   }
 
@@ -1083,15 +1070,15 @@ export default {
 
 .btn.btn-secondary.btn-block {
 
-  height: 45px !important;
+  height: 45px;
 
-  display: flex !important;
+  display: flex;
 
-  align-items: center !important;
+  align-items: center;
 
-  justify-content: center !important;
+  justify-content: center;
 
-  line-height: normal !important;
+  line-height: normal;
 
   color: var(--text-primary);
 
@@ -1109,11 +1096,11 @@ export default {
 
     background-color: rgba(var(--theme-color-rgb), 0.05);
 
-    color: var(--theme-color) !important;
+    color: var(--theme-color);
 
-    -webkit-text-fill-color: var(--theme-color) !important;
+    -webkit-text-fill-color: var(--theme-color);
 
-    background-image: none !important;
+    background-image: none;
 
   }
 

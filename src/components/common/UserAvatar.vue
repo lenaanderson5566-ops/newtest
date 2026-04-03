@@ -95,7 +95,6 @@ export default {
           router.push('/login');
         }, 500);
       } catch (error) {
-        console.error('退出登录失败:', error);
         showToast(t('auth.logoutFailed'), 'error');
       }
     };

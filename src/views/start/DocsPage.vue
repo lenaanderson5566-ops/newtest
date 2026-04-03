@@ -256,7 +256,6 @@ const fetchKnowledge = async () => {
     const result = await fetchKnowledgeList(locale.value);
     documents.value = result && result.data ? result.data : {};
   } catch (err) {
-    console.error('Failed to fetch knowledge list:', err);
     error.value = err.response?.message || (err && err.message ? err.message : t('docs.unknownError'));
     $toast?.error(error.value);
   } finally {

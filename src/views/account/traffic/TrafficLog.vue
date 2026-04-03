@@ -323,7 +323,6 @@ const fetchTrafficData = async () => {
 
   } catch (err) {
 
-    console.error('Failed to fetch traffic data:', err);
 
     error.value = true;
 

@@ -2001,6 +2001,7 @@ export default {
   }
 
   .section-wrapper.period-section {
+    // 必须覆盖公共 section-wrapper 样式，保持该页平面化分区视觉
     background-color: var(--background-color) !important;
     border: none !important;
     margin-top: map.get($spacers, 2);
@@ -2008,6 +2009,7 @@ export default {
   }
 
   .section-wrapper.subscription-intro-section {
+    // 必须覆盖公共 section-wrapper 样式，保持该页平面化分区视觉
     background-color: var(--background-color) !important;
     border: none !important;
     margin-top: map.get($spacers, 2);
@@ -2015,6 +2017,7 @@ export default {
   }
 
   .section-wrapper.payment-methods-section {
+    // 必须覆盖公共 section-wrapper 样式，保持该页平面化分区视觉
     background-color: var(--background-color) !important;
     border: none !important;
     margin-top: map.get($spacers, 2);
@@ -2275,6 +2278,7 @@ export default {
 
 
           .period-card-inner {
+            // 覆盖第三方卡片基础底色，选中态必须纯白
             background-color: #ffffff !important;
           }
 
@@ -2312,11 +2316,13 @@ export default {
           transform: none;
 
           .period-card-inner {
+            // 覆盖基础卡片底色，弱化态需要统一灰底
             background: var(--theme-surface-muted) !important;
           }
         }
 
         .period-card-inner {
+          // 覆盖共享卡片样式中的默认背景/最小高度
           background-color: #ffffff !important;
 
           padding: 16px 8px;
@@ -2883,8 +2889,9 @@ export default {
   }
 
   .right-column .order-summary-section .order-summary {
+    // 历史兼容：右栏主题卡片背景与文本需要强制反色
     background: var(--right-card-bg) !important;
-    border: var(--border-width) solid var(--border-default) !important;
+    border: var(--border-width) solid var(--border-default);
     color: var(--right-card-text) !important;
   }
 
@@ -2893,7 +2900,7 @@ export default {
   .right-column .order-summary-section .summary-row.total .summary-label,
   .right-column .order-summary-section .summary-row.total .summary-value,
   .right-column .order-summary-section .coupon-code-label {
-    color: var(--right-card-text) !important;
+    color: var(--right-card-text);
   }
 
   .coupon-verify-section .coupon-input {
@@ -3239,6 +3246,7 @@ export default {
         .period-card-inner {
           padding: 8px 8px;
 
+          // 覆盖上层卡片最小高度，确保移动端两列布局对齐
           min-height: 80px !important;
 
           .period-type {
@@ -3308,6 +3316,7 @@ export default {
 
       .period-card {
         .period-card-inner {
+          // 覆盖上层卡片最小高度，确保超小屏两列布局对齐
           min-height: 70px !important;
         }
       }
@@ -3341,6 +3350,7 @@ export default {
 }
 
 @include down(md) {
+  // 覆盖组件运行时注入的内联 grid 配置，强制移动端两列
   .order-confirm-container .period-selection .period-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
@@ -3349,6 +3359,7 @@ export default {
 }
 
 @include down(xs) {
+  // 覆盖组件运行时注入的内联 grid 配置，强制超小屏两列
   .order-confirm-container .period-selection .period-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
@@ -3357,11 +3368,13 @@ export default {
 }
 
 .order-confirm-container .period-selection .period-cards {
+  // 覆盖外部样式对 display 的重置，确保网格容器成立
   display: grid !important;
 }
 
 @include down(md) {
   .period-cards {
+    // 覆盖深层组件样式，维持移动端两列网格
     display: grid !important;
 
     grid-template-columns: repeat(2, 1fr) !important;
@@ -3372,6 +3385,7 @@ export default {
 
 @include down(xs) {
   .period-cards {
+    // 覆盖深层组件样式，维持超小屏两列网格
     display: grid !important;
 
     grid-template-columns: repeat(2, 1fr) !important;
@@ -3381,6 +3395,7 @@ export default {
 }
 
 :deep(.period-cards) {
+  // 覆盖第三方/深层组件默认流式布局，统一为网格
   display: grid !important;
 
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;

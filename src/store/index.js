@@ -34,7 +34,6 @@ export const useAppStore = defineStore('app', {
           forceLogout();
         }
       } catch (error) {
-        console.error('在Store中调用forceLogout失败:', error);
       }
     },
 
@@ -60,7 +59,6 @@ export const useAppStore = defineStore('app', {
         try {
           this.user = JSON.parse(userInfo);
         } catch (err) {
-          console.error('解析用户信息失败:', err);
           localStorage.removeItem('userInfo');
         }
       }

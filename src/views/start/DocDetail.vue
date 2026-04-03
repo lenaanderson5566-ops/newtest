@@ -265,7 +265,6 @@ const getUserSubscribeUrl = () => {
 
   } catch (e) {
 
-    console.error('获取订阅链接失败:', e);
 
   }
 
@@ -284,7 +283,6 @@ const safeBase64Encode = (str) => {
 
   } catch (e) {
 
-    console.error('Base64编码失败:', e);
 
     return '';
 
@@ -338,7 +336,6 @@ const copyToClipboard = (text) => {
 
       .catch(err => {
 
-        console.error('复制失败:', err);
 
         fallbackCopyToClipboard(text);
 
@@ -396,7 +393,6 @@ const fallbackCopyToClipboard = (text) => {
 
   } catch (err) {
 
-    console.error('后备复制方法失败:', err);
 
     showToast('复制失败，请手动复制', 'error');
 
@@ -492,7 +488,6 @@ const handleDocClick = (event) => {
 
         } catch (e) {
 
-          console.error('处理复制按钮出错:', e);
 
         }
 
@@ -524,7 +519,6 @@ const handleDocClick = (event) => {
 
         } catch (e) {
 
-          console.error('处理跳转按钮出错:', e);
 
         }
 
@@ -572,7 +566,6 @@ const handleDocClick = (event) => {
 
         } catch (e) {
 
-          console.error('处理复制按钮出错:', e);
 
         }
 
@@ -598,7 +591,6 @@ const handleDocClick = (event) => {
 
         } catch (e) {
 
-          console.error('处理跳转按钮出错:', e);
 
         }
 
@@ -736,7 +728,6 @@ const renderedContent = computed(() => {
 
     } catch (mdError) {
 
-      console.error('Markdown渲染失败:', mdError);
 
       renderedMd = content;
       
@@ -784,7 +775,6 @@ const renderedContent = computed(() => {
 
               } catch (e) {
 
-                console.error('获取订阅链接失败:', e);
 
               }
 
@@ -1097,7 +1087,6 @@ const renderedContent = computed(() => {
 
   } catch (err) {
 
-    console.error('Error processing content:', err);
     
     return `<p class="error-message">${t('docs.contentFormatError')}</p>`;
 
@@ -1175,7 +1164,6 @@ const fetchDocDetail = async () => {
 
   } catch (err) {
 
-    console.error('Failed to fetch document detail:', err);
 
     error.value = err && err.message ? err.message : t('docs.unknownError');
 

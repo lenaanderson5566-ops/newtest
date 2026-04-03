@@ -442,7 +442,6 @@ export default {
           subscriptionStatus === SUBSCRIPTION_STATUS.EXPIRED ||
           subscriptionStatus === SUBSCRIPTION_STATUS.BANNED;
       } catch (error) {
-        console.error('Failed to fetch current subscription:', error);
         currentPlanId.value = null;
         isCurrentSubscriptionExpired.value = false;
       }
@@ -683,7 +682,6 @@ export default {
           currencySymbol.value = response.data.currency_symbol || "¥";
         }
       } catch (error) {
-        console.error("Failed to fetch system config:", error);
       } finally {
         loading.config = false;
       }
@@ -897,7 +895,6 @@ export default {
         loading.plans = false;
 
       } catch (error) {
-        console.error("Failed to load shop data:", error);
 
         loading.plans = false;
       }

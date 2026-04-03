@@ -185,7 +185,6 @@ export default {
         unreadNoticeCount.value = Number(response?.data?.unreadCount || response?.data?.count || 0);
       } catch (error) {
         unreadNoticeCount.value = 0;
-        console.warn('Failed to load unread notices, fallback to local state:', error);
       }
     };
 
@@ -201,7 +200,6 @@ export default {
           store.setUser(userData);
         }
       } catch (error) {
-        console.error('加载用户信息失败:', error);
       } finally {
         isUserInfoLoading.value = false;
       }
@@ -233,7 +231,6 @@ export default {
             }
           }
         }).catch(err => {
-          console.error('检查登录状态出错:', err);
         });
       }
     };
@@ -282,7 +279,6 @@ export default {
           }
         }
       }).catch(err => {
-        console.error('检查登录状态出错:', err);
       });
 
       handleRedirectParam();

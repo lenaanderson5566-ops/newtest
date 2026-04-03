@@ -791,7 +791,6 @@ export default {
 
       } catch (error) {
 
-        console.error('无法获取网站配置:', error);
 
         showToast(t('messages.configLoadFailed'), 'error');
 
@@ -833,7 +832,6 @@ export default {
 
         if (window.turnstile && captchaConfig.type === 'cloudflare') {
 
-          console.log('Turnstile已存在，尝试重置而不是重新加载脚本');
 
 
 
@@ -892,7 +890,6 @@ export default {
 
           } catch (e) {
 
-            console.error('重置Turnstile失败，将尝试重新加载脚本', e);
 
           }
 
@@ -960,7 +957,6 @@ export default {
 
           window.captchaScriptLoaded = () => {
 
-            console.log('验证码脚本加载完成');
 
             setTimeout(() => {
 
@@ -1030,7 +1026,6 @@ export default {
 
                 } catch (error) {
 
-                  console.error('Google reCAPTCHA渲染错误:', error);
 
                   if (error.toString().includes('has already been rendered')) {
 
@@ -1063,9 +1058,7 @@ export default {
                     window.turnstile.reset();
 
                   } catch (e) {
-
-                    console.log('无法重置Turnstile验证码，将重新渲染');
-
+                    // 忽略 reset 失败，后续会重新渲染验证码容器
                   }
 
                 }
@@ -1099,7 +1092,6 @@ export default {
 
                 } catch (error) {
 
-                  console.error('Turnstile渲染错误:', error);
 
 
 
@@ -1135,21 +1127,11 @@ export default {
 
               } else {
 
-                console.error('找不到modal-turnstile容器');
 
               }
 
             } else {
 
-              console.error('验证码脚本未加载或配置不正确', {
-
-                type: captchaConfig.type,
-
-                hasGoogle: !!window.grecaptcha,
-
-                hasTurnstile: !!window.turnstile
-
-              });
 
             }
 
@@ -1619,7 +1601,6 @@ export default {
 
       if (configLoaded.value && config.is_recaptcha === 1 && captchaConfig.type === 'cloudflare') {
 
-        console.log('组件激活，重新加载Cloudflare Turnstile验证组件');
 
         loadCaptchaScript().then(() => {
 
@@ -1631,7 +1612,6 @@ export default {
 
             } catch (e) {
 
-              console.log('Turnstile重置失败，将重新渲染验证码组件');
 
 
 
@@ -1690,9 +1670,7 @@ export default {
           window.turnstile.reset();
 
         } catch (e) {
-
-          console.log('Turnstile重置失败', e);
-
+          // 忽略 reset 失败，后续会重新渲染验证码容器
         }
 
       }
@@ -2366,6 +2344,7 @@ export default {
 
     border: none;
 
+    // 覆盖全局按钮主题（第三方 btn 样式）
     background-color: var(--theme-color) !important;
 
     color: var(--text-on-dark-primary) !important;
@@ -2388,6 +2367,7 @@ export default {
 
     &:hover:not(:disabled) {
 
+      // 保证 hover 态不被全局按钮 hover 皮肤覆盖
       background-color: var(--primary-color-hover) !important;
 
       transform: translateY(-2px);
@@ -2727,17 +2707,17 @@ export default {
 
   a.btn {
 
-    display: flex !important;
+    display: flex;
 
-    align-items: center !important;
+    align-items: center;
 
-    justify-content: center !important;
+    justify-content: center;
 
     text-decoration: none;
 
-    height: 45px !important;
+    height: 45px;
 
-    line-height: normal !important;
+    line-height: normal;
 
   }
 
@@ -2775,37 +2755,37 @@ export default {
 
 .btn.btn-secondary.btn-block {
 
-  height: 45px !important;
+  height: 45px;
 
-  display: flex !important;
+  display: flex;
 
-  align-items: center !important;
+  align-items: center;
 
-  justify-content: center !important;
+  justify-content: center;
 
-  line-height: normal !important;
+  line-height: normal;
 
-  color: var(--text-primary) !important;
+  color: var(--text-primary);
 
-  border: var(--border-width) solid var(--border-default) !important;
+  border: var(--border-width) solid var(--border-default);
 
-  background-color: transparent !important;
+  background-color: transparent;
 
-  transition: all 0.3s ease !important;
+  transition: all 0.3s ease;
 
 
 
   &:hover {
 
-    border-color: var(--theme-color) !important;
+    border-color: var(--theme-color);
 
-    background-color: rgba(var(--theme-color-rgb), 0.05) !important;
+    background-color: rgba(var(--theme-color-rgb), 0.05);
 
-    color: var(--theme-color) !important;
+    color: var(--theme-color);
 
-    -webkit-text-fill-color: var(--theme-color) !important;
+    -webkit-text-fill-color: var(--theme-color);
 
-    background-image: none !important;
+    background-image: none;
 
   }
 

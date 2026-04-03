@@ -542,7 +542,6 @@ const updateQrCode = () => {
 
       .catch(err => {
 
-        console.error('二维码生成失败:', err);
 
         qrCodeLoading.value = false;
 
@@ -552,7 +551,6 @@ const updateQrCode = () => {
 
     } catch (error) {
 
-      console.error('生成二维码失败:', error);
 
       qrCodeLoading.value = false;
 
@@ -586,7 +584,6 @@ const copySubscribeLink = () => {
 
     .catch(err => {
 
-      console.error('无法复制链接: ', err);
 
       
 
@@ -622,7 +619,6 @@ const copySubscribeLink = () => {
 
       } catch (fallbackErr) {
 
-        console.error('后备复制方法也失败:', fallbackErr);
 
         showToast(t('common.copyFailed') || '复制失败', 'error');
 

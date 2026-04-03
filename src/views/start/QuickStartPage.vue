@@ -347,7 +347,6 @@ const quickImportSelectedClient = async () => {
   try {
     await navigator.clipboard.writeText(subscriptionUrl.value);
   } catch (err) {
-    console.warn('Copy subscription failed before import:', err);
   }
 
   window.open(schemeUrl, '_blank');
@@ -364,7 +363,6 @@ const openQrCodeModal = async () => {
     qrCodeUrl.value = await QRCode.toDataURL(subscriptionUrl.value);
     showQrCode.value = true;
   } catch (err) {
-    console.error('Generate QRCode failed:', err);
     toast.error(t('quickStartPage.qrGenerateFailed'));
   }
 };
@@ -379,7 +377,6 @@ const copySubscriptionUrl = async () => {
     await navigator.clipboard.writeText(subscriptionUrl.value);
     toast.success(t('quickStartPage.subscriptionCopied'));
   } catch (err) {
-    console.error('Copy subscription failed:', err);
     toast.error(t('quickStartPage.copyFailed'));
   }
 };
@@ -392,7 +389,6 @@ const fetchUserStatus = async () => {
     subscriptionUrl.value = subscribe?.subscribe_url || '';
     userStatus.value = resolveSubscriptionStatus(subscribe);
   } catch (err) {
-    console.error('Failed to fetch user status:', err);
     userStatus.value = SUBSCRIPTION_STATUS.NEW;
   }
 };

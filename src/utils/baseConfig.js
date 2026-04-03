@@ -115,7 +115,6 @@ export const getApiBaseUrl = () => {
 
           return apiBaseUrl;
         } catch (error) {
-          console.error("自动获取API URL失败:", error);
           // 仅在自动模式失败时回退到静态URL
           if (apiConfig.staticBaseUrl) {
             return apiConfig.staticBaseUrl;

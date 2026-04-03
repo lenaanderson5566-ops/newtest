@@ -43,7 +43,6 @@ export function formatDate(date, withTime = false) {
   }
   
   if (!(dateObj instanceof Date) || isNaN(dateObj.getTime())) {
-    console.error('Invalid date:', date);
     return '--';
   }
   

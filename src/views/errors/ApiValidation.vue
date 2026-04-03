@@ -166,7 +166,6 @@ export default {
         }
       }
 
-      console.warn("没有找到可用的API节点，将使用默认的第一个节点");
 
       const defaultUrl = window.EZ_CONFIG.API_CONFIG.staticBaseUrl[0];
 
@@ -249,7 +248,6 @@ export default {
 
             sessionStorage.removeItem("ez_original_query_params");
           } catch (e) {
-            console.error("解析存储的查询参数失败:", e);
           }
         }
 
@@ -259,7 +257,6 @@ export default {
           query: targetQuery,
         });
       } catch (error) {
-        console.error("导航跳转错误:", error);
 
         router.replace(redirectInfo.value.path);
       }

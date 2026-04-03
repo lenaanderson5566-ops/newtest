@@ -12,7 +12,6 @@ export function fetchKnowledgeList(language) {
     
     throw new Error('Invalid response format');
   }).catch(error => {
-    console.error('Error fetching knowledge list:', error);
     throw error;
   });
 }
@@ -29,7 +28,6 @@ export function fetchKnowledgeDetail(id, language) {
     
     throw new Error('Invalid response format');
   }).catch(error => {
-    console.error('Error fetching knowledge detail:', error);
     throw error;
   });
 }

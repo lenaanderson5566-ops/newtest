@@ -1086,7 +1086,6 @@ export default {
           }
         }
       } catch (err) {
-        console.error('获取邀请数据失败:', err);
         showToast(t('invite.records.fetchDataError'), 'error');
       } finally {
         loading.inviteData = false;
@@ -1116,7 +1115,6 @@ export default {
           totalRecords.value = 0;
         }
       } catch (err) {
-        console.error('获取邀请明细失败:', err);
         showToast(t('invite.records.fetchError'), 'error');
         inviteRecords.value = [];
         totalRecords.value = 0;
@@ -1141,7 +1139,6 @@ export default {
           }
         }
       } catch (err) {
-        console.error('获取佣金配置失败:', err);
       } finally {
         loading.commConfig = false;
       }
@@ -1323,7 +1320,6 @@ export default {
           showToast(withdrawError.value, 'error');
         }
       } catch (error) {
-        console.error('提现请求错误:', error);
         if (error.response && error.response.data && error.response.data.message) {
           withdrawError.value = error.response.data.message;
         } else if (error.message) {
@@ -1432,7 +1428,6 @@ export default {
     };
     
     const handleError = (error) => {
-      console.error('Error:', error);
       const message = error.response?.message || t('common.error');
       showToast(message, 'error');
     };

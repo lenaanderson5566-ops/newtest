@@ -45,7 +45,6 @@ async function initApiAvailabilityChecker(redirect = true) {
   try {
     const storedUrl = sessionStorage.getItem("ez_api_available_url");
     if (storedUrl) {
-      console.log("使用已验证的API URL:", storedUrl);
       return storedUrl;
     }
 
@@ -71,7 +70,6 @@ async function initApiAvailabilityChecker(redirect = true) {
       }
     }
   } catch (error) {
-    console.error("API可用性检测初始化失败:", error);
   }
 
   return null;
