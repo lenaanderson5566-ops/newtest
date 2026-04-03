@@ -2604,7 +2604,7 @@ export default {
       cursor: pointer;
       transition: border-color 0.2s ease, background-color 0.2s ease;
       border: none;
-      border-top: 1px solid rgba(148, 163, 184, 0.32);
+      border-top: var(--border-strong);
       background-color: transparent;
 
       &:hover {

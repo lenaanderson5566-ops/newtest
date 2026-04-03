@@ -672,7 +672,7 @@ $space-2: map.get($spacers, 2);
 
 .recent-login-list {
   margin-top: 0;
-  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-top: var(--border-soft);
 }
 
 .recent-login-state {
@@ -689,7 +689,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .recent-login-item + .recent-login-item {
-  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-top: var(--border-soft);
 }
 
 .recent-login-main {
@@ -919,7 +919,7 @@ $space-2: map.get($spacers, 2);
 
 .settings-list {
   overflow: hidden;
-  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-top: var(--border-soft);
 }
 
 .settings-row,
@@ -934,7 +934,7 @@ $space-2: map.get($spacers, 2);
 
 .settings-row + .settings-row,
 .nav-row + .nav-row {
-  border-top: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border-top: var(--border-soft);
 }
 
 .row-main { min-width: 0; }
@@ -1192,7 +1192,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     border-left: none;
     border-right: none;
     border-top: var(--border-soft);
-    border-bottom: 1px solid rgba(15, 23, 42, 0.12);
+    border-bottom: var(--border-soft);
     padding: 0 8px;
     background: #fff;
   }
