@@ -290,41 +290,11 @@
 
               <span v-if="errors.password" class="error-message">{{ errors.password }}</span>
 
-              <div class="password-strength">
-
-                <div class="password-rules">
-
-                  <div class="password-rule-item" :class="{ met: passwordRuleMinLengthMet }">
-
-                    <IconCheck class="rule-icon" />
-
-                    <span>{{ $t('auth.passwordRuleMinLength') }}</span>
-
-                  </div>
-
-                  <div class="password-rule-item" :class="{ met: passwordRuleAlphaNumericMet }">
-
-                    <IconCheck class="rule-icon" />
-
-                    <span>{{ $t('auth.passwordRuleAlphaNumeric') }}</span>
-
-                  </div>
-
-                  <div class="password-rule-item" :class="{ met: passwordRuleSpecialSuggestedMet }">
-
-                    <IconCheck class="rule-icon" />
-
-                    <span>{{ $t('auth.passwordRuleSpecialSuggested') }}</span>
-
-                  </div>
-
-                </div>
+              <div v-if="formData.password" class="password-strength">
 
                 <div class="password-strength-label">
 
-                  <span>{{ $t('auth.passwordStrength') }}</span>
-
-                  <span class="strength-text" :class="`strength-${passwordStrengthLevel}`">{{ $t(passwordStrengthTextKey) }}</span>
+                  {{ $t('auth.passwordStrength') }}：{{ $t(passwordStrengthTextKey) }}
 
                 </div>
 
@@ -928,7 +898,7 @@ export default {
 
       if (/[A-Z]/.test(password)) score += 1;
 
-      if (/[A-Za-z]/.test(password) && /\d/.test(password)) score += 1;
+      if (/\d/.test(password)) score += 1;
 
       if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score += 1;
 
@@ -936,27 +906,8 @@ export default {
 
     });
 
-    const passwordRuleMinLengthMet = computed(() => {
-
-      return (formData.password || '').length >= 8;
-
-    });
-
-    const passwordRuleAlphaNumericMet = computed(() => {
-
-      const password = formData.password || '';
-
-      return /[A-Za-z]/.test(password) && /\d/.test(password);
-
-    });
-
-    const passwordRuleSpecialSuggestedMet = computed(() => {
-
-      return /[!@#$%^&*(),.?":{}|<>]/.test(formData.password || '');
-
-    });
-
     const passwordStrengthLevel = computed(() => {
+
       if (passwordStrengthScore.value <= 1) return 'weak';
 
       if (passwordStrengthScore.value <= 3) return 'medium';
@@ -979,7 +930,7 @@ export default {
 
       if (!formData.password) return 0;
 
-      return Math.max(15, passwordStrengthScore.value * 25);
+      return Math.min(100, Math.max(20, passwordStrengthScore.value * 20));
 
     });
 
@@ -2255,12 +2206,6 @@ export default {
       isValidEmail,
 
       showPassword,
-
-      passwordRuleMinLengthMet,
-
-      passwordRuleAlphaNumericMet,
-
-      passwordRuleSpecialSuggestedMet,
 
       passwordStrengthLevel,
 
@@ -4210,97 +4155,17 @@ export default {
 
 .password-strength {
 
-  margin-top: 12px;
-
-}
-
-.password-rules {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 8px;
-
-  margin-bottom: 12px;
-
-}
-
-.password-rule-item {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-  font-size: 14px;
-
-  color: var(--text-tertiary);
-
-}
-
-.password-rule-item .rule-icon {
-
-  width: 16px;
-
-  height: 16px;
-
-  color: var(--text-disabled);
-
-  flex-shrink: 0;
-
-}
-
-.password-rule-item.met {
-
-  color: var(--text-primary);
-
-}
-
-.password-rule-item.met .rule-icon {
-
-  color: #22c55e;
+  margin-top: 8px;
 
 }
 
 .password-strength-label {
 
-  display: flex;
+  font-size: 12px;
 
-  align-items: baseline;
+  color: var(--text-tertiary);
 
-  gap: 8px;
-
-  font-size: 16px;
-
-  color: var(--text-primary);
-
-  margin-bottom: 8px;
-
-}
-
-.password-strength-label .strength-text {
-
-  font-weight: 600;
-
-}
-
-.password-strength-label .strength-text.strength-weak {
-
-  color: #ef4444;
-
-}
-
-.password-strength-label .strength-text.strength-medium {
-
-  color: #f59e0b;
-
-}
-
-.password-strength-label .strength-text.strength-strong {
-
-  color: #22c55e;
+  margin-bottom: 6px;
 
 }
 
@@ -4308,7 +4173,7 @@ export default {
 
   width: 100%;
 
-  height: 8px;
+  height: 6px;
 
   border-radius: 999px;
 
