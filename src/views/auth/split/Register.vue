@@ -290,6 +290,30 @@
 
               <span v-if="errors.password" class="error-message">{{ errors.password }}</span>
 
+              <div v-if="formData.password" class="password-strength">
+
+                <div class="password-strength-label">
+
+                  {{ $t('auth.passwordStrength') }}：{{ $t(passwordStrengthTextKey) }}
+
+                </div>
+
+                <div class="password-strength-bar">
+
+                  <div
+
+                    class="password-strength-fill"
+
+                    :class="`strength-${passwordStrengthLevel}`"
+
+                    :style="{ width: `${passwordStrengthPercent}%` }"
+
+                  ></div>
+
+                </div>
+
+              </div>
+
             </div>
 
 
@@ -859,6 +883,56 @@ export default {
 
 
     const showPassword = ref(false);
+
+    const passwordStrengthScore = computed(() => {
+
+      const password = formData.password || '';
+
+      if (!password) return 0;
+
+      let score = 0;
+
+      if (password.length >= 8) score += 1;
+
+      if (/[a-z]/.test(password)) score += 1;
+
+      if (/[A-Z]/.test(password)) score += 1;
+
+      if (/\d/.test(password)) score += 1;
+
+      if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score += 1;
+
+      return score;
+
+    });
+
+    const passwordStrengthLevel = computed(() => {
+
+      if (passwordStrengthScore.value <= 1) return 'weak';
+
+      if (passwordStrengthScore.value <= 3) return 'medium';
+
+      return 'strong';
+
+    });
+
+    const passwordStrengthTextKey = computed(() => {
+
+      if (passwordStrengthLevel.value === 'weak') return 'auth.passwordStrengthWeak';
+
+      if (passwordStrengthLevel.value === 'medium') return 'auth.passwordStrengthMedium';
+
+      return 'auth.passwordStrengthStrong';
+
+    });
+
+    const passwordStrengthPercent = computed(() => {
+
+      if (!formData.password) return 0;
+
+      return Math.min(100, Math.max(20, passwordStrengthScore.value * 20));
+
+    });
 
 
     const needCaptchaForEmailVerify = computed(() => {
@@ -2132,6 +2206,12 @@ export default {
       isValidEmail,
 
       showPassword,
+
+      passwordStrengthLevel,
+
+      passwordStrengthTextKey,
+
+      passwordStrengthPercent,
 
 
       config,
@@ -4071,6 +4151,65 @@ export default {
 }
 
 
+
+
+.password-strength {
+
+  margin-top: 8px;
+
+}
+
+.password-strength-label {
+
+  font-size: 12px;
+
+  color: var(--text-tertiary);
+
+  margin-bottom: 6px;
+
+}
+
+.password-strength-bar {
+
+  width: 100%;
+
+  height: 6px;
+
+  border-radius: 999px;
+
+  background-color: var(--background-light);
+
+  overflow: hidden;
+
+}
+
+.password-strength-fill {
+
+  height: 100%;
+
+  border-radius: 999px;
+
+  transition: width 0.25s ease, background-color 0.25s ease;
+
+}
+
+.password-strength-fill.strength-weak {
+
+  background-color: #ef4444;
+
+}
+
+.password-strength-fill.strength-medium {
+
+  background-color: #f59e0b;
+
+}
+
+.password-strength-fill.strength-strong {
+
+  background-color: #22c55e;
+
+}
 
 @keyframes modalFadeIn {
 
