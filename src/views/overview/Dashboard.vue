@@ -1606,7 +1606,7 @@ $space-2: map.get($spacers, 2);
 
     .card-header {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       margin-bottom: #{$space-2};
 
@@ -1951,7 +1951,7 @@ $space-2: map.get($spacers, 2);
 
 
             .plan-action-btn {
-              flex: 1;
+              flex: 0 1 auto;
               border-radius: var(--dashboard-button-radius);
               padding: 8px 16px;
               font-size: $font-size-sm;
@@ -2451,8 +2451,8 @@ $space-2: map.get($spacers, 2);
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+      justify-content: flex-start;
+      gap: 12px;
       padding: 0;
       border: none;
       border-radius: 0;
@@ -2461,7 +2461,7 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-content {
-      flex: 1;
+      flex: 0 1 auto;
       align-items: center;
       justify-content: center;
       display: flex;
@@ -2471,7 +2471,7 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-image {
-      width: 280px;
+      width: 220px;
       flex: 0 0 auto;
       max-width: 100%;
       height: auto;
@@ -2492,7 +2492,7 @@ $space-2: map.get($spacers, 2);
     .trend-empty-desc {
       @extend %typo-meta-text;
       color: var(--text-tertiary);
-      max-width: 420px;
+      max-width: 360px;
     }
 
     .trend-empty-action {
