@@ -375,8 +375,7 @@ import { fetchPlans, submitOrder } from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
-
-const noTrafficDataImage = new URL('../../assets/images/dashboard/no-traffic-data.svg', import.meta.url).href;
+import noTrafficDataImage from '@/assets/images/dashboard/no-traffic-data.svg';
 
 export default {
   name: 'UserDashboard',
@@ -2457,8 +2456,8 @@ $space-2: map.get($spacers, 2);
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      gap: 12px;
+      justify-content: center;
+      gap: 14px;
       padding: 0;
       border: none;
       border-radius: 0;
@@ -2472,8 +2471,8 @@ $space-2: map.get($spacers, 2);
       justify-content: center;
       display: flex;
       flex-direction: column;
-      text-align: left;
-      gap: 12px;
+      text-align: center;
+      gap: 14px;
     }
 
     .trend-empty-image {
