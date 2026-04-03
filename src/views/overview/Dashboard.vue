@@ -2158,10 +2158,18 @@ $space-2: map.get($spacers, 2);
         );
         background: var(--traffic-card-bg) !important;
         border-color: rgba(34, 89, 170, 0.16);
-        box-shadow: none;
+        box-shadow: var(--shadow-sm);
 
         .usage-card-title {
           color: var(--text-primary);
+        }
+
+        .plan-summary-card,
+        .plan-summary-section,
+        .plan-summary-section-meta,
+        .plan-summary-actions,
+        .plan-action-btn {
+          box-shadow: none !important;
         }
       }
 
