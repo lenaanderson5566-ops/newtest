@@ -320,7 +320,7 @@
 
               <div v-if="formData.password" class="password-strength">
 
-                <div class="password-strength-label">
+                <div class="password-strength-label" :class="{ 'is-weak': passwordStrengthLevel === 'weak' }">
 
                   {{ $t('auth.passwordStrength') }}：{{ $t(passwordStrengthTextKey) }}
 
@@ -4214,6 +4214,7 @@ export default {
 
 
 .password-rules {
+  margin-top: 14px;
 
   display: flex;
 
@@ -4285,6 +4286,12 @@ export default {
 
   margin-bottom: 8px;
 
+}
+
+.password-strength-label.is-weak {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  letter-spacing: 0.2px;
 }
 
 :deep(input[type="password"]::-ms-reveal),
@@ -4440,6 +4447,28 @@ export default {
 
 .auth-divider {
   margin-top: 4px;
+}
+
+/* Requested compact auth sizing */
+.auth-logo {
+  margin-bottom: 6px;
+}
+
+.auth-title {
+  margin-bottom: 2px;
+}
+
+.auth-subtitle {
+  margin-bottom: 8px;
+}
+
+.auth-form .form-control {
+  height: 43px;
+}
+
+.input-with-icon .input-icon {
+  width: 18px;
+  height: 18px;
 }
 
 </style>
