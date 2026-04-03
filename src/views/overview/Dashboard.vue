@@ -2157,8 +2157,8 @@ $space-2: map.get($spacers, 2);
           rgba(34, 89, 170, 0.14) 100%
         );
         background: var(--traffic-card-bg) !important;
-        border: 1px solid rgba(34, 89, 170, 0.16);
-        box-shadow: 0 12px 26px rgba(34, 89, 170, 0.08);
+        border-color: rgba(34, 89, 170, 0.16);
+        box-shadow: none;
 
         .usage-card-title {
           color: var(--text-primary);
