@@ -3698,15 +3698,15 @@ export default {
 
   flex-direction: column;
 
-  gap: 6px;
+  gap: 2px;
 
 }
 
 .password-rule-tip {
 
-  margin-top: 8px;
+  margin-top: 0;
 
-  margin-bottom: 8px;
+  margin-bottom: 0;
 
   display: flex;
 
@@ -3729,6 +3729,8 @@ export default {
   width: 16px;
 
   height: 16px;
+
+  stroke-width: 2.75;
 
 }
 
