@@ -2157,7 +2157,7 @@ $space-2: map.get($spacers, 2);
           rgba(34, 89, 170, 0.14) 100%
         );
         background: var(--traffic-card-bg) !important;
-        border-color: rgba(34, 89, 170, 0.16);
+        border: none !important;
         box-shadow: var(--shadow-sm);
 
         .usage-card-title {
@@ -2193,7 +2193,7 @@ $space-2: map.get($spacers, 2);
       &.traffic-board-total.expired-main-card {
         --traffic-card-bg: var(--theme-surface-muted);
         background: var(--theme-surface-muted) !important;
-        border-color: var(--quota-expired-border);
+        border: none !important;
         box-shadow: none;
 
         .plan-summary-card {
