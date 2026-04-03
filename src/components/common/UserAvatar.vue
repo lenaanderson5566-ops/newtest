@@ -37,6 +37,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
+import { useAppStore } from '@/store';
 import { IconMessageCircle } from '@tabler/icons-vue';
 import IconUser from '@/components/icons/IconUser.vue';
 import IconLogout from '@/components/icons/IconLogout.vue';
@@ -53,6 +54,10 @@ export default {
       type: String,
       default: ''
     },
+    username: {
+      type: String,
+      default: ''
+    },
     loading: {
       type: Boolean,
       default: false
@@ -60,19 +65,28 @@ export default {
   },
   setup(props) {
     const router = useRouter();
+    const store = useAppStore();
     const { t } = useI18n();
     const { showToast } = useToast();
     const isDropdownOpen = ref(false);
     const avatarContainer = ref(null);
     const avatarInitial = computed(() => {
       const rawEmail = (props.email || '').trim();
-      if (!rawEmail) return 'U';
+      if (rawEmail) {
+        const localPart = rawEmail.split('@')[0] || rawEmail;
+        const fallbackTarget = localPart || rawEmail;
+        const firstChar = [...fallbackTarget][0] || 'U';
 
-      const localPart = rawEmail.split('@')[0] || rawEmail;
-      const fallbackTarget = localPart || rawEmail;
-      const firstChar = [...fallbackTarget][0] || 'U';
+        return firstChar.toUpperCase();
+      }
 
-      return firstChar.toUpperCase();
+      const rawUsername = (props.username || '').trim();
+      if (rawUsername) {
+        const firstChar = [...rawUsername][0] || 'U';
+        return firstChar.toUpperCase();
+      }
+
+      return 'U';
     });
     
     const toggleDropdown = () => {
@@ -86,7 +100,7 @@ export default {
     
     const logout = async () => {
       try {
-        localStorage.removeItem('token'); 
+        store.clearUser();
         isDropdownOpen.value = false;
         
         showToast(t('auth.logoutSuccess'), 'success', 3000);

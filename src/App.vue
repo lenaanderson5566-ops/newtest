@@ -20,7 +20,7 @@
         >
           <IconGift :size="18" />
         </button>
-        <UserAvatar :email="email" :loading="isUserInfoLoading" />
+        <UserAvatar :email="userEmail" :username="userDisplayName" :loading="isUserInfoLoading" />
         </div>
       </div>
 
@@ -156,7 +156,14 @@ export default {
       handleRedirectParam();
     });
 
-    const email = computed(() => store.userInfo?.email || '');
+    const userEmail = computed(() => {
+      const user = store.userInfo || {};
+      return String(user.email || user.mail || '').trim();
+    });
+    const userDisplayName = computed(() => {
+      const user = store.userInfo || {};
+      return String(user.username || user.name || '').trim();
+    });
     const isUserInfoLoading = ref(false);
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
@@ -317,7 +324,8 @@ export default {
     );
 
     return {
-      email,
+      userEmail,
+      userDisplayName,
       isUserInfoLoading,
       siteConfig,
       currentYear,
