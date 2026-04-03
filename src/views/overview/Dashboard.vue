@@ -252,7 +252,7 @@
               <div class="trend-empty-content">
                 <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
                 <div class="trend-empty-desc">{{ $t('trafficLog.emptyDesc') }}</div>
-                <button class="trend-empty-action btn btn-primary" @click="goToQuickStart">
+                <button class="trend-empty-action btn btn-secondary" @click="goToQuickStart">
                   {{ $t('dashboard.goToQuickStart') }}
                 </button>
               </div>
