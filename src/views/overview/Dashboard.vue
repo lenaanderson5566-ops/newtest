@@ -2195,7 +2195,7 @@ $space-2: map.get($spacers, 2);
         --traffic-card-bg: var(--theme-surface-muted);
         background: var(--theme-surface-muted) !important;
         border: var(--border-width) solid var(--border-hover) !important;
-        box-shadow: none;
+        box-shadow: var(--shadow-md) !important;
 
         .plan-summary-card {
           .plan-summary-section-meta {
@@ -2204,7 +2204,7 @@ $space-2: map.get($spacers, 2);
               rgba(152, 173, 209, 0.92) 0%,
               rgba(164, 171, 211, 0.9) 52%,
               rgba(176, 166, 203, 0.9) 100%
-            );
+            ) !important;
             border: none;
             box-shadow: none;
 
