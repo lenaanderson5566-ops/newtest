@@ -1896,7 +1896,7 @@ export default {
       .btn-unlock-selection {
         height: 30px;
         padding: 0 8px;
-        border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+        border: var(--border-width) solid var(--border-active);
         border-radius: $border-radius-sm;
         background: transparent;
         color: var(--theme-color);
@@ -2091,7 +2091,7 @@ export default {
 
         -webkit-backdrop-filter: blur(8px);
 
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: var(--border-width) solid var(--border-subtle);
 
         will-change: backdrop-filter, background-color, color;
 
@@ -2456,7 +2456,7 @@ export default {
       border-radius: $border-radius-sm;
 
       background: color-mix(in srgb, var(--theme-color) 24%, transparent);
-      border: 1px solid color-mix(in srgb, var(--theme-color) 52%, white);
+      border: var(--border-width) solid var(--border-active);
       color: var(--text-on-dark-primary);
       font-size: $font-size-sm;
 
@@ -2884,7 +2884,7 @@ export default {
 
   .right-column .order-summary-section .order-summary {
     background: var(--right-card-bg) !important;
-    border: 1px solid var(--right-card-border) !important;
+    border: var(--border-width) solid var(--border-default) !important;
     color: var(--right-card-text) !important;
   }
 

@@ -632,7 +632,7 @@ watch(locale, () => {
   color: var(--text-on-dark-primary);
   font-weight: $font-weight-medium;
   font-size: $font-size-md;
-  border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+  border: var(--border-width) solid var(--border-active);
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(8px);

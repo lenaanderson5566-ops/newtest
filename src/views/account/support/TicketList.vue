@@ -1089,7 +1089,7 @@ onUnmounted(() => {
 
     -webkit-backdrop-filter: blur(8px);
 
-    border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+    border: var(--border-width) solid var(--border-active);
 
 
     &:hover {
@@ -1628,7 +1628,7 @@ onUnmounted(() => {
 
     -webkit-backdrop-filter: blur(8px);
 
-    border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+    border: var(--border-width) solid var(--border-active);
 
     &:hover:not(:disabled) {
       transform: translateY(-2px);
@@ -1801,7 +1801,7 @@ onUnmounted(() => {
 
   animation: modal-appear 0.3s cubic-bezier(0.21, 1.02, 0.73, 1);
 
-  border: 1px solid rgba(var(--theme-color-rgb), 0.1);
+  border: var(--border-width) solid var(--border-subtle);
 
   transform-origin: center center;
 
@@ -2081,7 +2081,7 @@ onUnmounted(() => {
     &.btn-submit {
       background-color: rgba(var(--theme-color-rgb), 0.85);
 
-      border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+      border: var(--border-width) solid var(--border-active);
 
       color: var(--text-on-dark-primary);
 

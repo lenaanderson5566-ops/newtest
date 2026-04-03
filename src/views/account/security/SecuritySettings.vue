@@ -490,12 +490,12 @@ onMounted(() => {
   font-size: $font-size-sm;
   color: var(--theme-color);
   background: rgba(var(--theme-color-rgb), 0.12);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.28);
+  border: var(--border-width) solid var(--border-active);
   white-space: nowrap;
 }
 
 .remove-session-btn {
-  border: 1px solid rgba(255, 77, 79, 0.5);
+  border: var(--border-width) solid var(--border-hover);
   background: transparent;
   color: var(--error-color);
   border-radius: 8px;

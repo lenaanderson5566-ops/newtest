@@ -415,7 +415,7 @@ onMounted(fetchUserStatus);
 
 .status-strip {
   background: rgba(var(--theme-color-rgb), 0.06);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.14);
+  border: var(--border-width) solid var(--divider);
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2);
 
@@ -447,7 +447,7 @@ onMounted(fetchUserStatus);
 
 .step-card {
   background: #f8faff;
-  border: 1px solid rgba(47, 85, 212, 0.08);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 3);
 

@@ -630,7 +630,7 @@ export default {
 
         padding: 8px 16px;
 
-        border: 1px solid rgba(var(--theme-color-rgb), 0.1);
+        border: var(--border-width) solid var(--border-subtle);
 
         
 
@@ -837,7 +837,7 @@ export default {
 
         margin-top: 16px;
 
-        border-top: 1px solid rgba(var(--theme-color-rgb), 0.1);
+        border-top: var(--border-width) solid var(--border-subtle);
 
         padding-top: 16px;
 

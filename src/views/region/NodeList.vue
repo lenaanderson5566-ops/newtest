@@ -636,7 +636,7 @@ onMounted(() => {
     height: 240px;
     border-radius: $border-radius-sm;
     margin-bottom: 16px;
-    border: 1px solid rgba(var(--theme-color-rgb), 0.22);
+    border: var(--border-width) solid var(--border-hover);
     background:
       radial-gradient(circle at 20% 30%, rgba(var(--theme-color-rgb), 0.22), transparent 35%),
       radial-gradient(circle at 78% 42%, rgba(99, 102, 241, 0.2), transparent 32%),
@@ -730,7 +730,7 @@ onMounted(() => {
 
       .unlock-tip-btn {
         margin-top: 8px;
-        border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+        border: var(--border-width) solid var(--border-active);
         background: rgba(var(--theme-color-rgb), 0.08);
         color: rgba(var(--theme-color-rgb), 0.95);
         border-radius: 999px;
@@ -755,7 +755,7 @@ onMounted(() => {
       font-size: $font-size-md;
       font-weight: $font-weight-bold;
       cursor: pointer;
-      border: 1px solid transparent;
+      border: var(--border-width) solid transparent;
     }
 
     .primary {
@@ -1018,7 +1018,7 @@ onMounted(() => {
 
   font-size: $font-size-md;
 
-  border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+  border: var(--border-width) solid var(--border-active);
 
 
   cursor: pointer;

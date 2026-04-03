@@ -1275,7 +1275,7 @@ export default {
   .overview-cancel-btn {
     height: 30px;
     padding: 0 8px;
-    border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+    border: var(--border-width) solid var(--border-active);
     border-radius: $border-radius-sm;
     background: transparent;
     color: var(--theme-color);
@@ -1304,7 +1304,7 @@ export default {
 
   .right-column .section-wrapper.payment-methods-section {
     background: var(--right-card-bg) !important;
-    border: 1px solid var(--right-card-border) !important;
+    border: var(--border-width) solid var(--border-default) !important;
   }
 
   .right-column .section-wrapper.payment-methods-section .section-title {
@@ -1408,7 +1408,7 @@ export default {
 
   .right-column .order-amount-section {
     background: var(--right-card-bg) !important;
-    border: 1px solid var(--right-card-border) !important;
+    border: var(--border-width) solid var(--border-default) !important;
   }
 
   .right-column .order-amount-section .section-title,
@@ -1518,7 +1518,7 @@ export default {
     padding: 16px;
     background-color: rgba(76, 175, 80, 0.1);
     border-radius: $border-radius-sm;
-    border: 1px solid rgba(76, 175, 80, 0.2);
+    border: var(--border-width) solid var(--border-hover);
 
     .notice-icon {
       margin-right: 16px;
@@ -1602,7 +1602,7 @@ export default {
 
         .btn-back.secondary-action {
           background: transparent;
-          border: 1px solid rgba(var(--theme-color-rgb), 0.38);
+          border: var(--border-width) solid var(--border-active);
           color: var(--theme-color);
 
           &:hover:not(:disabled) {
@@ -2124,7 +2124,7 @@ export default {
   padding: 4px 8px;
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
-  border: 1px solid transparent;
+  border: var(--border-width) solid transparent;
   transition: all 0.3s ease;
 
   &.status-transition {

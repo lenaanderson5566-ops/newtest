@@ -2246,7 +2246,7 @@ export default {
 
   background-color: var(--input-bg-color, #f9f9f9);
 
-  border: 1px solid var(--input-border-color, transparent);
+  border: var(--border-width) solid var(--border-default);
 
   transition: all 0.3s ease;
 
@@ -2344,7 +2344,7 @@ export default {
 
     cursor: pointer;
 
-    border-left: 1px solid var(--input-border-color, rgba(0, 0, 0, 0.08));
+    border-left: var(--border-width) solid var(--border-subtle);
 
     background-color: transparent;
 
@@ -2443,7 +2443,7 @@ export default {
 
       animation: dropdownFadeIn 0.2s ease;
 
-      border: 1px solid var(--input-border-color, rgba(0, 0, 0, 0.08));
+      border: var(--border-width) solid var(--border-subtle);
 
       min-width: 160px;
 
@@ -2637,7 +2637,7 @@ export default {
 
     border-radius: 8px;
 
-    border: 1px solid var(--input-border-color, transparent);
+    border: var(--border-width) solid var(--border-default);
 
     background-color: var(--input-bg-color, #f9f9f9);
 
@@ -3205,7 +3205,7 @@ export default {
 
   color: var(--text-primary) !important;
 
-  border: 1px solid var(--border-default) !important;
+  border: var(--border-width) solid var(--border-default) !important;
 
   background-color: transparent !important;
 

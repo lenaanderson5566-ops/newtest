@@ -723,7 +723,7 @@ export default {
 
     border-radius: 8px;
 
-    border: 1px solid var(--input-border-color, transparent);
+    border: var(--border-width) solid var(--border-default);
 
     background-color: var(--input-bg-color, #f9f9f9);
 

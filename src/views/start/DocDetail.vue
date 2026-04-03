@@ -1360,7 +1360,7 @@ onUnmounted(() => {
     padding: 24px;
 
 
-    border: 1px solid rgba(var(--theme-color-rgb), 0.1);
+    border: var(--border-width) solid var(--border-subtle);
 
     animation: errorAppear 0.5s ease-out;
 
@@ -1566,7 +1566,7 @@ onUnmounted(() => {
 
   padding-bottom: 16px;
 
-  border-bottom: 1px solid rgba(var(--theme-color-rgb), 0.1);
+  border-bottom: var(--border-width) solid var(--border-subtle);
 
   
 
@@ -1871,7 +1871,7 @@ onUnmounted(() => {
 
     color: var(--theme-color);
 
-    border: 1px solid rgba(var(--theme-color-rgb), 0.1);
+    border: var(--border-width) solid var(--border-subtle);
 
     transition: background-color 0.2s ease;
 
@@ -2193,7 +2193,7 @@ onUnmounted(() => {
 
     background-color: rgba(var(--theme-color-rgb), 0.05);
 
-    border: 1px solid rgba(var(--theme-color-rgb), 0.15);
+    border: var(--border-width) solid var(--border-subtle);
 
 
     position: relative;

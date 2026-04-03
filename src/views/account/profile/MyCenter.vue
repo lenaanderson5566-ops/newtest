@@ -602,7 +602,7 @@ $space-2: map.get($spacers, 2);
   gap: 0;
   overflow-x: auto;
   background: var(--card-bg-color, var(--card-background));
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
 }
 
@@ -641,7 +641,7 @@ $space-2: map.get($spacers, 2);
 .section-block {
   border-radius: $border-radius-sm;
   background-color: var(--card-background);
-  border: 1px solid rgba(15, 23, 42, 0.15);
+  border: var(--border-width) solid var(--border-hover);
   transition: box-shadow 0.22s ease, border-color 0.22s ease;
 
   &:hover {
@@ -815,7 +815,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .summary-nav-row {
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
   padding-left: 8px;
   padding-right: 8px;
@@ -823,7 +823,7 @@ $space-2: map.get($spacers, 2);
 
 .summary-item {
   padding: 8px;
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
   background: linear-gradient(180deg, rgba(var(--card-background-rgb), 0.96), rgba(var(--card-background-rgb), 0.9));
 
@@ -958,7 +958,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .tier-intro-card {
-  border: 1px solid rgba(var(--text-color-rgb), 0.08);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: 12px;
   background: rgba(var(--card-background-rgb), 0.7);
   padding: 8px;

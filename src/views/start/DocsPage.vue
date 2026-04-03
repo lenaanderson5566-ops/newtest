@@ -492,7 +492,7 @@ onMounted(() => {
 
     padding-bottom: 8px;
 
-    border-bottom: 1px solid rgba(var(--theme-color-rgb), 0.1);
+    border-bottom: var(--border-width) solid var(--border-subtle);
 
     color: var(--text-primary);
 
@@ -696,7 +696,7 @@ onMounted(() => {
 
   font-size: $font-size-md;
 
-  border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+  border: var(--border-width) solid var(--border-active);
 
 
   cursor: pointer;

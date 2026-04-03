@@ -1682,7 +1682,7 @@ export default {
 }
 
 .invite-card-inner {
-  border: 1px solid rgba(var(--theme-color-rgb), 0.2);
+  border: var(--border-width) solid var(--border-hover);
   border-radius: 14px;
   padding: 16px;
   background: linear-gradient(135deg, rgba(43, 46, 124, 0.98), rgba(53, 58, 138, 0.92));
@@ -1708,7 +1708,7 @@ export default {
   width: 100%;
   display: block;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: var(--border-width) solid var(--border-subtle);
   background: rgba(255, 255, 255, 0.08);
   padding: 8px 8px;
   white-space: nowrap;
@@ -1812,7 +1812,7 @@ export default {
 
 .invite-step {
   background: #f8faff;
-  border: 1px solid rgba(var(--theme-color-rgb), 0.1);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: 12px;
   padding: 16px;
 }
@@ -1996,7 +1996,7 @@ export default {
 
   &.alert-warning {
     background: rgba(245, 158, 11, 0.1);
-    border: 1px solid rgba(245, 158, 11, 0.28);
+    border: var(--border-width) solid var(--border-hover);
     border-left: 4px solid rgba(245, 158, 11, 0.92);
   }
 

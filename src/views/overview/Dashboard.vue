@@ -1596,7 +1596,7 @@ $space-2: map.get($spacers, 2);
   .dashboard-card {
     background-color: var(--saas-card-bg);
     padding: var(--dashboard-card-padding);
-    border: 1px solid var(--dashboard-border-color);
+    border: var(--border-width) solid var(--border-subtle);
     border-radius: var(--dashboard-radius);
     transition: box-shadow 0.2s ease;
 
@@ -1700,7 +1700,7 @@ $space-2: map.get($spacers, 2);
       padding: var(--dashboard-card-padding);
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
-      border: 1px solid var(--dashboard-border-color);
+      border: var(--border-width) solid var(--border-subtle);
 
       &.traffic-board-card {
         width: 100%;
@@ -1806,7 +1806,7 @@ $space-2: map.get($spacers, 2);
             font-weight: $font-weight-semibold;
             color: var(--plan-expired-strip-text);
             background: var(--plan-expired-strip-bg);
-            border: 1px solid var(--plan-expired-strip-border);
+            border: var(--border-width) solid var(--border-hover);
           }
 
           .plan-summary-section {
@@ -1929,7 +1929,7 @@ $space-2: map.get($spacers, 2);
             font-size: $font-size-md;
             font-weight: $font-weight-semibold;
             color: var(--text-on-dark-primary);
-            border: 1px solid rgba(255, 255, 255, 0.26);
+            border: var(--border-width) solid var(--border-subtle);
             background: rgba(255, 255, 255, 0.2);
             position: absolute;
             right: 0;
@@ -2120,7 +2120,7 @@ $space-2: map.get($spacers, 2);
           rgba(34, 89, 170, 0.14) 100%
         );
         background: var(--traffic-card-bg) !important;
-        border: 1px solid rgba(34, 89, 170, 0.16);
+        border: var(--border-width) solid var(--border-subtle);
         box-shadow: 0 10px 24px rgba(34, 89, 170, 0.08);
 
         .usage-card-title,
@@ -2219,7 +2219,7 @@ $space-2: map.get($spacers, 2);
 
             .plan-status-tag {
               color: rgba(248, 250, 252, 0.98);
-              border: 1px solid rgba(241, 245, 249, 0.58);
+              border: var(--border-width) solid var(--border-hover);
               background: rgba(148, 163, 184, 0.14);
             }
           }
@@ -2287,7 +2287,7 @@ $space-2: map.get($spacers, 2);
   .overview-card--traffic-quota {
     border-radius: var(--dashboard-radius);
     background: var(--saas-card-bg);
-    border: 1px solid var(--dashboard-border-color);
+    border: var(--border-width) solid var(--border-subtle);
   }
 
   .stats-grid .stats-card.overview-card,
@@ -2301,7 +2301,7 @@ $space-2: map.get($spacers, 2);
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
     background: var(--traffic-card-bg, var(--saas-card-bg));
-    border: 1px solid transparent;
+    border: var(--border-width) solid transparent;
     border-radius: var(--dashboard-radius);
     box-shadow: var(--shadow-sm);
   }
@@ -2509,7 +2509,7 @@ $space-2: map.get($spacers, 2);
     margin-bottom: 4px;
     padding: 14px 16px;
     border-radius: var(--dashboard-radius);
-    border: 1px solid var(--theme-border-color);
+    border: var(--border-width) solid var(--border-default);
     background: var(--theme-surface-elevated);
 
     &.is-active {
@@ -2542,7 +2542,7 @@ $space-2: map.get($spacers, 2);
     max-height: 48px;
     padding: 4px 8px;
     border-radius: var(--dashboard-radius);
-    border: 1px solid rgba(var(--warning-color-rgb), 0.4);
+    border: var(--border-width) solid var(--border-hover);
     background: var(--warning-background);
     display: flex;
     align-items: center;
@@ -2796,7 +2796,7 @@ $space-2: map.get($spacers, 2);
   max-width: var(--page-content-max-width);
   width: 100%;
   background: var(--card-background);
-  border: 1px solid var(--dashboard-border-color);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: var(--dashboard-radius);
   padding: 16px;
   margin-bottom: 0;
@@ -2814,7 +2814,7 @@ $space-2: map.get($spacers, 2);
   gap: 20px;
   border-radius: 14px;
   padding: 22px;
-  border: 1px solid rgba(var(--theme-color-rgb), 0.16);
+  border: var(--border-width) solid var(--border-subtle);
   background:
     radial-gradient(circle at 82% 18%, rgba(59, 130, 246, 0.16), transparent 40%),
     radial-gradient(circle at 18% 78%, rgba(99, 102, 241, 0.1), transparent 46%),
@@ -2843,7 +2843,7 @@ $space-2: map.get($spacers, 2);
   padding: 6px 12px;
   border-radius: 999px;
   color: #b45309;
-  border: 1px solid rgba(245, 158, 11, 0.32);
+  border: var(--border-width) solid var(--border-hover);
   background: rgba(245, 158, 11, 0.14);
 }
 
@@ -2869,7 +2869,7 @@ $space-2: map.get($spacers, 2);
 
 .hero-btn {
   min-width: 144px;
-  border: 1px solid transparent;
+  border: var(--border-width) solid transparent;
   border-radius: 10px;
   padding: 10px 18px;
   cursor: pointer;
@@ -2893,7 +2893,7 @@ $space-2: map.get($spacers, 2);
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(148, 163, 184, 0.22);
+  border: var(--border-width) solid var(--border-hover);
   background:
     radial-gradient(circle at 30% 75%, rgba(99, 102, 241, 0.1), transparent 45%),
     radial-gradient(circle at 84% 20%, rgba(59, 130, 246, 0.15), transparent 40%),
@@ -3128,7 +3128,7 @@ $space-2: map.get($spacers, 2);
   max-height: calc(100vh - 32px);
   overflow: hidden;
   background-color: var(--card-background);
-  border: 1px solid rgba(var(--theme-color-rgb), 0.15);
+  border: var(--border-width) solid var(--border-subtle);
   border-radius: 16px;
 
   .modal-header {
