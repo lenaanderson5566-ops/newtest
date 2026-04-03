@@ -503,6 +503,7 @@ onMounted(fetchUserStatus);
   justify-content: center;
   gap: 4px;
   position: relative;
+  box-shadow: var(--shadow-sm);
 
   &:hover {
     border-color: rgba(var(--theme-color-rgb), 0.5);
@@ -566,6 +567,7 @@ onMounted(fetchUserStatus);
   position: relative;
   cursor: pointer;
   text-align: left;
+  box-shadow: var(--shadow-sm);
 
   .client-text {
     min-width: 0;
@@ -642,6 +644,7 @@ onMounted(fetchUserStatus);
   align-items: center;
   justify-content: center;
   gap: 4px;
+  box-shadow: var(--shadow-sm);
 
   &.primary {
     background: #3f72e8;
