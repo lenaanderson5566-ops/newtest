@@ -2301,9 +2301,9 @@ $space-2: map.get($spacers, 2);
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
     background: var(--traffic-card-bg, var(--saas-card-bg));
-    border: var(--border-width) solid var(--border-subtle);
+    border: var(--border-width) solid var(--border-subtle) !important;
     border-radius: var(--dashboard-radius);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-sm) !important;
   }
 
   .stats-grid .stats-card.today-traffic-card .usage-card-title,
