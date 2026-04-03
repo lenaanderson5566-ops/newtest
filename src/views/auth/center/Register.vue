@@ -266,47 +266,6 @@
         </div>
 
 
-
-        <div class="form-group">
-
-          <label for="confirmPassword" class="form-label">{{ $t('common.confirmPassword') }} <span class="required">*</span></label>
-
-          <div class="input-with-icon">
-
-            <IconLock class="input-icon" />
-
-            <input
-
-              :type="showConfirmPassword ? 'text' : 'password'"
-
-              id="confirmPassword"
-
-              class="form-control"
-
-              v-model="formData.confirmPassword"
-
-              :placeholder="$t('auth.confirmPasswordPlaceholder')"
-
-              required
-
-            />
-
-            <div class="password-toggle" @click="showConfirmPassword = !showConfirmPassword">
-
-              <IconEye v-if="!showConfirmPassword" />
-
-              <IconEyeOff v-else />
-
-            </div>
-
-          </div>
-
-          <span v-if="errors.confirmPassword" class="error-message">{{ errors.confirmPassword }}</span>
-
-        </div>
-
-
-
         <!-- 验证码组件 -->
 
         <div class="form-group" v-if="config.is_recaptcha === 1">
@@ -760,7 +719,6 @@ export default {
 
       password: '',
 
-      confirmPassword: '',
 
       inviteCode: '',
 
@@ -778,7 +736,6 @@ export default {
 
       password: '',
 
-      confirmPassword: '',
 
       inviteCode: '',
 
@@ -789,10 +746,6 @@ export default {
 
 
     const showPassword = ref(false);
-
-    const showConfirmPassword = ref(false);
-
-
 
     const needCaptchaForEmailVerify = computed(() => {
 
@@ -1209,7 +1162,6 @@ export default {
 
       errors.password = '';
 
-      errors.confirmPassword = '';
 
       errors.inviteCode = '';
 
@@ -1268,24 +1220,6 @@ export default {
         isValid = false;
 
       }
-
-
-
-      if (!formData.confirmPassword) {
-
-        errors.confirmPassword = t('auth.confirmPasswordRequired');
-
-        isValid = false;
-
-      } else if (formData.password !== formData.confirmPassword) {
-
-        errors.confirmPassword = t('auth.passwordsDoNotMatch');
-
-        isValid = false;
-
-      }
-
-
 
       if (!formData.agreeTerms) {
 
@@ -2058,7 +1992,6 @@ export default {
 
       showPassword,
 
-      showConfirmPassword,
 
       config,
 
