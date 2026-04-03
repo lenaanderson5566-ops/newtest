@@ -1063,17 +1063,17 @@ export default {
 
   a.btn {
 
-    display: flex !important;
+    display: flex;
 
-    align-items: center !important;
+    align-items: center;
 
-    justify-content: center !important;
+    justify-content: center;
 
     text-decoration: none;
 
-    height: 45px !important;
+    height: 45px;
 
-    line-height: normal !important;
+    line-height: normal;
 
   }
 
@@ -1083,15 +1083,15 @@ export default {
 
 .btn.btn-secondary.btn-block {
 
-  height: 45px !important;
+  height: 45px;
 
-  display: flex !important;
+  display: flex;
 
-  align-items: center !important;
+  align-items: center;
 
-  justify-content: center !important;
+  justify-content: center;
 
-  line-height: normal !important;
+  line-height: normal;
 
   color: var(--text-primary);
 
@@ -1109,11 +1109,11 @@ export default {
 
     background-color: rgba(var(--theme-color-rgb), 0.05);
 
-    color: var(--theme-color) !important;
+    color: var(--theme-color);
 
-    -webkit-text-fill-color: var(--theme-color) !important;
+    -webkit-text-fill-color: var(--theme-color);
 
-    background-image: none !important;
+    background-image: none;
 
   }
 

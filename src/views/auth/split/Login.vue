@@ -796,21 +796,21 @@ export default {
   margin-top: 24px;
 
   a.btn {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    height: 45px !important;
-    line-height: normal !important;
+    height: 45px;
+    line-height: normal;
   }
 }
 
 .btn.btn-secondary.btn-block {
-  height: 45px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  line-height: normal !important;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
   color: var(--text-primary);
   border: var(--border-width) solid var(--border-default);
   background-color: transparent;
@@ -819,9 +819,9 @@ export default {
   &:hover {
     border-color: var(--theme-color);
     background-color: rgba(var(--theme-color-rgb), 0.05);
-    color: var(--theme-color) !important;
-    -webkit-text-fill-color: var(--theme-color) !important;
-    background-image: none !important;
+    color: var(--theme-color);
+    -webkit-text-fill-color: var(--theme-color);
+    background-image: none;
   }
 }
 

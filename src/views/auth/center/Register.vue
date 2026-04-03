@@ -2876,15 +2876,15 @@ export default {
 
       &:hover {
 
-        color: var(--theme-color) !important;
+        color: var(--theme-color);
 
-        border-color: var(--theme-color) !important;
+        border-color: var(--theme-color);
 
-        background-color: rgba(var(--theme-color-rgb), 0.05) !important;
+        background-color: rgba(var(--theme-color-rgb), 0.05);
 
-        -webkit-text-fill-color: var(--theme-color) !important;
+        -webkit-text-fill-color: var(--theme-color);
 
-        background-image: none !important;
+        background-image: none;
 
       }
 
@@ -3173,17 +3173,17 @@ export default {
 
   a.btn {
 
-    display: flex !important;
+    display: flex;
 
-    align-items: center !important;
+    align-items: center;
 
-    justify-content: center !important;
+    justify-content: center;
 
     text-decoration: none;
 
-    height: 45px !important;
+    height: 45px;
 
-    line-height: normal !important;
+    line-height: normal;
 
   }
 
@@ -3193,37 +3193,37 @@ export default {
 
 .btn.btn-secondary.btn-block {
 
-  height: 45px !important;
+  height: 45px;
 
-  display: flex !important;
+  display: flex;
 
-  align-items: center !important;
+  align-items: center;
 
-  justify-content: center !important;
+  justify-content: center;
 
-  line-height: normal !important;
+  line-height: normal;
 
-  color: var(--text-primary) !important;
+  color: var(--text-primary);
 
-  border: var(--border-width) solid var(--border-default) !important;
+  border: var(--border-width) solid var(--border-default);
 
-  background-color: transparent !important;
+  background-color: transparent;
 
-  transition: all 0.3s ease !important;
+  transition: all 0.3s ease;
 
 
 
   &:hover {
 
-    border-color: var(--theme-color) !important;
+    border-color: var(--theme-color);
 
-    background-color: rgba(var(--theme-color-rgb), 0.05) !important;
+    background-color: rgba(var(--theme-color-rgb), 0.05);
 
-    color: var(--theme-color) !important;
+    color: var(--theme-color);
 
-    -webkit-text-fill-color: var(--theme-color) !important;
+    -webkit-text-fill-color: var(--theme-color);
 
-    background-image: none !important;
+    background-image: none;
 
   }
 

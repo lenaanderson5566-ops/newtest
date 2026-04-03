@@ -1291,6 +1291,7 @@ export default {
   .section-wrapper.payment-methods-section {
     padding: 0;
     margin: 8px 0;
+    // 必须压过全局 section-wrapper 皮肤（公共层）
     background: var(--background-color) !important;
     border: none !important;
 
@@ -1303,12 +1304,13 @@ export default {
   }
 
   .right-column .section-wrapper.payment-methods-section {
+    // 历史兼容：右栏卡片主题需要强制背景，避免被公共块背景回退
     background: var(--right-card-bg) !important;
-    border: var(--border-width) solid var(--border-default) !important;
+    border: var(--border-width) solid var(--border-default);
   }
 
   .right-column .section-wrapper.payment-methods-section .section-title {
-    color: var(--right-card-text) !important;
+    color: var(--right-card-text);
   }
 
   .order-amount-section {
@@ -1408,18 +1410,18 @@ export default {
 
   .right-column .order-amount-section {
     background: var(--right-card-bg) !important;
-    border: var(--border-width) solid var(--border-default) !important;
+    border: var(--border-width) solid var(--border-default);
   }
 
   .right-column .order-amount-section .section-title,
   .right-column .order-amount-section .summary-title,
   .right-column .order-amount-section .summary-label,
   .right-column .order-amount-section .summary-value {
-    color: var(--right-card-text) !important;
+    color: var(--right-card-text);
   }
 
   .right-column .order-amount-section .summary-divider {
-    background-color: rgba(255, 255, 255, 0.18) !important;
+    background-color: rgba(255, 255, 255, 0.18);
   }
 
   .payment-methods {
@@ -1633,6 +1635,7 @@ export default {
       &:disabled {
         opacity: 0.6;
         cursor: not-allowed;
+        // 覆盖组件交互态 transform，避免禁用态按钮抖动
         transform: none !important;
       }
 
@@ -1950,6 +1953,7 @@ export default {
 
     .left-column .section-wrapper,
     .right-column .section-wrapper {
+      // 覆盖响应式容器中的默认外边距
       margin: 0 !important;
     }
 
