@@ -2118,7 +2118,7 @@ $space-2: map.get($spacers, 2);
           rgba(66, 133, 244, 0.08) 56%,
           rgba(34, 89, 170, 0.14) 100%
         );
-        background: var(--traffic-card-bg) !important;
+        background: var(--traffic-card-bg);
         border: var(--border-width) solid var(--border-subtle);
         box-shadow: var(--shadow-md);
 
@@ -2155,8 +2155,8 @@ $space-2: map.get($spacers, 2);
           rgba(66, 133, 244, 0.08) 56%,
           rgba(34, 89, 170, 0.14) 100%
         );
-        background: var(--traffic-card-bg) !important;
-        border: var(--border-width) solid var(--border-subtle) !important;
+        background: var(--traffic-card-bg);
+        border: var(--border-width) solid var(--border-subtle);
         box-shadow: var(--shadow-md);
 
         .usage-card-title {
@@ -2168,7 +2168,7 @@ $space-2: map.get($spacers, 2);
         .plan-summary-section-meta,
         .plan-summary-actions,
         .plan-action-btn {
-          box-shadow: none !important;
+          box-shadow: none;
         }
       }
 
@@ -2192,9 +2192,9 @@ $space-2: map.get($spacers, 2);
 
       &.traffic-board-total.expired-main-card {
         --traffic-card-bg: var(--theme-surface-muted);
-        background: var(--theme-surface-muted) !important;
-        border: var(--border-width) solid var(--border-hover) !important;
-        box-shadow: var(--shadow-md) !important;
+        background: var(--theme-surface-muted);
+        border: var(--border-width) solid var(--border-hover);
+        box-shadow: var(--shadow-md);
 
         .plan-summary-card {
           .plan-summary-section-meta {
@@ -2203,7 +2203,7 @@ $space-2: map.get($spacers, 2);
               rgba(152, 173, 209, 0.92) 0%,
               rgba(164, 171, 211, 0.9) 52%,
               rgba(176, 166, 203, 0.9) 100%
-            ) !important;
+            );
             border: none;
             box-shadow: none;
 
@@ -2300,15 +2300,15 @@ $space-2: map.get($spacers, 2);
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
     background: var(--traffic-card-bg, var(--saas-card-bg));
-    border: var(--border-width) solid var(--border-subtle) !important;
+    border: var(--border-width) solid var(--border-subtle);
     border-radius: var(--dashboard-radius);
-    box-shadow: var(--shadow-md) !important;
+    box-shadow: var(--shadow-md);
   }
 
   .stats-grid .stats-card.traffic-board-subscription.subscription-card-muted,
   .stats-grid .stats-card.traffic-board-subscription.quota-card-muted {
-    border-color: var(--theme-border-soft) !important;
-    background: var(--theme-surface-muted) !important;
+    border-color: var(--theme-border-soft);
+    background: var(--theme-surface-muted);
   }
 
   .stats-grid .stats-card.today-traffic-card .usage-card-title,
