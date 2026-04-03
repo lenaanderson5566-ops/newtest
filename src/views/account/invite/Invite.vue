@@ -899,7 +899,7 @@ export default {
   }
 
   .kpi-item {
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
     border-radius: 10px;
     padding: 8px;
     background: rgba(var(--theme-color-rgb), 0.03);
@@ -1536,7 +1536,7 @@ export default {
 
 .dashboard-card {
   background: var(--card-bg-color);
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   border-radius: 12px;
   padding: 8px;
 }
@@ -1592,7 +1592,7 @@ export default {
 }
 
 .modal-footer .btn-cancel {
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   background: transparent;
   color: var(--text-primary);
   min-width: 92px;
@@ -1619,7 +1619,7 @@ export default {
 }
 
 .kpi-item {
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   border-radius: 10px;
   padding: 8px;
 }
@@ -1653,7 +1653,7 @@ export default {
 .invite-cards-nav {
   width: 30px;
   height: 30px;
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
@@ -1930,7 +1930,7 @@ export default {
   overflow: auto;
   background: var(--card-background);
   border-radius: 12px;
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 }
 
 .modal-header {
@@ -2036,7 +2036,7 @@ export default {
 .input-with-prefix {
   display: grid;
   grid-template-columns: auto 1fr;
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   border-radius: 12px;
   background: var(--card-background);
   overflow: hidden;

@@ -491,7 +491,7 @@ onMounted(fetchUserStatus);
 }
 
 .system-item {
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   border-radius: $border-radius-sm;
   background: #fff;
   padding: 8px;
@@ -554,7 +554,7 @@ onMounted(fetchUserStatus);
 }
 
 .client-item {
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   background: #fff;
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2) 24px map.get($spacers, 2) map.get($spacers, 2);
@@ -631,7 +631,7 @@ onMounted(fetchUserStatus);
 
 .action-btn,
 .help-btn {
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   background: #fff;
   color: var(--info-color);
   border-radius: $border-radius-sm;

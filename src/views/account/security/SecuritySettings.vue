@@ -409,7 +409,7 @@ onMounted(() => {
 
 .profile-card {
   background: var(--card-bg-color);
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   border-radius: 12px;
 }
 
@@ -428,7 +428,7 @@ onMounted(() => {
 }
 
 .action-btn {
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   background: var(--card-bg-color);
   padding: 8px 8px;
   border-radius: 8px;
@@ -518,7 +518,7 @@ onMounted(() => {
 }
 
 .refresh-btn {
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   background: transparent;
   border-radius: 8px;
   padding: 4px 8px;
@@ -633,7 +633,7 @@ onMounted(() => {
     input {
       width: 100%;
       padding: 8px 8px;
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
       border-radius: 8px;
       background-color: var(--bg-secondary);
       color: var(--text-primary);
@@ -671,7 +671,7 @@ onMounted(() => {
 
     &.btn-cancel {
       background-color: transparent;
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
       color: var(--text-primary);
 
       &:hover {

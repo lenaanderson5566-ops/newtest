@@ -1095,7 +1095,7 @@ export default {
 
   color: var(--text-primary);
 
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 
   background-color: transparent;
 

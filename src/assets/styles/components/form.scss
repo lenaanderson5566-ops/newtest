@@ -114,7 +114,7 @@
 .btn-secondary {
   color: var(--text-primary);
   background-color: transparent;
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   position: relative;
   
   &:hover, &:focus {

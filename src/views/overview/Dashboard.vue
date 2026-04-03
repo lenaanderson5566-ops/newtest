@@ -1536,7 +1536,7 @@ $space-2: map.get($spacers, 2);
   --saas-brand: #355cc2;
   --saas-text-primary: #111827;
   --saas-text-secondary: var(--text-tertiary);
-  --saas-border-soft: #eef1f5;
+  --saas-border-soft: var(--border-color-soft);
   --saas-card-bg: #ffffff;
   --saas-card-shadow: none;
 
@@ -1546,7 +1546,7 @@ $space-2: map.get($spacers, 2);
   --theme-text-emphasis: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
-  --theme-border-soft: var(--card-border-soft);
+  --theme-border-soft: var(--border-color-soft);
   --theme-white: #ffffff;
   --quota-label-color: var(--text-tertiary);
   --quota-value-color: var(--text-primary);
@@ -1554,7 +1554,7 @@ $space-2: map.get($spacers, 2);
   --quota-progress-end: #3b82f6;
   --quota-muted-fill: #cbd5e1;
   --quota-total-bg-end: #f8fbff;
-  --quota-expired-border: #d1d5db;
+  --quota-expired-border: var(--border-color-strong);
   --plan-meta-text: var(--text-tertiary);
   --plan-expired-strip-text: #b91c1c;
   --plan-expired-strip-bg: rgba(248, 113, 113, 0.16);
@@ -2011,7 +2011,7 @@ $space-2: map.get($spacers, 2);
               cursor: pointer;
               inset: 0;
               background-color: var(--surface-subtle);
-              border: 1px solid var(--border-color);
+              border: var(--border-thin);
               transition: 0.4s;
 
               &.loading {
@@ -2757,7 +2757,7 @@ $space-2: map.get($spacers, 2);
   padding: 16px;
   animation: none;
   background-color: var(--card-bg-color);
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   position: relative;
 }
 
@@ -3187,7 +3187,7 @@ $space-2: map.get($spacers, 2);
     flex-direction: column;
     gap: #{$space-2};
     padding: 16px;
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
     border-radius: var(--dashboard-radius);
     background: linear-gradient(
       180deg,

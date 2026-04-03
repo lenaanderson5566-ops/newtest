@@ -1025,7 +1025,7 @@ export default {
 
     padding: map.get($spacers, 3);
 
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
 
     transition: all 0.3s ease;
 
@@ -1307,7 +1307,7 @@ export default {
 
     .plan-card {
       border-radius: var(--shop-card-radius);
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
 
       background-color: #fff;
 
@@ -1316,7 +1316,7 @@ export default {
 
       padding: 8px;
 
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
 
       transition: all 0.3s ease;
 
@@ -1729,7 +1729,7 @@ export default {
       gap: 0;
       padding: 4px;
       border-radius: 12px;
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
       background: var(--surface-subtle);
 
       .filter-highlight {
@@ -1956,7 +1956,7 @@ export default {
       .mobile-plan-chip {
         box-sizing: border-box;
         width: 100%;
-        border: 1px solid var(--border-color);
+        border: var(--border-thin);
         background: #fff;
         border-radius: 12px;
         padding: 0;
@@ -2034,7 +2034,7 @@ export default {
       }
 
       .mobile-plan-details {
-        border: 1px solid var(--border-color);
+        border: var(--border-thin);
         background: var(--card-bg-color);
         border-radius: 12px;
         padding: 8px 16px;
@@ -2103,7 +2103,7 @@ export default {
     gap: 4px;
 
     .filter-toggle-wrapper {
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
       border-radius: 12px;
       background: var(--surface-subtle);
 

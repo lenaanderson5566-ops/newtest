@@ -404,7 +404,7 @@ watch(locale, () => {
     width: 32px;
     height: 18px;
     border-radius: 999px;
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
     background: rgba(var(--theme-color-rgb), 0.08);
     transition: all 0.2s ease;
     flex: 0 0 auto;
@@ -755,7 +755,7 @@ watch(locale, () => {
     
     &.btn-cancel {
       background-color: transparent;
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
       color: var(--text-primary);
       
       &:hover {

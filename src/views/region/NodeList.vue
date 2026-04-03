@@ -351,7 +351,7 @@ onMounted(() => {
 
   padding: map.get($spacers, 3);
 
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 
   transition: all 0.3s ease;
 
@@ -418,7 +418,7 @@ onMounted(() => {
   }
 
   .quick-btn {
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
     background: #fff;
     color: var(--text-primary);
     border-radius: $border-radius-sm;
@@ -443,7 +443,7 @@ onMounted(() => {
 
   .import-panel {
     margin-top: 16px;
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
     border-radius: $border-radius-sm;
     padding: 16px;
     background: var(--card-bg);
@@ -490,7 +490,7 @@ onMounted(() => {
     }
 
     .platform-button {
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
       background: #f7f7fb;
       border-radius: 999px;
       padding: 8px 16px;
@@ -518,7 +518,7 @@ onMounted(() => {
     }
 
     .platform-option {
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
       border-radius: $border-radius-sm;
       padding: 24px 16px;
       background: #f5f7fb;
@@ -609,7 +609,7 @@ onMounted(() => {
 
 .nodes-no-plan {
   background: var(--card-background);
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   border-radius: $border-radius-sm;
   padding: 24px;
 
@@ -711,7 +711,7 @@ onMounted(() => {
     }
 
     .region-lock-card {
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
       border-radius: $border-radius-sm;
       padding: 16px;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.96));
@@ -805,7 +805,7 @@ onMounted(() => {
   transition: all 0.25s ease;
 
 
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 
   
 

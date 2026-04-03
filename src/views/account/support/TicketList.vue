@@ -929,7 +929,7 @@ onUnmounted(() => {
 
   padding: 16px;
 
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 
   transition: all 0.3s ease;
 
@@ -978,7 +978,7 @@ onUnmounted(() => {
 
   overflow: hidden;
 
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 }
 
 .ticket-sidebar {
@@ -1010,7 +1010,7 @@ onUnmounted(() => {
 
       padding: 0 16px 0 48px;
 
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
 
       border-radius: 8px;
 
@@ -1558,7 +1558,7 @@ onUnmounted(() => {
 
     padding: 16px 16px;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
 
     border-radius: 18px;
 
@@ -1915,7 +1915,7 @@ onUnmounted(() => {
 
       padding: 16px 16px;
 
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
 
       border-radius: 10px;
 
@@ -1972,7 +1972,7 @@ onUnmounted(() => {
 
         transition: all 0.2s ease;
 
-        border: 1px solid var(--border-color);
+        border: var(--border-thin);
 
         background-color: var(--bg-secondary);
 
@@ -2063,7 +2063,7 @@ onUnmounted(() => {
     &.btn-cancel {
       background-color: transparent;
 
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
 
       color: var(--text-primary);
 
@@ -2226,7 +2226,7 @@ onUnmounted(() => {
 
     width: 450px;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
 
     animation: scaleIn 0.5s ease;
 
@@ -2385,7 +2385,7 @@ onUnmounted(() => {
 
 .ticket-sidebar,
 .ticket-content {
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   border-radius: 14px;
   background: var(--card-bg-color);
 }
@@ -2411,7 +2411,7 @@ onUnmounted(() => {
 
 .ticket-detail-header {
   padding: 8px 8px;
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   border-radius: 12px;
   margin-bottom: 8px;
 
@@ -2429,14 +2429,14 @@ onUnmounted(() => {
 
 .messages-container {
   border-radius: 12px;
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   padding: 8px;
 }
 
 .reply-container {
   margin-top: 8px;
   border-radius: 12px;
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   padding: 8px;
 
   textarea {

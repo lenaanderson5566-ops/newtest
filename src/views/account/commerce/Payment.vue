@@ -1139,7 +1139,7 @@ export default {
     background-color: var(--card-bg-color);
     border-radius: $border-radius-sm;
     padding: map.get($spacers, 3);
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
     transition: all 0.3s ease;
     position: relative;
 
@@ -1192,7 +1192,7 @@ export default {
     border-radius: $border-radius-sm;
     padding: 16px;
     margin-bottom: 24px;
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
     transition: all 0.3s ease;
 
     &:last-child {
@@ -1313,7 +1313,7 @@ export default {
 
   .order-amount-section {
     background: var(--card-bg-color);
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
 
     .summary-header-block {
       margin-bottom: 12px;
@@ -1654,7 +1654,7 @@ export default {
       background-color: transparent;
       color: var(--text-primary);
       flex: 1;
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
 
       &:hover:not(:disabled) {
         background-color: var(--hover-color);
@@ -1688,7 +1688,7 @@ export default {
       background-color: var(--hover-color);
       color: var(--text-primary);
       flex: 1;
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
 
       &:hover:not(:disabled) {
         background-color: var(--card-bg-color);
@@ -2066,7 +2066,7 @@ export default {
 
     .cancel-btn {
       background-color: transparent;
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
       color: var(--text-primary);
 
       &:hover {

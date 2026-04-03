@@ -860,7 +860,7 @@ onUnmounted(() => {
       align-items: center;
       gap: 4px;
       background-color: rgba(var(--theme-color-rgb), 0.05);
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
       border-radius: 20px;
       padding: 8px 16px;
       font-size: $font-size-md;
@@ -895,7 +895,7 @@ onUnmounted(() => {
 
     padding: 16px;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
 
     transition: all 0.3s ease;
 

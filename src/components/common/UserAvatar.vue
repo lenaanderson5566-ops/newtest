@@ -213,7 +213,7 @@ export default {
   -webkit-backdrop-filter: blur(10px);
   border-radius: $border-radius-sm;
   box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   overflow: hidden;
   z-index: 100;
   animation: dropdownFadeIn 0.2s ease;

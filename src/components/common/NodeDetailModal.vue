@@ -791,7 +791,7 @@ watchEffect(() => {
 
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 
   overflow: hidden;
 

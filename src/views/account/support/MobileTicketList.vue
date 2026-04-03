@@ -791,7 +791,7 @@ fetchTickets();
 
   padding: 16px;
 
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 
   transition: all 0.3s ease;
 
@@ -973,7 +973,7 @@ fetchTickets();
 .ticket-item {
   background-color: var(--card-bg);
 
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 
   border-radius: 10px;
 
@@ -1492,7 +1492,7 @@ fetchTickets();
 
     padding: 16px;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
 
     border-radius: 12px;
 
@@ -1648,7 +1648,7 @@ fetchTickets();
 
   animation: slideIn 0.3s ease;
 
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 
 
   &.closing {
@@ -1744,7 +1744,7 @@ fetchTickets();
 
       padding: 16px 16px;
 
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
 
       border-radius: 10px;
 
@@ -1785,7 +1785,7 @@ fetchTickets();
 
       padding: 16px;
 
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
 
       border-radius: 10px;
 
@@ -1850,7 +1850,7 @@ fetchTickets();
     &.cancel-btn {
       background-color: var(--card-bg);
 
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
 
       color: var(--text-primary);
 
@@ -2068,7 +2068,7 @@ fetchTickets();
 
     width: 450px;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
 
     animation: scaleIn 0.5s ease;
 

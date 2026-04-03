@@ -1533,7 +1533,7 @@ onUnmounted(() => {
   padding: 24px;
 
 
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 
   transition: all 0.3s ease;
 
@@ -1837,7 +1837,7 @@ onUnmounted(() => {
 
     transition: all 0.3s ease;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
 
 
     
@@ -1893,7 +1893,7 @@ onUnmounted(() => {
 
     margin: 24px 0;
 
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
 
 
     position: relative;
@@ -2030,7 +2030,7 @@ onUnmounted(() => {
     border-radius: 6px;
 
 
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
 
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
 
@@ -2073,7 +2073,7 @@ onUnmounted(() => {
 
       padding: 16px 16px;
 
-      border: 1px solid var(--border-color);
+      border: var(--border-thin);
 
       text-align: left;
 

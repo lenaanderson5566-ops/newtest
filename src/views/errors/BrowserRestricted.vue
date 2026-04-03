@@ -482,7 +482,7 @@ export default {
 
   overflow: hidden;
 
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
 
   
 

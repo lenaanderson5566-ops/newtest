@@ -1096,7 +1096,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   input {
     width: 100%;
     padding: 8px 8px;
-    border: 1px solid var(--border-color);
+    border: var(--border-thin);
     border-radius: 8px;
     background-color: var(--bg-secondary);
     color: var(--text-primary);
@@ -1130,7 +1130,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   border-radius: 8px;
   font-size: $font-size-md;
   cursor: pointer;
-  border: 1px solid var(--border-color);
+  border: var(--border-thin);
   background: transparent;
   color: var(--text-primary);
 }
