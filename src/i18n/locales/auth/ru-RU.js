@@ -63,6 +63,8 @@ export default {
     passwordStrengthMedium: 'Средний',
     passwordStrengthStrong: 'Сильный',
     passwordRuleMinLength: 'Не менее 8 символов',
+    passwordRuleAlphaNumericSuggested: 'Содержит буквы и цифры (рекомендуется)',
+    passwordRuleSpecialSuggested: 'Содержит спецсимволы (рекомендуется)',
     passwordPlaceholder: 'Введите пароль',
     requiresAuth: 'Требуется вход',
     contactAdmin: 'Свяжитесь с администратором для получения авторизации',

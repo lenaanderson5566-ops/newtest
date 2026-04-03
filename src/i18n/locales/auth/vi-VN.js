@@ -61,6 +61,8 @@ export default {
     passwordStrengthMedium: 'Trung bình',
     passwordStrengthStrong: 'Mạnh',
     passwordRuleMinLength: 'Ít nhất 8 ký tự',
+    passwordRuleAlphaNumericSuggested: 'Bao gồm chữ và số (khuyến nghị)',
+    passwordRuleSpecialSuggested: 'Bao gồm ký tự đặc biệt (khuyến nghị)',
     passwordPlaceholder: 'Vui lòng nhập mật khẩu',
     requiresAuth: 'Yêu cầu đăng nhập',
     contactAdmin: 'Vui lòng liên hệ quản trị viên để được cấp quyền',

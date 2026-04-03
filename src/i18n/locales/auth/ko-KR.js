@@ -63,6 +63,8 @@ export default {
     passwordStrengthMedium: '보통',
     passwordStrengthStrong: '강함',
     passwordRuleMinLength: '최소 8자',
+    passwordRuleAlphaNumericSuggested: '영문자와 숫자 포함 (권장)',
+    passwordRuleSpecialSuggested: '특수문자 포함 (권장)',
     passwordPlaceholder: '비밀번호를 입력하세요',
     requiresAuth: '로그인이 필요합니다',
     contactAdmin: '관리자에게 연락하여 인증을 받으세요',

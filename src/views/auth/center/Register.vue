@@ -263,11 +263,31 @@
 
           <span v-if="errors.password" class="error-message">{{ errors.password }}</span>
 
-          <div v-if="formData.password" class="password-rule-tip">
+          <div v-if="formData.password" class="password-rules">
 
-            <IconCheck class="rule-icon" :class="passwordMinLengthMet ? 'met' : 'unmet'" />
+            <div class="password-rule-tip">
 
-            <span :class="{ met: passwordMinLengthMet }">{{ $t('auth.passwordRuleMinLength') }}</span>
+              <IconCheck class="rule-icon" :class="passwordMinLengthMet ? 'met' : 'unmet'" />
+
+              <span :class="{ met: passwordMinLengthMet }">{{ $t('auth.passwordRuleMinLength') }}</span>
+
+            </div>
+
+            <div class="password-rule-tip">
+
+              <IconCheck class="rule-icon" :class="passwordAlphaNumericMet ? 'met' : 'unmet'" />
+
+              <span :class="{ met: passwordAlphaNumericMet }">{{ $t('auth.passwordRuleAlphaNumericSuggested') }}</span>
+
+            </div>
+
+            <div class="password-rule-tip">
+
+              <IconCheck class="rule-icon" :class="passwordSpecialCharMet ? 'met' : 'unmet'" />
+
+              <span :class="{ met: passwordSpecialCharMet }">{{ $t('auth.passwordRuleSpecialSuggested') }}</span>
+
+            </div>
 
           </div>
 
@@ -808,6 +828,22 @@ export default {
     const passwordMinLengthMet = computed(() => {
 
       return (formData.password || '').length >= 8;
+
+    });
+
+    const passwordAlphaNumericMet = computed(() => {
+
+      const password = formData.password || '';
+
+      return /[A-Za-z]/.test(password) && /\d/.test(password);
+
+    });
+
+    const passwordSpecialCharMet = computed(() => {
+
+      const password = formData.password || '';
+
+      return /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
     });
 
@@ -2085,6 +2121,10 @@ export default {
       showPassword,
 
       passwordMinLengthMet,
+
+      passwordAlphaNumericMet,
+
+      passwordSpecialCharMet,
 
       passwordStrengthLevel,
 
@@ -3651,6 +3691,16 @@ export default {
 
 
 
+
+.password-rules {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+}
 
 .password-rule-tip {
 
