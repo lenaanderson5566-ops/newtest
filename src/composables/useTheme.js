@@ -19,7 +19,6 @@ export function useTheme() {
       '--text-color': 'textColor',
       '--secondary-text-color': 'secondaryTextColor',
       '--muted-text-color': 'mutedTextColor',
-      '--border-color': 'borderColor',
       '--border-default': 'borderColor',
       '--border-subtle': 'borderColorSoft',
       '--divider': 'borderColorSoft',

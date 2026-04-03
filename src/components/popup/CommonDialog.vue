@@ -289,7 +289,7 @@ export default {
       }
 
       .dialog-btn-cancel {
-        background-color: var(--border-color);
+        background-color: var(--border-default);
         color: var(--text-primary);
 
         &:hover {

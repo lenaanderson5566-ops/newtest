@@ -1200,7 +1200,7 @@ export default {
     }
 
     &:hover {
-      border-color: var(--border-color);
+      border-color: var(--border-default);
     }
 
     .overview-plan-block {
@@ -1220,7 +1220,7 @@ export default {
 
     .overview-divider {
       height: 1px;
-      background-color: var(--border-color);
+      background-color: var(--border-default);
       margin: 8px 0 8px;
     }
 
@@ -1330,7 +1330,7 @@ export default {
       color: var(--text-primary);
 
       &::after {
-        background-color: var(--border-color);
+        background-color: var(--border-default);
       }
     }
 
@@ -1388,7 +1388,7 @@ export default {
 
       .summary-divider {
         height: 1px;
-        background-color: var(--border-color);
+        background-color: var(--border-default);
         margin: 16px 0;
 
         &.strong {

@@ -3470,7 +3470,7 @@ export default {
 
       background-color: transparent;
 
-      border: 2px solid var(--border-color);
+      border: 2px solid var(--border-default);
 
       border-radius: 4px;
 
@@ -3717,7 +3717,7 @@ export default {
 
   color: var(--text-primary) !important;
 
-  border: 1px solid var(--border-color) !important;
+  border: 1px solid var(--border-default) !important;
 
   background-color: transparent !important;
 

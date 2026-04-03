@@ -1228,7 +1228,7 @@ export default {
       const textColor =
         rootStyles.getPropertyValue('--text-primary').trim() ||
         `rgb(${rootStyles.getPropertyValue('--text-color-rgb').trim() || '51, 51, 51'})`;
-      const borderColor = rootStyles.getPropertyValue('--border-color').trim() || '#e8e8e8';
+      const borderColor = rootStyles.getPropertyValue('--border-default').trim() || '#e8e8e8';
       const themeColor = rootStyles.getPropertyValue('--theme-color').trim() || '#6753f6';
       const lightGridColor = 'rgba(148, 163, 184, 0.14)';
       trafficTrendChart = echarts.init(trafficTrendChartRef.value);
@@ -1525,7 +1525,7 @@ $space-2: map.get($spacers, 2);
   --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
   --dashboard-shadow-compact: none;
-  --dashboard-border-color: var(--card-border-subtle);
+  --dashboard-border-color: var(--border-subtle);
   --dashboard-title-size: 14px;
   --dashboard-subtitle-color: var(--text-tertiary);
   --dashboard-value-size: 30px;
@@ -2267,7 +2267,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &:hover {
-        border-color: var(--card-border-hover);
+        border-color: var(--border-hover);
       }
     }
   }

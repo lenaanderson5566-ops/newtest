@@ -488,7 +488,7 @@ const initChart = () => {
 
         lineStyle: {
 
-          color: getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || '#e8e8e8'
+          color: getComputedStyle(document.documentElement).getPropertyValue('--border-default').trim() || '#e8e8e8'
 
         }
 
@@ -498,7 +498,7 @@ const initChart = () => {
 
         lineStyle: {
 
-          color: getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || '#e8e8e8'
+          color: getComputedStyle(document.documentElement).getPropertyValue('--border-default').trim() || '#e8e8e8'
 
         }
 
@@ -532,7 +532,7 @@ const initChart = () => {
 
         lineStyle: {
 
-          color: getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || '#e8e8e8'
+          color: getComputedStyle(document.documentElement).getPropertyValue('--border-default').trim() || '#e8e8e8'
 
         }
 
@@ -542,7 +542,7 @@ const initChart = () => {
 
         lineStyle: {
 
-          color: getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || '#e8e8e8'
+          color: getComputedStyle(document.documentElement).getPropertyValue('--border-default').trim() || '#e8e8e8'
 
         }
 

@@ -2061,7 +2061,7 @@ onUnmounted(() => {
 
       tr {
 
-        border-bottom: 2px solid var(--border-color);
+        border-bottom: 2px solid var(--border-default);
 
       }
 
@@ -2125,7 +2125,7 @@ onUnmounted(() => {
 
     border: none;
 
-    background-color: var(--border-color);
+    background-color: var(--border-default);
 
     margin: 24px 0;
 

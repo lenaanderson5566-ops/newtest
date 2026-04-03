@@ -682,7 +682,7 @@ export default {
       height: 20px;
       width: 20px;
       background-color: transparent;
-      border: 2px solid var(--border-color);
+      border: 2px solid var(--border-default);
       border-radius: 4px;
       transition: all 0.2s ease;
 

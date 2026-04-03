@@ -2431,7 +2431,7 @@ export default {
 
       &.applied {
         background-color: var(--input-bg-color);
-        border-color: var(--border-color);
+        border-color: var(--border-default);
       }
 
       &:focus {
@@ -2827,7 +2827,7 @@ export default {
     .summary-divider {
       height: 1px;
 
-      background-color: var(--border-color);
+      background-color: var(--border-default);
 
       margin: 16px 0;
 
@@ -2908,7 +2908,7 @@ export default {
 
   .order-summary-section .coupon-field {
     background: var(--input-bg-color);
-    border-color: var(--border-color);
+    border-color: var(--border-default);
     color: var(--right-card-text);
 
     &::placeholder {
@@ -2918,7 +2918,7 @@ export default {
 
   .order-summary-section .coupon-light-row {
     background: rgba(var(--theme-color-rgb), 0.04);
-    border-color: var(--border-color);
+    border-color: var(--border-default);
   }
 
   .order-summary-section .coupon-code-label {
@@ -2939,7 +2939,7 @@ export default {
 
   .coupon-verify-section .coupon-field {
     background: var(--input-bg-color);
-    border-color: var(--border-color);
+    border-color: var(--border-default);
     color: var(--text-primary);
 
     &::placeholder {
@@ -2967,7 +2967,7 @@ export default {
   }
 
   .order-summary-section .summary-divider {
-    background: var(--border-color);
+    background: var(--border-default);
   }
 
   .order-summary-section {

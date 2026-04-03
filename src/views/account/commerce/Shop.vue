@@ -1354,7 +1354,7 @@ export default {
       }
 
       &.current-plan-card {
-        border-color: var(--border-color);
+        border-color: var(--border-default);
         border-top-left-radius: 0;
         border-top-right-radius: 0;
       }

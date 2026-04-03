@@ -911,7 +911,7 @@ fetchTickets();
 
   border-radius: 12px;
 
-  border: 1px dashed var(--border-color);
+  border: 1px dashed var(--border-default);
 
   p {
     margin: 16px 0;
@@ -1056,7 +1056,7 @@ fetchTickets();
 
     padding-top: 8px;
 
-    border-top: 1px dashed rgba(var(--border-color-rgb), 0.5);
+    border-top: 1px dashed rgba(var(--border-default-rgb), 0.5);
   }
 }
 
@@ -1291,7 +1291,7 @@ fetchTickets();
 
     border-radius: 12px;
 
-    border: 1px dashed var(--border-color);
+    border: 1px dashed var(--border-default);
 
 
     p {
@@ -1327,7 +1327,7 @@ fetchTickets();
 
   border-radius: 12px;
 
-  border: 1px dashed var(--border-color);
+  border: 1px dashed var(--border-default);
 
   margin: 16px 0;
 

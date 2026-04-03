@@ -267,7 +267,7 @@ export default {
   
   .divider {
     height: 1px;
-    background-color: var(--border-color);
+    background-color: var(--border-default);
     margin: 4px 0;
   }
 }

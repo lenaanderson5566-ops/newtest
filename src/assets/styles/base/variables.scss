@@ -28,12 +28,6 @@
   --border-hover: rgba(148, 163, 184, 0.2);
   --border-active: rgba(37, 99, 235, 0.32);
   --divider: rgba(148, 163, 184, 0.14);
-  /* 兼容旧变量引用 */
-  --border-color: var(--border-default);
-  --card-border-subtle: var(--border-subtle);
-  --card-border-soft: var(--divider);
-  --card-border-hover: var(--border-hover);
-
   /* Shadow tokens (light, modern UI) */
   --shadow-color: rgba(15, 23, 42, 0.06);
   --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);

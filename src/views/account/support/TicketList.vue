@@ -1341,7 +1341,7 @@ onUnmounted(() => {
 
       height: 1px;
 
-      background-color: var(--border-color);
+      background-color: var(--border-default);
 
       flex: 1;
     }

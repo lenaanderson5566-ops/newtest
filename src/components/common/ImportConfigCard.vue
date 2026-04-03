@@ -328,7 +328,7 @@ onMounted(() => {
 
     .no-clients-tip {
       padding: 8px;
-      border: 1px dashed var(--border-color);
+      border: 1px dashed var(--border-default);
       border-radius: 10px;
       color: var(--text-tertiary);
       font-size: $font-size-sm;

@@ -68,7 +68,7 @@ const variantClass = computed(() => `info-card--${props.variant}`);
 .info-card {
   --info-card-padding: var(--space-4);
   --info-card-radius: var(--radius-lg);
-  --info-card-border: var(--border-color);
+  --info-card-border: var(--border-default);
   --info-card-bg: rgba(var(--card-background-rgb), 0.95);
 
   width: 100%;

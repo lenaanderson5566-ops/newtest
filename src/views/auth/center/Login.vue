@@ -844,7 +844,7 @@ export default {
 
       background-color: transparent;
 
-      border: 2px solid var(--border-color);
+      border: 2px solid var(--border-default);
 
       border-radius: 4px;
 

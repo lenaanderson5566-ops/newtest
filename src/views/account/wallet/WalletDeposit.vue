@@ -745,7 +745,7 @@ onMounted(() => {
 }
 .skeleton-card {
   cursor: default;
-  border: 2px solid var(--border-color);
+  border: 2px solid var(--border-default);
   position: relative;
   overflow: hidden;
   
@@ -788,7 +788,7 @@ onMounted(() => {
   .skeleton-input-field {
     width: 100%;
     height: 100%;
-    border: 2px solid var(--border-color);
+    border: 2px solid var(--border-default);
     border-radius: 12px;
     background-color: var(--skeleton-bg, rgba(0, 0, 0, 0.05));
     position: relative;
