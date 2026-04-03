@@ -3,10 +3,10 @@
   "version": "v0.3.8",
   "private": true,
   "scripts": {
-    "dev": "npx vite",
-    "build": "npx vite build",
-    "preview": "npx vite preview",
-    "serve": "npx vite",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite",
     "screenshot:preview": "node scripts/capture-preview-screenshot.mjs"
   },
   "keywords": [],
@@ -41,5 +41,11 @@
     "sass": "^1.97.3",
     "vite": "^7.1.5",
     "vue": "^3.5.29"
+  },
+  "pnpm": {
+    "overrides": {
+      "picomatch": "^4.0.4",
+      "yaml": "^2.8.3"
+    }
   }
 }
