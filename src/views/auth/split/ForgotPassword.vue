@@ -2342,12 +2342,11 @@ export default {
 
     font-size: $font-size-sm;
 
-    border: none;
+    border: var(--border-width) solid var(--border-default);
 
-    // 覆盖全局按钮主题（第三方 btn 样式）
-    background-color: var(--theme-color) !important;
+    background-color: transparent !important;
 
-    color: var(--text-on-dark-primary) !important;
+    color: var(--text-primary) !important;
 
     margin: 0;
 
@@ -2368,7 +2367,7 @@ export default {
     &:hover:not(:disabled) {
 
       // 保证 hover 态不被全局按钮 hover 皮肤覆盖
-      background-color: var(--primary-color-hover) !important;
+      background-color: rgba(var(--text-color-rgb), 0.05) !important;
 
       transform: translateY(-2px);
 
@@ -3088,28 +3087,6 @@ export default {
 
 .auth-divider {
   margin-top: 4px;
-}
-
-/* Requested compact auth sizing */
-.auth-logo {
-  margin-bottom: 6px;
-}
-
-.auth-title {
-  margin-bottom: 2px;
-}
-
-.auth-subtitle {
-  margin-bottom: 8px;
-}
-
-.auth-form .form-control {
-  height: 43px;
-}
-
-.input-with-icon .input-icon {
-  width: 18px;
-  height: 18px;
 }
 
 </style>

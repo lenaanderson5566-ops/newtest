@@ -320,7 +320,7 @@
 
               <div v-if="formData.password" class="password-strength">
 
-                <div class="password-strength-label" :class="{ 'is-weak': passwordStrengthLevel === 'weak' }">
+                <div class="password-strength-label">
 
                   {{ $t('auth.passwordStrength') }}：{{ $t(passwordStrengthTextKey) }}
 
@@ -3286,11 +3286,11 @@ export default {
 
     font-size: $font-size-sm;
 
-    border: none;
+    border: var(--border-width) solid var(--border-default);
 
-    background-color: var(--theme-color);
+    background-color: transparent;
 
-    color: var(--text-on-dark-primary);
+    color: var(--text-primary);
 
     margin: 0;
 
@@ -3310,7 +3310,7 @@ export default {
 
     &:hover:not(:disabled) {
 
-      background-color: var(--primary-color-hover);
+      background-color: rgba(var(--text-color-rgb), 0.05);
 
     }
 
@@ -3388,7 +3388,7 @@ export default {
 
     &:hover:not(:disabled) {
 
-      background-color: var(--primary-color-hover);
+      background-color: rgba(var(--text-color-rgb), 0.05);
 
     }
 
@@ -4288,11 +4288,6 @@ export default {
 
 }
 
-.password-strength-label.is-weak {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  letter-spacing: 0.2px;
-}
 
 :deep(input[type="password"]::-ms-reveal),
 :deep(input[type="password"]::-ms-clear) {
@@ -4447,28 +4442,6 @@ export default {
 
 .auth-divider {
   margin-top: 4px;
-}
-
-/* Requested compact auth sizing */
-.auth-logo {
-  margin-bottom: 6px;
-}
-
-.auth-title {
-  margin-bottom: 2px;
-}
-
-.auth-subtitle {
-  margin-bottom: 8px;
-}
-
-.auth-form .form-control {
-  height: 43px;
-}
-
-.input-with-icon .input-icon {
-  width: 18px;
-  height: 18px;
 }
 
 </style>

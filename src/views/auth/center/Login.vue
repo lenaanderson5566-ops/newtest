@@ -1326,26 +1326,4 @@ export default {
   margin-top: 4px;
 }
 
-/* Requested compact auth sizing */
-.auth-logo {
-  margin-bottom: 6px;
-}
-
-.auth-title {
-  margin-bottom: 2px;
-}
-
-.auth-subtitle {
-  margin-bottom: 8px;
-}
-
-.auth-form .form-control {
-  height: 43px;
-}
-
-.input-with-icon .input-icon {
-  width: 18px;
-  height: 18px;
-}
-
 </style>
