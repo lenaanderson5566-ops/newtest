@@ -352,6 +352,7 @@ onMounted(() => {
   padding: map.get($spacers, 3);
 
   border: var(--border-width) solid var(--border-default);
+  box-shadow: var(--shadow-sm);
 
   transition: all 0.3s ease;
 

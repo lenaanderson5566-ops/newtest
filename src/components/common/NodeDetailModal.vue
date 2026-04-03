@@ -789,7 +789,7 @@ watchEffect(() => {
 
   border-radius: $border-radius-sm;
 
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-sm);
 
   border: var(--border-width) solid var(--border-default);
 

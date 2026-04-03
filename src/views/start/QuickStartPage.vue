@@ -449,6 +449,7 @@ onMounted(fetchUserStatus);
   background: #f8faff;
   border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
+  box-shadow: var(--shadow-sm);
   padding: map.get($spacers, 3);
 
   .step-header {
