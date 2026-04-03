@@ -2121,7 +2121,7 @@ $space-2: map.get($spacers, 2);
         );
         background: var(--traffic-card-bg) !important;
         border: var(--border-width) solid var(--border-subtle);
-        box-shadow: var(--shadow-md);
+        box-shadow: var(--shadow-sm);
 
         .usage-card-title,
         .usage-percent,

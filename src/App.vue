@@ -461,7 +461,7 @@ export default {
     &:hover {
       border-color: rgba(var(--theme-color-rgb), 0.45);
       color: var(--theme-color);
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-sm);
       transform: translateY(-1px);
     }
   }

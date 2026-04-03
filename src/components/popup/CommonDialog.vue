@@ -294,7 +294,7 @@ export default {
 
         &:hover {
           background-color: var(--text-tertiary);
-          box-shadow: var(--shadow-md);
+          box-shadow: var(--shadow-sm);
         }
       }
 
@@ -303,7 +303,7 @@ export default {
         color: var(--text-on-dark-primary);
 
         &:hover {
-          box-shadow: var(--shadow-md);
+          box-shadow: var(--shadow-sm);
         }
       }
     }
