@@ -153,6 +153,7 @@ export default {
     border-radius: $border-radius-sm;
     padding: 0;
     border: var(--border-width) solid var(--border-subtle);
+    box-shadow: var(--shadow-sm);
     overflow: hidden;
   }
 

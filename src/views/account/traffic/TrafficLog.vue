@@ -88,9 +88,10 @@
 
           <div v-else-if="!trafficData.length" class="empty-container">
 
-            <IconFileOff :size="48" class="empty-icon" />
-
-            <p>{{ $t('trafficLog.noTrafficData') }}</p>
+            <div class="empty-illustration-row">
+              <img :src="noTrafficDataImage" alt="no-traffic-data" class="empty-illustration-image" />
+              <p>{{ $t('trafficLog.noTrafficData') }}</p>
+            </div>
 
           </div>
 
@@ -152,9 +153,10 @@
 
           <div v-else-if="!trafficData.length" class="empty-container">
 
-            <IconFileOff :size="48" class="empty-icon" />
-
-            <p>{{ $t('trafficLog.noTrafficData') }}</p>
+            <div class="empty-illustration-row">
+              <img :src="noTrafficDataImage" alt="no-traffic-data" class="empty-illustration-image" />
+              <p>{{ $t('trafficLog.noTrafficData') }}</p>
+            </div>
 
           </div>
 
@@ -228,7 +230,7 @@ import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
 
 import { useI18n } from 'vue-i18n';
 
-import { IconAlertCircle, IconFileOff } from '@tabler/icons-vue';
+import { IconAlertCircle } from '@tabler/icons-vue';
 
 import { getTrafficLog } from '@/api/account/trafficLog';
 
@@ -261,6 +263,8 @@ const chartRef = ref(null);
 let chartInstance = null;
 
 const showOriginalData = ref(false); // false: 显示倍率后, true: 显示实际
+
+const noTrafficDataImage = new URL('../../../assets/images/dashboard/no-traffic-data.svg', import.meta.url).href;
 
 
 const fetchTrafficData = async () => {
@@ -994,6 +998,24 @@ onUnmounted(() => {
 
     }
 
+  }
+
+  .empty-illustration-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .empty-illustration-image {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    opacity: 0.9;
   }
 
   

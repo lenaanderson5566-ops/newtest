@@ -2011,7 +2011,7 @@ $space-2: map.get($spacers, 2);
               cursor: pointer;
               inset: 0;
               background-color: var(--surface-subtle);
-              border: var(--border-width) solid var(--border-default);
+              border: none;
               transition: 0.4s;
 
               &.loading {
@@ -2509,7 +2509,7 @@ $space-2: map.get($spacers, 2);
     margin-bottom: 4px;
     padding: 14px 16px;
     border-radius: var(--dashboard-radius);
-    border: var(--border-width) solid var(--border-default);
+    border: none;
     background: var(--theme-surface-elevated);
 
     &.is-active {
