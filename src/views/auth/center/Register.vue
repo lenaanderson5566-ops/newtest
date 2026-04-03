@@ -3666,6 +3666,10 @@ export default {
 
   font-size: 14px;
 
+  font-weight: 400;
+
+  line-height: 1.5;
+
   color: var(--text-tertiary);
 
 }
@@ -3700,11 +3704,28 @@ export default {
 
   font-size: 14px;
 
-  font-weight: 500;
+  font-weight: 400;
+
+  line-height: 1.5;
 
   color: var(--text-tertiary);
 
   margin-bottom: 8px;
+
+}
+
+:deep(input[type="password"]::-ms-reveal),
+:deep(input[type="password"]::-ms-clear) {
+
+  display: none;
+
+}
+
+:deep(input[type="password"]::-webkit-credentials-auto-fill-button) {
+
+  visibility: hidden;
+
+  pointer-events: none;
 
 }
 
