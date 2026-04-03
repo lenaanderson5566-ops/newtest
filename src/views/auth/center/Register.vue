@@ -263,11 +263,13 @@
 
           <span v-if="errors.password" class="error-message">{{ errors.password }}</span>
 
-          <div class="password-rule-tip" :class="{ met: passwordMinLengthMet }">
+          <div v-if="formData.password" class="password-rule-tip">
 
-            <IconCheck class="rule-icon" />
+            <IconCheck v-if="passwordMinLengthMet" class="rule-icon met" />
 
-            <span>{{ $t('auth.passwordRuleMinLength') }}</span>
+            <IconCircle v-else class="rule-icon unmet" />
+
+            <span :class="{ met: passwordMinLengthMet }">{{ $t('auth.passwordRuleMinLength') }}</span>
 
           </div>
 
@@ -496,6 +498,8 @@ import { useRouter } from 'vue-router';
 
 import { useI18n } from 'vue-i18n';
 
+import { IconCircle } from '@tabler/icons-vue';
+
 import { useToast } from '@/composables/useToast';
 
 
@@ -519,6 +523,9 @@ import IconEye from '@/components/icons/IconEye.vue';
 import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
+
+import IconCheck from '@/components/icons/IconCheck.vue';
+
 
 import { register, checkLoginStatus, getWebsiteConfig, sendEmailVerify } from '@/api/auth';
 
@@ -587,6 +594,9 @@ export default {
 
     IconChevronDown,
 
+    IconCheck,
+
+    IconCircle,
 
     AuthPopup
 
@@ -3672,19 +3682,23 @@ export default {
 
   height: 16px;
 
+}
+
+.password-rule-tip .rule-icon.unmet {
+
   color: var(--text-disabled);
 
 }
 
-.password-rule-tip.met {
+.password-rule-tip .rule-icon.met {
 
-  color: var(--text-primary);
+  color: #22c55e;
 
 }
 
-.password-rule-tip.met .rule-icon {
+.password-rule-tip span.met {
 
-  color: #22c55e;
+  color: var(--text-primary);
 
 }
 
