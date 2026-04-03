@@ -993,7 +993,6 @@ export default {
 
               } catch (error) {
 
-                console.error('Turnstile渲染错误:', error);
 
 
 
@@ -1029,21 +1028,11 @@ export default {
 
             } else {
 
-              console.error('找不到modal-turnstile容器');
 
             }
 
           } else {
 
-            console.error('验证码脚本未加载或配置不正确', {
-
-              type: captchaConfig.type,
-
-              hasGoogle: !!window.grecaptcha,
-
-              hasTurnstile: !!window.turnstile
-
-            });
 
           }
 
@@ -1808,7 +1797,6 @@ export default {
 
             } catch (error) {
 
-              console.error('Google reCAPTCHA渲染错误:', error);
 
               if (error.toString().includes('has already been rendered')) {
 
@@ -1861,7 +1849,6 @@ export default {
 
             } catch (error) {
 
-              console.error('表单验证码渲染错误:', error);
 
             }
 
@@ -1937,7 +1924,6 @@ export default {
 
           } catch (e) {
 
-            console.error('重置Turnstile失败，将尝试重新加载脚本', e);
 
           }
 

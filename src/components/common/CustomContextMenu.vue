@@ -106,7 +106,6 @@ export default {
           await navigator.clipboard.writeText(selectedText.value);
         }
       } catch (err) {
-        console.error('复制失败:', err);
       }
       handleClickOutside();
     };

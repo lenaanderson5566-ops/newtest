@@ -401,7 +401,6 @@ export default {
 
         } catch (error) {
 
-          console.error('令牌登录过程中出错:', error);
 
         } finally {
 
@@ -476,7 +475,6 @@ export default {
 
       } catch (error) {
 
-        console.error("登录状态检查失败", error);
 
       }
 

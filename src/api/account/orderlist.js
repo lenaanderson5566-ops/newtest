@@ -12,7 +12,6 @@ export function fetchOrderList() {
     
     throw new Error('Invalid response format');
   }).catch(error => {
-    console.error('Error fetching order list:', error);
     throw error;
   });
 }
@@ -40,7 +39,6 @@ export function cancelOrder(tradeNo) {
       }
     })
     .catch(error => {
-      console.error('取消订单失败:', error);
       
       let errorMessage = '取消订单失败';
       

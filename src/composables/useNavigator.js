@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
  * - 支持 path/name
  * - 支持 replace/newTab/forceReload
  * - path 直接用字符串 push：router.push('/dashboard')
- * - 自动检测目标是否存在，并在控制台给出明确提示
+ * - 自动检测目标是否存在
  */
 export function useNavigator() {
   const router = useRouter()
@@ -29,10 +29,7 @@ export function useNavigator() {
         ? router.resolve({ path: pathOrName, query: params })
         : router.resolve({ name: pathOrName, params })
       
-      if (!target.matched.length) {
-        console.warn('[useNavigator] 未匹配到目标路由：', pathOrName)
-        return
-      }
+      if (!target.matched.length) return
       window.open(target.href, '_blank')
       return
     }
@@ -43,17 +40,11 @@ export function useNavigator() {
         ? router.resolve({ path: pathOrName, query: params })
         : router.resolve({ name: pathOrName, params })
       
-      if (!target.matched.length) {
-        console.warn('[useNavigator] 未匹配到目标路由：', pathOrName)
-        return
-      }
+      if (!target.matched.length) return
       
       if (currentPath === target.fullPath) {
         if (options.forceReload) {
           router.go(0)
-        } else {
-          // 重复点击同一路由，直接忽略（避免无意义跳转）
-          console.warn(`[useNavigator] 已在 ${target.fullPath}，已忽略跳转`)
         }
         return
       }
@@ -72,14 +63,9 @@ export function useNavigator() {
     if (isPath) {
       const hasQuery = params && Object.keys(params).length > 0
       const target = hasQuery ? { path: pathOrName, query: params } : pathOrName
-      navigate(target).catch((err) => {
-        // 打印真正的失败原因（例如守卫拦截）
-        if (err) console.error('[useNavigator] 跳转失败:', err)
-      })
+      navigate(target).catch(() => {})
     } else {
-      navigate({ name: pathOrName, params }).catch((err) => {
-        if (err) console.error('[useNavigator] 跳转失败:', err)
-      })
+      navigate({ name: pathOrName, params }).catch(() => {})
     }
   }
   

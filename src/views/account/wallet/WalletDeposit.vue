@@ -177,7 +177,6 @@ const fetchUserConfig = async () => {
       currencyCode.value = String(response.data.currency).toUpperCase();
     }
   } catch (error) {
-    console.error('获取用户配置失败:', error);
   } finally {
     loading.config = false;
   }
@@ -246,7 +245,6 @@ const fetchUserBalance = async () => {
       walletBalances.value = normalizeWallets(response.data);
     }
   } catch (error) {
-    console.error('获取用户余额失败:', error);
     showToast(error.response?.message || error.message || t('errors.serverError') || t('common.error_occurred'), 'error');
   } finally {
     loading.balance = false;
@@ -279,7 +277,6 @@ const handleDeposit = async () => {
       });
     }
   } catch (error) {
-    console.error('创建充值订单失败:', error);
     showToast(error.response?.message || error.message || t('errors.serverError') || t('wallet.deposit.failed'), 'error');
   } finally {
     loading.submitting = false;

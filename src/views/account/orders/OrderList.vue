@@ -160,7 +160,6 @@ const fetchOrders = async () => {
       orders.value = [];
     }
   } catch (err) {
-    console.error('Failed to fetch orders:', err);
     error.value = err && err.message ? err.message : t('common.networkError') || '网络错误';
     
     if ($toast) {
@@ -285,7 +284,6 @@ const confirmCancelOrder = async () => {
     
     fetchOrders();
   } catch (err) {
-    console.error('取消订单失败, 错误对象:', err);
     
     let errorMessage = t('orders.cancelFailed') || '取消订单失败';
     
@@ -300,7 +298,6 @@ const confirmCancelOrder = async () => {
         }
       }
     } catch (e) {
-      console.error('错误处理过程中出现问题:', e);
     }
     
     if ($toast && typeof $toast.error === 'function') {

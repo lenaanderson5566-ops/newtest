@@ -156,7 +156,6 @@ const preCopySubscriptionUrl = async () => {
     await navigator.clipboard.writeText(subscriptionUrl.value);
     return true;
   } catch (err) {
-    console.warn('Failed to copy subscription url:', err);
     return false;
   }
 };
@@ -177,7 +176,6 @@ const fetchSubscription = async () => {
       subscriptionUrl.value = resolveSubscribeUrl(result.data);
     }
   } catch (err) {
-    console.error('Failed to fetch subscription info:', err);
   }
 };
 

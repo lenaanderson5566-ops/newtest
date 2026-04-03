@@ -313,7 +313,6 @@ export default {
 
       } catch (err) {
 
-        console.error('复制失败:', err);
 
         copyStatus.value = t('common.copyFailed');
 

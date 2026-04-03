@@ -186,7 +186,6 @@ const fetchUserInfo = async () => {
 
   } catch (err) {
 
-    console.error('Failed to fetch user info:', err);
 
     if ($toast) {
 
@@ -280,7 +279,6 @@ const fetchNodes = async () => {
 
   } catch (err) {
 
-    console.error('Failed to fetch nodes:', err);
 
     error.value = err.response?.message || (err && err.message ? err.message : t('common.networkError'));
 

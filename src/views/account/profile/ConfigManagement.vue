@@ -69,7 +69,6 @@ const handleResetSecurity = async () => {
     showResetModal.value = false;
     $toast?.success(t('profile.resetSuccess'));
   } catch (err) {
-    console.error('Failed to reset security:', err);
     $toast?.error(t('errors.serverError'));
   } finally {
     resetting.value = false;

@@ -111,13 +111,11 @@ request.interceptors.request.use(
         }
       }
     } catch (error) {
-      console.error("Failed to apply custom headers:", error);
     }
 
     return config;
   },
   (error) => {
-    console.error("Request interceptor error:", error);
     return Promise.reject(new Error("Request configuration error"));
   }
 );
@@ -136,12 +134,10 @@ request.interceptors.response.use(
 
       return res;
     } catch (err) {
-      console.error("Failed to process response data:", err);
       return Promise.reject(new Error("Failed to process response data"));
     }
   },
   (error) => {
-    console.error("Request error:", error);
 
     if (error.response && error.response.data && error.response.data.message) {
       error.response.message = error.response.data.message;

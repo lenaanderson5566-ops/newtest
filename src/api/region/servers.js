@@ -12,7 +12,6 @@ export function fetchServerNodes() {
     
     throw new Error('Invalid response format');
   }).catch(error => {
-    console.error('Error fetching server nodes:', error);
     throw error;
   });
 } 

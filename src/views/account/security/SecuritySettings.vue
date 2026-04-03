@@ -198,7 +198,6 @@ const changePassword = async () => {
       showPasswordModal.value = false;
     }
   } catch (err) {
-    console.error('Failed to change password:', err);
     showError(t('profile.passwordError'));
   } finally {
     changingPassword.value = false;
@@ -232,7 +231,6 @@ const fetchActiveSessions = async () => {
       sessionError.value = t('profile.sessionError');
     }
   } catch (err) {
-    console.error('Failed to fetch active sessions:', err);
     const statusCode = err?.response?.status;
     if (statusCode === 401 || statusCode === 403) {
       forceLogout();
@@ -287,7 +285,6 @@ const handleLogoutAllSessions = async () => {
     }
     showError(t('profile.logoutAllSessionsError'));
   } catch (err) {
-    console.error('Failed to logout all sessions:', err);
     showError(t('profile.logoutAllSessionsError'));
   } finally {
     loggingOutAllSessions.value = false;
@@ -309,7 +306,6 @@ const handleRemoveSession = async (session) => {
     }
     showError(t('profile.logoutDeviceError'));
   } catch (err) {
-    console.error('Failed to remove active session:', err);
     showError(t('profile.logoutDeviceError'));
   } finally {
     removingSessionIds.value.delete(sessionId);

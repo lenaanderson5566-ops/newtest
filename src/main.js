@@ -20,6 +20,5 @@ const enableAntiDebugging = String(env.VITE_DEBUGGING ?? env.VUE_APP_DEBUGGING ?
 
     await import('./appInit.js');
   } catch (error) {
-    console.error(error);
   }
 })();

@@ -266,7 +266,6 @@ export default {
             return;
           }
         } catch (error) {
-          console.error('令牌登录过程中出错:', error);
         } finally {
           loading.value = false;
         }
@@ -302,7 +301,6 @@ export default {
 
         showAuthPopup.value = shouldShowAuthPopup(AUTH_CONFIG.popup);
       } catch (error) {
-        console.error("登录状态检查失败", error);
       }
     });
 

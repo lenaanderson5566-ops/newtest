@@ -71,7 +71,6 @@ const getCookie = (name) => {
           break;
         }
       } catch (err) {
-        console.error('Cookie 解析失败:', err);
       }
     }
   }
@@ -86,7 +85,6 @@ const getCookie = (name) => {
             cookieValue = parsedValue.value;
           }
         } catch (err) {
-          console.error('LocalStorage cookie 解析失败:', err);
         }
       }
     } catch (err) {
@@ -255,7 +253,6 @@ export function register(data) {
         
         window.dispatchEvent(new CustomEvent('languageChanged'));
       } catch (error) {
-        console.error('注册后重载语言包失败:', error);
       }
     }, 100);
     
@@ -286,7 +283,6 @@ export const logout = async () => {
     try {
       await logoutCurrentSession();
     } catch (apiError) {
-      console.warn('调用退出当前会话接口失败，将继续清理本地登录态:', apiError);
     }
 
     _clearAllAuthData();
@@ -483,7 +479,6 @@ const _clearAllAuthData = () => {
   try {
     useAppStore(pinia).clearUser();
   } catch (e) {
-    console.error('Pinia状态清除失败', e);
   }
 };
 
@@ -536,7 +531,6 @@ export const forceLogout = () => {
   try {
     useAppStore(pinia).clearUser();
   } catch (e) {
-    console.error('Pinia状态清除失败', e);
   }
 };
 
@@ -587,7 +581,6 @@ export const checkUserLoginStatus = async () => {
       return { isLoggedIn: false, message: '登录已过期，请重新登录' };
     }
   } catch (error) {
-    console.error('检查登录状态失败:', error);
     
     if (error.response && error.response.data && error.response.data.message === '未登录或登陆已过期') {
       forceLogout();
