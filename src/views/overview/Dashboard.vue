@@ -90,7 +90,7 @@
             class="stats-card overview-card overview-card--traffic-quota traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'quota-traffic-card': card.key === 'subscription' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired)) || (card.key === 'subscription' && isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }]"
+            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'quota-traffic-card': card.key === 'subscription' || card.key === 'package' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired)) || (card.key === 'subscription' && isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">
@@ -2079,9 +2079,6 @@ $space-2: map.get($spacers, 2);
         }
 
         .package-usage-intro {
-          @extend %typo-label-text;
-          font-weight: $font-weight-normal;
-          line-height: 1.45;
           margin-top: 0;
         }
 
@@ -2138,6 +2135,13 @@ $space-2: map.get($spacers, 2);
           background: var(--theme-border-soft);
         }
 
+      }
+
+      &.traffic-board-package {
+        --traffic-card-bg: linear-gradient(315deg, rgba(234, 29, 44, 0.16) 0%, rgba(234, 29, 44, 0.08) 38%, #ffffff 100%);
+        min-height: auto;
+        height: auto;
+        z-index: 8;
       }
 
       &.traffic-board-total {
@@ -2288,6 +2292,8 @@ $space-2: map.get($spacers, 2);
   }
 
   .stats-grid .stats-card.traffic-board-subscription,
+  .stats-grid .stats-card.traffic-board-package,
+  .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
     background: var(--traffic-card-bg, var(--saas-card-bg));
     border: var(--border-width) solid var(--border-subtle);
@@ -2306,6 +2312,36 @@ $space-2: map.get($spacers, 2);
     @extend %typo-label-text;
     line-height: 1.3;
     letter-spacing: 0.02em;
+  }
+
+
+  .stats-grid .stats-card.today-traffic-card {
+    color: var(--text-primary);
+    background: linear-gradient(315deg, rgba(34, 89, 170, 0.14) 0%, rgba(90, 57, 216, 0.08) 42%, #ffffff 100%);
+    min-width: 0;
+    z-index: 2;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: #{$space-2};
+
+    .today-card-title {
+      margin-bottom: 0;
+    }
+
+    .today-traffic-total-main {
+      display: inline-flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .today-traffic-breakdown {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: #{$space-2};
+    }
   }
 
   .info-tooltip {
