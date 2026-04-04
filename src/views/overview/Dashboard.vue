@@ -2000,6 +2000,48 @@ $space-2: map.get($spacers, 2);
           line-height: 1;
         }
 
+        .usage-kpis {
+          width: 100%;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+        }
+
+        .usage-summary-line {
+          grid-column: 1 / -1;
+          @extend %typo-body-text;
+        }
+
+        .usage-kpi {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          padding: 8px;
+          border-radius: var(--dashboard-radius);
+          background: transparent;
+        }
+
+        .usage-kpi-label {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+          font-size: $font-size-sm;
+          color: var(--dashboard-subtitle-color);
+          line-height: 1;
+        }
+
+        .usage-kpi-value {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+          font-size: $font-size-md;
+          color: var(--quota-value-color);
+          font-weight: $font-weight-semibold;
+          line-height: 1.2;
+        }
+
+        .usage-reset-hint {
+          width: 100%;
+          @extend %typo-body-text;
+        }
       }
 
       &.traffic-board-package {
@@ -2022,6 +2064,11 @@ $space-2: map.get($spacers, 2);
 
         .package-remaining-label {
           @extend %typo-item-title;
+        }
+
+        .usage-card-title {
+          margin-bottom: 0;
+          min-height: 20px;
         }
 
         .usage-card-main.package-main {
@@ -2048,34 +2095,28 @@ $space-2: map.get($spacers, 2);
         .plan-action-btn {
           box-shadow: none;
         }
-      }
+        
+        .plan-summary-card .plan-summary-section-meta {
+          background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
+          border: none;
+          box-shadow: none;
 
-      &.traffic-board-total {
-        .plan-summary-card {
-          .plan-summary-section-meta {
-            background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
-            border: none;
-            box-shadow: none;
+          .plan-name-main {
+            color: var(--text-on-dark-primary);
+          }
 
-            .plan-name-main {
-              color: var(--text-on-dark-primary);
-            }
-
-            .plan-expire-meta {
-              color: var(--text-on-dark-secondary);
-            }
+          .plan-expire-meta {
+            color: var(--text-on-dark-secondary);
           }
         }
-      }
 
-      &.traffic-board-total.expired-main-card {
-        --traffic-card-bg: var(--theme-surface-muted);
-        background: var(--theme-surface-muted);
-        border: var(--border-width) solid var(--border-hover);
-        box-shadow: var(--shadow-md);
+        &.expired-main-card {
+          --traffic-card-bg: var(--theme-surface-muted);
+          background: var(--theme-surface-muted);
+          border: var(--border-width) solid var(--border-hover);
+          box-shadow: var(--shadow-md);
 
-        .plan-summary-card {
-          .plan-summary-section-meta {
+          .plan-summary-card .plan-summary-section-meta {
             background: linear-gradient(
               135deg,
               rgba(152, 173, 209, 0.92) 0%,
@@ -2102,52 +2143,6 @@ $space-2: map.get($spacers, 2);
           }
         }
       }
-
-        &.traffic-board-subscription {
-          .usage-kpis {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 8px;
-          }
-
-          .usage-summary-line {
-            grid-column: 1 / -1;
-            @extend %typo-body-text;
-          }
-
-          .usage-kpi {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            padding: 8px;
-            border-radius: var(--dashboard-radius);
-            background: transparent;
-          }
-
-          .usage-kpi-label {
-            writing-mode: horizontal-tb;
-            text-orientation: mixed;
-            font-size: $font-size-sm;
-            color: var(--dashboard-subtitle-color);
-            line-height: 1;
-          }
-
-          .usage-kpi-value {
-            writing-mode: horizontal-tb;
-            text-orientation: mixed;
-            font-size: $font-size-md;
-            color: var(--quota-value-color);
-            font-weight: $font-weight-semibold;
-            line-height: 1.2;
-          }
-
-          .usage-reset-hint {
-            width: 100%;
-            @extend %typo-body-text;
-          }
-
-        }
       }
 
       &:hover {
@@ -2190,16 +2185,6 @@ $space-2: map.get($spacers, 2);
     background: var(--theme-surface-muted);
   }
 
-  .stats-grid .stats-card.traffic-board-package,
-  .stats-grid .stats-card.today-traffic-card {
-    gap: 4px;
-
-    .usage-card-title {
-      margin-bottom: 0;
-      min-height: 20px;
-    }
-  }
-
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
     @extend %typo-label-text;
@@ -2219,6 +2204,7 @@ $space-2: map.get($spacers, 2);
 
     .today-card-title {
       margin-bottom: 0;
+      min-height: 20px;
       @extend %typo-label-text;
     }
 
