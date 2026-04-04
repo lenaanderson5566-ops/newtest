@@ -90,7 +90,7 @@
             class="stats-card overview-card overview-card--traffic-quota traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'quota-traffic-card': card.key === 'subscription' || card.key === 'package' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired)) || (card.key === 'subscription' && isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }]"
+            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'traffic-surface-card': card.key === 'package' }, { 'total-main-card': card.key === 'total' }, { 'quota-traffic-card': card.key === 'subscription' || card.key === 'package' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired)) || (card.key === 'subscription' && isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }]"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">
@@ -221,7 +221,7 @@
           </div>
 
           <div
-            class="stats-card overview-card overview-card--today-traffic today-traffic-card"
+            class="stats-card overview-card overview-card--today-traffic today-traffic-card traffic-surface-card"
             :class="{ 'card-animate': !loading.userStats }"
             :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
@@ -239,7 +239,7 @@
         </template>
       </div>
 
-      <div class="dashboard-card usage-trend-card" :class="{ 'card-animate': !trafficTrendLoading }" v-if="hasPlan">
+      <div class="dashboard-card usage-trend-card traffic-surface-card" :class="{ 'card-animate': !trafficTrendLoading }" v-if="hasPlan">
         <div class="card-header">
           <h2 class="card-title usage-card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
@@ -2151,11 +2151,9 @@ $space-2: map.get($spacers, 2);
     box-shadow: var(--shadow-md);
   }
 
-  /* 统一三张流量相关卡片背景，避免多层变量和分散规则导致覆盖不稳定 */
-  .stats-grid > .stats-card.traffic-board-package,
-  .stats-grid > .stats-card.today-traffic-card,
-  .dashboard-inner > .dashboard-card.usage-trend-card {
-    background: var(--color-bg-surface) !important;
+  /* 三张流量相关卡片统一语义类，降低选择器层级与覆盖复杂度 */
+  .traffic-surface-card {
+    background: var(--color-bg-surface);
   }
 
   .stats-grid .stats-card.traffic-board-subscription.subscription-card-muted,
