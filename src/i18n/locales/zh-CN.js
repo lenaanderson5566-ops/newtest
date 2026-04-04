@@ -198,7 +198,7 @@ export default {
         packageNotPurchased: '未购买流量额度包',
         usagePanel: '使用情况面板',
         totalTrafficPackAndPackage: '总流量（订阅+流量包）',
-        subscriptionMonthlyTraffic: '月流量',
+        subscriptionMonthlyTraffic: '每月使用限额',
         trafficPackageQuota: '流量额度包',
         packageUsageNote: '月流量用完后自动使用流量额度包',
         memberTier: '会员等级',

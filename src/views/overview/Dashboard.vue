@@ -126,13 +126,10 @@
               <div class="plan-summary-section plan-summary-section-traffic">
                 <div class="plan-summary-row monthly-traffic-row">
                   <span class="plan-summary-label">{{ $t('dashboard.subscriptionMonthlyTraffic') }}</span>
-                  <strong class="plan-summary-value">{{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.remaining)) }}</strong>
+                  <strong class="plan-summary-value monthly-limit-value">{{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.remaining)) }}</strong>
                 </div>
                 <div class="section-progress-track in-plan-card">
                   <div class="section-progress-fill" :style="{ width: `${applyPlanStatus(subscriptionTrafficSummary.remainingPercentage)}%` }"></div>
-                </div>
-                <div class="usage-summary-line in-plan-card">
-                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.used)) }} / {{ formatPackageRemaining(subscriptionTrafficSummary.total) }}
                 </div>
                 <div class="usage-reset-hint in-plan-card">
                   {{ $t('dashboard.resetTimeLabel') }} {{ userPlan.resetDateTime || '-' }}
@@ -1813,8 +1810,14 @@ $space-2: map.get($spacers, 2);
             gap: 8px;
 
             .monthly-traffic-row {
-              align-items: center;
+              align-items: flex-start;
+              flex-direction: column;
+              gap: 4px;
               padding: 0;
+
+              .monthly-limit-value {
+                @extend %typo-section-title;
+              }
             }
 
             .section-progress-track.in-plan-card {
