@@ -332,14 +332,6 @@ onMounted(() => {
 
 
 
-.nodes-inner {
-
-}
-
-
-
-
-
 .dashboard-card {
 
   background-color: var(--card-bg);

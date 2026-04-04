@@ -275,7 +275,6 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
-@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 @use "@/assets/styles/base/typography.scss" as *;
 
@@ -289,26 +288,6 @@ onMounted(() => {
   
 
 }
-
-
-
-.docs-inner {
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

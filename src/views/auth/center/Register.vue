@@ -2346,13 +2346,6 @@ export default {
 
       background-color: transparent;
 
-
-
-      &:focus {
-
-
-      }
-
     }
 
   }
