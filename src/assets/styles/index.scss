@@ -36,7 +36,7 @@
 }
 
 .app-content-wrapper :where(.page-shell) {
-  background-color: var(--color-bg-page);
+  background-color: var(--color-bg-surface);
   background-image: none;
   color: var(--text-primary);
   font-size: var(--view-font-size-base);
@@ -122,6 +122,7 @@
   .ticket-container,
   .trafficlog-container
 ) :where(.dashboard-card, .section-block, .section-wrapper, .profile-card, .order-summary) {
+  background-color: var(--color-bg-surface);
   box-shadow: var(--shadow-sm);
 }
 

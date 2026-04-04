@@ -334,7 +334,7 @@ onMounted(() => {
 
 .dashboard-card {
 
-  background-color: var(--card-bg);
+  background-color: var(--color-bg-surface);
 
   border-radius: $border-radius-sm;
 
@@ -437,7 +437,7 @@ onMounted(() => {
     border: var(--border-width) solid var(--border-default);
     border-radius: $border-radius-sm;
     padding: 16px;
-    background: var(--card-bg);
+    background: var(--color-bg-surface);
 
     .import-header {
       display: flex;

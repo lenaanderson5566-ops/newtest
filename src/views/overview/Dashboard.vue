@@ -2019,7 +2019,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-package {
-        --traffic-card-bg: var(--color-bg-surface-subtle);
+        --traffic-card-bg: var(--color-bg-surface);
         min-height: auto;
         height: auto;
         z-index: 3;
@@ -2167,7 +2167,7 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
-    background: var(--color-bg-surface-subtle);
+    background: var(--color-bg-surface);
     min-width: 0;
     z-index: 2;
     align-items: flex-start;
@@ -2271,7 +2271,7 @@ $space-2: map.get($spacers, 2);
 
   .usage-trend-card {
     padding: 8px;
-    background: var(--color-bg-surface-subtle);
+    background: var(--color-bg-surface);
 
     .card-header {
       margin-bottom: 4px;
