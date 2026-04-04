@@ -2035,6 +2035,7 @@ $space-2: map.get($spacers, 2);
         height: auto;
         z-index: 3;
         gap: 4px;
+        background: var(--color-bg-surface);
 
         .package-main-value {
           @extend %typo-section-title;
@@ -2165,7 +2166,7 @@ $space-2: map.get($spacers, 2);
   .stats-grid .stats-card.traffic-board-package,
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
-    background-color: var(--color-bg-surface) !important;
+    background: var(--color-bg-surface) !important;
     background-image: none !important;
   }
 
