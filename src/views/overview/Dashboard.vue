@@ -126,13 +126,13 @@
               <div class="plan-summary-section plan-summary-section-traffic">
                 <div class="plan-summary-row monthly-traffic-row">
                   <span class="plan-summary-label">{{ $t('dashboard.subscriptionMonthlyTraffic') }}</span>
-                  <strong class="plan-summary-value">{{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.remaining)) }}</strong>
+                  <strong class="plan-summary-value monthly-limit-value">
+                    <span>{{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.remaining)) }}</span>
+                    <span class="monthly-limit-suffix">{{ $t('dashboard.remaining') }}</span>
+                  </strong>
                 </div>
                 <div class="section-progress-track in-plan-card">
                   <div class="section-progress-fill" :style="{ width: `${applyPlanStatus(subscriptionTrafficSummary.remainingPercentage)}%` }"></div>
-                </div>
-                <div class="usage-summary-line in-plan-card">
-                  {{ $t('dashboard.used') }} {{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.used)) }} / {{ formatPackageRemaining(subscriptionTrafficSummary.total) }}
                 </div>
                 <div class="usage-reset-hint in-plan-card">
                   {{ $t('dashboard.resetTimeLabel') }} {{ userPlan.resetDateTime || '-' }}
@@ -175,15 +175,15 @@
             </div>
             <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
-                <span class="usage-percent compact">{{ formatPackageRemaining(card.remaining) }}</span>
-                <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+                <span class="usage-percent compact package-main-value">{{ formatPackageRemaining(card.remaining) }}</span>
+                <span class="usage-percent-label package-remaining-label">{{ $t('dashboard.remaining') }}</span>
                 <button class="package-add-btn" @click.stop="openTrafficPackageModal" :title="$t('dashboard.purchaseTrafficPackage')">
                   <IconPlus :size="14" />
                 </button>
               </template>
               <template v-else>
                 <template v-if="card.key === 'subscription'">
-                  <span class="usage-percent compact">{{ formatPackageRemaining(applyPlanStatus(card.remaining)) }}</span>
+                  <span class="usage-percent compact subscription-main-value">{{ formatPackageRemaining(applyPlanStatus(card.remaining)) }}</span>
                   <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
                 </template>
                 <template v-else>
@@ -227,8 +227,8 @@
           >
             <div class="usage-card-title today-card-title">{{ $t('dashboard.todayTrafficTitle') }}</div>
             <div class="today-traffic-total-main">
-              <span class="usage-percent compact">{{ todayTrafficStats.totalGb }} GB</span>
-              <span class="usage-percent-label">{{ $t('dashboard.todayTrafficUsed') }}</span>
+              <span class="usage-percent compact today-main-value">{{ todayTrafficStats.totalGb }} GB</span>
+              <span class="usage-percent-label today-used-label">{{ $t('dashboard.todayTrafficUsed') }}</span>
             </div>
             <div class="today-traffic-breakdown">
               <span class="traffic-up">{{ $t('dashboard.todayTrafficUpload') }} {{ todayTrafficStats.uploadGb }} GB</span>
@@ -1731,7 +1731,7 @@ $space-2: map.get($spacers, 2);
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           white-space: normal;
-          @extend %typo-card-title;
+          @extend %typo-label-text;
           line-height: 1.35;
           min-height: 20px;
         }
@@ -1775,16 +1775,10 @@ $space-2: map.get($spacers, 2);
           }
         }
 
-        &.total-main-card {
-          .usage-card-title {
-            color: var(--quota-label-color);
-            font-weight: $font-weight-semibold;
-          }
-        }
-
+        &.total-main-card,
         &.expired-main-card {
           .usage-card-title {
-            color: var(--text-tertiary);
+            font-weight: $font-weight-medium;
           }
         }
 
@@ -1819,8 +1813,21 @@ $space-2: map.get($spacers, 2);
             gap: 8px;
 
             .monthly-traffic-row {
-              align-items: center;
+              align-items: flex-start;
+              flex-direction: column;
+              gap: 4px;
               padding: 0;
+
+              .monthly-limit-value {
+                @extend %typo-section-title;
+                display: inline-flex;
+                align-items: baseline;
+                gap: 4px;
+              }
+
+              .monthly-limit-suffix {
+                @extend %typo-item-title;
+              }
             }
 
             .section-progress-track.in-plan-card {
@@ -1829,6 +1836,7 @@ $space-2: map.get($spacers, 2);
 
             .usage-summary-line.in-plan-card,
             .usage-reset-hint.in-plan-card {
+              @extend %typo-body-text;
               margin: 0;
             }
           }
@@ -1889,8 +1897,7 @@ $space-2: map.get($spacers, 2);
           }
 
           .plan-summary-label {
-            font-size: $font-size-sm;
-            color: var(--text-tertiary);
+            @extend %typo-body-text;
 
             &.with-tooltip {
               display: inline-flex;
@@ -1908,9 +1915,7 @@ $space-2: map.get($spacers, 2);
           }
 
           .plan-summary-value {
-            font-size: $font-size-md;
-            color: var(--text-primary);
-            font-weight: $font-weight-semibold;
+            @extend %typo-body-text;
             text-align: right;
             word-break: break-word;
           }
@@ -2062,14 +2067,9 @@ $space-2: map.get($spacers, 2);
         }
 
         .usage-percent {
-          @extend %typo-metric-md;
           writing-mode: horizontal-tb;
           text-orientation: mixed;
           line-height: 1;
-
-          &.compact {
-            font-size: $font-size-lg;
-          }
         }
 
         .usage-percent-label {
@@ -2097,16 +2097,6 @@ $space-2: map.get($spacers, 2);
           transition: width 0.35s ease;
         }
 
-      &.quota-traffic-card {
-        .usage-percent {
-          font-size: $font-size-2xl;
-
-          &.compact {
-            font-size: $font-size-2xl;
-          }
-        }
-      }
-
       &.traffic-board-subscription {
         --traffic-card-bg: linear-gradient(
           90deg,
@@ -2118,21 +2108,17 @@ $space-2: map.get($spacers, 2);
         border: var(--border-width) solid var(--border-subtle);
         box-shadow: var(--shadow-md);
 
-        .usage-card-title,
-        .usage-percent,
-        .usage-summary-line,
-        .usage-reset-hint,
-        .usage-kpi-value,
-        .usage-kpi-label {
-          color: var(--text-primary);
-        }
-
         .usage-kpi {
           background: transparent;
         }
 
         .section-progress-track {
           background: var(--theme-border-soft);
+        }
+
+        .subscription-main-value {
+          @extend %typo-section-title;
+          line-height: 1;
         }
 
       }
@@ -2142,6 +2128,27 @@ $space-2: map.get($spacers, 2);
         min-height: auto;
         height: auto;
         z-index: 8;
+        gap: 4px;
+
+        .package-main-value {
+          @extend %typo-section-title;
+          line-height: 1;
+        }
+
+        .package-usage-intro {
+          @extend %typo-body-text;
+          display: flex;
+          align-items: center;
+        }
+
+        .package-remaining-label {
+          @extend %typo-item-title;
+        }
+
+        .usage-card-main.package-main {
+          min-height: 0;
+          align-items: baseline;
+        }
       }
 
       &.traffic-board-total {
@@ -2154,10 +2161,6 @@ $space-2: map.get($spacers, 2);
         background: var(--traffic-card-bg);
         border: var(--border-width) solid var(--border-subtle);
         box-shadow: var(--shadow-md);
-
-        .usage-card-title {
-          color: var(--text-primary);
-        }
 
         .plan-summary-card,
         .plan-summary-section,
@@ -2231,9 +2234,7 @@ $space-2: map.get($spacers, 2);
 
           .usage-summary-line {
             grid-column: 1 / -1;
-            font-size: $font-size-sm;
-            font-weight: $font-weight-semibold;
-            color: var(--neutral-strong);
+            @extend %typo-body-text;
           }
 
           .usage-kpi {
@@ -2264,8 +2265,7 @@ $space-2: map.get($spacers, 2);
 
           .usage-reset-hint {
             width: 100%;
-            font-size: $font-size-sm;
-            color: var(--text-tertiary);
+            @extend %typo-body-text;
           }
 
         }
@@ -2307,13 +2307,22 @@ $space-2: map.get($spacers, 2);
     background: var(--theme-surface-muted);
   }
 
+  .stats-grid .stats-card.traffic-board-package,
+  .stats-grid .stats-card.today-traffic-card {
+    gap: 4px;
+
+    .usage-card-title {
+      margin-bottom: 0;
+      min-height: 20px;
+    }
+  }
+
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
     @extend %typo-label-text;
     line-height: 1.3;
     letter-spacing: 0.02em;
   }
-
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
@@ -2323,10 +2332,11 @@ $space-2: map.get($spacers, 2);
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
-    gap: #{$space-2};
+    gap: 4px;
 
     .today-card-title {
       margin-bottom: 0;
+      @extend %typo-label-text;
     }
 
     .today-traffic-total-main {
@@ -2334,6 +2344,7 @@ $space-2: map.get($spacers, 2);
       align-items: baseline;
       flex-wrap: wrap;
       gap: 8px;
+      min-height: 0;
     }
 
     .today-traffic-breakdown {
@@ -2341,6 +2352,20 @@ $space-2: map.get($spacers, 2);
       align-items: center;
       flex-wrap: wrap;
       gap: #{$space-2};
+      line-height: 1.4;
+
+      span {
+        @extend %typo-body-text;
+      }
+    }
+
+    .today-main-value {
+      @extend %typo-section-title;
+      line-height: 1;
+    }
+
+    .today-used-label {
+      @extend %typo-item-title;
     }
   }
 
@@ -2458,9 +2483,7 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-title {
-      @extend %typo-item-title;
-      color: var(--text-primary);
-      font-size: $font-size-md;
+      @extend %typo-label-text;
     }
 
     .trend-empty-action {
@@ -2583,14 +2606,6 @@ $space-2: map.get($spacers, 2);
       padding: 8px;
       gap: 4px;
 
-      .usage-percent {
-        font-size: $font-size-2xl;
-
-        &.compact {
-          font-size: $font-size-2xl;
-        }
-      }
-
       .usage-percent-label {
         font-size: $font-size-sm;
       }
@@ -2625,10 +2640,6 @@ $space-2: map.get($spacers, 2);
       width: 52px;
       height: 52px;
       display: none;
-    }
-
-    .trend-empty-title {
-      font-size: $font-size-sm;
     }
 
     .trend-empty-block {
