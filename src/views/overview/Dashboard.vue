@@ -2483,9 +2483,7 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-title {
-      @extend %typo-item-title;
-      color: var(--text-primary);
-      font-size: $font-size-md;
+      @extend %typo-label-text;
     }
 
     .trend-empty-action {
@@ -2642,10 +2640,6 @@ $space-2: map.get($spacers, 2);
       width: 52px;
       height: 52px;
       display: none;
-    }
-
-    .trend-empty-title {
-      font-size: $font-size-sm;
     }
 
     .trend-empty-block {
