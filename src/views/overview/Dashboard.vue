@@ -1516,7 +1516,8 @@ $space-2: map.get($spacers, 2);
 .dashboard-container {
   display: flex;
   justify-content: center;
-  --dashboard-card-padding: 8px;
+  --dashboard-card-padding: 16px;
+  --dashboard-section-padding: 12px;
   --dashboard-radius: #{$border-radius-sm};
   --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
@@ -1792,7 +1793,7 @@ $space-2: map.get($spacers, 2);
 
           .expired-status-strip {
             border-radius: var(--dashboard-radius);
-            padding: 8px 8px;
+            padding: var(--dashboard-section-padding);
             font-size: $font-size-sm;
             font-weight: $font-weight-semibold;
             color: var(--plan-expired-strip-text);
@@ -1804,7 +1805,7 @@ $space-2: map.get($spacers, 2);
             border: none;
             border-radius: var(--dashboard-radius);
             background: transparent;
-            padding: 8px 8px;
+            padding: var(--dashboard-section-padding);
             overflow: visible;
           }
 
@@ -1842,7 +1843,7 @@ $space-2: map.get($spacers, 2);
           }
 
           .plan-summary-section-meta {
-            padding: 8px 8px;
+            padding: var(--dashboard-section-padding);
           }
 
           .plan-status-hero {
@@ -2098,15 +2099,10 @@ $space-2: map.get($spacers, 2);
         }
 
       &.traffic-board-subscription {
-        --traffic-card-bg: linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0.98) 0%,
-          rgba(66, 133, 244, 0.08) 56%,
-          rgba(34, 89, 170, 0.14) 100%
-        );
+        --traffic-card-bg: var(--theme-surface-soft);
         background: var(--traffic-card-bg);
         border: var(--border-width) solid var(--border-subtle);
-        box-shadow: var(--shadow-md);
+        box-shadow: var(--shadow-sm);
 
         .usage-kpi {
           background: transparent;
@@ -2124,10 +2120,10 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-package {
-        --traffic-card-bg: linear-gradient(315deg, rgba(234, 29, 44, 0.16) 0%, rgba(234, 29, 44, 0.08) 38%, #ffffff 100%);
+        --traffic-card-bg: color-mix(in srgb, var(--error-background) 38%, var(--theme-white) 62%);
         min-height: auto;
         height: auto;
-        z-index: 8;
+        z-index: 3;
         gap: 4px;
 
         .package-main-value {
@@ -2153,10 +2149,10 @@ $space-2: map.get($spacers, 2);
 
       &.traffic-board-total {
         --traffic-card-bg: linear-gradient(
-          90deg,
+          120deg,
           rgba(255, 255, 255, 0.98) 0%,
-          rgba(66, 133, 244, 0.08) 56%,
-          rgba(34, 89, 170, 0.14) 100%
+          rgba(66, 133, 244, 0.14) 52%,
+          rgba(34, 89, 170, 0.2) 100%
         );
         background: var(--traffic-card-bg);
         border: var(--border-width) solid var(--border-subtle);
@@ -2298,6 +2294,10 @@ $space-2: map.get($spacers, 2);
     background: var(--traffic-card-bg, var(--saas-card-bg));
     border: var(--border-width) solid var(--border-subtle);
     border-radius: var(--dashboard-radius);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .stats-grid .stats-card.traffic-board-total {
     box-shadow: var(--shadow-md);
   }
 
@@ -2326,7 +2326,7 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
-    background: linear-gradient(315deg, rgba(34, 89, 170, 0.14) 0%, rgba(90, 57, 216, 0.08) 42%, #ffffff 100%);
+    background: color-mix(in srgb, var(--info-background) 46%, var(--theme-white) 54%);
     min-width: 0;
     z-index: 2;
     align-items: flex-start;
@@ -2595,7 +2595,8 @@ $space-2: map.get($spacers, 2);
 
 @include down(md) {
   .dashboard-container {
-    --dashboard-card-padding: 8px;
+    --dashboard-card-padding: 12px;
+    --dashboard-section-padding: 10px;
   }
 
   .stats-grid {
