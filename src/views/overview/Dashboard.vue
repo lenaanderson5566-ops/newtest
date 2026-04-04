@@ -2164,7 +2164,7 @@ $space-2: map.get($spacers, 2);
 
   /* 三张流量相关卡片统一语义类，降低选择器层级与覆盖复杂度 */
   .traffic-surface-card {
-    background: var(--color-bg-surface);
+    background: var(--color-bg-surface) !important;
   }
 
   .stats-grid .stats-card.traffic-board-subscription.subscription-card-muted,
