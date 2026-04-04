@@ -2342,12 +2342,11 @@ export default {
 
     font-size: $font-size-sm;
 
-    border: none;
+    border: var(--border-width) solid var(--border-default);
 
-    // 覆盖全局按钮主题（第三方 btn 样式）
-    background-color: var(--theme-color) !important;
+    background-color: transparent !important;
 
-    color: var(--text-on-dark-primary) !important;
+    color: var(--text-primary) !important;
 
     margin: 0;
 
@@ -2368,7 +2367,7 @@ export default {
     &:hover:not(:disabled) {
 
       // 保证 hover 态不被全局按钮 hover 皮肤覆盖
-      background-color: var(--primary-color-hover) !important;
+      background-color: rgba(var(--text-color-rgb), 0.05) !important;
 
       transform: translateY(-2px);
 
@@ -3010,6 +3009,84 @@ export default {
 
   }
 
+}
+
+/* Compact spacing tune */
+.auth-form-container {
+  padding: 40px 40px;
+}
+
+.auth-header {
+  margin-bottom: 16px;
+}
+
+.auth-logo {
+  margin-bottom: 10px;
+}
+
+.auth-title {
+  margin-bottom: 6px;
+}
+
+.auth-subtitle {
+  margin-bottom: 12px;
+}
+
+.auth-form .form-group {
+  margin-bottom: 12px;
+}
+
+.auth-footer {
+  margin-top: 16px;
+}
+
+@include down(lg) {
+  .auth-form-container {
+    padding: 20px 16px;
+  }
+
+  .auth-header {
+    margin-bottom: 14px;
+  }
+
+  .auth-subtitle {
+    margin-bottom: 10px;
+  }
+
+  .auth-form .form-group {
+    margin-bottom: 10px;
+  }
+
+  .auth-footer {
+    margin-top: 14px;
+  }
+}
+
+/* Visual polish tune */
+.auth-form-container {
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+}
+
+.auth-title {
+  letter-spacing: 0.2px;
+}
+
+.auth-subtitle {
+  line-height: 1.45;
+}
+
+.auth-form .form-control:focus {
+  box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.btn.btn-primary.btn-block {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.auth-divider {
+  margin-top: 4px;
 }
 
 </style>

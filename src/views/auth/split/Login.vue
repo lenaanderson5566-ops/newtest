@@ -903,4 +903,82 @@ export default {
     justify-content: flex-start;
   }
 }
+/* Compact spacing tune */
+.auth-form-container {
+  padding: 40px 40px;
+}
+
+.auth-header {
+  margin-bottom: 16px;
+}
+
+.auth-logo {
+  margin-bottom: 10px;
+}
+
+.auth-title {
+  margin-bottom: 6px;
+}
+
+.auth-subtitle {
+  margin-bottom: 12px;
+}
+
+.auth-form .form-group {
+  margin-bottom: 12px;
+}
+
+.auth-footer {
+  margin-top: 16px;
+}
+
+@include down(lg) {
+  .auth-form-container {
+    padding: 20px 16px;
+  }
+
+  .auth-header {
+    margin-bottom: 14px;
+  }
+
+  .auth-subtitle {
+    margin-bottom: 10px;
+  }
+
+  .auth-form .form-group {
+    margin-bottom: 10px;
+  }
+
+  .auth-footer {
+    margin-top: 14px;
+  }
+}
+
+/* Visual polish tune */
+.auth-form-container {
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+}
+
+.auth-title {
+  letter-spacing: 0.2px;
+}
+
+.auth-subtitle {
+  line-height: 1.45;
+}
+
+.auth-form .form-control:focus {
+  box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.btn.btn-primary.btn-block {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.auth-divider {
+  margin-top: 4px;
+}
+
 </style>

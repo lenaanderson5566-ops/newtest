@@ -187,7 +187,7 @@ const formatCycle = (cycle) => {
     'month_price': t('shop.plan.price_options.month') || '月付',
     'quarter_price': t('shop.plan.price_options.quarter') || '季度',
     'half_year_price': t('shop.plan.price_options.half_year') || '半年',
-    'year_price': t('shop.plan.price_options.year') || '一年',
+    'year_price': t('shop.plan.price_options.year') || '年付',
     'two_year_price': t('shop.plan.price_options.two_year') || '两年',
     'three_year_price': t('shop.plan.price_options.three_year') || '三年',
     'onetime_price': t('shop.plan.price_options.onetime') || '一次性',

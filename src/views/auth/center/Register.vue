@@ -263,48 +263,59 @@
 
           <span v-if="errors.password" class="error-message">{{ errors.password }}</span>
 
-        </div>
+          <div v-if="formData.password" class="password-rules">
 
+            <div class="password-rule-tip">
 
+              <IconCheck class="rule-icon" :class="passwordMinLengthMet ? 'met' : 'unmet'" />
 
-        <div class="form-group">
+              <span :class="{ met: passwordMinLengthMet }">{{ $t('auth.passwordRuleMinLength') }}</span>
 
-          <label for="confirmPassword" class="form-label">{{ $t('common.confirmPassword') }} <span class="required">*</span></label>
+            </div>
 
-          <div class="input-with-icon">
+            <div class="password-rule-tip">
 
-            <IconLock class="input-icon" />
+              <IconCheck class="rule-icon" :class="passwordAlphaNumericMet ? 'met' : 'unmet'" />
 
-            <input
+              <span :class="{ met: passwordAlphaNumericMet }">{{ $t('auth.passwordRuleAlphaNumericSuggested') }}</span>
 
-              :type="showConfirmPassword ? 'text' : 'password'"
+            </div>
 
-              id="confirmPassword"
+            <div class="password-rule-tip">
 
-              class="form-control"
+              <IconCheck class="rule-icon" :class="passwordSpecialCharMet ? 'met' : 'unmet'" />
 
-              v-model="formData.confirmPassword"
-
-              :placeholder="$t('auth.confirmPasswordPlaceholder')"
-
-              required
-
-            />
-
-            <div class="password-toggle" @click="showConfirmPassword = !showConfirmPassword">
-
-              <IconEye v-if="!showConfirmPassword" />
-
-              <IconEyeOff v-else />
+              <span :class="{ met: passwordSpecialCharMet }">{{ $t('auth.passwordRuleSpecialSuggested') }}</span>
 
             </div>
 
           </div>
 
-          <span v-if="errors.confirmPassword" class="error-message">{{ errors.confirmPassword }}</span>
+          <div v-if="formData.password" class="password-strength">
+
+            <div class="password-strength-label">
+
+              {{ $t('auth.passwordStrength') }}：{{ $t(passwordStrengthTextKey) }}
+
+            </div>
+
+            <div class="password-strength-bar">
+
+              <div
+
+                class="password-strength-fill"
+
+                :class="`strength-${passwordStrengthLevel}`"
+
+                :style="{ width: `${passwordStrengthPercent}%` }"
+
+              ></div>
+
+            </div>
+
+          </div>
 
         </div>
-
 
 
         <!-- 验证码组件 -->
@@ -351,7 +362,7 @@
 
               {{ $t('auth.agreeToTerms') }}
 
-              <a :href="config.tos_url || '#'" target="_blank" class="">{{ $t('auth.termsOfService') }}</a>
+              <a :href="config.tos_url || '/#/terms'" target="_blank" class="">{{ $t('auth.termsOfService') }}</a>
 
               <span class="required">*</span>
 
@@ -529,6 +540,9 @@ import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 
+import IconCheck from '@/components/icons/IconCheck.vue';
+
+
 import { register, checkLoginStatus, getWebsiteConfig, sendEmailVerify } from '@/api/auth';
 
 
@@ -596,6 +610,7 @@ export default {
 
     IconChevronDown,
 
+    IconCheck,
 
     AuthPopup
 
@@ -760,7 +775,6 @@ export default {
 
       password: '',
 
-      confirmPassword: '',
 
       inviteCode: '',
 
@@ -778,7 +792,6 @@ export default {
 
       password: '',
 
-      confirmPassword: '',
 
       inviteCode: '',
 
@@ -790,9 +803,77 @@ export default {
 
     const showPassword = ref(false);
 
-    const showConfirmPassword = ref(false);
+    const passwordStrengthScore = computed(() => {
 
+      const password = formData.password || '';
 
+      if (!password) return 0;
+
+      let score = 0;
+
+      if (password.length >= 8) score += 1;
+
+      if (/[a-z]/.test(password)) score += 1;
+
+      if (/[A-Z]/.test(password)) score += 1;
+
+      if (/\d/.test(password)) score += 1;
+
+      if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score += 1;
+
+      return score;
+
+    });
+
+    const passwordMinLengthMet = computed(() => {
+
+      return (formData.password || '').length >= 8;
+
+    });
+
+    const passwordAlphaNumericMet = computed(() => {
+
+      const password = formData.password || '';
+
+      return /[A-Za-z]/.test(password) && /\d/.test(password);
+
+    });
+
+    const passwordSpecialCharMet = computed(() => {
+
+      const password = formData.password || '';
+
+      return /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    });
+
+    const passwordStrengthLevel = computed(() => {
+
+      if (passwordStrengthScore.value <= 1) return 'weak';
+
+      if (passwordStrengthScore.value <= 3) return 'medium';
+
+      return 'strong';
+
+    });
+
+    const passwordStrengthTextKey = computed(() => {
+
+      if (passwordStrengthLevel.value === 'weak') return 'auth.passwordStrengthWeak';
+
+      if (passwordStrengthLevel.value === 'medium') return 'auth.passwordStrengthMedium';
+
+      return 'auth.passwordStrengthStrong';
+
+    });
+
+    const passwordStrengthPercent = computed(() => {
+
+      if (!formData.password) return 0;
+
+      return Math.min(100, Math.max(20, passwordStrengthScore.value * 20));
+
+    });
 
     const needCaptchaForEmailVerify = computed(() => {
 
@@ -1209,7 +1290,6 @@ export default {
 
       errors.password = '';
 
-      errors.confirmPassword = '';
 
       errors.inviteCode = '';
 
@@ -1268,24 +1348,6 @@ export default {
         isValid = false;
 
       }
-
-
-
-      if (!formData.confirmPassword) {
-
-        errors.confirmPassword = t('auth.confirmPasswordRequired');
-
-        isValid = false;
-
-      } else if (formData.password !== formData.confirmPassword) {
-
-        errors.confirmPassword = t('auth.passwordsDoNotMatch');
-
-        isValid = false;
-
-      }
-
-
 
       if (!formData.agreeTerms) {
 
@@ -2058,7 +2120,18 @@ export default {
 
       showPassword,
 
-      showConfirmPassword,
+      passwordMinLengthMet,
+
+      passwordAlphaNumericMet,
+
+      passwordSpecialCharMet,
+
+      passwordStrengthLevel,
+
+      passwordStrengthTextKey,
+
+      passwordStrengthPercent,
+
 
       config,
 
@@ -2710,11 +2783,11 @@ export default {
 
     font-size: $font-size-sm;
 
-    border: none;
+    border: var(--border-width) solid var(--border-default);
 
-    background-color: var(--theme-color);
+    background-color: transparent;
 
-    color: var(--text-on-dark-primary);
+    color: var(--text-primary);
 
     margin: 0;
 
@@ -2734,7 +2807,7 @@ export default {
 
     &:hover:not(:disabled) {
 
-      background-color: var(--primary-color-hover);
+      background-color: rgba(var(--text-color-rgb), 0.05);
 
     }
 
@@ -3618,6 +3691,140 @@ export default {
 
 
 
+
+.password-rules {
+  margin-top: 14px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+}
+
+.password-rule-tip {
+
+  margin-top: 0;
+
+  margin-bottom: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  color: var(--text-tertiary);
+
+}
+
+.password-rule-tip .rule-icon {
+
+  width: 16px;
+
+  height: 16px;
+
+  stroke-width: 2.75;
+
+}
+
+.password-rule-tip .rule-icon.unmet {
+
+  color: var(--text-disabled);
+
+}
+
+.password-rule-tip .rule-icon.met {
+
+  color: #22c55e;
+
+}
+
+.password-strength {
+
+  margin-top: 8px;
+
+}
+
+.password-strength-label {
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  color: var(--text-tertiary);
+
+  margin-bottom: 8px;
+
+}
+
+
+:deep(input[type="password"]::-ms-reveal),
+:deep(input[type="password"]::-ms-clear) {
+
+  display: none;
+
+}
+
+:deep(input[type="password"]::-webkit-credentials-auto-fill-button) {
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+}
+
+.password-strength-bar {
+
+  width: 100%;
+
+  height: 6px;
+
+  border-radius: 999px;
+
+  background-color: var(--background-light);
+
+  overflow: hidden;
+
+}
+
+.password-strength-fill {
+
+  height: 100%;
+
+  border-radius: 999px;
+
+  transition: width 0.25s ease, background-color 0.25s ease;
+
+}
+
+.password-strength-fill.strength-weak {
+
+  background-color: #ef4444;
+
+}
+
+.password-strength-fill.strength-medium {
+
+  background-color: #f59e0b;
+
+}
+
+.password-strength-fill.strength-strong {
+
+  background-color: #22c55e;
+
+}
+
 @keyframes modalFadeIn {
 
   from {
@@ -3636,6 +3843,84 @@ export default {
 
   }
 
+}
+
+/* Compact spacing tune */
+.auth-card {
+  padding: 20px;
+}
+
+.auth-header {
+  margin-bottom: 16px;
+}
+
+.auth-logo {
+  margin-bottom: 10px;
+}
+
+.auth-title {
+  margin-bottom: 6px;
+}
+
+.auth-subtitle {
+  margin-bottom: 12px;
+}
+
+.auth-form .form-group {
+  margin-bottom: 12px;
+}
+
+.auth-footer {
+  margin-top: 16px;
+}
+
+@include down(sm) {
+  .auth-card {
+    padding: 18px;
+  }
+
+  .auth-header {
+    margin-bottom: 14px;
+  }
+
+  .auth-subtitle {
+    margin-bottom: 10px;
+  }
+
+  .auth-form .form-group {
+    margin-bottom: 10px;
+  }
+
+  .auth-footer {
+    margin-top: 14px;
+  }
+}
+
+/* Visual polish tune */
+.auth-card {
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+}
+
+.auth-title {
+  letter-spacing: 0.2px;
+}
+
+.auth-subtitle {
+  line-height: 1.45;
+}
+
+.auth-form .form-control:focus {
+  box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.btn.btn-primary.btn-block {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.auth-divider {
+  margin-top: 4px;
 }
 
 </style>

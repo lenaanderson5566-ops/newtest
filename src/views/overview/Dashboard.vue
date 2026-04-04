@@ -239,7 +239,7 @@
         </template>
       </div>
 
-      <div class="dashboard-card usage-trend-card" v-if="hasPlan">
+      <div class="dashboard-card usage-trend-card" :class="{ 'card-animate': !trafficTrendLoading }" v-if="hasPlan">
         <div class="card-header">
           <h2 class="card-title usage-card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
@@ -248,11 +248,10 @@
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
           <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
             <div class="trend-empty-block">
-              <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
+              <IconFileText :size="64" stroke-width="1.8" class="trend-empty-icon" />
               <div class="trend-empty-content">
                 <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
-                <div class="trend-empty-desc">{{ $t('trafficLog.emptyDesc') }}</div>
-                <button class="trend-empty-action btn btn-primary" @click="goToQuickStart">
+                <button class="trend-empty-action btn btn-secondary" @click="goToQuickStart">
                   {{ $t('dashboard.goToQuickStart') }}
                 </button>
               </div>
@@ -375,7 +374,6 @@ import { fetchPlans, submitOrder } from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
-import noTrafficDataImage from '@/assets/images/dashboard/no-traffic-data.svg';
 
 export default {
   name: 'UserDashboard',
@@ -1490,7 +1488,6 @@ export default {
       trafficTrendData,
       trafficTrendLoading,
       trafficTrendError,
-      noTrafficDataImage,
       todayTrafficStats,
       todayTrafficAnimationDelay,
       allowNewPeriod,
@@ -1747,6 +1744,7 @@ $space-2: map.get($spacers, 2);
 
           &.package-main {
             width: 100%;
+            min-height: 0;
           }
 
           .package-add-btn {
@@ -1945,6 +1943,7 @@ $space-2: map.get($spacers, 2);
 
           .plan-summary-actions {
             display: flex;
+            justify-content: center;
             gap: #{$space-2};
             margin-top: 0;
 
@@ -2069,7 +2068,7 @@ $space-2: map.get($spacers, 2);
           line-height: 1;
 
           &.compact {
-            font-size: $font-size-xl;
+            font-size: $font-size-lg;
           }
         }
 
@@ -2080,10 +2079,7 @@ $space-2: map.get($spacers, 2);
         }
 
         .package-usage-intro {
-          font-size: $font-size-xs;
-          color: var(--text-tertiary);
-          line-height: 1.4;
-          margin-top: -2px;
+          margin-top: 0;
         }
 
         .section-progress-track {
@@ -2311,10 +2307,9 @@ $space-2: map.get($spacers, 2);
     background: var(--theme-surface-muted);
   }
 
-  .stats-grid .stats-card.today-traffic-card .usage-card-title,
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
-    @extend %typo-card-title;
+    @extend %typo-label-text;
     line-height: 1.3;
     letter-spacing: 0.02em;
   }
@@ -2339,19 +2334,6 @@ $space-2: map.get($spacers, 2);
       align-items: baseline;
       flex-wrap: wrap;
       gap: 8px;
-
-      .usage-percent {
-        @extend %typo-metric-md;
-        line-height: 1;
-
-        &.compact {
-          font-size: $font-size-2xl;
-        }
-      }
-
-      .usage-percent-label {
-        @extend %typo-label-text;
-      }
     }
 
     .today-traffic-breakdown {
@@ -2359,15 +2341,6 @@ $space-2: map.get($spacers, 2);
       align-items: center;
       flex-wrap: wrap;
       gap: #{$space-2};
-      font-size: $font-size-sm;
-      line-height: 1.45;
-      color: var(--text-tertiary);
-
-      .traffic-up,
-      .traffic-down {
-        color: var(--text-tertiary);
-        font-weight: $font-weight-semibold;
-      }
     }
   }
 
@@ -2431,6 +2404,7 @@ $space-2: map.get($spacers, 2);
 
   .usage-trend-card {
     padding: 8px;
+    --traffic-card-bg: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(66, 133, 244, 0.08) 56%, rgba(34, 89, 170, 0.14) 100%);
 
     .card-header {
       margin-bottom: 4px;
@@ -2475,29 +2449,18 @@ $space-2: map.get($spacers, 2);
       gap: 14px;
     }
 
-    .trend-empty-image {
-      width: 220px;
+    .trend-empty-icon {
+      width: 68px;
+      height: 68px;
+      color: #9aa3b2;
+      opacity: 0.95;
       flex: 0 0 auto;
-      max-width: 100%;
-      height: auto;
-      opacity: 0.96;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      pointer-events: none;
-      user-select: none;
     }
 
     .trend-empty-title {
       @extend %typo-item-title;
       color: var(--text-primary);
-      font-size: $font-size-xl;
-    }
-
-    .trend-empty-desc {
-      @extend %typo-meta-text;
-      color: var(--text-tertiary);
-      max-width: 360px;
+      font-size: $font-size-md;
     }
 
     .trend-empty-action {
@@ -2613,16 +2576,6 @@ $space-2: map.get($spacers, 2);
   }
 
   .stats-grid {
-    .stats-card.today-traffic-card {
-      .today-traffic-total-main {
-        .usage-percent {
-          &.compact {
-            font-size: $font-size-2xl;
-          }
-        }
-      }
-    }
-
     .stats-card.quota-traffic-card {
       min-width: 0;
       min-height: auto;
@@ -2668,16 +2621,14 @@ $space-2: map.get($spacers, 2);
       min-height: 68px;
     }
 
-    .trend-empty-image {
+    .trend-empty-icon {
+      width: 52px;
+      height: 52px;
       display: none;
     }
 
     .trend-empty-title {
-      font-size: $font-size-md;
-    }
-
-    .trend-empty-desc {
-      font-size: $font-size-xs;
+      font-size: $font-size-sm;
     }
 
     .trend-empty-block {
@@ -3263,4 +3214,19 @@ $space-2: map.get($spacers, 2);
   }
 }
 
+
+.dashboard-card.usage-trend-card.card-animate {
+  animation: usageCardIn 0.42s ease both;
+}
+
+@keyframes usageCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>
