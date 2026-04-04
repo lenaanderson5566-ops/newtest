@@ -353,7 +353,6 @@ export default {
 
 .app-root-shell {
   min-height: 100dvh;
-  --site-accent-gradient: linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
   background-color: var(--color-bg-page);
 }
 
@@ -404,17 +403,6 @@ export default {
   padding: 0 8px;
   z-index: 120;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 3px;
-    background: var(--site-accent-gradient);
-    pointer-events: none;
-  }
 }
 
 
@@ -519,15 +507,10 @@ export default {
 .app-content-wrapper {
   width: 100%;
   box-sizing: border-box;
-  --page-edge-gap: 4px;
-  --left-nav-gap: 8px;
-  --left-nav-occupy: 220px;
-  --mobile-bottom-nav-space: 0px;
 
   &.with-top-bar {
-    --page-content-top-gap: 8px;
     --app-top-bar-height: calc(56px + env(safe-area-inset-top, 0px));
-    padding-top: calc(var(--app-top-bar-height, 56px) + var(--page-content-top-gap, 8px));
+    padding-top: calc(var(--app-top-bar-height, 56px) + 8px);
   }
 
 }

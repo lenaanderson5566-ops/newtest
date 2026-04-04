@@ -221,7 +221,7 @@
           </div>
 
           <div
-            class="stats-card overview-card overview-card--today-traffic today-traffic-card traffic-surface-card"
+            class="stats-card overview-card overview-card--today-traffic today-traffic-card"
             :class="{ 'card-animate': !loading.userStats }"
             :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
@@ -239,7 +239,7 @@
         </template>
       </div>
 
-      <div class="dashboard-card usage-trend-card traffic-surface-card" :class="{ 'card-animate': !trafficTrendLoading }" v-if="hasPlan">
+      <div class="dashboard-card usage-trend-card" :class="{ 'card-animate': !trafficTrendLoading }" v-if="hasPlan">
         <div class="card-header">
           <h2 class="card-title usage-card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
@@ -1439,7 +1439,6 @@ export default {
     const getTrafficCardClass = (card) => ({
       [`traffic-board-${card.key}`]: true,
       'card-animate': !loading.userStats,
-      'traffic-surface-card': card.key === 'package',
       'total-main-card': card.key === 'total',
       'quota-traffic-card': card.key === 'subscription' || card.key === 'package',
       'expired-main-card': card.key === 'total' && isPlanExpired.value,
@@ -2162,9 +2161,12 @@ $space-2: map.get($spacers, 2);
     box-shadow: var(--shadow-md);
   }
 
-  /* 三张流量相关卡片统一语义类，降低选择器层级与覆盖复杂度 */
-  .traffic-surface-card {
-    background: var(--color-bg-surface) !important;
+  /* 三张流量相关卡片统一为 surface token，避免被其他层叠样式覆盖 */
+  .stats-grid .stats-card.traffic-board-package,
+  .stats-grid .stats-card.today-traffic-card,
+  .dashboard-card.usage-trend-card {
+    background-color: var(--color-bg-surface) !important;
+    background-image: none !important;
   }
 
   .stats-grid .stats-card.traffic-board-subscription.subscription-card-muted,
