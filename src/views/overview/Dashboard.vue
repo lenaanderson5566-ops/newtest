@@ -90,7 +90,7 @@
             class="stats-card overview-card overview-card--traffic-quota traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'traffic-surface-card': card.key === 'package' }, { 'total-main-card': card.key === 'total' }, { 'quota-traffic-card': card.key === 'subscription' || card.key === 'package' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired)) || (card.key === 'subscription' && isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }]"
+            :class="getTrafficCardClass(card)"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">
@@ -1436,6 +1436,18 @@ export default {
       return `${baseDelay + trafficBoardSections.value.length * step}s`;
     });
 
+    const getTrafficCardClass = (card) => ({
+      [`traffic-board-${card.key}`]: true,
+      'card-animate': !loading.userStats,
+      'traffic-surface-card': card.key === 'package',
+      'total-main-card': card.key === 'total',
+      'quota-traffic-card': card.key === 'subscription' || card.key === 'package',
+      'expired-main-card': card.key === 'total' && isPlanExpired.value,
+      'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage.value || isPlanExpired.value))
+        || (card.key === 'subscription' && isPlanExpired.value),
+      'subscription-card-muted': card.key === 'subscription' && isPlanExpired.value
+    });
+
     return {
       userStats,
       userBalance,
@@ -1484,6 +1496,7 @@ export default {
       needRefreshData,
       trafficBoardSections,
       hasPurchasedTrafficPackage,
+      getTrafficCardClass,
       trafficTrendChartRef,
       trafficTrendData,
       trafficTrendLoading,
@@ -2138,9 +2151,7 @@ $space-2: map.get($spacers, 2);
     padding: var(--dashboard-card-padding);
   }
 
-  .stats-grid .stats-card.traffic-board-subscription,
-  .stats-grid .stats-card.traffic-board-package,
-  .stats-grid .stats-card.today-traffic-card {
+  .stats-grid .stats-card.traffic-board-subscription {
     background: var(--traffic-card-bg, var(--saas-card-bg));
     border: var(--border-width) solid var(--border-subtle);
     border-radius: var(--dashboard-radius);
