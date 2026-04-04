@@ -267,7 +267,7 @@ export default {
         serviceNotInRegion: '未在地区参考列表',
 
         trafficPackageHint: '流量额度包为一次性补充流量，优先消耗月订阅流量，订阅用尽后再消耗额度包流量。',
-        trafficPackageSupplementHint: '使用流量额度包补充超出套餐限额的流量',
+        trafficPackageSupplementHint: '用于补充超出套餐限额的流量',
         pendingTrafficOrderRedirected: '检测到未支付的流量额度包订单，已为您跳转至支付页。',
         subscriptionPausedAfterExpiry: '订阅已过期，服务已暂停',
         renewToRestoreAccess: '续费后将立即恢复节点访问',

@@ -1826,7 +1826,7 @@ $space-2: map.get($spacers, 2);
               }
 
               .monthly-limit-suffix {
-                @extend %typo-card-title;
+                @extend %typo-item-title;
               }
             }
 
@@ -2149,7 +2149,7 @@ $space-2: map.get($spacers, 2);
         }
 
         .package-remaining-label {
-          @extend %typo-card-title;
+          @extend %typo-item-title;
         }
       }
 
@@ -2355,7 +2355,7 @@ $space-2: map.get($spacers, 2);
     }
 
     .today-used-label {
-      @extend %typo-card-title;
+      @extend %typo-item-title;
     }
   }
 
