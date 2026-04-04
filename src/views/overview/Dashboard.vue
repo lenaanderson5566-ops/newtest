@@ -90,7 +90,7 @@
             class="stats-card overview-card overview-card--traffic-quota traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[getTrafficCardClass(card), { 'surface-traffic-card': card.key === 'package' }]"
+            :class="getTrafficCardClass(card)"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">
@@ -240,7 +240,7 @@
       </div>
 
       <div
-        class="dashboard-card usage-trend-card surface-traffic-card"
+        class="dashboard-card usage-trend-card"
         :class="{ 'card-animate': !trafficTrendLoading }"
         v-if="hasPlan"
       >
@@ -2165,12 +2165,6 @@ $space-2: map.get($spacers, 2);
     box-shadow: var(--shadow-md);
   }
 
-  .stats-grid .stats-card.surface-traffic-card,
-  .dashboard-card.surface-traffic-card {
-    background: var(--color-bg-surface);
-    background-image: none;
-  }
-
   .stats-grid .stats-card.traffic-board-subscription.subscription-card-muted,
   .stats-grid .stats-card.traffic-board-subscription.quota-card-muted {
     border-color: var(--theme-border-soft);
@@ -2185,8 +2179,6 @@ $space-2: map.get($spacers, 2);
   }
 
   .dashboard-container .stats-grid .stats-card.today-traffic-card {
-    background: var(--color-bg-surface) !important;
-    background-image: none !important;
     color: var(--text-primary);
     min-width: 0;
     z-index: 2;
