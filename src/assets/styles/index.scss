@@ -126,17 +126,6 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* 统一覆盖首页三张流量卡片的背景，避免被组件内渐变/状态样式反向覆盖 */
-.app-content-wrapper .dashboard-container :is(
-  .stats-card.traffic-board-package,
-  .stats-card.today-traffic-card,
-  .dashboard-card.usage-trend-card
-) {
-  background: var(--color-bg-surface) !important;
-  background-image: none !important;
-}
-
-
 @media (max-width: 1200px) {
   :root {
     --global-card-gap: #{map.get($spacers, 2)};
