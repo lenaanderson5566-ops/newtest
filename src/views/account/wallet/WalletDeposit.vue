@@ -128,16 +128,11 @@ import { useToast } from '@/composables/useToast';
 import { IconAlertCircle, IconChevronLeft, IconShoppingCart } from '@tabler/icons-vue';
 import { getUserInfo } from '@/api/account/user';
 import { createOrderDeposit, getUserConfig } from '@/api/account/wallet';
-import { isXiaoV2board } from '@/utils/baseConfig';
 import { useRouter } from 'vue-router';
 import { WALLET_CONFIG } from '@/utils/baseConfig';
 const { t } = useI18n();
 const { showToast } = useToast();
 const router = useRouter();
-const isXiaoPanel = isXiaoV2board();
-if (!isXiaoPanel) {
-  router.push('/dashboard');
-}
 const currencySymbol = ref('$');
 const currencyCode = ref('USD');
 const walletBalances = ref([]);

@@ -39,20 +39,6 @@ const isObject = (item) => {
   return item && typeof item === "object" && !Array.isArray(item);
 };
 
-// 获取面板类型的常量
-// 可选值: 'V2board', 'Xiao-V2board' 或 'Xboard'
-export const PANEL_TYPE = getConfig("PANEL_TYPE", "Xiao-V2board");
-
-// 判断是否为Xiao-V2board面板
-export const isXiaoV2board = () => {
-  return PANEL_TYPE === "Xiao-V2board";
-};
-
-// 判断是否为Xboard面板
-export const isXboard = () => {
-  return PANEL_TYPE === "Xboard";
-};
-
 // 获取API基础URL的函数
 export const getApiBaseUrl = () => {
   // 完全依赖config.js中的配置

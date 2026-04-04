@@ -334,8 +334,7 @@ export function getWebsiteConfig() {
 export function sendEmailVerify(data) {
   const sendData = { ...data };
   
-  if (window.EZ_CONFIG && window.EZ_CONFIG.PANEL_TYPE === 'Xiao-V2board' && 
-      typeof sendData.isForgetPassword !== 'undefined') {
+  if (typeof sendData.isForgetPassword !== 'undefined') {
     sendData.isforget = sendData.isForgetPassword ? 1 : 0;
     delete sendData.isForgetPassword;
   }
