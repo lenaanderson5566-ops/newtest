@@ -91,7 +91,10 @@
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
             :class="getTrafficCardClass(card)"
-            :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
+            :style="[
+              { animationDelay: `${0.5 + idx * 0.1}s` },
+              card.key === 'package' ? trafficSurfaceCardInlineStyle : null
+            ]"
           >
             <div class="usage-card-title">
               <span>{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</span>
@@ -223,7 +226,10 @@
           <div
             class="stats-card overview-card overview-card--today-traffic today-traffic-card"
             :class="{ 'card-animate': !loading.userStats }"
-            :style="{ animationDelay: todayTrafficAnimationDelay }"
+            :style="[
+              { animationDelay: todayTrafficAnimationDelay },
+              trafficSurfaceCardInlineStyle
+            ]"
           >
             <div class="usage-card-title today-card-title">{{ $t('dashboard.todayTrafficTitle') }}</div>
             <div class="today-traffic-total-main">
@@ -239,7 +245,12 @@
         </template>
       </div>
 
-      <div class="dashboard-card usage-trend-card" :class="{ 'card-animate': !trafficTrendLoading }" v-if="hasPlan">
+      <div
+        class="dashboard-card usage-trend-card"
+        :class="{ 'card-animate': !trafficTrendLoading }"
+        :style="trafficSurfaceCardInlineStyle"
+        v-if="hasPlan"
+      >
         <div class="card-header">
           <h2 class="card-title usage-card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
@@ -1436,6 +1447,11 @@ export default {
       return `${baseDelay + trafficBoardSections.value.length * step}s`;
     });
 
+    const trafficSurfaceCardInlineStyle = Object.freeze({
+      background: 'var(--color-bg-surface)',
+      backgroundImage: 'none'
+    });
+
     const getTrafficCardClass = (card) => ({
       [`traffic-board-${card.key}`]: true,
       'card-animate': !loading.userStats,
@@ -1502,6 +1518,7 @@ export default {
       trafficTrendError,
       todayTrafficStats,
       todayTrafficAnimationDelay,
+      trafficSurfaceCardInlineStyle,
       allowNewPeriod,
       showTrafficPackageModal,
       trafficPackageLoading,
@@ -3038,6 +3055,13 @@ $space-2: map.get($spacers, 2);
 
 .dashboard-card.usage-trend-card.card-animate {
   animation: usageCardIn 0.42s ease both;
+}
+
+.dashboard-container .stats-grid .stats-card.traffic-board-package,
+.dashboard-container .stats-grid .stats-card.today-traffic-card,
+.dashboard-container .dashboard-card.usage-trend-card {
+  background: var(--color-bg-surface) !important;
+  background-image: none !important;
 }
 
 @keyframes usageCardIn {
