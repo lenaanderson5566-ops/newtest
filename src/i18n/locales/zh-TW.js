@@ -269,7 +269,7 @@ export default {
 
 
     trafficPackageHint: '流量額度包為一次性補充流量，優先消耗月訂閱流量，訂閱用盡後再消耗額度包流量。',
-    trafficPackageSupplementHint: '使用流量額度包補充超出方案限額的流量。',
+    trafficPackageSupplementHint: '使用流量額度包補充超出方案限額的流量',
     pendingTrafficOrderRedirected: '偵測到未付款的流量額度包訂單，已為您跳轉到付款頁。',
     subscriptionPausedAfterExpiry: '訂閱已過期，服務已暫停',
     renewToRestoreAccess: '續費後將立即恢復節點訪問',
@@ -724,7 +724,7 @@ profile: {
         month: ' / 月付',
         quarter: ' / 季付',
         half_year: ' / 半年',
-        year: ' / 一年',
+        year: ' / 年付',
         two_year: ' / 兩年',
         three_year: ' / 三年',
         onetime: ' / 一次性'
@@ -733,7 +733,7 @@ profile: {
         month: '月付',
         quarter: '季付',
         half_year: '半年',
-        year: '一年',
+        year: '年付',
         two_year: '兩年',
         three_year: '三年',
         onetime: '一次性',

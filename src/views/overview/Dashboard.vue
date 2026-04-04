@@ -2312,10 +2312,16 @@ $space-2: map.get($spacers, 2);
     background: var(--theme-surface-muted);
   }
 
-  .stats-grid .stats-card.today-traffic-card .usage-card-title,
-  .usage-trend-card .card-title.usage-card-title {
+  .stats-grid .stats-card.today-traffic-card .usage-card-title {
     margin: 0;
     @extend %typo-card-title;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+  }
+
+  .usage-trend-card .card-title.usage-card-title {
+    margin: 0;
+    @extend %typo-label-text;
     line-height: 1.3;
     letter-spacing: 0.02em;
   }
@@ -2442,6 +2448,7 @@ $space-2: map.get($spacers, 2);
 
   .usage-trend-card {
     padding: 8px;
+    background: linear-gradient(315deg, rgba(16, 185, 129, 0.12) 0%, rgba(45, 212, 191, 0.08) 42%, #ffffff 100%);
 
     .card-header {
       margin-bottom: 4px;
