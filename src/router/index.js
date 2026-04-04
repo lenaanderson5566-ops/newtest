@@ -62,6 +62,7 @@ const Login = getAuthComponent('Login');
 const Register = getAuthComponent('Register');
 
 const ForgotPassword = getAuthComponent('ForgotPassword');
+const TermsOfService = () => import('@/views/legal/TermsOfService.vue');
 
 const Dashboard = () => import('@/views/overview/Dashboard.vue');
 const AnnouncementList = () => import('@/views/account/announcements/AnnouncementList.vue');
@@ -192,6 +193,15 @@ const routes = [
 
     }
 
+  },
+  {
+    path: '/terms',
+    name: 'TermsOfService',
+    component: TermsOfService,
+    meta: {
+      titleKey: 'auth.termsOfService',
+      requiresAuth: false
+    }
   },
 
   {

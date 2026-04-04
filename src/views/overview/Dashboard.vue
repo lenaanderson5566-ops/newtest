@@ -239,7 +239,7 @@
         </template>
       </div>
 
-      <div class="dashboard-card usage-trend-card" v-if="hasPlan">
+      <div class="dashboard-card usage-trend-card" :class="{ 'card-animate': !trafficTrendLoading }" v-if="hasPlan">
         <div class="card-header">
           <h2 class="card-title usage-card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
@@ -248,7 +248,7 @@
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
           <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
             <div class="trend-empty-block">
-              <img :src="noTrafficDataImage" alt="no-traffic-data" class="trend-empty-image" />
+              <IconPhotoOff :size="68" stroke-width="1.8" class="trend-empty-icon" />
               <div class="trend-empty-content">
                 <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
                 <div class="trend-empty-desc">{{ $t('trafficLog.emptyDesc') }}</div>
@@ -353,6 +353,7 @@ import {
   IconHelpCircle,
   IconMoon,
   IconPackage,
+  IconPhotoOff,
   IconRouter,
   IconSend,
   IconShare,
@@ -375,7 +376,6 @@ import { fetchPlans, submitOrder } from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
-import noTrafficDataImage from '@/assets/images/dashboard/no-traffic-data.svg';
 
 export default {
   name: 'UserDashboard',
@@ -399,6 +399,7 @@ export default {
     IconDeviceDesktop,
     IconCrosshair,
     IconPackage,
+    IconPhotoOff,
     IconMoon,
     IconWaveSawTool,
     IconBrandGithub,
@@ -1490,7 +1491,6 @@ export default {
       trafficTrendData,
       trafficTrendLoading,
       trafficTrendError,
-      noTrafficDataImage,
       todayTrafficStats,
       todayTrafficAnimationDelay,
       allowNewPeriod,
@@ -2069,7 +2069,7 @@ $space-2: map.get($spacers, 2);
           line-height: 1;
 
           &.compact {
-            font-size: $font-size-xl;
+            font-size: $font-size-lg;
           }
         }
 
@@ -2475,23 +2475,18 @@ $space-2: map.get($spacers, 2);
       gap: 14px;
     }
 
-    .trend-empty-image {
-      width: 220px;
+    .trend-empty-icon {
+      width: 68px;
+      height: 68px;
+      color: #9aa3b2;
+      opacity: 0.95;
       flex: 0 0 auto;
-      max-width: 100%;
-      height: auto;
-      opacity: 0.96;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      pointer-events: none;
-      user-select: none;
     }
 
     .trend-empty-title {
       @extend %typo-item-title;
       color: var(--text-primary);
-      font-size: $font-size-xl;
+      font-size: $font-size-md;
     }
 
     .trend-empty-desc {
@@ -2668,12 +2663,13 @@ $space-2: map.get($spacers, 2);
       min-height: 68px;
     }
 
-    .trend-empty-image {
-      display: none;
+    .trend-empty-icon {
+      width: 52px;
+      height: 52px;
     }
 
     .trend-empty-title {
-      font-size: $font-size-md;
+      font-size: $font-size-sm;
     }
 
     .trend-empty-desc {
@@ -3263,4 +3259,19 @@ $space-2: map.get($spacers, 2);
   }
 }
 
+
+.dashboard-card.usage-trend-card.card-animate {
+  animation: usageCardIn 0.42s ease both;
+}
+
+@keyframes usageCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>
