@@ -2134,10 +2134,10 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-package {
-        --traffic-card-bg: linear-gradient(315deg, rgba(234, 29, 44, 0.16) 0%, rgba(234, 29, 44, 0.08) 38%, #ffffff 100%);
+        --traffic-card-bg: var(--saas-card-bg);
         min-height: auto;
         height: auto;
-        z-index: 8;
+        z-index: 1;
 
         .package-main-value {
           @extend %typo-section-title;
@@ -2294,8 +2294,7 @@ $space-2: map.get($spacers, 2);
   }
 
   .stats-grid .stats-card.traffic-board-subscription,
-  .stats-grid .stats-card.traffic-board-package,
-  .stats-grid .stats-card.today-traffic-card,
+  .stats-grid .stats-card.traffic-board-total,
   .dashboard-card.usage-trend-card {
     background: var(--traffic-card-bg, var(--saas-card-bg));
     border: var(--border-width) solid var(--border-subtle);
@@ -2318,9 +2317,9 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
-    background: linear-gradient(315deg, rgba(34, 89, 170, 0.14) 0%, rgba(90, 57, 216, 0.08) 42%, #ffffff 100%);
+    background: var(--saas-card-bg);
     min-width: 0;
-    z-index: 2;
+    z-index: 1;
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
