@@ -2859,8 +2859,11 @@ button.no-plan-step {
 </style>
 
 <style lang="scss">
+@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 @use '@/assets/styles/no-plan-card' as *;
+
+$space-2: map.get($spacers, 2);
 
 .traffic-package-modal-overlay {
   position: fixed;
