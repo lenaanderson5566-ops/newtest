@@ -1525,7 +1525,7 @@ $space-2: map.get($spacers, 2);
   --dashboard-gap-compact: var(--global-card-gap);
   --dashboard-section-margin: var(--global-card-gap);
 
-  --saas-card-bg: #ffffff;
+  --saas-card-bg: var(--color-bg-surface);
 
   --theme-text-primary: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
@@ -2156,6 +2156,10 @@ $space-2: map.get($spacers, 2);
   .stats-grid .stats-card.traffic-board-subscription.quota-card-muted {
     border-color: var(--theme-border-soft);
     background: var(--theme-surface-muted);
+  }
+
+  .usage-trend-card {
+    background: var(--color-bg-surface);
   }
 
   .usage-trend-card .card-title.usage-card-title {
