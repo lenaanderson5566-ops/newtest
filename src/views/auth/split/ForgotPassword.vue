@@ -1947,7 +1947,7 @@ export default {
 
   position: relative;
 
-  background-color: var(--background-color);
+  background-color: var(--color-bg-page);
 
   overflow-y: auto;
 
@@ -2533,7 +2533,7 @@ export default {
 
     z-index: 2;
 
-    background-color: var(--card-background);
+    background-color: var(--color-bg-surface);
 
     border-radius: 12px;
 

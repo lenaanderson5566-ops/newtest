@@ -1924,7 +1924,7 @@ export default {
     position: relative;
     border: var(--border-width) solid var(--border-default);
     border-radius: $border-radius;
-    background: var(--card-background);
+    background: var(--color-bg-surface);
     min-height: 110px;
     padding: 8px;
     text-align: left;
@@ -1993,7 +1993,7 @@ export default {
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background: var(--card-background);
+    background: var(--color-bg-surface);
     color: var(--theme-color);
     display: inline-flex;
     align-items: center;
@@ -2002,7 +2002,7 @@ export default {
 
   .section-wrapper.period-section {
     // 必须覆盖公共 section-wrapper 样式，保持该页平面化分区视觉
-    background-color: var(--background-color) !important;
+    background-color: var(--color-bg-page) !important;
     border: none !important;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
@@ -2010,7 +2010,7 @@ export default {
 
   .section-wrapper.subscription-intro-section {
     // 必须覆盖公共 section-wrapper 样式，保持该页平面化分区视觉
-    background-color: var(--background-color) !important;
+    background-color: var(--color-bg-page) !important;
     border: none !important;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
@@ -2018,7 +2018,7 @@ export default {
 
   .section-wrapper.payment-methods-section {
     // 必须覆盖公共 section-wrapper 样式，保持该页平面化分区视觉
-    background-color: var(--background-color) !important;
+    background-color: var(--color-bg-page) !important;
     border: none !important;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
@@ -2027,7 +2027,7 @@ export default {
   .subscription-intro-section .section-title,
   .period-section .section-title,
   .payment-methods-section .section-title {
-    background-color: var(--background-color);
+    background-color: var(--color-bg-page);
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
   }
@@ -2047,7 +2047,7 @@ export default {
     transition: all 0.3s ease;
 
     &.glassmorphism {
-      background-color: rgba(var(--card-background-rgb, 255, 255, 255), 0.7);
+      background-color: rgba(var(--color-bg-surface-rgb, 255, 255, 255), 0.7);
 
       backdrop-filter: blur(20px);
 
@@ -2711,7 +2711,7 @@ export default {
     border: var(--border-width) solid var(--border-default);
 
     &.glassmorphism {
-      background-color: rgba(var(--card-background-rgb, 255, 255, 255), 0.7);
+      background-color: rgba(var(--color-bg-surface-rgb, 255, 255, 255), 0.7);
 
       backdrop-filter: blur(20px);
 

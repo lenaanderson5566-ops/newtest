@@ -2019,7 +2019,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-package {
-        --traffic-card-bg: var(--surface-card-tint);
+        --traffic-card-bg: var(--color-bg-surface-subtle);
         min-height: auto;
         height: auto;
         z-index: 3;
@@ -2167,7 +2167,7 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
-    background: var(--surface-card-tint);
+    background: var(--color-bg-surface-subtle);
     min-width: 0;
     z-index: 2;
     align-items: flex-start;
@@ -2271,7 +2271,7 @@ $space-2: map.get($spacers, 2);
 
   .usage-trend-card {
     padding: 8px;
-    background: var(--surface-card-tint);
+    background: var(--color-bg-surface-subtle);
 
     .card-header {
       margin-bottom: 4px;
@@ -2605,7 +2605,7 @@ $space-2: map.get($spacers, 2);
   margin: 0 auto;
   max-width: var(--page-content-max-width);
   width: 100%;
-  background: var(--card-background);
+  background: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-subtle);
   border-radius: var(--dashboard-radius);
   padding: 16px;
@@ -2887,7 +2887,7 @@ $space-2: map.get($spacers, 2);
   flex-direction: column;
   max-height: calc(100vh - 32px);
   overflow: hidden;
-  background-color: var(--card-background);
+  background-color: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-subtle);
   border-radius: 16px;
 

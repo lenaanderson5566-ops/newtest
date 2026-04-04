@@ -1995,7 +1995,7 @@ export default {
 
     z-index: 2;
 
-    background-color: var(--card-background);
+    background-color: var(--color-bg-surface);
 
     border-radius: 12px;
 

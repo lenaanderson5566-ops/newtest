@@ -1264,7 +1264,7 @@ export default {
   }
 
   .overview-header {
-    background-color: var(--background-color);
+    background-color: var(--color-bg-page);
     margin: 8px 0;
 
     .overview-cancel-btn {
@@ -1292,11 +1292,11 @@ export default {
     padding: 0;
     margin: 8px 0;
     // 必须压过全局 section-wrapper 皮肤（公共层）
-    background: var(--background-color) !important;
+    background: var(--color-bg-page) !important;
     border: none !important;
 
     .section-title {
-      background-color: var(--background-color);
+      background-color: var(--color-bg-page);
       margin-top: 8px;
       margin-bottom: 8px;
       color: var(--text-primary);
@@ -1981,7 +1981,7 @@ export default {
 }
 
 .payment-container .overview-section {
-  background-color: var(--card-background);
+  background-color: var(--color-bg-surface);
 }
 
 .cancel-modal {
@@ -2012,13 +2012,13 @@ export default {
   }
 
   .cancel-modal-content {
-    background-color: var(--card-background);
+    background-color: var(--color-bg-surface);
     border-radius: $border-radius-sm;
     overflow: hidden;
     transform: translateZ(0);
 
     @media (prefers-color-scheme: dark) {
-      background-color: rgba(var(--card-background-rgb, 40, 40, 40), 1);
+      background-color: rgba(var(--color-bg-surface-rgb, 40, 40, 40), 1);
     }
   }
 

@@ -206,7 +206,7 @@ export default {
   top: calc(100% + 8px);
   right: 0;
   min-width: 140px;
-  background: rgba(var(--card-background-rgb), 0.95);
+  background: rgba(var(--color-bg-surface-rgb), 0.95);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: $border-radius-sm;

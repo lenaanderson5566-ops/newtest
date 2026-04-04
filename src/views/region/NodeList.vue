@@ -599,7 +599,7 @@ onMounted(() => {
 
 
 .nodes-no-plan {
-  background: var(--card-background);
+  background: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-default);
   border-radius: $border-radius-sm;
   padding: 24px;
@@ -791,7 +791,7 @@ onMounted(() => {
 
   border-radius: $border-radius-sm;
 
-  background: var(--card-background);
+  background: var(--color-bg-surface);
 
   transition: all 0.25s ease;
 

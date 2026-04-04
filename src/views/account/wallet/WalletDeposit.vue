@@ -332,7 +332,7 @@ onMounted(() => {
     }
     
     &.glassmorphism {
-      background-color: rgba(var(--card-background-rgb, 255, 255, 255), 0.7);
+      background-color: rgba(var(--color-bg-surface-rgb, 255, 255, 255), 0.7);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       will-change: backdrop-filter, background-color;
@@ -392,7 +392,7 @@ onMounted(() => {
         padding: 8px 8px;
         border-radius: $border-radius-sm;
         border: var(--border-width) solid var(--border-default);
-        background: var(--card-background);
+        background: var(--color-bg-surface);
         @extend %typo-label-text;
       }
 

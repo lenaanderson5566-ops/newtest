@@ -102,7 +102,7 @@ const handleResetSecurity = async () => {
 }
 
 .profile-card {
-  background: var(--card-background);
+  background: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-default);
   border-radius: 12px;
   padding: 16px;
@@ -140,7 +140,7 @@ const handleResetSecurity = async () => {
 .modal-content {
   width: min(420px, 92vw);
   border-radius: 12px;
-  background: var(--card-background);
+  background: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-default);
 }
 

@@ -601,7 +601,7 @@ $space-2: map.get($spacers, 2);
   display: flex;
   gap: 0;
   overflow-x: auto;
-  background: var(--card-bg-color, var(--card-background));
+  background: var(--card-bg-color, var(--color-bg-surface));
   border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
 }
@@ -640,7 +640,7 @@ $space-2: map.get($spacers, 2);
 
 .section-block {
   border-radius: $border-radius-sm;
-  background-color: var(--card-background);
+  background-color: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-hover);
   transition: box-shadow 0.22s ease, border-color 0.22s ease;
 
@@ -825,7 +825,7 @@ $space-2: map.get($spacers, 2);
   padding: 8px;
   border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
-  background: linear-gradient(180deg, rgba(var(--card-background-rgb), 0.96), rgba(var(--card-background-rgb), 0.9));
+  background: linear-gradient(180deg, rgba(var(--color-bg-surface-rgb), 0.96), rgba(var(--color-bg-surface-rgb), 0.9));
 
   .label {
     display: block;
@@ -960,7 +960,7 @@ $space-2: map.get($spacers, 2);
 .tier-intro-card {
   border: var(--border-width) solid var(--border-subtle);
   border-radius: 12px;
-  background: rgba(var(--card-background-rgb), 0.7);
+  background: rgba(var(--color-bg-surface-rgb), 0.7);
   padding: 8px;
 
   p {
@@ -1031,7 +1031,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 }
 
 .modal-content {
-  background-color: var(--card-background);
+  background-color: var(--color-bg-surface);
   border-radius: 12px;
   width: 90%;
   max-width: 480px;

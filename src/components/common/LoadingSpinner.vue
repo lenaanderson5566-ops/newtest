@@ -38,7 +38,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(var(--card-background-rgb), 0.7);
+    background-color: rgba(var(--color-bg-surface-rgb), 0.7);
     backdrop-filter: blur(5px);
     z-index: 9999;
   }

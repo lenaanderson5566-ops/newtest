@@ -30,7 +30,7 @@
   font-size: $font-size-md;
   line-height: 1.5;
   color: var(--text-primary);
-  background-color: var(--card-background);
+  background-color: var(--color-bg-surface);
   background-clip: padding-box;
   border: none;
   border-radius: $border-radius;
@@ -118,7 +118,7 @@
   position: relative;
   
   &:hover, &:focus {
-    background-color: rgba(var(--card-background-rgb), 0.5);
+    background-color: rgba(var(--color-bg-surface-rgb), 0.5);
     border-color: var(--theme-color);
     color: var(--theme-color);
     -webkit-text-fill-color: var(--theme-color);

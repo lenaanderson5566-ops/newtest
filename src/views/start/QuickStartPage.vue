@@ -442,7 +442,7 @@ onMounted(fetchUserStatus);
 }
 
 .step-card {
-  background: var(--surface-card-tint);
+  background: var(--color-bg-surface-subtle);
   border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
   box-shadow: var(--shadow-sm);
@@ -490,7 +490,7 @@ onMounted(fetchUserStatus);
 .system-item {
   border: var(--border-width) solid var(--border-default);
   border-radius: $border-radius-sm;
-  background: var(--surface-card);
+  background: var(--color-bg-surface);
   padding: 8px;
   min-height: 100px;
   display: flex;
@@ -553,7 +553,7 @@ onMounted(fetchUserStatus);
 
 .client-item {
   border: var(--border-width) solid var(--border-default);
-  background: var(--surface-card);
+  background: var(--color-bg-surface);
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2) 24px map.get($spacers, 2) map.get($spacers, 2);
   min-height: 62px;
@@ -631,7 +631,7 @@ onMounted(fetchUserStatus);
 .action-btn,
 .help-btn {
   border: var(--border-width) solid var(--border-default);
-  background: var(--surface-card);
+  background: var(--color-bg-surface);
   color: var(--info-color);
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2);
@@ -665,7 +665,7 @@ onMounted(fetchUserStatus);
 .qrcode-modal {
   width: min(420px, 92vw);
   border-radius: $border-radius-sm;
-  background: var(--surface-card);
+  background: var(--color-bg-surface);
   padding: map.get($spacers, 3);
 
   .qrcode-header {

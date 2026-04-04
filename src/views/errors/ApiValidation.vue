@@ -316,7 +316,7 @@ export default {
 
   justify-content: center;
 
-  background-color: var(--background-color);
+  background-color: var(--color-bg-page);
 
   overflow: hidden;
 
@@ -475,7 +475,7 @@ export default {
   }
 
   .validation-container {
-    background-color: var(--card-background, rgba(30, 32, 35, 0.6));
+    background-color: var(--color-bg-surface, rgba(30, 32, 35, 0.6));
 
 
     .progress-ring-bg {
