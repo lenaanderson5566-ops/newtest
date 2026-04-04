@@ -2142,6 +2142,18 @@ $space-2: map.get($spacers, 2);
         min-height: auto;
         height: auto;
         z-index: 8;
+
+        .usage-card-title,
+        .usage-percent,
+        .usage-percent-label,
+        .package-usage-intro {
+          font-size: inherit;
+          font-weight: inherit;
+          line-height: inherit;
+          color: inherit;
+          letter-spacing: normal;
+          text-shadow: none;
+        }
       }
 
       &.traffic-board-total {
