@@ -353,9 +353,14 @@ export default {
 
 .app-root-shell {
   min-height: 100dvh;
+  /* 顶部栏强调渐变条（仅用于 top-fixed-bar::after，不参与页面主背景计算） */
+  --site-accent-gradient: linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
   background-color: var(--color-bg-page);
 }
 
+/* 全局卡片基线样式：
+ * 保留 .dashboard-card 与 .stats-card 两个选择器是有必要的，
+ * 因为页面中存在仅使用其中一个类名的组件，统一放在此处可避免漏样式。 */
 .card,
 .dashboard-card,
 .stats-card,
@@ -403,6 +408,17 @@ export default {
   padding: 0 8px;
   z-index: 120;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: var(--site-accent-gradient);
+    pointer-events: none;
+  }
 }
 
 
