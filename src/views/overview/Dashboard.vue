@@ -2448,7 +2448,7 @@ $space-2: map.get($spacers, 2);
 
   .usage-trend-card {
     padding: 8px;
-    background: linear-gradient(315deg, rgba(16, 185, 129, 0.12) 0%, rgba(45, 212, 191, 0.08) 42%, #ffffff 100%);
+    --traffic-card-bg: linear-gradient(315deg, rgba(16, 185, 129, 0.12) 0%, rgba(45, 212, 191, 0.08) 42%, #ffffff 100%);
 
     .card-header {
       margin-bottom: 4px;
