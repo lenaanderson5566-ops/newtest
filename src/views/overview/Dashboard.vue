@@ -329,7 +329,6 @@ import {
 } from 'vue';
 import {useRouter} from 'vue-router';
 import {useI18n} from 'vue-i18n';
-import { isXiaoV2board } from '@/utils/baseConfig';
 import {
   IconAlertTriangle,
   IconBox,
@@ -1352,15 +1351,9 @@ export default {
       router.push(`/order-confirm?id=${userPlanId.value}`);
     };
 
-    const isXiaoPanel = isXiaoV2board();
-
     const navigateToDeposit = () => {
       router.push('/wallet/deposit');
     };
-
-    const showDeviceLimit = computed(() => {
-      return isXiaoV2board();
-    });
 
     const timers = {};
     const listeners = {};
@@ -1489,9 +1482,7 @@ export default {
       welcomeHeadline,
       hasPlan,
       renewPlan,
-      isXiaoPanel,
       navigateToDeposit,
-      showDeviceLimit,
       needRefreshData,
       trafficBoardSections,
       hasPurchasedTrafficPackage,

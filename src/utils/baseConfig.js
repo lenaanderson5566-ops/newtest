@@ -39,20 +39,6 @@ const isObject = (item) => {
   return item && typeof item === "object" && !Array.isArray(item);
 };
 
-// 获取面板类型的常量
-// 可选值: 'V2board', 'Xiao-V2board' 或 'Xboard'
-export const PANEL_TYPE = getConfig("PANEL_TYPE", "Xiao-V2board");
-
-// 判断是否为Xiao-V2board面板
-export const isXiaoV2board = () => {
-  return PANEL_TYPE === "Xiao-V2board";
-};
-
-// 判断是否为Xboard面板
-export const isXboard = () => {
-  return PANEL_TYPE === "Xboard";
-};
-
 // 获取API基础URL的函数
 export const getApiBaseUrl = () => {
   // 完全依赖config.js中的配置
@@ -216,19 +202,6 @@ const DEFAULT_TICKET_CONFIG = {
 export const TICKET_CONFIG = mergeDeep(
   DEFAULT_TICKET_CONFIG,
   getConfig("TICKET_CONFIG")
-);
-
-/**
- * 流量明细配置
- * 控制流量明细页面的行为
- */
-const DEFAULT_TRAFFICLOG_CONFIG = {
-  // 配置以 src/config/index.js 为主，避免重复维护
-};
-
-export const TRAFFICLOG_CONFIG = mergeDeep(
-  DEFAULT_TRAFFICLOG_CONFIG,
-  getConfig("TRAFFICLOG_CONFIG")
 );
 
 /**

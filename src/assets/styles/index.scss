@@ -119,8 +119,7 @@
   .payment-container,
   .security-container,
   .shop-container,
-  .ticket-container,
-  .trafficlog-container
+  .ticket-container
 ) :where(.dashboard-card, .section-block, .section-wrapper, .profile-card, .order-summary) {
   background-color: var(--color-bg-surface);
   box-shadow: var(--shadow-sm);
