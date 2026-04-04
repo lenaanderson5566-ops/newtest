@@ -1775,16 +1775,10 @@ $space-2: map.get($spacers, 2);
           }
         }
 
-        &.total-main-card {
-          .usage-card-title {
-            color: var(--quota-label-color);
-            font-weight: $font-weight-semibold;
-          }
-        }
-
+        &.total-main-card,
         &.expired-main-card {
           .usage-card-title {
-            color: var(--text-tertiary);
+            font-weight: $font-weight-medium;
           }
         }
 
@@ -2115,15 +2109,6 @@ $space-2: map.get($spacers, 2);
         border: var(--border-width) solid var(--border-subtle);
         box-shadow: var(--shadow-md);
 
-        .usage-card-title,
-        .usage-percent,
-        .usage-summary-line,
-        .usage-reset-hint,
-        .usage-kpi-value,
-        .usage-kpi-label {
-          color: var(--text-primary);
-        }
-
         .usage-kpi {
           background: transparent;
         }
@@ -2160,10 +2145,6 @@ $space-2: map.get($spacers, 2);
         background: var(--traffic-card-bg);
         border: var(--border-width) solid var(--border-subtle);
         box-shadow: var(--shadow-md);
-
-        .usage-card-title {
-          color: var(--text-primary);
-        }
 
         .plan-summary-card,
         .plan-summary-section,
