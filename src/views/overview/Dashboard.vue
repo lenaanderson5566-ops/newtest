@@ -1519,47 +1519,26 @@ $space-2: map.get($spacers, 2);
   --dashboard-card-padding: 16px;
   --dashboard-section-padding: 12px;
   --dashboard-radius: #{$border-radius-sm};
-  --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
-  --dashboard-shadow-compact: none;
-  --dashboard-border-color: var(--border-subtle);
-  --dashboard-title-size: 14px;
   --dashboard-subtitle-color: var(--text-tertiary);
-  --dashboard-value-size: 30px;
   --dashboard-kpi-size: 13px;
   --dashboard-gap-compact: var(--global-card-gap);
   --dashboard-section-margin: var(--global-card-gap);
 
-  --saas-brand: #355cc2;
-  --saas-text-primary: #111827;
-  --saas-text-secondary: var(--text-tertiary);
-  --saas-border-soft: var(--divider);
   --saas-card-bg: #ffffff;
-  --saas-card-shadow: none;
 
   --theme-text-primary: var(--text-primary);
-  --theme-text-secondary: var(--text-tertiary);
-  --theme-text-subtle: #9ca3af;
-  --theme-text-emphasis: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
   --theme-border-soft: var(--divider);
   --theme-white: #ffffff;
-  --quota-label-color: var(--text-tertiary);
   --quota-value-color: var(--text-primary);
   --quota-progress-start: #60a5fa;
   --quota-progress-end: #3b82f6;
   --quota-muted-fill: #cbd5e1;
-  --quota-total-bg-end: #f8fbff;
-  --quota-expired-border: var(--border-hover);
   --plan-meta-text: var(--text-tertiary);
   --plan-expired-strip-text: #b91c1c;
   --plan-expired-strip-bg: rgba(248, 113, 113, 0.16);
-  --plan-expired-strip-border: rgba(239, 68, 68, 0.32);
-  --status-active-text: #15803d;
-  --status-active-bg: rgba(34, 197, 94, 0.15);
-  --status-expired-text: #dc2626;
-  --status-expired-bg: rgba(220, 38, 38, 0.1);
 
   &.is-no-plan {
     .dashboard-inner {
