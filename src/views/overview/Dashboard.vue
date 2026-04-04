@@ -175,7 +175,7 @@
             </div>
             <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
-                <span class="usage-percent compact">{{ formatPackageRemaining(card.remaining) }}</span>
+                <span class="usage-percent compact package-main-value">{{ formatPackageRemaining(card.remaining) }}</span>
                 <span class="usage-percent-label package-remaining-label">{{ $t('dashboard.remaining') }}</span>
                 <button class="package-add-btn" @click.stop="openTrafficPackageModal" :title="$t('dashboard.purchaseTrafficPackage')">
                   <IconPlus :size="14" />
@@ -227,7 +227,7 @@
           >
             <div class="usage-card-title today-card-title">{{ $t('dashboard.todayTrafficTitle') }}</div>
             <div class="today-traffic-total-main">
-              <span class="usage-percent compact">{{ todayTrafficStats.totalGb }} GB</span>
+              <span class="usage-percent compact today-main-value">{{ todayTrafficStats.totalGb }} GB</span>
               <span class="usage-percent-label today-used-label">{{ $t('dashboard.todayTrafficUsed') }}</span>
             </div>
             <div class="today-traffic-breakdown">
@@ -2139,7 +2139,7 @@ $space-2: map.get($spacers, 2);
         height: auto;
         z-index: 8;
 
-        .usage-percent.compact {
+        .package-main-value {
           @extend %typo-section-title;
           line-height: 1;
         }
@@ -2349,7 +2349,7 @@ $space-2: map.get($spacers, 2);
       }
     }
 
-    .usage-percent.compact {
+    .today-main-value {
       @extend %typo-section-title;
       line-height: 1;
     }
