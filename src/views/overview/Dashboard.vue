@@ -1823,6 +1823,7 @@ $space-2: map.get($spacers, 2);
 
             .usage-summary-line.in-plan-card,
             .usage-reset-hint.in-plan-card {
+              @extend %typo-body-text;
               margin: 0;
             }
           }
