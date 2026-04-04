@@ -221,7 +221,7 @@
           </div>
 
           <div
-            class="stats-card overview-card overview-card--today-traffic today-traffic-card surface-traffic-card"
+            class="stats-card overview-card overview-card--today-traffic today-traffic-card"
             :class="{ 'card-animate': !loading.userStats }"
             :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
@@ -2185,6 +2185,8 @@ $space-2: map.get($spacers, 2);
   }
 
   .stats-grid .stats-card.today-traffic-card {
+    background: var(--color-bg-surface);
+    background-image: none;
     color: var(--text-primary);
     min-width: 0;
     z-index: 2;
