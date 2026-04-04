@@ -1307,13 +1307,7 @@ export default {
       border: var(--border-width) solid var(--border-default);
 
       background-color: #fff;
-
-      border-radius: 16px;
-
-
       padding: 8px;
-
-      border: var(--border-width) solid var(--border-default);
 
       transition: all 0.3s ease;
 
