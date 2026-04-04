@@ -1710,19 +1710,6 @@ $space-2: map.get($spacers, 2);
         justify-content: flex-start;
         gap: #{$space-2};
 
-        .stats-info {
-          width: 100%;
-        }
-
-        .stats-value {
-          font-size: $font-size-md;
-          margin-bottom: 0;
-        }
-
-        .stats-label {
-          font-size: $font-size-sm;
-        }
-
         .usage-card-title {
           position: relative;
           z-index: 5;
@@ -1899,26 +1886,6 @@ $space-2: map.get($spacers, 2);
 
           .plan-summary-label {
             @extend %typo-body-text;
-
-            &.with-tooltip {
-              display: inline-flex;
-              align-items: center;
-              gap: 4px;
-            }
-          }
-
-          .plan-summary-value-wrap {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-          }
-
-          .plan-summary-value {
-            @extend %typo-body-text;
-            text-align: right;
-            word-break: break-word;
           }
 
           .plan-status-tag {
@@ -1939,13 +1906,6 @@ $space-2: map.get($spacers, 2);
             top: 50%;
             transform: translateY(-50%);
           }
-
-          .plan-summary-desc {
-            margin: 4px 0 0;
-            font-size: $font-size-sm;
-            color: var(--text-on-dark-primary);
-          }
-
 
           .plan-summary-actions {
             display: flex;
@@ -1988,83 +1948,6 @@ $space-2: map.get($spacers, 2);
             text-align: center;
           }
 
-          .switch {
-            position: relative;
-            display: inline-block;
-            width: 46px;
-            height: 24px;
-            flex-shrink: 0;
-
-            &.disabled {
-              opacity: 0.7;
-              cursor: not-allowed;
-            }
-
-            input {
-              opacity: 0;
-              width: 0;
-              height: 0;
-
-              &:disabled + .slider {
-                cursor: not-allowed;
-              }
-            }
-
-            .slider {
-              position: absolute;
-              cursor: pointer;
-              inset: 0;
-              background-color: var(--surface-subtle);
-              border: none;
-              transition: 0.4s;
-
-              &.loading {
-                overflow: hidden;
-
-                &::before {
-                  animation: pulse 1.5s infinite;
-                }
-
-                &::after {
-                  content: '';
-                  position: absolute;
-                  width: 100%;
-                  height: 100%;
-                  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-                  animation: sweep 1.5s infinite;
-                }
-              }
-
-              &::before {
-                position: absolute;
-                content: '';
-                height: 18px;
-                width: 18px;
-                left: 3px;
-                bottom: 3px;
-                background-color: white;
-                transition: 0.4s;
-                z-index: 1;
-              }
-
-              &.round {
-                border-radius: 34px;
-
-                &::before {
-                  border-radius: 50%;
-                }
-              }
-            }
-
-            input:checked + .slider {
-              background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
-              border-color: transparent;
-            }
-
-            input:checked + .slider::before {
-              transform: translateX(22px);
-            }
-          }
         }
 
         .usage-percent {
@@ -2822,12 +2705,6 @@ $space-2: map.get($spacers, 2);
   letter-spacing: 0.2px;
 }
 
-.no-plan-subtitle {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: $font-size-lg;
-}
-
 .hero-actions {
   margin-top: 14px;
   display: flex;
@@ -3027,50 +2904,6 @@ button.no-plan-step {
 @use '@/assets/styles/no-plan-card' as *;
 
 $space-2: map.get($spacers, 2);
-
-.dashboard-container .stats-card {
-  &.warning-card,
-  &.danger-card {
-    border-color: rgba(var(--stats-alert-rgb), 0.42);
-
-    .stats-icon {
-      background-color: rgba(var(--stats-alert-rgb), 0.1);
-      color: var(--stats-level-color);
-    }
-
-    .stats-value {
-      color: var(--stats-level-color);
-    }
-  }
-
-  &.warning-card {
-    --stats-alert-rgb: var(--warning-color-rgb);
-    --stats-level-color: var(--warning-color);
-  }
-
-  &.danger-card {
-    --stats-alert-rgb: var(--error-color-rgb);
-    --stats-level-color: var(--error-color);
-  }
-
-  &.balance-card {
-    .stats-value {
-      color: var(--theme-color);
-    }
-
-    &.clickable {
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-
-      &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.08);
-        transform: translateY(-3px);
-      }
-    }
-  }
-}
 
 .traffic-package-modal-overlay {
   position: fixed;
