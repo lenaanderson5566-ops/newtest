@@ -354,6 +354,7 @@ export default {
 .app-root-shell {
   min-height: 100dvh;
   --site-accent-gradient: linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
+  background-color: var(--color-bg-page);
 }
 
 .card,
