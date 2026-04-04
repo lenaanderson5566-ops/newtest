@@ -2369,6 +2369,16 @@ $space-2: map.get($spacers, 2);
     }
   }
 
+  .stats-grid .stats-card.today-traffic-card .today-card-title,
+  .stats-grid .stats-card.today-traffic-card .today-traffic-breakdown,
+  .stats-grid .stats-card.traffic-board-package .usage-card-title,
+  .stats-grid .stats-card.traffic-board-package .usage-percent-label,
+  .stats-grid .stats-card.traffic-board-package .package-usage-intro,
+  .stats-grid .stats-card.traffic-board-package .usage-summary-line,
+  .stats-grid .stats-card.traffic-board-package .usage-kpi-label {
+    @extend %typo-label-text;
+  }
+
   .info-tooltip {
     position: relative;
     z-index: 12;
