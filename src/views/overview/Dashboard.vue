@@ -2080,9 +2080,6 @@ $space-2: map.get($spacers, 2);
 
         .package-usage-intro {
           @extend %typo-label-text;
-          font-size: $font-size-sm;
-          font-weight: $font-weight-medium;
-          color: var(--text-tertiary);
           line-height: 1.45;
           margin-top: 0;
         }
