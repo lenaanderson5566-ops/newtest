@@ -251,7 +251,6 @@
               <IconFileText :size="64" stroke-width="1.8" class="trend-empty-icon" />
               <div class="trend-empty-content">
                 <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
-                <div class="trend-empty-desc">{{ $t('trafficLog.emptyDesc') }}</div>
                 <button class="trend-empty-action btn btn-secondary" @click="goToQuickStart">
                   {{ $t('dashboard.goToQuickStart') }}
                 </button>
@@ -1943,6 +1942,7 @@ $space-2: map.get($spacers, 2);
 
           .plan-summary-actions {
             display: flex;
+            justify-content: center;
             gap: #{$space-2};
             margin-top: 0;
 
@@ -2081,7 +2081,7 @@ $space-2: map.get($spacers, 2);
           font-size: $font-size-xs;
           color: var(--text-tertiary);
           line-height: 1.4;
-          margin-top: -2px;
+          margin-top: 0;
         }
 
         .section-progress-track {
@@ -2357,14 +2357,15 @@ $space-2: map.get($spacers, 2);
       align-items: center;
       flex-wrap: wrap;
       gap: #{$space-2};
-      font-size: $font-size-sm;
+      @extend %typo-label-text;
       line-height: 1.45;
       color: var(--text-tertiary);
 
       .traffic-up,
       .traffic-down {
+        @extend %typo-label-text;
         color: var(--text-tertiary);
-        font-weight: $font-weight-semibold;
+        font-weight: inherit;
       }
     }
   }
@@ -2495,12 +2496,6 @@ $space-2: map.get($spacers, 2);
       @extend %typo-item-title;
       color: var(--text-primary);
       font-size: $font-size-md;
-    }
-
-    .trend-empty-desc {
-      @extend %typo-meta-text;
-      color: var(--text-tertiary);
-      max-width: 360px;
     }
 
     .trend-empty-action {
@@ -2679,10 +2674,6 @@ $space-2: map.get($spacers, 2);
 
     .trend-empty-title {
       font-size: $font-size-sm;
-    }
-
-    .trend-empty-desc {
-      font-size: $font-size-xs;
     }
 
     .trend-empty-block {
