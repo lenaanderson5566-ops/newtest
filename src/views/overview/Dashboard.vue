@@ -252,7 +252,9 @@
               <div class="trend-empty-content">
                 <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
                 <div class="trend-empty-desc">{{ $t('trafficLog.emptyDesc') }}</div>
-                <div class="trend-empty-label">{{ $t('trafficLog.title') }}</div>
+                <button class="trend-empty-action btn btn-secondary" @click="goToQuickStart">
+                  {{ $t('dashboard.goToQuickStart') }}
+                </button>
               </div>
             </div>
           </div>
@@ -486,6 +488,10 @@ export default {
 
     const goToDocs = () => {
       router.push('/docs');
+    };
+
+    const goToQuickStart = () => {
+      router.push('/quick-start');
     };
 
     const userPlanId = ref(null);
@@ -1439,6 +1445,7 @@ export default {
       loading,
       goToShop,
       goToDocs,
+      goToQuickStart,
       hasPendingItems,
       noPlanHeroBadge,
       noPlanHeroTitle,
@@ -2486,10 +2493,9 @@ $space-2: map.get($spacers, 2);
       max-width: 360px;
     }
 
-    .trend-empty-label {
-      @extend %typo-meta-text;
-      color: var(--text-quaternary);
-      font-size: $font-size-sm;
+    .trend-empty-action {
+      min-width: 180px;
+      padding-inline: 18px;
     }
 
     .usage-trend-chart {
