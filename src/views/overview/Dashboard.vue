@@ -2078,9 +2078,10 @@ $space-2: map.get($spacers, 2);
         }
 
         .package-usage-intro {
-          font-size: $font-size-xs;
+          font-size: $font-size-sm;
+          font-weight: $font-weight-medium;
           color: var(--text-tertiary);
-          line-height: 1.4;
+          line-height: 1.45;
           margin-top: 0;
         }
 
@@ -2357,24 +2358,23 @@ $space-2: map.get($spacers, 2);
       align-items: center;
       flex-wrap: wrap;
       gap: #{$space-2};
-      @extend %typo-label-text;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
       line-height: 1.45;
       color: var(--text-tertiary);
 
       .traffic-up,
       .traffic-down {
-        @extend %typo-label-text;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
         color: var(--text-tertiary);
-        font-weight: inherit;
       }
     }
   }
 
   .stats-grid .stats-card.today-traffic-card .today-card-title,
-  .stats-grid .stats-card.today-traffic-card .today-traffic-breakdown,
   .stats-grid .stats-card.traffic-board-package .usage-card-title,
   .stats-grid .stats-card.traffic-board-package .usage-percent-label,
-  .stats-grid .stats-card.traffic-board-package .package-usage-intro,
   .stats-grid .stats-card.traffic-board-package .usage-summary-line,
   .stats-grid .stats-card.traffic-board-package .usage-kpi-label {
     @extend %typo-label-text;
