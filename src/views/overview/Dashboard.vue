@@ -1530,7 +1530,6 @@ $space-2: map.get($spacers, 2);
   --theme-text-primary: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
-  --quick-step-card-bg: #f8faff;
   --theme-border-soft: var(--divider);
   --theme-white: #ffffff;
   --quota-value-color: var(--text-primary);
@@ -2020,7 +2019,11 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-package {
-        --traffic-card-bg: var(--quick-step-card-bg);
+        --traffic-card-bg: linear-gradient(
+          135deg,
+          rgba(34, 89, 170, 0.18) 0%,
+          rgba(183, 55, 217, 0.14) 100%
+        );
         min-height: auto;
         height: auto;
         z-index: 3;
@@ -2168,7 +2171,11 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
-    background: var(--quick-step-card-bg);
+    background: linear-gradient(
+      135deg,
+      rgba(34, 89, 170, 0.18) 0%,
+      rgba(90, 57, 216, 0.14) 100%
+    );
     min-width: 0;
     z-index: 2;
     align-items: flex-start;
@@ -2272,7 +2279,11 @@ $space-2: map.get($spacers, 2);
 
   .usage-trend-card {
     padding: 8px;
-    background: var(--quick-step-card-bg);
+    background: linear-gradient(
+      135deg,
+      rgba(47, 75, 158, 0.16) 0%,
+      rgba(234, 29, 44, 0.12) 100%
+    );
 
     .card-header {
       margin-bottom: 4px;
