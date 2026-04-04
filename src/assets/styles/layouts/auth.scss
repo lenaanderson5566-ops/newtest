@@ -95,6 +95,43 @@
   }
 }
 
+// 验证码输入 + 发送按钮：组合成一个统一控件
+.auth-card .input-with-button,
+.auth-form-container .input-with-button {
+  border: var(--border-width) solid var(--border-default);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--card-background);
+}
+
+.auth-card .input-with-button .verification-input,
+.auth-form-container .input-with-button .verification-input {
+  border: none;
+  background: transparent;
+}
+
+.auth-card .input-with-button .verification-input .form-control,
+.auth-form-container .input-with-button .verification-input .form-control {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.auth-card .input-with-button .send-code-btn,
+.auth-form-container .input-with-button .send-code-btn {
+  border: none !important;
+  border-left: var(--border-width) solid var(--border-default) !important;
+  border-radius: 0 !important;
+  background: rgba(var(--text-color-rgb), 0.02);
+  transform: none !important;
+}
+
+.auth-card .input-with-button:focus-within,
+.auth-form-container .input-with-button:focus-within {
+  border-color: rgba(var(--theme-color-rgb), 0.45);
+  box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.12);
+}
+
 .auth-divider {
   display: flex;
   align-items: center;
