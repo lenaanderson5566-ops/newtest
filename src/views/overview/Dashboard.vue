@@ -2279,11 +2279,7 @@ $space-2: map.get($spacers, 2);
 
   .usage-trend-card {
     padding: 8px;
-    background: linear-gradient(
-      135deg,
-      rgba(47, 75, 158, 0.16) 0%,
-      rgba(234, 29, 44, 0.12) 100%
-    );
+    background: var(--theme-white);
 
     .card-header {
       margin-bottom: 4px;
