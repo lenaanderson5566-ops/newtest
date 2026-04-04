@@ -248,7 +248,7 @@
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
           <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
             <div class="trend-empty-block">
-              <IconPhotoOff :size="68" stroke-width="1.8" class="trend-empty-icon" />
+              <IconFileText :size="64" stroke-width="1.8" class="trend-empty-icon" />
               <div class="trend-empty-content">
                 <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
                 <div class="trend-empty-desc">{{ $t('trafficLog.emptyDesc') }}</div>
@@ -353,7 +353,6 @@ import {
   IconHelpCircle,
   IconMoon,
   IconPackage,
-  IconPhotoOff,
   IconRouter,
   IconSend,
   IconShare,
@@ -399,7 +398,6 @@ export default {
     IconDeviceDesktop,
     IconCrosshair,
     IconPackage,
-    IconPhotoOff,
     IconMoon,
     IconWaveSawTool,
     IconBrandGithub,
@@ -2666,6 +2664,7 @@ $space-2: map.get($spacers, 2);
     .trend-empty-icon {
       width: 52px;
       height: 52px;
+      display: none;
     }
 
     .trend-empty-title {
