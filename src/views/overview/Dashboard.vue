@@ -90,11 +90,8 @@
             class="stats-card overview-card overview-card--traffic-quota traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="getTrafficCardClass(card)"
-            :style="[
-              { animationDelay: `${0.5 + idx * 0.1}s` },
-              card.key === 'package' ? trafficSurfaceCardInlineStyle : null
-            ]"
+            :class="[getTrafficCardClass(card), { 'surface-traffic-card': card.key === 'package' }]"
+            :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">
               <span>{{ card.key === 'total' ? $t('dashboard.subscriptionInfo') : card.title }}</span>
@@ -224,12 +221,9 @@
           </div>
 
           <div
-            class="stats-card overview-card overview-card--today-traffic today-traffic-card"
+            class="stats-card overview-card overview-card--today-traffic today-traffic-card surface-traffic-card"
             :class="{ 'card-animate': !loading.userStats }"
-            :style="[
-              { animationDelay: todayTrafficAnimationDelay },
-              trafficSurfaceCardInlineStyle
-            ]"
+            :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
             <div class="usage-card-title today-card-title">{{ $t('dashboard.todayTrafficTitle') }}</div>
             <div class="today-traffic-total-main">
@@ -246,9 +240,8 @@
       </div>
 
       <div
-        class="dashboard-card usage-trend-card"
+        class="dashboard-card usage-trend-card surface-traffic-card"
         :class="{ 'card-animate': !trafficTrendLoading }"
-        :style="trafficSurfaceCardInlineStyle"
         v-if="hasPlan"
       >
         <div class="card-header">
@@ -1447,11 +1440,6 @@ export default {
       return `${baseDelay + trafficBoardSections.value.length * step}s`;
     });
 
-    const trafficSurfaceCardInlineStyle = Object.freeze({
-      background: 'var(--color-bg-surface)',
-      backgroundImage: 'none'
-    });
-
     const getTrafficCardClass = (card) => ({
       [`traffic-board-${card.key}`]: true,
       'card-animate': !loading.userStats,
@@ -1518,7 +1506,6 @@ export default {
       trafficTrendError,
       todayTrafficStats,
       todayTrafficAnimationDelay,
-      trafficSurfaceCardInlineStyle,
       allowNewPeriod,
       showTrafficPackageModal,
       trafficPackageLoading,
@@ -2052,7 +2039,6 @@ $space-2: map.get($spacers, 2);
         height: auto;
         z-index: 3;
         gap: 4px;
-        background: var(--color-bg-surface);
 
         .package-main-value {
           @extend %typo-section-title;
@@ -2179,12 +2165,10 @@ $space-2: map.get($spacers, 2);
     box-shadow: var(--shadow-md);
   }
 
-  /* 三张流量相关卡片统一为 surface token，避免被其他层叠样式覆盖 */
-  .stats-grid .stats-card.traffic-board-package,
-  .stats-grid .stats-card.today-traffic-card,
-  .dashboard-card.usage-trend-card {
-    background: var(--color-bg-surface) !important;
-    background-image: none !important;
+  .stats-grid .stats-card.surface-traffic-card,
+  .dashboard-card.surface-traffic-card {
+    background: var(--color-bg-surface);
+    background-image: none;
   }
 
   .stats-grid .stats-card.traffic-board-subscription.subscription-card-muted,
@@ -2305,7 +2289,6 @@ $space-2: map.get($spacers, 2);
 
   .usage-trend-card {
     padding: 8px;
-    background: var(--color-bg-surface);
 
     .card-header {
       margin-bottom: 4px;
