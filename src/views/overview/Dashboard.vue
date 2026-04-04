@@ -221,7 +221,7 @@
           </div>
 
           <div
-            class="stats-card overview-card overview-card--today-traffic today-traffic-card"
+            class="dashboard-card today-traffic-card"
             :class="{ 'card-animate': !loading.userStats }"
             :style="{ animationDelay: todayTrafficAnimationDelay }"
           >
@@ -1646,7 +1646,7 @@ $space-2: map.get($spacers, 2);
       grid-row: 2 / 3;
     }
 
-    > .stats-card.today-traffic-card {
+    > .today-traffic-card {
       grid-column: 1 / 2;
       grid-row: 2 / 3;
     }
@@ -1666,7 +1666,7 @@ $space-2: map.get($spacers, 2);
         grid-row: 2 / 3;
       }
 
-      > .stats-card.today-traffic-card {
+      > .today-traffic-card {
         grid-column: 2 / 3;
         grid-row: 1 / 2;
       }
@@ -2141,7 +2141,6 @@ $space-2: map.get($spacers, 2);
   }
 
   .overview-card,
-  .overview-card--today-traffic,
   .overview-card--traffic-quota {
     border-radius: var(--dashboard-radius);
     background: var(--saas-card-bg);
@@ -2149,7 +2148,6 @@ $space-2: map.get($spacers, 2);
   }
 
   .stats-grid .stats-card.overview-card,
-  .stats-grid .stats-card.overview-card--today-traffic,
   .stats-grid .stats-card.overview-card--traffic-quota {
     padding: var(--dashboard-card-padding);
   }
@@ -2176,51 +2174,6 @@ $space-2: map.get($spacers, 2);
     @extend %typo-label-text;
     line-height: 1.3;
     letter-spacing: 0.02em;
-  }
-
-  .dashboard-container .stats-grid .stats-card.today-traffic-card {
-    color: var(--text-primary);
-    min-width: 0;
-    z-index: 2;
-    align-items: flex-start;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 4px;
-
-    .today-card-title {
-      margin-bottom: 0;
-      min-height: 20px;
-      @extend %typo-label-text;
-    }
-
-    .today-traffic-total-main {
-      display: inline-flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 8px;
-      min-height: 0;
-    }
-
-    .today-traffic-breakdown {
-      display: inline-flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: #{$space-2};
-      line-height: 1.4;
-
-      span {
-        @extend %typo-body-text;
-      }
-    }
-
-    .today-main-value {
-      @extend %typo-section-title;
-      line-height: 1;
-    }
-
-    .today-used-label {
-      @extend %typo-item-title;
-    }
   }
 
   .info-tooltip {
