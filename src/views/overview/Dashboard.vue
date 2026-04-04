@@ -1744,6 +1744,7 @@ $space-2: map.get($spacers, 2);
 
           &.package-main {
             width: 100%;
+            min-height: 0;
           }
 
           .package-add-btn {
@@ -2078,6 +2079,7 @@ $space-2: map.get($spacers, 2);
         }
 
         .package-usage-intro {
+          @extend %typo-label-text;
           font-size: $font-size-sm;
           font-weight: $font-weight-medium;
           color: var(--text-tertiary);
