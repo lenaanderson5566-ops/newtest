@@ -421,21 +421,6 @@ export const config = {
   TICKET_CONFIG: {
   },
 
-  // 流量明细配置
-  TRAFFICLOG_CONFIG: {
-    // 是否启用流量明细页面 (true=启用, false=禁用)
-    enableTrafficLog: true, // 默认启用
-
-    //是否启用流量明表格 (true=启用, false=禁用）
-    showTrafficTable: true, // 默认启用
-
-    // 显示多少天的流量记录
-    daysToShow: 30, // 默认显示30天
-
-    // 流量趋势图是否聚合每日流量 (如果你的节点倍率全为1倍则无需开启)
-    sumDailyTraffic: false, // 默认禁用
-  },
-
   // 节点列表配置
   NODES_CONFIG: {
     // 是否显示节点倍率 (true=显示, false=隐藏，若此处为false则allowViewNodeInfo也会为false)

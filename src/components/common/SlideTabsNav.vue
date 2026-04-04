@@ -79,8 +79,7 @@ export default {
         'ConfigManagement',
         'SecuritySettings',
         'TicketList',
-        'MobileTickets',
-        'TrafficLog'
+        'MobileTickets'
       ]);
 
       if (regionRoutes.has(routeName)) return 'Nodes';
