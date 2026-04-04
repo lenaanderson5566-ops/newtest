@@ -2141,8 +2141,7 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid .stats-card.traffic-board-subscription,
   .stats-grid .stats-card.traffic-board-package,
-  .stats-grid .stats-card.today-traffic-card,
-  .dashboard-card.usage-trend-card {
+  .stats-grid .stats-card.today-traffic-card {
     background: var(--traffic-card-bg, var(--saas-card-bg));
     border: var(--border-width) solid var(--border-subtle);
     border-radius: var(--dashboard-radius);
@@ -2272,7 +2271,6 @@ $space-2: map.get($spacers, 2);
 
   .usage-trend-card {
     padding: 8px;
-    --traffic-card-bg: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(66, 133, 244, 0.08) 56%, rgba(34, 89, 170, 0.14) 100%);
 
     .card-header {
       margin-bottom: 4px;
