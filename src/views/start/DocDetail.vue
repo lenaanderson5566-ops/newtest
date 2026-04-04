@@ -1215,7 +1215,7 @@ onUnmounted(() => {
 .doc-detail-container {
 
   padding: 0;
-  background-color: var(--color-bg-page);
+  background-color: var(--color-bg-surface);
 
   padding-bottom: calc(2px + 64px); 
 

@@ -316,7 +316,7 @@ export default {
 
   justify-content: center;
 
-  background-color: var(--color-bg-page);
+  background-color: var(--color-bg-surface);
 
   overflow: hidden;
 

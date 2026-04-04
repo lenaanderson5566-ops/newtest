@@ -1264,7 +1264,7 @@ export default {
   }
 
   .overview-header {
-    background-color: var(--color-bg-page);
+    background-color: var(--color-bg-surface);
     margin: 8px 0;
 
     .overview-cancel-btn {
@@ -1292,11 +1292,11 @@ export default {
     padding: 0;
     margin: 8px 0;
     // 必须压过全局 section-wrapper 皮肤（公共层）
-    background: var(--color-bg-page) !important;
+    background: var(--color-bg-surface) !important;
     border: none !important;
 
     .section-title {
-      background-color: var(--color-bg-page);
+      background-color: var(--color-bg-surface);
       margin-top: 8px;
       margin-bottom: 8px;
       color: var(--text-primary);

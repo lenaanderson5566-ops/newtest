@@ -308,7 +308,7 @@ export default {
 
   align-items: center;
 
-  background-color: var(--color-bg-page);
+  background-color: var(--color-bg-surface);
 
   color: var(--text-primary);
 
@@ -689,7 +689,7 @@ export default {
 
   height: 100%;
 
-  background-color: var(--color-bg-page);
+  background-color: var(--color-bg-surface);
 
   z-index: 1000;
 

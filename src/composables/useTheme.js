@@ -13,7 +13,7 @@ export function useTheme() {
       '--theme-color-rgb': 'primaryColorRgb',
       '--theme-hover-color': 'primaryColorHover',
       '--primary-color-hover': 'primaryColorHover',
-      '--color-bg-page': 'backgroundColor',
+      '--color-bg-page': 'cardBackground',
       '--background-elevated': 'backgroundElevated',
       '--color-bg-surface': 'cardBackground',
       '--text-color': 'textColor',

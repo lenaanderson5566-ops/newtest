@@ -1947,7 +1947,7 @@ export default {
 
   position: relative;
 
-  background-color: var(--color-bg-page);
+  background-color: var(--color-bg-surface);
 
   overflow-y: auto;
 

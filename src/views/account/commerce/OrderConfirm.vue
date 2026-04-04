@@ -2002,7 +2002,7 @@ export default {
 
   .section-wrapper.period-section {
     // 必须覆盖公共 section-wrapper 样式，保持该页平面化分区视觉
-    background-color: var(--color-bg-page) !important;
+    background-color: var(--color-bg-surface) !important;
     border: none !important;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
@@ -2010,7 +2010,7 @@ export default {
 
   .section-wrapper.subscription-intro-section {
     // 必须覆盖公共 section-wrapper 样式，保持该页平面化分区视觉
-    background-color: var(--color-bg-page) !important;
+    background-color: var(--color-bg-surface) !important;
     border: none !important;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
@@ -2018,7 +2018,7 @@ export default {
 
   .section-wrapper.payment-methods-section {
     // 必须覆盖公共 section-wrapper 样式，保持该页平面化分区视觉
-    background-color: var(--color-bg-page) !important;
+    background-color: var(--color-bg-surface) !important;
     border: none !important;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
@@ -2027,7 +2027,7 @@ export default {
   .subscription-intro-section .section-title,
   .period-section .section-title,
   .payment-methods-section .section-title {
-    background-color: var(--color-bg-page);
+    background-color: var(--color-bg-surface);
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
   }
