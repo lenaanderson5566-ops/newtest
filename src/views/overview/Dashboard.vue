@@ -2128,6 +2128,7 @@ $space-2: map.get($spacers, 2);
         min-height: auto;
         height: auto;
         z-index: 8;
+        gap: 4px;
 
         .package-main-value {
           @extend %typo-section-title;
@@ -2136,7 +2137,6 @@ $space-2: map.get($spacers, 2);
 
         .package-usage-intro {
           @extend %typo-body-text;
-          min-height: 18px;
           display: flex;
           align-items: center;
         }
@@ -2146,7 +2146,7 @@ $space-2: map.get($spacers, 2);
         }
 
         .usage-card-main.package-main {
-          min-height: 36px;
+          min-height: 0;
           align-items: baseline;
         }
       }
@@ -2332,7 +2332,7 @@ $space-2: map.get($spacers, 2);
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
-    gap: #{$space-2};
+    gap: 4px;
 
     .today-card-title {
       margin-bottom: 0;
@@ -2344,7 +2344,7 @@ $space-2: map.get($spacers, 2);
       align-items: baseline;
       flex-wrap: wrap;
       gap: 8px;
-      min-height: 36px;
+      min-height: 0;
     }
 
     .today-traffic-breakdown {
@@ -2352,7 +2352,6 @@ $space-2: map.get($spacers, 2);
       align-items: center;
       flex-wrap: wrap;
       gap: #{$space-2};
-      min-height: 18px;
       line-height: 1.4;
 
       span {
