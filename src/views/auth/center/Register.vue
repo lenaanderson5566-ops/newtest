@@ -2885,7 +2885,7 @@ export default {
 
     &:hover:not(:disabled) {
 
-      background-color: rgba(var(--text-color-rgb), 0.05);
+      background-color: var(--primary-color-hover);
 
     }
 
