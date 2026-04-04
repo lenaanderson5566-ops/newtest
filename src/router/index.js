@@ -2,7 +2,7 @@
 
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, TRAFFICLOG_CONFIG, AUTH_LAYOUT_CONFIG } from '@/utils/baseConfig';
+import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, AUTH_LAYOUT_CONFIG } from '@/utils/baseConfig';
 
 import i18n, { reloadMessages } from '@/i18n';
 import { shouldCheckApiAvailability } from '@/utils/apiAvailabilityChecker';
@@ -44,7 +44,6 @@ const ACTIVE_NAV_BY_ROUTE = {
   Invite: 'Profile',
   TicketList: 'Profile',
   MobileTickets: 'Profile',
-  TrafficLog: 'Profile',
   Shop: 'Profile',
   OrderConfirm: 'Profile',
   Payment: 'Profile',
@@ -542,39 +541,6 @@ const routes = [
           requiresAuth: true,
 
           get activeNav() { return getActiveNavForRoute('SecuritySettings'); } 
-        }
-
-      },
-
-      {
-
-        path: 'trafficlog',
-
-        name: 'TrafficLog',
-
-        component: () => import('@/views/account/traffic/TrafficLog.vue'),
-
-        meta: {
-
-          titleKey: 'trafficLog.title',
-
-          requiresAuth: true,
-
-          get activeNav() { return getActiveNavForRoute('TrafficLog'); } 
-        },
-
-        beforeEnter: (to, from, next) => {
-
-          if (!TRAFFICLOG_CONFIG.enableTrafficLog) {
-
-            next('/dashboard');
-
-          } else {
-
-            next();
-
-          }
-
         }
 
       },
