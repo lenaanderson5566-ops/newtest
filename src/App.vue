@@ -368,7 +368,7 @@ export default {
 .dialog-content,
 .pending-order-dialog,
 .modal-content {
-  background-color: #ffffff !important;
+  background-color: var(--color-bg-surface) !important;
   border-radius: $border-radius-sm !important;
   border: var(--border-width) solid var(--border-subtle);
 }
