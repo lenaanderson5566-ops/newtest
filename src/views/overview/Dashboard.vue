@@ -1590,11 +1590,6 @@ $space-2: map.get($spacers, 2);
         @extend %typo-card-title;
         margin: 0;
       }
-
-      .card-actions {
-        display: flex;
-        gap: #{$space-2};
-      }
     }
   }
 
