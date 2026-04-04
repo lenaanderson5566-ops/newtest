@@ -2716,7 +2716,7 @@ $space-2: map.get($spacers, 2);
 .line-device {
   position: absolute;
   border-radius: 10px;
-  border: 2px solid transparent;
+  border: 2px solid rgba(79, 70, 229, 0.2);
   background: rgba(255, 255, 255, 0.35);
 }
 
@@ -2725,8 +2725,6 @@ $space-2: map.get($spacers, 2);
   height: 118px;
   right: 16%;
   top: 28%;
-  border-color: rgba(34, 89, 170, 0.34);
-  background: rgba(34, 89, 170, 0.08);
 }
 
 .line-device.tablet {
@@ -2734,8 +2732,6 @@ $space-2: map.get($spacers, 2);
   height: 80px;
   right: 8%;
   top: 20%;
-  border-color: rgba(90, 57, 216, 0.34);
-  background: rgba(90, 57, 216, 0.08);
 }
 
 .line-device.phone {
@@ -2743,8 +2739,6 @@ $space-2: map.get($spacers, 2);
   height: 94px;
   right: 14%;
   top: 50%;
-  border-color: rgba(234, 29, 44, 0.34);
-  background: rgba(234, 29, 44, 0.08);
 }
 
 .platform-icons {

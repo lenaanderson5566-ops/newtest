@@ -384,7 +384,7 @@ export default {
 
     height: 600px;
 
-    background: var(--theme-color);
+    background: #2259aa;
 
     top: -10%;
 
@@ -405,7 +405,7 @@ export default {
 
     height: 500px;
 
-    background: #A747FE;
+    background: #5a39d8;
 
     top: 40%;
 
@@ -426,7 +426,7 @@ export default {
 
     height: 450px;
 
-    background: #37DEC9;
+    background: #ea1d2c;
 
     bottom: -10%;
 
