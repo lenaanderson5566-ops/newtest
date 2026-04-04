@@ -126,7 +126,10 @@
               <div class="plan-summary-section plan-summary-section-traffic">
                 <div class="plan-summary-row monthly-traffic-row">
                   <span class="plan-summary-label">{{ $t('dashboard.subscriptionMonthlyTraffic') }}</span>
-                  <strong class="plan-summary-value monthly-limit-value">{{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.remaining)) }}</strong>
+                  <strong class="plan-summary-value monthly-limit-value">
+                    <span>{{ formatPackageRemaining(applyPlanStatus(subscriptionTrafficSummary.remaining)) }}</span>
+                    <span class="monthly-limit-suffix">{{ $t('dashboard.remaining') }}</span>
+                  </strong>
                 </div>
                 <div class="section-progress-track in-plan-card">
                   <div class="section-progress-fill" :style="{ width: `${applyPlanStatus(subscriptionTrafficSummary.remainingPercentage)}%` }"></div>
@@ -173,7 +176,7 @@
             <div v-else class="usage-card-main" :class="{ 'package-main': card.key === 'package' }">
               <template v-if="card.key === 'package'">
                 <span class="usage-percent compact">{{ formatPackageRemaining(card.remaining) }}</span>
-                <span class="usage-percent-label">{{ $t('dashboard.remaining') }}</span>
+                <span class="usage-percent-label package-remaining-label">{{ $t('dashboard.remaining') }}</span>
                 <button class="package-add-btn" @click.stop="openTrafficPackageModal" :title="$t('dashboard.purchaseTrafficPackage')">
                   <IconPlus :size="14" />
                 </button>
@@ -225,7 +228,7 @@
             <div class="usage-card-title today-card-title">{{ $t('dashboard.todayTrafficTitle') }}</div>
             <div class="today-traffic-total-main">
               <span class="usage-percent compact">{{ todayTrafficStats.totalGb }} GB</span>
-              <span class="usage-percent-label">{{ $t('dashboard.todayTrafficUsed') }}</span>
+              <span class="usage-percent-label today-used-label">{{ $t('dashboard.todayTrafficUsed') }}</span>
             </div>
             <div class="today-traffic-breakdown">
               <span class="traffic-up">{{ $t('dashboard.todayTrafficUpload') }} {{ todayTrafficStats.uploadGb }} GB</span>
@@ -1817,6 +1820,13 @@ $space-2: map.get($spacers, 2);
 
               .monthly-limit-value {
                 @extend %typo-section-title;
+                display: inline-flex;
+                align-items: baseline;
+                gap: 4px;
+              }
+
+              .monthly-limit-suffix {
+                @extend %typo-card-title;
               }
             }
 
@@ -2137,6 +2147,10 @@ $space-2: map.get($spacers, 2);
         .package-usage-intro {
           @extend %typo-body-text;
         }
+
+        .package-remaining-label {
+          @extend %typo-card-title;
+        }
       }
 
       &.traffic-board-total {
@@ -2338,6 +2352,10 @@ $space-2: map.get($spacers, 2);
     .usage-percent.compact {
       @extend %typo-section-title;
       line-height: 1;
+    }
+
+    .today-used-label {
+      @extend %typo-card-title;
     }
   }
 
