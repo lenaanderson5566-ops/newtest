@@ -246,13 +246,6 @@ export default {
         pendingOrderBanner: '你有 {count} 个待支付订单，请尽快完成支付以激活服务。',
         payNow: '去支付',
         goToQuickStart: '前往快速开始',
-        currentExitRegion: '当前出口地区',
-        smoothStatusNormal: '流畅状态：正常',
-        serviceReference: '服务参考',
-        serviceReferenceHint: '地区服务参考仅基于地区静态映射推测，不代表实时解锁检测结果。',
-        serviceReferenceAria: '地区服务参考',
-        serviceAvailableInRegion: '地区参考可用',
-        serviceNotInRegion: '未在地区参考列表',
 
         trafficPackageHint: '流量额度包为一次性补充流量，优先消耗月订阅流量，订阅用尽后再消耗额度包流量。',
         trafficPackageSupplementHint: '用于补充超出套餐限额的流量',

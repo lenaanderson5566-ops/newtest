@@ -246,14 +246,7 @@ export default {
     pendingOrderBanner: 'شما {count} سفارش در انتظار پرداخت دارید. لطفاً برای فعال‌سازی سرویس هرچه سریع‌تر پرداخت را انجام دهید.',
     payNow: 'پرداخت',
     goToQuickStart: 'رفتن به شروع سریع',
-    currentExitRegion: 'منطقه خروج فعلی',
     refreshing: 'در حال تازه‌سازی',
-    smoothStatusNormal: 'وضعیت اتصال: عادی',
-    serviceReference: 'مرجع سرویس',
-    serviceReferenceHint: 'مرجع سرویس منطقه‌ای بر اساس نگاشت ایستای منطقه تخمین زده می‌شود و نتیجه بررسی لحظه‌ای نیست.',
-    serviceReferenceAria: 'مرجع سرویس منطقه‌ای',
-    serviceAvailableInRegion: 'در مرجع منطقه‌ای قابل استفاده',
-    serviceNotInRegion: 'در فهرست مرجع منطقه‌ای نیست',
 
 
     trafficPackageHint: 'بسته ترافیک یک مکمل یک‌باره است؛ ابتدا ترافیک اشتراک ماهانه مصرف می‌شود و پس از اتمام آن، از بسته ترافیک استفاده خواهد شد.',

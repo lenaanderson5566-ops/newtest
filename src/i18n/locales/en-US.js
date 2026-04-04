@@ -245,13 +245,6 @@ export default {
         pendingOrderBanner: 'You have {count} pending order(s). Please complete payment to activate the service.',
         payNow: 'Pay Now',
         goToQuickStart: 'Go to Quick Start',
-        currentExitRegion: 'Current Exit Region',
-        smoothStatusNormal: 'Connection status: normal',
-        serviceReference: 'Service Reference',
-        serviceReferenceHint: 'Regional service reference is estimated from static region mapping and does not represent real-time unlock checks.',
-        serviceReferenceAria: 'Regional service reference',
-        serviceAvailableInRegion: 'Available in regional reference',
-        serviceNotInRegion: 'Not in regional reference list',
 
         trafficPackageHint: 'Traffic package quota is one-time supplemental traffic. Monthly subscription traffic is consumed first, then traffic package quota is used after subscription quota is exhausted.',
         trafficPackageSupplementHint: 'Use traffic packages to cover usage beyond your plan quota.',

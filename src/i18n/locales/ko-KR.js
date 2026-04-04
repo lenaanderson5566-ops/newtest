@@ -246,14 +246,7 @@ export default {
     pendingOrderBanner: '결제 대기 주문이 {count}건 있습니다. 서비스를 활성화하려면 빠르게 결제를 완료하세요.',
     payNow: '지금 결제',
     goToQuickStart: '빠른 시작으로 이동',
-    currentExitRegion: '현재 출구 지역',
     refreshing: '새로고침 중',
-    smoothStatusNormal: '연결 상태: 정상',
-    serviceReference: '서비스 참고',
-    serviceReferenceHint: '지역 서비스 참고는 정적 지역 매핑 기반 추정이며 실시간 해제 검사 결과를 의미하지 않습니다.',
-    serviceReferenceAria: '지역 서비스 참고',
-    serviceAvailableInRegion: '지역 참고에서 사용 가능',
-    serviceNotInRegion: '지역 참고 목록에 없음',
 
 
     trafficPackageHint: '트래픽 패키지는 1회성 추가 트래픽입니다. 월간 구독 트래픽이 먼저 소모되고, 구독 트래픽 소진 후 패키지 트래픽이 소모됩니다.',

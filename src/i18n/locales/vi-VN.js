@@ -262,14 +262,7 @@ export default {
         pendingOrderBanner: 'Bạn có {count} đơn hàng chờ thanh toán. Vui lòng thanh toán sớm để kích hoạt dịch vụ.',
         payNow: 'Thanh toán ngay',
         goToQuickStart: 'Đi đến bắt đầu nhanh',
-        currentExitRegion: 'Khu vực thoát hiện tại',
         refreshing: 'Đang làm mới',
-        smoothStatusNormal: 'Trạng thái kết nối: bình thường',
-        serviceReference: 'Tham chiếu dịch vụ',
-        serviceReferenceHint: 'Tham chiếu dịch vụ theo khu vực chỉ là ước tính từ ánh xạ khu vực tĩnh, không phải kết quả kiểm tra mở khóa theo thời gian thực.',
-        serviceReferenceAria: 'Tham chiếu dịch vụ theo khu vực',
-        serviceAvailableInRegion: 'Khả dụng theo tham chiếu khu vực',
-        serviceNotInRegion: 'Không có trong danh sách tham chiếu khu vực',
 
 
         trafficPackageHint: 'Gói lưu lượng là lưu lượng bổ sung một lần. Lưu lượng gói thuê bao tháng sẽ được dùng trước, sau khi hết mới dùng đến lưu lượng gói bổ sung.',

@@ -246,14 +246,7 @@ export default {
     pendingOrderBanner: '您有 {count} 個待支付訂單，請盡快完成支付以啟用服務。',
     payNow: '去支付',
     goToQuickStart: '前往快速開始',
-    currentExitRegion: '當前出口地區',
     refreshing: '重新整理中',
-    smoothStatusNormal: '連線狀態：正常',
-    serviceReference: '服務參考',
-    serviceReferenceHint: '地區服務參考僅基於地區靜態映射推測，不代表即時解鎖檢測結果。',
-    serviceReferenceAria: '地區服務參考',
-    serviceAvailableInRegion: '地區參考可用',
-    serviceNotInRegion: '未在地區參考列表',
 
 
     trafficPackageHint: '流量額度包為一次性補充流量，優先消耗月訂閱流量，訂閱用盡後再消耗額度包流量。',

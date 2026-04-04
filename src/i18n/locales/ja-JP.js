@@ -246,14 +246,7 @@ export default {
     pendingOrderBanner: '{count} 件の未払い注文があります。サービスを有効化するため、できるだけ早くお支払いください。',
     payNow: '支払う',
     goToQuickStart: 'クイックスタートへ',
-    currentExitRegion: '現在の出口地域',
     refreshing: '更新中',
-    smoothStatusNormal: '接続状態：正常',
-    serviceReference: 'サービス参照',
-    serviceReferenceHint: '地域サービス参照は静的な地域マッピングに基づく推定であり、リアルタイムの解放判定結果ではありません。',
-    serviceReferenceAria: '地域サービス参照',
-    serviceAvailableInRegion: '地域参照で利用可能',
-    serviceNotInRegion: '地域参照リストにありません',
 
 
     trafficPackageHint: '流量パッケージは一回限りの追加流量です。月間サブスク流量が優先して消費され、使い切った後にパッケージ流量が消費されます。',
