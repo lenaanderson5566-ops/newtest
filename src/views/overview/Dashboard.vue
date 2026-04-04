@@ -2019,7 +2019,6 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-package {
-        --traffic-card-bg: var(--color-bg-surface);
         min-height: auto;
         height: auto;
         z-index: 3;
@@ -2152,14 +2151,17 @@ $space-2: map.get($spacers, 2);
     box-shadow: var(--shadow-md);
   }
 
+  /* 统一三张流量相关卡片背景，避免多层变量和分散规则导致覆盖不稳定 */
+  .stats-grid > .stats-card.traffic-board-package,
+  .stats-grid > .stats-card.today-traffic-card,
+  .dashboard-inner > .dashboard-card.usage-trend-card {
+    background: var(--color-bg-surface) !important;
+  }
+
   .stats-grid .stats-card.traffic-board-subscription.subscription-card-muted,
   .stats-grid .stats-card.traffic-board-subscription.quota-card-muted {
     border-color: var(--theme-border-soft);
     background: var(--theme-surface-muted);
-  }
-
-  .usage-trend-card {
-    background: var(--color-bg-surface);
   }
 
   .usage-trend-card .card-title.usage-card-title {
@@ -2171,7 +2173,6 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
-    background: var(--color-bg-surface);
     min-width: 0;
     z-index: 2;
     align-items: flex-start;
