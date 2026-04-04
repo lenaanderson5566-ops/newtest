@@ -2184,9 +2184,9 @@ $space-2: map.get($spacers, 2);
     letter-spacing: 0.02em;
   }
 
-  .stats-grid .stats-card.today-traffic-card {
-    background: var(--color-bg-surface);
-    background-image: none;
+  .dashboard-container .stats-grid .stats-card.today-traffic-card {
+    background: var(--color-bg-surface) !important;
+    background-image: none !important;
     color: var(--text-primary);
     min-width: 0;
     z-index: 2;
