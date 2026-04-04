@@ -1307,13 +1307,7 @@ export default {
       border: var(--border-width) solid var(--border-default);
 
       background-color: #fff;
-
-      border-radius: 16px;
-
-
       padding: 8px;
-
-      border: var(--border-width) solid var(--border-default);
 
       transition: all 0.3s ease;
 
@@ -1441,7 +1435,7 @@ export default {
           height: 22px;
           border-radius: 50%;
           color: var(--theme-color);
-          background: var(--card-background);
+          background: var(--color-bg-surface);
           padding: 4px;
           flex-shrink: 0;
         }
@@ -2027,7 +2021,7 @@ export default {
         align-items: center;
         justify-content: center;
         color: var(--theme-color);
-        background: var(--card-background);
+        background: var(--color-bg-surface);
       }
 
       .mobile-plan-details {

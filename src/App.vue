@@ -353,9 +353,14 @@ export default {
 
 .app-root-shell {
   min-height: 100dvh;
+  /* 顶部栏强调渐变条（仅用于 top-fixed-bar::after，不参与页面主背景计算） */
   --site-accent-gradient: linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
+  background-color: var(--color-bg-page);
 }
 
+/* 全局卡片基线样式：
+ * 保留 .dashboard-card 与 .stats-card 两个选择器是有必要的，
+ * 因为页面中存在仅使用其中一个类名的组件，统一放在此处可避免漏样式。 */
 .card,
 .dashboard-card,
 .stats-card,
@@ -367,8 +372,8 @@ export default {
 .dialog-content,
 .pending-order-dialog,
 .modal-content {
-  background-color: #ffffff !important;
-  border-radius: $border-radius-sm !important;
+  background-color: var(--color-bg-surface);
+  border-radius: $border-radius-sm;
   border: var(--border-width) solid var(--border-subtle);
 }
 
@@ -518,15 +523,10 @@ export default {
 .app-content-wrapper {
   width: 100%;
   box-sizing: border-box;
-  --page-edge-gap: 4px;
-  --left-nav-gap: 8px;
-  --left-nav-occupy: 220px;
-  --mobile-bottom-nav-space: 0px;
 
   &.with-top-bar {
-    --page-content-top-gap: 8px;
     --app-top-bar-height: calc(56px + env(safe-area-inset-top, 0px));
-    padding-top: calc(var(--app-top-bar-height, 56px) + var(--page-content-top-gap, 8px));
+    padding-top: calc(var(--app-top-bar-height, 56px) + 8px);
   }
 
 }

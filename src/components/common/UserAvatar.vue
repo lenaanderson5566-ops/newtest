@@ -221,7 +221,7 @@ export default {
   top: calc(100% + 8px);
   right: 0;
   width: 180px;
-  background: rgba(var(--card-background-rgb), 0.9);
+  background: rgba(var(--color-bg-surface-rgb), 0.9);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: $border-radius-sm;

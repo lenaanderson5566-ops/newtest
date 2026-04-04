@@ -1064,7 +1064,7 @@ fetchTickets();
 
   flex-direction: column;
 
-  background-color: var(--card-background, rgba(30, 30, 30, 0.8));
+  background-color: var(--color-bg-surface, rgba(30, 30, 30, 0.8));
 
   position: fixed;
 
@@ -1261,7 +1261,7 @@ fetchTickets();
 
   flex-direction: column;
 
-  background-color: var(--card-background, rgba(30, 30, 30, 0.8));
+  background-color: var(--color-bg-surface, rgba(30, 30, 30, 0.8));
 
   .loading-state {
     flex: 1;
@@ -1635,7 +1635,7 @@ fetchTickets();
 
   max-width: 500px;
 
-  background-color: var(--card-background);
+  background-color: var(--color-bg-surface);
 
   border-radius: 16px;
 

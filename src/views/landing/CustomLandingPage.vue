@@ -400,7 +400,7 @@ export default {
 
   height: 100%;
 
-  background-color: var(--background-color);
+  background-color: var(--color-bg-surface);
 
   display: flex;
 

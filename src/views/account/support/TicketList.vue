@@ -1781,7 +1781,7 @@ onUnmounted(() => {
 }
 
 .modal-content {
-  background-color: var(--card-background);
+  background-color: var(--color-bg-surface);
 
   border-radius: 16px;
 

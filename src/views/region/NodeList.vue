@@ -332,17 +332,9 @@ onMounted(() => {
 
 
 
-.nodes-inner {
-
-}
-
-
-
-
-
 .dashboard-card {
 
-  background-color: var(--card-bg);
+  background-color: var(--color-bg-surface);
 
   border-radius: $border-radius-sm;
 
@@ -445,7 +437,7 @@ onMounted(() => {
     border: var(--border-width) solid var(--border-default);
     border-radius: $border-radius-sm;
     padding: 16px;
-    background: var(--card-bg);
+    background: var(--color-bg-surface);
 
     .import-header {
       display: flex;
@@ -607,7 +599,7 @@ onMounted(() => {
 
 
 .nodes-no-plan {
-  background: var(--card-background);
+  background: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-default);
   border-radius: $border-radius-sm;
   padding: 24px;
@@ -799,7 +791,7 @@ onMounted(() => {
 
   border-radius: $border-radius-sm;
 
-  background: var(--card-background);
+  background: var(--color-bg-surface);
 
   transition: all 0.25s ease;
 

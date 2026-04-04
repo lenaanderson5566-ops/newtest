@@ -159,7 +159,7 @@ export default {
   position: fixed;
   z-index: 1000;
   min-width: 180px;
-  background-color: rgba(var(--card-background-rgb), 0.6);
+  background-color: rgba(var(--color-bg-surface-rgb), 0.6);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border-radius: 12px;

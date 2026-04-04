@@ -2346,13 +2346,6 @@ export default {
 
       background-color: transparent;
 
-
-
-      &:focus {
-
-
-      }
-
     }
 
   }
@@ -2481,7 +2474,7 @@ export default {
 
       right: -1px;
 
-      background-color: var(--card-background);
+      background-color: var(--color-bg-surface);
 
       border-radius: 8px;
 
@@ -3538,7 +3531,7 @@ export default {
 
     max-width: 420px;
 
-    background-color: var(--card-background);
+    background-color: var(--color-bg-surface);
 
     border-radius: 12px;
 

@@ -275,40 +275,19 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
-@use "sass:map";
 @use "@/assets/styles/base/variables.scss" as *;
 @use "@/assets/styles/base/typography.scss" as *;
 
 .docs-container {
 
   padding: 0;
-  background-color: var(--background-color);
+  background-color: var(--color-bg-surface);
 
   padding-bottom: calc(2px + 64px); 
 
   
 
 }
-
-
-
-.docs-inner {
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

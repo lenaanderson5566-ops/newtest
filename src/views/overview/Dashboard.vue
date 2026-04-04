@@ -90,7 +90,7 @@
             class="stats-card overview-card overview-card--traffic-quota traffic-board-card"
             v-for="(card, idx) in trafficBoardSections"
             :key="card.key"
-            :class="[`traffic-board-${card.key}`, { 'card-animate': !loading.userStats }, { 'total-main-card': card.key === 'total' }, { 'quota-traffic-card': card.key === 'subscription' || card.key === 'package' }, { 'expired-main-card': card.key === 'total' && isPlanExpired }, { 'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage || isPlanExpired)) || (card.key === 'subscription' && isPlanExpired) }, { 'subscription-card-muted': card.key === 'subscription' && isPlanExpired }]"
+            :class="getTrafficCardClass(card)"
             :style="{ animationDelay: `${0.5 + idx * 0.1}s` }"
           >
             <div class="usage-card-title">
@@ -1436,6 +1436,17 @@ export default {
       return `${baseDelay + trafficBoardSections.value.length * step}s`;
     });
 
+    const getTrafficCardClass = (card) => ({
+      [`traffic-board-${card.key}`]: true,
+      'card-animate': !loading.userStats,
+      'total-main-card': card.key === 'total',
+      'quota-traffic-card': card.key === 'subscription' || card.key === 'package',
+      'expired-main-card': card.key === 'total' && isPlanExpired.value,
+      'quota-card-muted': (card.key === 'package' && (!hasPurchasedTrafficPackage.value || isPlanExpired.value))
+        || (card.key === 'subscription' && isPlanExpired.value),
+      'subscription-card-muted': card.key === 'subscription' && isPlanExpired.value
+    });
+
     return {
       userStats,
       userBalance,
@@ -1484,6 +1495,7 @@ export default {
       needRefreshData,
       trafficBoardSections,
       hasPurchasedTrafficPackage,
+      getTrafficCardClass,
       trafficTrendChartRef,
       trafficTrendData,
       trafficTrendLoading,
@@ -1516,49 +1528,29 @@ $space-2: map.get($spacers, 2);
 .dashboard-container {
   display: flex;
   justify-content: center;
-  --dashboard-card-padding: 8px;
+  --dashboard-card-padding: 16px;
+  --dashboard-section-padding: 12px;
   --dashboard-radius: #{$border-radius-sm};
-  --dashboard-pill-radius: 999px;
   --dashboard-button-radius: 12px;
-  --dashboard-shadow-compact: none;
-  --dashboard-border-color: var(--border-subtle);
-  --dashboard-title-size: 14px;
   --dashboard-subtitle-color: var(--text-tertiary);
-  --dashboard-value-size: 30px;
   --dashboard-kpi-size: 13px;
   --dashboard-gap-compact: var(--global-card-gap);
   --dashboard-section-margin: var(--global-card-gap);
 
-  --saas-brand: #355cc2;
-  --saas-text-primary: #111827;
-  --saas-text-secondary: var(--text-tertiary);
-  --saas-border-soft: var(--divider);
-  --saas-card-bg: #ffffff;
-  --saas-card-shadow: none;
+  --saas-card-bg: var(--color-bg-surface);
 
   --theme-text-primary: var(--text-primary);
-  --theme-text-secondary: var(--text-tertiary);
-  --theme-text-subtle: #9ca3af;
-  --theme-text-emphasis: var(--text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
   --theme-border-soft: var(--divider);
   --theme-white: #ffffff;
-  --quota-label-color: var(--text-tertiary);
   --quota-value-color: var(--text-primary);
   --quota-progress-start: #60a5fa;
   --quota-progress-end: #3b82f6;
   --quota-muted-fill: #cbd5e1;
-  --quota-total-bg-end: #f8fbff;
-  --quota-expired-border: var(--border-hover);
   --plan-meta-text: var(--text-tertiary);
   --plan-expired-strip-text: #b91c1c;
   --plan-expired-strip-bg: rgba(248, 113, 113, 0.16);
-  --plan-expired-strip-border: rgba(239, 68, 68, 0.32);
-  --status-active-text: #15803d;
-  --status-active-bg: rgba(34, 197, 94, 0.15);
-  --status-expired-text: #dc2626;
-  --status-expired-bg: rgba(220, 38, 38, 0.1);
 
   &.is-no-plan {
     .dashboard-inner {
@@ -1609,11 +1601,6 @@ $space-2: map.get($spacers, 2);
       .card-title {
         @extend %typo-card-title;
         margin: 0;
-      }
-
-      .card-actions {
-        display: flex;
-        gap: #{$space-2};
       }
     }
   }
@@ -1709,19 +1696,6 @@ $space-2: map.get($spacers, 2);
         justify-content: flex-start;
         gap: #{$space-2};
 
-        .stats-info {
-          width: 100%;
-        }
-
-        .stats-value {
-          font-size: $font-size-md;
-          margin-bottom: 0;
-        }
-
-        .stats-label {
-          font-size: $font-size-sm;
-        }
-
         .usage-card-title {
           position: relative;
           z-index: 5;
@@ -1792,7 +1766,7 @@ $space-2: map.get($spacers, 2);
 
           .expired-status-strip {
             border-radius: var(--dashboard-radius);
-            padding: 8px 8px;
+            padding: var(--dashboard-section-padding);
             font-size: $font-size-sm;
             font-weight: $font-weight-semibold;
             color: var(--plan-expired-strip-text);
@@ -1804,7 +1778,7 @@ $space-2: map.get($spacers, 2);
             border: none;
             border-radius: var(--dashboard-radius);
             background: transparent;
-            padding: 8px 8px;
+            padding: var(--dashboard-section-padding);
             overflow: visible;
           }
 
@@ -1842,7 +1816,7 @@ $space-2: map.get($spacers, 2);
           }
 
           .plan-summary-section-meta {
-            padding: 8px 8px;
+            padding: var(--dashboard-section-padding);
           }
 
           .plan-status-hero {
@@ -1898,26 +1872,6 @@ $space-2: map.get($spacers, 2);
 
           .plan-summary-label {
             @extend %typo-body-text;
-
-            &.with-tooltip {
-              display: inline-flex;
-              align-items: center;
-              gap: 4px;
-            }
-          }
-
-          .plan-summary-value-wrap {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-          }
-
-          .plan-summary-value {
-            @extend %typo-body-text;
-            text-align: right;
-            word-break: break-word;
           }
 
           .plan-status-tag {
@@ -1938,13 +1892,6 @@ $space-2: map.get($spacers, 2);
             top: 50%;
             transform: translateY(-50%);
           }
-
-          .plan-summary-desc {
-            margin: 4px 0 0;
-            font-size: $font-size-sm;
-            color: var(--text-on-dark-primary);
-          }
-
 
           .plan-summary-actions {
             display: flex;
@@ -1987,83 +1934,6 @@ $space-2: map.get($spacers, 2);
             text-align: center;
           }
 
-          .switch {
-            position: relative;
-            display: inline-block;
-            width: 46px;
-            height: 24px;
-            flex-shrink: 0;
-
-            &.disabled {
-              opacity: 0.7;
-              cursor: not-allowed;
-            }
-
-            input {
-              opacity: 0;
-              width: 0;
-              height: 0;
-
-              &:disabled + .slider {
-                cursor: not-allowed;
-              }
-            }
-
-            .slider {
-              position: absolute;
-              cursor: pointer;
-              inset: 0;
-              background-color: var(--surface-subtle);
-              border: none;
-              transition: 0.4s;
-
-              &.loading {
-                overflow: hidden;
-
-                &::before {
-                  animation: pulse 1.5s infinite;
-                }
-
-                &::after {
-                  content: '';
-                  position: absolute;
-                  width: 100%;
-                  height: 100%;
-                  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-                  animation: sweep 1.5s infinite;
-                }
-              }
-
-              &::before {
-                position: absolute;
-                content: '';
-                height: 18px;
-                width: 18px;
-                left: 3px;
-                bottom: 3px;
-                background-color: white;
-                transition: 0.4s;
-                z-index: 1;
-              }
-
-              &.round {
-                border-radius: 34px;
-
-                &::before {
-                  border-radius: 50%;
-                }
-              }
-            }
-
-            input:checked + .slider {
-              background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
-              border-color: transparent;
-            }
-
-            input:checked + .slider::before {
-              transform: translateX(22px);
-            }
-          }
         }
 
         .usage-percent {
@@ -2098,15 +1968,10 @@ $space-2: map.get($spacers, 2);
         }
 
       &.traffic-board-subscription {
-        --traffic-card-bg: linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0.98) 0%,
-          rgba(66, 133, 244, 0.08) 56%,
-          rgba(34, 89, 170, 0.14) 100%
-        );
+        --traffic-card-bg: var(--theme-surface-soft);
         background: var(--traffic-card-bg);
         border: var(--border-width) solid var(--border-subtle);
-        box-shadow: var(--shadow-md);
+        box-shadow: var(--shadow-sm);
 
         .usage-kpi {
           background: transparent;
@@ -2121,13 +1986,54 @@ $space-2: map.get($spacers, 2);
           line-height: 1;
         }
 
+        .usage-kpis {
+          width: 100%;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+        }
+
+        .usage-summary-line {
+          grid-column: 1 / -1;
+          @extend %typo-body-text;
+        }
+
+        .usage-kpi {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          padding: 8px;
+          border-radius: var(--dashboard-radius);
+          background: transparent;
+        }
+
+        .usage-kpi-label {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+          font-size: $font-size-sm;
+          color: var(--dashboard-subtitle-color);
+          line-height: 1;
+        }
+
+        .usage-kpi-value {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+          font-size: $font-size-md;
+          color: var(--quota-value-color);
+          font-weight: $font-weight-semibold;
+          line-height: 1.2;
+        }
+
+        .usage-reset-hint {
+          width: 100%;
+          @extend %typo-body-text;
+        }
       }
 
       &.traffic-board-package {
-        --traffic-card-bg: linear-gradient(315deg, rgba(234, 29, 44, 0.16) 0%, rgba(234, 29, 44, 0.08) 38%, #ffffff 100%);
         min-height: auto;
         height: auto;
-        z-index: 8;
+        z-index: 3;
         gap: 4px;
 
         .package-main-value {
@@ -2145,6 +2051,11 @@ $space-2: map.get($spacers, 2);
           @extend %typo-item-title;
         }
 
+        .usage-card-title {
+          margin-bottom: 0;
+          min-height: 20px;
+        }
+
         .usage-card-main.package-main {
           min-height: 0;
           align-items: baseline;
@@ -2153,10 +2064,10 @@ $space-2: map.get($spacers, 2);
 
       &.traffic-board-total {
         --traffic-card-bg: linear-gradient(
-          90deg,
+          120deg,
           rgba(255, 255, 255, 0.98) 0%,
-          rgba(66, 133, 244, 0.08) 56%,
-          rgba(34, 89, 170, 0.14) 100%
+          rgba(66, 133, 244, 0.14) 52%,
+          rgba(34, 89, 170, 0.2) 100%
         );
         background: var(--traffic-card-bg);
         border: var(--border-width) solid var(--border-subtle);
@@ -2169,34 +2080,28 @@ $space-2: map.get($spacers, 2);
         .plan-action-btn {
           box-shadow: none;
         }
-      }
+        
+        .plan-summary-card .plan-summary-section-meta {
+          background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
+          border: none;
+          box-shadow: none;
 
-      &.traffic-board-total {
-        .plan-summary-card {
-          .plan-summary-section-meta {
-            background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
-            border: none;
-            box-shadow: none;
+          .plan-name-main {
+            color: var(--text-on-dark-primary);
+          }
 
-            .plan-name-main {
-              color: var(--text-on-dark-primary);
-            }
-
-            .plan-expire-meta {
-              color: var(--text-on-dark-secondary);
-            }
+          .plan-expire-meta {
+            color: var(--text-on-dark-secondary);
           }
         }
-      }
 
-      &.traffic-board-total.expired-main-card {
-        --traffic-card-bg: var(--theme-surface-muted);
-        background: var(--theme-surface-muted);
-        border: var(--border-width) solid var(--border-hover);
-        box-shadow: var(--shadow-md);
+        &.expired-main-card {
+          --traffic-card-bg: var(--theme-surface-muted);
+          background: var(--theme-surface-muted);
+          border: var(--border-width) solid var(--border-hover);
+          box-shadow: var(--shadow-md);
 
-        .plan-summary-card {
-          .plan-summary-section-meta {
+          .plan-summary-card .plan-summary-section-meta {
             background: linear-gradient(
               135deg,
               rgba(152, 173, 209, 0.92) 0%,
@@ -2223,52 +2128,6 @@ $space-2: map.get($spacers, 2);
           }
         }
       }
-
-        &.traffic-board-subscription {
-          .usage-kpis {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 8px;
-          }
-
-          .usage-summary-line {
-            grid-column: 1 / -1;
-            @extend %typo-body-text;
-          }
-
-          .usage-kpi {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            padding: 8px;
-            border-radius: var(--dashboard-radius);
-            background: transparent;
-          }
-
-          .usage-kpi-label {
-            writing-mode: horizontal-tb;
-            text-orientation: mixed;
-            font-size: $font-size-sm;
-            color: var(--dashboard-subtitle-color);
-            line-height: 1;
-          }
-
-          .usage-kpi-value {
-            writing-mode: horizontal-tb;
-            text-orientation: mixed;
-            font-size: $font-size-md;
-            color: var(--quota-value-color);
-            font-weight: $font-weight-semibold;
-            line-height: 1.2;
-          }
-
-          .usage-reset-hint {
-            width: 100%;
-            @extend %typo-body-text;
-          }
-
-        }
       }
 
       &:hover {
@@ -2291,30 +2150,29 @@ $space-2: map.get($spacers, 2);
     padding: var(--dashboard-card-padding);
   }
 
-  .stats-grid .stats-card.traffic-board-subscription,
-  .stats-grid .stats-card.traffic-board-package,
-  .stats-grid .stats-card.today-traffic-card,
-  .dashboard-card.usage-trend-card {
+  .stats-grid .stats-card.traffic-board-subscription {
     background: var(--traffic-card-bg, var(--saas-card-bg));
     border: var(--border-width) solid var(--border-subtle);
     border-radius: var(--dashboard-radius);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .stats-grid .stats-card.traffic-board-total {
     box-shadow: var(--shadow-md);
+  }
+
+  /* 三张流量相关卡片统一为 surface token，避免被其他层叠样式覆盖 */
+  .stats-grid .stats-card.traffic-board-package,
+  .stats-grid .stats-card.today-traffic-card,
+  .dashboard-card.usage-trend-card {
+    background-color: var(--color-bg-surface) !important;
+    background-image: none !important;
   }
 
   .stats-grid .stats-card.traffic-board-subscription.subscription-card-muted,
   .stats-grid .stats-card.traffic-board-subscription.quota-card-muted {
     border-color: var(--theme-border-soft);
     background: var(--theme-surface-muted);
-  }
-
-  .stats-grid .stats-card.traffic-board-package,
-  .stats-grid .stats-card.today-traffic-card {
-    gap: 4px;
-
-    .usage-card-title {
-      margin-bottom: 0;
-      min-height: 20px;
-    }
   }
 
   .usage-trend-card .card-title.usage-card-title {
@@ -2326,7 +2184,6 @@ $space-2: map.get($spacers, 2);
 
   .stats-grid .stats-card.today-traffic-card {
     color: var(--text-primary);
-    background: linear-gradient(315deg, rgba(34, 89, 170, 0.14) 0%, rgba(90, 57, 216, 0.08) 42%, #ffffff 100%);
     min-width: 0;
     z-index: 2;
     align-items: flex-start;
@@ -2336,6 +2193,7 @@ $space-2: map.get($spacers, 2);
 
     .today-card-title {
       margin-bottom: 0;
+      min-height: 20px;
       @extend %typo-label-text;
     }
 
@@ -2429,7 +2287,7 @@ $space-2: map.get($spacers, 2);
 
   .usage-trend-card {
     padding: 8px;
-    --traffic-card-bg: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(66, 133, 244, 0.08) 56%, rgba(34, 89, 170, 0.14) 100%);
+    background: var(--color-bg-surface);
 
     .card-header {
       margin-bottom: 4px;
@@ -2595,7 +2453,8 @@ $space-2: map.get($spacers, 2);
 
 @include down(md) {
   .dashboard-container {
-    --dashboard-card-padding: 8px;
+    --dashboard-card-padding: 12px;
+    --dashboard-section-padding: 10px;
   }
 
   .stats-grid {
@@ -2762,7 +2621,7 @@ $space-2: map.get($spacers, 2);
   margin: 0 auto;
   max-width: var(--page-content-max-width);
   width: 100%;
-  background: var(--card-background);
+  background: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-subtle);
   border-radius: var(--dashboard-radius);
   padding: 16px;
@@ -2819,12 +2678,6 @@ $space-2: map.get($spacers, 2);
   margin: 10px 0 8px;
   line-height: 1.24;
   letter-spacing: 0.2px;
-}
-
-.no-plan-subtitle {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: $font-size-lg;
 }
 
 .hero-actions {
@@ -3027,50 +2880,6 @@ button.no-plan-step {
 
 $space-2: map.get($spacers, 2);
 
-.dashboard-container .stats-card {
-  &.warning-card,
-  &.danger-card {
-    border-color: rgba(var(--stats-alert-rgb), 0.42);
-
-    .stats-icon {
-      background-color: rgba(var(--stats-alert-rgb), 0.1);
-      color: var(--stats-level-color);
-    }
-
-    .stats-value {
-      color: var(--stats-level-color);
-    }
-  }
-
-  &.warning-card {
-    --stats-alert-rgb: var(--warning-color-rgb);
-    --stats-level-color: var(--warning-color);
-  }
-
-  &.danger-card {
-    --stats-alert-rgb: var(--error-color-rgb);
-    --stats-level-color: var(--error-color);
-  }
-
-  &.balance-card {
-    .stats-value {
-      color: var(--theme-color);
-    }
-
-    &.clickable {
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-
-      &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.08);
-        transform: translateY(-3px);
-      }
-    }
-  }
-}
-
 .traffic-package-modal-overlay {
   position: fixed;
   inset: 0;
@@ -3094,7 +2903,7 @@ $space-2: map.get($spacers, 2);
   flex-direction: column;
   max-height: calc(100vh - 32px);
   overflow: hidden;
-  background-color: var(--card-background);
+  background-color: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-subtle);
   border-radius: 16px;
 

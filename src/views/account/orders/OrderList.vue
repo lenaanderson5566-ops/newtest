@@ -680,7 +680,7 @@ watch(locale, () => {
 }
 
 .modal-content {
-  background-color: var(--card-background);
+  background-color: var(--color-bg-surface);
   border-radius: $border-radius-sm;
   width: 90%;
   max-width: 480px;
@@ -689,7 +689,7 @@ watch(locale, () => {
   flex-direction: column;
   
   @media (prefers-color-scheme: dark) {
-    background-color: rgba(var(--card-background-rgb, 30, 30, 30), 1);
+    background-color: rgba(var(--color-bg-surface-rgb, 30, 30, 30), 1);
   }
 }
 

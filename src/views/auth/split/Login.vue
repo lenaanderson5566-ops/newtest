@@ -494,7 +494,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   position: relative;
-  background-color: var(--background-color);
+  background-color: var(--color-bg-surface);
   overflow-y: auto;
   height: 100%;
 

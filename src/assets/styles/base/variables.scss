@@ -5,9 +5,10 @@
 
 // 给CSS变量设置初始值
 :root {
-  --background-color: #f5f7fa;
-  --card-background: #ffffff;
-  --card-background-rgb: 255, 255, 255;
+  --color-bg-page: #ffffff;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-rgb: 255, 255, 255;
+  --color-bg-surface-subtle: #f8faff;
 
   --text-primary: #111827;
   --text-secondary: #1f2937;

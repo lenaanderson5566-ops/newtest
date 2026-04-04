@@ -92,7 +92,7 @@ export default {
 .toast {
   min-width: 300px;
   max-width: 380px;
-  background-color: var(--card-background);
+  background-color: var(--color-bg-surface);
   color: var(--text-primary);
   border-radius: 12px;
   padding: 16px 16px;

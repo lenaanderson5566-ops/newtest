@@ -266,7 +266,7 @@ onMounted(() => {
 
   .platform-button {
     border: var(--border-width) solid var(--border-default);
-    background: var(--card-background);
+    background: var(--color-bg-surface);
     border-radius: 999px;
     padding: 8px 16px;
     cursor: pointer;
@@ -300,7 +300,7 @@ onMounted(() => {
       border: var(--border-width) solid var(--border-default);
       border-radius: 14px;
       padding: 8px 16px;
-      background: var(--card-background);
+      background: var(--color-bg-surface);
       cursor: pointer;
       display: inline-flex;
       align-items: center;

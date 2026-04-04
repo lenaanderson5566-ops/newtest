@@ -2545,7 +2545,7 @@ export default {
 
   position: relative;
 
-  background-color: var(--background-color);
+  background-color: var(--color-bg-surface);
 
   overflow-y: auto;
 
@@ -2849,13 +2849,6 @@ export default {
 
       background-color: transparent;
 
-
-
-      &:focus {
-
-
-      }
-
     }
 
   }
@@ -2984,7 +2977,7 @@ export default {
 
       right: -1px;
 
-      background-color: var(--card-background);
+      background-color: var(--color-bg-surface);
 
       border-radius: 8px;
 
@@ -4059,7 +4052,7 @@ export default {
 
     max-width: 420px;
 
-    background-color: var(--card-background);
+    background-color: var(--color-bg-surface);
 
     border-radius: 12px;
 

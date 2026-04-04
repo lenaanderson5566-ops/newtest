@@ -1923,7 +1923,7 @@ export default {
   width: min(94vw, 460px);
   max-height: calc(100vh - 32px);
   overflow: auto;
-  background: var(--card-background);
+  background: var(--color-bg-surface);
   border-radius: 12px;
   border: var(--border-width) solid var(--border-default);
 }
@@ -2033,7 +2033,7 @@ export default {
   grid-template-columns: auto 1fr;
   border: var(--border-width) solid var(--border-default);
   border-radius: 12px;
-  background: var(--card-background);
+  background: var(--color-bg-surface);
   overflow: hidden;
 }
 
