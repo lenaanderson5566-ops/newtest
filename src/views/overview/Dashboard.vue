@@ -2142,18 +2142,6 @@ $space-2: map.get($spacers, 2);
         min-height: auto;
         height: auto;
         z-index: 8;
-
-        .usage-card-title,
-        .usage-percent,
-        .usage-percent-label,
-        .package-usage-intro {
-          font-size: inherit;
-          font-weight: inherit;
-          line-height: inherit;
-          color: inherit;
-          letter-spacing: normal;
-          text-shadow: none;
-        }
       }
 
       &.traffic-board-total {
@@ -2324,6 +2312,28 @@ $space-2: map.get($spacers, 2);
     @extend %typo-label-text;
     line-height: 1.3;
     letter-spacing: 0.02em;
+  }
+
+  .stats-grid .stats-card.traffic-board-subscription .usage-card-title,
+  .stats-grid .stats-card.traffic-board-package .usage-card-title,
+  .stats-grid .stats-card.today-traffic-card .usage-card-title,
+  .usage-trend-card .card-title.usage-card-title {
+    @extend %typo-label-text;
+  }
+
+  .stats-grid .stats-card.today-traffic-card .usage-percent.compact,
+  .stats-grid .stats-card.traffic-board-package .usage-percent.compact {
+    @extend %typo-section-title;
+    line-height: 1;
+  }
+
+  .stats-grid .stats-card.traffic-board-subscription .plan-summary-label,
+  .stats-grid .stats-card.traffic-board-subscription .plan-summary-value,
+  .stats-grid .stats-card.traffic-board-subscription .usage-summary-line,
+  .stats-grid .stats-card.traffic-board-subscription .usage-reset-hint,
+  .stats-grid .stats-card.today-traffic-card .today-traffic-breakdown span,
+  .stats-grid .stats-card.traffic-board-package .package-usage-intro {
+    @extend %typo-body-text;
   }
 
 
