@@ -2146,10 +2146,18 @@ $space-2: map.get($spacers, 2);
 
         .package-usage-intro {
           @extend %typo-body-text;
+          min-height: 22px;
+          display: flex;
+          align-items: center;
         }
 
         .package-remaining-label {
           @extend %typo-item-title;
+        }
+
+        .usage-card-main.package-main {
+          min-height: 42px;
+          align-items: baseline;
         }
       }
 
@@ -2309,6 +2317,16 @@ $space-2: map.get($spacers, 2);
     background: var(--theme-surface-muted);
   }
 
+  .stats-grid .stats-card.traffic-board-package,
+  .stats-grid .stats-card.today-traffic-card {
+    gap: 6px;
+
+    .usage-card-title {
+      margin-bottom: 0;
+      min-height: 20px;
+    }
+  }
+
   .usage-trend-card .card-title.usage-card-title {
     margin: 0;
     @extend %typo-label-text;
@@ -2336,6 +2354,7 @@ $space-2: map.get($spacers, 2);
       align-items: baseline;
       flex-wrap: wrap;
       gap: 8px;
+      min-height: 42px;
     }
 
     .today-traffic-breakdown {
@@ -2343,6 +2362,8 @@ $space-2: map.get($spacers, 2);
       align-items: center;
       flex-wrap: wrap;
       gap: #{$space-2};
+      min-height: 22px;
+      line-height: 1.4;
 
       span {
         @extend %typo-body-text;
