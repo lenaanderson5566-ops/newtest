@@ -219,19 +219,6 @@ export const TICKET_CONFIG = mergeDeep(
 );
 
 /**
- * 流量明细配置
- * 控制流量明细页面的行为
- */
-const DEFAULT_TRAFFICLOG_CONFIG = {
-  // 配置以 src/config/index.js 为主，避免重复维护
-};
-
-export const TRAFFICLOG_CONFIG = mergeDeep(
-  DEFAULT_TRAFFICLOG_CONFIG,
-  getConfig("TRAFFICLOG_CONFIG")
-);
-
-/**
  * 客户端下载配置
  * 用于控制仪表板中的客户端下载选项
  */
