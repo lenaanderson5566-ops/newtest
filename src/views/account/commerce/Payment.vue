@@ -1410,7 +1410,7 @@ export default {
   }
 
   .right-column .order-amount-section {
-    background: transparent !important;
+    background: var(--right-card-bg) !important;
     border: var(--border-width) solid var(--border-default);
   }
 
@@ -1431,6 +1431,10 @@ export default {
 
   .right-column .order-amount-section .summary-divider {
     background-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .overview-section {
+    background: transparent;
   }
 
   .payment-methods {
