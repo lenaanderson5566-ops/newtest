@@ -248,7 +248,7 @@
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
           <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
             <div class="trend-empty-block">
-              <img src="@/assets/images/dashboard/no-traffic-data.svg" alt="" class="trend-empty-icon" />
+              <img :src="noTrafficDataIcon" alt="" class="trend-empty-icon" />
               <div class="trend-empty-content">
                 <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
                 <button class="trend-empty-action btn btn-secondary" @click="goToQuickStart">
@@ -372,6 +372,7 @@ import { fetchPlans, submitOrder } from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
+import noTrafficDataIcon from '@/assets/images/dashboard/no-traffic-data.svg';
 
 export default {
   name: 'UserDashboard',
@@ -1501,6 +1502,7 @@ export default {
       getTrafficPackageDisplayName,
       getTrafficPackageContent,
       isTrafficPackageSoldOut,
+      noTrafficDataIcon,
     };
   }
 };
