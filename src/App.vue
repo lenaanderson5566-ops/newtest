@@ -463,14 +463,15 @@ export default {
   pointer-events: none;
   z-index: 0;
   background-image: var(--post-login-bg-image);
-  background-repeat: repeat;
-  background-size: auto;
 }
 
 .app-root-shell.has-post-login-background::before {
   top: 0;
-  height: min(34dvh, 300px);
-  opacity: 0.32;
+  height: min(42dvh, 380px);
+  opacity: 0.4;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
   -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
@@ -478,7 +479,10 @@ export default {
 .app-root-shell.has-post-login-background::after {
   bottom: 0;
   height: min(36dvh, 340px);
-  opacity: 0.42;
+  opacity: 0.48;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
   mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
   -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
