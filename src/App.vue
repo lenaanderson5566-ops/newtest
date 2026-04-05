@@ -1,5 +1,5 @@
 <template>
-  <div class="app-root-shell">
+  <div class="app-root-shell" :style="postLoginBackgroundStyle">
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
     <div class="static-layout" v-if="$route.meta.requiresAuth">
       <div class="top-fixed-bar" ref="topFixedBarRef">
@@ -39,7 +39,6 @@
     <div
       ref="appContentWrapperRef"
       :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]"
-      :style="postLoginBackgroundStyle"
     >
       <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
         <router-view v-slot="{ Component, route }">
