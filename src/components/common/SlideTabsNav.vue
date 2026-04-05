@@ -217,6 +217,47 @@ export default {
   }
 }
 
+
+@include up(lg) {
+  .slide-tabs-container {
+    .slide-tabs-wrapper {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+    }
+
+    .slide-tabs-nav {
+      gap: 6px;
+
+      .nav-item {
+        padding: 10px 12px;
+        min-height: 40px;
+        color: #111827;
+        border-radius: 6px;
+
+        .nav-icon svg {
+          color: #111827;
+        }
+
+        &.active {
+          color: #111827;
+          background: #d7d7d7;
+
+          .nav-icon svg {
+            color: #111827;
+          }
+        }
+
+        &:hover {
+          color: #111827;
+          background: #e5e5e5;
+        }
+      }
+    }
+  }
+}
+
 @include down(lg) {
   .slide-tabs-container {
     top: auto;
