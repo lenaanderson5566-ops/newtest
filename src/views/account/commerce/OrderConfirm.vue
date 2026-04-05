@@ -2278,8 +2278,8 @@ export default {
 
 
           .period-card-inner {
-            // 覆盖第三方卡片基础底色，选中态必须纯白
-            background-color: #ffffff !important;
+            // 覆盖第三方卡片基础底色，统一使用透明底
+            background-color: transparent !important;
           }
 
           .period-price {
@@ -2323,7 +2323,7 @@ export default {
 
         .period-card-inner {
           // 覆盖共享卡片样式中的默认背景/最小高度
-          background-color: #ffffff !important;
+          background-color: transparent !important;
 
           padding: 16px 8px;
 
@@ -2441,7 +2441,7 @@ export default {
       }
 
       &:focus {
-        border-color: rgba(var(--theme-color-rgb), 0.5);
+        border-color: #ffffff;
 
 
         transform: translateY(-1px);
