@@ -2054,12 +2054,7 @@ $space-2: map.get($spacers, 2);
       }
 
       &.traffic-board-total {
-        --traffic-card-bg: linear-gradient(
-          120deg,
-          rgba(255, 255, 255, 0.98) 0%,
-          rgba(66, 133, 244, 0.14) 52%,
-          rgba(34, 89, 170, 0.2) 100%
-        );
+        --traffic-card-bg: var(--color-bg-surface);
         background: var(--traffic-card-bg);
         border: var(--border-width) solid var(--border-subtle);
         box-shadow: var(--shadow-md);
@@ -2073,16 +2068,16 @@ $space-2: map.get($spacers, 2);
         }
         
         .plan-summary-card .plan-summary-section-meta {
-          background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
+          background: var(--color-bg-surface-subtle);
           border: none;
           box-shadow: none;
 
           .plan-name-main {
-            color: var(--text-on-dark-primary);
+            color: var(--text-primary);
           }
 
           .plan-expire-meta {
-            color: var(--text-on-dark-secondary);
+            color: var(--text-secondary);
           }
         }
 
@@ -2093,26 +2088,21 @@ $space-2: map.get($spacers, 2);
           box-shadow: var(--shadow-md);
 
           .plan-summary-card .plan-summary-section-meta {
-            background: linear-gradient(
-              135deg,
-              rgba(152, 173, 209, 0.92) 0%,
-              rgba(164, 171, 211, 0.9) 52%,
-              rgba(176, 166, 203, 0.9) 100%
-            );
+            background: var(--color-bg-surface-subtle);
             border: none;
             box-shadow: none;
 
             .plan-name-main {
-              color: rgba(248, 250, 252, 0.98);
+              color: var(--text-primary);
             }
 
             .plan-expire-meta,
             .plan-expire-meta .expire-suffix {
-              color: rgba(241, 245, 249, 0.92);
+              color: var(--text-secondary);
             }
 
             .plan-status-tag {
-              color: rgba(248, 250, 252, 0.98);
+              color: var(--text-primary);
               border: var(--border-width) solid var(--border-hover);
               background: rgba(148, 163, 184, 0.14);
             }
