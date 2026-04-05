@@ -519,6 +519,7 @@ export default {
 .app-content-wrapper {
   width: 100%;
   box-sizing: border-box;
+  background-color: transparent;
 
   &.with-top-bar {
     --app-top-bar-height: calc(56px + env(safe-area-inset-top, 0px));
@@ -531,6 +532,7 @@ export default {
 .content-layout-shell {
   width: 100%;
   box-sizing: border-box;
+  background-color: transparent;
 }
 
 .content-layout-shell.fixed-content-width {
@@ -553,6 +555,10 @@ export default {
 }
 
 @include up(lg) {
+  .app-content-wrapper.with-left-nav .content-layout-shell {
+    background-color: transparent;
+  }
+
   .app-content-wrapper.with-left-nav {
     --left-nav-gap: 14px;
     padding-left: calc(var(--left-nav-occupy, 220px) + var(--left-nav-gap, 10px));
