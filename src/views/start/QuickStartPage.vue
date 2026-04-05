@@ -489,7 +489,7 @@ onMounted(fetchUserStatus);
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: #4177e9;
+    background: var(--theme-color);
     color: var(--text-on-dark-primary);
     display: flex;
     align-items: center;
@@ -655,9 +655,9 @@ onMounted(fetchUserStatus);
 
 .action-btn,
 .help-btn {
-  border: var(--border-width) solid var(--border-default);
+  border: var(--border-width) solid rgba(var(--theme-color-rgb), 0.35);
   background: var(--color-bg-surface);
-  color: var(--info-color);
+  color: var(--theme-color);
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2);
   cursor: pointer;
@@ -666,10 +666,21 @@ onMounted(fetchUserStatus);
   justify-content: center;
   gap: 4px;
   box-shadow: var(--shadow-sm);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    border-color: rgba(var(--theme-color-rgb), 0.5);
+    background: rgba(var(--theme-color-rgb), 0.05);
+  }
 
   &.primary {
-    background: #3f72e8;
+    background: var(--theme-color);
     color: var(--text-on-dark-primary);
+
+    &:hover {
+      background: var(--theme-hover-color);
+      border-color: transparent;
+    }
   }
 }
 
