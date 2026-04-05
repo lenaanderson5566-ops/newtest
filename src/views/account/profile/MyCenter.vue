@@ -1181,6 +1181,12 @@ input:checked + .slider:before { transform: translateX(18px); }
     box-shadow: none;
   }
 
+  .tier-panel.section-block {
+    background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.25), transparent 35%),
+      linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%) !important;
+    border-color: rgba(161, 181, 255, 0.3);
+  }
+
   .top-nav-wrap {
     border-radius: 0;
     border-left: none;
