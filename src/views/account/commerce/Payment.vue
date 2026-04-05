@@ -1315,7 +1315,7 @@ export default {
   }
 
   .order-amount-section {
-    background: var(--card-bg-color);
+    background: transparent;
     border: var(--border-width) solid var(--border-default);
 
     .summary-header-block {
@@ -1410,7 +1410,7 @@ export default {
   }
 
   .right-column .order-amount-section {
-    background: var(--right-card-bg) !important;
+    background: transparent !important;
     border: var(--border-width) solid var(--border-default);
   }
 

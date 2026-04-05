@@ -1936,9 +1936,10 @@ export default {
     transition: all 0.22s ease;
 
     &.active {
-      border-color: rgba(var(--theme-color-rgb), 0.68);
-      box-shadow: 0 0 0 1px rgba(var(--theme-color-rgb), 0.28);
-      color: var(--text-on-dark-primary);
+      border-color: rgba(var(--theme-color-rgb), 0.85);
+      box-shadow: 0 0 0 1px rgba(var(--theme-color-rgb), 0.22);
+      background: rgba(var(--theme-color-rgb), 0.05);
+      color: var(--theme-color);
     }
 
     &.active.is-locked {
@@ -1946,9 +1947,9 @@ export default {
       box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
     }
 
-    &.active.tone-1 { background: linear-gradient(135deg, #2259aa 0%, #5a39d8 100%); }
-    &.active.tone-2 { background: linear-gradient(135deg, #2259aa 0%, #b737d9 100%); }
-    &.active.tone-3 { background: linear-gradient(135deg, #2f4b9e 0%, #ea1d2c 100%); }
+    &.active.tone-1,
+    &.active.tone-2,
+    &.active.tone-3 { background: rgba(var(--theme-color-rgb), 0.05); }
 
     &:disabled,
     &.is-locked {
