@@ -643,6 +643,7 @@ $space-2: map.get($spacers, 2);
   background-color: transparent;
   border: var(--border-width) solid var(--border-hover);
   transition: box-shadow 0.22s ease, border-color 0.22s ease;
+  margin-bottom: 0 !important;
 
   &:hover {
     border-color: rgba(var(--theme-color-rgb), 0.22);
@@ -1182,10 +1183,15 @@ input:checked + .slider:before { transform: translateX(18px); }
 
 @include down(md) {
   .my-center {
-    background: #f3f3f5;
+    background: transparent;
   }
 
   .my-center-inner { max-width: 100%; gap: #{$space-2}; }
+
+  .section-block {
+    background: transparent !important;
+    box-shadow: none;
+  }
 
   .top-nav-wrap {
     border-radius: 0;
