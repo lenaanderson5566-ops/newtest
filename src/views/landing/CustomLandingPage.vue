@@ -1,69 +1,34 @@
-﻿<template>
-
+<template>
   <div class="custom-landing-container">
-
     <!-- 全屏加载动画 -->
-
     <div
-
-        v-if="shouldShowPreloader"
-
-        class="preloader"
-
-        :class="{'fade-out': isLoaded}"
-
-        ref="preloader"
-
-        :style="preloaderStyle"
-
+      v-if="shouldShowPreloader"
+      ref="preloader"
+      class="preloader"
+      :class="{ 'fade-out': isLoaded }"
+      :style="preloaderStyle"
     >
-
       <div class="loader" :style="loaderStyle"></div>
-
     </div>
-
-
-
-
-
 
     <!-- iframe用于加载自定义landing页面 -->
-
     <iframe
-
-        v-if="customLandingPath"
-
-        :src="customLandingPath"
-
-        class="custom-landing-iframe"
-
-        ref="landingIframe"
-
-        frameborder="0"
-
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-
-        allowfullscreen
-
-        @load="handleIframeLoaded"
-
+      v-if="customLandingPath"
+      ref="landingIframe"
+      :src="customLandingPath"
+      class="custom-landing-iframe"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      @load="handleIframeLoaded"
     ></iframe>
 
-
-
     <!-- 如果没有授权码或未指定自定义landing页，显示默认landing页 -->
-
     <div v-else>
-
       <LandingPage @loaded="handleContentLoaded" />
-
     </div>
-
   </div>
-
 </template>
-
-
 
 <script>
 import { ref, onMounted, computed, onBeforeUnmount } from 'vue';
@@ -118,6 +83,15 @@ export default {
       }
     };
 
+    const PRELOADER_KEY = 'ez_preloader_shown';
+    const shouldShowPreloader = ref(sessionStorage.getItem(PRELOADER_KEY) !== '1');
+
+    const hidePreloader = () => {
+      isLoaded.value = true;
+      sessionStorage.setItem(PRELOADER_KEY, '1');
+      shouldShowPreloader.value = false;
+    };
+
     const handleIframeLoaded = () => {
       setTimeout(() => {
         hidePreloader();
@@ -128,16 +102,7 @@ export default {
       hidePreloader();
     };
 
-    const PRELOADER_KEY = 'ez_preloader_shown';
-    const shouldShowPreloader = ref(sessionStorage.getItem(PRELOADER_KEY) !== '1');
-
-    const hidePreloader = () => {
-      isLoaded.value = true;
-      sessionStorage.setItem(PRELOADER_KEY, '1');
-      shouldShowPreloader.value = false;
-    };
-
-    onMounted(async () => {
+    onMounted(() => {
       if (sessionStorage.getItem(PRELOADER_KEY) === '1') {
         isLoaded.value = true;
         if (preloader.value) preloader.value.style.display = 'none';
@@ -175,140 +140,76 @@ export default {
       preloaderStyle,
       loaderStyle,
       handleIframeLoaded,
-      handleContentLoaded
+      handleContentLoaded,
     };
   }
 };
 </script>
 
-
-
 <style lang="scss" scoped>
-
 .custom-landing-container {
-
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
   position: relative;
-
 }
-
-
 
 .custom-landing-iframe {
-
   width: 100%;
-
   height: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-
   border: none;
   display: block;
-
 }
-
-
-
-
 
 .preloader {
-
   position: fixed;
-
   top: 0;
-
   left: 0;
-
   width: 100%;
-
   height: 100%;
-
   background-color: var(--color-bg-surface);
-
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
   z-index: 9999;
-
   transition: opacity 0.8s ease, visibility 0.8s ease;
-
 }
-
-
 
 .preloader.fade-out {
-
   opacity: 0;
-
   visibility: hidden;
-
 }
-
-
 
 .loader {
-
   width: 50px;
-
   height: 50px;
-
   border-radius: 50%;
-
   border-top-color: var(--loader-primary-color);
-
   animation: spin 1s ease-in-out infinite;
-
   position: relative;
-
 }
-
-
 
 .loader::before {
-
   content: '';
-
   position: absolute;
-
   top: -3px;
-
   left: -3px;
-
   right: -3px;
-
   bottom: -3px;
-
   border: 3px solid transparent;
-
   border-bottom-color: var(--loader-primary-light);
-
   border-radius: 50%;
-
   animation: spin 1.5s linear infinite;
-
 }
-
-
 
 @keyframes spin {
-
   0% {
-
     transform: rotate(0deg);
-
   }
-
   100% {
-
     transform: rotate(360deg);
-
   }
-
 }
-
 </style>
