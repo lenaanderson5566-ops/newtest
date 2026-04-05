@@ -1722,7 +1722,7 @@ $space-2: map.get($spacers, 2);
             align-items: center;
             justify-content: center;
             color: var(--theme-white);
-            background: linear-gradient(135deg, var(--theme-color), var(--theme-hover-color));
+            background: var(--theme-gradient-primary);
             cursor: pointer;
           }
         }
@@ -2690,7 +2690,7 @@ $space-2: map.get($spacers, 2);
 
 .hero-btn.primary {
   color: var(--text-on-dark-primary);
-  background: linear-gradient(135deg, var(--theme-color), var(--theme-hover-color));
+  background: var(--theme-gradient-primary);
 }
 
 .hero-btn.secondary {

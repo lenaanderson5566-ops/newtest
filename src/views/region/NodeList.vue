@@ -751,7 +751,7 @@ onMounted(() => {
 
     .primary {
       color: var(--text-on-dark-primary);
-      background: linear-gradient(135deg, var(--theme-color), var(--theme-hover-color));
+      background: var(--theme-gradient-primary);
     }
 
     .secondary {
