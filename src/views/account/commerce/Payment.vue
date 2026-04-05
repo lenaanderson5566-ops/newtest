@@ -1682,7 +1682,7 @@ export default {
       flex: 2;
 
       &:hover:not(:disabled) {
-        background-color: var(--primary-color-hover);
+        background-color: var(--theme-hover-color);
         transform: none;
       }
     }

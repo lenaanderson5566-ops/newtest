@@ -586,7 +586,7 @@ $space-2: map.get($spacers, 2);
 
 .my-center {
   padding: 0 0 0;
-  background: #f5f5f7;
+  background: transparent;
 }
 
 .my-center-inner {
@@ -640,7 +640,7 @@ $space-2: map.get($spacers, 2);
 
 .section-block {
   border-radius: $border-radius-sm;
-  background-color: var(--color-bg-surface);
+  background-color: transparent;
   border: var(--border-width) solid var(--border-hover);
   transition: box-shadow 0.22s ease, border-color 0.22s ease;
 

@@ -42,8 +42,6 @@ import { useRouter, useRoute } from "vue-router";
 
 import { SITE_CONFIG } from "@/utils/baseConfig";
 
-import { useTheme } from "@/composables/useTheme";
-
 export default {
   name: "ApiValidation",
 
@@ -53,10 +51,6 @@ export default {
     const route = useRoute();
 
     const siteConfig = ref(SITE_CONFIG);
-
-    const { theme } = useTheme();
-
-    const isDarkTheme = computed(() => theme.value === "dark");
 
     const isChecking = ref(true);
 
@@ -293,8 +287,6 @@ export default {
       dashOffset,
 
       progressPercent,
-
-      isDarkTheme,
 
       redirectInfo,
     };

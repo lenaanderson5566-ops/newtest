@@ -1656,7 +1656,7 @@ export default {
     padding: 0 16px;
     margin-top: 4px;
     align-self: flex-start;
-    background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
+    background: linear-gradient(135deg, var(--theme-color), var(--theme-hover-color));
 
     &.glassmorphism {
       backdrop-filter: none;
@@ -1670,7 +1670,7 @@ export default {
     }
 
     &.btn-disabled {
-      background: var(--button-disabled-bg);
+      background: var(--text-quaternary);
       cursor: not-allowed;
       border: var(--border-width) solid var(--border-hover);
 
@@ -1721,7 +1721,7 @@ export default {
       padding: 4px;
       border-radius: 12px;
       border: var(--border-width) solid var(--border-default);
-      background: var(--surface-subtle);
+      background: var(--color-bg-surface-subtle);
 
       .filter-highlight {
         position: absolute;
@@ -1729,7 +1729,7 @@ export default {
         top: 3px;
         bottom: 3px;
         border-radius: 9px;
-        background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
+        background: linear-gradient(135deg, var(--theme-color), var(--theme-hover-color));
         transition: transform 0.22s ease, width 0.22s ease;
         pointer-events: none;
       }
@@ -1792,7 +1792,7 @@ export default {
       transition: all 0.3s ease;
 
       &:hover {
-        background-color: var(--primary-color-hover);
+        background-color: var(--theme-hover-color);
 
         transform: translateY(-2px);
       }
@@ -1883,7 +1883,7 @@ export default {
   }
 
   .shop-container {
-  --shop-card-radius: var(--radius-lg);
+  --shop-card-radius: var(--radius-base);
 
     padding: 16px;
 
@@ -2066,13 +2066,13 @@ export default {
         align-items: center;
         justify-content: center;
         gap: 8px;
-        background: linear-gradient(135deg, var(--button-primary-start) 0%, var(--button-primary-end) 100%);
+        background: linear-gradient(135deg, var(--theme-color), var(--theme-hover-color));
         color: var(--text-on-dark-primary);
         font-weight: $font-weight-semibold;
 
         &.btn-disabled {
-          background: var(--button-disabled-bg);
-          border-color: var(--button-disabled-bg);
+          background: var(--text-quaternary);
+          border-color: var(--text-quaternary);
         }
       }
     }
@@ -2096,7 +2096,7 @@ export default {
     .filter-toggle-wrapper {
       border: var(--border-width) solid var(--border-default);
       border-radius: 12px;
-      background: var(--surface-subtle);
+      background: var(--color-bg-surface-subtle);
 
       width: fit-content;
     }

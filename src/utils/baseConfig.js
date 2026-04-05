@@ -156,7 +156,6 @@ export const SITE_CONFIG = mergeDeep(
 const DEFAULT_BASE_CONFIG = {
   // 配置以 src/config/index.js 为主，避免重复维护
   // 保留最小兜底，防止未加载外部配置时主题计算报错
-  defaultTheme: "light",
   primaryColor: "#355cc2",
   enableLandingPage: true,
 };
@@ -247,105 +246,6 @@ const DEFAULT_DASHBOARD_CONFIG = {
 export const DASHBOARD_CONFIG = mergeDeep(
   DEFAULT_DASHBOARD_CONFIG,
   getConfig("DASHBOARD_CONFIG")
-);
-
-/**
- * 将16进制颜色转换为RGB数组
- * @param {string} hex - 16进制颜色值
- * @returns {number[]} RGB数组
- */
-const hexToRgb = (hex) => {
-  // 确保输入值是字符串
-  if (typeof hex !== "string") {
-    hex = String(hex);
-  }
-
-  // 去除空格
-  hex = hex.trim();
-
-  // 处理缩写形式的颜色值（例如#FFF -> #FFFFFF）
-  const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
-
-  // 正则匹配完整的十六进制颜色值
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-
-  if (result) {
-    return [
-      parseInt(result[1], 16),
-      parseInt(result[2], 16),
-      parseInt(result[3], 16),
-    ];
-  }
-};
-
-/**
- * 计算主题相关的颜色
- * @param {string} primaryColor - 主题色（16进制）
- * @returns {object} 主题色相关的颜色对象
- */
-const calculateThemeColors = (primaryColor) => {
-  const rgb = hexToRgb(primaryColor);
-  return {
-    primaryColor: primaryColor,
-    primaryColorRgb: rgb.join(", "),
-    // 计算衍生颜色
-    primaryColorLight: `rgba(${rgb.join(", ")}, 0.1)`,
-    primaryColorDark: primaryColor,
-    primaryColorHover: `rgba(${rgb.join(", ")}, 0.9)`,
-    primaryColorActive: `rgba(${rgb.join(", ")}, 0.8)`,
-    primaryColorFocus: `rgba(${rgb.join(", ")}, 0.25)`,
-  };
-};
-
-// 默认主题配置
-const DEFAULT_THEME_CONFIG = {
-  // 默认主题（light或dark）
-  defaultTheme: DEFAULT_CONFIG.defaultTheme,
-
-  // 主题颜色变量
-  light: {
-    ...calculateThemeColors(DEFAULT_CONFIG.primaryColor),
-    backgroundColor: "#f3f6fb",
-    backgroundElevated: "#f8faff",
-    cardBackground: "#ffffff",
-    textColor: "#0f172a",
-    secondaryTextColor: "#64748b",
-    mutedTextColor: "#94a3b8",
-    borderColor: "rgba(148, 163, 184, 0.22)",
-    borderColorSoft: "rgba(148, 163, 184, 0.14)",
-    shadowColor: "rgba(15, 23, 42, 0.06)",
-    shadowCardSm: "0 1px 3px rgba(15, 23, 42, 0.04), 0 6px 14px rgba(15, 23, 42, 0.04)",
-    shadowCardMd: "0 4px 20px rgba(15, 23, 42, 0.08)",
-    radiusSm: "8px",
-    radiusMd: "8px",
-    radiusLg: "8px",
-    surfaceSubtle: "#f1f5f9",
-    headingColor: "#0f172a",
-    neutralStrong: "#334155",
-    buttonPrimaryStart: DEFAULT_CONFIG.primaryColor,
-    buttonPrimarySoftStart: DEFAULT_CONFIG.primaryColor,
-    buttonPrimaryEnd: calculateThemeColors(DEFAULT_CONFIG.primaryColor).primaryColorHover,
-    buttonDisabledBg: "#94a3b8",
-  },
-
-  dark: {
-    ...calculateThemeColors(DEFAULT_CONFIG.primaryColor),
-    backgroundColor: "#171A1D",
-    cardBackground: "rgba(30, 30, 30, 0.8)",
-    textColor: "rgba(255, 255, 255, 0.9)",
-    secondaryTextColor: "rgba(255, 255, 255, 0.6)",
-    borderColor: "rgba(255, 255, 255, 0.1)",
-    shadowColor: "rgba(0, 0, 0, 0.3)",
-    radiusSm: "8px",
-    radiusMd: "8px",
-    radiusLg: "8px",
-  },
-};
-
-export const THEME_CONFIG = mergeDeep(
-  DEFAULT_THEME_CONFIG,
-  getConfig("THEME_CONFIG")
 );
 
 // 默认背景装饰球配置

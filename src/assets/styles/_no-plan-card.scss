@@ -110,7 +110,7 @@
 }
 
 .action-button.primary:hover {
-  background-color: var(--primary-color-hover, var(--theme-color));
+  background-color: var(--theme-hover-color, var(--theme-color));
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(var(--theme-color-rgb), 0.4);
 }

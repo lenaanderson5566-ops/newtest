@@ -82,7 +82,6 @@
 <script>
 import { onMounted, onUnmounted, ref, computed, provide, watch, nextTick } from 'vue';
 import { useAppStore } from '@/store';
-import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
 import { SITE_CONFIG, PROFILE_CONFIG } from '@/utils/baseConfig';
 import { checkAuthAndReloadMessages } from '@/utils/authUtils';
@@ -121,7 +120,6 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const store = useAppStore();
-    const { applyTheme } = useTheme();
     const { showToast } = useToast();
     const siteConfig = ref(SITE_CONFIG);
     const currentYear = computed(() => new Date().getFullYear());
@@ -275,8 +273,6 @@ export default {
 
     onMounted(() => {
       window.addEventListener('languageChanged', onLanguageChanged);
-
-      applyTheme(store.currentTheme);
 
       checkAuthAndReloadMessages();
       loadUnreadNoticeCount();
@@ -523,6 +519,7 @@ export default {
 .app-content-wrapper {
   width: 100%;
   box-sizing: border-box;
+  background-color: transparent;
 
   &.with-top-bar {
     --app-top-bar-height: calc(56px + env(safe-area-inset-top, 0px));
@@ -535,6 +532,7 @@ export default {
 .content-layout-shell {
   width: 100%;
   box-sizing: border-box;
+  background-color: transparent;
 }
 
 .content-layout-shell.fixed-content-width {

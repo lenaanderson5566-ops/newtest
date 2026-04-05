@@ -72,9 +72,6 @@ export const config = {
 
   // 默认主题配置
   DEFAULT_CONFIG: {
-    // 默认主题 ('light' 或 'dark')
-    defaultTheme: "light",
-
     // 主题色 (16进制颜色值)
     primaryColor: "#355cc2",
 

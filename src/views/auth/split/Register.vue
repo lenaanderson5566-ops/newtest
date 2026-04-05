@@ -3381,7 +3381,7 @@ export default {
 
     &:hover:not(:disabled) {
 
-      background-color: var(--primary-color-hover);
+      background-color: var(--theme-hover-color);
 
     }
 

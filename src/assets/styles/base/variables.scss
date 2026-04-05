@@ -51,6 +51,12 @@
   --info-color: #2563eb;
   --info-background: #eef4ff;
   --info-color-rgb: 37, 99, 235;
+
+  /* Theme semantic tokens (single source of truth) */
+  --radius-base: 8px;
+  --theme-color: #355cc2;
+  --theme-color-rgb: 53, 92, 194;
+  --theme-hover-color: rgba(var(--theme-color-rgb), 0.9);
 }
 
 // 断点变量
