@@ -410,7 +410,7 @@ onMounted(fetchUserStatus);
 }
 
 .status-strip {
-  background: rgba(var(--theme-color-rgb), 0.06);
+  background: var(--color-bg-page);
   border: var(--border-width) solid var(--divider);
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2);
@@ -436,6 +436,10 @@ onMounted(fetchUserStatus);
     color: var(--error-color);
   }
 
+
+  &.is-active {
+    background: var(--color-bg-surface-subtle);
+  }
   &.is-active .status-icon {
     color: var(--success-color);
   }
