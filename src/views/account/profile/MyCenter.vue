@@ -22,7 +22,7 @@
               <span class="label">{{ $t('myCenter.email') }}</span>
               <strong>{{ userInfo.email || '-' }}</strong>
             </div>
-            <div class="summary-item is-highlight">
+            <div class="summary-item">
               <span class="label">{{ $t('myCenter.accountBalance') }}</span>
               <div class="balance-amount-row">
                 <strong v-for="item in balanceDisplayItems" :key="item.key" class="balance-amount">
@@ -36,7 +36,7 @@
           <div class="summary-actions">
             <button class="nav-row summary-nav-row" @click="go('/wallet/deposit')">
               <div class="row-main">
-                <div class="row-title">{{ $t('myCenter.accountBalance') }}</div>
+                <div class="row-title">{{ $t('myCenter.topUp') }}</div>
                 <p>{{ $t('myCenter.balanceDesc') }}</p>
               </div>
               <IconChevronRight :size="18" />
@@ -833,10 +833,6 @@ $space-2: map.get($spacers, 2);
     word-break: break-word;
   }
 
-  &.is-highlight {
-    border-color: rgba(var(--theme-color-rgb), 0.32);
-    background: linear-gradient(130deg, rgba(var(--theme-color-rgb), 0.14), rgba(var(--theme-color-rgb), 0.05));
-  }
 }
 
 .section-title {

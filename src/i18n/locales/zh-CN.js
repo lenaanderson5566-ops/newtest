@@ -431,7 +431,7 @@ export default {
     myCenter: {
         summaryTitle: '账号摘要',
         summaryDesc: '核心账号信息一目了然',
-        topUp: '余额充值',
+        topUp: '账户充值',
         email: '邮箱',
         currentPlan: '当前计划',
         expireAt: '到期时间',
