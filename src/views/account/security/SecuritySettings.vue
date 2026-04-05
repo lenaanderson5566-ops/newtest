@@ -389,7 +389,7 @@ onMounted(() => {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   @extend %typo-item-title;
   display: inline-flex;
   align-items: center;
@@ -504,7 +504,7 @@ onMounted(() => {
   display: flex;
   gap: 8px;
   font-size: $font-size-sm;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
 }
 
 .device-empty,
@@ -586,13 +586,13 @@ onMounted(() => {
     margin: 0;
     font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
 
   .modal-close {
     background: none;
     border: none;
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
     cursor: pointer;
     padding: 4px;
     display: flex;
@@ -622,7 +622,7 @@ onMounted(() => {
       display: block;
       font-size: $font-size-md;
       font-weight: $font-weight-medium;
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       margin-bottom: 8px;
     }
 
@@ -632,7 +632,7 @@ onMounted(() => {
       border: var(--border-width) solid var(--border-default);
       border-radius: 8px;
       background-color: var(--bg-secondary);
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       font-size: $font-size-md;
       transition: all 0.3s ease;
 
@@ -668,7 +668,7 @@ onMounted(() => {
     &.btn-cancel {
       background-color: transparent;
       border: var(--border-width) solid var(--border-default);
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);

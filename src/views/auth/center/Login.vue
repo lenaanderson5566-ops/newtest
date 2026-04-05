@@ -656,7 +656,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     width: 20px;
 
@@ -676,7 +676,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     cursor: pointer;
 
@@ -716,7 +716,7 @@ export default {
 
     transition: all 0.3s ease;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
 
 
@@ -869,7 +869,7 @@ export default {
 
     .checkbox-label {
 
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
 
       font-size: $font-size-sm;
 
@@ -1080,7 +1080,7 @@ export default {
 
   line-height: normal;
 
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 
   border: var(--border-width) solid var(--border-default);
 

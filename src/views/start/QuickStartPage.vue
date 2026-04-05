@@ -410,39 +410,59 @@ onMounted(fetchUserStatus);
 }
 
 .status-strip {
-  background: #ead6a8;
-  border: var(--border-width) solid var(--divider);
+  min-height: 52px;
+  padding: 12px 16px;
   border-radius: $border-radius-sm;
-  box-shadow: var(--shadow-sm);
-  padding: map.get($spacers, 2);
+  border: none;
+  background: #ead6a8;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease;
 
   .status-main-row {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
   }
 
   .status-icon {
-    color: rgba(var(--theme-color-rgb), 0.9);
+    color: #111827;
     flex-shrink: 0;
   }
 
   .status-main {
     margin: 0;
-    @extend %typo-body-text;
-    font-weight: $font-weight-semibold;
+    color: #111827;
+    font-size: $font-size-md;
+    line-height: 1.35;
+    font-weight: $font-weight-medium;
+  }
+
+  &:hover {
+    background: #e5cf9e;
   }
 
   &.is-expired .status-icon {
     color: var(--error-color);
   }
 
+  &.is-expired {
+    background: #fee2e2;
+  }
 
   &.is-active {
-    background: #efe1bf;
+    background: #dcfce7;
   }
   &.is-active .status-icon {
-    color: var(--success-color);
+    color: #166534;
+  }
+  &.is-active .status-main {
+    color: #166534;
+  }
+
+  &.is-active:hover {
+    background: #bbf7d0;
   }
 }
 
@@ -469,7 +489,7 @@ onMounted(fetchUserStatus);
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: #4177e9;
+    background: var(--theme-color);
     color: var(--text-on-dark-primary);
     display: flex;
     align-items: center;
@@ -635,9 +655,9 @@ onMounted(fetchUserStatus);
 
 .action-btn,
 .help-btn {
-  border: var(--border-width) solid var(--border-default);
+  border: var(--border-width) solid rgba(var(--theme-color-rgb), 0.35);
   background: var(--color-bg-surface);
-  color: var(--info-color);
+  color: var(--theme-color);
   border-radius: $border-radius-sm;
   padding: map.get($spacers, 2);
   cursor: pointer;
@@ -646,10 +666,21 @@ onMounted(fetchUserStatus);
   justify-content: center;
   gap: 4px;
   box-shadow: var(--shadow-sm);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    border-color: rgba(var(--theme-color-rgb), 0.5);
+    background: rgba(var(--theme-color-rgb), 0.05);
+  }
 
   &.primary {
-    background: #3f72e8;
+    background: var(--theme-color);
     color: var(--text-on-dark-primary);
+
+    &:hover {
+      background: var(--theme-hover-color);
+      border-color: transparent;
+    }
   }
 }
 
@@ -687,7 +718,7 @@ onMounted(fetchUserStatus);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
   }
 
   img {

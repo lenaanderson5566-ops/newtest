@@ -461,7 +461,7 @@ export default {
     }
 
     &.black {
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       text-shadow: none;
     }
   }
@@ -480,7 +480,7 @@ export default {
     }
 
     &.black {
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       text-shadow: none;
     }
   }
@@ -552,7 +552,7 @@ export default {
     font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
     margin-bottom: 8px;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
     @include up(lg) {
       text-align: left;
@@ -561,7 +561,7 @@ export default {
 
   .auth-subtitle {
     font-size: $font-size-md;
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
     margin-bottom: 24px;
 
     @include up(lg) {
@@ -586,7 +586,7 @@ export default {
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
     width: 20px;
     height: 20px;
   }
@@ -596,7 +596,7 @@ export default {
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
     cursor: pointer;
     padding: 4px;
     display: flex;
@@ -616,7 +616,7 @@ export default {
     border: var(--border-width) solid var(--border-default);
     background-color: var(--input-bg-color, #f9f9f9);
     transition: all 0.3s ease;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
     &[type="password"],
     &[type="text"] {
@@ -692,7 +692,7 @@ export default {
     }
 
     .checkbox-label {
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
       font-size: $font-size-sm;
     }
   }
@@ -802,7 +802,7 @@ export default {
   align-items: center;
   justify-content: center;
   line-height: normal;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   border: var(--border-width) solid var(--border-default);
   background-color: transparent;
   transition: all 0.3s ease;
@@ -893,7 +893,7 @@ export default {
   }
 
   p {
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
     font-size: $font-size-md;
   }
 }

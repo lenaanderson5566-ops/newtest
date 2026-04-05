@@ -1157,7 +1157,7 @@ export default {
 
     .card-body {
       p {
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
         margin: 0;
       }
     }
@@ -1239,7 +1239,7 @@ export default {
   .section-title {
     @extend %typo-section-title;
     margin-bottom: 16px;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     position: relative;
     display: flex;
     align-items: center;
@@ -1292,21 +1292,22 @@ export default {
     padding: 0;
     margin: 8px 0;
     // 必须压过全局 section-wrapper 皮肤（公共层）
-    background: var(--color-bg-surface) !important;
+    background: transparent !important;
     border: none !important;
+    box-shadow: none !important;
 
     .section-title {
-      background-color: var(--color-bg-surface);
+      background-color: transparent;
       margin-top: 8px;
       margin-bottom: 8px;
-      color: var(--text-primary);
+      color: var(--color-text-primary);
     }
   }
 
   .right-column .section-wrapper.payment-methods-section {
-    // 历史兼容：右栏卡片主题需要强制背景，避免被公共块背景回退
-    background: var(--right-card-bg) !important;
-    border: var(--border-width) solid var(--border-default);
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   .right-column .section-wrapper.payment-methods-section .section-title {
@@ -1314,7 +1315,7 @@ export default {
   }
 
   .order-amount-section {
-    background: var(--card-bg-color);
+    background: transparent;
     border: var(--border-width) solid var(--border-default);
 
     .summary-header-block {
@@ -1324,12 +1325,12 @@ export default {
         @extend %typo-card-title;
         @extend %typo-dark-primary;
         margin: 0;
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
     }
 
     .section-title {
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       &::after {
         background-color: var(--border-default);
@@ -1352,7 +1353,7 @@ export default {
           flex: 1;
           min-width: 0;
           font-size: $font-size-sm;
-          color: var(--text-tertiary);
+          color: var(--color-text-tertiary);
           letter-spacing: 0.2px;
         }
 
@@ -1361,7 +1362,7 @@ export default {
           text-align: right;
           font-size: $font-size-sm;
           font-weight: $font-weight-medium;
-          color: var(--text-primary);
+          color: var(--color-text-primary);
 
           &.discount {
             color: var(--error-color);
@@ -1369,13 +1370,13 @@ export default {
           }
 
           &.fee {
-            color: var(--text-tertiary);
+            color: var(--color-text-tertiary);
           }
         }
 
         &.total {
           .summary-label {
-            color: var(--text-primary);
+            color: var(--color-text-primary);
             font-weight: $font-weight-semibold;
           }
 
@@ -1409,7 +1410,7 @@ export default {
   }
 
   .right-column .order-amount-section {
-    background: var(--right-card-bg) !important;
+    background: transparent !important;
     border: var(--border-width) solid var(--border-default);
   }
 
@@ -1417,6 +1418,14 @@ export default {
   .right-column .order-amount-section .summary-title,
   .right-column .order-amount-section .summary-label,
   .right-column .order-amount-section .summary-value {
+    color: var(--right-card-text);
+  }
+
+  // 提升选择器优先级，覆盖浅色基础规则，确保右侧卡片文本保持深色卡片反色风格
+  .right-column .order-amount-section .order-info .summary-row .summary-label,
+  .right-column .order-amount-section .order-info .summary-row .summary-value,
+  .right-column .order-amount-section .order-info .summary-row.total .summary-label,
+  .right-column .order-amount-section .order-info .summary-row.total .summary-value.final {
     color: var(--right-card-text);
   }
 
@@ -1500,13 +1509,13 @@ export default {
         .method-name {
           font-size: $font-size-md;
           font-weight: $font-weight-semibold;
-          color: var(--text-primary);
+          color: var(--color-text-primary);
           line-height: 1.2;
         }
 
         .method-fee {
           font-size: $font-size-sm;
-          color: var(--text-tertiary);
+          color: var(--color-text-tertiary);
           white-space: nowrap;
         }
       }
@@ -1542,7 +1551,7 @@ export default {
 
       p {
         margin: 0;
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
     }
   }
@@ -1655,7 +1664,7 @@ export default {
 
     .btn-back {
       background-color: transparent;
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       flex: 1;
       border: var(--border-width) solid var(--border-default);
 
@@ -1689,7 +1698,7 @@ export default {
 
     .btn-check {
       background-color: var(--hover-color);
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       flex: 1;
       border: var(--border-width) solid var(--border-default);
 
@@ -2042,14 +2051,14 @@ export default {
       font-size: $font-size-xl;
       font-weight: $font-weight-semibold;
       margin: 0 0 8px;
-      color: var(--text-primary);
+      color: var(--color-text-primary);
     }
 
     p {
       font-size: $font-size-md;
       line-height: 1.5;
       margin: 0;
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
     }
   }
 
@@ -2071,7 +2080,7 @@ export default {
     .cancel-btn {
       background-color: transparent;
       border: var(--border-width) solid var(--border-default);
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       &:hover {
         background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
@@ -2162,7 +2171,7 @@ export default {
   }
 
   &.status-unknown {
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
     background-color: rgba(158, 158, 158, 0.12);
     border-color: rgba(158, 158, 158, 0.2);
   }

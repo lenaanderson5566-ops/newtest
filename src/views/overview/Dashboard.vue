@@ -1222,7 +1222,7 @@ export default {
       }
       const rootStyles = getComputedStyle(document.documentElement);
       const textColor =
-        rootStyles.getPropertyValue('--text-primary').trim() ||
+        rootStyles.getPropertyValue('--color-text-primary').trim() ||
         `rgb(${rootStyles.getPropertyValue('--text-color-rgb').trim() || '51, 51, 51'})`;
       const borderColor = rootStyles.getPropertyValue('--border-default').trim() || '#e8e8e8';
       const themeColor = rootStyles.getPropertyValue('--theme-color').trim() || '#6753f6';
@@ -1521,25 +1521,25 @@ $space-2: map.get($spacers, 2);
   justify-content: center;
   --dashboard-card-padding: 16px;
   --dashboard-section-padding: 12px;
-  --dashboard-radius: #{$border-radius-sm};
+  --dashboard-radius: #{$border-radius};
   --dashboard-button-radius: 12px;
-  --dashboard-subtitle-color: var(--text-tertiary);
+  --dashboard-subtitle-color: var(--color-text-tertiary);
   --dashboard-kpi-size: 13px;
   --dashboard-gap-compact: var(--global-card-gap);
   --dashboard-section-margin: var(--global-card-gap);
 
   --saas-card-bg: var(--color-bg-surface);
 
-  --theme-text-primary: var(--text-primary);
+  --theme-text-primary: var(--color-text-primary);
   --theme-surface-muted: #f3f4f6;
   --theme-surface-soft: #f8fafc;
   --theme-border-soft: var(--divider);
   --theme-white: #ffffff;
-  --quota-value-color: var(--text-primary);
+  --quota-value-color: var(--color-text-primary);
   --quota-progress-start: #60a5fa;
   --quota-progress-end: #3b82f6;
   --quota-muted-fill: #cbd5e1;
-  --plan-meta-text: var(--text-tertiary);
+  --plan-meta-text: var(--color-text-tertiary);
   --plan-expired-strip-text: #b91c1c;
   --plan-expired-strip-bg: rgba(248, 113, 113, 0.16);
 
@@ -1824,7 +1824,7 @@ $space-2: map.get($spacers, 2);
             font-size: $font-size-2xl;
             line-height: 1.2;
             font-weight: $font-weight-bold;
-            color: var(--text-primary);
+            color: var(--color-text-primary);
           }
 
           .plan-expire-meta {
@@ -1921,7 +1921,7 @@ $space-2: map.get($spacers, 2);
           .plan-action-helper-text {
             margin-top: 8px;
             font-size: $font-size-sm;
-            color: var(--text-tertiary);
+            color: var(--color-text-tertiary);
             text-align: center;
           }
 
@@ -2169,7 +2169,7 @@ $space-2: map.get($spacers, 2);
   }
 
   .stats-grid .stats-card.today-traffic-card {
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     min-width: 0;
     z-index: 2;
     align-items: flex-start;
@@ -2222,7 +2222,7 @@ $space-2: map.get($spacers, 2);
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
     cursor: help;
 
     .info-tooltip-content {
@@ -2689,7 +2689,7 @@ $space-2: map.get($spacers, 2);
 }
 
 .hero-btn.secondary {
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   border-color: rgba(148, 163, 184, 0.3);
   background: rgba(255, 255, 255, 0.76);
 }
@@ -2903,7 +2903,7 @@ $space-2: map.get($spacers, 2);
 
     h3 {
       margin: 0;
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       font-size: $font-size-xl;
       font-weight: $font-weight-semibold;
     }
@@ -2914,11 +2914,11 @@ $space-2: map.get($spacers, 2);
       justify-content: center;
       border: none;
       background: transparent;
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
       cursor: pointer;
 
       &:hover {
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
     }
   }
@@ -2943,7 +2943,7 @@ $space-2: map.get($spacers, 2);
 
   .traffic-package-desc {
     margin: 0 0 16px;
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
     font-size: $font-size-md;
     line-height: 1.5;
   }
@@ -2975,7 +2975,7 @@ $space-2: map.get($spacers, 2);
     gap: #{$space-2};
 
     strong {
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       font-size: $font-size-md;
       font-weight: $font-weight-semibold;
     }
@@ -2989,7 +2989,7 @@ $space-2: map.get($spacers, 2);
 
   .item-content {
     min-height: 32px;
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
     font-size: $font-size-sm;
     line-height: 1.45;
   }

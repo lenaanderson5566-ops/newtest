@@ -386,7 +386,7 @@ onMounted(() => {
 
     p {
 
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
 
       margin: 0;
 
@@ -411,7 +411,7 @@ onMounted(() => {
   .quick-btn {
     border: var(--border-width) solid var(--border-default);
     background: #fff;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     border-radius: $border-radius-sm;
     padding: 8px 16px;
     cursor: pointer;
@@ -577,7 +577,7 @@ onMounted(() => {
     }
 
     .reset-modal-text {
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       font-size: $font-size-md;
       margin: 0 0 8px;
       line-height: 1.6;
@@ -617,7 +617,7 @@ onMounted(() => {
 
     p {
       margin: 8px 0 0;
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
       font-size: $font-size-md;
     }
   }
@@ -715,7 +715,7 @@ onMounted(() => {
 
       p {
         margin: 0;
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
         font-size: $font-size-sm;
       }
 
@@ -755,7 +755,7 @@ onMounted(() => {
     }
 
     .secondary {
-      color: var(--text-secondary);
+      color: var(--color-text-secondary);
       border-color: var(--border-default);
       background: var(--color-bg-surface-subtle);
     }
@@ -846,7 +846,7 @@ onMounted(() => {
 
       margin: 0 0 4px;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       line-height: 1.4;
 
@@ -870,7 +870,7 @@ onMounted(() => {
 
       font-size: $font-size-xs;
 
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
 
       margin: 0;
 
@@ -890,7 +890,7 @@ onMounted(() => {
         padding: 0 4px;
         border-radius: 999px;
         background-color: rgba(190, 24, 93, 0.1);
-        color: var(--text-secondary);
+        color: var(--color-text-secondary);
         font-weight: $font-weight-medium;
         display: inline-flex;
         align-items: center;
@@ -959,7 +959,7 @@ onMounted(() => {
 
     margin-top: 16px;
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     font-size: $font-size-lg;
 
@@ -971,7 +971,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     opacity: 0.7;
 

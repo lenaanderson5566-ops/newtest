@@ -1522,21 +1522,21 @@ export default {
         .currency {
           font-size: $font-size-3xl;
           font-weight: $font-weight-medium;
-          color: color-mix(in srgb, var(--text-primary) 72%, var(--text-tertiary) 28%);
+          color: color-mix(in srgb, var(--color-text-primary) 72%, var(--color-text-tertiary) 28%);
         }
 
         .amount {
           font-size: $font-size-3xl;
           line-height: 0.95;
           font-weight: $font-weight-bold;
-          color: var(--text-primary);
+          color: var(--color-text-primary);
           letter-spacing: -0.8px;
         }
 
         .unit-line {
           font-size: $font-size-sm;
           font-weight: $font-weight-medium;
-          color: color-mix(in srgb, var(--text-primary) 72%, var(--text-tertiary) 28%);
+          color: color-mix(in srgb, var(--color-text-primary) 72%, var(--color-text-tertiary) 28%);
         }
       }
     }
@@ -1580,14 +1580,14 @@ export default {
           }
 
           &.disabled {
-            color: var(--text-quaternary);
+            color: var(--color-text-muted);
           }
         }
 
         span {
           font-size: $font-size-sm;
 
-          color: var(--text-primary);
+          color: var(--color-text-primary);
 
           line-height: 1.5; // 添加行高改善可读性
 
@@ -1598,7 +1598,7 @@ export default {
           flex: 1; // 占据剩余空间
 
           &.disabled-text {
-            color: var(--text-tertiary);
+            color: var(--color-text-tertiary);
           }
         }
       }
@@ -1608,7 +1608,7 @@ export default {
 
         line-height: 1.6;
 
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
     }
   }
@@ -1648,7 +1648,7 @@ export default {
     }
 
     &.btn-disabled {
-      background: var(--text-quaternary);
+      background: var(--color-text-muted);
       cursor: not-allowed;
       border: var(--border-width) solid var(--border-hover);
 
@@ -1742,7 +1742,7 @@ export default {
 
         .option-text {
           font-size: $font-size-sm;
-          color: var(--text-tertiary);
+          color: var(--color-text-tertiary);
           font-weight: $font-weight-medium;
           white-space: nowrap;
         }
@@ -1827,7 +1827,7 @@ export default {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   display: inline-flex;
@@ -1840,7 +1840,7 @@ export default {
 
 .back-label {
   font-size: $font-size-md;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
 }
 
 @include down(lg) {
@@ -1921,7 +1921,7 @@ export default {
         flex-direction: column;
         gap: 4px;
         text-align: left;
-        color: var(--text-primary);
+        color: var(--color-text-primary);
         position: relative;
         min-height: 96px;
         overflow: hidden;
@@ -1968,7 +1968,7 @@ export default {
 
       .chip-period {
         font-size: $font-size-sm;
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
       }
 
       .mobile-plan-chip.active .chip-period,
@@ -2012,7 +2012,7 @@ export default {
 
       .mobile-label {
         font-size: $font-size-sm;
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
       }
 
       .mobile-value {
@@ -2037,8 +2037,8 @@ export default {
         font-weight: $font-weight-semibold;
 
         &.btn-disabled {
-          background: var(--text-quaternary);
-          border-color: var(--text-quaternary);
+          background: var(--color-text-muted);
+          border-color: var(--color-text-muted);
         }
       }
     }

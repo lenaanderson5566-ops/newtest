@@ -363,7 +363,7 @@ watch(locale, () => {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   @extend %typo-item-title;
   display: inline-flex;
   align-items: center;
@@ -432,7 +432,7 @@ watch(locale, () => {
 
 .orders-empty-inline {
   padding: 16px 16px;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
   text-align: center;
 }
 
@@ -455,7 +455,7 @@ watch(locale, () => {
   
   th {
     font-weight: $font-weight-semibold;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
   
   tbody tr {
@@ -704,7 +704,7 @@ watch(locale, () => {
     margin: 0;
     font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
   
   .modal-close {
@@ -731,7 +731,7 @@ watch(locale, () => {
   
   p {
     margin: 0 0 24px;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
 }
 
@@ -753,7 +753,7 @@ watch(locale, () => {
     &.btn-cancel {
       background-color: transparent;
       border: var(--border-width) solid var(--border-default);
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);

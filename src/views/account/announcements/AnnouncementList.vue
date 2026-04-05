@@ -110,6 +110,6 @@ export default {
   border-radius: $border-radius-sm;
   padding: 24px;
   text-align: center;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
 }
 </style>

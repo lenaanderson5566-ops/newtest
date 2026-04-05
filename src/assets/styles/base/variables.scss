@@ -5,15 +5,15 @@
 
 // 给CSS变量设置初始值
 :root {
-  --color-bg-page: #f3f3f3;
+  --color-bg-page: #f6f8fb;
   --color-bg-surface: #ffffff;
   --color-bg-surface-rgb: 255, 255, 255;
   --color-bg-surface-subtle: #f8faff;
 
-  --text-primary: #111827;
-  --text-secondary: #1f2937;
-  --text-tertiary: #6b7280;
-  --text-quaternary: #9aa4b2;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #8b95a7;
+  --color-text-muted: #a8b0bf;
   --text-color-rgb: 31, 41, 55;
 
   /* 文本颜色（深色表面） */
@@ -23,7 +23,7 @@
   --text-on-dark-disabled: rgba(255, 255, 255, 0.38);
 
   /* Border tokens (统一收口) */
-  --border-width: 0.4px;
+  --border-width: 1px;
   --border-subtle: rgba(148, 163, 184, 0.12);
   --border-default: #e2e8f0;
   --border-hover: rgba(148, 163, 184, 0.2);
@@ -121,10 +121,10 @@ $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
 // 边框圆角
-$border-radius-sm: 8px;
+$border-radius-sm: 6px;
 $border-radius: 8px;
-$border-radius-lg: 8px;
-$border-radius-xl: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
 
 // 动画时间
 $transition-time-fast: 0.2s;

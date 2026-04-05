@@ -38,14 +38,14 @@
 .app-content-wrapper :where(.page-shell) {
   background-color: transparent;
   background-image: none;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   font-size: var(--view-font-size-base);
   line-height: var(--view-line-height-base);
 }
 
 /* 统一 views 下常见文本风格，减少各页面重复定义 */
 .app-content-wrapper :where(.page-shell) :where(h1, h2, h3, h4, .card-title) {
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   line-height: 1.3;
 }
 
@@ -65,7 +65,7 @@
 .typo-dark-disabled { @extend %typo-dark-disabled; }
 
 .app-content-wrapper :where(.page-shell) :where(.muted, .secondary, .subtitle, .description, .info-label) {
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
   font-size: var(--view-font-size-small);
 }
 
@@ -170,13 +170,13 @@
 
 .payment-container .section-wrapper .info-label {
   width: 120px;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
   font-size: $font-size-md;
 }
 
 .payment-container .section-wrapper .info-value {
   flex: 1;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   font-weight: $font-weight-medium;
   font-size: $font-size-md;
 }
@@ -266,7 +266,7 @@
   width: 90%;
   max-width: 320px;
   background-color: var(--color-bg-surface);
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   border-radius: $border-radius-sm;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
@@ -296,12 +296,12 @@
   margin: 0;
   font-size: $font-size-xl;
   font-weight: $font-weight-semibold;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 .pending-order-modal .pending-order-dialog p {
   margin: 0;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
   line-height: 1.5;
   font-size: $font-size-md;
 }
@@ -326,7 +326,7 @@
 
 .pending-order-modal .pending-order-actions .btn-return-orders {
   background: transparent;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 
   &:hover {
     background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
