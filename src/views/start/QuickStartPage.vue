@@ -413,6 +413,7 @@ onMounted(fetchUserStatus);
   background: var(--color-bg-page);
   border: var(--border-width) solid var(--divider);
   border-radius: $border-radius-sm;
+  box-shadow: var(--shadow-sm);
   padding: map.get($spacers, 2);
 
   .status-main-row {

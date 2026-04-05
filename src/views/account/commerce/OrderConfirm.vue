@@ -2269,6 +2269,8 @@ export default {
 
         transition: all 0.3s ease;
 
+        box-shadow: var(--shadow-sm);
+
         position: relative;
 
 
