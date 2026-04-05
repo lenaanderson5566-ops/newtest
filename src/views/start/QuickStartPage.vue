@@ -410,39 +410,59 @@ onMounted(fetchUserStatus);
 }
 
 .status-strip {
-  background: #ead6a8;
-  border: var(--border-width) solid var(--divider);
+  min-height: 52px;
+  padding: 12px 16px;
   border-radius: $border-radius-sm;
-  box-shadow: var(--shadow-sm);
-  padding: map.get($spacers, 2);
+  border: none;
+  background: #ead6a8;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease;
 
   .status-main-row {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
   }
 
   .status-icon {
-    color: rgba(var(--theme-color-rgb), 0.9);
+    color: #111827;
     flex-shrink: 0;
   }
 
   .status-main {
     margin: 0;
-    @extend %typo-body-text;
-    font-weight: $font-weight-semibold;
+    color: #111827;
+    font-size: $font-size-md;
+    line-height: 1.35;
+    font-weight: $font-weight-medium;
+  }
+
+  &:hover {
+    background: #e5cf9e;
   }
 
   &.is-expired .status-icon {
     color: var(--error-color);
   }
 
+  &.is-expired {
+    background: #fee2e2;
+  }
 
   &.is-active {
-    background: #efe1bf;
+    background: #dcfce7;
   }
   &.is-active .status-icon {
-    color: var(--success-color);
+    color: #166534;
+  }
+  &.is-active .status-main {
+    color: #166534;
+  }
+
+  &.is-active:hover {
+    background: #bbf7d0;
   }
 }
 
