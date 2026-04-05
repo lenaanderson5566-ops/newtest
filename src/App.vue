@@ -191,10 +191,10 @@ export default {
 
       return {
         backgroundImage: `url(${backgroundUrl})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
+        backgroundPosition: 'left top',
+        backgroundSize: 'auto',
+        backgroundRepeat: 'repeat',
+        backgroundAttachment: 'scroll'
       };
     });
 
