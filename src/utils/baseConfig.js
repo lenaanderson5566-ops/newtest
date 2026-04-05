@@ -156,7 +156,6 @@ export const SITE_CONFIG = mergeDeep(
 const DEFAULT_BASE_CONFIG = {
   // 配置以 src/config/index.js 为主，避免重复维护
   // 保留最小兜底，防止未加载外部配置时主题计算报错
-  defaultTheme: "light",
   primaryColor: "#355cc2",
   enableLandingPage: true,
 };
@@ -300,46 +299,30 @@ const calculateThemeColors = (primaryColor) => {
 
 // 默认主题配置
 const DEFAULT_THEME_CONFIG = {
-  // 默认主题（light或dark）
-  defaultTheme: DEFAULT_CONFIG.defaultTheme,
-
   // 主题颜色变量
   light: {
     ...calculateThemeColors(DEFAULT_CONFIG.primaryColor),
-    backgroundColor: "#f3f6fb",
-    backgroundElevated: "#f8faff",
-    cardBackground: "#ffffff",
-    textColor: "#0f172a",
-    secondaryTextColor: "#64748b",
-    mutedTextColor: "#94a3b8",
-    borderColor: "rgba(148, 163, 184, 0.22)",
-    borderColorSoft: "rgba(148, 163, 184, 0.14)",
-    shadowColor: "rgba(15, 23, 42, 0.06)",
-    shadowCardSm: "0 1px 3px rgba(15, 23, 42, 0.04), 0 6px 14px rgba(15, 23, 42, 0.04)",
-    shadowCardMd: "0 4px 20px rgba(15, 23, 42, 0.08)",
-    radiusSm: "8px",
-    radiusMd: "8px",
-    radiusLg: "8px",
-    surfaceSubtle: "#f1f5f9",
-    headingColor: "#0f172a",
-    neutralStrong: "#334155",
+    backgroundColor: "var(--theme-light-background-color)",
+    backgroundElevated: "var(--theme-light-background-elevated)",
+    cardBackground: "var(--theme-light-card-background)",
+    textColor: "var(--theme-light-text-color)",
+    secondaryTextColor: "var(--theme-light-secondary-text-color)",
+    mutedTextColor: "var(--theme-light-muted-text-color)",
+    borderColor: "var(--theme-light-border-color)",
+    borderColorSoft: "var(--theme-light-border-color-soft)",
+    shadowColor: "var(--theme-light-shadow-color)",
+    shadowCardSm: "var(--theme-light-shadow-card-sm)",
+    shadowCardMd: "var(--theme-light-shadow-card-md)",
+    radiusSm: "var(--theme-radius-sm)",
+    radiusMd: "var(--theme-radius-md)",
+    radiusLg: "var(--theme-radius-lg)",
+    surfaceSubtle: "var(--theme-light-surface-subtle)",
+    headingColor: "var(--theme-light-heading-color)",
+    neutralStrong: "var(--theme-light-neutral-strong)",
     buttonPrimaryStart: DEFAULT_CONFIG.primaryColor,
     buttonPrimarySoftStart: DEFAULT_CONFIG.primaryColor,
     buttonPrimaryEnd: calculateThemeColors(DEFAULT_CONFIG.primaryColor).primaryColorHover,
-    buttonDisabledBg: "#94a3b8",
-  },
-
-  dark: {
-    ...calculateThemeColors(DEFAULT_CONFIG.primaryColor),
-    backgroundColor: "#171A1D",
-    cardBackground: "rgba(30, 30, 30, 0.8)",
-    textColor: "rgba(255, 255, 255, 0.9)",
-    secondaryTextColor: "rgba(255, 255, 255, 0.6)",
-    borderColor: "rgba(255, 255, 255, 0.1)",
-    shadowColor: "rgba(0, 0, 0, 0.3)",
-    radiusSm: "8px",
-    radiusMd: "8px",
-    radiusLg: "8px",
+    buttonDisabledBg: "var(--theme-light-button-disabled-bg)",
   },
 };
 
