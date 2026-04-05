@@ -65,6 +65,16 @@
   --surface-subtle: #f1f5f9;
   --heading-color: #0f172a;
   --neutral-strong: #334155;
+
+  /* Primary theme color tokens (no runtime theme switch) */
+  --theme-color: #355cc2;
+  --theme-color-rgb: 53, 92, 194;
+  --theme-hover-color: rgba(53, 92, 194, 0.9);
+  --primary-color-hover: rgba(53, 92, 194, 0.9);
+  --button-primary-start: #355cc2;
+  --button-primary-soft-start: #355cc2;
+  --button-primary-end: rgba(53, 92, 194, 0.9);
+  --button-disabled-bg: #94a3b8;
 }
 
 // 断点变量

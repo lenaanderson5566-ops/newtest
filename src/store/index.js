@@ -7,7 +7,6 @@ export const useAppStore = defineStore('app', {
   state: () => ({
     user: null,
     token: localStorage.getItem('token') || '',
-    theme: 'light',
     loading: false,
     error: null
   }),
@@ -15,8 +14,6 @@ export const useAppStore = defineStore('app', {
   getters: {
     isLoggedIn: state => !!state.token,
     userInfo: state => state.user,
-    currentTheme: () => 'light',
-    isDarkTheme: () => false,
     username: state => state.user?.email || state.user?.username || state.user?.name || '',
     avatarUrl: state => state.user?.avatar_url || state.user?.avatar || ''
   },
@@ -47,10 +44,6 @@ export const useAppStore = defineStore('app', {
       this.token = '';
       localStorage.removeItem('token');
       localStorage.removeItem('userInfo');
-    },
-
-    toggleTheme() {
-      this.theme = 'light';
     },
 
     initUserInfo() {

@@ -66,294 +66,119 @@
 
 
 <script>
-
-import { ref, onMounted, computed, onBeforeUnmount, watch } from 'vue';
-
+import { ref, onMounted, computed, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
-
-import { SITE_CONFIG, THEME_CONFIG, DEFAULT_CONFIG } from '@/utils/baseConfig';
-
-
-
-
-import { useTheme } from '@/composables/useTheme';
-
-
+import { SITE_CONFIG, DEFAULT_CONFIG } from '@/utils/baseConfig';
 import LandingPage from './LandingPage.vue';
 
-
-
 export default {
-
   name: 'CustomLandingPage',
-
   components: {
-
-
     LandingPage
-
   },
-
   setup() {
-
     const router = useRouter();
-
     const landingIframe = ref(null);
-
     const preloader = ref(null);
-
     const isLoaded = ref(false);
 
+    const preloaderStyle = computed(() => ({
+      backgroundColor: 'var(--color-bg-page)'
+    }));
 
+    const parseHexToRgb = (hex) => {
+      const normalized = String(hex || '').trim().replace(/^#/, '');
+      const fullHex = normalized.length === 3
+        ? normalized.split('').map((v) => v + v).join('')
+        : normalized;
 
-    const { theme, toggleTheme } = useTheme();
+      if (!/^[0-9a-fA-F]{6}$/.test(fullHex)) {
+        return '53, 92, 194';
+      }
 
-
-
-
-
-
-    const preloaderStyle = computed(() => {
-
-      const themeColors = THEME_CONFIG[theme.value];
-
-      return {
-
-        backgroundColor: themeColors.backgroundColor
-
-      };
-
-    });
-
-
+      return [
+        parseInt(fullHex.slice(0, 2), 16),
+        parseInt(fullHex.slice(2, 4), 16),
+        parseInt(fullHex.slice(4, 6), 16)
+      ].join(', ');
+    };
 
     const loaderStyle = computed(() => {
-
-      const themeColors = THEME_CONFIG[theme.value];
-
-      const primaryColor = themeColors.primaryColor || DEFAULT_CONFIG.primaryColor;
-
-      const primaryRgb = themeColors.primaryColorRgb;
-
-
-
+      const primaryColor = DEFAULT_CONFIG.primaryColor || '#355cc2';
       return {
-
         '--loader-primary-color': primaryColor,
-
-        '--loader-primary-rgb': primaryRgb,
-
+        '--loader-primary-rgb': parseHexToRgb(primaryColor),
         '--loader-primary-light': primaryColor,
       };
-
     });
-
-
 
     const handleIframeMessage = (event) => {
-
       if (event.data && event.data.type === 'navigation') {
-
         router.push('/' + event.data.route);
-
       }
-
-      else if (event.data && event.data.type === 'themeChanged') {
-
-        if (theme.value !== event.data.theme) {
-
-          toggleTheme();
-
-        }
-
-      }
-
-      else if (event.data && event.data.type === 'getTheme') {
-
-        sendThemeToIframe();
-
-      }
-
     };
-
-
-
-    const sendThemeToIframe = () => {
-
-      if (landingIframe.value && landingIframe.value.contentWindow) {
-
-        landingIframe.value.contentWindow.postMessage({
-
-          type: 'setTheme',
-
-          theme: theme.value
-
-        }, '*');
-
-      }
-
-    };
-
-
-
-    watch(theme, () => {
-
-      sendThemeToIframe();
-
-    });
-
-
 
     const handleIframeLoaded = () => {
-
       setTimeout(() => {
-
         hidePreloader();
-
       }, 500);
-
     };
-
-
 
     const handleContentLoaded = () => {
-
       hidePreloader();
-
     };
-
-
 
     const PRELOADER_KEY = 'ez_preloader_shown';
-
     const shouldShowPreloader = ref(sessionStorage.getItem(PRELOADER_KEY) !== '1');
 
-
-
     const hidePreloader = () => {
-
       isLoaded.value = true;
-
       sessionStorage.setItem(PRELOADER_KEY, '1');
-
       shouldShowPreloader.value = false;
-
     };
 
-
-
     onMounted(async () => {
-
       if (sessionStorage.getItem(PRELOADER_KEY) === '1') {
-
         isLoaded.value = true;
-
         if (preloader.value) preloader.value.style.display = 'none';
-
       }
-
-
-
-
-
-
-
-
-
 
       window.addEventListener('message', handleIframeMessage);
 
-
-
-      if (landingIframe.value) {
-
-        landingIframe.value.onload = () => {
-
-          setTimeout(() => {
-
-            sendThemeToIframe();
-
-          }, 500);
-
-        };
-
-      }
-
-
-
       setTimeout(() => {
-
         if (!isLoaded.value) {
-
           hidePreloader();
-
         }
-
       }, 5000);
-
     });
-
-
 
     onBeforeUnmount(() => {
-
       window.removeEventListener('message', handleIframeMessage);
-
     });
-
-
 
     const customLandingPath = computed(() => {
-
       if (!SITE_CONFIG.customLandingPage) return '';
 
-
-
       let path = SITE_CONFIG.customLandingPage;
-
-
-
       if (!path.startsWith('/') && !path.startsWith('http://') && !path.startsWith('https://')) {
-
         path = '/' + path;
-
       }
-
-
-
       return path;
-
     });
 
-
-
     return {
-
-
       customLandingPath,
-
       landingIframe,
-
       preloader,
-
       isLoaded,
-
-      handleIframeLoaded,
-
-      handleContentLoaded,
-
+      shouldShowPreloader,
       preloaderStyle,
-
       loaderStyle,
-
-      shouldShowPreloader
-
+      handleIframeLoaded,
+      handleContentLoaded
     };
-
   }
-
 };
-
 </script>
 
 
