@@ -2264,22 +2264,23 @@ export default {
 
         overflow: hidden;
 
-        border: var(--border-width) solid var(--border-default);
+        border: none;
+        background: transparent;
 
         transition: all 0.3s ease;
+
+        box-shadow: var(--shadow-sm);
 
         position: relative;
 
 
         &.active {
-          border-color: var(--theme-color);
-
           transform: translateY(-3px);
 
 
           .period-card-inner {
             // 覆盖第三方卡片基础底色，统一使用透明底
-            background-color: transparent !important;
+            background-color: var(--color-bg-surface) !important;
           }
 
           .period-price {
@@ -2291,14 +2292,11 @@ export default {
         }
 
         &.active.is-locked {
-          border-color: rgba(var(--theme-color-rgb), 0.95);
           box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
         }
 
         &:hover:not(.active) {
           transform: translateY(-3px);
-
-          border-color: rgba(var(--theme-color-rgb), 0.3);
 
         }
 
@@ -2311,7 +2309,6 @@ export default {
         &.is-dimmed {
           opacity: 0.28;
           filter: grayscale(0.92) saturate(0.58) brightness(0.92);
-          border-color: var(--theme-border-soft);
           background: var(--theme-surface-muted);
           transform: none;
 
@@ -2323,7 +2320,7 @@ export default {
 
         .period-card-inner {
           // 覆盖共享卡片样式中的默认背景/最小高度
-          background-color: transparent !important;
+          background-color: var(--color-bg-surface) !important;
 
           padding: 16px 8px;
 
@@ -2420,7 +2417,7 @@ export default {
 
       border-radius: $border-radius-sm;
 
-      border: var(--border-width) solid var(--border-default);
+      border: var(--border-width) solid var(--border-subtle);
 
       background-color: var(--input-bg-color);
 
@@ -2918,6 +2915,10 @@ export default {
     border-color: var(--border-default);
     color: var(--right-card-text);
 
+    &:placeholder-shown {
+      border-color: var(--border-subtle);
+    }
+
     &::placeholder {
       color: var(--text-on-dark-primary);
     }
@@ -2948,6 +2949,10 @@ export default {
     background: var(--input-bg-color);
     border-color: var(--border-default);
     color: var(--text-primary);
+
+    &:placeholder-shown {
+      border-color: var(--border-subtle);
+    }
 
     &::placeholder {
       color: var(--text-tertiary);

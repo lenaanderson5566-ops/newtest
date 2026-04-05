@@ -5,7 +5,7 @@
 
 // 给CSS变量设置初始值
 :root {
-  --color-bg-page: #ffffff;
+  --color-bg-page: #f3f3f3;
   --color-bg-surface: #ffffff;
   --color-bg-surface-rgb: 255, 255, 255;
   --color-bg-surface-subtle: #f8faff;
@@ -23,7 +23,7 @@
   --text-on-dark-disabled: rgba(255, 255, 255, 0.38);
 
   /* Border tokens (统一收口) */
-  --border-width: 1px;
+  --border-width: 0.4px;
   --border-subtle: rgba(148, 163, 184, 0.12);
   --border-default: #e2e8f0;
   --border-hover: rgba(148, 163, 184, 0.2);
@@ -54,8 +54,8 @@
 
   /* Theme semantic tokens (single source of truth) */
   --radius-base: 8px;
-  --theme-color: #355cc2;
-  --theme-color-rgb: 53, 92, 194;
+  --theme-color: #000000;
+  --theme-color-rgb: 0, 0, 0;
   --theme-hover-color: rgba(var(--theme-color-rgb), 0.9);
 }
 
