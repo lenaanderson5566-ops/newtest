@@ -1,5 +1,8 @@
 <template>
-  <div class="app-root-shell" :style="postLoginBackgroundStyle">
+  <div
+    :class="['app-root-shell', { 'has-post-login-background': postLoginBackgroundEnabled }]"
+    :style="postLoginBackgroundStyle"
+  >
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
     <div class="static-layout" v-if="$route.meta.requiresAuth">
       <div class="top-fixed-bar" ref="topFixedBarRef">
@@ -171,29 +174,27 @@ export default {
       import: 'default'
     });
 
-    const postLoginBackgroundStyle = computed(() => {
-      if (!route.meta.requiresAuth) {
-        return {};
-      }
-
+    const postLoginBackgroundImageUrl = computed(() => {
       const fileName = String(siteConfig.value?.postLoginBackgroundImage || '').trim();
       if (!fileName) {
-        return {};
+        return '';
       }
 
       const assetKey = Object.keys(postLoginBackgroundAssets).find((key) => key.endsWith(`/${fileName}`));
-      const backgroundUrl = assetKey ? postLoginBackgroundAssets[assetKey] : '';
+      return assetKey ? postLoginBackgroundAssets[assetKey] : '';
+    });
 
-      if (!backgroundUrl) {
+    const postLoginBackgroundEnabled = computed(() => {
+      return route.meta.requiresAuth && !!postLoginBackgroundImageUrl.value;
+    });
+
+    const postLoginBackgroundStyle = computed(() => {
+      if (!postLoginBackgroundEnabled.value) {
         return {};
       }
 
       return {
-        backgroundImage: `url(${backgroundUrl})`,
-        backgroundPosition: 'left top',
-        backgroundSize: 'auto',
-        backgroundRepeat: 'repeat',
-        backgroundAttachment: 'scroll'
+        '--post-login-bg-image': `url(${postLoginBackgroundImageUrl.value})`
       };
     });
 
@@ -366,6 +367,7 @@ export default {
       hasUnreadNotice,
       topFixedBarRef,
       appContentWrapperRef,
+      postLoginBackgroundEnabled,
       postLoginBackgroundStyle
     };
   }
@@ -381,9 +383,45 @@ export default {
 
 .app-root-shell {
   min-height: 100dvh;
+  position: relative;
+  isolation: isolate;
   /* 顶部栏强调渐变条（仅用于 top-fixed-bar::after，不参与页面主背景计算） */
   --site-accent-gradient: linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
   background-color: var(--color-bg-page);
+}
+
+.app-root-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.app-root-shell.has-post-login-background::before,
+.app-root-shell.has-post-login-background::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: var(--post-login-bg-image);
+  background-repeat: repeat;
+  background-size: auto;
+}
+
+.app-root-shell.has-post-login-background::before {
+  top: 0;
+  height: min(34dvh, 300px);
+  opacity: 0.32;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}
+
+.app-root-shell.has-post-login-background::after {
+  bottom: 0;
+  height: min(36dvh, 340px);
+  opacity: 0.42;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
 
 /* 全局卡片基线样式：
@@ -558,6 +596,17 @@ export default {
     padding-top: calc(var(--app-top-bar-height, 56px) + 8px);
   }
 
+}
+
+.app-root-shell.has-post-login-background .app-content-wrapper.with-left-nav {
+  background: linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 108px,
+    var(--color-bg-page) 180px,
+    var(--color-bg-page) calc(100% - 210px),
+    transparent 100%
+  );
 }
 
 
