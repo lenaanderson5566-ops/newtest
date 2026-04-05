@@ -23,7 +23,7 @@
   --text-on-dark-disabled: rgba(255, 255, 255, 0.38);
 
   /* Border tokens (统一收口) */
-  --border-width: 0.4px;
+  --border-width: 1px;
   --border-subtle: rgba(148, 163, 184, 0.12);
   --border-default: #e2e8f0;
   --border-hover: rgba(148, 163, 184, 0.2);
@@ -121,10 +121,10 @@ $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
 // 边框圆角
-$border-radius-sm: 8px;
+$border-radius-sm: 6px;
 $border-radius: 8px;
-$border-radius-lg: 8px;
-$border-radius-xl: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
 
 // 动画时间
 $transition-time-fast: 0.2s;

@@ -1521,7 +1521,7 @@ $space-2: map.get($spacers, 2);
   justify-content: center;
   --dashboard-card-padding: 16px;
   --dashboard-section-padding: 12px;
-  --dashboard-radius: #{$border-radius-sm};
+  --dashboard-radius: #{$border-radius};
   --dashboard-button-radius: 12px;
   --dashboard-subtitle-color: var(--color-text-tertiary);
   --dashboard-kpi-size: 13px;
