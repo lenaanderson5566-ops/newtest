@@ -1994,7 +1994,7 @@ export default {
 }
 
 .payment-container .overview-section {
-  background-color: var(--color-bg-surface);
+  background-color: transparent;
 }
 
 .cancel-modal {
