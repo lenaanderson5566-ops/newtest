@@ -1189,7 +1189,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   .my-center-inner { max-width: 100%; gap: #{$space-2}; }
 
   .section-block {
-    background: transparent !important;
+    background: var(--color-bg-surface) !important;
     box-shadow: none;
   }
 
