@@ -436,7 +436,7 @@ export default {
   myCenter: {
     summaryTitle: 'アカウント概要',
     summaryDesc: '主要なアカウント情報を一目で確認',
-    topUp: '残高チャージ',
+    topUp: 'アカウントチャージ',
     email: 'メール',
     currentPlan: '現在のプラン',
     expireAt: '有効期限',
@@ -699,7 +699,7 @@ profile: {
     }
   },
   order: {
-    title: '注文確認',
+    title: 'サブスクリプションを選択',
     description: '注文情報を確認し、支払いを完了してください',
     existing_plan_warning_title: '有効なサブスクリプションがすでにあります',
     existing_plan_warning_desc: '新しいサブスクリプションを購入すると現在のサブスクリプションが置き換えられます',
@@ -789,7 +789,7 @@ profile: {
     pay_processing: '支払い処理中...',
     open_in_new_tab: '新しいタブで開く',
     check_timeout: '支払い状態確認タイムアウト。後で再試行してください',
-    payment_pending: '支払い処理中。後で確認してください',
+    payment_pending: '注文はロックされています。支払いを完了してください',
     copy_success: 'クリップボードにコピー済み',
     copy_failed: 'コピー失敗。手動でコピーしてください',
     check_manually: '手動確認',

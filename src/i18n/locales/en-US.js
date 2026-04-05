@@ -431,7 +431,7 @@ export default {
     myCenter: {
         summaryTitle: 'Account Summary',
         summaryDesc: 'Core account information at a glance',
-        topUp: 'Top Up Balance',
+        topUp: 'Account Top Up',
         email: 'Email',
         currentPlan: 'Current Plan',
         expireAt: 'Expiry Date',
@@ -694,7 +694,7 @@ profile: {
         }
     },
     order: {
-        title: 'Confirm Order',
+        title: 'Choose Subscription',
         description: 'Please confirm your order details and complete the payment',
         existing_plan_warning_title: 'You already have an active subscription',
         existing_plan_warning_desc: 'Purchasing a new subscription will replace your current active subscription',
@@ -784,7 +784,7 @@ profile: {
         pay_processing: 'Processing payment...',
         open_in_new_tab: 'Open in New Tab',
         check_timeout: 'Payment status check timed out, please try again later',
-        payment_pending: 'Payment processing, please check again later',
+        payment_pending: 'Order is locked, please complete payment',
         copy_success: 'Copied to clipboard',
         copy_failed: 'Copy failed, please copy manually',
         check_manually: 'Click to Check',

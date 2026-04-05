@@ -437,7 +437,7 @@ export default {
   myCenter: {
     summaryTitle: '계정 요약',
     summaryDesc: '핵심 계정 정보를 한눈에 확인',
-    topUp: '잔액 충전',
+    topUp: '계정 충전',
     email: '이메일',
     currentPlan: '현재 플랜',
     expireAt: '만료일',
@@ -700,7 +700,7 @@ profile: {
     }
   },
   order: {
-    title: '주문 확인',
+    title: '구독 선택',
     description: '주문 정보를 확인하고 결제를 완료하세요',
     existing_plan_warning_title: '이미 유효한 구독이 있습니다',
     existing_plan_warning_desc: '새 구독을 구매하면 현재 유효한 구독이 대체됩니다',
@@ -790,7 +790,7 @@ profile: {
     pay_processing: '결제 처리 중...',
     open_in_new_tab: '새 탭에서 열기',
     check_timeout: '결제 상태 확인 시간이 초과되었습니다. 나중에 다시 시도하세요',
-    payment_pending: '결제 처리 중, 나중에 다시 확인하세요',
+    payment_pending: '주문이 잠겼습니다. 결제를 완료해 주세요',
     copy_success: '클립보드에 복사됨',
     copy_failed: '복사 실패, 수동으로 복사하세요',
     check_manually: '확인 클릭',
