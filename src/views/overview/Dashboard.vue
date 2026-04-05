@@ -9,10 +9,10 @@
         @click="goToLatestPendingOrderPayment"
       >
         <div class="banner-main">
-          <IconAlertTriangle :size="16" class="banner-icon" />
-          <span class="banner-text text-ellipsis">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
+          <IconAlertTriangle :size="18" class="banner-icon" />
+          <span class="banner-text">{{ $t('dashboard.pendingOrderBanner', { count: userStats.pendingOrders }) }}</span>
+          <button class="banner-link" @click.stop="goToLatestPendingOrderPayment">{{ $t('dashboard.payNow') }}</button>
         </div>
-        <button class="banner-action btn btn-primary" @click.stop="goToLatestPendingOrderPayment">{{ $t('dashboard.payNow') }}</button>
       </div>
 
       <div
@@ -2373,48 +2373,48 @@ $space-2: map.get($spacers, 2);
 
   .pending-order-banner {
     margin-bottom: var(--dashboard-section-margin);
-    min-height: 44px;
-    max-height: 48px;
-    padding: 4px 8px;
+    min-height: 52px;
+    padding: 12px 16px;
     border-radius: var(--dashboard-radius);
-    border: var(--border-width) solid var(--border-hover);
-    background: var(--warning-background);
+    border: none;
+    background: #ead6a8;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: #{$space-2};
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 
     &:hover {
-      background: color-mix(in srgb, var(--warning-background) 88%, var(--theme-white) 12%);
-      border-color: rgba(var(--warning-color-rgb), 0.55);
+      background: #e5cf9e;
       transform: none;
     }
 
     .banner-main {
       display: inline-flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 8px;
       min-width: 0;
-      color: var(--warning-color);
-      font-size: $font-size-sm;
+      color: #111827;
+      font-size: $font-size-md;
       line-height: 1.35;
       font-weight: $font-weight-medium;
     }
 
     .banner-icon {
       flex-shrink: 0;
-      color: var(--warning-color);
+      color: #111827;
     }
 
-    .banner-action {
-      border-radius: 8px;
-      height: 30px;
-      padding: 0 8px;
-      font-size: $font-size-sm;
+    .banner-link {
+      border: none;
+      background: transparent;
+      padding: 0;
+      color: #111827;
+      font-size: $font-size-md;
       font-weight: $font-weight-semibold;
-      flex-shrink: 0;
+      text-decoration: underline;
+      cursor: pointer;
     }
   }
 
