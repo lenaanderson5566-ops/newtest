@@ -627,7 +627,6 @@ profile: {
     description: '檢視並購買可用訂閱',
     loading: '正在載入訂閱...',
     billingPeriodAria: '計費週期切換',
-    maxSavingsTip: '最多節省 {percent}%',
     filter: {
       all: '全部',
       recurring: '週期性',

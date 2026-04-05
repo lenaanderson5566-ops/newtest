@@ -29,13 +29,6 @@
                   <span class="option-text">{{ getFilterDisplayLabel(filter) }}</span>
                 </button>
               </div>
-              <span
-                v-if="maxYearlyDiscountPercent > 0"
-                class="max-saving-tip"
-                :class="{ 'active-year': selectedFilter === 'year_price' }"
-              >
-                {{ $t('shop.maxSavingsTip', { percent: maxYearlyDiscountPercent }) }}
-              </span>
             </div>
           </div>
         </div>
@@ -386,20 +379,6 @@ export default {
         return [monthFilter, yearFilter];
       }
       return filters.value;
-    });
-
-    const maxYearlyDiscountPercent = computed(() => {
-      let maxDiscount = 0;
-      plans.value.forEach((plan) => {
-        const monthPrice = normalizePriceValue(plan, "month_price");
-        const yearPrice = normalizePriceValue(plan, "year_price");
-        if (!monthPrice || !yearPrice) return;
-        const monthlyTotalYear = monthPrice * 12;
-        if (monthlyTotalYear <= 0 || yearPrice >= monthlyTotalYear) return;
-        const discount = ((monthlyTotalYear - yearPrice) / monthlyTotalYear) * 100;
-        maxDiscount = Math.max(maxDiscount, discount);
-      });
-      return Math.max(0, Math.round(maxDiscount));
     });
 
     const filterHighlightStyle = computed(() => {
@@ -953,7 +932,6 @@ export default {
       currentLanguage,
       displayedFilters,
       filterHighlightStyle,
-      maxYearlyDiscountPercent,
       currentPlanBadgeLabel,
 
       selectPlanPriceType,
@@ -1798,18 +1776,6 @@ export default {
       }
     }
 
-    .max-saving-tip {
-      color: var(--text-tertiary);
-      font-size: $font-size-sm;
-      font-weight: $font-weight-semibold;
-      white-space: nowrap;
-      line-height: 1;
-      transition: color 0.2s ease;
-
-      &.active-year {
-        color: var(--theme-color);
-      }
-    }
   }
 
   .animate-card {
@@ -2101,9 +2067,6 @@ export default {
       width: fit-content;
     }
 
-    .max-saving-tip {
-      font-size: $font-size-sm;
-    }
   }
 }
 
@@ -2126,8 +2089,5 @@ export default {
     }
   }
 
-  .shop-container .filter-toggle-container .max-saving-tip {
-    font-size: $font-size-xs;
-  }
 }
 </style>

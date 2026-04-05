@@ -622,7 +622,6 @@ profile: {
         description: 'Choose the subscription service that suits you',
         loading: 'Loading subscriptions...',
         billingPeriodAria: 'Billing period switcher',
-        maxSavingsTip: 'Save up to {percent}%',
         filter: {
             all: 'All',
             recurring: 'Recurring',
