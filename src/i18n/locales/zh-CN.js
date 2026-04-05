@@ -755,7 +755,6 @@ profile: {
         cancel_order: '取消订单',
         check_payment: '检测支付状态',
         activate: '激活',
-        free_activate: '免费激活',
         continue_to_dashboard: '前往仪表盘',
         confirm_cancel: '确定要取消此订单吗？',
         cancel_success: '订单已取消',
