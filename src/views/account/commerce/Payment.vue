@@ -1421,6 +1421,14 @@ export default {
     color: var(--right-card-text);
   }
 
+  // 提升选择器优先级，覆盖浅色基础规则，确保右侧卡片文本保持深色卡片反色风格
+  .right-column .order-amount-section .order-info .summary-row .summary-label,
+  .right-column .order-amount-section .order-info .summary-row .summary-value,
+  .right-column .order-amount-section .order-info .summary-row.total .summary-label,
+  .right-column .order-amount-section .order-info .summary-row.total .summary-value.final {
+    color: var(--right-card-text);
+  }
+
   .right-column .order-amount-section .summary-divider {
     background-color: rgba(255, 255, 255, 0.18);
   }

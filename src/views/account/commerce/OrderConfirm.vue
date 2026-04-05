@@ -1937,6 +1937,7 @@ export default {
 
     &.active {
       border-color: rgba(var(--theme-color-rgb), 0.68);
+      box-shadow: 0 0 0 1px rgba(var(--theme-color-rgb), 0.28);
       color: var(--text-on-dark-primary);
     }
 
