@@ -1816,7 +1816,7 @@ export default {
       p {
         margin: 0;
 
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
 
         font-size: $font-size-md;
 
@@ -1857,7 +1857,7 @@ export default {
 
       margin-bottom: 16px;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       position: relative;
       display: flex;
@@ -1889,7 +1889,7 @@ export default {
       .locked-tip {
         font-style: normal;
         font-size: $font-size-sm;
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
         margin-left: 4px;
       }
 
@@ -1931,7 +1931,7 @@ export default {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     cursor: pointer;
     transition: all 0.22s ease;
 
@@ -2074,7 +2074,7 @@ export default {
 
         letter-spacing: 0.3px;
 
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
 
       .card-badge {
@@ -2154,19 +2154,19 @@ export default {
             }
 
             &.disabled {
-              color: var(--text-quaternary);
+              color: var(--color-text-muted);
             }
           }
 
           span {
             font-size: $font-size-sm;
 
-            color: var(--text-primary);
+            color: var(--color-text-primary);
 
             line-height: 1.5;
 
             &.disabled-text {
-              color: var(--text-tertiary);
+              color: var(--color-text-tertiary);
             }
           }
         }
@@ -2176,7 +2176,7 @@ export default {
 
           line-height: 1.6;
 
-          color: var(--text-primary);
+          color: var(--color-text-primary);
         }
       }
     }
@@ -2344,7 +2344,7 @@ export default {
 
           margin-bottom: 8px;
 
-          color: var(--text-primary);
+          color: var(--color-text-primary);
 
           letter-spacing: 0.2px;
 
@@ -2371,7 +2371,7 @@ export default {
 
             font-weight: $font-weight-medium;
 
-            color: var(--text-primary);
+            color: var(--color-text-primary);
           }
 
           .amount {
@@ -2379,12 +2379,12 @@ export default {
 
             font-weight: $font-weight-bold;
 
-            color: var(--text-primary);
+            color: var(--color-text-primary);
           }
 
           .original-price {
             text-decoration: line-through;
-            color: var(--text-tertiary);
+            color: var(--color-text-tertiary);
             font-size: $font-size-sm;
             margin-left: 4px;
           }
@@ -2421,7 +2421,7 @@ export default {
 
       background-color: var(--input-bg-color);
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       font-size: $font-size-sm;
 
@@ -2445,7 +2445,7 @@ export default {
       }
 
       &::placeholder {
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
 
         opacity: 0.6;
       }
@@ -2503,7 +2503,7 @@ export default {
 
         border-radius: 50%;
 
-        border-top-color: var(--text-tertiary);
+        border-top-color: var(--color-text-tertiary);
 
         animation: spin 1s linear infinite;
       }
@@ -2515,7 +2515,7 @@ export default {
       border-radius: $border-radius-sm;
       border: var(--border-width) solid var(--border-default);
       background: rgba(148, 163, 184, 0.08);
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
       font-size: $font-size-sm;
       display: inline-flex;
       align-items: center;
@@ -2530,7 +2530,7 @@ export default {
       border-radius: $border-radius-sm;
       border: var(--border-width) solid var(--border-default);
       background: rgba(148, 163, 184, 0.08);
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
       font-size: $font-size-sm;
       cursor: pointer;
       line-height: 1;
@@ -2538,7 +2538,7 @@ export default {
 
       &:hover {
         background: rgba(148, 163, 184, 0.14);
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
     }
   }
@@ -2584,11 +2584,11 @@ export default {
     line-height: 1.4;
 
     &.error {
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
     }
 
     &.warning {
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
     }
   }
 
@@ -2668,13 +2668,13 @@ export default {
         .method-name {
           font-size: $font-size-md;
           font-weight: $font-weight-semibold;
-          color: var(--text-primary);
+          color: var(--color-text-primary);
           line-height: 1.2;
         }
 
         .method-fee {
           font-size: $font-size-sm;
-          color: var(--text-tertiary);
+          color: var(--color-text-tertiary);
           white-space: nowrap;
         }
       }
@@ -2791,7 +2791,7 @@ export default {
         min-width: 0;
         font-size: $font-size-sm;
 
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
 
         letter-spacing: 0.2px;
 
@@ -2817,7 +2817,7 @@ export default {
 
         font-weight: $font-weight-medium;
 
-        color: var(--text-primary);
+        color: var(--color-text-primary);
 
         &.discount {
           color: var(--error-color);
@@ -2873,7 +2873,7 @@ export default {
   .coupon-verify-section,
   .order-summary-section {
     .section-title {
-      color: var(--text-primary);
+      color: var(--color-text-primary);
     }
   }
 
@@ -2882,7 +2882,7 @@ export default {
     background: var(--card-bg-color);
     border: var(--border-width) solid var(--border-default);
     border-radius: $border-radius-sm;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
 
   .right-column .order-summary-section .order-summary {
@@ -2930,7 +2930,7 @@ export default {
   }
 
   .order-summary-section .coupon-code-label {
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
 
   .order-summary-section .btn-remove-text {
@@ -2948,14 +2948,14 @@ export default {
   .coupon-verify-section .coupon-field {
     background: var(--input-bg-color);
     border-color: var(--border-default);
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
     &:placeholder-shown {
       border-color: var(--border-subtle);
     }
 
     &::placeholder {
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
     }
   }
 
@@ -2966,7 +2966,7 @@ export default {
 
   .order-summary-section .summary-row .summary-label,
   .order-summary-section .summary-row .summary-value {
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
 
   .order-summary-section .summary-row .summary-value.discount {
@@ -2975,7 +2975,7 @@ export default {
 
   .order-summary-section .summary-row.total .summary-label,
   .order-summary-section .summary-row.total .summary-value {
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
 
   .order-summary-section .summary-divider {

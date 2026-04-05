@@ -105,7 +105,7 @@ const variantClass = computed(() => `info-card--${props.variant}`);
   margin: 0;
   font-size: $font-size-xl;
   font-weight: $font-weight-bold;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 .info-card-body {
@@ -115,7 +115,7 @@ const variantClass = computed(() => `info-card--${props.variant}`);
 .info-card-description,
 .info-card-meta {
   margin: 0;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
   font-size: $font-size-md;
   line-height: 1.45;
 }

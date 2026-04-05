@@ -851,7 +851,7 @@ watchEffect(() => {
 
     font-weight: $font-weight-semibold;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
   }
 
@@ -865,7 +865,7 @@ watchEffect(() => {
 
     cursor: pointer;
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     display: flex;
 
@@ -887,7 +887,7 @@ watchEffect(() => {
 
       background-color: rgba(0, 0, 0, 0.05);
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       transform: rotate(90deg);
 
@@ -955,7 +955,7 @@ watchEffect(() => {
 
       font-weight: $font-weight-medium;
 
-      color: var(--text-quaternary);
+      color: var(--color-text-muted);
 
       flex: 0 0 40%; 
 
@@ -965,7 +965,7 @@ watchEffect(() => {
 
     .info-value {
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       font-weight: $font-weight-medium;
 
@@ -1011,7 +1011,7 @@ watchEffect(() => {
 
       font-size: $font-size-md;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
     }
 
@@ -1041,7 +1041,7 @@ watchEffect(() => {
 
         border-radius: 4px;
 
-        color: var(--text-quaternary);
+        color: var(--color-text-muted);
 
         font-size: $font-size-sm;
 
@@ -1109,7 +1109,7 @@ watchEffect(() => {
 
       word-break: break-all;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       margin-bottom: 24px; 
 
@@ -1217,7 +1217,7 @@ watchEffect(() => {
 
       p {
 
-        color: var(--text-quaternary);
+        color: var(--color-text-muted);
 
         font-size: $font-size-md;
 

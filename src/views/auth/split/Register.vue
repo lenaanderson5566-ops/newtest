@@ -2479,7 +2479,7 @@ export default {
 
     &.black {
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       text-shadow: none;
 
@@ -2515,7 +2515,7 @@ export default {
 
     &.black {
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       text-shadow: none;
 
@@ -2688,7 +2688,7 @@ export default {
 
     font-size: $font-size-md;
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     margin-bottom: 24px;
 
@@ -2744,7 +2744,7 @@ export default {
 
   p {
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     font-size: $font-size-md;
 
@@ -2865,7 +2865,7 @@ export default {
 
     padding: 0 4px;
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     font-size: $font-size-md;
 
@@ -2929,7 +2929,7 @@ export default {
 
       text-overflow: ellipsis;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       font-size: $font-size-md;
 
@@ -2951,7 +2951,7 @@ export default {
 
       transition: transform 0.3s ease;
 
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
 
       opacity: 0.8;
 
@@ -3042,7 +3042,7 @@ export default {
 
         transition: all 0.2s;
 
-        color: var(--text-primary);
+        color: var(--color-text-primary);
 
         font-size: $font-size-md;
 
@@ -3130,7 +3130,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     width: 20px;
 
@@ -3150,7 +3150,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     cursor: pointer;
 
@@ -3190,7 +3190,7 @@ export default {
 
     transition: all 0.3s ease;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
 
 
@@ -3283,7 +3283,7 @@ export default {
 
     background-color: transparent;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
     margin: 0;
 
@@ -3553,7 +3553,7 @@ export default {
 
     .checkbox-label {
 
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
 
       font-size: $font-size-sm;
 
@@ -3760,7 +3760,7 @@ export default {
 
   line-height: normal;
 
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 
   border: var(--border-width) solid var(--border-default);
 
@@ -4103,7 +4103,7 @@ export default {
 
         font-weight: $font-weight-semibold;
 
-        color: var(--text-primary);
+        color: var(--color-text-primary);
 
       }
 
@@ -4121,7 +4121,7 @@ export default {
 
         line-height: 1;
 
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
 
         padding: 0;
 
@@ -4141,7 +4141,7 @@ export default {
 
         &:hover {
 
-          color: var(--text-primary);
+          color: var(--color-text-primary);
 
         }
 
@@ -4163,7 +4163,7 @@ export default {
 
         margin-bottom: 16px;
 
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
 
       }
 
@@ -4235,7 +4235,7 @@ export default {
 
   line-height: 1.5;
 
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
 
 }
 
@@ -4275,7 +4275,7 @@ export default {
 
   line-height: 1.5;
 
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
 
   margin-bottom: 8px;
 

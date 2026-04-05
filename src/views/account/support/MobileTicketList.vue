@@ -813,7 +813,7 @@ fetchTickets();
 
   .card-body {
     p {
-      color: var(--text-quaternary);
+      color: var(--color-text-muted);
 
       margin: 0;
 
@@ -898,7 +898,7 @@ fetchTickets();
 
   text-align: center;
 
-  color: var(--text-quaternary);
+  color: var(--color-text-muted);
 
   margin: 16px 0;
 
@@ -1004,7 +1004,7 @@ fetchTickets();
     .ticket-subject {
       font-weight: $font-weight-semibold;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       flex: 1;
 
@@ -1035,7 +1035,7 @@ fetchTickets();
       &.status-1 {
         background-color: rgba(158, 158, 158, 0.1);
 
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
       }
     }
   }
@@ -1047,7 +1047,7 @@ fetchTickets();
 
     font-size: $font-size-sm;
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     padding-top: 8px;
 
@@ -1119,7 +1119,7 @@ fetchTickets();
 
     border: none;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
     padding: 8px;
 
@@ -1164,7 +1164,7 @@ fetchTickets();
 
       font-weight: $font-weight-semibold;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
     }
 
     .meta-info {
@@ -1226,7 +1226,7 @@ fetchTickets();
   &.status-1 {
     background-color: rgba(158, 158, 158, 0.1);
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
   }
 }
 
@@ -1278,7 +1278,7 @@ fetchTickets();
 
     text-align: center;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
     margin: 16px 0;
 
@@ -1296,7 +1296,7 @@ fetchTickets();
 
       line-height: 1.5;
 
-      color: var(--text-quaternary);
+      color: var(--color-text-muted);
     }
   }
 }
@@ -1312,7 +1312,7 @@ fetchTickets();
 
   justify-content: center;
 
-  color: var(--text-quaternary);
+  color: var(--color-text-muted);
 
   padding: 48px;
 
@@ -1444,7 +1444,7 @@ fetchTickets();
     }
 
     .message-time {
-      color: var(--text-quaternary);
+      color: var(--color-text-muted);
     }
   }
 
@@ -1493,7 +1493,7 @@ fetchTickets();
 
     background-color: var(--bg-secondary);
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
     font-size: $font-size-sm;
 
@@ -1587,7 +1587,7 @@ fetchTickets();
 
   gap: 8px;
 
-  color: var(--text-quaternary);
+  color: var(--color-text-muted);
 
   font-size: $font-size-md;
 
@@ -1671,7 +1671,7 @@ fetchTickets();
 
     font-weight: $font-weight-semibold;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
 
   .close-btn {
@@ -1679,7 +1679,7 @@ fetchTickets();
 
     border: none;
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     cursor: pointer;
 
@@ -1709,7 +1709,7 @@ fetchTickets();
   background-color: var(--bg-color);
 
   p {
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
     font-size: $font-size-md;
 
@@ -1728,7 +1728,7 @@ fetchTickets();
 
       font-weight: $font-weight-medium;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       font-size: $font-size-md;
     }
@@ -1745,7 +1745,7 @@ fetchTickets();
 
       background-color: var(--card-bg);
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       font-size: $font-size-md;
 
@@ -1759,7 +1759,7 @@ fetchTickets();
       }
 
       &::placeholder {
-        color: var(--text-quaternary);
+        color: var(--color-text-muted);
       }
     }
 
@@ -1786,7 +1786,7 @@ fetchTickets();
 
       background-color: var(--card-bg);
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       cursor: pointer;
 
@@ -1847,12 +1847,12 @@ fetchTickets();
 
       border: var(--border-width) solid var(--border-default);
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       &:hover {
         background-color: var(--bg-secondary);
 
-        border-color: var(--text-quaternary);
+        border-color: var(--color-text-muted);
       }
     }
 
@@ -2072,13 +2072,13 @@ fetchTickets();
 
       font-size: $font-size-2xl;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       font-weight: $font-weight-semibold;
     }
 
     p {
-      color: var(--text-quaternary);
+      color: var(--color-text-muted);
 
       margin-bottom: 24px;
 
@@ -2205,7 +2205,7 @@ fetchTickets();
 }
 
 .upload-tip-text {
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
 
   font-weight: $font-weight-medium;
 
@@ -2219,7 +2219,7 @@ fetchTickets();
 
   font-size: $font-size-sm;
 
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
 
   margin-top: 0;
 }
@@ -2252,11 +2252,11 @@ fetchTickets();
   }
 
   .upload-tip-text {
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
   }
 
   .upload-desc {
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
   }
 }
 </style>

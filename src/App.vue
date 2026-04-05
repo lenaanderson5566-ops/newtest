@@ -597,7 +597,7 @@ export default {
     background: var(--toolbar-control-bg);
     border: 1px solid var(--toolbar-control-border);
     box-shadow: var(--toolbar-control-shadow);
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     cursor: pointer;
     transition: all 0.3s ease;
 
@@ -691,7 +691,7 @@ export default {
   bottom: calc(6px + env(safe-area-inset-bottom, 0px));
   z-index: 90;
   text-align: left;
-  color: var(--text-quaternary);
+  color: var(--color-text-muted);
   font-size: $font-size-xs;
   line-height: 1.4;
   padding: 0;

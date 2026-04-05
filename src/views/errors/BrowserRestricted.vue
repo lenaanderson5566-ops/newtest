@@ -560,7 +560,7 @@ export default {
 
       margin-bottom: 24px;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
     }
 
@@ -586,7 +586,7 @@ export default {
 
         font-size: $font-size-md;
 
-        color: var(--text-primary);
+        color: var(--color-text-primary);
 
       }
 
@@ -645,7 +645,7 @@ export default {
 
           white-space: nowrap;
 
-          color: var(--text-tertiary);
+          color: var(--color-text-tertiary);
 
         }
 
@@ -879,7 +879,7 @@ export default {
 
             background-color: rgba(var(--theme-color-rgb), 0.05);
 
-            color: var(--text-primary);
+            color: var(--color-text-primary);
 
             font-size: $font-size-md;
 
@@ -947,7 +947,7 @@ export default {
 
           line-height: 1.6;
 
-          color: var(--text-primary);
+          color: var(--color-text-primary);
 
         }
 

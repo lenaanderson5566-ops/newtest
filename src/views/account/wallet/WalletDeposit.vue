@@ -301,7 +301,7 @@ onMounted(() => {
     width: fit-content;
     border: none;
     background: transparent;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     @extend %typo-item-title;
     display: inline-flex;
     align-items: center;
@@ -342,7 +342,7 @@ onMounted(() => {
       .card-title {
         @extend %typo-section-title;
         margin: 0;
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
     }
   }
@@ -350,7 +350,7 @@ onMounted(() => {
   .welcome-card {
     .card-body {
       p {
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
         @extend %typo-body-text;
         line-height: 1.6;
         margin: 0;
@@ -526,14 +526,14 @@ onMounted(() => {
             .currency {
               font-size: $font-size-md;
               font-weight: $font-weight-semibold;
-              color: var(--text-primary);
+              color: var(--color-text-primary);
               margin-right: 0;
             }
             
             .amount {
               font-size: $font-size-xl;
               font-weight: $font-weight-bold;
-              color: var(--text-primary);
+              color: var(--color-text-primary);
             }
           }
         }
@@ -546,7 +546,7 @@ onMounted(() => {
       label {
         display: block;
         font-size: $font-size-sm;
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
         margin-bottom: 8px;
         font-weight: $font-weight-medium;
       }
@@ -560,7 +560,7 @@ onMounted(() => {
         .currency-symbol {
           position: absolute;
           left: 15px;
-          color: var(--text-primary);
+          color: var(--color-text-primary);
           font-weight: $font-weight-semibold;
           font-size: $font-size-lg;
         }
@@ -573,7 +573,7 @@ onMounted(() => {
           background-color: var(--input-bg, rgba(0, 0, 0, 0.02));
           padding: 0 16px 0 24px;
           font-size: $font-size-lg;
-          color: var(--text-primary);
+          color: var(--color-text-primary);
           transition: all 0.3s ease;
           
           &:hover {

@@ -87,7 +87,7 @@ const handleResetSecurity = async () => {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   @extend %typo-item-title;
   display: inline-flex;
   align-items: center;
@@ -160,7 +160,7 @@ const handleResetSecurity = async () => {
 .modal-text {
   padding: 16px;
   margin: 0;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
 }
 
 .modal-actions {

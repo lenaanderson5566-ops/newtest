@@ -612,17 +612,17 @@ $space-2: map.get($spacers, 2);
   padding: 8px 16px;
   border: none;
   background: transparent;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
   @extend %typo-item-title;
   cursor: pointer;
   white-space: nowrap;
 
   &:hover {
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
   }
 
   &.active {
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     font-weight: $font-weight-bold;
   }
 
@@ -767,9 +767,9 @@ $space-2: map.get($spacers, 2);
     font-weight: $font-weight-bold;
 
     &.is-bronze { background: linear-gradient(135deg, #b27241, #d39d63); }
-    &.is-silver { background: linear-gradient(135deg, #8ea0bf, #d4deef); color: var(--text-secondary); }
-    &.is-gold { background: linear-gradient(135deg, #f59e0b, #fcd34d); color: var(--text-secondary); }
-    &.is-platinum { background: linear-gradient(135deg, #5ba7c6, #a8e4ff); color: var(--text-secondary); }
+    &.is-silver { background: linear-gradient(135deg, #8ea0bf, #d4deef); color: var(--color-text-secondary); }
+    &.is-gold { background: linear-gradient(135deg, #f59e0b, #fcd34d); color: var(--color-text-secondary); }
+    &.is-platinum { background: linear-gradient(135deg, #5ba7c6, #a8e4ff); color: var(--color-text-secondary); }
     &.is-diamond { background: linear-gradient(135deg, #6a7bff, #9dc7ff); }
     &.is-default { background: linear-gradient(135deg, #6379d6, #91a4ff); }
   }
@@ -832,12 +832,12 @@ $space-2: map.get($spacers, 2);
     display: block;
     margin-bottom: 4px;
     font-size: $font-size-sm;
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
   }
 
   strong {
     font-size: $font-size-md;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     word-break: break-word;
   }
 
@@ -915,7 +915,7 @@ $space-2: map.get($spacers, 2);
 
 .balance-currency {
   font-size: $font-size-md;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .settings-list {
@@ -943,13 +943,13 @@ $space-2: map.get($spacers, 2);
 .row-title {
   font-size: $font-size-md;
   font-weight: $font-weight-semibold;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 .row-main p {
   margin: 4px 0 0;
   font-size: $font-size-xs;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
 }
 
 .tier-intro-list {
@@ -968,7 +968,7 @@ $space-2: map.get($spacers, 2);
     margin: 4px 0 0;
     font-size: $font-size-sm;
     line-height: 1.6;
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
   }
 }
 
@@ -979,11 +979,11 @@ $space-2: map.get($spacers, 2);
 .tier-intro-title {
   font-size: $font-size-md;
   font-weight: $font-weight-bold;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 .tier-intro-note {
-  color: var(--text-primary) !important;
+  color: var(--color-text-primary) !important;
   font-weight: $font-weight-semibold;
 }
 
@@ -992,7 +992,7 @@ $space-2: map.get($spacers, 2);
   border: none;
   background: transparent;
   text-align: left;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 
@@ -1052,14 +1052,14 @@ input:checked + .slider:before { transform: translateX(18px); }
     margin: 0;
     font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
 
   .modal-close,
   .close-btn {
     background: none;
     border: none;
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
     cursor: pointer;
     padding: 4px;
     display: flex;
@@ -1090,7 +1090,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     display: block;
     font-size: $font-size-md;
     font-weight: $font-weight-medium;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     margin-bottom: 8px;
   }
 
@@ -1100,7 +1100,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     border: var(--border-width) solid var(--border-default);
     border-radius: 8px;
     background-color: var(--bg-secondary);
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     font-size: $font-size-md;
     transition: all 0.3s ease;
 
@@ -1133,7 +1133,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   cursor: pointer;
   border: var(--border-width) solid var(--border-default);
   background: transparent;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 .btn-submit,
@@ -1150,7 +1150,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .modal-text {
   padding: 16px;
   margin: 0;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
 }
 
 .modal-actions {

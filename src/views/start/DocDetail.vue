@@ -1307,7 +1307,7 @@ onUnmounted(() => {
 
     margin-top: 16px;
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     font-size: $font-size-lg;
 
@@ -1423,7 +1423,7 @@ onUnmounted(() => {
 
   .error-message {
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     font-size: $font-size-md;
 
@@ -1629,7 +1629,7 @@ onUnmounted(() => {
 
 .doc-body {
 
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 
   font-size: $font-size-md;
 
@@ -1647,7 +1647,7 @@ onUnmounted(() => {
 
     line-height: 1.4;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
     position: relative;
 
@@ -1699,7 +1699,7 @@ onUnmounted(() => {
 
     font-size: $font-size-xl;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
   }
 
@@ -1709,7 +1709,7 @@ onUnmounted(() => {
 
     font-size: $font-size-lg;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
   }
 
@@ -1719,7 +1719,7 @@ onUnmounted(() => {
 
     font-size: $font-size-md;
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     font-weight: $font-weight-medium;
 
@@ -1905,7 +1905,7 @@ onUnmounted(() => {
 
       padding: 0;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       border: none;
 
@@ -1957,7 +1957,7 @@ onUnmounted(() => {
 
     margin-bottom: 24px;
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     font-style: italic;
 
@@ -2073,7 +2073,7 @@ onUnmounted(() => {
 
       font-weight: $font-weight-semibold;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
     }
 
@@ -2127,7 +2127,7 @@ onUnmounted(() => {
 
     font-weight: $font-weight-semibold;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
   }
 
@@ -2163,7 +2163,7 @@ onUnmounted(() => {
 
     font-size: $font-size-sm;
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
   }
 

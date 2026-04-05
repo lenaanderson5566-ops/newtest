@@ -215,14 +215,14 @@ export default {
         margin: 0;
         font-size: $font-size-xl;
         font-weight: $font-weight-semibold;
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
 
       .dialog-close-btn {
         background: none;
         border: none;
         cursor: pointer;
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -233,7 +233,7 @@ export default {
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
-          color: var(--text-primary);
+          color: var(--color-text-primary);
           transform: rotate(90deg);
         }
       }
@@ -248,7 +248,7 @@ export default {
       :deep(p) {
         margin: 8px 0;
         line-height: 1.6;
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
 
       :deep(strong) {
@@ -290,10 +290,10 @@ export default {
 
       .dialog-btn-cancel {
         background-color: var(--border-default);
-        color: var(--text-primary);
+        color: var(--color-text-primary);
 
         &:hover {
-          background-color: var(--text-tertiary);
+          background-color: var(--color-text-tertiary);
           box-shadow: var(--shadow-sm);
         }
       }

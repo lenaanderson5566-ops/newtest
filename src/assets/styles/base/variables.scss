@@ -5,15 +5,15 @@
 
 // 给CSS变量设置初始值
 :root {
-  --color-bg-page: #f3f3f3;
+  --color-bg-page: #f6f8fb;
   --color-bg-surface: #ffffff;
   --color-bg-surface-rgb: 255, 255, 255;
   --color-bg-surface-subtle: #f8faff;
 
-  --text-primary: #111827;
-  --text-secondary: #1f2937;
-  --text-tertiary: #6b7280;
-  --text-quaternary: #9aa4b2;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #8b95a7;
+  --color-text-muted: #a8b0bf;
   --text-color-rgb: 31, 41, 55;
 
   /* 文本颜色（深色表面） */

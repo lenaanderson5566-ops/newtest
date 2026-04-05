@@ -93,7 +93,7 @@ export default {
   min-width: 300px;
   max-width: 380px;
   background-color: var(--color-bg-surface);
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   border-radius: 12px;
   padding: 16px 16px;
   box-shadow: var(--shadow-sm);
@@ -238,7 +238,7 @@ export default {
     border: none;
     font-size: $font-size-xl;
     line-height: 1;
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
     cursor: pointer;
     padding: 0;
     opacity: 0.6;

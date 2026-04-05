@@ -166,7 +166,7 @@ export default {
       border-radius: $border-radius-sm;
       font-weight: $font-weight-medium;
       font-size: $font-size-sm;
-      color: var(--text-secondary);
+      color: var(--color-text-secondary);
       text-decoration: none;
       text-align: left;
       transition: all 0.25s ease;
@@ -200,7 +200,7 @@ export default {
       }
 
       &.active {
-        color: var(--text-primary);
+        color: var(--color-text-primary);
         background: rgba(var(--theme-color-rgb), 0.12);
 
         .nav-icon svg {
@@ -209,7 +209,7 @@ export default {
       }
 
       &:hover {
-        color: var(--text-primary);
+        color: var(--color-text-primary);
         background: rgba(var(--theme-color-rgb), 0.08);
       }
 

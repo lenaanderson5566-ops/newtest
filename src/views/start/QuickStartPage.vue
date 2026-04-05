@@ -687,7 +687,7 @@ onMounted(fetchUserStatus);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
   }
 
   img {

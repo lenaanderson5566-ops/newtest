@@ -1157,7 +1157,7 @@ export default {
 
     .card-body {
       p {
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
         margin: 0;
       }
     }
@@ -1239,7 +1239,7 @@ export default {
   .section-title {
     @extend %typo-section-title;
     margin-bottom: 16px;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     position: relative;
     display: flex;
     align-items: center;
@@ -1299,7 +1299,7 @@ export default {
       background-color: var(--color-bg-surface);
       margin-top: 8px;
       margin-bottom: 8px;
-      color: var(--text-primary);
+      color: var(--color-text-primary);
     }
   }
 
@@ -1324,12 +1324,12 @@ export default {
         @extend %typo-card-title;
         @extend %typo-dark-primary;
         margin: 0;
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
     }
 
     .section-title {
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       &::after {
         background-color: var(--border-default);
@@ -1352,7 +1352,7 @@ export default {
           flex: 1;
           min-width: 0;
           font-size: $font-size-sm;
-          color: var(--text-tertiary);
+          color: var(--color-text-tertiary);
           letter-spacing: 0.2px;
         }
 
@@ -1361,7 +1361,7 @@ export default {
           text-align: right;
           font-size: $font-size-sm;
           font-weight: $font-weight-medium;
-          color: var(--text-primary);
+          color: var(--color-text-primary);
 
           &.discount {
             color: var(--error-color);
@@ -1369,13 +1369,13 @@ export default {
           }
 
           &.fee {
-            color: var(--text-tertiary);
+            color: var(--color-text-tertiary);
           }
         }
 
         &.total {
           .summary-label {
-            color: var(--text-primary);
+            color: var(--color-text-primary);
             font-weight: $font-weight-semibold;
           }
 
@@ -1500,13 +1500,13 @@ export default {
         .method-name {
           font-size: $font-size-md;
           font-weight: $font-weight-semibold;
-          color: var(--text-primary);
+          color: var(--color-text-primary);
           line-height: 1.2;
         }
 
         .method-fee {
           font-size: $font-size-sm;
-          color: var(--text-tertiary);
+          color: var(--color-text-tertiary);
           white-space: nowrap;
         }
       }
@@ -1542,7 +1542,7 @@ export default {
 
       p {
         margin: 0;
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
     }
   }
@@ -1655,7 +1655,7 @@ export default {
 
     .btn-back {
       background-color: transparent;
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       flex: 1;
       border: var(--border-width) solid var(--border-default);
 
@@ -1689,7 +1689,7 @@ export default {
 
     .btn-check {
       background-color: var(--hover-color);
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       flex: 1;
       border: var(--border-width) solid var(--border-default);
 
@@ -2042,14 +2042,14 @@ export default {
       font-size: $font-size-xl;
       font-weight: $font-weight-semibold;
       margin: 0 0 8px;
-      color: var(--text-primary);
+      color: var(--color-text-primary);
     }
 
     p {
       font-size: $font-size-md;
       line-height: 1.5;
       margin: 0;
-      color: var(--text-tertiary);
+      color: var(--color-text-tertiary);
     }
   }
 
@@ -2071,7 +2071,7 @@ export default {
     .cancel-btn {
       background-color: transparent;
       border: var(--border-width) solid var(--border-default);
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       &:hover {
         background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
@@ -2162,7 +2162,7 @@ export default {
   }
 
   &.status-unknown {
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
     background-color: rgba(158, 158, 158, 0.12);
     border-color: rgba(158, 158, 158, 0.2);
   }

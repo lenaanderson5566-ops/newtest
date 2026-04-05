@@ -739,8 +739,8 @@ export default {
               :root { --font-size-sm: 14px; --font-size-base: 16px; --font-size-lg: 20px; }
               body { font-family: Arial, sans-serif; text-align: center; padding: 16px; }
               img { max-width: 100%; height: auto; margin-bottom: 16px; }
-              h2 { color: var(--text-primary); }
-              p { color: var(--text-tertiary); }
+              h2 { color: var(--color-text-primary); }
+              p { color: var(--color-text-tertiary); }
             
 
 /* Compact dashboard layout overrides for Referral */
@@ -907,7 +907,7 @@ export default {
 
   .kpi-label {
     font-size: $font-size-sm;
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
     margin-bottom: 4px;
   }
 
@@ -1589,7 +1589,7 @@ export default {
 .modal-footer .btn-cancel {
   border: var(--border-width) solid var(--border-default);
   background: transparent;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   min-width: 92px;
 }
 
@@ -1653,7 +1653,7 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
 }
 
 .invite-cards-wrapper {
@@ -1826,7 +1826,7 @@ export default {
   p {
     margin: 4px 0 0;
     @extend %typo-body-text;
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
   }
 
   .invite-step-create-btn {
@@ -1873,7 +1873,7 @@ export default {
 .step-balance-text {
   margin: 0 0 8px;
   @extend %typo-item-title;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 .step-balance-amount {
@@ -1955,7 +1955,7 @@ export default {
 .modal-close {
   border: none;
   background: transparent;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
   padding: 4px;
   border-radius: 6px;
   display: inline-flex;
@@ -1973,7 +1973,7 @@ export default {
   p {
     margin: 0;
     font-size: $font-size-lg;
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
   }
 }
 
@@ -2008,7 +2008,7 @@ export default {
 
   .alert-desc {
     @extend %typo-body-text;
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
   }
 }
 
@@ -2025,7 +2025,7 @@ export default {
 
 .form-label {
   @extend %typo-item-title;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 .input-with-prefix {
@@ -2059,7 +2059,7 @@ export default {
   border: none;
   background: transparent;
   padding: 0 16px;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   @extend %typo-body-text;
 
   &:focus {
@@ -2069,7 +2069,7 @@ export default {
 
 .form-hint {
   @extend %typo-body-text;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .modal-footer {
@@ -2084,7 +2084,7 @@ export default {
   width: fit-content;
   border: none;
   background: transparent;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   display: inline-flex;
   align-items: center;
   padding: 0;

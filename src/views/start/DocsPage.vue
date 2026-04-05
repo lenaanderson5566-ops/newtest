@@ -344,7 +344,7 @@ onMounted(() => {
 
     left: 1rem;
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     transition: color 0.3s ease;
 
@@ -364,7 +364,7 @@ onMounted(() => {
 
     background-color: var(--input-bg);
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
     @extend %typo-item-title;
 
@@ -393,7 +393,7 @@ onMounted(() => {
 
     &::placeholder {
 
-      color: var(--text-quaternary);
+      color: var(--color-text-muted);
 
     }
 
@@ -411,7 +411,7 @@ onMounted(() => {
 
     border: none;
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     cursor: pointer;
 
@@ -472,7 +472,7 @@ onMounted(() => {
 
     border-bottom: var(--border-width) solid var(--border-subtle);
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
   }
 
@@ -540,7 +540,7 @@ onMounted(() => {
 
       margin-bottom: 4px;
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       line-height: 1.4;
 
@@ -564,7 +564,7 @@ onMounted(() => {
 
       font-size: $font-size-xs;
 
-      color: var(--text-quaternary);
+      color: var(--color-text-muted);
 
     }
 
@@ -574,7 +574,7 @@ onMounted(() => {
 
   .doc-action {
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     margin-left: 16px;
 
@@ -624,7 +624,7 @@ onMounted(() => {
 
     margin-top: 16px;
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     font-size: $font-size-lg;
 
@@ -636,7 +636,7 @@ onMounted(() => {
 
   .empty-icon {
 
-    color: var(--text-quaternary);
+    color: var(--color-text-muted);
 
     opacity: 0.7;
 
@@ -775,7 +775,7 @@ onMounted(() => {
 
     margin: 0;
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     line-height: 1.5;
 

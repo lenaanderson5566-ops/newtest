@@ -1919,7 +1919,7 @@ export default {
 
     &.black {
 
-      color: var(--text-primary);
+      color: var(--color-text-primary);
 
       text-shadow: none;
 
@@ -2077,7 +2077,7 @@ export default {
 
     margin-bottom: 8px;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
 
 
@@ -2095,7 +2095,7 @@ export default {
 
     font-size: $font-size-md;
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     margin-bottom: 24px;
 
@@ -2151,7 +2151,7 @@ export default {
 
   p {
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     font-size: $font-size-md;
 
@@ -2193,7 +2193,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     width: 20px;
 
@@ -2213,7 +2213,7 @@ export default {
 
     transform: translateY(-50%);
 
-    color: var(--text-tertiary);
+    color: var(--color-text-tertiary);
 
     cursor: pointer;
 
@@ -2253,7 +2253,7 @@ export default {
 
     transition: all 0.3s ease;
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
 
 
@@ -2346,7 +2346,7 @@ export default {
 
     background-color: transparent !important;
 
-    color: var(--text-primary) !important;
+    color: var(--color-text-primary) !important;
 
     margin: 0;
 
@@ -2574,7 +2574,7 @@ export default {
 
         font-size: $font-size-xl;
 
-        color: var(--text-primary);
+        color: var(--color-text-primary);
 
       }
 
@@ -2588,7 +2588,7 @@ export default {
 
         cursor: pointer;
 
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
 
         font-size: $font-size-2xl;
 
@@ -2632,7 +2632,7 @@ export default {
 
         margin-bottom: 16px;
 
-        color: var(--text-tertiary);
+        color: var(--color-text-tertiary);
 
       }
 
@@ -2764,7 +2764,7 @@ export default {
 
   line-height: normal;
 
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 
   border: var(--border-width) solid var(--border-default);
 
@@ -3003,7 +3003,7 @@ export default {
 
   &.black {
 
-    color: var(--text-primary);
+    color: var(--color-text-primary);
 
     text-shadow: none;
 

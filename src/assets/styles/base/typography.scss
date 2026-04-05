@@ -7,15 +7,15 @@
   color: $color;
 }
 
-%typo-page-title { @include text-token($font-size-2xl, $font-weight-bold, var(--text-primary)); }
-%typo-section-title { @include text-token($font-size-xl, $font-weight-bold, var(--text-primary)); }
-%typo-card-title { @include text-token($font-size-lg, $font-weight-bold, var(--text-primary)); }
-%typo-item-title { @include text-token($font-size-md, $font-weight-semibold, var(--text-primary)); }
-%typo-body-text { @include text-token($font-size-sm, $font-weight-normal, var(--text-tertiary)); }
-%typo-label-text { @include text-token($font-size-sm, $font-weight-medium, var(--text-tertiary)); }
-%typo-meta-text { @include text-token($font-size-xs, $font-weight-normal, var(--text-quaternary)); }
-%typo-metric-md { @include text-token($font-size-2xl, $font-weight-bold, var(--text-primary)); }
-%typo-metric-lg { @include text-token($font-size-3xl, $font-weight-bold, var(--text-primary)); }
+%typo-page-title { @include text-token($font-size-2xl, $font-weight-bold, var(--color-text-primary)); }
+%typo-section-title { @include text-token($font-size-xl, $font-weight-bold, var(--color-text-primary)); }
+%typo-card-title { @include text-token($font-size-lg, $font-weight-bold, var(--color-text-primary)); }
+%typo-item-title { @include text-token($font-size-md, $font-weight-semibold, var(--color-text-primary)); }
+%typo-body-text { @include text-token($font-size-sm, $font-weight-normal, var(--color-text-tertiary)); }
+%typo-label-text { @include text-token($font-size-sm, $font-weight-medium, var(--color-text-tertiary)); }
+%typo-meta-text { @include text-token($font-size-xs, $font-weight-normal, var(--color-text-muted)); }
+%typo-metric-md { @include text-token($font-size-2xl, $font-weight-bold, var(--color-text-primary)); }
+%typo-metric-lg { @include text-token($font-size-3xl, $font-weight-bold, var(--color-text-primary)); }
 
 %typo-dark-primary { color: var(--text-on-dark-primary); }
 %typo-dark-secondary { color: var(--text-on-dark-secondary); }
