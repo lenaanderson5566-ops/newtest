@@ -1,5 +1,8 @@
 <template>
-  <div class="app-root-shell">
+  <div
+    :class="['app-root-shell', { 'has-post-login-background': postLoginBackgroundEnabled }]"
+    :style="postLoginBackgroundStyle"
+  >
     <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
     <div class="static-layout" v-if="$route.meta.requiresAuth">
       <div class="top-fixed-bar" ref="topFixedBarRef">
@@ -166,6 +169,86 @@ export default {
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
 
+    const postLoginBackgroundAssets = import.meta.glob('./assets/images/background/*', {
+      eager: true,
+      import: 'default'
+    });
+
+    const postLoginBackgroundImageUrl = ref('');
+
+    const resolveConfiguredBackgroundCandidates = () => {
+      const fileName = String(siteConfig.value?.postLoginBackgroundImage || '').trim();
+      if (!fileName) {
+        return [];
+      }
+
+      if (/^(https?:)?\/\//.test(fileName) || fileName.startsWith('/')) {
+        return [fileName];
+      }
+
+      const assetKeys = Object.keys(postLoginBackgroundAssets);
+      const exactAssetKey = assetKeys.find((key) => key.endsWith(`/${fileName}`));
+      const ignoreCaseAssetKey = exactAssetKey
+        ? ''
+        : assetKeys.find((key) => key.toLowerCase().endsWith(`/${fileName.toLowerCase()}`));
+
+      const candidates = [];
+      if (exactAssetKey) {
+        candidates.push(postLoginBackgroundAssets[exactAssetKey]);
+      } else if (ignoreCaseAssetKey) {
+        candidates.push(postLoginBackgroundAssets[ignoreCaseAssetKey]);
+      }
+
+      candidates.push(`/images/background/${fileName}`);
+      return candidates;
+    };
+
+    const canLoadBackgroundImage = (url) => {
+      if (typeof window === 'undefined' || typeof Image === 'undefined') {
+        return Promise.resolve(false);
+      }
+
+      return new Promise((resolve) => {
+        const image = new Image();
+        image.onload = () => resolve(true);
+        image.onerror = () => resolve(false);
+        image.src = url;
+      });
+    };
+
+    const resolvePostLoginBackgroundImage = async () => {
+      const candidates = resolveConfiguredBackgroundCandidates();
+      if (!candidates.length) {
+        postLoginBackgroundImageUrl.value = '';
+        return;
+      }
+
+      for (const candidate of candidates) {
+        // eslint-disable-next-line no-await-in-loop
+        const canUse = await canLoadBackgroundImage(candidate);
+        if (canUse) {
+          postLoginBackgroundImageUrl.value = candidate;
+          return;
+        }
+      }
+
+      postLoginBackgroundImageUrl.value = '';
+    };
+
+    const postLoginBackgroundEnabled = computed(() => {
+      return route.meta.requiresAuth && !!postLoginBackgroundImageUrl.value;
+    });
+
+    const postLoginBackgroundStyle = computed(() => {
+      if (!postLoginBackgroundEnabled.value) {
+        return {};
+      }
+
+      return {
+        '--post-login-bg-image': `url(${postLoginBackgroundImageUrl.value})`
+      };
+    });
+
     watch(
       () => route.meta.requiresAuth,
       (requiresAuth) => {
@@ -324,6 +407,14 @@ export default {
       { immediate: true }
     );
 
+    watch(
+      () => siteConfig.value?.postLoginBackgroundImage,
+      () => {
+        resolvePostLoginBackgroundImage();
+      },
+      { immediate: true }
+    );
+
     return {
       userEmail,
       userDisplayName,
@@ -334,7 +425,9 @@ export default {
       cachedRoutes,
       hasUnreadNotice,
       topFixedBarRef,
-      appContentWrapperRef
+      appContentWrapperRef,
+      postLoginBackgroundEnabled,
+      postLoginBackgroundStyle
     };
   }
 };
@@ -349,9 +442,49 @@ export default {
 
 .app-root-shell {
   min-height: 100dvh;
+  position: relative;
+  isolation: isolate;
   /* 顶部栏强调渐变条（仅用于 top-fixed-bar::after，不参与页面主背景计算） */
   --site-accent-gradient: linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
   background-color: var(--color-bg-page);
+}
+
+.app-root-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.app-root-shell.has-post-login-background::before,
+.app-root-shell.has-post-login-background::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: var(--post-login-bg-image);
+}
+
+.app-root-shell.has-post-login-background::before {
+  top: 0;
+  height: min(42dvh, 380px);
+  opacity: 0.4;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}
+
+.app-root-shell.has-post-login-background::after {
+  bottom: 0;
+  height: min(36dvh, 340px);
+  opacity: 0.48;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
 
 /* 全局卡片基线样式：
@@ -526,6 +659,17 @@ export default {
     padding-top: calc(var(--app-top-bar-height, 56px) + 8px);
   }
 
+}
+
+.app-root-shell.has-post-login-background .app-content-wrapper.with-left-nav {
+  background: linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 108px,
+    var(--color-bg-page) 180px,
+    var(--color-bg-page) calc(100% - 210px),
+    transparent 100%
+  );
 }
 
 

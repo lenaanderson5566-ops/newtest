@@ -52,6 +52,10 @@ export const config = {
     // 是否显示标题中的网站Logo (true=显示, false=隐藏)
     showLogo: true,
 
+    // 登录后页面背景图文件名（优先 src/assets/images/background，其次 public/images/background）
+    // 例如: 'dashboard-bg.jpg'。也支持直接填写完整 URL。留空或文件不存在时保持默认样式。
+    postLoginBackgroundImage: '',
+
     // Landing页面多语言标语
     landingText: {
       "zh-CN": "探索全球网络无限可能",

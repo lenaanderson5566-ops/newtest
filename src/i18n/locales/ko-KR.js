@@ -628,7 +628,6 @@ profile: {
     description: '사용 가능한 플랜을 확인하고 구매하세요',
     loading: '구독 로딩 중...',
     billingPeriodAria: '청구 주기 전환',
-    maxSavingsTip: '최대 {percent}% 절약',
     filter: {
       all: '전체',
       recurring: '주기적',
