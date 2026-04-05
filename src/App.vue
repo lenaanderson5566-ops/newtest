@@ -39,6 +39,7 @@
     <div
       ref="appContentWrapperRef"
       :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]"
+      :style="postLoginBackgroundStyle"
     >
       <div :class="['content-layout-shell', { 'fixed-content-width': $route.meta.requiresAuth }]">
         <router-view v-slot="{ Component, route }">
@@ -165,6 +166,37 @@ export default {
     const isUserInfoLoading = ref(!!route.meta.requiresAuth);
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
+
+    const postLoginBackgroundAssets = import.meta.glob('./assets/images/background/*', {
+      eager: true,
+      import: 'default'
+    });
+
+    const postLoginBackgroundStyle = computed(() => {
+      if (!route.meta.requiresAuth) {
+        return {};
+      }
+
+      const fileName = String(siteConfig.value?.postLoginBackgroundImage || '').trim();
+      if (!fileName) {
+        return {};
+      }
+
+      const assetKey = Object.keys(postLoginBackgroundAssets).find((key) => key.endsWith(`/${fileName}`));
+      const backgroundUrl = assetKey ? postLoginBackgroundAssets[assetKey] : '';
+
+      if (!backgroundUrl) {
+        return {};
+      }
+
+      return {
+        backgroundImage: `url(${backgroundUrl})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
+      };
+    });
 
     watch(
       () => route.meta.requiresAuth,
@@ -334,7 +366,8 @@ export default {
       cachedRoutes,
       hasUnreadNotice,
       topFixedBarRef,
-      appContentWrapperRef
+      appContentWrapperRef,
+      postLoginBackgroundStyle
     };
   }
 };
