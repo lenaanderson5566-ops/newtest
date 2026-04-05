@@ -2068,16 +2068,16 @@ $space-2: map.get($spacers, 2);
         }
         
         .plan-summary-card .plan-summary-section-meta {
-          background: var(--color-bg-surface-subtle);
+          background: linear-gradient(135deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
           border: none;
           box-shadow: none;
 
           .plan-name-main {
-            color: var(--text-primary);
+            color: var(--text-on-dark-primary);
           }
 
           .plan-expire-meta {
-            color: var(--text-secondary);
+            color: var(--text-on-dark-secondary);
           }
         }
 
@@ -2088,21 +2088,26 @@ $space-2: map.get($spacers, 2);
           box-shadow: var(--shadow-md);
 
           .plan-summary-card .plan-summary-section-meta {
-            background: var(--color-bg-surface-subtle);
+            background: linear-gradient(
+              135deg,
+              rgba(152, 173, 209, 0.92) 0%,
+              rgba(164, 171, 211, 0.9) 52%,
+              rgba(176, 166, 203, 0.9) 100%
+            );
             border: none;
             box-shadow: none;
 
             .plan-name-main {
-              color: var(--text-primary);
+              color: rgba(248, 250, 252, 0.98);
             }
 
             .plan-expire-meta,
             .plan-expire-meta .expire-suffix {
-              color: var(--text-secondary);
+              color: rgba(241, 245, 249, 0.92);
             }
 
             .plan-status-tag {
-              color: var(--text-primary);
+              color: rgba(248, 250, 252, 0.98);
               border: var(--border-width) solid var(--border-hover);
               background: rgba(148, 163, 184, 0.14);
             }
