@@ -174,15 +174,66 @@ export default {
       import: 'default'
     });
 
-    const postLoginBackgroundImageUrl = computed(() => {
+    const postLoginBackgroundImageUrl = ref('');
+
+    const resolveConfiguredBackgroundCandidates = () => {
       const fileName = String(siteConfig.value?.postLoginBackgroundImage || '').trim();
       if (!fileName) {
-        return '';
+        return [];
       }
 
-      const assetKey = Object.keys(postLoginBackgroundAssets).find((key) => key.endsWith(`/${fileName}`));
-      return assetKey ? postLoginBackgroundAssets[assetKey] : '';
-    });
+      if (/^(https?:)?\/\//.test(fileName) || fileName.startsWith('/')) {
+        return [fileName];
+      }
+
+      const assetKeys = Object.keys(postLoginBackgroundAssets);
+      const exactAssetKey = assetKeys.find((key) => key.endsWith(`/${fileName}`));
+      const ignoreCaseAssetKey = exactAssetKey
+        ? ''
+        : assetKeys.find((key) => key.toLowerCase().endsWith(`/${fileName.toLowerCase()}`));
+
+      const candidates = [];
+      if (exactAssetKey) {
+        candidates.push(postLoginBackgroundAssets[exactAssetKey]);
+      } else if (ignoreCaseAssetKey) {
+        candidates.push(postLoginBackgroundAssets[ignoreCaseAssetKey]);
+      }
+
+      candidates.push(`/images/background/${fileName}`);
+      return candidates;
+    };
+
+    const canLoadBackgroundImage = (url) => {
+      if (typeof window === 'undefined' || typeof Image === 'undefined') {
+        return Promise.resolve(false);
+      }
+
+      return new Promise((resolve) => {
+        const image = new Image();
+        image.onload = () => resolve(true);
+        image.onerror = () => resolve(false);
+        image.src = url;
+      });
+    };
+
+    const resolvePostLoginBackgroundImage = async () => {
+      const candidates = resolveConfiguredBackgroundCandidates();
+      if (!candidates.length) {
+        postLoginBackgroundImageUrl.value = '';
+        return;
+      }
+
+      for (const candidate of candidates) {
+        // eslint-disable-next-line no-await-in-loop
+        const canUse = await canLoadBackgroundImage(candidate);
+        if (canUse) {
+          postLoginBackgroundImageUrl.value = candidate;
+          return;
+        }
+      }
+
+      postLoginBackgroundImageUrl.value = '';
+    };
 
     const postLoginBackgroundEnabled = computed(() => {
       return route.meta.requiresAuth && !!postLoginBackgroundImageUrl.value;
@@ -352,6 +403,14 @@ export default {
         nextTick(() => {
           syncTopBarHeight();
         });
+      },
+      { immediate: true }
+    );
+
+    watch(
+      () => siteConfig.value?.postLoginBackgroundImage,
+      () => {
+        resolvePostLoginBackgroundImage();
       },
       { immediate: true }
     );
