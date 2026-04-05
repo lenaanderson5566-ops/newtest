@@ -302,27 +302,10 @@ const DEFAULT_THEME_CONFIG = {
   // 主题颜色变量
   light: {
     ...calculateThemeColors(DEFAULT_CONFIG.primaryColor),
-    backgroundColor: "var(--theme-light-background-color)",
-    backgroundElevated: "var(--theme-light-background-elevated)",
-    cardBackground: "var(--theme-light-card-background)",
-    textColor: "var(--theme-light-text-color)",
-    secondaryTextColor: "var(--theme-light-secondary-text-color)",
-    mutedTextColor: "var(--theme-light-muted-text-color)",
-    borderColor: "var(--theme-light-border-color)",
-    borderColorSoft: "var(--theme-light-border-color-soft)",
-    shadowColor: "var(--theme-light-shadow-color)",
-    shadowCardSm: "var(--theme-light-shadow-card-sm)",
-    shadowCardMd: "var(--theme-light-shadow-card-md)",
-    radiusSm: "var(--theme-radius-sm)",
-    radiusMd: "var(--theme-radius-md)",
-    radiusLg: "var(--theme-radius-lg)",
-    surfaceSubtle: "var(--theme-light-surface-subtle)",
-    headingColor: "var(--theme-light-heading-color)",
-    neutralStrong: "var(--theme-light-neutral-strong)",
     buttonPrimaryStart: DEFAULT_CONFIG.primaryColor,
     buttonPrimarySoftStart: DEFAULT_CONFIG.primaryColor,
     buttonPrimaryEnd: calculateThemeColors(DEFAULT_CONFIG.primaryColor).primaryColorHover,
-    buttonDisabledBg: "var(--theme-light-button-disabled-bg)",
+    buttonDisabledBg: "var(--button-disabled-bg)",
   },
 };
 
