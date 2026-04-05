@@ -2147,11 +2147,11 @@ $space-2: map.get($spacers, 2);
     box-shadow: var(--shadow-md);
   }
 
-  /* 三张流量相关卡片统一为 subtle surface token，避免被其他层叠样式覆盖 */
+  /* 三张流量相关卡片统一为 surface token，避免被其他层叠样式覆盖 */
   .stats-grid .stats-card.traffic-board-package,
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
-    background-color: var(--color-bg-surface-subtle) !important;
+    background-color: var(--color-bg-surface) !important;
     background-image: none !important;
   }
 

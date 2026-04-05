@@ -316,7 +316,7 @@ onMounted(() => {
   }
   
   .dashboard-card {
-    background-color: var(--color-bg-surface-subtle);
+    background-color: var(--color-bg-surface);
     border-radius: $border-radius-sm;
     padding: map.get($spacers, 3);
     border: var(--border-width) solid var(--border-default);
