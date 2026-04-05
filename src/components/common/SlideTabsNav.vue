@@ -159,13 +159,13 @@ export default {
   .slide-tabs-nav {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
 
     .nav-item {
-      padding: 8px 8px;
+      padding: 10px 10px;
       border-radius: $border-radius-sm;
       font-weight: $font-weight-medium;
-      font-size: $font-size-sm;
+      font-size: $font-size-md;
       color: var(--color-text-secondary);
       text-decoration: none;
       text-align: left;
@@ -175,7 +175,7 @@ export default {
       align-items: center;
       justify-content: flex-start;
       gap: 8px;
-      min-height: 38px;
+      min-height: 42px;
 
       .nav-icon {
         display: flex;
@@ -228,11 +228,11 @@ export default {
     }
 
     .slide-tabs-nav {
-      gap: 6px;
+      gap: 10px;
 
       .nav-item {
-        padding: 10px 12px;
-        min-height: 40px;
+        padding: 12px 12px;
+        min-height: 44px;
         color: #111827;
         border-radius: 6px;
 
