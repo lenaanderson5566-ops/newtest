@@ -316,7 +316,7 @@ onMounted(() => {
   }
   
   .dashboard-card {
-    background-color: var(--card-bg);
+    background-color: var(--color-bg-surface);
     border-radius: $border-radius-sm;
     padding: map.get($spacers, 3);
     border: var(--border-width) solid var(--border-default);
@@ -396,7 +396,7 @@ onMounted(() => {
       }
 
       .wallet-amount {
-        @extend %typo-label-text;
+        @extend %typo-section-title;
         font-variant-numeric: tabular-nums;
       }
       

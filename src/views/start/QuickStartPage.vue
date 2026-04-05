@@ -442,7 +442,7 @@ onMounted(fetchUserStatus);
 }
 
 .step-card {
-  background: var(--color-bg-surface-subtle);
+  background: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-subtle);
   border-radius: $border-radius-sm;
   box-shadow: var(--shadow-sm);

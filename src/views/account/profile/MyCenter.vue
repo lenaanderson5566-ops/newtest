@@ -640,7 +640,7 @@ $space-2: map.get($spacers, 2);
 
 .section-block {
   border-radius: $border-radius-sm;
-  background-color: transparent;
+  background-color: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-hover);
   transition: box-shadow 0.22s ease, border-color 0.22s ease;
   margin-bottom: 0 !important;
@@ -1189,7 +1189,7 @@ input:checked + .slider:before { transform: translateX(18px); }
   .my-center-inner { max-width: 100%; gap: #{$space-2}; }
 
   .section-block {
-    background: transparent !important;
+    background: var(--color-bg-surface) !important;
     box-shadow: none;
   }
 

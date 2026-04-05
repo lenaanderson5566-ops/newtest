@@ -1530,7 +1530,7 @@ export default {
 }
 
 .dashboard-card {
-  background: var(--card-bg-color);
+  background: var(--color-bg-surface);
   border: var(--border-width) solid var(--border-default);
   border-radius: 12px;
   padding: 8px;
