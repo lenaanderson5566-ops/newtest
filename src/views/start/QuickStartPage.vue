@@ -410,7 +410,7 @@ onMounted(fetchUserStatus);
 }
 
 .status-strip {
-  background: var(--color-bg-page);
+  background: #ead6a8;
   border: var(--border-width) solid var(--divider);
   border-radius: $border-radius-sm;
   box-shadow: var(--shadow-sm);
@@ -439,7 +439,7 @@ onMounted(fetchUserStatus);
 
 
   &.is-active {
-    background: var(--color-bg-surface-subtle);
+    background: #efe1bf;
   }
   &.is-active .status-icon {
     color: var(--success-color);
