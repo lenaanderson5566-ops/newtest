@@ -751,13 +751,13 @@ onMounted(() => {
 
     .primary {
       color: var(--text-on-dark-primary);
-      background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
+      background: linear-gradient(135deg, var(--theme-color), var(--theme-hover-color));
     }
 
     .secondary {
-      color: var(--neutral-strong);
+      color: var(--text-secondary);
       border-color: var(--border-default);
-      background: var(--surface-subtle);
+      background: var(--color-bg-surface-subtle);
     }
   }
 }

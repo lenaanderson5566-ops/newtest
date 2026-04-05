@@ -1722,7 +1722,7 @@ $space-2: map.get($spacers, 2);
             align-items: center;
             justify-content: center;
             color: var(--theme-white);
-            background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
+            background: linear-gradient(135deg, var(--theme-color), var(--theme-hover-color));
             cursor: pointer;
           }
         }
@@ -1824,7 +1824,7 @@ $space-2: map.get($spacers, 2);
             font-size: $font-size-2xl;
             line-height: 1.2;
             font-weight: $font-weight-bold;
-            color: var(--heading-color);
+            color: var(--text-primary);
           }
 
           .plan-expire-meta {
@@ -2690,11 +2690,11 @@ $space-2: map.get($spacers, 2);
 
 .hero-btn.primary {
   color: var(--text-on-dark-primary);
-  background: linear-gradient(135deg, var(--button-primary-soft-start), var(--button-primary-start));
+  background: linear-gradient(135deg, var(--theme-color), var(--theme-hover-color));
 }
 
 .hero-btn.secondary {
-  color: var(--neutral-strong);
+  color: var(--text-secondary);
   border-color: rgba(148, 163, 184, 0.3);
   background: rgba(255, 255, 255, 0.76);
 }

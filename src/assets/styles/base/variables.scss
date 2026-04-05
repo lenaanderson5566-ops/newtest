@@ -52,29 +52,11 @@
   --info-background: #eef4ff;
   --info-color-rgb: 37, 99, 235;
 
-  /* Unified theme variables (light) */
-  --background-elevated: var(--color-bg-surface-subtle);
-  --text-color: var(--text-primary);
-  --secondary-text-color: var(--text-tertiary);
-  --muted-text-color: var(--text-quaternary);
-  --shadow-card-sm: var(--shadow-sm);
-  --shadow-card-md: var(--shadow-md);
-  --radius-sm: 8px;
-  --radius-md: 8px;
-  --radius-lg: 8px;
-  --surface-subtle: var(--color-bg-surface-subtle);
-  --heading-color: var(--text-primary);
-  --neutral-strong: var(--text-secondary);
-
-  /* Primary theme color tokens (no runtime theme switch) */
+  /* Theme semantic tokens (single source of truth) */
+  --radius-base: 8px;
   --theme-color: #355cc2;
   --theme-color-rgb: 53, 92, 194;
   --theme-hover-color: rgba(var(--theme-color-rgb), 0.9);
-  --primary-color-hover: var(--theme-hover-color);
-  --button-primary-start: var(--theme-color);
-  --button-primary-soft-start: var(--theme-color);
-  --button-primary-end: var(--theme-hover-color);
-  --button-disabled-bg: var(--text-quaternary);
 }
 
 // 断点变量
