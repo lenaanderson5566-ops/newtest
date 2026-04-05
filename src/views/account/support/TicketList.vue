@@ -917,7 +917,7 @@ onUnmounted(() => {
 }
 
 .dashboard-card {
-  background-color: var(--card-bg-color);
+  background-color: transparent;
 
   border-radius: 12px;
 
