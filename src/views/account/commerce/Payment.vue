@@ -1292,11 +1292,12 @@ export default {
     padding: 0;
     margin: 8px 0;
     // 必须压过全局 section-wrapper 皮肤（公共层）
-    background: var(--color-bg-surface) !important;
+    background: transparent !important;
     border: none !important;
+    box-shadow: none !important;
 
     .section-title {
-      background-color: var(--color-bg-surface);
+      background-color: transparent;
       margin-top: 8px;
       margin-bottom: 8px;
       color: var(--color-text-primary);
@@ -1304,9 +1305,9 @@ export default {
   }
 
   .right-column .section-wrapper.payment-methods-section {
-    // 历史兼容：右栏卡片主题需要强制背景，避免被公共块背景回退
-    background: var(--right-card-bg) !important;
-    border: var(--border-width) solid var(--border-default);
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   .right-column .section-wrapper.payment-methods-section .section-title {

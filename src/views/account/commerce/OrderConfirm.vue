@@ -2004,6 +2004,7 @@ export default {
     // 必须覆盖公共 section-wrapper 样式，保持该页平面化分区视觉
     background-color: transparent !important;
     border: none !important;
+    box-shadow: none !important;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
   }
@@ -2020,6 +2021,7 @@ export default {
     // 必须覆盖公共 section-wrapper 样式，保持该页平面化分区视觉
     background-color: transparent !important;
     border: none !important;
+    box-shadow: none !important;
     margin-top: map.get($spacers, 2);
     margin-bottom: map.get($spacers, 2);
   }
