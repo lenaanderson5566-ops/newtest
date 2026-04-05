@@ -22,14 +22,6 @@
               <span class="label">{{ $t('myCenter.email') }}</span>
               <strong>{{ userInfo.email || '-' }}</strong>
             </div>
-            <div class="summary-item">
-              <span class="label">{{ $t('myCenter.currentPlan') }}</span>
-              <strong>{{ subscriptionText }}</strong>
-            </div>
-            <div class="summary-item">
-              <span class="label">{{ $t('myCenter.expireAt') }}</span>
-              <strong>{{ subscriptionExpireText }}</strong>
-            </div>
             <div class="summary-item is-highlight">
               <span class="label">{{ $t('myCenter.accountBalance') }}</span>
               <div class="balance-amount-row">
@@ -807,7 +799,7 @@ $space-2: map.get($spacers, 2);
 
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: #{$space-2};
 }
 
