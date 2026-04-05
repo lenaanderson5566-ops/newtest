@@ -751,7 +751,6 @@ onMounted(() => {
 
     .primary {
       color: var(--text-on-dark-primary);
-      background: var(--theme-gradient-primary);
     }
 
     .secondary {

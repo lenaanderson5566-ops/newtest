@@ -1656,7 +1656,6 @@ export default {
     padding: 0 16px;
     margin-top: 4px;
     align-self: flex-start;
-    background: var(--theme-gradient-primary);
 
     &.glassmorphism {
       backdrop-filter: none;
@@ -1729,7 +1728,6 @@ export default {
         top: 3px;
         bottom: 3px;
         border-radius: 9px;
-        background: var(--theme-gradient-primary);
         transition: transform 0.22s ease, width 0.22s ease;
         pointer-events: none;
       }
@@ -2066,7 +2064,6 @@ export default {
         align-items: center;
         justify-content: center;
         gap: 8px;
-        background: var(--theme-gradient-primary);
         color: var(--text-on-dark-primary);
         font-weight: $font-weight-semibold;
 
