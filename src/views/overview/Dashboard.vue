@@ -2343,12 +2343,13 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-title {
-      @extend %typo-label-text;
+      @extend %typo-meta-text;
     }
 
     .trend-empty-action {
-      min-width: 164px;
-      padding-inline: 14px;
+      min-width: 148px;
+      padding-inline: 12px;
+      font-size: $font-size-sm;
     }
 
     .usage-trend-chart {
