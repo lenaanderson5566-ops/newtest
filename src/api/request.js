@@ -47,18 +47,10 @@ const toOrigin = (value) => {
   }
 };
 
-const getAllowedApiOrigins = () => {
+const getStaticApiOrigins = () => {
   const origins = new Set();
-
-  const currentApiBase = getApiBaseUrl();
-  const availableApiUrl = getAvailableApiUrl();
-
-  [currentApiBase, availableApiUrl].forEach((item) => {
-    const origin = toOrigin(item);
-    if (origin) origins.add(origin);
-  });
-
   const staticBaseUrl = window?.EZ_CONFIG?.API_CONFIG?.staticBaseUrl;
+
   if (Array.isArray(staticBaseUrl)) {
     staticBaseUrl.forEach((item) => {
       const origin = toOrigin(item);
@@ -68,6 +60,24 @@ const getAllowedApiOrigins = () => {
     const origin = toOrigin(staticBaseUrl);
     if (origin) origins.add(origin);
   }
+
+  return origins;
+};
+
+const getAllowedApiOrigins = () => {
+  const staticOrigins = getStaticApiOrigins();
+  if (staticOrigins.size > 0) {
+    return staticOrigins;
+  }
+
+  const origins = new Set();
+  const currentApiBase = getApiBaseUrl();
+  const availableApiUrl = getAvailableApiUrl();
+
+  [currentApiBase, availableApiUrl].forEach((item) => {
+    const origin = toOrigin(item);
+    if (origin) origins.add(origin);
+  });
 
   return origins;
 };
@@ -139,7 +149,9 @@ request.interceptors.request.use(
     const allowedOrigins = getAllowedApiOrigins();
     const canAttachAuth =
       !!authDataFromStorage &&
-      (!allowedOrigins.size || allowedOrigins.has(requestOrigin));
+      allowedOrigins.size > 0 &&
+      !!requestOrigin &&
+      allowedOrigins.has(requestOrigin);
 
     if (canAttachAuth) {
       config.headers["Authorization"] = authDataFromStorage;

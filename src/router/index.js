@@ -6,6 +6,7 @@ import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, AUTH_LAYOUT_CONFIG } 
 
 import i18n, { reloadMessages } from '@/i18n';
 import { shouldCheckApiAvailability } from '@/utils/apiAvailabilityChecker';
+import { checkSessionWithServer, forceLogout } from '@/api/auth';
 
 import pageCache from '@/utils/pageCache';
 
@@ -73,6 +74,68 @@ const Profile = () => import('@/views/account/profile/MyCenter.vue');
 const BrowserRestricted = () => import('@/views/errors/BrowserRestricted.vue');
 
 const NotFound = () => import('@/views/errors/NotFound.vue');
+
+const AUTH_CHECK_TTL = 30 * 1000;
+let authCheckCache = {
+  token: '',
+  authData: '',
+  checkedAt: 0,
+  isLoggedIn: null,
+  pending: null
+};
+
+const getLocalAuthSnapshot = () => ({
+  token: localStorage.getItem('token') || sessionStorage.getItem('token') || '',
+  authData: localStorage.getItem('auth_data') || sessionStorage.getItem('auth_data') || ''
+});
+
+const validateSession = async () => {
+  const { token, authData } = getLocalAuthSnapshot();
+
+  if (!token || !authData) {
+    return { isLoggedIn: false };
+  }
+
+  const now = Date.now();
+  const canUseCache = authCheckCache.token === token &&
+    authCheckCache.authData === authData &&
+    authCheckCache.checkedAt > 0 &&
+    now - authCheckCache.checkedAt < AUTH_CHECK_TTL;
+
+  if (canUseCache) {
+    return {
+      isLoggedIn: authCheckCache.isLoggedIn
+    };
+  }
+
+  if (authCheckCache.pending) {
+    return authCheckCache.pending;
+  }
+
+  authCheckCache.pending = checkSessionWithServer().then((result) => {
+    authCheckCache.token = token;
+    authCheckCache.authData = authData;
+    authCheckCache.checkedAt = Date.now();
+    authCheckCache.isLoggedIn = result?.isLoggedIn;
+    authCheckCache.pending = null;
+    return result;
+  }).catch(() => {
+    authCheckCache.pending = null;
+    return { isLoggedIn: null };
+  });
+
+  return authCheckCache.pending;
+};
+
+const clearAuthCheckCache = () => {
+  authCheckCache = {
+    token: '',
+    authData: '',
+    checkedAt: 0,
+    isLoggedIn: null,
+    pending: null
+  };
+};
 
 
 
@@ -705,9 +768,32 @@ router.beforeEach(async (to, from, next) => {
 
     next({ name: 'Login' });
 
-  } else if (to.path === '/login' && token) {
+  } else if (to.meta.requiresAuth) {
+    const sessionStatus = await validateSession();
 
-    next({ path: '/dashboard' });
+    if (sessionStatus?.isLoggedIn === false) {
+      clearAuthCheckCache();
+      forceLogout();
+      next({ name: 'Login', query: { redirect: to.fullPath } });
+      return;
+    }
+
+    if (sessionStatus?.isLoggedIn === null) {
+      clearAuthCheckCache();
+      next({ name: 'Login', query: { redirect: to.fullPath } });
+      return;
+    }
+
+    next();
+  } else if (to.path === '/login' && token) {
+    const sessionStatus = await validateSession();
+    if (sessionStatus?.isLoggedIn === true) {
+      next({ path: '/dashboard' });
+      return;
+    }
+
+    clearAuthCheckCache();
+    next();
 
   } else {
 
