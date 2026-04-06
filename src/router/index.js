@@ -7,7 +7,7 @@ import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, AUTH_LAYOUT_CONFIG } 
 import i18n, { reloadMessages } from '@/i18n';
 import { shouldCheckApiAvailability } from '@/utils/apiAvailabilityChecker';
 import { checkSessionWithServer, forceLogout } from '@/api/auth';
-import { getAuthSnapshot, getToken } from '@/utils/authState';
+import { getAuthSnapshot, getAuthData } from '@/utils/authState';
 
 import pageCache from '@/utils/pageCache';
 
@@ -78,7 +78,6 @@ const NotFound = () => import('@/views/errors/NotFound.vue');
 
 const AUTH_CHECK_TTL = 5 * 60 * 1000;
 let authCheckCache = {
-  token: '',
   authData: '',
   checkedAt: 0,
   isLoggedIn: null,
@@ -88,15 +87,14 @@ let authCheckCache = {
 const getLocalAuthSnapshot = () => getAuthSnapshot();
 
 const validateSession = async () => {
-  const { token, authData } = getLocalAuthSnapshot();
+  const { authData } = getLocalAuthSnapshot();
 
-  if (!token || !authData) {
+  if (!authData) {
     return { isLoggedIn: false };
   }
 
   const now = Date.now();
-  const canUseCache = authCheckCache.token === token &&
-    authCheckCache.authData === authData &&
+  const canUseCache = authCheckCache.authData === authData &&
     authCheckCache.checkedAt > 0 &&
     now - authCheckCache.checkedAt < AUTH_CHECK_TTL;
 
@@ -111,7 +109,6 @@ const validateSession = async () => {
   }
 
   authCheckCache.pending = checkSessionWithServer().then((result) => {
-    authCheckCache.token = token;
     authCheckCache.authData = authData;
     authCheckCache.checkedAt = Date.now();
     authCheckCache.isLoggedIn = result?.isLoggedIn;
@@ -127,7 +124,6 @@ const validateSession = async () => {
 
 const clearAuthCheckCache = () => {
   authCheckCache = {
-    token: '',
     authData: '',
     checkedAt: 0,
     isLoggedIn: null,
@@ -737,7 +733,7 @@ router.beforeEach(async (to, from, next) => {
 
   
 
-  const token = getToken();
+  const authData = getAuthData();
 
   
 
@@ -762,7 +758,7 @@ router.beforeEach(async (to, from, next) => {
 
   
 
-  if (to.meta.requiresAuth && !token) {
+  if (to.meta.requiresAuth && !authData) {
 
     next({ name: 'Login' });
 
@@ -783,7 +779,7 @@ router.beforeEach(async (to, from, next) => {
     }
 
     next();
-  } else if (to.path === '/login' && token) {
+  } else if (to.path === '/login' && authData) {
     const sessionStatus = await validateSession();
     if (sessionStatus?.isLoggedIn === true) {
       next({ path: '/dashboard' });

@@ -5,7 +5,6 @@ import { updateUserLanguage, logoutCurrentSession } from './account/user';
 import { getDefaultRegisterLanguage } from '@/utils/userLanguage';
 import { reloadMessages, initializeLanguageFromUserSettings } from '@/i18n';
 import {
-  getToken,
   getAuthData,
   setAuthData,
   setUserLoggedInFlag,
@@ -29,7 +28,9 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
     setUserLoggedInFlag(undefined);
     const usePersistentStorage = rememberMe === true;
     
-    useAppStore(pinia).login(responseData.token, { rememberMe: usePersistentStorage });
+    if (responseData.token) {
+      useAppStore(pinia).login(responseData.token, { rememberMe: usePersistentStorage });
+    }
     
     if (responseData.is_admin === 1) {
       localStorage.setItem('is_admin', '1');
@@ -240,13 +241,6 @@ export const checkLoginStatus = () => {
     return false;
   }
   
-  const token = getToken();
-  if (!token || token === 'undefined' || token === 'null' || token === '') {
-    _clearAllAuthData(); 
-    _cacheLoginStatus(false);
-    return false;
-  }
-  
   const authData = getAuthData();
                   
   if (!authData || authData === 'undefined' || authData === 'null' || authData === '') {
@@ -259,7 +253,7 @@ export const checkLoginStatus = () => {
   if (!storeAuth) {
   }
   
-  const isLoggedIn = !!token && !!authData;
+  const isLoggedIn = !!authData;
   
   if (isLoggedIn) {
     setUserLoggedInFlag(true);
@@ -340,7 +334,6 @@ export const tokenLogin = (verifyToken, redirect) => {
 
 export const checkUserLoginStatus = async () => {
   const authData = getAuthData();
-  const token = getToken();
 
   const getCurrentRoutePath = () => {
     const hash = window.location.hash || '';
@@ -356,7 +349,7 @@ export const checkUserLoginStatus = async () => {
 
   const isAuthRoutePath = (path) => /\/(login|register|forgot-password)/.test(path);
   
-  if (!token || !authData) {
+  if (!authData) {
     forceLogout(); 
     return { isLoggedIn: false };
   }
@@ -407,9 +400,8 @@ export const checkUserLoginStatus = async () => {
 
 export const checkSessionWithServer = async () => {
   const authData = getAuthData();
-  const token = getToken();
 
-  if (!token || !authData) {
+  if (!authData) {
     return { isLoggedIn: false };
   }
 

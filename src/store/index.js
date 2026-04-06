@@ -1,6 +1,6 @@
 import { createPinia, defineStore } from 'pinia';
 import { forceLogout } from '@/api/auth';
-import { getToken, setToken } from '@/utils/authState';
+import { getToken, setToken, getAuthData } from '@/utils/authState';
 
 export const pinia = createPinia();
 
@@ -13,7 +13,7 @@ export const useAppStore = defineStore('app', {
   }),
 
   getters: {
-    isLoggedIn: state => !!state.token,
+    isLoggedIn: () => !!getAuthData(),
     userInfo: state => state.user,
     username: state => state.user?.email || state.user?.username || state.user?.name || '',
     avatarUrl: state => state.user?.avatar_url || state.user?.avatar || ''
