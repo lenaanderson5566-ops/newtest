@@ -1143,6 +1143,19 @@ export default {
       }
     };
 
+    const scheduleNonCriticalRequest = (task, delayMs = 350) => {
+      if (typeof window !== 'undefined' && typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(() => {
+          Promise.resolve(task()).catch(() => {});
+        }, { timeout: 1200 });
+        return;
+      }
+
+      setTimeout(() => {
+        Promise.resolve(task()).catch(() => {});
+      }, delayMs);
+    };
+
     const updateAccountBalanceDisplay = () => {
       if (userBalance.value) {
         userStats.accountBalance = `${currencySymbol.value}${(parseFloat(userBalance.value) / 100).toFixed(2)}`;
@@ -1313,16 +1326,14 @@ export default {
     };
 
     onMounted(async () => {
-      await fetchUserConfig();
+      await Promise.allSettled([
+        fetchUserInfo(),
+        fetchSubscribe(),
+        fetchUserStats()
+      ]);
 
-      fetchUserInfo();
-
-      fetchSubscribe();
-
-
-      fetchUserStats();
-      fetchTrafficTrend();
-
+      scheduleNonCriticalRequest(() => fetchUserConfig(), 250);
+      scheduleNonCriticalRequest(() => hasPlan.value ? fetchTrafficTrend() : Promise.resolve(), 450);
     });
 
     watch(() => userPlan.value.subscribeUrl, () => {
@@ -1364,8 +1375,11 @@ export default {
 
     onActivated(() => {
       if (needRefreshData.value) {
-        fetchUserInfo();
-        fetchUserStats();
+        Promise.allSettled([
+          fetchUserInfo(),
+          fetchUserStats()
+        ]);
+        scheduleNonCriticalRequest(() => hasPlan.value ? fetchTrafficTrend() : Promise.resolve(), 350);
         needRefreshData.value = false;
       }
 
