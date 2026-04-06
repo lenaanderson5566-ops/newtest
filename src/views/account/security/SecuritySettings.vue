@@ -107,11 +107,6 @@
               <label>{{ $t('profile.newPassword') }}</label>
               <input type="password" v-model="passwordForm.newPassword" :placeholder="$t('profile.newPassword')" />
             </div>
-            <div class="form-group">
-              <label>{{ $t('profile.confirmPassword') }}</label>
-              <input type="password" v-model="passwordForm.confirmPassword" :placeholder="$t('profile.confirmPassword')" />
-            </div>
-            <div v-if="passwordMismatch" class="error-text">{{ $t('profile.passwordMismatch') }}</div>
           </div>
           <div class="modal-footer">
             <button class="btn-cancel" @click="showPasswordModal = false">{{ $t('common.cancel') }}</button>
@@ -163,21 +158,13 @@ const currentSessionId = ref('');
 
 const passwordForm = ref({
   oldPassword: '',
-  newPassword: '',
-  confirmPassword: ''
-});
-
-const passwordMismatch = computed(() => {
-  if (!passwordForm.value.confirmPassword) return false;
-  return passwordForm.value.newPassword !== passwordForm.value.confirmPassword;
+  newPassword: ''
 });
 
 const validatePasswordForm = () => {
   return (
     passwordForm.value.oldPassword &&
-    passwordForm.value.newPassword &&
-    passwordForm.value.confirmPassword &&
-    !passwordMismatch.value
+    passwordForm.value.newPassword
   );
 };
 
@@ -194,7 +181,7 @@ const changePassword = async () => {
 
     if (response && response.data) {
       success(t('profile.passwordChanged'));
-      passwordForm.value = { oldPassword: '', newPassword: '', confirmPassword: '' };
+      passwordForm.value = { oldPassword: '', newPassword: '' };
       showPasswordModal.value = false;
     }
   } catch (err) {

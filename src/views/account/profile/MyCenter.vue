@@ -275,11 +275,6 @@
               <label>{{ $t('profile.newPassword') }}</label>
               <input v-model="passwordForm.newPassword" type="password" :placeholder="$t('profile.newPassword')" />
             </div>
-            <div class="form-group">
-              <label>{{ $t('profile.confirmPassword') }}</label>
-              <input v-model="passwordForm.confirmPassword" type="password" :placeholder="$t('profile.confirmPassword')" />
-            </div>
-            <div v-if="passwordMismatch" class="error-text">{{ $t('profile.passwordMismatch') }}</div>
           </div>
           <div class="modal-footer">
             <button class="btn-cancel" @click="closePasswordModal">{{ $t('common.cancel') }}</button>
@@ -341,8 +336,7 @@ const recentLoginLoading = ref(false);
 const recentLoginRecords = ref([]);
 const passwordForm = ref({
   oldPassword: '',
-  newPassword: '',
-  confirmPassword: ''
+  newPassword: ''
 });
 const activeSection = ref('overview');
 const sectionTabs = computed(() => [
@@ -441,16 +435,9 @@ const handleSectionClick = (sectionKey) => {
   activeSection.value = sectionKey;
 };
 
-const passwordMismatch = computed(() => {
-  if (!passwordForm.value.confirmPassword) return false;
-  return passwordForm.value.newPassword !== passwordForm.value.confirmPassword;
-});
-
 const validatePasswordForm = () => (
   passwordForm.value.oldPassword &&
-  passwordForm.value.newPassword &&
-  passwordForm.value.confirmPassword &&
-  !passwordMismatch.value
+  passwordForm.value.newPassword
 );
 
 const openPasswordChangePrompt = () => {
@@ -459,7 +446,7 @@ const openPasswordChangePrompt = () => {
 
 const closePasswordModal = () => {
   showPasswordModal.value = false;
-  passwordForm.value = { oldPassword: '', newPassword: '', confirmPassword: '' };
+  passwordForm.value = { oldPassword: '', newPassword: '' };
 };
 
 const submitPasswordChange = async () => {
