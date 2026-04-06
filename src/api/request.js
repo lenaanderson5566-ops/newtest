@@ -28,8 +28,6 @@ const clearAuthDataAndRedirectToLogin = () => {
   });
 
   window.isUserLoggedIn = false;
-  window.authDataInStorage = null;
-  window.authCookieFailure = false;
   window.location.href = "/#/login";
 };
 

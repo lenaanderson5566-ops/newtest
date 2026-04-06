@@ -1,131 +1,14 @@
 ﻿
 import request from './request';
 import { pinia, useAppStore } from '@/store';
-import { SITE_CONFIG } from '@/utils/baseConfig';
 import { updateUserLanguage, logoutCurrentSession } from './account/user';
 import { getDefaultRegisterLanguage } from '@/utils/userLanguage';
 import { reloadMessages, initializeLanguageFromUserSettings } from '@/i18n';
 
 
-const setCookie = (name, value, days) => {
-  const siteName = SITE_CONFIG.siteName;
-  
-  const cookieValue = JSON.stringify({
-    site: siteName,
-    value: value
-  });
-  
-  const isSecure = window.location.protocol === 'https:';
-  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  
-  const date = new Date();
-  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-  const expires = `expires=${date.toUTCString()}`;
-  const domain = isLocalhost ? '' : `domain=${window.location.hostname};`;
-  let cookieString = `${name}=${encodeURIComponent(cookieValue)}; ${expires}; ${domain} path=/`;
-  
-  if (isSecure) {
-    cookieString += '; secure';
-  }
-  
-  cookieString += '; SameSite=Lax';
-  
-  document.cookie = cookieString;
-  
-  try {
-    localStorage.setItem(`cookie_${name}`, cookieValue);
-  } catch (err) {
-  }
-  
-  setTimeout(() => {
-    const checkCookie = getCookie(name);
-    const success = !!checkCookie;
-    
-    if (!success) {
-      document.cookie = `${name}=${encodeURIComponent(cookieValue)}; ${expires}; path=/`;
-      localStorage.setItem(`cookie_${name}_failure`, 'true');
-      window.authCookieFailure = true;
-    }
-  }, 300);
-};
-
-
-const getCookie = (name) => {
-  const siteName = SITE_CONFIG.siteName;
-  
-  const nameEQ = name + "=";
-  const ca = document.cookie.split(';');
-  let cookieValue = null;
-  
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) === 0) {
-      try {
-        const rawValue = c.substring(nameEQ.length, c.length);
-        const decodedValue = decodeURIComponent(rawValue);
-        const parsedValue = JSON.parse(decodedValue);
-        
-        if (parsedValue && parsedValue.site === siteName) {
-          cookieValue = parsedValue.value;
-          break;
-        }
-      } catch (err) {
-      }
-    }
-  }
-  
-  if (!cookieValue) {
-    try {
-      const localValue = localStorage.getItem(`cookie_${name}`);
-      if (localValue) {
-        try {
-          const parsedValue = JSON.parse(localValue);
-          if (parsedValue && parsedValue.site === siteName) {
-            cookieValue = parsedValue.value;
-          }
-        } catch (err) {
-        }
-      }
-    } catch (err) {
-    }
-  }
-  
-  if (!cookieValue && name === 'auth_data' && window.authDataInStorage) {
-    cookieValue = window.authDataInStorage;
-  }
-  
-  return cookieValue;
-};
-
-
-const deleteCookie = (name) => {
-  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-  
-  try {
-    localStorage.removeItem(`cookie_${name}`);
-    localStorage.removeItem(`cookie_${name}_failure`);
-  } catch (err) {
-  }
-  
-  setTimeout(() => {
-    const checkCookie = getCookie(name);
-    if (checkCookie) {
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
-      
-      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      const domain = isLocalhost ? '' : `domain=${window.location.hostname};`;
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; ${domain} path=/`;
-    }
-  }, 100);
-};
-
-
 export const handleLoginSuccess = (responseData, rememberMe) => {
   try {
     window.isUserLoggedIn = undefined;
-    window.authCookieFailure = false;
-    window.authDataInStorage = null;
     const usePersistentStorage = rememberMe === true;
     
     useAppStore(pinia).login(responseData.token, { rememberMe: usePersistentStorage });
@@ -421,8 +304,6 @@ const _cacheLoginStatus = (status) => {
 
 const _clearAllAuthData = () => {
   window.isUserLoggedIn = false;
-  window.authDataInStorage = null;
-  window.authCookieFailure = false;
   
   const authKeys = [
     'token', 
@@ -460,7 +341,6 @@ const _clearAllAuthData = () => {
     });
     
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    deleteCookie(name);
   });
   
   try {
