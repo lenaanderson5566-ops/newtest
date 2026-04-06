@@ -249,7 +249,7 @@
           <h2 class="card-title usage-card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
         <div class="card-body">
-          <div v-if="trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
+          <div v-if="!trafficTrendRequested || trafficTrendLoading" class="trend-state">{{ $t('trafficLog.loadingTraffic') }}</div>
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
           <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
             <div class="trend-empty-block">
@@ -457,6 +457,7 @@ export default {
 
     const trafficTrendChartRef = ref(null);
     const trafficTrendData = ref([]);
+    const trafficTrendRequested = ref(false);
     const trafficTrendLoading = ref(false);
     const trafficTrendError = ref(false);
     const todayTrafficStats = reactive({
@@ -1156,6 +1157,7 @@ export default {
     };
 
     const fetchTrafficTrend = async () => {
+      trafficTrendRequested.value = true;
       trafficTrendLoading.value = true;
       trafficTrendError.value = false;
       try {
@@ -1499,6 +1501,7 @@ export default {
       getTrafficCardClass,
       trafficTrendChartRef,
       trafficTrendData,
+      trafficTrendRequested,
       trafficTrendLoading,
       trafficTrendError,
       todayTrafficStats,
