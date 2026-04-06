@@ -438,7 +438,7 @@ export default {
     myCenter: {
         summaryTitle: 'Tổng quan tài khoản',
         summaryDesc: 'Thông tin tài khoản cốt lõi trong một màn hình',
-        topUp: 'Nạp tiền',
+        topUp: 'Nạp tiền tài khoản',
         email: 'Email',
         currentPlan: 'Gói hiện tại',
         expireAt: 'Ngày hết hạn',
@@ -701,7 +701,7 @@ profile: {
         }
     },
     order: {
-        title: 'Xác nhận Đơn hàng',
+        title: 'Chọn gói đăng ký',
         description: 'Vui lòng xác nhận thông tin đơn hàng và hoàn thành thanh toán',
         existing_plan_warning_title: 'Bạn đã có gói đăng ký hợp lệ',
         existing_plan_warning_desc: 'Mua gói đăng ký mới sẽ thay thế gói đăng ký hợp lệ hiện tại của bạn',
@@ -791,7 +791,7 @@ profile: {
         pay_processing: 'Đang xử lý thanh toán...',
         open_in_new_tab: 'Mở trong tab mới',
         check_timeout: 'Kiểm tra trạng thái thanh toán quá thời gian, vui lòng thử lại sau',
-        payment_pending: 'Thanh toán đang xử lý, vui lòng kiểm tra lại sau',
+        payment_pending: 'Đơn hàng đã được khóa, vui lòng hoàn tất thanh toán',
         copy_success: 'Đã sao chép vào clipboard',
         copy_failed: 'Sao chép thất bại, vui lòng sao chép thủ công',
         check_manually: 'Nhấn để kiểm tra',

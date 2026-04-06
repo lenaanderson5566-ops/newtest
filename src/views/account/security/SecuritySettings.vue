@@ -105,13 +105,19 @@
             </div>
             <div class="form-group">
               <label>{{ $t('profile.newPassword') }}</label>
-              <input type="password" v-model="passwordForm.newPassword" :placeholder="$t('profile.newPassword')" />
+              <div class="password-input-wrapper">
+                <input :type="showNewPassword ? 'text' : 'password'" v-model="passwordForm.newPassword" :placeholder="$t('profile.newPassword')" />
+                <button
+                  type="button"
+                  class="password-toggle-btn"
+                  @click="showNewPassword = !showNewPassword"
+                >
+                  <IconEye v-if="!showNewPassword" :size="18" />
+                  <IconEyeOff v-else :size="18" />
+                </button>
+              </div>
+              <PasswordStrengthIndicator :password="passwordForm.newPassword" />
             </div>
-            <div class="form-group">
-              <label>{{ $t('profile.confirmPassword') }}</label>
-              <input type="password" v-model="passwordForm.confirmPassword" :placeholder="$t('profile.confirmPassword')" />
-            </div>
-            <div v-if="passwordMismatch" class="error-text">{{ $t('profile.passwordMismatch') }}</div>
           </div>
           <div class="modal-footer">
             <button class="btn-cancel" @click="showPasswordModal = false">{{ $t('common.cancel') }}</button>
@@ -143,7 +149,11 @@ import {
 } from '@tabler/icons-vue';
 import useToast from '@/hooks/useToast';
 import { PROFILE_CONFIG } from '@/utils/baseConfig';
+import PasswordStrengthIndicator from '@/components/common/PasswordStrengthIndicator.vue';
+import IconEye from '@/components/icons/IconEye.vue';
+import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 import { forceLogout } from '@/api/auth';
+import { validatePassword } from '@/utils/validators';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -153,6 +163,7 @@ const showSessionModule = computed(() => route.query.section !== 'password');
 const { success, error: showError } = useToast();
 
 const showPasswordModal = ref(false);
+const showNewPassword = ref(false);
 const changingPassword = ref(false);
 const activeSessions = ref([]);
 const loadingSessions = ref(false);
@@ -163,21 +174,13 @@ const currentSessionId = ref('');
 
 const passwordForm = ref({
   oldPassword: '',
-  newPassword: '',
-  confirmPassword: ''
-});
-
-const passwordMismatch = computed(() => {
-  if (!passwordForm.value.confirmPassword) return false;
-  return passwordForm.value.newPassword !== passwordForm.value.confirmPassword;
+  newPassword: ''
 });
 
 const validatePasswordForm = () => {
   return (
     passwordForm.value.oldPassword &&
-    passwordForm.value.newPassword &&
-    passwordForm.value.confirmPassword &&
-    !passwordMismatch.value
+    validatePassword(passwordForm.value.newPassword).valid
   );
 };
 
@@ -194,7 +197,8 @@ const changePassword = async () => {
 
     if (response && response.data) {
       success(t('profile.passwordChanged'));
-      passwordForm.value = { oldPassword: '', newPassword: '', confirmPassword: '' };
+      passwordForm.value = { oldPassword: '', newPassword: '' };
+      showNewPassword.value = false;
       showPasswordModal.value = false;
     }
   } catch (err) {
@@ -397,10 +401,6 @@ onMounted(() => {
   cursor: pointer;
   padding: 0;
   margin-bottom: 8px;
-}
-
-.back-label {
-  @extend %typo-body-text;
 }
 
 .profile-card {
@@ -642,11 +642,32 @@ onMounted(() => {
       }
     }
 
+    .password-input-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      padding: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .error-text {
       margin-top: 4px;
       color: var(--error-color);
       font-size: $font-size-sm;
     }
+
   }
 }
 
@@ -724,9 +745,15 @@ onMounted(() => {
   }
 }
 
-@include down(md) {
-  .back-label {
-    display: none;
-  }
+:deep(input[type="password"]::-ms-reveal),
+:deep(input[type="password"]::-ms-clear) {
+  display: none;
 }
+
+:deep(input[type="password"]::-webkit-credentials-auto-fill-button) {
+  visibility: hidden;
+  pointer-events: none;
+  display: none !important;
+}
+
 </style>

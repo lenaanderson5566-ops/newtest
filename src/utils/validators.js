@@ -30,27 +30,52 @@ export const validatePassword = (password) => {
     return result;
   }
   
-  const hasNumber = /\d/.test(password);
-  const hasLowercase = /[a-z]/.test(password);
-  const hasUppercase = /[A-Z]/.test(password);
-  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-  
-  const strength = [hasNumber, hasLowercase, hasUppercase, hasSpecial].filter(Boolean).length;
-  
-  if (strength < 3) {
-    result.message = '密码强度不足，请包含数字、大小写字母和特殊字符';
-    return result;
-  }
-  
   result.valid = true;
   return result;
 };
 
 
-export function passwordsMatch(password, confirmPassword) {
-  if (!password || !confirmPassword) return false;
-  return password === confirmPassword;
-}
+export const getPasswordStrengthMeta = (password) => {
+  const value = password || '';
+
+  if (!value) {
+    return {
+      score: 0,
+      minLengthMet: false,
+      alphaNumericMet: false,
+      specialCharMet: false,
+      level: 'weak',
+      percent: 0
+    };
+  }
+
+  let score = 0;
+  const minLengthMet = value.length >= 8;
+  const hasLowercase = /[a-z]/.test(value);
+  const hasUppercase = /[A-Z]/.test(value);
+  const hasDigit = /\d/.test(value);
+  const alphaNumericMet = /[A-Za-z]/.test(value) && hasDigit;
+  const specialCharMet = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+  if (minLengthMet) score += 1;
+  if (hasLowercase) score += 1;
+  if (hasUppercase) score += 1;
+  if (hasDigit) score += 1;
+  if (specialCharMet) score += 1;
+
+  let level = 'strong';
+  if (score <= 1) level = 'weak';
+  else if (score <= 3) level = 'medium';
+
+  return {
+    score,
+    minLengthMet,
+    alphaNumericMet,
+    specialCharMet,
+    level,
+    percent: Math.min(100, Math.max(20, score * 20))
+  };
+};
 
 
 export const validateRequiredWithMessage = (value, fieldName) => {
@@ -72,11 +97,3 @@ export const validateRequiredWithMessage = (value, fieldName) => {
 export const validateRequired = (value) => {
   return !!value && (typeof value !== 'string' || value.trim() !== '');
 };
-
-
-export function isStrongPassword(password) {
-  if (!password) return false;
-  
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  return passwordRegex.test(password);
-} 

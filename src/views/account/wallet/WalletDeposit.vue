@@ -362,29 +362,33 @@ onMounted(() => {
     .card-body {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      align-items: stretch;
       padding: 16px;
       gap: 16px;
     }
     
     .balance-display {
-      text-align: center;
+      width: 100%;
+      text-align: left;
 
       .wallet-balance-list {
         width: 100%;
-        max-width: 360px;
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
-        margin: 0 auto 8px;
+        margin: 0 0 8px;
+
+        @include down(sm) {
+          grid-template-columns: minmax(0, 1fr);
+        }
       }
 
       .wallet-balance-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 8px 8px;
+        padding: 10px 12px;
         border-radius: $border-radius-sm;
         border: var(--border-width) solid var(--border-default);
         background: var(--color-bg-surface);
@@ -392,12 +396,19 @@ onMounted(() => {
       }
 
       .wallet-currency {
-        @extend %typo-item-title;
+        @extend %typo-body-text;
+        font-weight: $font-weight-semibold;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: rgba(var(--theme-color-rgb), 0.1);
+        color: var(--theme-color);
       }
 
       .wallet-amount {
         @extend %typo-section-title;
         font-variant-numeric: tabular-nums;
+        font-size: clamp(1rem, 1.1vw + 0.72rem, 1.3rem);
+        color: var(--color-text-primary);
       }
       
       .balance-label {

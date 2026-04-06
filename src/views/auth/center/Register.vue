@@ -521,7 +521,7 @@ import { useToast } from '@/composables/useToast';
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 
-import { isValidEmail } from '@/utils/validators';
+import { isValidEmail, validatePassword, getPasswordStrengthMeta } from '@/utils/validators';
 
 import IconMail from '@/components/icons/IconMail.vue';
 
@@ -802,60 +802,12 @@ export default {
 
 
     const showPassword = ref(false);
-
-    const passwordStrengthScore = computed(() => {
-
-      const password = formData.password || '';
-
-      if (!password) return 0;
-
-      let score = 0;
-
-      if (password.length >= 8) score += 1;
-
-      if (/[a-z]/.test(password)) score += 1;
-
-      if (/[A-Z]/.test(password)) score += 1;
-
-      if (/\d/.test(password)) score += 1;
-
-      if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score += 1;
-
-      return score;
-
-    });
-
-    const passwordMinLengthMet = computed(() => {
-
-      return (formData.password || '').length >= 8;
-
-    });
-
-    const passwordAlphaNumericMet = computed(() => {
-
-      const password = formData.password || '';
-
-      return /[A-Za-z]/.test(password) && /\d/.test(password);
-
-    });
-
-    const passwordSpecialCharMet = computed(() => {
-
-      const password = formData.password || '';
-
-      return /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-    });
-
-    const passwordStrengthLevel = computed(() => {
-
-      if (passwordStrengthScore.value <= 1) return 'weak';
-
-      if (passwordStrengthScore.value <= 3) return 'medium';
-
-      return 'strong';
-
-    });
+    const passwordStrengthMeta = computed(() => getPasswordStrengthMeta(formData.password));
+    const passwordStrengthScore = computed(() => passwordStrengthMeta.value.score);
+    const passwordMinLengthMet = computed(() => passwordStrengthMeta.value.minLengthMet);
+    const passwordAlphaNumericMet = computed(() => passwordStrengthMeta.value.alphaNumericMet);
+    const passwordSpecialCharMet = computed(() => passwordStrengthMeta.value.specialCharMet);
+    const passwordStrengthLevel = computed(() => passwordStrengthMeta.value.level);
 
     const passwordStrengthTextKey = computed(() => {
 
@@ -867,13 +819,7 @@ export default {
 
     });
 
-    const passwordStrengthPercent = computed(() => {
-
-      if (!formData.password) return 0;
-
-      return Math.min(100, Math.max(20, passwordStrengthScore.value * 20));
-
-    });
+    const passwordStrengthPercent = computed(() => passwordStrengthMeta.value.percent);
 
     const needCaptchaForEmailVerify = computed(() => {
 
@@ -1335,18 +1281,10 @@ export default {
 
 
 
-      if (!formData.password) {
-
-        errors.password = t('auth.passwordRequired');
-
+      const passwordValidation = validatePassword(formData.password);
+      if (!passwordValidation.valid) {
+        errors.password = formData.password ? t('auth.passwordTooShort') : t('auth.passwordRequired');
         isValid = false;
-
-      } else if (formData.password.length < 8) {
-
-        errors.password = t('auth.passwordTooShort');
-
-        isValid = false;
-
       }
 
       if (!formData.agreeTerms) {

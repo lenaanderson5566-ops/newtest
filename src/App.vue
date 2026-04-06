@@ -552,7 +552,7 @@ export default {
 
 
 .site-logo {
-  font-size: $font-size-md;
+  font-size: $font-size-lg;
   font-weight: $font-weight-bold;
   color: var(--theme-color);
   letter-spacing: -0.5px;
@@ -736,7 +736,7 @@ export default {
   }
 
   .site-logo {
-    font-size: $font-size-md;
+    font-size: $font-size-lg;
     gap: 8px;
 
     .site-logo-img {

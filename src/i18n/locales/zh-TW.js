@@ -436,7 +436,7 @@ export default {
   myCenter: {
     summaryTitle: '帳號摘要',
     summaryDesc: '核心帳號資訊一目了然',
-    topUp: '餘額儲值',
+    topUp: '帳戶儲值',
     email: '電子郵件',
     currentPlan: '當前方案',
     expireAt: '到期時間',
@@ -699,7 +699,7 @@ profile: {
     },
   },
   order: {
-    title: '確認訂單',
+    title: '選擇訂閱',
     description: '請確認您的訂單資訊並完成支付',
     existing_plan_warning_title: '您已有一個有效訂閱',
     existing_plan_warning_desc: '購買新訂閱將取代您目前的有效訂閱',
@@ -789,7 +789,7 @@ profile: {
     pay_processing: '正在處理支付...',
     open_in_new_tab: '在新分頁開啟',
     check_timeout: '檢測支付狀態超時，請稍後重試',
-    payment_pending: '支付處理中，請稍後再檢查',
+    payment_pending: '訂單已鎖定，請完成支付',
     copy_success: '已複製到剪貼簿',
     copy_failed: '複製失敗，請手動複製',
     check_manually: '點擊檢查',

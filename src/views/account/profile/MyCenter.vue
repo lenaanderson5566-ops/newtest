@@ -22,7 +22,7 @@
               <span class="label">{{ $t('myCenter.email') }}</span>
               <strong>{{ userInfo.email || '-' }}</strong>
             </div>
-            <div class="summary-item is-highlight">
+            <div class="summary-item">
               <span class="label">{{ $t('myCenter.accountBalance') }}</span>
               <div class="balance-amount-row">
                 <strong v-for="item in balanceDisplayItems" :key="item.key" class="balance-amount">
@@ -36,7 +36,7 @@
           <div class="summary-actions">
             <button class="nav-row summary-nav-row" @click="go('/wallet/deposit')">
               <div class="row-main">
-                <div class="row-title">{{ $t('myCenter.accountBalance') }}</div>
+                <div class="row-title">{{ $t('myCenter.topUp') }}</div>
                 <p>{{ $t('myCenter.balanceDesc') }}</p>
               </div>
               <IconChevronRight :size="18" />
@@ -274,12 +274,8 @@
             <div class="form-group">
               <label>{{ $t('profile.newPassword') }}</label>
               <input v-model="passwordForm.newPassword" type="password" :placeholder="$t('profile.newPassword')" />
+              <PasswordStrengthIndicator :password="passwordForm.newPassword" />
             </div>
-            <div class="form-group">
-              <label>{{ $t('profile.confirmPassword') }}</label>
-              <input v-model="passwordForm.confirmPassword" type="password" :placeholder="$t('profile.confirmPassword')" />
-            </div>
-            <div v-if="passwordMismatch" class="error-text">{{ $t('profile.passwordMismatch') }}</div>
           </div>
           <div class="modal-footer">
             <button class="btn-cancel" @click="closePasswordModal">{{ $t('common.cancel') }}</button>
@@ -320,7 +316,9 @@ import { useI18n } from 'vue-i18n';
 import { changePassword as apiChangePassword, getRecentLoginRecords, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
 import { formatDate } from '@/utils/formatters';
+import { validatePassword } from '@/utils/validators';
 import { useToast } from '@/composables/useToast';
+import PasswordStrengthIndicator from '@/components/common/PasswordStrengthIndicator.vue';
 
 const router = useRouter();
 const { t } = useI18n();
@@ -341,8 +339,7 @@ const recentLoginLoading = ref(false);
 const recentLoginRecords = ref([]);
 const passwordForm = ref({
   oldPassword: '',
-  newPassword: '',
-  confirmPassword: ''
+  newPassword: ''
 });
 const activeSection = ref('overview');
 const sectionTabs = computed(() => [
@@ -441,16 +438,9 @@ const handleSectionClick = (sectionKey) => {
   activeSection.value = sectionKey;
 };
 
-const passwordMismatch = computed(() => {
-  if (!passwordForm.value.confirmPassword) return false;
-  return passwordForm.value.newPassword !== passwordForm.value.confirmPassword;
-});
-
 const validatePasswordForm = () => (
   passwordForm.value.oldPassword &&
-  passwordForm.value.newPassword &&
-  passwordForm.value.confirmPassword &&
-  !passwordMismatch.value
+  validatePassword(passwordForm.value.newPassword).valid
 );
 
 const openPasswordChangePrompt = () => {
@@ -459,7 +449,7 @@ const openPasswordChangePrompt = () => {
 
 const closePasswordModal = () => {
   showPasswordModal.value = false;
-  passwordForm.value = { oldPassword: '', newPassword: '', confirmPassword: '' };
+  passwordForm.value = { oldPassword: '', newPassword: '' };
 };
 
 const submitPasswordChange = async () => {
@@ -833,10 +823,6 @@ $space-2: map.get($spacers, 2);
     word-break: break-word;
   }
 
-  &.is-highlight {
-    border-color: rgba(var(--theme-color-rgb), 0.32);
-    background: linear-gradient(130deg, rgba(var(--theme-color-rgb), 0.14), rgba(var(--theme-color-rgb), 0.05));
-  }
 }
 
 .section-title {
@@ -1183,6 +1169,12 @@ input:checked + .slider:before { transform: translateX(18px); }
   .section-block {
     background: var(--color-bg-surface) !important;
     box-shadow: none;
+  }
+
+  .tier-panel.section-block {
+    background: radial-gradient(circle at 85% 10%, rgba(132, 161, 255, 0.25), transparent 35%),
+      linear-gradient(135deg, #1c2f6a 0%, #213a8f 45%, #3049a5 100%) !important;
+    border-color: rgba(161, 181, 255, 0.3);
   }
 
   .top-nav-wrap {

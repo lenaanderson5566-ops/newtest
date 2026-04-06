@@ -431,7 +431,7 @@ export default {
     myCenter: {
         summaryTitle: '账号摘要',
         summaryDesc: '核心账号信息一目了然',
-        topUp: '余额充值',
+        topUp: '账户充值',
         email: '邮箱',
         currentPlan: '当前计划',
         expireAt: '到期时间',
@@ -694,7 +694,7 @@ profile: {
         }
     },
     order: {
-        title: '确认订单',
+        title: '选择订阅',
         description: '请确认您的订单信息并完成支付',
         existing_plan_warning_title: '您已有一个有效订阅',
         existing_plan_warning_desc: '购买新订阅将替换您当前的有效订阅',
@@ -755,7 +755,6 @@ profile: {
         cancel_order: '取消订单',
         check_payment: '检测支付状态',
         activate: '激活',
-        free_activate: '免费激活',
         continue_to_dashboard: '前往仪表盘',
         confirm_cancel: '确定要取消此订单吗？',
         cancel_success: '订单已取消',
@@ -785,7 +784,7 @@ profile: {
         pay_processing: '正在处理支付...',
         open_in_new_tab: '在新标签页打开',
         check_timeout: '检测支付状态超时，请稍后重试',
-        payment_pending: '支付处理中，请稍后再检查',
+        payment_pending: '订单已锁定，请完成支付',
         copy_success: '已复制到剪贴板',
         copy_failed: '复制失败，请手动复制',
         check_manually: '点击检查',

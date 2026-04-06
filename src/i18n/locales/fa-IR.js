@@ -436,7 +436,7 @@ export default {
   myCenter: {
     summaryTitle: 'خلاصه حساب',
     summaryDesc: 'اطلاعات اصلی حساب در یک نگاه',
-    topUp: 'شارژ موجودی',
+    topUp: 'شارژ حساب',
     email: 'ایمیل',
     currentPlan: 'پلن فعلی',
     expireAt: 'تاریخ انقضا',
@@ -699,7 +699,7 @@ profile: {
     }
   },
   order: {
-    title: 'تایید سفارش',
+    title: 'انتخاب اشتراک',
     description: 'اطلاعات سفارش را تایید کنید و پرداخت را کامل کنید',
     existing_plan_warning_title: 'شما یک اشتراک فعال دارید',
     existing_plan_warning_desc: 'خرید اشتراک جدید اشتراک فعلی را جایگزین می کند',
@@ -789,7 +789,7 @@ profile: {
     pay_processing: 'پرداخت در حال پردازش...',
     open_in_new_tab: 'در تب جدید باز کنید',
     check_timeout: 'بررسی وضعیت پرداخت زمان بر است، بعدا امتحان کنید',
-    payment_pending: 'پرداخت در حال پردازش است، بعدا چک کنید',
+    payment_pending: 'سفارش قفل شده است، لطفاً پرداخت را تکمیل کنید',
     copy_success: 'به کلیپ بورد کپی شد',
     copy_failed: 'کپی شکست خورد، لطفا دستی کپی کنید',
     check_manually: 'بررسی کنید',

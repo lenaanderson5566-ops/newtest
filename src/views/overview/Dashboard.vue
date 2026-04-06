@@ -248,7 +248,7 @@
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
           <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
             <div class="trend-empty-block">
-              <IconFileText :size="64" stroke-width="1.8" class="trend-empty-icon" />
+              <img :src="noTrafficDataIcon" alt="" class="trend-empty-icon" />
               <div class="trend-empty-content">
                 <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
                 <button class="trend-empty-action btn btn-secondary" @click="goToQuickStart">
@@ -347,7 +347,6 @@ import {
   IconDeviceDesktop,
   IconEye,
   IconEyeOff,
-  IconFileText,
   IconHelpCircle,
   IconMoon,
   IconPackage,
@@ -373,6 +372,7 @@ import { fetchPlans, submitOrder } from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
+import noTrafficDataIcon from '@/assets/images/dashboard/no-traffic-data.svg';
 
 export default {
   name: 'UserDashboard',
@@ -381,7 +381,6 @@ export default {
     IconSend,
     IconCalendar,
     IconUserPlus,
-    IconFileText,
     IconWallet,
     IconBrandApple,
     IconBrandAndroid,
@@ -1503,6 +1502,7 @@ export default {
       getTrafficPackageDisplayName,
       getTrafficPackageContent,
       isTrafficPackageSoldOut,
+      noTrafficDataIcon,
     };
   }
 };
@@ -1892,7 +1892,8 @@ $space-2: map.get($spacers, 2);
 
 
             .plan-action-btn {
-              flex: 0 1 auto;
+              flex: 1 1 0;
+              min-width: 0;
               border-radius: var(--dashboard-button-radius);
               padding: 8px 16px;
               font-size: $font-size-sm;
@@ -2125,9 +2126,10 @@ $space-2: map.get($spacers, 2);
   .overview-card,
   .overview-card--today-traffic,
   .overview-card--traffic-quota {
-    border-radius: var(--dashboard-radius);
+    border-radius: $border-radius-lg;
     background: var(--saas-card-bg);
     border: var(--border-width) solid var(--border-subtle);
+    box-shadow: var(--shadow-md);
   }
 
   .stats-grid .stats-card.overview-card,
@@ -2139,8 +2141,8 @@ $space-2: map.get($spacers, 2);
   .stats-grid .stats-card.traffic-board-subscription {
     background: var(--traffic-card-bg, var(--saas-card-bg));
     border: var(--border-width) solid var(--border-subtle);
-    border-radius: var(--dashboard-radius);
-    box-shadow: var(--shadow-sm);
+    border-radius: $border-radius-lg;
+    box-shadow: var(--shadow-md);
   }
 
   .stats-grid .stats-card.traffic-board-total {
@@ -2153,6 +2155,8 @@ $space-2: map.get($spacers, 2);
   .dashboard-card.usage-trend-card {
     background-color: var(--color-bg-surface) !important;
     background-image: none !important;
+    border-radius: $border-radius-lg;
+    box-shadow: var(--shadow-md);
   }
 
   .stats-grid .stats-card.traffic-board-subscription.subscription-card-muted,
@@ -2331,8 +2335,8 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-action {
-      min-width: 180px;
-      padding-inline: 18px;
+      min-width: 164px;
+      padding-inline: 14px;
     }
 
     .usage-trend-chart {

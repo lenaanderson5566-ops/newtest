@@ -204,44 +204,7 @@
               </div>
 
               <div v-if="errors.newPassword" class="error-message">{{ errors.newPassword }}</div>
-
-            </div>
-
-
-
-            <div class="form-group">
-
-              <label for="confirmPassword">{{ $t('common.confirmPassword') }} <span class="required">*</span></label>
-
-              <div class="input-with-icon">
-
-                <IconLock class="input-icon" />
-
-                <input
-
-                  :type="showConfirmPassword ? 'text' : 'password'"
-
-                  id="confirmPassword"
-
-                  class="form-control"
-
-                  v-model="formData.confirmPassword"
-
-                  :placeholder="$t('auth.confirmPasswordPlaceholder')"
-
-                />
-
-                <div class="password-toggle" @click="showConfirmPassword = !showConfirmPassword">
-
-                  <IconEye v-if="!showConfirmPassword" />
-
-                  <IconEyeOff v-else />
-
-                </div>
-
-              </div>
-
-              <div v-if="errors.confirmPassword" class="error-message">{{ errors.confirmPassword }}</div>
+              <PasswordStrengthIndicator :password="formData.newPassword" />
 
             </div>
 
@@ -251,7 +214,7 @@
 
               class="btn btn-primary btn-block"
 
-              :disabled="loading || !formData.email || !formData.verificationCode || !formData.newPassword || !formData.confirmPassword"
+              :disabled="loading || !formData.email || !formData.verificationCode || !formData.newPassword"
 
               type="submit"
 
@@ -389,8 +352,9 @@ import { useI18n } from 'vue-i18n';
 
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
+import PasswordStrengthIndicator from '@/components/common/PasswordStrengthIndicator.vue';
 
-import { isValidEmail } from '@/utils/validators';
+import { isValidEmail, validatePassword } from '@/utils/validators';
 
 import { useToast } from '@/composables/useToast';
 
@@ -500,6 +464,7 @@ export default {
     IconEye,
 
     IconEyeOff,
+    PasswordStrengthIndicator,
 
 
     AuthPopup
@@ -680,9 +645,7 @@ export default {
 
       verificationCode: '',
 
-      newPassword: '',
-
-      confirmPassword: ''
+      newPassword: ''
 
     });
 
@@ -694,15 +657,11 @@ export default {
 
       verificationCode: '',
 
-      newPassword: '',
-
-      confirmPassword: ''
+      newPassword: ''
 
     });
 
 
-
-    const showConfirmPassword = ref(false);
 
 
 
@@ -1369,8 +1328,6 @@ export default {
 
       errors.newPassword = '';
 
-      errors.confirmPassword = '';
-
 
 
       let isValid = true;
@@ -1403,34 +1360,10 @@ export default {
 
 
 
-      if (!formData.newPassword) {
-
-        errors.newPassword = t('auth.passwordRequired');
-
+      const passwordValidation = validatePassword(formData.newPassword);
+      if (!passwordValidation.valid) {
+        errors.newPassword = formData.newPassword ? t('auth.passwordTooShort') : t('auth.passwordRequired');
         isValid = false;
-
-      } else if (formData.newPassword.length < 8) {
-
-        errors.newPassword = t('auth.passwordTooShort');
-
-        isValid = false;
-
-      }
-
-
-
-      if (!formData.confirmPassword) {
-
-        errors.confirmPassword = t('auth.confirmPasswordRequired');
-
-        isValid = false;
-
-      } else if (formData.newPassword !== formData.confirmPassword) {
-
-        errors.confirmPassword = t('auth.passwordsDoNotMatch');
-
-        isValid = false;
-
       }
 
 
@@ -1724,8 +1657,6 @@ export default {
       isValidEmail,
 
       showPassword,
-
-      showConfirmPassword,
 
 
 
@@ -3087,6 +3018,17 @@ export default {
 
 .auth-divider {
   margin-top: 4px;
+}
+
+:deep(input[type="password"]::-ms-reveal),
+:deep(input[type="password"]::-ms-clear) {
+  display: none;
+}
+
+:deep(input[type="password"]::-webkit-credentials-auto-fill-button) {
+  visibility: hidden;
+  pointer-events: none;
+  display: none !important;
 }
 
 </style>

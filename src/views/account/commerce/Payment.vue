@@ -1264,7 +1264,7 @@ export default {
   }
 
   .overview-header {
-    background-color: var(--color-bg-surface);
+    background-color: transparent;
     margin: 8px 0;
 
     .overview-cancel-btn {
@@ -1410,7 +1410,7 @@ export default {
   }
 
   .right-column .order-amount-section {
-    background: transparent !important;
+    background: var(--right-card-bg) !important;
     border: var(--border-width) solid var(--border-default);
   }
 
