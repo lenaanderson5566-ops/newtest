@@ -3020,4 +3020,15 @@ export default {
   margin-top: 4px;
 }
 
+:deep(input[type="password"]::-ms-reveal),
+:deep(input[type="password"]::-ms-clear) {
+  display: none;
+}
+
+:deep(input[type="password"]::-webkit-credentials-auto-fill-button) {
+  visibility: hidden;
+  pointer-events: none;
+  display: none !important;
+}
+
 </style>
