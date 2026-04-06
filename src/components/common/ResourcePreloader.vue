@@ -1,8 +1,5 @@
-<!-- 资源预加载组件 -->
 <template>
-  <!-- 这个组件不会显示任何内容，仅用于资源预加载 -->
   <div class="resource-preloader" style="display: none;">
-    <!-- 用于预加载图片的隐藏容器 -->
     <div v-if="preloadImages.length > 0" style="display: none;">
       <img 
         v-for="(src, index) in preloadImages" 
