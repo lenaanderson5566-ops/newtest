@@ -126,18 +126,22 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
     window.isUserLoggedIn = undefined;
     window.authCookieFailure = false;
     window.authDataInStorage = null;
+    const usePersistentStorage = rememberMe === true;
     
-    useAppStore(pinia).login(responseData.token);
+    useAppStore(pinia).login(responseData.token, { rememberMe: usePersistentStorage });
     
-    localStorage.setItem('token', responseData.token);
-    sessionStorage.setItem('token', responseData.token);
     if (responseData.is_admin === 1) {
       localStorage.setItem('is_admin', '1');
     }
     
     if (responseData.auth_data) {
-      localStorage.setItem('auth_data', responseData.auth_data);
-      sessionStorage.setItem('auth_data', responseData.auth_data);
+      if (usePersistentStorage) {
+        localStorage.setItem('auth_data', responseData.auth_data);
+        sessionStorage.removeItem('auth_data');
+      } else {
+        sessionStorage.setItem('auth_data', responseData.auth_data);
+        localStorage.removeItem('auth_data');
+      }
     }
     
     setTimeout(() => {
@@ -210,14 +214,14 @@ export function register(data) {
     let responseData = response.data || response;
     
     if (responseData.token) {
-      useAppStore(pinia).login(responseData.token);
+      useAppStore(pinia).login(responseData.token, { rememberMe: true });
       
       window.isUserLoggedIn = true;
     }
     
     if (responseData.auth_data) {
       localStorage.setItem('auth_data', responseData.auth_data);
-      sessionStorage.setItem('auth_data', responseData.auth_data);
+      sessionStorage.removeItem('auth_data');
     }
     
     if (typeof responseData.is_admin !== 'undefined') {
@@ -467,54 +471,7 @@ const _clearAllAuthData = () => {
 
 
 export const forceLogout = () => {
-  window.isUserLoggedIn = false;
-  window.authDataInStorage = null;
-  window.authCookieFailure = false;
-  
-  const authKeys = [
-    'token', 
-    'auth_data', 
-    'cookie_auth_data', 
-    'userInfo', 
-    'is_admin',
-    'vuex',
-    'user',
-    'auth'
-  ];
-  
-  authKeys.forEach(key => {
-    localStorage.removeItem(key);
-  });
-  
-  const sessionKeys = [
-    'token', 
-    'auth_data',
-    'vuex',
-    'user',
-    'auth'
-  ];
-  
-  sessionKeys.forEach(key => {
-    sessionStorage.removeItem(key);
-  });
-  
-  const cookiePaths = ['/', '/dashboard', '/user', '/admin'];
-  const cookieNames = ['auth_data', 'XSRF-TOKEN', 'laravel_session', 'token'];
-  
-  cookieNames.forEach(name => {
-    cookiePaths.forEach(path => {
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};`;
-    });
-    
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    
-    deleteCookie(name);
-  });
-  
-  try {
-    useAppStore(pinia).clearUser();
-  } catch (e) {
-  }
+  _clearAllAuthData();
 };
 
 

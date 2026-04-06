@@ -19,10 +19,16 @@ export const useAppStore = defineStore('app', {
   },
 
   actions: {
-    login(token) {
+    login(token, options = {}) {
+      const rememberMe = options?.rememberMe === true;
       this.token = token;
-      localStorage.setItem('token', token);
-      sessionStorage.setItem('token', token);
+      if (rememberMe) {
+        localStorage.setItem('token', token);
+        sessionStorage.removeItem('token');
+      } else {
+        sessionStorage.setItem('token', token);
+        localStorage.removeItem('token');
+      }
     },
 
     logout() {

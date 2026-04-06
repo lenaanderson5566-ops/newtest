@@ -51,16 +51,9 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     config.baseURL = getApiBaseUrl();
-    if (
-      window.EZ_CONFIG &&
-      window.EZ_CONFIG.API_BASE_URLS &&
-      Array.isArray(window.EZ_CONFIG.API_BASE_URLS) &&
-      window.EZ_CONFIG.API_BASE_URLS.length > 1
-    ) {
-      const availableApiUrl = getAvailableApiUrl();
-      if (availableApiUrl) {
-        config.baseURL = availableApiUrl;
-      }
+    const availableApiUrl = getAvailableApiUrl();
+    if (availableApiUrl) {
+      config.baseURL = availableApiUrl;
     }
 
     if (config.method === "post" && config.data) {
