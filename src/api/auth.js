@@ -549,6 +549,20 @@ export const tokenLogin = (verifyToken, redirect) => {
 export const checkUserLoginStatus = async () => {
   const authData = localStorage.getItem('auth_data') || sessionStorage.getItem('auth_data');
   const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+
+  const getCurrentRoutePath = () => {
+    const hash = window.location.hash || '';
+    if (hash.startsWith('#')) {
+      const hashPath = hash.slice(1).split('?')[0];
+      if (hashPath) {
+        return hashPath.startsWith('/') ? hashPath : `/${hashPath}`;
+      }
+    }
+
+    return window.location.pathname || '/';
+  };
+
+  const isAuthRoutePath = (path) => /\/(login|register|forgot-password)/.test(path);
   
   if (!token || !authData) {
     forceLogout(); 
@@ -570,8 +584,8 @@ export const checkUserLoginStatus = async () => {
     } else {
       forceLogout();
       
-      const currentRoute = window.location.pathname;
-      const isAuthPage = /\/(login|register|forgot-password)/.test(currentRoute);
+      const currentRoute = getCurrentRoutePath();
+      const isAuthPage = isAuthRoutePath(currentRoute);
       
       if (!isAuthPage) {
         window.location.href = '/#/login';
@@ -584,8 +598,8 @@ export const checkUserLoginStatus = async () => {
     if (error.response && error.response.data && error.response.data.message === '未登录或登陆已过期') {
       forceLogout();
       
-      const currentRoute = window.location.pathname;
-      const isAuthPage = /\/(login|register|forgot-password)/.test(currentRoute);
+      const currentRoute = getCurrentRoutePath();
+      const isAuthPage = isAuthRoutePath(currentRoute);
       
       if (!isAuthPage) {
         window.location.href = '/#/login';
