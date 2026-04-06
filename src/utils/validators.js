@@ -30,18 +30,6 @@ export const validatePassword = (password) => {
     return result;
   }
   
-  const hasNumber = /\d/.test(password);
-  const hasLowercase = /[a-z]/.test(password);
-  const hasUppercase = /[A-Z]/.test(password);
-  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-  
-  const strength = [hasNumber, hasLowercase, hasUppercase, hasSpecial].filter(Boolean).length;
-  
-  if (strength < 3) {
-    result.message = '密码强度不足，请包含数字、大小写字母和特殊字符';
-    return result;
-  }
-  
   result.valid = true;
   return result;
 };
