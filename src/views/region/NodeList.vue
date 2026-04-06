@@ -229,10 +229,8 @@ const formatCountryTag = (countryTag) => countryTag.toUpperCase();
 
 const countryBadgeClass = (countryTag) => {
   const code = formatCountryTag(countryTag || '');
-  if (['US', 'CA', 'NL'].includes(code)) return 'is-blue';
-  if (['HK', 'SG'].includes(code)) return 'is-pink';
-  if (['DE', 'JP', 'KR'].includes(code)) return 'is-red';
-  return 'is-red';
+  const badgeMap = NODES_CONFIG?.badgeByCountryCode || {};
+  return badgeMap[code] || 'is-red';
 };
 
 const hasActivePlan = computed(() => {

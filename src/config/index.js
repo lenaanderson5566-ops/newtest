@@ -182,18 +182,6 @@ export const config = {
 
   // 仪表盘页面配置
   DASHBOARD_CONFIG: {
-    // 当前出口 IP 卡片：地区徽记颜色映射（国家/地区代码 -> 徽记色）
-    ipRegionBadgeByCountryCode: {
-      US: 'is-blue',
-      CA: 'is-blue',
-      NL: 'is-blue',
-      HK: 'is-pink',
-      SG: 'is-pink',
-      JP: 'is-red',
-      KR: 'is-red',
-      DE: 'is-red',
-      CN: 'is-red',
-    },
   },
 
   // 客户端下载配置
@@ -447,6 +435,19 @@ export const config = {
 
     // 是否允许查看节点详细信息（控制详情按钮和模态框）
     allowViewNodeInfo: true,
+
+    // 节点列表：地区徽记颜色映射（国家/地区代码 -> 徽记色）
+    badgeByCountryCode: {
+      US: 'is-blue',
+      CA: 'is-blue',
+      NL: 'is-blue',
+      HK: 'is-pink',
+      SG: 'is-pink',
+      JP: 'is-red',
+      KR: 'is-red',
+      DE: 'is-red',
+      CN: 'is-red',
+    },
   },
 
   // 导航配置（已迁移为固定四项：概览/区域/使用/账号）
