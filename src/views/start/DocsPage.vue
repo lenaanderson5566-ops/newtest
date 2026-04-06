@@ -301,6 +301,10 @@ onMounted(() => {
     align-items: center;
     gap: 16px;
     margin-bottom: 24px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
 
     .card-title {
       @extend %typo-section-title;
