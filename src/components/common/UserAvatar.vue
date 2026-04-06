@@ -37,7 +37,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
-import { useAppStore } from '@/store';
+import { logout as logoutAction } from '@/api/auth';
 import { IconMessageCircle } from '@tabler/icons-vue';
 import IconUser from '@/components/icons/IconUser.vue';
 import IconLogout from '@/components/icons/IconLogout.vue';
@@ -65,7 +65,6 @@ export default {
   },
   setup(props) {
     const router = useRouter();
-    const store = useAppStore();
     const { t } = useI18n();
     const { showToast } = useToast();
     const isDropdownOpen = ref(false);
@@ -100,13 +99,13 @@ export default {
     
     const logout = async () => {
       try {
-        store.clearUser();
+        const result = await logoutAction();
         isDropdownOpen.value = false;
         
         showToast(t('auth.logoutSuccess'), 'success', 3000);
         
         setTimeout(() => {
-          router.push('/login');
+          router.push(result?.redirectUrl || '/login?logout=true');
         }, 500);
       } catch (error) {
         showToast(t('auth.logoutFailed'), 'error');
