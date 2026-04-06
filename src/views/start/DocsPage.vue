@@ -282,7 +282,7 @@ onMounted(() => {
 .docs-container {
 
   padding: 0;
-  background-color: var(--color-bg-surface);
+  background-color: transparent;
 
   padding-bottom: calc(2px + 64px); 
 
