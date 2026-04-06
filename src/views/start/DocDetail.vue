@@ -958,13 +958,15 @@ const renderedContent = computed(() => {
 
       
 
+      processedContent = processedContent.replace(/\sonclick\s*=/gi, ' data-original-onclick=');
+
       processedContent = DOMPurify.sanitize(processedContent, {
 
         ADD_TAGS: ['button', 'a', 'img', 'iframe', 'div', 'span'],
 
         ADD_ATTR: [
 
-          'onclick', 'class', 'style', 'type', 'rel', 'href', 'target', 
+          'class', 'style', 'type', 'rel', 'href', 'target', 
 
           'src', 'alt', 'title', 'width', 'height', 'frameborder', 'allowfullscreen',
 
@@ -982,7 +984,7 @@ const renderedContent = computed(() => {
 
         FORBID_ATTR: [],
 
-        ALLOW_UNKNOWN_PROTOCOLS: true,
+        ALLOW_UNKNOWN_PROTOCOLS: false,
 
         ALLOW_ARIA_ATTR: true
 
@@ -1012,9 +1014,9 @@ const renderedContent = computed(() => {
 
         if ((buttonText.includes('复制') || buttonText.includes('copy')) && 
 
-            !button.hasAttribute('onclick')) {
+            !button.hasAttribute('data-original-onclick')) {
 
-          button.setAttribute('onclick', "copy('{{subscribeUrl}}')");
+          button.setAttribute('data-original-onclick', "copy('{{subscribeUrl}}')");
 
         }
 
