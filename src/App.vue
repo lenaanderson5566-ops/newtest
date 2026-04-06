@@ -3,16 +3,16 @@
     :class="['app-root-shell', { 'has-post-login-background': postLoginBackgroundEnabled }]"
     :style="postLoginBackgroundStyle"
   >
-    <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
+    
     <div class="static-layout" v-if="$route.meta.requiresAuth">
       <div class="top-fixed-bar" ref="topFixedBarRef">
-        <!-- 网站名称 -->
+        
         <div class="site-logo">
           <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
           {{ siteConfig.siteName }}
         </div>
 
-        <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
+        
         <div class="top-toolbar">
         <ServiceNoticeButton :has-unread="hasUnreadNotice" :aria-label="$t('menu.announcement')" />
         <LanguageSelector />
@@ -27,11 +27,11 @@
         </div>
       </div>
 
-      <!-- 顶部导航栏 - 保持不变 -->
+      
       <SlideTabsNav />
     </div>
 
-    <!-- 路由视图只对内容部分应用过渡效果 -->
+    
     <div
       ref="appContentWrapperRef"
       :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]"
@@ -58,19 +58,19 @@
       </div>
     </div>
 
-    <!-- 全局Toast通知 - 放在最外层，确保不受页面切换影响 -->
+    
     <Toast />
 
-    <!-- 返回顶部按钮 -->
+    
     <BackToTop />
 
-    <!-- 自定义鼠标右键菜单 -->
+    
     <CustomContextMenu />
 
-    <!-- 资源预加载组件 -->
+    
     <ResourcePreloader />
 
-    <!-- SVG图标定义 -->
+    
     <IconDefinitions />
   </div>
 </template>
@@ -162,282 +162,7 @@ export default {
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
 
-    const postLoginBackgroundAssets = import.meta.glob('./assets/images/background/*', {
-      eager: true,
-      import: 'default'
-    });
-
-    const postLoginBackgroundImageUrl = ref('');
-
-    const resolveConfiguredBackgroundCandidates = () => {
-      const fileName = String(siteConfig.value?.postLoginBackgroundImage || '').trim();
-      if (!fileName) {
-        return [];
-      }
-
-      if (/^(https?:)?\/\//.test(fileName) || fileName.startsWith('/')) {
-        return [fileName];
-      }
-
-      const assetKeys = Object.keys(postLoginBackgroundAssets);
-      const exactAssetKey = assetKeys.find((key) => key.endsWith(`/${fileName}`));
-      const ignoreCaseAssetKey = exactAssetKey
-        ? ''
-        : assetKeys.find((key) => key.toLowerCase().endsWith(`/${fileName.toLowerCase()}`));
-
-      const candidates = [];
-      if (exactAssetKey) {
-        candidates.push(postLoginBackgroundAssets[exactAssetKey]);
-      } else if (ignoreCaseAssetKey) {
-        candidates.push(postLoginBackgroundAssets[ignoreCaseAssetKey]);
-      }
-
-      candidates.push(`/images/background/${fileName}`);
-      return candidates;
-    };
-
-    const canLoadBackgroundImage = (url) => {
-      if (typeof window === 'undefined' || typeof Image === 'undefined') {
-        return Promise.resolve(false);
-      }
-
-      return new Promise((resolve) => {
-        const image = new Image();
-        image.onload = () => resolve(true);
-        image.onerror = () => resolve(false);
-        image.src = url;
-      });
-    };
-
-    const resolvePostLoginBackgroundImage = async () => {
-      const candidates = resolveConfiguredBackgroundCandidates();
-      if (!candidates.length) {
-        postLoginBackgroundImageUrl.value = '';
-        return;
-      }
-
-      for (const candidate of candidates) {
-        // eslint-disable-next-line no-await-in-loop
-        const canUse = await canLoadBackgroundImage(candidate);
-        if (canUse) {
-          postLoginBackgroundImageUrl.value = candidate;
-          return;
-        }
-      }
-
-      postLoginBackgroundImageUrl.value = '';
-    };
-
-    const postLoginBackgroundEnabled = computed(() => {
-      return route.meta.requiresAuth && !!postLoginBackgroundImageUrl.value;
-    });
-
-    const postLoginBackgroundStyle = computed(() => {
-      if (!postLoginBackgroundEnabled.value) {
-        return {};
-      }
-
-      return {
-        '--post-login-bg-image': `url(${postLoginBackgroundImageUrl.value})`
-      };
-    });
-
-    watch(
-      () => route.meta.requiresAuth,
-      (requiresAuth) => {
-        if (!requiresAuth) {
-          unreadNoticeCount.value = 0;
-          return;
-        }
-
-        loadUnreadNoticeCount();
-      },
-      { immediate: true }
-    );
-
-    const loadUnreadNoticeCount = async () => {
-      if (!route.meta.requiresAuth) {
-        unreadNoticeCount.value = 0;
-        return;
-      }
-
-      try {
-        const response = await getUnreadNoticeCount();
-        unreadNoticeCount.value = Number(response?.data?.unreadCount || response?.data?.count || 0);
-      } catch (error) {
-        unreadNoticeCount.value = 0;
-      }
-    };
-
-    const loadCurrentUserInfo = async () => {
-      if (!route.meta.requiresAuth) return;
-      isUserInfoLoading.value = true;
-      try {
-        const response = await getAccountUserInfo();
-        const apiUserData = response?.data?.data && typeof response.data.data === 'object'
-          ? response.data.data
-          : response?.data;
-
-        if (apiUserData && typeof apiUserData === 'object') {
-          const normalizedUserData = {
-            ...apiUserData,
-            email: String(apiUserData.email || '').trim()
-          };
-          store.setUser(normalizedUserData);
-        }
-      } catch (error) {
-      } finally {
-        isUserInfoLoading.value = false;
-      }
-    };
-
-    const languageChangedSignal = ref(0);
-
-    const onLanguageChanged = () => {
-      languageChangedSignal.value++;
-
-      setTimeout(() => {
-        document.body.classList.add('language-transitioning');
-        setTimeout(() => {
-          document.body.classList.remove('language-transitioning');
-        }, 300);
-      }, 0);
-    };
-
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        checkAuthAndReloadMessages();
-        loadUnreadNoticeCount();
-        loadCurrentUserInfo();
-
-        checkUserLoginStatus().then(result => {
-          if (result.isLoggedIn === false && result.message) {
-            if (showToast) {
-              showToast(result.message, 'warning');
-            }
-          }
-        }).catch(err => {
-        });
-      }
-    };
-
-    const syncTopBarHeight = () => {
-      const wrapperEl = appContentWrapperRef.value;
-      if (!wrapperEl) return;
-
-      if (!route.meta.requiresAuth) {
-        wrapperEl.style.setProperty('--app-top-bar-height', '0px');
-        return;
-      }
-
-      const topBarHeight = topFixedBarRef.value?.offsetHeight || 0;
-      wrapperEl.style.setProperty('--app-top-bar-height', `${topBarHeight}px`);
-    };
-
-    provide('languageChangedSignal', languageChangedSignal);
-
-    const clearCache = () => {
-      pageCache.clearCache();
-    };
-
-    const removeCachedRoute = (routeName) => {
-      pageCache.removeRouteFromCache(routeName);
-    };
-
-    provide('clearCache', clearCache);
-    provide('removeCachedRoute', removeCachedRoute);
-
-    onMounted(() => {
-      window.addEventListener('languageChanged', onLanguageChanged);
-
-      checkAuthAndReloadMessages();
-      loadUnreadNoticeCount();
-      loadCurrentUserInfo();
-
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-
-      checkUserLoginStatus().then(result => {
-        if (result.isLoggedIn === false && result.message) {
-          if (showToast) {
-            showToast(result.message, 'warning');
-          }
-        }
-      }).catch(err => {
-      });
-
-      handleRedirectParam();
-
-      nextTick(() => {
-        syncTopBarHeight();
-      });
-
-      window.addEventListener('resize', syncTopBarHeight);
-
-      if (typeof window !== 'undefined' && 'ResizeObserver' in window && topFixedBarRef.value) {
-        topBarResizeObserver = new ResizeObserver(() => {
-          syncTopBarHeight();
-        });
-        topBarResizeObserver.observe(topFixedBarRef.value);
-      }
-
-    });
-
-    onUnmounted(() => {
-      window.removeEventListener('languageChanged', onLanguageChanged);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('resize', syncTopBarHeight);
-      topBarResizeObserver?.disconnect();
-      topBarResizeObserver = null;
-    });
-
-    watch(
-      () => [route.fullPath, route.meta.requiresAuth],
-      () => {
-        nextTick(() => {
-          syncTopBarHeight();
-        });
-      },
-      { immediate: true }
-    );
-
-    watch(
-      () => siteConfig.value?.postLoginBackgroundImage,
-      () => {
-        resolvePostLoginBackgroundImage();
-      },
-      { immediate: true }
-    );
-
-    return {
-      userEmail,
-      userDisplayName,
-      isUserInfoLoading,
-      siteConfig,
-      currentYear,
-      PROFILE_CONFIG,
-      cachedRoutes,
-      hasUnreadNotice,
-      topFixedBarRef,
-      appContentWrapperRef,
-      postLoginBackgroundEnabled,
-      postLoginBackgroundStyle
-    };
-  }
-};
-</script>
-
-<style lang="scss">
-@use "sass:math";
-@use "@/assets/styles/base/variables.scss" as *;
-@use "@/assets/styles/base/reset.scss" as *;
-@use "@/assets/styles/base/animations.scss" as *;
-@use "@/assets/styles/base/scrollbar.scss" as *;
-
-.app-root-shell {
-  min-height: 100dvh;
-  position: relative;
-  isolation: isolate;
-  /* 顶部栏强调渐变条（仅用于 top-fixed-bar::after，不参与页面主背景计算） */
+    const postLoginBackgroundAssets = import.meta.glob('./assets/images/background
   --site-accent-gradient: linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
   background-color: var(--color-bg-page);
 }
@@ -480,9 +205,7 @@ export default {
   -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
 
-/* 全局卡片基线样式：
- * 保留 .dashboard-card 与 .stats-card 两个选择器是有必要的，
- * 因为页面中存在仅使用其中一个类名的组件，统一放在此处可避免漏样式。 */
+
 .card,
 .dashboard-card,
 .stats-card,
@@ -744,7 +467,7 @@ export default {
     justify-content: flex-end;
   }
 
-  /* Mobile density optimization: avoid oversized modules */
+  
   .app-content-wrapper {
     .dashboard-card,
     .stats-card,
@@ -784,7 +507,7 @@ export default {
 
 }
 
-/* 统一窄屏容器规则：仅最外层保留 2px，内层容器全部归零，最大化可用宽度 */
+
 @include down(xl) {
   .content-layout-shell {
     padding-inline: var(--page-edge-gap, 2px);
