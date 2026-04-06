@@ -37,7 +37,6 @@ export const useAppStore = defineStore('app', {
 
     setUser(user) {
       this.user = user;
-      sessionStorage.setItem('userInfo', JSON.stringify(user));
     },
 
     clearUser() {
@@ -52,16 +51,8 @@ export const useAppStore = defineStore('app', {
     },
 
     initUserInfo() {
-      const userInfo = sessionStorage.getItem('userInfo') || localStorage.getItem('userInfo');
-      if (userInfo) {
-        try {
-          this.user = JSON.parse(userInfo);
-          localStorage.removeItem('userInfo');
-        } catch (err) {
-          sessionStorage.removeItem('userInfo');
-          localStorage.removeItem('userInfo');
-        }
-      }
+      sessionStorage.removeItem('userInfo');
+      localStorage.removeItem('userInfo');
     }
   }
 });
