@@ -1,5 +1,4 @@
 const runtimeState = {
-  token: '',
   isUserLoggedIn: undefined,
   isLoggingOut: false,
   lastLoginCheck: null,
@@ -15,8 +14,6 @@ const purgeLegacyTokenStorage = () => {
 };
 
 purgeLegacyTokenStorage();
-
-export const getToken = () => runtimeState.token || '';
 
 const migrateAuthDataToAuthorization = (authData) => {
   if (!authData) return '';
@@ -42,14 +39,8 @@ export const getAuthData = () => {
 };
 
 export const getAuthSnapshot = () => ({
-  token: getToken(),
   authData: getAuthData()
 });
-
-export const setToken = (token) => {
-  runtimeState.token = token || '';
-  purgeLegacyTokenStorage();
-};
 
 export const setAuthData = (authData) => {
   if (!authData) return;

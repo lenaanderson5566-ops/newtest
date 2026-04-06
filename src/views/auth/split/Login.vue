@@ -142,6 +142,7 @@ import IconArrowRight from '@/components/icons/IconArrowRight.vue';
 import IconEye from '@/components/icons/IconEye.vue';
 import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 import { login, checkLoginStatus } from '@/api/auth';
+import { isLogoutInProgress } from '@/utils/authState';
 import { validateEmail, validateRequired } from '@/utils/validators';
 
 import { handleTokenLogin, hasVerifyToken } from '@/utils/tokenLogin';
@@ -278,7 +279,7 @@ export default {
       }
 
       try {
-        if (window._isLoggingOut === true) {
+        if (isLogoutInProgress()) {
           return;
         }
 
@@ -633,62 +634,6 @@ export default {
   align-items: center;
   margin-bottom: 24px;
 
-  .remember-me .checkbox-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding-left: 24px;
-    cursor: pointer;
-    user-select: none;
-
-    input {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-
-      &:checked ~ .checkmark {
-        background-color: var(--theme-color);
-        border-color: var(--theme-color);
-
-        &:after {
-          display: block;
-        }
-      }
-    }
-
-    .checkmark {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 20px;
-      width: 20px;
-      background-color: transparent;
-      border: 2px solid var(--border-default);
-      border-radius: 4px;
-      transition: all 0.2s ease;
-
-      &:after {
-        content: "";
-        position: absolute;
-        display: none;
-        left: 5px;
-        top: 0.5px;
-        width: 5px;
-        height: 10px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-      }
-    }
-
-    .checkbox-label {
-      color: var(--color-text-tertiary);
-      font-size: $font-size-sm;
-    }
-  }
-
   .forgot-password {
     color: var(--theme-color);
     font-size: $font-size-sm;
@@ -754,10 +699,6 @@ export default {
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
-
-    .remember-me {
-      flex: 0 0 auto;
-    }
 
     .forgot-password {
       flex: 0 0 auto;

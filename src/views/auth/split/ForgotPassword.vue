@@ -373,6 +373,7 @@ import IconEye from '@/components/icons/IconEye.vue';
 import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 
 import { resetPassword, sendEmailVerify, checkLoginStatus, getWebsiteConfig } from '@/api/auth';
+import { isLogoutInProgress } from '@/utils/authState';
 import { getResponseData } from '@/api/request';
 
 
@@ -1500,7 +1501,7 @@ export default {
 
       try {
 
-        if (window._isLoggingOut === true) {
+        if (isLogoutInProgress()) {
 
           return;
 

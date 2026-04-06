@@ -1,13 +1,12 @@
 import { createPinia, defineStore } from 'pinia';
 import { forceLogout } from '@/api/auth';
-import { getToken, setToken, getAuthData } from '@/utils/authState';
+import { getAuthData } from '@/utils/authState';
 
 export const pinia = createPinia();
 
 export const useAppStore = defineStore('app', {
   state: () => ({
     user: null,
-    token: getToken(),
     loading: false,
     error: null
   }),
@@ -20,9 +19,7 @@ export const useAppStore = defineStore('app', {
   },
 
   actions: {
-    login(token) {
-      this.token = token;
-      setToken(token);
+    login() {
     },
 
     logout() {
@@ -41,7 +38,6 @@ export const useAppStore = defineStore('app', {
 
     clearUser() {
       this.user = null;
-      this.token = '';
       localStorage.removeItem('token');
       sessionStorage.removeItem('token');
       localStorage.removeItem('userInfo');

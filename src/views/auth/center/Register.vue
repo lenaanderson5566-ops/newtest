@@ -544,6 +544,7 @@ import IconCheck from '@/components/icons/IconCheck.vue';
 
 
 import { register, checkLoginStatus, getWebsiteConfig, sendEmailVerify } from '@/api/auth';
+import { isLogoutInProgress } from '@/utils/authState';
 import { getResponseData } from '@/api/request';
 
 
@@ -1462,7 +1463,7 @@ export default {
 
       try {
 
-        if (window._isLoggingOut === true) {
+        if (isLogoutInProgress()) {
 
           fetchWebsiteConfig();
 

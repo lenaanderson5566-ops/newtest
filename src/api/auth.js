@@ -28,10 +28,6 @@ export const handleLoginSuccess = (responseData) => {
   try {
     setUserLoggedInFlag(undefined);
     
-    if (responseData.token) {
-      useAppStore(pinia).login(responseData.token);
-    }
-    
     if (responseData.is_admin === 1) {
       localStorage.setItem('is_admin', '1');
     }
@@ -67,7 +63,7 @@ export const login = async (loginData) => {
   });
   const responseData = resolvePayload(envelope);
   
-  if (!responseData || !(responseData.token || responseData.auth_data)) {
+  if (!responseData || !responseData.auth_data) {
     throw new Error('登录数据不完整');
   }
   
@@ -76,7 +72,6 @@ export const login = async (loginData) => {
   if (handledResponse.success) {
     return {
       success: true,
-      token: responseData.token,
       auth_data: responseData.auth_data,
       is_admin: responseData.is_admin
     };
@@ -100,9 +95,7 @@ export function register(data) {
   }).then((envelope) => {
     const responseData = resolvePayload(envelope);
     
-    if (responseData?.token) {
-      useAppStore(pinia).login(responseData.token);
-      
+    if (responseData?.auth_data) {
       setUserLoggedInFlag(true);
     }
     
@@ -245,10 +238,6 @@ export const checkLoginStatus = () => {
     _clearAllAuthData();
     _cacheLoginStatus(false);
     return false;
-  }
-  
-  const storeAuth = useAppStore(pinia).isLoggedIn;
-  if (!storeAuth) {
   }
   
   const isLoggedIn = !!authData;
