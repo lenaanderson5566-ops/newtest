@@ -6,6 +6,38 @@ import {
 } from "@/utils/baseConfig";
 import { getAvailableApiUrl } from "@/utils/apiAvailabilityChecker";
 
+const clearAuthDataAndRedirectToLogin = () => {
+  const authKeys = [
+    "token",
+    "auth_data",
+    "cookie_auth_data",
+    "userInfo",
+    "is_admin",
+    "vuex",
+    "user",
+    "auth",
+  ];
+
+  authKeys.forEach((key) => {
+    localStorage.removeItem(key);
+  });
+
+  const sessionKeys = ["token", "auth_data", "vuex", "user", "auth"];
+  sessionKeys.forEach((key) => {
+    sessionStorage.removeItem(key);
+  });
+
+  window.isUserLoggedIn = false;
+  window.location.href = "/#/login";
+};
+
+const normalizeAuthData = (value) => {
+  if (typeof value !== "string") return "";
+  const trimmed = value.trim();
+  if (!trimmed || trimmed === "undefined" || trimmed === "null") return "";
+  return trimmed;
+};
+
 const request = axios.create({
   baseURL: API_BASE_URL,
   timeout: 30000,
@@ -17,16 +49,9 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     config.baseURL = getApiBaseUrl();
-    if (
-      window.EZ_CONFIG &&
-      window.EZ_CONFIG.API_BASE_URLS &&
-      Array.isArray(window.EZ_CONFIG.API_BASE_URLS) &&
-      window.EZ_CONFIG.API_BASE_URLS.length > 1
-    ) {
-      const availableApiUrl = getAvailableApiUrl();
-      if (availableApiUrl) {
-        config.baseURL = availableApiUrl;
-      }
+    const availableApiUrl = getAvailableApiUrl();
+    if (availableApiUrl) {
+      config.baseURL = availableApiUrl;
     }
 
     if (config.method === "post" && config.data) {
@@ -41,58 +66,15 @@ request.interceptors.request.use(
       config.headers["Content-Type"] = "application/x-www-form-urlencoded";
     }
 
-    let authData = localStorage.getItem("auth_data");
+    const authDataFromStorage = normalizeAuthData(
+      localStorage.getItem("auth_data") || sessionStorage.getItem("auth_data")
+    );
 
-    if (!authData) {
-      try {
-        const { getCookie } = require("./auth");
-        authData = getCookie("auth_data");
-      } catch (err) {
-        const cookieAuthData = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("auth_data="));
-
-        if (cookieAuthData) {
-          try {
-            const encodedValue = cookieAuthData.split("=")[1];
-            const decodedValue = decodeURIComponent(encodedValue);
-            const parsedValue = JSON.parse(decodedValue);
-
-            const { SITE_CONFIG } = require("../utils/baseConfig");
-            if (parsedValue && parsedValue.site === SITE_CONFIG.siteName) {
-              authData = parsedValue.value;
-            }
-          } catch (e) {
-            authData = cookieAuthData.split("=")[1];
-          }
-        }
-      }
-    }
-
-    if (!authData && window.authDataInStorage) {
-      authData = window.authDataInStorage;
-    }
-
-    if (!authData) {
-      const backupData = localStorage.getItem("cookie_auth_data");
-      if (backupData) {
-        try {
-          const parsedValue = JSON.parse(backupData);
-
-          const { SITE_CONFIG } = require("../utils/baseConfig");
-          if (parsedValue && parsedValue.site === SITE_CONFIG.siteName) {
-            authData = parsedValue.value;
-          } else {
-            authData = backupData;
-          }
-        } catch (e) {
-          authData = backupData;
-        }
-      }
-    }
-
-    if (authData) {
-      config.headers["Authorization"] = authData;
+    if (authDataFromStorage) {
+      config.headers["Authorization"] = authDataFromStorage;
+    } else {
+      delete config.headers?.Authorization;
+      delete config.headers?.authorization;
     }
 
     try {
@@ -125,9 +107,7 @@ request.interceptors.response.use(
       const res = response.data;
 
       if (res && (res.message === "未登录或登陆已过期" || res.message === "Not logged in or session expired")) {
-        const { forceLogout } = require("./auth");
-        forceLogout();
-        window.location.href = "/#/login";
+        clearAuthDataAndRedirectToLogin();
         return Promise.reject(new Error(res.message));
       }
 

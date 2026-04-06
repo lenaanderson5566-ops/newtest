@@ -31,13 +31,6 @@
       <SlideTabsNav />
     </div>
 
-    <!-- 认证页面顶部工具栏，确保认证页面也有语言切换器 -->
-    <div class="auth-toolbar" v-if="!$route.meta.requiresAuth && $route.path.includes('/auth')">
-      <div class="top-toolbar">
-        <LanguageSelector />
-      </div>
-    </div>
-
     <!-- 路由视图只对内容部分应用过渡效果 -->
     <div
       ref="appContentWrapperRef"
@@ -882,23 +875,6 @@ export default {
 
 html {
   scroll-behavior: smooth;
-}
-
-
-.auth-toolbar {
-  position: fixed;
-  top: env(safe-area-inset-top, 0px);
-  right: 0;
-  z-index: 100;
-
-  .top-toolbar {
-    position: fixed;
-    top: 20px;
-    right: 25px;
-    display: flex;
-    gap: 16px;
-    z-index: 110;
-  }
 }
 
 

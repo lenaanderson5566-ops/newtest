@@ -1,159 +1,34 @@
 ﻿
 import request from './request';
 import { pinia, useAppStore } from '@/store';
-import { SITE_CONFIG } from '@/utils/baseConfig';
 import { updateUserLanguage, logoutCurrentSession } from './account/user';
 import { getDefaultRegisterLanguage } from '@/utils/userLanguage';
 import { reloadMessages, initializeLanguageFromUserSettings } from '@/i18n';
 
 
-const setCookie = (name, value, days) => {
-  const siteName = SITE_CONFIG.siteName;
-  
-  const cookieValue = JSON.stringify({
-    site: siteName,
-    value: value
-  });
-  
-  const isSecure = window.location.protocol === 'https:';
-  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  
-  const date = new Date();
-  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-  const expires = `expires=${date.toUTCString()}`;
-  const domain = isLocalhost ? '' : `domain=${window.location.hostname};`;
-  let cookieString = `${name}=${encodeURIComponent(cookieValue)}; ${expires}; ${domain} path=/`;
-  
-  if (isSecure) {
-    cookieString += '; secure';
-  }
-  
-  cookieString += '; SameSite=Lax';
-  
-  document.cookie = cookieString;
-  
-  try {
-    localStorage.setItem(`cookie_${name}`, cookieValue);
-  } catch (err) {
-  }
-  
-  setTimeout(() => {
-    const checkCookie = getCookie(name);
-    const success = !!checkCookie;
-    
-    if (!success) {
-      document.cookie = `${name}=${encodeURIComponent(cookieValue)}; ${expires}; path=/`;
-      localStorage.setItem(`cookie_${name}_failure`, 'true');
-      window.authCookieFailure = true;
-    }
-  }, 300);
-};
-
-
-const getCookie = (name) => {
-  const siteName = SITE_CONFIG.siteName;
-  
-  const nameEQ = name + "=";
-  const ca = document.cookie.split(';');
-  let cookieValue = null;
-  
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) === 0) {
-      try {
-        const rawValue = c.substring(nameEQ.length, c.length);
-        const decodedValue = decodeURIComponent(rawValue);
-        const parsedValue = JSON.parse(decodedValue);
-        
-        if (parsedValue && parsedValue.site === siteName) {
-          cookieValue = parsedValue.value;
-          break;
-        }
-      } catch (err) {
-      }
-    }
-  }
-  
-  if (!cookieValue) {
-    try {
-      const localValue = localStorage.getItem(`cookie_${name}`);
-      if (localValue) {
-        try {
-          const parsedValue = JSON.parse(localValue);
-          if (parsedValue && parsedValue.site === siteName) {
-            cookieValue = parsedValue.value;
-          }
-        } catch (err) {
-        }
-      }
-    } catch (err) {
-    }
-  }
-  
-  if (!cookieValue && name === 'auth_data' && window.authDataInStorage) {
-    cookieValue = window.authDataInStorage;
-  }
-  
-  return cookieValue;
-};
-
-
-const deleteCookie = (name) => {
-  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-  
-  try {
-    localStorage.removeItem(`cookie_${name}`);
-    localStorage.removeItem(`cookie_${name}_failure`);
-  } catch (err) {
-  }
-  
-  setTimeout(() => {
-    const checkCookie = getCookie(name);
-    if (checkCookie) {
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
-      
-      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      const domain = isLocalhost ? '' : `domain=${window.location.hostname};`;
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; ${domain} path=/`;
-    }
-  }, 100);
-};
-
-
 export const handleLoginSuccess = (responseData, rememberMe) => {
   try {
     window.isUserLoggedIn = undefined;
-    window.authCookieFailure = false;
-    window.authDataInStorage = null;
+    const usePersistentStorage = rememberMe === true;
     
-    useAppStore(pinia).login(responseData.token);
+    useAppStore(pinia).login(responseData.token, { rememberMe: usePersistentStorage });
     
-    localStorage.setItem('token', responseData.token);
     if (responseData.is_admin === 1) {
       localStorage.setItem('is_admin', '1');
     }
     
     if (responseData.auth_data) {
-      localStorage.setItem('auth_data', responseData.auth_data);
-    }
-    
-    const days = rememberMe ? 30 : 1; 
-    if (responseData.auth_data) {
-      setCookie('auth_data', responseData.auth_data, days);
+      if (usePersistentStorage) {
+        localStorage.setItem('auth_data', responseData.auth_data);
+        sessionStorage.removeItem('auth_data');
+      } else {
+        sessionStorage.setItem('auth_data', responseData.auth_data);
+        localStorage.removeItem('auth_data');
+      }
     }
     
     setTimeout(() => {
-      const loginCheck = checkLoginStatus();
-      
-      if (!loginCheck) {
-        window.isUserLoggedIn = true;
-        
-        if (responseData.auth_data) {
-          window.authDataInStorage = responseData.auth_data;
-          localStorage.setItem('cookie_auth_data', responseData.auth_data);
-        }
-      }
+      window.isUserLoggedIn = true;
       
       Promise.resolve().then(async () => {
         try {
@@ -222,17 +97,14 @@ export function register(data) {
     let responseData = response.data || response;
     
     if (responseData.token) {
-      useAppStore(pinia).login(responseData.token);
+      useAppStore(pinia).login(responseData.token, { rememberMe: true });
       
       window.isUserLoggedIn = true;
     }
     
     if (responseData.auth_data) {
-      setCookie('auth_data', responseData.auth_data, 1); 
-      
       localStorage.setItem('auth_data', responseData.auth_data);
-      
-      window.authDataInStorage = responseData.auth_data;
+      sessionStorage.removeItem('auth_data');
     }
     
     if (typeof responseData.is_admin !== 'undefined') {
@@ -378,8 +250,7 @@ export const checkLoginStatus = () => {
   }
   
   const authData = localStorage.getItem('auth_data') || 
-                  sessionStorage.getItem('auth_data') || 
-                  window.authDataInStorage;
+                  sessionStorage.getItem('auth_data');
                   
   if (!authData || authData === 'undefined' || authData === 'null' || authData === '') {
     if (window.isUserLoggedIn === true) {
@@ -433,8 +304,6 @@ const _cacheLoginStatus = (status) => {
 
 const _clearAllAuthData = () => {
   window.isUserLoggedIn = false;
-  window.authDataInStorage = null;
-  window.authCookieFailure = false;
   
   const authKeys = [
     'token', 
@@ -472,7 +341,6 @@ const _clearAllAuthData = () => {
     });
     
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    deleteCookie(name);
   });
   
   try {
@@ -483,54 +351,7 @@ const _clearAllAuthData = () => {
 
 
 export const forceLogout = () => {
-  window.isUserLoggedIn = false;
-  window.authDataInStorage = null;
-  window.authCookieFailure = false;
-  
-  const authKeys = [
-    'token', 
-    'auth_data', 
-    'cookie_auth_data', 
-    'userInfo', 
-    'is_admin',
-    'vuex',
-    'user',
-    'auth'
-  ];
-  
-  authKeys.forEach(key => {
-    localStorage.removeItem(key);
-  });
-  
-  const sessionKeys = [
-    'token', 
-    'auth_data',
-    'vuex',
-    'user',
-    'auth'
-  ];
-  
-  sessionKeys.forEach(key => {
-    sessionStorage.removeItem(key);
-  });
-  
-  const cookiePaths = ['/', '/dashboard', '/user', '/admin'];
-  const cookieNames = ['auth_data', 'XSRF-TOKEN', 'laravel_session', 'token'];
-  
-  cookieNames.forEach(name => {
-    cookiePaths.forEach(path => {
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};`;
-    });
-    
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    
-    deleteCookie(name);
-  });
-  
-  try {
-    useAppStore(pinia).clearUser();
-  } catch (e) {
-  }
+  _clearAllAuthData();
 };
 
 
@@ -549,6 +370,20 @@ export const tokenLogin = (verifyToken, redirect) => {
 export const checkUserLoginStatus = async () => {
   const authData = localStorage.getItem('auth_data') || sessionStorage.getItem('auth_data');
   const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+
+  const getCurrentRoutePath = () => {
+    const hash = window.location.hash || '';
+    if (hash.startsWith('#')) {
+      const hashPath = hash.slice(1).split('?')[0];
+      if (hashPath) {
+        return hashPath.startsWith('/') ? hashPath : `/${hashPath}`;
+      }
+    }
+
+    return window.location.pathname || '/';
+  };
+
+  const isAuthRoutePath = (path) => /\/(login|register|forgot-password)/.test(path);
   
   if (!token || !authData) {
     forceLogout(); 
@@ -570,8 +405,8 @@ export const checkUserLoginStatus = async () => {
     } else {
       forceLogout();
       
-      const currentRoute = window.location.pathname;
-      const isAuthPage = /\/(login|register|forgot-password)/.test(currentRoute);
+      const currentRoute = getCurrentRoutePath();
+      const isAuthPage = isAuthRoutePath(currentRoute);
       
       if (!isAuthPage) {
         window.location.href = '/#/login';
@@ -584,8 +419,8 @@ export const checkUserLoginStatus = async () => {
     if (error.response && error.response.data && error.response.data.message === '未登录或登陆已过期') {
       forceLogout();
       
-      const currentRoute = window.location.pathname;
-      const isAuthPage = /\/(login|register|forgot-password)/.test(currentRoute);
+      const currentRoute = getCurrentRoutePath();
+      const isAuthPage = isAuthRoutePath(currentRoute);
       
       if (!isAuthPage) {
         window.location.href = '/#/login';

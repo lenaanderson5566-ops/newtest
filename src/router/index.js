@@ -676,7 +676,7 @@ router.beforeEach(async (to, from, next) => {
 
   
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
 
   
 
