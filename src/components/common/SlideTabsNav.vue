@@ -200,11 +200,11 @@ export default {
       }
 
       &.active {
-        color: var(--color-text-primary);
-        background: rgba(var(--theme-color-rgb), 0.12);
+        color: var(--text-on-dark-primary);
+        background: var(--theme-color);
 
         .nav-icon svg {
-          color: var(--theme-color);
+          color: var(--text-on-dark-primary);
         }
       }
 
@@ -241,11 +241,11 @@ export default {
         }
 
         &.active {
-          color: #111827;
-          background: #d7d7d7;
+          color: var(--text-on-dark-primary);
+          background: var(--theme-color);
 
           .nav-icon svg {
-            color: #111827;
+            color: var(--text-on-dark-primary);
           }
         }
 
@@ -316,11 +316,14 @@ export default {
         }
 
         &.active {
+          background: var(--theme-color);
+
           .nav-text {
-            color: var(--theme-color);
+            color: var(--text-on-dark-primary);
           }
 
           .nav-icon svg {
+            color: var(--text-on-dark-primary);
             transform: scale(1);
           }
         }
