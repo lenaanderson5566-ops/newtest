@@ -49,79 +49,46 @@ export default {
     IconX
   },
   props: {
-    /**
-     * 是否显示弹窗
-     */
     showDialog: {
       type: Boolean,
       default: false
     },
-    /**
-     * 弹窗标题
-     */
     title: {
       type: String,
       default: ''
     },
-    /**
-     * 弹窗内容
-     */
     content: {
       type: String,
       default: ''
     },
-    /**
-     * 是否显示右上角关闭图标
-     */
     showCloseIcon: {
       type: Boolean,
       default: true
     },
-    /**
-     * 是否显示取消按钮
-     */
     showCancelButton: {
       type: Boolean,
       default: true
     },
-    /**
-     * 是否显示确认按钮
-     */
     showConfirmButton: {
       type: Boolean,
       default: true
     },
-    /**
-     * 取消按钮文本（如果提供，优先使用此文本）
-     */
     cancelButtonText: {
       type: String,
       default: ''
     },
-    /**
-     * 确认按钮文本（如果提供，优先使用此文本）
-     */
     confirmButtonText: {
       type: String,
       default: ''
     },
-    /**
-     * 取消按钮i18n key
-     */
     cancelButtonI18nKey: {
       type: String,
       default: 'common.cancel'
     },
-    /**
-     * 确认按钮i18n key
-     */
     confirmButtonI18nKey: {
       type: String,
       default: 'common.confirm'
     },
-    /**
-     * 点击遮罩层是否可以关闭
-     */
     clickOverlayToClose: {
       type: Boolean,
       default: true
@@ -131,34 +98,22 @@ export default {
   setup(props, { emit }) {
     const show = ref(false);
 
-    /**
-     * 处理关闭操作（取消按钮和右上角X按钮都触发此方法）
-     */
     const handleClose = () => {
       show.value = false;
       emit('close');
     };
 
-    /**
-     * 处理确认操作
-     */
     const handleConfirm = () => {
       show.value = false;
       emit('confirm');
     };
 
-    /**
-     * 处理遮罩层点击
-     */
     const handleOverlayClick = () => {
       if (props.clickOverlayToClose) {
         handleClose();
       }
     };
 
-    /**
-     * 监听showDialog变化
-     */
     watch(() => props.showDialog, (newVal) => {
       show.value = newVal;
     }, { immediate: true });

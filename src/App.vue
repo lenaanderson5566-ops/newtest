@@ -207,7 +207,6 @@ export default {
       }
 
       for (const candidate of candidates) {
-        // eslint-disable-next-line no-await-in-loop
         const canUse = await canLoadBackgroundImage(candidate);
         if (canUse) {
           postLoginBackgroundImageUrl.value = candidate;
@@ -427,7 +426,6 @@ export default {
   min-height: 100dvh;
   position: relative;
   isolation: isolate;
-  /* 顶部栏强调渐变条（仅用于 top-fixed-bar::after，不参与页面主背景计算） */
   --site-accent-gradient: linear-gradient(90deg, #2259aa 0%, #5a39d8 52%, #ea1d2c 100%);
   background-color: var(--color-bg-page);
 }
@@ -470,9 +468,6 @@ export default {
   -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
 
-/* 全局卡片基线样式：
- * 保留 .dashboard-card 与 .stats-card 两个选择器是有必要的，
- * 因为页面中存在仅使用其中一个类名的组件，统一放在此处可避免漏样式。 */
 .card,
 .dashboard-card,
 .stats-card,
@@ -734,7 +729,6 @@ export default {
     justify-content: flex-end;
   }
 
-  /* Mobile density optimization: avoid oversized modules */
   .app-content-wrapper {
     .dashboard-card,
     .stats-card,
@@ -774,7 +768,6 @@ export default {
 
 }
 
-/* 统一窄屏容器规则：仅最外层保留 2px，内层容器全部归零，最大化可用宽度 */
 @include down(xl) {
   .content-layout-shell {
     padding-inline: var(--page-edge-gap, 2px);

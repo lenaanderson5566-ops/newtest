@@ -20,15 +20,12 @@
 
         
 
-        <!-- 使用页面切换动画 -->
 
         <transition :name="slideDirection" mode="out-in">
 
-          <!-- 节点基本信息页面 -->
 
           <div v-if="currentPage === 'info'" key="info" class="node-detail-modal-body">
 
-            <!-- 节点基本信息 -->
 
             <div class="node-info-section">
 
@@ -66,7 +63,6 @@
 
               
 
-              <!-- 根据节点类型显示不同的信息 -->
 
               <template v-if="node.type === 'ss' || node.type === 'shadowsocks'">
 
@@ -112,7 +108,6 @@
 
             
 
-            <!-- 切换到订阅链接页面的按钮 -->
 
             <div class="page-nav-btn-container">
 
@@ -130,11 +125,9 @@
 
           
 
-          <!-- 订阅链接页面 -->
 
           <div v-else-if="currentPage === 'subscribe'" key="subscribe" class="node-detail-modal-body">
 
-            <!-- 快速连接信息切换 -->
 
             <div class="quick-link-section">
 
@@ -182,7 +175,6 @@
 
               
 
-              <!-- 链接视图 -->
 
               <div v-if="viewMode === 'link'" class="link-card">
 
@@ -200,7 +192,6 @@
 
               
 
-              <!-- 二维码视图 -->
 
               <div v-else-if="viewMode === 'qrcode'" class="qrcode-container">
 
@@ -232,7 +223,6 @@
 
             
 
-            <!-- 返回节点信息页面的按钮 -->
 
             <div class="page-nav-btn-container">
 
