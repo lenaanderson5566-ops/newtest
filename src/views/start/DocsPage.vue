@@ -290,6 +290,12 @@ onMounted(() => {
 
 }
 
+.docs-inner {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 
 
 .docs-header {
@@ -364,7 +370,7 @@ onMounted(() => {
 
     border: var(--border-width) solid var(--border-default);
 
-    background-color: var(--input-bg);
+    background-color: transparent;
 
     color: var(--color-text-primary);
 
