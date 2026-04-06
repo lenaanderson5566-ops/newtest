@@ -13,7 +13,9 @@
 
       <div class="docs-header">
 
-        <h1 class="docs-title">{{ $t('menu.start') }}</h1>
+        <div class="help-welcome-banner">
+          <h1 class="docs-title">{{ $t('menu.start') }}</h1>
+        </div>
 
         
 
@@ -295,12 +297,23 @@ onMounted(() => {
 
   margin-bottom: 24px;
 
-  
+  .help-welcome-banner {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(var(--theme-color-rgb), 0.22);
+    background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.14), rgba(var(--theme-color-rgb), 0.05));
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 8px 20px rgba(var(--theme-color-rgb), 0.1);
+    margin-bottom: 24px;
+  }
 
   .docs-title {
     @extend %typo-page-title;
 
-    margin-bottom: 24px;
+    margin-bottom: 0;
 
     background: linear-gradient(45deg, var(--theme-color), var(--secondary-color));
 
@@ -502,7 +515,7 @@ onMounted(() => {
 
   border-radius: $border-radius-sm;
 
-  background-color: #fff;
+  background-color: transparent;
 
   cursor: pointer;
 
@@ -617,6 +630,7 @@ onMounted(() => {
   padding: 48px 16px;
 
   text-align: center;
+  background-color: transparent;
 
   
 
