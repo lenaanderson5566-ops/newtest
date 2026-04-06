@@ -204,6 +204,20 @@
               </div>
 
               <div v-if="errors.newPassword" class="error-message">{{ errors.newPassword }}</div>
+              <div v-if="formData.newPassword" class="password-rules">
+                <div class="password-rule-tip">
+                  <span :class="{ met: passwordStrengthMeta.minLengthMet }">{{ $t('auth.passwordRuleMinLength') }}</span>
+                </div>
+                <div class="password-rule-tip">
+                  <span :class="{ met: passwordStrengthMeta.alphaNumericMet }">{{ $t('auth.passwordRuleAlphaNumericSuggested') }}</span>
+                </div>
+                <div class="password-rule-tip">
+                  <span :class="{ met: passwordStrengthMeta.specialCharMet }">{{ $t('auth.passwordRuleSpecialSuggested') }}</span>
+                </div>
+              </div>
+              <div v-if="formData.newPassword" class="password-strength">
+                {{ $t('auth.passwordStrength') }}：{{ $t(passwordStrengthTextKey) }}
+              </div>
 
             </div>
 
@@ -352,7 +366,7 @@ import { useI18n } from 'vue-i18n';
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 
-import { isValidEmail, validatePassword } from '@/utils/validators';
+import { isValidEmail, validatePassword, getPasswordStrengthMeta } from '@/utils/validators';
 
 import { useToast } from '@/composables/useToast';
 
@@ -644,6 +658,12 @@ export default {
 
       newPassword: ''
 
+    });
+    const passwordStrengthMeta = computed(() => getPasswordStrengthMeta(formData.newPassword));
+    const passwordStrengthTextKey = computed(() => {
+      if (passwordStrengthMeta.value.level === 'weak') return 'auth.passwordStrengthWeak';
+      if (passwordStrengthMeta.value.level === 'medium') return 'auth.passwordStrengthMedium';
+      return 'auth.passwordStrengthStrong';
     });
 
 
@@ -1654,6 +1674,8 @@ export default {
       isValidEmail,
 
       showPassword,
+      passwordStrengthMeta,
+      passwordStrengthTextKey,
 
 
 
@@ -3015,6 +3037,27 @@ export default {
 
 .auth-divider {
   margin-top: 4px;
+}
+
+.password-rules {
+  margin-top: 8px;
+  display: grid;
+  gap: 4px;
+}
+
+.password-rule-tip {
+  font-size: $font-size-sm;
+  color: var(--color-text-tertiary);
+}
+
+.password-rule-tip .met {
+  color: #22c55e;
+}
+
+.password-strength {
+  margin-top: 8px;
+  font-size: $font-size-sm;
+  color: var(--color-text-tertiary);
 }
 
 </style>

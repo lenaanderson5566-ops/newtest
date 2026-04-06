@@ -274,6 +274,20 @@
             <div class="form-group">
               <label>{{ $t('profile.newPassword') }}</label>
               <input v-model="passwordForm.newPassword" type="password" :placeholder="$t('profile.newPassword')" />
+              <div v-if="passwordForm.newPassword" class="password-rules">
+                <div class="password-rule-tip">
+                  <span :class="{ met: passwordStrengthMeta.minLengthMet }">{{ $t('auth.passwordRuleMinLength') }}</span>
+                </div>
+                <div class="password-rule-tip">
+                  <span :class="{ met: passwordStrengthMeta.alphaNumericMet }">{{ $t('auth.passwordRuleAlphaNumericSuggested') }}</span>
+                </div>
+                <div class="password-rule-tip">
+                  <span :class="{ met: passwordStrengthMeta.specialCharMet }">{{ $t('auth.passwordRuleSpecialSuggested') }}</span>
+                </div>
+              </div>
+              <div v-if="passwordForm.newPassword" class="password-strength">
+                {{ $t('auth.passwordStrength') }}：{{ $t(passwordStrengthTextKey) }}
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -315,7 +329,7 @@ import { useI18n } from 'vue-i18n';
 import { changePassword as apiChangePassword, getRecentLoginRecords, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
 import { formatDate } from '@/utils/formatters';
-import { validatePassword } from '@/utils/validators';
+import { validatePassword, getPasswordStrengthMeta } from '@/utils/validators';
 import { useToast } from '@/composables/useToast';
 
 const router = useRouter();
@@ -338,6 +352,12 @@ const recentLoginRecords = ref([]);
 const passwordForm = ref({
   oldPassword: '',
   newPassword: ''
+});
+const passwordStrengthMeta = computed(() => getPasswordStrengthMeta(passwordForm.value.newPassword));
+const passwordStrengthTextKey = computed(() => {
+  if (passwordStrengthMeta.value.level === 'weak') return 'auth.passwordStrengthWeak';
+  if (passwordStrengthMeta.value.level === 'medium') return 'auth.passwordStrengthMedium';
+  return 'auth.passwordStrengthStrong';
 });
 const activeSection = ref('overview');
 const sectionTabs = computed(() => [
@@ -1143,6 +1163,27 @@ input:checked + .slider:before { transform: translateX(18px); }
   border-radius: 50%;
   border-top-color: white;
   animation: spin 1s linear infinite;
+}
+
+.password-rules {
+  margin-top: 8px;
+  display: grid;
+  gap: 4px;
+}
+
+.password-rule-tip {
+  font-size: $font-size-sm;
+  color: var(--color-text-tertiary);
+}
+
+.password-rule-tip .met {
+  color: #22c55e;
+}
+
+.password-strength {
+  margin-top: 8px;
+  font-size: $font-size-sm;
+  color: var(--color-text-tertiary);
 }
 
 @keyframes spin {
