@@ -13,6 +13,7 @@ const clearAuthDataAndRedirectToLogin = () => {
     "auth_data",
     "cookie_auth_data",
     "userInfo",
+    "left_sidebar_collapsed",
     "is_admin",
     "vuex",
     "user",

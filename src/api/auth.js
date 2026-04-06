@@ -259,21 +259,6 @@ export const checkLoginStatus = () => {
   if (!storeAuth) {
   }
   
-  const userInfoStr = localStorage.getItem('userInfo');
-  let userInfo = null;
-  
-  try {
-    if (userInfoStr) {
-      userInfo = JSON.parse(userInfoStr);
-      if (!userInfo || typeof userInfo !== 'object') {
-        userInfo = null;
-      }
-    }
-  } catch (e) {
-    userInfo = null;
-    localStorage.removeItem('userInfo');
-  }
-  
   const isLoggedIn = !!token && !!authData;
   
   if (isLoggedIn) {
@@ -298,6 +283,7 @@ const _clearAllAuthData = () => {
     'auth_data', 
     'cookie_auth_data', 
     'userInfo', 
+    'left_sidebar_collapsed',
     'is_admin',
     'vuex',
     'user',
