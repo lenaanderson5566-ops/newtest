@@ -15,6 +15,15 @@ const generateRandomFileName = (length = 8) => {
   return `${randowNumber}.${name}.js`;
 };
 
+const generateRandomToken = (length = 12) => {
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  let value = '';
+  for (let i = 0; i < length; i++) {
+    value += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return value;
+};
+
 const extraConfigPlugin = ({ isProd, enableConfigJS, enableObfuscation, extraScriptFileName }) => ({
   name: 'generate-extra-config-js',
   transformIndexHtml(html) {
@@ -91,6 +100,16 @@ export default defineConfig(({ mode }) => {
       assetsDir: 'static',
       sourcemap: false,
       minify: 'esbuild',
+      rollupOptions: {
+        output: {
+          entryFileNames: () => `static/${generateRandomToken()}.js`,
+          chunkFileNames: () => `static/${generateRandomToken()}.js`,
+          assetFileNames: (assetInfo) => {
+            const ext = path.extname(assetInfo?.name || '');
+            return `static/${generateRandomToken()}${ext}`;
+          }
+        }
+      },
       esbuild: {
         drop: ['console', 'debugger'],
         legalComments: 'none',
