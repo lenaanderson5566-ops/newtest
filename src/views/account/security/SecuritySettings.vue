@@ -139,6 +139,7 @@ import {
 import useToast from '@/hooks/useToast';
 import { PROFILE_CONFIG } from '@/utils/baseConfig';
 import { forceLogout } from '@/api/auth';
+import { validatePassword } from '@/utils/validators';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -164,7 +165,7 @@ const passwordForm = ref({
 const validatePasswordForm = () => {
   return (
     passwordForm.value.oldPassword &&
-    passwordForm.value.newPassword
+    validatePassword(passwordForm.value.newPassword).valid
   );
 };
 

@@ -35,6 +35,49 @@ export const validatePassword = (password) => {
 };
 
 
+export const getPasswordStrengthMeta = (password) => {
+  const value = password || '';
+
+  if (!value) {
+    return {
+      score: 0,
+      minLengthMet: false,
+      alphaNumericMet: false,
+      specialCharMet: false,
+      level: 'weak',
+      percent: 0
+    };
+  }
+
+  let score = 0;
+  const minLengthMet = value.length >= 8;
+  const hasLowercase = /[a-z]/.test(value);
+  const hasUppercase = /[A-Z]/.test(value);
+  const hasDigit = /\d/.test(value);
+  const alphaNumericMet = /[A-Za-z]/.test(value) && hasDigit;
+  const specialCharMet = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+  if (minLengthMet) score += 1;
+  if (hasLowercase) score += 1;
+  if (hasUppercase) score += 1;
+  if (hasDigit) score += 1;
+  if (specialCharMet) score += 1;
+
+  let level = 'strong';
+  if (score <= 1) level = 'weak';
+  else if (score <= 3) level = 'medium';
+
+  return {
+    score,
+    minLengthMet,
+    alphaNumericMet,
+    specialCharMet,
+    level,
+    percent: Math.min(100, Math.max(20, score * 20))
+  };
+};
+
+
 export const validateRequiredWithMessage = (value, fieldName) => {
   const result = {
     valid: false,

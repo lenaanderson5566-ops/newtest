@@ -315,6 +315,7 @@ import { useI18n } from 'vue-i18n';
 import { changePassword as apiChangePassword, getRecentLoginRecords, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
 import { formatDate } from '@/utils/formatters';
+import { validatePassword } from '@/utils/validators';
 import { useToast } from '@/composables/useToast';
 
 const router = useRouter();
@@ -437,7 +438,7 @@ const handleSectionClick = (sectionKey) => {
 
 const validatePasswordForm = () => (
   passwordForm.value.oldPassword &&
-  passwordForm.value.newPassword
+  validatePassword(passwordForm.value.newPassword).valid
 );
 
 const openPasswordChangePrompt = () => {

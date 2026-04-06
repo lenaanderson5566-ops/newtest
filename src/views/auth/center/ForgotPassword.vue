@@ -308,7 +308,7 @@ import { useI18n } from 'vue-i18n';
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 
-import { isValidEmail } from '@/utils/validators';
+import { isValidEmail, validatePassword } from '@/utils/validators';
 
 import { useToast } from '@/composables/useToast';
 
@@ -1197,18 +1197,10 @@ export default {
 
 
 
-      if (!formData.newPassword) {
-
-        errors.newPassword = t('auth.passwordRequired');
-
+      const passwordValidation = validatePassword(formData.newPassword);
+      if (!passwordValidation.valid) {
+        errors.newPassword = formData.newPassword ? t('auth.passwordTooShort') : t('auth.passwordRequired');
         isValid = false;
-
-      } else if (formData.newPassword.length < 8) {
-
-        errors.newPassword = t('auth.passwordTooShort');
-
-        isValid = false;
-
       }
 
 
