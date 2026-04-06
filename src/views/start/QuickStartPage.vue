@@ -213,7 +213,7 @@ const statusStripVariant = computed(() => {
 
 const statusStripIcon = computed(() => {
   if (statusStripVariant.value === 'new') return IconAlertTriangle;
-  if (statusStripVariant.value === 'expired') return IconX;
+  if (statusStripVariant.value === 'expired') return IconAlertTriangle;
   return IconCheck;
 });
 
@@ -443,12 +443,12 @@ onMounted(fetchUserStatus);
     background: #e5cf9e;
   }
 
-  &.is-expired .status-icon {
-    color: var(--error-color);
+  &.is-expired {
+    background: #ead6a8;
   }
 
-  &.is-expired {
-    background: #fee2e2;
+  &.is-expired:hover {
+    background: #e5cf9e;
   }
 
   &.is-active {
