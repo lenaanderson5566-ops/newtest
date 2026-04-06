@@ -24,13 +24,12 @@ const resolvePayload = (envelope) => {
 };
 
 
-export const handleLoginSuccess = (responseData, rememberMe) => {
+export const handleLoginSuccess = (responseData) => {
   try {
     setUserLoggedInFlag(undefined);
-    const usePersistentStorage = rememberMe === true;
     
     if (responseData.token) {
-      useAppStore(pinia).login(responseData.token, { rememberMe: usePersistentStorage });
+      useAppStore(pinia).login(responseData.token);
     }
     
     if (responseData.is_admin === 1) {
@@ -61,12 +60,10 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
 
 
 export const login = async (loginData) => {
-  const { rememberMe, ...requestData } = loginData;
-  
   const envelope = await request({
     url: '/passport/auth/login',
     method: 'post',
-    data: requestData
+    data: loginData
   });
   const responseData = resolvePayload(envelope);
   
@@ -74,7 +71,7 @@ export const login = async (loginData) => {
     throw new Error('登录数据不完整');
   }
   
-  const handledResponse = handleLoginSuccess(responseData, rememberMe);
+  const handledResponse = handleLoginSuccess(responseData);
   
   if (handledResponse.success) {
     return {
@@ -104,7 +101,7 @@ export function register(data) {
     const responseData = resolvePayload(envelope);
     
     if (responseData?.token) {
-      useAppStore(pinia).login(responseData.token, { rememberMe: true });
+      useAppStore(pinia).login(responseData.token);
       
       setUserLoggedInFlag(true);
     }

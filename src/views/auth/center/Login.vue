@@ -122,21 +122,6 @@
 
 
         <div class="form-options">
-
-          <div class="remember-me">
-
-            <label class="checkbox-container">
-
-              <input type="checkbox" v-model="formData.rememberMe" />
-
-              <span class="checkmark"></span>
-
-              <span class="checkbox-label">{{ $t('common.rememberMe') }}</span>
-
-            </label>
-
-          </div>
-
           <router-link to="/forgot-password" class="forgot-password">
 
             {{ $t('common.forgotPassword') }}
@@ -315,9 +300,7 @@ export default {
 
       email: '',
 
-      password: '',
-
-      rememberMe: false
+      password: ''
 
     });
 

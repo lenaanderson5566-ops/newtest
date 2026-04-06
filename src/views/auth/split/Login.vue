@@ -80,13 +80,6 @@
             </div>
 
             <div class="form-options">
-              <div class="remember-me">
-                <label class="checkbox-container">
-                  <input type="checkbox" v-model="formData.rememberMe" />
-                  <span class="checkmark"></span>
-                  <span class="checkbox-label">{{ $t('common.rememberMe') }}</span>
-                </label>
-              </div>
               <router-link to="/forgot-password" class="forgot-password">
                 {{ $t('common.forgotPassword') }}
               </router-link>
@@ -182,8 +175,7 @@ export default {
 
     const formData = reactive({
       email: '',
-      password: '',
-      rememberMe: false
+      password: ''
     });
 
     const errors = reactive({
