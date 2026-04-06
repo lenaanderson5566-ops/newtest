@@ -8,6 +8,13 @@ import { tokenLogin, handleLoginSuccess } from '@/api/auth';
 import { getResponseData } from '@/api/request';
 import { handleRedirectPath } from '@/utils/redirectHandler';
 
+const resolvePayload = (envelope) => {
+  const nestedData = getResponseData(envelope);
+  if (nestedData !== null && nestedData !== undefined) return nestedData;
+  if (envelope && typeof envelope === 'object') return envelope;
+  return null;
+};
+
 const initialUrlParams = {
   verifyToken: null,
   redirectPath: null,
@@ -79,7 +86,7 @@ export const handleTokenLogin = async (options = {}) => {
   
   try {
     const envelope = await tokenLogin(verifyToken, redirectPath);
-    const responseData = getResponseData(envelope);
+    const responseData = resolvePayload(envelope);
 
     if (responseData && (responseData.token || responseData.auth_data)) {
       showToast(envelope?.message || t('auth.verifyTokenSuccess'), 'success');

@@ -5,6 +5,13 @@ import { updateUserLanguage, logoutCurrentSession } from './account/user';
 import { getDefaultRegisterLanguage } from '@/utils/userLanguage';
 import { reloadMessages, initializeLanguageFromUserSettings } from '@/i18n';
 
+const resolvePayload = (envelope) => {
+  const nestedData = getResponseData(envelope);
+  if (nestedData !== null && nestedData !== undefined) return nestedData;
+  if (envelope && typeof envelope === 'object') return envelope;
+  return null;
+};
+
 
 export const handleLoginSuccess = (responseData, rememberMe) => {
   try {
@@ -54,7 +61,7 @@ export const login = async (loginData) => {
     method: 'post',
     data: requestData
   });
-  const responseData = getResponseData(envelope);
+  const responseData = resolvePayload(envelope);
   
   if (!responseData || !(responseData.token || responseData.auth_data)) {
     throw new Error('登录数据不完整');
@@ -87,7 +94,7 @@ export function register(data) {
     method: 'post',
     data: registerPayload
   }).then((envelope) => {
-    const responseData = getResponseData(envelope);
+    const responseData = resolvePayload(envelope);
     
     if (responseData?.token) {
       useAppStore(pinia).login(responseData.token, { rememberMe: true });
@@ -376,7 +383,7 @@ export const checkUserLoginStatus = async () => {
         'Authorization': authData
       }
     });
-    const responseData = getResponseData(envelope);
+    const responseData = resolvePayload(envelope);
     
     if (responseData?.is_login === true) {
       window.isUserLoggedIn = true;
