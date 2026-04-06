@@ -54,11 +54,3 @@ export const validateRequiredWithMessage = (value, fieldName) => {
 export const validateRequired = (value) => {
   return !!value && (typeof value !== 'string' || value.trim() !== '');
 };
-
-
-export function isStrongPassword(password) {
-  if (!password) return false;
-  
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  return passwordRegex.test(password);
-} 
