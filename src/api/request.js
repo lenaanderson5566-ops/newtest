@@ -63,14 +63,6 @@ request.interceptors.request.use(
       }
     }
 
-    const authDataFromBody =
-      config.data &&
-      typeof config.data === "object" &&
-      !Array.isArray(config.data) &&
-      !(config.data instanceof URLSearchParams)
-        ? normalizeAuthData(config.data.auth_data)
-        : "";
-
     if (config.method === "post" && config.data) {
       const formData = new URLSearchParams();
       for (const key in config.data) {
@@ -83,16 +75,15 @@ request.interceptors.request.use(
       config.headers["Content-Type"] = "application/x-www-form-urlencoded";
     }
 
-    const authDataFromHeader = normalizeAuthData(
-      config.headers?.Authorization || config.headers?.authorization
-    );
     const authDataFromStorage = normalizeAuthData(
       localStorage.getItem("auth_data") || sessionStorage.getItem("auth_data")
     );
-    const authData = authDataFromHeader || authDataFromBody || authDataFromStorage;
 
-    if (authData) {
-      config.headers["Authorization"] = authData;
+    if (authDataFromStorage) {
+      config.headers["Authorization"] = authDataFromStorage;
+    } else {
+      delete config.headers?.Authorization;
+      delete config.headers?.authorization;
     }
 
     try {
