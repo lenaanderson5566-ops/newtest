@@ -131,7 +131,7 @@
         <p class="section-subtitle">{{ $t('myCenter.accountDetails') }}</p>
         <section class="section-block dashboard-like-card">
         <div class="settings-list">
-          <button class="nav-row" @click="openPasswordChangePrompt">
+          <button class="nav-row" @click="go('/security?section=password')">
             <div class="row-main row-main-with-icon">
               <IconLock :size="20" class="row-leading-icon" />
               <div class="row-content">
@@ -257,37 +257,6 @@
  
     </div>
 
-    <transition name="modal-fade">
-      <div v-if="showPasswordModal" class="modal-overlay" @click="closePasswordModal">
-        <div class="modal-content" @click.stop>
-          <div class="modal-header">
-            <h3>{{ $t('profile.changePasswordTitle') }}</h3>
-            <button class="modal-close" @click="closePasswordModal">
-              <IconX :size="20" />
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label>{{ $t('profile.oldPassword') }}</label>
-              <input v-model="passwordForm.oldPassword" type="password" :placeholder="$t('profile.oldPassword')" />
-            </div>
-            <div class="form-group">
-              <label>{{ $t('profile.newPassword') }}</label>
-              <input v-model="passwordForm.newPassword" type="password" :placeholder="$t('profile.newPassword')" />
-              <PasswordStrengthIndicator :password="passwordForm.newPassword" />
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button class="btn-cancel" @click="closePasswordModal">{{ $t('common.cancel') }}</button>
-            <button class="btn-submit" :disabled="!validatePasswordForm() || updatingPassword" @click="submitPasswordChange">
-              <span v-if="updatingPassword" class="loader"></span>
-              <span>{{ $t('common.submit') }}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </transition>
-
     <transition name="fade">
       <div v-if="showResetModal" class="modal-overlay" @click="closeResetModal">
         <div class="modal-content reset-modal-content" @click.stop>
@@ -311,14 +280,12 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { IconAlertCircle, IconBell, IconChevronRight, IconClock, IconDevices, IconGift, IconLock, IconReceipt, IconRefresh, IconShoppingCart, IconX } from '@tabler/icons-vue';
+import { IconAlertCircle, IconBell, IconChevronRight, IconClock, IconDevices, IconGift, IconLock, IconReceipt, IconRefresh, IconShoppingCart } from '@tabler/icons-vue';
 import { useI18n } from 'vue-i18n';
-import { changePassword as apiChangePassword, getRecentLoginRecords, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
+import { getRecentLoginRecords, getUserInfo, getUserSubscribe, resetSecurity as apiResetSecurity, updateRemindSettings as apiUpdateRemind } from '@/api/account/user';
 import { getUserConfig } from '@/api/account/wallet';
 import { formatDate } from '@/utils/formatters';
-import { validatePassword } from '@/utils/validators';
 import { useToast } from '@/composables/useToast';
-import PasswordStrengthIndicator from '@/components/common/PasswordStrengthIndicator.vue';
 
 const router = useRouter();
 const { t } = useI18n();
@@ -331,16 +298,10 @@ const remindTraffic = ref(false);
 const autoRenewal = ref(false);
 const updatingSettings = ref(false);
 const updatingAutoRenewal = ref(false);
-const showPasswordModal = ref(false);
 const showResetModal = ref(false);
-const updatingPassword = ref(false);
 const resettingSecurity = ref(false);
 const recentLoginLoading = ref(false);
 const recentLoginRecords = ref([]);
-const passwordForm = ref({
-  oldPassword: '',
-  newPassword: ''
-});
 const activeSection = ref('overview');
 const sectionTabs = computed(() => [
   { key: 'overview', label: t('myCenter.tabOverview') },
@@ -436,38 +397,6 @@ const handleSectionClick = (sectionKey) => {
     return;
   }
   activeSection.value = sectionKey;
-};
-
-const validatePasswordForm = () => (
-  passwordForm.value.oldPassword &&
-  validatePassword(passwordForm.value.newPassword).valid
-);
-
-const openPasswordChangePrompt = () => {
-  showPasswordModal.value = true;
-};
-
-const closePasswordModal = () => {
-  showPasswordModal.value = false;
-  passwordForm.value = { oldPassword: '', newPassword: '' };
-};
-
-const submitPasswordChange = async () => {
-  if (updatingPassword.value) return;
-  if (!validatePasswordForm()) return;
-  try {
-    updatingPassword.value = true;
-    await apiChangePassword({
-      old_password: passwordForm.value.oldPassword,
-      new_password: passwordForm.value.newPassword
-    });
-    showToast(t('profile.passwordChanged'), 'success');
-    closePasswordModal();
-  } catch (error) {
-    showToast(t('profile.passwordError'), 'error');
-  } finally {
-    updatingPassword.value = false;
-  }
 };
 
 const confirmSecurityReset = () => {
