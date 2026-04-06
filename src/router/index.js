@@ -7,6 +7,7 @@ import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, AUTH_LAYOUT_CONFIG } 
 import i18n, { reloadMessages } from '@/i18n';
 import { shouldCheckApiAvailability } from '@/utils/apiAvailabilityChecker';
 import { checkSessionWithServer, forceLogout } from '@/api/auth';
+import { getAuthSnapshot, getToken } from '@/utils/authState';
 
 import pageCache from '@/utils/pageCache';
 
@@ -84,10 +85,7 @@ let authCheckCache = {
   pending: null
 };
 
-const getLocalAuthSnapshot = () => ({
-  token: localStorage.getItem('token') || sessionStorage.getItem('token') || '',
-  authData: localStorage.getItem('auth_data') || sessionStorage.getItem('auth_data') || ''
-});
+const getLocalAuthSnapshot = () => getAuthSnapshot();
 
 const validateSession = async () => {
   const { token, authData } = getLocalAuthSnapshot();
@@ -739,7 +737,7 @@ router.beforeEach(async (to, from, next) => {
 
   
 
-  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const token = getToken();
 
   
 

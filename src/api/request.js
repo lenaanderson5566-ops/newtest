@@ -5,6 +5,7 @@ import {
   CUSTOM_HEADERS_CONFIG,
 } from "@/utils/baseConfig";
 import { getAvailableApiUrl } from "@/utils/apiAvailabilityChecker";
+import { getAuthData, setUserLoggedInFlag } from "@/utils/authState";
 
 const clearAuthDataAndRedirectToLogin = () => {
   const authKeys = [
@@ -27,7 +28,7 @@ const clearAuthDataAndRedirectToLogin = () => {
     sessionStorage.removeItem(key);
   });
 
-  window.isUserLoggedIn = false;
+  setUserLoggedInFlag(false);
   window.location.href = "/#/login";
 };
 
@@ -141,9 +142,7 @@ request.interceptors.request.use(
       config.headers["Content-Type"] = "application/x-www-form-urlencoded";
     }
 
-    const authDataFromStorage = normalizeAuthData(
-      localStorage.getItem("auth_data") || sessionStorage.getItem("auth_data")
-    );
+    const authDataFromStorage = normalizeAuthData(getAuthData());
 
     const requestOrigin = resolveRequestOrigin(config);
     const allowedOrigins = getAllowedApiOrigins();

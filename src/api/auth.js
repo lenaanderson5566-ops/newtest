@@ -4,6 +4,17 @@ import { pinia, useAppStore } from '@/store';
 import { updateUserLanguage, logoutCurrentSession } from './account/user';
 import { getDefaultRegisterLanguage } from '@/utils/userLanguage';
 import { reloadMessages, initializeLanguageFromUserSettings } from '@/i18n';
+import {
+  getToken,
+  getAuthData,
+  setAuthData,
+  setUserLoggedInFlag,
+  getUserLoggedInFlag,
+  setCachedLoginStatus,
+  getCachedLoginStatus,
+  setLogoutInProgress,
+  isLogoutInProgress
+} from '@/utils/authState';
 
 const resolvePayload = (envelope) => {
   const nestedData = getResponseData(envelope);
@@ -15,7 +26,7 @@ const resolvePayload = (envelope) => {
 
 export const handleLoginSuccess = (responseData, rememberMe) => {
   try {
-    window.isUserLoggedIn = undefined;
+    setUserLoggedInFlag(undefined);
     const usePersistentStorage = rememberMe === true;
     
     useAppStore(pinia).login(responseData.token, { rememberMe: usePersistentStorage });
@@ -25,17 +36,11 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
     }
     
     if (responseData.auth_data) {
-      if (usePersistentStorage) {
-        localStorage.setItem('auth_data', responseData.auth_data);
-        sessionStorage.removeItem('auth_data');
-      } else {
-        sessionStorage.setItem('auth_data', responseData.auth_data);
-        localStorage.removeItem('auth_data');
-      }
+      setAuthData(responseData.auth_data, usePersistentStorage);
     }
     
     setTimeout(() => {
-      window.isUserLoggedIn = true;
+      setUserLoggedInFlag(true);
       
       Promise.resolve().then(async () => {
         await initializeLanguageFromUserSettings().catch(() => null);
@@ -99,12 +104,11 @@ export function register(data) {
     if (responseData?.token) {
       useAppStore(pinia).login(responseData.token, { rememberMe: true });
       
-      window.isUserLoggedIn = true;
+      setUserLoggedInFlag(true);
     }
     
     if (responseData?.auth_data) {
-      localStorage.setItem('auth_data', responseData.auth_data);
-      sessionStorage.removeItem('auth_data');
+      setAuthData(responseData.auth_data, true);
     }
     
     if (typeof responseData?.is_admin !== 'undefined') {
@@ -146,6 +150,7 @@ export function getUserInfo() {
 
 export const logout = async () => {
   try {
+    setLogoutInProgress(true);
     await logoutCurrentSession().catch(() => null);
 
     _clearAllAuthData();
@@ -182,6 +187,8 @@ export const logout = async () => {
       redirectToLogin: true,
       redirectUrl: '/login?logout=true'
     };
+  } finally {
+    setLogoutInProgress(false);
   }
 };
 
@@ -211,12 +218,12 @@ export function sendEmailVerify(data) {
 
 
 export const checkLoginStatus = () => {
-  const now = Date.now();
-  if (window._lastLoginCheck && (now - window._lastLoginCheckTime < 1000)) {
-    return window._lastLoginCheck;
+  const cachedStatus = getCachedLoginStatus(1000);
+  if (cachedStatus !== null) {
+    return cachedStatus;
   }
   
-  if (window._isLoggingOut === true) {
+  if (isLogoutInProgress()) {
     _cacheLoginStatus(false);
     return false;
   }
@@ -228,20 +235,19 @@ export const checkLoginStatus = () => {
     return false;
   }
   
-  if (window.isUserLoggedIn === false) {
+  if (getUserLoggedInFlag() === false) {
     _cacheLoginStatus(false);
     return false;
   }
   
-  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const token = getToken();
   if (!token || token === 'undefined' || token === 'null' || token === '') {
     _clearAllAuthData(); 
     _cacheLoginStatus(false);
     return false;
   }
   
-  const authData = localStorage.getItem('auth_data') || 
-                  sessionStorage.getItem('auth_data');
+  const authData = getAuthData();
                   
   if (!authData || authData === 'undefined' || authData === 'null' || authData === '') {
     _clearAllAuthData();
@@ -271,7 +277,7 @@ export const checkLoginStatus = () => {
   const isLoggedIn = !!token && !!authData;
   
   if (isLoggedIn) {
-    window.isUserLoggedIn = true;
+    setUserLoggedInFlag(true);
   }
   
   _cacheLoginStatus(isLoggedIn);
@@ -280,13 +286,12 @@ export const checkLoginStatus = () => {
 
 
 const _cacheLoginStatus = (status) => {
-  window._lastLoginCheck = status;
-  window._lastLoginCheckTime = Date.now();
+  setCachedLoginStatus(status);
 };
 
 
 const _clearAllAuthData = () => {
-  window.isUserLoggedIn = false;
+  setUserLoggedInFlag(false);
   
   const authKeys = [
     'token', 
@@ -348,8 +353,8 @@ export const tokenLogin = (verifyToken, redirect) => {
 
 
 export const checkUserLoginStatus = async () => {
-  const authData = localStorage.getItem('auth_data') || sessionStorage.getItem('auth_data');
-  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const authData = getAuthData();
+  const token = getToken();
 
   const getCurrentRoutePath = () => {
     const hash = window.location.hash || '';
@@ -381,7 +386,7 @@ export const checkUserLoginStatus = async () => {
     const responseData = resolvePayload(envelope);
     
     if (responseData?.is_login === true) {
-      window.isUserLoggedIn = true;
+      setUserLoggedInFlag(true);
       return { isLoggedIn: true };
     } else {
       forceLogout();
@@ -415,8 +420,8 @@ export const checkUserLoginStatus = async () => {
 };
 
 export const checkSessionWithServer = async () => {
-  const authData = localStorage.getItem('auth_data') || sessionStorage.getItem('auth_data');
-  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const authData = getAuthData();
+  const token = getToken();
 
   if (!token || !authData) {
     return { isLoggedIn: false };
