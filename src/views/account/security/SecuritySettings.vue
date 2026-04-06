@@ -106,20 +106,7 @@
             <div class="form-group">
               <label>{{ $t('profile.newPassword') }}</label>
               <input type="password" v-model="passwordForm.newPassword" :placeholder="$t('profile.newPassword')" />
-              <div v-if="passwordForm.newPassword" class="password-rules">
-                <div class="password-rule-tip">
-                  <span :class="{ met: passwordStrengthMeta.minLengthMet }">{{ $t('auth.passwordRuleMinLength') }}</span>
-                </div>
-                <div class="password-rule-tip">
-                  <span :class="{ met: passwordStrengthMeta.alphaNumericMet }">{{ $t('auth.passwordRuleAlphaNumericSuggested') }}</span>
-                </div>
-                <div class="password-rule-tip">
-                  <span :class="{ met: passwordStrengthMeta.specialCharMet }">{{ $t('auth.passwordRuleSpecialSuggested') }}</span>
-                </div>
-              </div>
-              <div v-if="passwordForm.newPassword" class="password-strength">
-                {{ $t('auth.passwordStrength') }}：{{ $t(passwordStrengthTextKey) }}
-              </div>
+              <PasswordStrengthIndicator :password="passwordForm.newPassword" />
             </div>
           </div>
           <div class="modal-footer">
@@ -152,8 +139,9 @@ import {
 } from '@tabler/icons-vue';
 import useToast from '@/hooks/useToast';
 import { PROFILE_CONFIG } from '@/utils/baseConfig';
+import PasswordStrengthIndicator from '@/components/common/PasswordStrengthIndicator.vue';
 import { forceLogout } from '@/api/auth';
-import { validatePassword, getPasswordStrengthMeta } from '@/utils/validators';
+import { validatePassword } from '@/utils/validators';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -174,12 +162,6 @@ const currentSessionId = ref('');
 const passwordForm = ref({
   oldPassword: '',
   newPassword: ''
-});
-const passwordStrengthMeta = computed(() => getPasswordStrengthMeta(passwordForm.value.newPassword));
-const passwordStrengthTextKey = computed(() => {
-  if (passwordStrengthMeta.value.level === 'weak') return 'auth.passwordStrengthWeak';
-  if (passwordStrengthMeta.value.level === 'medium') return 'auth.passwordStrengthMedium';
-  return 'auth.passwordStrengthStrong';
 });
 
 const validatePasswordForm = () => {
@@ -656,26 +638,6 @@ onMounted(() => {
       font-size: $font-size-sm;
     }
 
-    .password-rules {
-      margin-top: 8px;
-      display: grid;
-      gap: 4px;
-    }
-
-    .password-rule-tip {
-      font-size: $font-size-sm;
-      color: var(--color-text-tertiary);
-    }
-
-    .password-rule-tip .met {
-      color: #22c55e;
-    }
-
-    .password-strength {
-      margin-top: 8px;
-      font-size: $font-size-sm;
-      color: var(--color-text-tertiary);
-    }
   }
 }
 
