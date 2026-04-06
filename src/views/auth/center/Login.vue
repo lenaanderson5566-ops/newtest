@@ -2,13 +2,13 @@
 
   <div class="auth-container">
 
-    <!-- 域名授权验证提示 -->
+    
 
 
 
 
 
-    <!-- 顶部工具栏：语言选择器和主题切换 -->
+    
 
     <div class="top-toolbar">
 
@@ -184,7 +184,7 @@
 
 
 
-    <!-- 自定义弹窗 -->
+    
 
     <AuthPopup
 
@@ -1112,7 +1112,7 @@ export default {
 
 }
 
-/* Compact spacing tune */
+
 .auth-card {
   padding: 20px;
 }
@@ -1163,7 +1163,7 @@ export default {
   }
 }
 
-/* Visual polish tune */
+
 .auth-card {
   border-radius: 16px;
   box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);

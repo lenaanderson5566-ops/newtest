@@ -96,12 +96,7 @@ const resolveRequestOrigin = (config) => {
   }
 };
 
-/**
- * 统一响应契约说明：
- * - request(...) 成功时固定返回 `response.data`（即后端响应包，以下简称 envelope）
- * - envelope 常见结构：{ data, message, ... }
- * - 业务代码请通过下方辅助函数读取，避免在各处写分叉兼容逻辑
- */
+
 export const getResponseEnvelope = (response) => {
   if (response && typeof response === "object") {
     return response;

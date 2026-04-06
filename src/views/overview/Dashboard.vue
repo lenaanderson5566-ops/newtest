@@ -870,7 +870,6 @@ export default {
           return enabled.slice(0, 2).join(' · ');
         }
       } catch (_) {
-        // non-json content
       }
       const plain = String(raw).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
       const displayName = getTrafficPackageDisplayName(plan);
@@ -2161,7 +2160,7 @@ $space-2: map.get($spacers, 2);
     box-shadow: var(--shadow-md);
   }
 
-  /* 三张流量相关卡片统一为 surface token，避免被其他层叠样式覆盖 */
+  
   .stats-grid .stats-card.traffic-board-package,
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {

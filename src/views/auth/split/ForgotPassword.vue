@@ -8,7 +8,7 @@
 
 
 
-      <!-- 左侧背景区域 -->
+      
 
       <div class="auth-split-left" :style="leftSideStyles">
 
@@ -30,11 +30,11 @@
 
 
 
-      <!-- 右侧表单区域 -->
+      
 
       <div class="auth-split-right">
 
-        <!-- 顶部工具栏：语言选择器和主题切换 -->
+        
 
         <div class="top-toolbar">
 
@@ -266,7 +266,7 @@
 
 
 
-    <!-- 验证码弹窗 -->
+    
 
     <div class="captcha-modal" v-if="showCaptchaModal" :class="{ 'closing': isClosingModal }">
 
@@ -292,7 +292,7 @@
 
 
 
-          <!-- Google reCAPTCHA -->
+          
 
           <div v-if="captchaConfig.type === 'google'" class="google-captcha" @click.stop>
 
@@ -302,7 +302,7 @@
 
 
 
-          <!-- Cloudflare Turnstile -->
+          
 
           <div v-else-if="captchaConfig.type === 'cloudflare'" class="cloudflare-captcha" @click.stop>
 
@@ -318,7 +318,7 @@
 
 
 
-    <!-- 自定义弹窗 -->
+    
 
     <AuthPopup
 
@@ -1020,7 +1020,6 @@ export default {
                     window.turnstile.reset();
 
                   } catch (e) {
-                    // 忽略 reset 失败，后续会重新渲染验证码容器
                   }
 
                 }
@@ -1606,7 +1605,6 @@ export default {
           window.turnstile.reset();
 
         } catch (e) {
-          // 忽略 reset 失败，后续会重新渲染验证码容器
         }
 
       }
@@ -2299,8 +2297,6 @@ export default {
 
 
     &:hover:not(:disabled) {
-
-      // 保证 hover 态不被全局按钮 hover 皮肤覆盖
       background-color: rgba(var(--text-color-rgb), 0.05) !important;
 
       transform: translateY(-2px);
@@ -2945,7 +2941,7 @@ export default {
 
 }
 
-/* Compact spacing tune */
+
 .auth-form-container {
   padding: 40px 40px;
 }
@@ -2996,7 +2992,7 @@ export default {
   }
 }
 
-/* Visual polish tune */
+
 .auth-form-container {
   border-radius: 16px;
   box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
