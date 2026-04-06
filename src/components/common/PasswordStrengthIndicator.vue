@@ -63,22 +63,12 @@ const strengthTextKey = computed(() => {
   return 'auth.passwordStrengthStrong';
 });
 
-const translateWithFallback = (key, fallback) => {
-  const value = t(key);
-  return value === key ? fallback : value;
-};
-
-const minLengthText = computed(() => translateWithFallback(props.minLengthKey, '至少 8 位'));
-const alphaNumericText = computed(() => translateWithFallback(props.alphaNumericKey, '包含字母和数字（建议）'));
-const specialCharText = computed(() => translateWithFallback(props.specialCharKey, '包含特殊字符（建议）'));
-const strengthLabelText = computed(() => translateWithFallback(props.strengthLabelKey, '密码强度'));
+const minLengthText = computed(() => t(props.minLengthKey));
+const alphaNumericText = computed(() => t(props.alphaNumericKey));
+const specialCharText = computed(() => t(props.specialCharKey));
+const strengthLabelText = computed(() => t(props.strengthLabelKey));
 const strengthText = computed(() => {
-  const fallbackMap = {
-    weak: '弱',
-    medium: '中',
-    strong: '强'
-  };
-  return translateWithFallback(strengthTextKey.value, fallbackMap[strengthMeta.value.level] || '中');
+  return t(strengthTextKey.value);
 });
 </script>
 
