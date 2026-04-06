@@ -5,20 +5,20 @@
         <IconChevronLeft :size="20" />
       </button>
 
-      <!-- 加载状态 -->
+      
       <div v-if="loading" class="orders-loading">
         <LoadingSpinner />
         <p>{{ headerTexts.loading }}</p>
       </div>
       
-      <!-- 错误提示 -->
+      
       <div v-else-if="error" class="orders-error">
         <IconAlertTriangle :size="48" class="error-icon" />
         <p>{{ error }}</p>
         <button class="retry-button" @click="fetchOrders">{{ $t('common.retry') || '重试' }}</button>
       </div>
       
-      <!-- 订单列表 -->
+      
       <div v-else-if="orders.length > 0" class="orders-content">
         <div class="orders-filter-bar">
           <label class="filter-switch">
@@ -75,7 +75,7 @@
         </div>
       </div>
       
-      <!-- 空状态 -->
+      
       <div v-else class="orders-empty">
         <IconShoppingCart :size="48" class="empty-icon" />
         <p>{{ headerTexts.noOrders }}</p>
@@ -85,7 +85,7 @@
         </button>
       </div>
       
-      <!-- 取消订单确认弹窗 -->
+      
       <transition name="modal-fade">
         <div class="modal-overlay" v-if="showConfirmModal" @click="closeConfirmModal">
           <div class="modal-content" @click.stop>

@@ -1,7 +1,7 @@
 <template>
   <div class="api-validation-page">
     <div class="validation-container">
-      <!-- 加载动画 -->
+      
 
       <div class="loading-animation">
         <div class="progress-ring">
@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <!-- 状态信息 -->
+      
 
       <div class="status-info">
         <h2 class="status-title">{{ $t("common.apiChecking") }}</h2>

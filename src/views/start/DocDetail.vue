@@ -4,7 +4,7 @@
 
     <div class="doc-detail-inner page-inner page-stack">
 
-      <!-- 返回按钮 -->
+      
 
       <button class="back-button" @click="$router.push('/docs')">
 
@@ -16,7 +16,7 @@
 
       
 
-      <!-- 加载状态 -->
+      
 
       <div v-if="loading" class="doc-loading">
 
@@ -28,7 +28,7 @@
 
 
 
-      <!-- 错误提示 - 美化版 -->
+      
 
       <div v-else-if="error" class="doc-error">
 
@@ -58,11 +58,11 @@
 
 
 
-      <!-- 文档内容 -->
+      
 
       <div v-else class="doc-content">
 
-        <!-- 文档头部 -->
+        
 
         <div class="doc-header">
 
@@ -80,7 +80,7 @@
 
         
 
-        <!-- 文档正文 -->
+        
 
         <div class="doc-body" v-html="renderedContent"></div>
 
@@ -678,10 +678,6 @@ const handleDocClick = (event) => {
   }
 
 };
-
-
-
-// 构建“无访问权限”卡片 HTML（仪表盘同款结构）
 const buildNoAccessCardHtml = () => {
   const title = t('docs.noAccessPrompt');
   const buyText = t('dashboard.purchasePlan');
@@ -1065,10 +1061,6 @@ const renderedContent = computed(() => {
         }
 
       });
-
-      
-
-      // 3) 检测并替换 v2board-no-access 块为美化卡片
       const noAccessEls = tempDiv.querySelectorAll('.v2board-no-access');
       if (noAccessEls && noAccessEls.length > 0) {
         const cardHtml = buildNoAccessCardHtml();
@@ -2233,7 +2225,7 @@ onUnmounted(() => {
 
 
 
-<!-- 全局样式，不受scoped限制 -->
+
 
 <style lang="scss">
 @use "@/assets/styles/base/variables.scss" as *;

@@ -1,8 +1,8 @@
-﻿<!-- 移动端工单页面 -->
+﻿
 
 <template>
   <div class="mobile-ticket-container page-shell page-inner page-stack">
-    <!-- 大屏幕提示 -->
+    
 
     <div v-if="isLargeScreen" class="screen-size-notice">
       <div class="notice-content">
@@ -19,7 +19,7 @@
     </div>
 
     <template v-else>
-      <!-- 欢迎卡片 -->
+      
 
       <div class="dashboard-card welcome-card">
         <div class="card-header">
@@ -31,10 +31,10 @@
         </div>
       </div>
 
-      <!-- 工单列表 -->
+      
 
       <div class="ticket-list" v-if="!selectedTicket">
-        <!-- 创建工单按钮 -->
+        
 
         <div class="create-ticket-wrapper">
           <button class="new-ticket-btn" @click="showCreateTicketModal">
@@ -44,7 +44,7 @@
           </button>
         </div>
 
-        <!-- 加载状态 -->
+        
 
         <div v-if="loading" class="loading-state">
           <LoadingSpinner />
@@ -52,7 +52,7 @@
           <p>{{ $t("tickets.loadingTickets") }}</p>
         </div>
 
-        <!-- 工单列表内容 -->
+        
 
         <div v-else-if="tickets.length > 0" class="tickets-content">
           <div
@@ -83,7 +83,7 @@
           </div>
         </div>
 
-        <!-- 空状态 -->
+        
 
         <div v-else class="empty-state">
           <IconTicket :size="48" />
@@ -96,10 +96,10 @@
         </div>
       </div>
 
-      <!-- 工单详情 -->
+      
 
       <div v-else class="ticket-detail">
-        <!-- 详情页头部 -->
+        
 
         <div class="detail-header">
           <button class="back-btn" @click="backToList">
@@ -135,7 +135,7 @@
           </button>
         </div>
 
-        <!-- 消息列表 -->
+        
 
         <div class="messages-container">
           <div v-if="loadingMessages" class="loading-state">
@@ -188,7 +188,7 @@
           </div>
         </div>
 
-        <!-- 回复框 -->
+        
 
         <div v-if="selectedTicket.status === 0" class="reply-box">
           <textarea
@@ -228,7 +228,7 @@
       </div>
     </template>
 
-    <!-- 创建工单模态框 并将弹窗置顶-->
+    
     <teleport to="body">
       <div v-if="showModal" class="modal-overlay" @click="closeModal">
         <div class="modal-content" @click.stop>
@@ -298,7 +298,7 @@
         </div>
       </div>
     </teleport>
-    <!-- 关闭工单确认弹窗 -->
+    
 
     <div
       v-if="showCloseTicketModal"

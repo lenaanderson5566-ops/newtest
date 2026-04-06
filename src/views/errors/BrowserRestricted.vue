@@ -2,7 +2,7 @@
 
   <div class="browser-restricted-container">
 
-    <!-- 域名授权验证提示 -->
+    
 
 
     
@@ -77,7 +77,7 @@
 
           <div class="browser-buttons">
 
-            <!-- 动态显示配置文件中定义的所有推荐浏览器 -->
+            
 
             <a 
 

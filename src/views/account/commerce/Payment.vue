@@ -1291,7 +1291,6 @@ export default {
   .section-wrapper.payment-methods-section {
     padding: 0;
     margin: 8px 0;
-    // 必须压过全局 section-wrapper 皮肤（公共层）
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
@@ -1420,8 +1419,6 @@ export default {
   .right-column .order-amount-section .summary-value {
     color: var(--right-card-text);
   }
-
-  // 提升选择器优先级，覆盖浅色基础规则，确保右侧卡片文本保持深色卡片反色风格
   .right-column .order-amount-section .order-info .summary-row .summary-label,
   .right-column .order-amount-section .order-info .summary-row .summary-value,
   .right-column .order-amount-section .order-info .summary-row.total .summary-label,
@@ -1644,7 +1641,6 @@ export default {
       &:disabled {
         opacity: 0.6;
         cursor: not-allowed;
-        // 覆盖组件交互态 transform，避免禁用态按钮抖动
         transform: none !important;
       }
 
@@ -1962,7 +1958,6 @@ export default {
 
     .left-column .section-wrapper,
     .right-column .section-wrapper {
-      // 覆盖响应式容器中的默认外边距
       margin: 0 !important;
     }
 

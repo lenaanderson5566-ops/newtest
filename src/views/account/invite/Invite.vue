@@ -1,6 +1,6 @@
 <template>
   <div class="account-container page-shell">
-    <!-- 确认弹窗（复用项目已有弹窗结构） -->
+    
     <transition name="modal-fade">
       <div v-if="showConfirmModal" class="modal-overlay" @click="cancelConfirmation">
         <div class="modal-content" @click.stop>
@@ -30,7 +30,7 @@
         <IconChevronLeft :size="20" />
       </button>
 
-      <!-- 划转到余额弹窗 -->
+      
       <transition name="modal-fade">
         <div v-if="showTransferCardState" class="modal-overlay" @click="showTransferCardState = false">
           <div class="modal-content" @click.stop>
@@ -88,7 +88,7 @@
         </div>
       </transition>
       
-      <!-- 提现弹窗 -->
+      
       <transition name="modal-fade">
         <div v-if="showWithdrawCard" class="modal-overlay" @click="closeWithdrawCard()">
           <div class="modal-content" @click.stop>
@@ -185,7 +185,7 @@
         </div>
       </transition>
       
-      <!-- 邀请链接卡片 -->
+      
       <div class="dashboard-card invite-link-card">
         <div class="card-header">
           <h2 class="card-title invite-main-title">{{ $t('invite.title') }}</h2>
@@ -343,7 +343,7 @@
         </div>
       </div>
       
-      <!-- 邀请记录卡片 -->
+      
       <div class="dashboard-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('invite.records.title') }}</h2>
@@ -390,7 +390,7 @@
               </tbody>
             </table>
             
-            <!-- 添加分页控件 -->
+            
             <div class="pagination-controls" v-if="totalPages > 1">
               <button 
                 class="page-btn prev-btn" 
@@ -401,7 +401,7 @@
               </button>
               
               <div class="page-numbers">
-                <!-- 第一页 - 仅在桌面端显示 -->
+                
                 <button 
                   v-if="totalPages > 4 && currentPage > 3 && !isMobile" 
                   class="page-btn" 
@@ -412,10 +412,10 @@
                   1
                 </button>
                 
-                <!-- 省略号 - 仅在桌面端显示 -->
+                
                 <span v-if="totalPages > 4 && currentPage > 3 && !isMobile" class="page-ellipsis">...</span>
                 
-                <!-- 页码按钮 -->
+                
                 <template v-for="page in displayPageNumbers" :key="'page-'+page">
                   <button 
                     class="page-btn"
@@ -427,10 +427,10 @@
                   </button>
                 </template>
                 
-                <!-- 省略号 - 仅在桌面端显示 -->
+                
                 <span v-if="totalPages > 4 && currentPage < totalPages - 2 && !isMobile" class="page-ellipsis">...</span>
                 
-                <!-- 最后一页 - 仅在桌面端显示 -->
+                
                 <button 
                   v-if="totalPages > 4 && currentPage < totalPages - 2 && !isMobile" 
                   class="page-btn" 
@@ -450,7 +450,7 @@
                 <IconChevronRight size="16" />
               </button>
               
-              <!-- 添加每页显示数量选择器 -->
+              
               <div class="page-size-container">
                 <div class="page-size-selector" @click="togglePageSizeDropdown" :class="{ disabled: loading.inviteDetails }">
                   <div class="select-value">{{ pageSize }}</div>
@@ -743,7 +743,7 @@ export default {
               p { color: var(--color-text-tertiary); }
             
 
-/* Compact dashboard layout overrides for Referral */
+
 .account-container {
   padding: 16px;
 
