@@ -75,7 +75,7 @@ const BrowserRestricted = () => import('@/views/errors/BrowserRestricted.vue');
 
 const NotFound = () => import('@/views/errors/NotFound.vue');
 
-const AUTH_CHECK_TTL = 2 * 60 * 1000;
+const AUTH_CHECK_TTL = 5 * 60 * 1000;
 let authCheckCache = {
   token: '',
   authData: '',
