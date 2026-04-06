@@ -47,12 +47,6 @@ export const validatePassword = (password) => {
 };
 
 
-export function passwordsMatch(password, confirmPassword) {
-  if (!password || !confirmPassword) return false;
-  return password === confirmPassword;
-}
-
-
 export const validateRequiredWithMessage = (value, fieldName) => {
   const result = {
     valid: false,
