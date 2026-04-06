@@ -6,7 +6,7 @@ export const pinia = createPinia();
 export const useAppStore = defineStore('app', {
   state: () => ({
     user: null,
-    token: localStorage.getItem('token') || '',
+    token: localStorage.getItem('token') || sessionStorage.getItem('token') || '',
     loading: false,
     error: null
   }),
@@ -22,6 +22,7 @@ export const useAppStore = defineStore('app', {
     login(token) {
       this.token = token;
       localStorage.setItem('token', token);
+      sessionStorage.setItem('token', token);
     },
 
     logout() {
@@ -43,6 +44,7 @@ export const useAppStore = defineStore('app', {
       this.user = null;
       this.token = '';
       localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
       localStorage.removeItem('userInfo');
     },
 

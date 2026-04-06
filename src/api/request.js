@@ -3,7 +3,6 @@ import {
   API_BASE_URL,
   getApiBaseUrl,
   CUSTOM_HEADERS_CONFIG,
-  SITE_CONFIG,
 } from "@/utils/baseConfig";
 import { getAvailableApiUrl } from "@/utils/apiAvailabilityChecker";
 
@@ -34,6 +33,13 @@ const clearAuthDataAndRedirectToLogin = () => {
   window.location.href = "/#/login";
 };
 
+const normalizeAuthData = (value) => {
+  if (typeof value !== "string") return "";
+  const trimmed = value.trim();
+  if (!trimmed || trimmed === "undefined" || trimmed === "null") return "";
+  return trimmed;
+};
+
 const request = axios.create({
   baseURL: API_BASE_URL,
   timeout: 30000,
@@ -57,6 +63,14 @@ request.interceptors.request.use(
       }
     }
 
+    const authDataFromBody =
+      config.data &&
+      typeof config.data === "object" &&
+      !Array.isArray(config.data) &&
+      !(config.data instanceof URLSearchParams)
+        ? normalizeAuthData(config.data.auth_data)
+        : "";
+
     if (config.method === "post" && config.data) {
       const formData = new URLSearchParams();
       for (const key in config.data) {
@@ -69,48 +83,13 @@ request.interceptors.request.use(
       config.headers["Content-Type"] = "application/x-www-form-urlencoded";
     }
 
-    let authData = localStorage.getItem("auth_data");
-
-    if (!authData) {
-      const cookieAuthData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("auth_data="));
-
-      if (cookieAuthData) {
-        try {
-          const encodedValue = cookieAuthData.split("=")[1];
-          const decodedValue = decodeURIComponent(encodedValue);
-          const parsedValue = JSON.parse(decodedValue);
-
-          if (parsedValue && parsedValue.site === SITE_CONFIG.siteName) {
-            authData = parsedValue.value;
-          }
-        } catch (e) {
-          authData = cookieAuthData.split("=")[1];
-        }
-      }
-    }
-
-    if (!authData && window.authDataInStorage) {
-      authData = window.authDataInStorage;
-    }
-
-    if (!authData) {
-      const backupData = localStorage.getItem("cookie_auth_data");
-      if (backupData) {
-        try {
-          const parsedValue = JSON.parse(backupData);
-
-          if (parsedValue && parsedValue.site === SITE_CONFIG.siteName) {
-            authData = parsedValue.value;
-          } else {
-            authData = backupData;
-          }
-        } catch (e) {
-          authData = backupData;
-        }
-      }
-    }
+    const authDataFromHeader = normalizeAuthData(
+      config.headers?.Authorization || config.headers?.authorization
+    );
+    const authDataFromStorage = normalizeAuthData(
+      localStorage.getItem("auth_data") || sessionStorage.getItem("auth_data")
+    );
+    const authData = authDataFromHeader || authDataFromBody || authDataFromStorage;
 
     if (authData) {
       config.headers["Authorization"] = authData;

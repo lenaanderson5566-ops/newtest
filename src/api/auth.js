@@ -130,30 +130,18 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
     useAppStore(pinia).login(responseData.token);
     
     localStorage.setItem('token', responseData.token);
+    sessionStorage.setItem('token', responseData.token);
     if (responseData.is_admin === 1) {
       localStorage.setItem('is_admin', '1');
     }
     
     if (responseData.auth_data) {
       localStorage.setItem('auth_data', responseData.auth_data);
-    }
-    
-    const days = rememberMe ? 30 : 1; 
-    if (responseData.auth_data) {
-      setCookie('auth_data', responseData.auth_data, days);
+      sessionStorage.setItem('auth_data', responseData.auth_data);
     }
     
     setTimeout(() => {
-      const loginCheck = checkLoginStatus();
-      
-      if (!loginCheck) {
-        window.isUserLoggedIn = true;
-        
-        if (responseData.auth_data) {
-          window.authDataInStorage = responseData.auth_data;
-          localStorage.setItem('cookie_auth_data', responseData.auth_data);
-        }
-      }
+      window.isUserLoggedIn = true;
       
       Promise.resolve().then(async () => {
         try {
@@ -228,11 +216,8 @@ export function register(data) {
     }
     
     if (responseData.auth_data) {
-      setCookie('auth_data', responseData.auth_data, 1); 
-      
       localStorage.setItem('auth_data', responseData.auth_data);
-      
-      window.authDataInStorage = responseData.auth_data;
+      sessionStorage.setItem('auth_data', responseData.auth_data);
     }
     
     if (typeof responseData.is_admin !== 'undefined') {
@@ -378,8 +363,7 @@ export const checkLoginStatus = () => {
   }
   
   const authData = localStorage.getItem('auth_data') || 
-                  sessionStorage.getItem('auth_data') || 
-                  window.authDataInStorage;
+                  sessionStorage.getItem('auth_data');
                   
   if (!authData || authData === 'undefined' || authData === 'null' || authData === '') {
     if (window.isUserLoggedIn === true) {
