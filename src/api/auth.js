@@ -417,4 +417,34 @@ export const checkUserLoginStatus = async () => {
     
     return { isLoggedIn: null, error: error.message || '网络错误' };
   }
-}; 
+};
+
+export const checkSessionWithServer = async () => {
+  const authData = localStorage.getItem('auth_data') || sessionStorage.getItem('auth_data');
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+
+  if (!token || !authData) {
+    return { isLoggedIn: false };
+  }
+
+  try {
+    const envelope = await request({
+      url: '/user/checkLogin',
+      method: 'GET',
+      headers: {
+        Authorization: authData
+      }
+    });
+    const responseData = resolvePayload(envelope);
+
+    return {
+      isLoggedIn: responseData?.is_login === true,
+      isAdmin: responseData?.is_admin === true || responseData?.is_admin === 1
+    };
+  } catch (error) {
+    return {
+      isLoggedIn: null,
+      error: error?.message || '网络错误'
+    };
+  }
+};

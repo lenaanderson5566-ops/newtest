@@ -38,6 +38,50 @@ const normalizeAuthData = (value) => {
   return trimmed;
 };
 
+const toOrigin = (value) => {
+  if (!value || typeof value !== "string") return "";
+  try {
+    return new URL(value, window.location.origin).origin;
+  } catch (e) {
+    return "";
+  }
+};
+
+const getAllowedApiOrigins = () => {
+  const origins = new Set();
+
+  const currentApiBase = getApiBaseUrl();
+  const availableApiUrl = getAvailableApiUrl();
+
+  [currentApiBase, availableApiUrl].forEach((item) => {
+    const origin = toOrigin(item);
+    if (origin) origins.add(origin);
+  });
+
+  const staticBaseUrl = window?.EZ_CONFIG?.API_CONFIG?.staticBaseUrl;
+  if (Array.isArray(staticBaseUrl)) {
+    staticBaseUrl.forEach((item) => {
+      const origin = toOrigin(item);
+      if (origin) origins.add(origin);
+    });
+  } else {
+    const origin = toOrigin(staticBaseUrl);
+    if (origin) origins.add(origin);
+  }
+
+  return origins;
+};
+
+const resolveRequestOrigin = (config) => {
+  const base = config.baseURL || getApiBaseUrl() || window.location.origin;
+  const targetUrl = config.url || "";
+  try {
+    return new URL(targetUrl, base).origin;
+  } catch (e) {
+    return "";
+  }
+};
+
 /**
  * 统一响应契约说明：
  * - request(...) 成功时固定返回 `response.data`（即后端响应包，以下简称 envelope）
@@ -91,7 +135,13 @@ request.interceptors.request.use(
       localStorage.getItem("auth_data") || sessionStorage.getItem("auth_data")
     );
 
-    if (authDataFromStorage) {
+    const requestOrigin = resolveRequestOrigin(config);
+    const allowedOrigins = getAllowedApiOrigins();
+    const canAttachAuth =
+      !!authDataFromStorage &&
+      (!allowedOrigins.size || allowedOrigins.has(requestOrigin));
+
+    if (canAttachAuth) {
       config.headers["Authorization"] = authDataFromStorage;
     } else {
       delete config.headers?.Authorization;
