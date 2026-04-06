@@ -11,8 +11,8 @@ const generateRandomFileName = (length = 8) => {
     name += chars.charAt(Math.floor(Math.random() * chars.length));
   }
 
-  const randowNumber = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-  return `${randowNumber}.${name}.js`;
+  const randomNumber = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  return `${randomNumber}.${name}.js`;
 };
 
 const generateRandomToken = (length = 12) => {
@@ -97,7 +97,6 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: 'dist',
-      assetsDir: 'static',
       sourcemap: false,
       minify: 'esbuild',
       rollupOptions: {
