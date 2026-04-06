@@ -153,6 +153,7 @@ import PasswordStrengthIndicator from '@/components/common/PasswordStrengthIndic
 import IconEye from '@/components/icons/IconEye.vue';
 import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 import { forceLogout } from '@/api/auth';
+import { getAuthData } from '@/utils/authState';
 import { validatePassword } from '@/utils/validators';
 
 const { t } = useI18n();
@@ -268,7 +269,7 @@ const decodeJwtPayload = (token) => {
 };
 
 const getCurrentSessionId = () => {
-  const authData = localStorage.getItem('auth_data') || '';
+  const authData = getAuthData();
   const payload = decodeJwtPayload(authData);
   return payload?.session || '';
 };

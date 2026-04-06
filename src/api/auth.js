@@ -38,7 +38,7 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
     }
     
     if (responseData.auth_data) {
-      setAuthData(responseData.auth_data, usePersistentStorage);
+      setAuthData(responseData.auth_data);
     }
     
     setTimeout(() => {
@@ -110,7 +110,7 @@ export function register(data) {
     }
     
     if (responseData?.auth_data) {
-      setAuthData(responseData.auth_data, true);
+      setAuthData(responseData.auth_data);
     }
     
     if (typeof responseData?.is_admin !== 'undefined') {
@@ -276,6 +276,7 @@ const _clearAllAuthData = () => {
   
   const authKeys = [
     'token', 
+    'authorization',
     'auth_data', 
     'cookie_auth_data', 
     'userInfo', 
@@ -292,6 +293,7 @@ const _clearAllAuthData = () => {
   
   const sessionKeys = [
     'token', 
+    'authorization',
     'auth_data',
     'vuex',
     'user',

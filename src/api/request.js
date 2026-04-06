@@ -10,6 +10,7 @@ import { clearCachedLoginStatus, getAuthData, setUserLoggedInFlag } from "@/util
 const clearAuthDataAndRedirectToLogin = () => {
   const authKeys = [
     "token",
+    "authorization",
     "auth_data",
     "cookie_auth_data",
     "userInfo",
@@ -24,7 +25,7 @@ const clearAuthDataAndRedirectToLogin = () => {
     localStorage.removeItem(key);
   });
 
-  const sessionKeys = ["token", "auth_data", "vuex", "user", "auth"];
+  const sessionKeys = ["token", "authorization", "auth_data", "vuex", "user", "auth"];
   sessionKeys.forEach((key) => {
     sessionStorage.removeItem(key);
   });

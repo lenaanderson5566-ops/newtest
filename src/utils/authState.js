@@ -6,6 +6,9 @@ const runtimeState = {
   lastLoginCheckTime: 0
 };
 
+const AUTHORIZATION_KEY = 'authorization';
+const LEGACY_AUTH_KEYS = ['auth_data', 'authorization'];
+
 const purgeLegacyTokenStorage = () => {
   localStorage.removeItem('token');
   sessionStorage.removeItem('token');
@@ -15,7 +18,28 @@ purgeLegacyTokenStorage();
 
 export const getToken = () => runtimeState.token || '';
 
-export const getAuthData = () => localStorage.getItem('auth_data') || sessionStorage.getItem('auth_data') || '';
+const migrateAuthDataToAuthorization = (authData) => {
+  if (!authData) return '';
+  localStorage.setItem(AUTHORIZATION_KEY, authData);
+  LEGACY_AUTH_KEYS.forEach((key) => {
+    if (key !== AUTHORIZATION_KEY) {
+      localStorage.removeItem(key);
+    }
+    sessionStorage.removeItem(key);
+  });
+  return authData;
+};
+
+export const getAuthData = () => {
+  const authDataFromAuthorization = localStorage.getItem(AUTHORIZATION_KEY);
+  if (authDataFromAuthorization) return authDataFromAuthorization;
+
+  const legacyAuthData = localStorage.getItem('auth_data') ||
+    sessionStorage.getItem('auth_data') ||
+    sessionStorage.getItem(AUTHORIZATION_KEY) ||
+    '';
+  return migrateAuthDataToAuthorization(legacyAuthData);
+};
 
 export const getAuthSnapshot = () => ({
   token: getToken(),
@@ -27,15 +51,12 @@ export const setToken = (token) => {
   purgeLegacyTokenStorage();
 };
 
-export const setAuthData = (authData, rememberMe = false) => {
+export const setAuthData = (authData) => {
   if (!authData) return;
-  if (rememberMe) {
-    localStorage.setItem('auth_data', authData);
-    sessionStorage.removeItem('auth_data');
-    return;
-  }
-  sessionStorage.setItem('auth_data', authData);
+  localStorage.setItem(AUTHORIZATION_KEY, authData);
   localStorage.removeItem('auth_data');
+  sessionStorage.removeItem('auth_data');
+  sessionStorage.removeItem(AUTHORIZATION_KEY);
 };
 
 export const setUserLoggedInFlag = (status) => {
