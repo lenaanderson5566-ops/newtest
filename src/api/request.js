@@ -5,7 +5,7 @@ import {
   CUSTOM_HEADERS_CONFIG,
 } from "@/utils/baseConfig";
 import { getAvailableApiUrl } from "@/utils/apiAvailabilityChecker";
-import { getAuthData, setUserLoggedInFlag } from "@/utils/authState";
+import { clearCachedLoginStatus, getAuthData, setUserLoggedInFlag } from "@/utils/authState";
 
 const clearAuthDataAndRedirectToLogin = () => {
   const authKeys = [
@@ -30,6 +30,7 @@ const clearAuthDataAndRedirectToLogin = () => {
   });
 
   setUserLoggedInFlag(false);
+  clearCachedLoginStatus();
   window.location.href = "/#/login";
 };
 

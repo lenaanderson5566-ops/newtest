@@ -11,6 +11,7 @@ import {
   getUserLoggedInFlag,
   setCachedLoginStatus,
   getCachedLoginStatus,
+  clearCachedLoginStatus,
   setLogoutInProgress,
   isLogoutInProgress
 } from '@/utils/authState';
@@ -271,6 +272,7 @@ const _cacheLoginStatus = (status) => {
 
 const _clearAllAuthData = () => {
   setUserLoggedInFlag(false);
+  clearCachedLoginStatus();
   
   const authKeys = [
     'token', 
