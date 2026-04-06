@@ -780,7 +780,7 @@ router.beforeEach(async (to, from, next) => {
 
     if (sessionStatus?.isLoggedIn === null) {
       clearAuthCheckCache();
-      next({ name: 'Login', query: { redirect: to.fullPath } });
+      next();
       return;
     }
 

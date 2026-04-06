@@ -244,11 +244,6 @@ export const checkLoginStatus = () => {
                   sessionStorage.getItem('auth_data');
                   
   if (!authData || authData === 'undefined' || authData === 'null' || authData === '') {
-    if (window.isUserLoggedIn === true) {
-      _cacheLoginStatus(true);
-      return true;
-    }
-    
     _clearAllAuthData();
     _cacheLoginStatus(false);
     return false;
