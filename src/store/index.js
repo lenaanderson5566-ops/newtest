@@ -20,10 +20,9 @@ export const useAppStore = defineStore('app', {
   },
 
   actions: {
-    login(token, options = {}) {
-      const rememberMe = options?.rememberMe === true;
+    login(token) {
       this.token = token;
-      setToken(token, rememberMe);
+      setToken(token);
     },
 
     logout() {

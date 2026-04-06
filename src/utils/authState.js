@@ -1,11 +1,19 @@
 const runtimeState = {
+  token: '',
   isUserLoggedIn: undefined,
   isLoggingOut: false,
   lastLoginCheck: null,
   lastLoginCheckTime: 0
 };
 
-export const getToken = () => localStorage.getItem('token') || sessionStorage.getItem('token') || '';
+const purgeLegacyTokenStorage = () => {
+  localStorage.removeItem('token');
+  sessionStorage.removeItem('token');
+};
+
+purgeLegacyTokenStorage();
+
+export const getToken = () => runtimeState.token || '';
 
 export const getAuthData = () => localStorage.getItem('auth_data') || sessionStorage.getItem('auth_data') || '';
 
@@ -14,15 +22,9 @@ export const getAuthSnapshot = () => ({
   authData: getAuthData()
 });
 
-export const setToken = (token, rememberMe = false) => {
-  if (!token) return;
-  if (rememberMe) {
-    localStorage.setItem('token', token);
-    sessionStorage.removeItem('token');
-    return;
-  }
-  sessionStorage.setItem('token', token);
-  localStorage.removeItem('token');
+export const setToken = (token) => {
+  runtimeState.token = token || '';
+  purgeLegacyTokenStorage();
 };
 
 export const setAuthData = (authData, rememberMe = false) => {
