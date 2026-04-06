@@ -2,19 +2,19 @@
   <div v-if="password" class="password-strength-indicator">
     <div class="password-rules">
       <div class="password-rule-tip">
-        <span :class="{ met: strengthMeta.minLengthMet }">{{ t(minLengthKey) }}</span>
+        <span :class="{ met: strengthMeta.minLengthMet }">{{ minLengthText }}</span>
       </div>
       <div class="password-rule-tip">
-        <span :class="{ met: strengthMeta.alphaNumericMet }">{{ t(alphaNumericKey) }}</span>
+        <span :class="{ met: strengthMeta.alphaNumericMet }">{{ alphaNumericText }}</span>
       </div>
       <div class="password-rule-tip">
-        <span :class="{ met: strengthMeta.specialCharMet }">{{ t(specialCharKey) }}</span>
+        <span :class="{ met: strengthMeta.specialCharMet }">{{ specialCharText }}</span>
       </div>
     </div>
 
     <div class="password-strength">
       <div class="password-strength-label">
-        {{ t(strengthLabelKey) }}：{{ t(strengthTextKey) }}
+        {{ strengthLabelText }}：{{ strengthText }}
       </div>
       <div class="password-strength-bar">
         <div
@@ -55,12 +55,30 @@ const props = defineProps({
   }
 });
 
-const { t } = useI18n();
+const { t } = useI18n({ useScope: 'global' });
 const strengthMeta = computed(() => getPasswordStrengthMeta(props.password));
 const strengthTextKey = computed(() => {
   if (strengthMeta.value.level === 'weak') return 'auth.passwordStrengthWeak';
   if (strengthMeta.value.level === 'medium') return 'auth.passwordStrengthMedium';
   return 'auth.passwordStrengthStrong';
+});
+
+const translateWithFallback = (key, fallback) => {
+  const value = t(key);
+  return value === key ? fallback : value;
+};
+
+const minLengthText = computed(() => translateWithFallback(props.minLengthKey, '至少 8 位'));
+const alphaNumericText = computed(() => translateWithFallback(props.alphaNumericKey, '包含字母和数字（建议）'));
+const specialCharText = computed(() => translateWithFallback(props.specialCharKey, '包含特殊字符（建议）'));
+const strengthLabelText = computed(() => translateWithFallback(props.strengthLabelKey, '密码强度'));
+const strengthText = computed(() => {
+  const fallbackMap = {
+    weak: '弱',
+    medium: '中',
+    strong: '强'
+  };
+  return translateWithFallback(strengthTextKey.value, fallbackMap[strengthMeta.value.level] || '中');
 });
 </script>
 
