@@ -3,8 +3,36 @@ import {
   API_BASE_URL,
   getApiBaseUrl,
   CUSTOM_HEADERS_CONFIG,
+  SITE_CONFIG,
 } from "@/utils/baseConfig";
 import { getAvailableApiUrl } from "@/utils/apiAvailabilityChecker";
+
+const clearAuthDataAndRedirectToLogin = () => {
+  const authKeys = [
+    "token",
+    "auth_data",
+    "cookie_auth_data",
+    "userInfo",
+    "is_admin",
+    "vuex",
+    "user",
+    "auth",
+  ];
+
+  authKeys.forEach((key) => {
+    localStorage.removeItem(key);
+  });
+
+  const sessionKeys = ["token", "auth_data", "vuex", "user", "auth"];
+  sessionKeys.forEach((key) => {
+    sessionStorage.removeItem(key);
+  });
+
+  window.isUserLoggedIn = false;
+  window.authDataInStorage = null;
+  window.authCookieFailure = false;
+  window.location.href = "/#/login";
+};
 
 const request = axios.create({
   baseURL: API_BASE_URL,
@@ -44,27 +72,21 @@ request.interceptors.request.use(
     let authData = localStorage.getItem("auth_data");
 
     if (!authData) {
-      try {
-        const { getCookie } = require("./auth");
-        authData = getCookie("auth_data");
-      } catch (err) {
-        const cookieAuthData = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("auth_data="));
+      const cookieAuthData = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("auth_data="));
 
-        if (cookieAuthData) {
-          try {
-            const encodedValue = cookieAuthData.split("=")[1];
-            const decodedValue = decodeURIComponent(encodedValue);
-            const parsedValue = JSON.parse(decodedValue);
+      if (cookieAuthData) {
+        try {
+          const encodedValue = cookieAuthData.split("=")[1];
+          const decodedValue = decodeURIComponent(encodedValue);
+          const parsedValue = JSON.parse(decodedValue);
 
-            const { SITE_CONFIG } = require("../utils/baseConfig");
-            if (parsedValue && parsedValue.site === SITE_CONFIG.siteName) {
-              authData = parsedValue.value;
-            }
-          } catch (e) {
-            authData = cookieAuthData.split("=")[1];
+          if (parsedValue && parsedValue.site === SITE_CONFIG.siteName) {
+            authData = parsedValue.value;
           }
+        } catch (e) {
+          authData = cookieAuthData.split("=")[1];
         }
       }
     }
@@ -79,7 +101,6 @@ request.interceptors.request.use(
         try {
           const parsedValue = JSON.parse(backupData);
 
-          const { SITE_CONFIG } = require("../utils/baseConfig");
           if (parsedValue && parsedValue.site === SITE_CONFIG.siteName) {
             authData = parsedValue.value;
           } else {
@@ -125,9 +146,7 @@ request.interceptors.response.use(
       const res = response.data;
 
       if (res && (res.message === "未登录或登陆已过期" || res.message === "Not logged in or session expired")) {
-        const { forceLogout } = require("./auth");
-        forceLogout();
-        window.location.href = "/#/login";
+        clearAuthDataAndRedirectToLogin();
         return Promise.reject(new Error(res.message));
       }
 
