@@ -403,10 +403,6 @@ onMounted(() => {
   margin-bottom: 8px;
 }
 
-.back-label {
-  @extend %typo-body-text;
-}
-
 .profile-card {
   background: var(--card-bg-color);
   border: var(--border-width) solid var(--border-default);
@@ -760,9 +756,4 @@ onMounted(() => {
   display: none !important;
 }
 
-@include down(md) {
-  .back-label {
-    display: none;
-  }
-}
 </style>
