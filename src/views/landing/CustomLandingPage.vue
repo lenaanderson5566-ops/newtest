@@ -1,6 +1,6 @@
 <template>
   <div class="custom-landing-container">
-    <!-- 全屏加载动画 -->
+    
     <div
       v-if="shouldShowPreloader"
       ref="preloader"
@@ -11,7 +11,7 @@
       <div class="loader" :style="loaderStyle"></div>
     </div>
 
-    <!-- iframe用于加载自定义landing页面 -->
+    
     <iframe
       v-if="customLandingPath"
       ref="landingIframe"
@@ -23,7 +23,7 @@
       @load="handleIframeLoaded"
     ></iframe>
 
-    <!-- 如果没有授权码或未指定自定义landing页，显示默认landing页 -->
+    
     <div v-else>
       <LandingPage @loaded="handleContentLoaded" />
     </div>

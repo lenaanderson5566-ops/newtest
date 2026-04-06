@@ -6,7 +6,7 @@
 
     
 
-    <!-- 背景装饰 -->
+    
 
     <div class="background-decoration">
 
@@ -20,7 +20,7 @@
 
     
 
-    <!-- 顶部工具栏 -->
+    
 
     <div class="top-toolbar">
 
@@ -31,7 +31,7 @@
 
     
 
-    <!-- 中央内容区 -->
+    
 
     <div class="content-container">
 
@@ -49,7 +49,7 @@
 
     
 
-    <!-- 底部箭头 -->
+    
 
     <div class="scroll-arrow-container" @click="navigateToLogin">
 
@@ -65,7 +65,7 @@
 
     
 
-    <!-- 页面过渡遮罩 -->
+    
 
     <div class="page-transition-mask" :class="{ 'active': isTransitioning }"></div>
 

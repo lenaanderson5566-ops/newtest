@@ -5,13 +5,16 @@ import {
   CUSTOM_HEADERS_CONFIG,
 } from "@/utils/baseConfig";
 import { getAvailableApiUrl } from "@/utils/apiAvailabilityChecker";
+import { clearCachedLoginStatus, getAuthData, setUserLoggedInFlag } from "@/utils/authState";
 
 const clearAuthDataAndRedirectToLogin = () => {
   const authKeys = [
     "token",
+    "authorization",
     "auth_data",
     "cookie_auth_data",
     "userInfo",
+    "left_sidebar_collapsed",
     "is_admin",
     "vuex",
     "user",
@@ -22,12 +25,13 @@ const clearAuthDataAndRedirectToLogin = () => {
     localStorage.removeItem(key);
   });
 
-  const sessionKeys = ["token", "auth_data", "vuex", "user", "auth"];
+  const sessionKeys = ["token", "authorization", "auth_data", "vuex", "user", "auth"];
   sessionKeys.forEach((key) => {
     sessionStorage.removeItem(key);
   });
 
-  window.isUserLoggedIn = false;
+  setUserLoggedInFlag(false);
+  clearCachedLoginStatus();
   window.location.href = "/#/login";
 };
 
@@ -36,6 +40,76 @@ const normalizeAuthData = (value) => {
   const trimmed = value.trim();
   if (!trimmed || trimmed === "undefined" || trimmed === "null") return "";
   return trimmed;
+};
+
+const toOrigin = (value) => {
+  if (!value || typeof value !== "string") return "";
+  try {
+    return new URL(value, window.location.origin).origin;
+  } catch (e) {
+    return "";
+  }
+};
+
+const getStaticApiOrigins = () => {
+  const origins = new Set();
+  const staticBaseUrl = window?.EZ_CONFIG?.API_CONFIG?.staticBaseUrl;
+
+  if (Array.isArray(staticBaseUrl)) {
+    staticBaseUrl.forEach((item) => {
+      const origin = toOrigin(item);
+      if (origin) origins.add(origin);
+    });
+  } else {
+    const origin = toOrigin(staticBaseUrl);
+    if (origin) origins.add(origin);
+  }
+
+  return origins;
+};
+
+const getAllowedApiOrigins = () => {
+  const staticOrigins = getStaticApiOrigins();
+  if (staticOrigins.size > 0) {
+    return staticOrigins;
+  }
+
+  const origins = new Set();
+  const currentApiBase = getApiBaseUrl();
+  const availableApiUrl = getAvailableApiUrl();
+
+  [currentApiBase, availableApiUrl].forEach((item) => {
+    const origin = toOrigin(item);
+    if (origin) origins.add(origin);
+  });
+
+  return origins;
+};
+
+const resolveRequestOrigin = (config) => {
+  const base = config.baseURL || getApiBaseUrl() || window.location.origin;
+  const targetUrl = config.url || "";
+  try {
+    return new URL(targetUrl, base).origin;
+  } catch (e) {
+    return "";
+  }
+};
+
+
+export const getResponseEnvelope = (response) => {
+  if (response && typeof response === "object") {
+    return response;
+  }
+  return {};
+};
+
+export const getResponseData = (response) => {
+  const envelope = getResponseEnvelope(response);
+  if (Object.prototype.hasOwnProperty.call(envelope, "data")) {
+    return envelope.data;
+  }
+  return null;
 };
 
 const request = axios.create({
@@ -66,32 +140,35 @@ request.interceptors.request.use(
       config.headers["Content-Type"] = "application/x-www-form-urlencoded";
     }
 
-    const authDataFromStorage = normalizeAuthData(
-      localStorage.getItem("auth_data") || sessionStorage.getItem("auth_data")
-    );
+    const authDataFromStorage = normalizeAuthData(getAuthData());
 
-    if (authDataFromStorage) {
+    const requestOrigin = resolveRequestOrigin(config);
+    const allowedOrigins = getAllowedApiOrigins();
+    const canAttachAuth =
+      !!authDataFromStorage &&
+      allowedOrigins.size > 0 &&
+      !!requestOrigin &&
+      allowedOrigins.has(requestOrigin);
+
+    if (canAttachAuth) {
       config.headers["Authorization"] = authDataFromStorage;
     } else {
       delete config.headers?.Authorization;
       delete config.headers?.authorization;
     }
 
-    try {
-      if (
-        CUSTOM_HEADERS_CONFIG &&
-        CUSTOM_HEADERS_CONFIG.enabled &&
-        CUSTOM_HEADERS_CONFIG.headers
-      ) {
-        const customHeaders = CUSTOM_HEADERS_CONFIG.headers;
-        for (const headerName in customHeaders) {
-          if (Object.prototype.hasOwnProperty.call(customHeaders, headerName)) {
-            const headerValue = customHeaders[headerName];
-            config.headers[headerName] = headerValue;
-          }
+    if (
+      CUSTOM_HEADERS_CONFIG &&
+      CUSTOM_HEADERS_CONFIG.enabled &&
+      CUSTOM_HEADERS_CONFIG.headers
+    ) {
+      const customHeaders = CUSTOM_HEADERS_CONFIG.headers;
+      for (const headerName in customHeaders) {
+        if (Object.prototype.hasOwnProperty.call(customHeaders, headerName)) {
+          const headerValue = customHeaders[headerName];
+          config.headers[headerName] = headerValue;
         }
       }
-    } catch (error) {
     }
 
     return config;
@@ -103,18 +180,14 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   (response) => {
-    try {
-      const res = response.data;
+    const res = response.data;
 
-      if (res && (res.message === "未登录或登陆已过期" || res.message === "Not logged in or session expired")) {
-        clearAuthDataAndRedirectToLogin();
-        return Promise.reject(new Error(res.message));
-      }
-
-      return res;
-    } catch (err) {
-      return Promise.reject(new Error("Failed to process response data"));
+    if (res && (res.message === "未登录或登陆已过期" || res.message === "Not logged in or session expired")) {
+      clearAuthDataAndRedirectToLogin();
+      return Promise.reject(new Error(res.message));
     }
+
+    return res;
   },
   (error) => {
 

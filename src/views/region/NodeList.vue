@@ -2,7 +2,7 @@
 
   <div class="nodes-container page-shell">
 
-    <!-- 域名授权验证提示 - 如果不需要域名授权功能，移除此组件即可 -->
+    
 
 
 
@@ -11,7 +11,7 @@
     <div class="nodes-inner page-inner page-stack">
 
 
-      <!-- 线路列表状态 -->
+      
 
       <div v-if="loading" class="nodes-loading">
 
@@ -23,7 +23,7 @@
 
       
 
-      <!-- 错误提示 -->
+      
 
       <div v-else-if="error" class="nodes-error">
 
@@ -37,7 +37,7 @@
 
       
 
-      <!-- 无订阅解锁页 -->
+      
       <div v-else-if="!hasActivePlan" class="nodes-no-plan">
         <div class="no-plan-head">
           <h2>{{ $t('lines.noPlan.coverageTitle') }}</h2>
@@ -79,7 +79,7 @@
         </div>
       </div>
 
-      <!-- 线路列表内容 -->
+      
 
       <div v-else-if="lines.length > 0" class="node-items">
 
@@ -107,7 +107,7 @@
 
       </div>
 
-      <!-- 空状态 -->
+      
 
       <div v-else class="nodes-empty">
 

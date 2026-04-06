@@ -239,7 +239,12 @@
         </template>
       </div>
 
-      <div class="dashboard-card usage-trend-card" :class="{ 'card-animate': !trafficTrendLoading }" v-if="hasPlan">
+      <div
+        class="dashboard-card usage-trend-card"
+        :class="{ 'card-animate': !trafficTrendLoading }"
+        :style="{ animationDelay: usageTrendAnimationDelay }"
+        v-if="hasPlan"
+      >
         <div class="card-header">
           <h2 class="card-title usage-card-title">{{ $t('trafficLog.title') }}</h2>
         </div>
@@ -248,7 +253,7 @@
           <div v-else-if="trafficTrendError" class="trend-state">{{ $t('trafficLog.errorLoadingTraffic') }}</div>
           <div v-else-if="!trafficTrendData.length" class="trend-state trend-state-illustration">
             <div class="trend-empty-block">
-              <img :src="noTrafficDataIcon" alt="" class="trend-empty-icon" />
+              <IconDatabaseOff :size="48" class="trend-empty-icon trend-empty-icon--semantic" />
               <div class="trend-empty-content">
                 <div class="trend-empty-title">{{ $t('trafficLog.emptyTitle') }}</div>
                 <button class="trend-empty-action btn btn-secondary" @click="goToQuickStart">
@@ -360,7 +365,8 @@ import {
   IconWaveSawTool,
   IconX,
   IconCalendarPlus,
-  IconPlus
+  IconPlus,
+  IconDatabaseOff
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
 import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
@@ -372,7 +378,6 @@ import { fetchPlans, submitOrder } from '@/api/account/shop';
 import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
 import { formatDate } from '@/utils/formatters';
 import { SUBSCRIPTION_STATUS, resolveSubscriptionStatus } from '@/utils/subscriptionStatus';
-import noTrafficDataIcon from '@/assets/images/dashboard/no-traffic-data.svg';
 
 export default {
   name: 'UserDashboard',
@@ -408,6 +413,7 @@ export default {
     IconX,
     IconCalendarPlus,
     IconPlus,
+    IconDatabaseOff,
     CommonDialog
   },
   setup() {
@@ -864,7 +870,6 @@ export default {
           return enabled.slice(0, 2).join(' · ');
         }
       } catch (_) {
-        // non-json content
       }
       const plain = String(raw).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
       const displayName = getTrafficPackageDisplayName(plan);
@@ -1428,6 +1433,12 @@ export default {
       return `${baseDelay + trafficBoardSections.value.length * step}s`;
     });
 
+    const usageTrendAnimationDelay = computed(() => {
+      const baseDelay = 0.5;
+      const step = 0.1;
+      return `${baseDelay + (trafficBoardSections.value.length + 1) * step}s`;
+    });
+
     const getTrafficCardClass = (card) => ({
       [`traffic-board-${card.key}`]: true,
       'card-animate': !loading.userStats,
@@ -1492,6 +1503,7 @@ export default {
       trafficTrendError,
       todayTrafficStats,
       todayTrafficAnimationDelay,
+      usageTrendAnimationDelay,
       allowNewPeriod,
       showTrafficPackageModal,
       trafficPackageLoading,
@@ -1502,7 +1514,6 @@ export default {
       getTrafficPackageDisplayName,
       getTrafficPackageContent,
       isTrafficPackageSoldOut,
-      noTrafficDataIcon,
     };
   }
 };
@@ -2149,7 +2160,7 @@ $space-2: map.get($spacers, 2);
     box-shadow: var(--shadow-md);
   }
 
-  /* 三张流量相关卡片统一为 surface token，避免被其他层叠样式覆盖 */
+  
   .stats-grid .stats-card.traffic-board-package,
   .stats-grid .stats-card.today-traffic-card,
   .dashboard-card.usage-trend-card {
@@ -2331,12 +2342,13 @@ $space-2: map.get($spacers, 2);
     }
 
     .trend-empty-title {
-      @extend %typo-label-text;
+      @extend %typo-meta-text;
     }
 
     .trend-empty-action {
-      min-width: 164px;
-      padding-inline: 14px;
+      min-width: 148px;
+      padding-inline: 12px;
+      font-size: $font-size-sm;
     }
 
     .usage-trend-chart {

@@ -2,13 +2,13 @@
 
   <div class="auth-container">
 
-    <!-- 域名授权验证提示 -->
+    
 
 
 
 
 
-    <!-- 顶部工具栏：语言选择器和主题切换 -->
+    
 
     <div class="top-toolbar">
 
@@ -222,7 +222,7 @@
 
 
 
-    <!-- 验证码弹窗 -->
+    
 
     <div class="captcha-modal" v-if="showCaptchaModal" :class="{ 'closing': isClosingModal }">
 
@@ -248,7 +248,7 @@
 
 
 
-          <!-- Google reCAPTCHA -->
+          
 
           <div v-if="captchaConfig.type === 'google'" class="google-captcha" @click.stop>
 
@@ -258,7 +258,7 @@
 
 
 
-          <!-- Cloudflare Turnstile -->
+          
 
           <div v-else-if="captchaConfig.type === 'cloudflare'" class="cloudflare-captcha" @click.stop>
 
@@ -274,7 +274,7 @@
 
 
 
-    <!-- 自定义弹窗 -->
+    
 
     <AuthPopup
 
@@ -329,6 +329,8 @@ import IconEye from '@/components/icons/IconEye.vue';
 import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 
 import { resetPassword, sendEmailVerify, checkLoginStatus, getWebsiteConfig } from '@/api/auth';
+import { isLogoutInProgress } from '@/utils/authState';
+import { getResponseData } from '@/api/request';
 
 
 
@@ -566,10 +568,11 @@ export default {
       try {
 
         const response = await getWebsiteConfig();
+        const responseData = getResponseData(response);
 
-        if (response && response.data) {
+        if (responseData) {
 
-          Object.assign(config, response.data);
+          Object.assign(config, responseData);
 
 
 
@@ -857,7 +860,6 @@ export default {
                     window.turnstile.reset();
 
                   } catch (e) {
-                    // 忽略 reset 失败，后续会重新渲染验证码容器
                   }
 
                 }
@@ -1036,7 +1038,7 @@ export default {
 
 
 
-        if (response && response.data === true) {
+        if (getResponseData(response) === true) {
 
           startCooldown();
 
@@ -1258,7 +1260,7 @@ export default {
 
 
 
-        if (response.data === true) {
+        if (getResponseData(response) === true) {
 
           showToast(response.message || t('auth.passwordResetSuccess'), 'success');
 
@@ -1338,7 +1340,7 @@ export default {
 
       try {
 
-        if (window._isLoggingOut === true) {
+        if (isLogoutInProgress()) {
 
           return;
 
@@ -1443,7 +1445,6 @@ export default {
           window.turnstile.reset();
 
         } catch (e) {
-          // 忽略 reset 失败，后续会重新渲染验证码容器
         }
 
       }
@@ -1758,8 +1759,6 @@ export default {
 
 
     &:hover:not(:disabled) {
-
-      // 保证 hover 态不被全局按钮 hover 皮肤覆盖
       background-color: rgba(var(--text-color-rgb), 0.05) !important;
 
       transform: translateY(-2px);
@@ -2344,7 +2343,7 @@ export default {
 
 }
 
-/* Compact spacing tune */
+
 .auth-card {
   padding: 20px;
 }
@@ -2395,7 +2394,7 @@ export default {
   }
 }
 
-/* Visual polish tune */
+
 .auth-card {
   border-radius: 16px;
   box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);

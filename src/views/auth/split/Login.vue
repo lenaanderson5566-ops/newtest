@@ -3,7 +3,7 @@
     <div class="auth-split-container">
 
 
-      <!-- 左侧背景区域 -->
+      
       <div class="auth-split-left" :style="leftSideStyles">
         <div class="left-content-overlay"></div>
         <div class="site-name"  v-if="showSiteName" :class="siteNameColorClass" @click="goTo('/')">
@@ -14,9 +14,9 @@
         </div>
       </div>
 
-      <!-- 右侧表单区域 -->
+      
       <div class="auth-split-right">
-        <!-- 顶部工具栏：语言选择器和主题切换 -->
+        
         <div class="top-toolbar">
           <LanguageSelector />
         </div>
@@ -80,13 +80,6 @@
             </div>
 
             <div class="form-options">
-              <div class="remember-me">
-                <label class="checkbox-container">
-                  <input type="checkbox" v-model="formData.rememberMe" />
-                  <span class="checkmark"></span>
-                  <span class="checkbox-label">{{ $t('common.rememberMe') }}</span>
-                </label>
-              </div>
               <router-link to="/forgot-password" class="forgot-password">
                 {{ $t('common.forgotPassword') }}
               </router-link>
@@ -120,12 +113,12 @@
       </div>
     </div>
 
-    <!-- 验证码弹窗 -->
+    
     <div class="captcha-modal" v-if="showCaptchaModal" :class="{ 'closing': isClosingModal }">
-      <!-- 现有弹窗内容保持不变 -->
+      
     </div>
 
-    <!-- 自定义弹窗 -->
+    
     <AuthPopup
       :show-popup="showAuthPopup"
       :title="authPopupConfig.title"
@@ -149,6 +142,7 @@ import IconArrowRight from '@/components/icons/IconArrowRight.vue';
 import IconEye from '@/components/icons/IconEye.vue';
 import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 import { login, checkLoginStatus } from '@/api/auth';
+import { isLogoutInProgress } from '@/utils/authState';
 import { validateEmail, validateRequired } from '@/utils/validators';
 
 import { handleTokenLogin, hasVerifyToken } from '@/utils/tokenLogin';
@@ -182,8 +176,7 @@ export default {
 
     const formData = reactive({
       email: '',
-      password: '',
-      rememberMe: false
+      password: ''
     });
 
     const errors = reactive({
@@ -286,7 +279,7 @@ export default {
       }
 
       try {
-        if (window._isLoggingOut === true) {
+        if (isLogoutInProgress()) {
           return;
         }
 
@@ -641,62 +634,6 @@ export default {
   align-items: center;
   margin-bottom: 24px;
 
-  .remember-me .checkbox-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding-left: 24px;
-    cursor: pointer;
-    user-select: none;
-
-    input {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-
-      &:checked ~ .checkmark {
-        background-color: var(--theme-color);
-        border-color: var(--theme-color);
-
-        &:after {
-          display: block;
-        }
-      }
-    }
-
-    .checkmark {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 20px;
-      width: 20px;
-      background-color: transparent;
-      border: 2px solid var(--border-default);
-      border-radius: 4px;
-      transition: all 0.2s ease;
-
-      &:after {
-        content: "";
-        position: absolute;
-        display: none;
-        left: 5px;
-        top: 0.5px;
-        width: 5px;
-        height: 10px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-      }
-    }
-
-    .checkbox-label {
-      color: var(--color-text-tertiary);
-      font-size: $font-size-sm;
-    }
-  }
-
   .forgot-password {
     color: var(--theme-color);
     font-size: $font-size-sm;
@@ -762,10 +699,6 @@ export default {
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
-
-    .remember-me {
-      flex: 0 0 auto;
-    }
 
     .forgot-password {
       flex: 0 0 auto;
@@ -903,7 +836,7 @@ export default {
     justify-content: flex-start;
   }
 }
-/* Compact spacing tune */
+
 .auth-form-container {
   padding: 40px 40px;
 }
@@ -954,7 +887,7 @@ export default {
   }
 }
 
-/* Visual polish tune */
+
 .auth-form-container {
   border-radius: 16px;
   box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);

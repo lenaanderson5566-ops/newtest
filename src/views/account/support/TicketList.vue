@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="ticket-container page-shell page-inner page-stack">
-    <!-- 屏幕尺寸提示 -->
+    
 
     <div v-if="isSmallScreen" class="screen-size-notice">
       <div class="notice-content">
@@ -16,11 +16,11 @@
       </div>
     </div>
 
-    <!-- 原有内容在非小屏时显示 -->
+    
 
     <template v-else>
       <div class="ticket-list-container">
-        <!-- 左侧工单列表 -->
+        
 
         <div class="ticket-sidebar">
           <div class="ticket-header">
@@ -82,7 +82,7 @@
             </div>
           </div>
 
-          <!-- 加载状态 -->
+          
 
           <div v-else-if="loadingTickets" class="ticket-loading">
             <LoadingSpinner />
@@ -97,11 +97,11 @@
           </div>
         </div>
 
-        <!-- 右侧对话内容 -->
+        
 
         <div class="ticket-content">
           <template v-if="selectedTicket">
-            <!-- 工单详情头部 -->
+            
 
             <div class="ticket-detail-header">
               <div class="ticket-subject-info">
@@ -149,11 +149,11 @@
               </div>
             </div>
 
-            <!-- 工单对话内容 -->
+            
 
             <div class="ticket-detail-content">
               <div class="ticket-messages">
-                <!-- 初始工单内容将在获取详情后显示 -->
+                
 
                 <div class="message-loading" v-if="loadingMessages">
                   <LoadingSpinner />
@@ -224,7 +224,7 @@
               </div>
             </div>
 
-            <!-- 回复输入框 -->
+            
 
             <div class="reply-container" v-if="selectedTicket.status === 0">
               <textarea
@@ -263,7 +263,7 @@
 
       </div>
 
-      <!-- 新建工单弹窗 并将弹窗置顶-->
+      
       <teleport to="body">
         <div
           class="modal-overlay"
@@ -393,7 +393,7 @@
           </div>
         </div>
       </teleport>
-      <!-- 关闭工单确认弹窗 -->
+      
 
       <div
         class="modal-overlay"
@@ -1298,15 +1298,7 @@ onUnmounted(() => {
   display: flex;
 
   flex-direction: column;
-
-  // 移除系统暗色覆盖
-  // @media (prefers-color-scheme: dark) {
-  //   background-color: rgba(20, 25, 30, 0.7);
-  //   background-image: linear-gradient(to bottom, rgba(30,35,40,.4), rgba(15,20,25,.4));
-  // }
 }
-
-// 仅在 EZ 主题为暗色时生效
 
 .ticket-messages {
   display: flex;
@@ -2358,15 +2350,15 @@ onUnmounted(() => {
 }
 .reply-tools {
   display: flex;
-  flex-direction: column; /* 竖排按钮 */
-  align-items: stretch; /* 按钮宽度撑满容器（与输入框对齐） */
+  flex-direction: column; 
+  align-items: stretch; 
   gap: 8px;
 }
 .reply-tools .send-reply-btn {
-  width: 100%; /* 按钮填满右侧容器宽度 */
+  width: 100%; 
 }
 
-/* SaaS support workspace layout */
+
 .ticket-container {
   padding: 0;
 }

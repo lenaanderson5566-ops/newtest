@@ -5,13 +5,13 @@
         <IconChevronLeft :size="20" />
       </button>
 
-      <!-- 余额信息卡片 -->
+      
       <div class="dashboard-card balance-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('wallet.balance.title') }}</h2>
         </div>
         <div class="card-body">
-          <!-- 余额信息 - 已加载 -->
+          
           <div class="balance-display" v-if="!loading.balance">
             <div class="wallet-balance-list">
               <div
@@ -25,7 +25,7 @@
             </div>
           </div>
 
-          <!-- 余额信息 - 骨架屏 -->
+          
           <div class="balance-skeleton" v-else>
             <div class="skeleton-balance-value"></div>
             <div class="skeleton-balance-label"></div>
@@ -34,22 +34,22 @@
         </div>
       </div>
 
-      <!-- 充值卡片 -->
+      
       <div class="dashboard-card deposit-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('wallet.deposit.title') }}</h2>
         </div>
         <div class="card-body">
-          <!-- 充值说明 -->
+          
           <div class="deposit-notice">
             <IconAlertCircle :size="20" class="notice-icon" />
             <span>{{ $t('wallet.deposit.notice') }}</span>
           </div>
 
-          <!-- 预设金额选择 -->
+          
           <div class="amount-selection">
             <div class="period-cards">
-              <!-- 骨架屏 - 当货币符号加载中显示 -->
+              
               <template v-if="loading.config">
                 <div v-for="i in 4" :key="`skeleton-${i}`" class="period-card skeleton-card">
                   <div class="period-card-inner">
@@ -57,7 +57,7 @@
                   </div>
                 </div>
               </template>
-              <!-- 实际金额卡片 - 加载完成后显示 -->
+              
               <template v-else>
                 <div
                   v-for="(amount, index) in presetAmounts"
@@ -77,14 +77,14 @@
             </div>
           </div>
 
-          <!-- 自定义金额输入 -->
+          
           <div class="custom-amount">
             <label for="customAmount">{{ $t('wallet.deposit.customAmount') }}</label>
-            <!-- 骨架屏 - 当货币符号加载中显示 -->
+            
             <div v-if="loading.config" class="input-container skeleton-input">
               <div class="skeleton-input-field"></div>
             </div>
-            <!-- 实际输入框 - 加载完成后显示 -->
+            
             <div v-else class="input-container">
               <span class="currency-symbol">{{ currencySymbol }}</span>
               <input
@@ -99,11 +99,11 @@
             <small v-if="amountError" class="error-message">{{ amountError }}</small>
           </div>
 
-          <!-- 充值按钮 -->
+          
           <div class="deposit-actions">
-            <!-- 骨架屏 - 当货币符号加载中显示 -->
+            
             <div v-if="loading.config" class="btn-order-skeleton"></div>
-            <!-- 实际按钮 - 加载完成后显示 -->
+            
             <button 
               v-else
               class="btn-order"

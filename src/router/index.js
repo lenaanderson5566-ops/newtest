@@ -6,6 +6,8 @@ import { SITE_CONFIG, DEFAULT_CONFIG, isBrowserRestricted, AUTH_LAYOUT_CONFIG } 
 
 import i18n, { reloadMessages } from '@/i18n';
 import { shouldCheckApiAvailability } from '@/utils/apiAvailabilityChecker';
+import { checkSessionWithServer, forceLogout } from '@/api/auth';
+import { getAuthSnapshot, getAuthData } from '@/utils/authState';
 
 import pageCache from '@/utils/pageCache';
 
@@ -73,6 +75,61 @@ const Profile = () => import('@/views/account/profile/MyCenter.vue');
 const BrowserRestricted = () => import('@/views/errors/BrowserRestricted.vue');
 
 const NotFound = () => import('@/views/errors/NotFound.vue');
+
+const AUTH_CHECK_TTL = 5 * 60 * 1000;
+let authCheckCache = {
+  authData: '',
+  checkedAt: 0,
+  isLoggedIn: null,
+  pending: null
+};
+
+const getLocalAuthSnapshot = () => getAuthSnapshot();
+
+const validateSession = async () => {
+  const { authData } = getLocalAuthSnapshot();
+
+  if (!authData) {
+    return { isLoggedIn: false };
+  }
+
+  const now = Date.now();
+  const canUseCache = authCheckCache.authData === authData &&
+    authCheckCache.checkedAt > 0 &&
+    now - authCheckCache.checkedAt < AUTH_CHECK_TTL;
+
+  if (canUseCache) {
+    return {
+      isLoggedIn: authCheckCache.isLoggedIn
+    };
+  }
+
+  if (authCheckCache.pending) {
+    return authCheckCache.pending;
+  }
+
+  authCheckCache.pending = checkSessionWithServer().then((result) => {
+    authCheckCache.authData = authData;
+    authCheckCache.checkedAt = Date.now();
+    authCheckCache.isLoggedIn = result?.isLoggedIn;
+    authCheckCache.pending = null;
+    return result;
+  }).catch(() => {
+    authCheckCache.pending = null;
+    return { isLoggedIn: null };
+  });
+
+  return authCheckCache.pending;
+};
+
+const clearAuthCheckCache = () => {
+  authCheckCache = {
+    authData: '',
+    checkedAt: 0,
+    isLoggedIn: null,
+    pending: null
+  };
+};
 
 
 
@@ -676,7 +733,7 @@ router.beforeEach(async (to, from, next) => {
 
   
 
-  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const authData = getAuthData();
 
   
 
@@ -701,13 +758,36 @@ router.beforeEach(async (to, from, next) => {
 
   
 
-  if (to.meta.requiresAuth && !token) {
+  if (to.meta.requiresAuth && !authData) {
 
     next({ name: 'Login' });
 
-  } else if (to.path === '/login' && token) {
+  } else if (to.meta.requiresAuth) {
+    const sessionStatus = await validateSession();
 
-    next({ path: '/dashboard' });
+    if (sessionStatus?.isLoggedIn === false) {
+      clearAuthCheckCache();
+      forceLogout();
+      next({ name: 'Login', query: { redirect: to.fullPath } });
+      return;
+    }
+
+    if (sessionStatus?.isLoggedIn === null) {
+      clearAuthCheckCache();
+      next();
+      return;
+    }
+
+    next();
+  } else if (to.path === '/login' && authData) {
+    const sessionStatus = await validateSession();
+    if (sessionStatus?.isLoggedIn === true) {
+      next({ path: '/dashboard' });
+      return;
+    }
+
+    clearAuthCheckCache();
+    next();
 
   } else {
 

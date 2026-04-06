@@ -19,13 +19,6 @@ export function updateUserLanguage(language) {
     data: { language }
   });
 }
-export function getIpLocationInfo() {
-  return request({
-    url: 'https://ipinfo.io/json',
-    method: 'get',
-    baseURL: '' 
-  });
-}
 
 
 export function redeemGiftCard(giftcard) {

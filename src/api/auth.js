@@ -1,40 +1,46 @@
 ﻿
-import request from './request';
+import request, { getResponseData } from './request';
 import { pinia, useAppStore } from '@/store';
 import { updateUserLanguage, logoutCurrentSession } from './account/user';
 import { getDefaultRegisterLanguage } from '@/utils/userLanguage';
 import { reloadMessages, initializeLanguageFromUserSettings } from '@/i18n';
+import {
+  getAuthData,
+  setAuthData,
+  setUserLoggedInFlag,
+  getUserLoggedInFlag,
+  setCachedLoginStatus,
+  getCachedLoginStatus,
+  clearCachedLoginStatus,
+  setLogoutInProgress,
+  isLogoutInProgress
+} from '@/utils/authState';
+
+const resolvePayload = (envelope) => {
+  const nestedData = getResponseData(envelope);
+  if (nestedData !== null && nestedData !== undefined) return nestedData;
+  if (envelope && typeof envelope === 'object') return envelope;
+  return null;
+};
 
 
-export const handleLoginSuccess = (responseData, rememberMe) => {
+export const handleLoginSuccess = (responseData) => {
   try {
-    window.isUserLoggedIn = undefined;
-    const usePersistentStorage = rememberMe === true;
-    
-    useAppStore(pinia).login(responseData.token, { rememberMe: usePersistentStorage });
+    setUserLoggedInFlag(undefined);
     
     if (responseData.is_admin === 1) {
       localStorage.setItem('is_admin', '1');
     }
     
     if (responseData.auth_data) {
-      if (usePersistentStorage) {
-        localStorage.setItem('auth_data', responseData.auth_data);
-        sessionStorage.removeItem('auth_data');
-      } else {
-        sessionStorage.setItem('auth_data', responseData.auth_data);
-        localStorage.removeItem('auth_data');
-      }
+      setAuthData(responseData.auth_data);
     }
     
     setTimeout(() => {
-      window.isUserLoggedIn = true;
+      setUserLoggedInFlag(true);
       
       Promise.resolve().then(async () => {
-        try {
-          await initializeLanguageFromUserSettings();
-        } catch (e) {
-        }
+        await initializeLanguageFromUserSettings().catch(() => null);
 
         reloadMessages().catch(() => {
         });
@@ -50,29 +56,22 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
 
 
 export const login = async (loginData) => {
-  const { rememberMe, ...requestData } = loginData;
-  
-  const response = await request({
+  const envelope = await request({
     url: '/passport/auth/login',
     method: 'post',
-    data: requestData
+    data: loginData
   });
+  const responseData = resolvePayload(envelope);
   
-  let responseData = response;
-  if ((response && response.data) || (response && typeof response === 'object' && Object.prototype.hasOwnProperty.call(response, 'data'))) {
-    responseData = response.data;
-  }
-  
-  if (!responseData || !(responseData.token || responseData.auth_data)) {
+  if (!responseData || !responseData.auth_data) {
     throw new Error('登录数据不完整');
   }
   
-  const handledResponse = handleLoginSuccess(responseData, rememberMe);
+  const handledResponse = handleLoginSuccess(responseData);
   
   if (handledResponse.success) {
     return {
       success: true,
-      token: responseData.token,
       auth_data: responseData.auth_data,
       is_admin: responseData.is_admin
     };
@@ -93,42 +92,33 @@ export function register(data) {
     url: '/passport/auth/register',
     method: 'post',
     data: registerPayload
-  }).then(response => {
-    let responseData = response.data || response;
+  }).then((envelope) => {
+    const responseData = resolvePayload(envelope);
     
-    if (responseData.token) {
-      useAppStore(pinia).login(responseData.token, { rememberMe: true });
-      
-      window.isUserLoggedIn = true;
+    if (responseData?.auth_data) {
+      setUserLoggedInFlag(true);
     }
     
-    if (responseData.auth_data) {
-      localStorage.setItem('auth_data', responseData.auth_data);
-      sessionStorage.removeItem('auth_data');
+    if (responseData?.auth_data) {
+      setAuthData(responseData.auth_data);
     }
     
-    if (typeof responseData.is_admin !== 'undefined') {
+    if (typeof responseData?.is_admin !== 'undefined') {
       localStorage.setItem('is_admin', responseData.is_admin);
     }
 
     localStorage.setItem('language', registerLanguage);
 
-    try {
-      updateUserLanguage(registerLanguage).catch(() => {
-      });
-    } catch (error) {
-    }
+    updateUserLanguage(registerLanguage).catch(() => {
+    });
     
     setTimeout(async () => {
-      try {
-        const result = await reloadMessages();
-        
+      await reloadMessages().then(() => {
         window.dispatchEvent(new CustomEvent('languageChanged'));
-      } catch (error) {
-      }
+      }).catch(() => null);
     }, 100);
     
-    return response;
+    return envelope;
   });
 }
 
@@ -152,10 +142,8 @@ export function getUserInfo() {
 
 export const logout = async () => {
   try {
-    try {
-      await logoutCurrentSession();
-    } catch (apiError) {
-    }
+    setLogoutInProgress(true);
+    await logoutCurrentSession().catch(() => null);
 
     _clearAllAuthData();
     
@@ -191,6 +179,8 @@ export const logout = async () => {
       redirectToLogin: true,
       redirectUrl: '/login?logout=true'
     };
+  } finally {
+    setLogoutInProgress(false);
   }
 };
 
@@ -220,12 +210,12 @@ export function sendEmailVerify(data) {
 
 
 export const checkLoginStatus = () => {
-  const now = Date.now();
-  if (window._lastLoginCheck && (now - window._lastLoginCheckTime < 1000)) {
-    return window._lastLoginCheck;
+  const cachedStatus = getCachedLoginStatus(1000);
+  if (cachedStatus !== null) {
+    return cachedStatus;
   }
   
-  if (window._isLoggingOut === true) {
+  if (isLogoutInProgress()) {
     _cacheLoginStatus(false);
     return false;
   }
@@ -237,58 +227,23 @@ export const checkLoginStatus = () => {
     return false;
   }
   
-  if (window.isUserLoggedIn === false) {
+  if (getUserLoggedInFlag() === false) {
     _cacheLoginStatus(false);
     return false;
   }
   
-  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-  if (!token || token === 'undefined' || token === 'null' || token === '') {
-    _clearAllAuthData(); 
-    _cacheLoginStatus(false);
-    return false;
-  }
-  
-  const authData = localStorage.getItem('auth_data') || 
-                  sessionStorage.getItem('auth_data');
+  const authData = getAuthData();
                   
   if (!authData || authData === 'undefined' || authData === 'null' || authData === '') {
-    if (window.isUserLoggedIn === true) {
-      _cacheLoginStatus(true);
-      return true;
-    }
-    
     _clearAllAuthData();
     _cacheLoginStatus(false);
     return false;
   }
   
-  try {
-    const storeAuth = useAppStore(pinia).isLoggedIn;
-    if (!storeAuth) {
-    }
-  } catch (e) {
-  }
-  
-  const userInfoStr = localStorage.getItem('userInfo');
-  let userInfo = null;
-  
-  try {
-    if (userInfoStr) {
-      userInfo = JSON.parse(userInfoStr);
-      if (!userInfo || typeof userInfo !== 'object') {
-        userInfo = null;
-      }
-    }
-  } catch (e) {
-    userInfo = null;
-    localStorage.removeItem('userInfo');
-  }
-  
-  const isLoggedIn = !!token && !!authData;
+  const isLoggedIn = !!authData;
   
   if (isLoggedIn) {
-    window.isUserLoggedIn = true;
+    setUserLoggedInFlag(true);
   }
   
   _cacheLoginStatus(isLoggedIn);
@@ -297,19 +252,21 @@ export const checkLoginStatus = () => {
 
 
 const _cacheLoginStatus = (status) => {
-  window._lastLoginCheck = status;
-  window._lastLoginCheckTime = Date.now();
+  setCachedLoginStatus(status);
 };
 
 
 const _clearAllAuthData = () => {
-  window.isUserLoggedIn = false;
+  setUserLoggedInFlag(false);
+  clearCachedLoginStatus();
   
   const authKeys = [
     'token', 
+    'authorization',
     'auth_data', 
     'cookie_auth_data', 
     'userInfo', 
+    'left_sidebar_collapsed',
     'is_admin',
     'vuex',
     'user',
@@ -322,6 +279,7 @@ const _clearAllAuthData = () => {
   
   const sessionKeys = [
     'token', 
+    'authorization',
     'auth_data',
     'vuex',
     'user',
@@ -343,10 +301,7 @@ const _clearAllAuthData = () => {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   });
   
-  try {
-    useAppStore(pinia).clearUser();
-  } catch (e) {
-  }
+  useAppStore(pinia).clearUser();
 };
 
 
@@ -368,8 +323,7 @@ export const tokenLogin = (verifyToken, redirect) => {
 
 
 export const checkUserLoginStatus = async () => {
-  const authData = localStorage.getItem('auth_data') || sessionStorage.getItem('auth_data');
-  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const authData = getAuthData();
 
   const getCurrentRoutePath = () => {
     const hash = window.location.hash || '';
@@ -385,22 +339,23 @@ export const checkUserLoginStatus = async () => {
 
   const isAuthRoutePath = (path) => /\/(login|register|forgot-password)/.test(path);
   
-  if (!token || !authData) {
+  if (!authData) {
     forceLogout(); 
     return { isLoggedIn: false };
   }
   
   try {
-    const response = await request({
+    const envelope = await request({
       url: '/user/checkLogin',
       method: 'GET',
       headers: {
         'Authorization': authData
       }
     });
+    const responseData = resolvePayload(envelope);
     
-    if (response && response.data && response.data.is_login === true) {
-      window.isUserLoggedIn = true;
+    if (responseData?.is_login === true) {
+      setUserLoggedInFlag(true);
       return { isLoggedIn: true };
     } else {
       forceLogout();
@@ -431,4 +386,33 @@ export const checkUserLoginStatus = async () => {
     
     return { isLoggedIn: null, error: error.message || '网络错误' };
   }
-}; 
+};
+
+export const checkSessionWithServer = async () => {
+  const authData = getAuthData();
+
+  if (!authData) {
+    return { isLoggedIn: false };
+  }
+
+  try {
+    const envelope = await request({
+      url: '/user/checkLogin',
+      method: 'GET',
+      headers: {
+        Authorization: authData
+      }
+    });
+    const responseData = resolvePayload(envelope);
+
+    return {
+      isLoggedIn: responseData?.is_login === true,
+      isAdmin: responseData?.is_admin === true || responseData?.is_admin === 1
+    };
+  } catch (error) {
+    return {
+      isLoggedIn: null,
+      error: error?.message || '网络错误'
+    };
+  }
+};

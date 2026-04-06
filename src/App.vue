@@ -3,16 +3,13 @@
     :class="['app-root-shell', { 'has-post-login-background': postLoginBackgroundEnabled }]"
     :style="postLoginBackgroundStyle"
   >
-    <!-- 静态布局容器，包含不需要过渡效果的菜单和按钮 -->
     <div class="static-layout" v-if="$route.meta.requiresAuth">
       <div class="top-fixed-bar" ref="topFixedBarRef">
-        <!-- 网站名称 -->
         <div class="site-logo">
           <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
           {{ siteConfig.siteName }}
         </div>
 
-        <!-- 顶部工具栏：语言选择器、主题切换和用户头像 -->
         <div class="top-toolbar">
         <ServiceNoticeButton :has-unread="hasUnreadNotice" :aria-label="$t('menu.announcement')" />
         <LanguageSelector />
@@ -27,11 +24,9 @@
         </div>
       </div>
 
-      <!-- 顶部导航栏 - 保持不变 -->
       <SlideTabsNav />
     </div>
 
-    <!-- 路由视图只对内容部分应用过渡效果 -->
     <div
       ref="appContentWrapperRef"
       :class="['app-content-wrapper', { 'with-left-nav': $route.meta.requiresAuth, 'with-top-bar': $route.meta.requiresAuth }]"
@@ -58,19 +53,14 @@
       </div>
     </div>
 
-    <!-- 全局Toast通知 - 放在最外层，确保不受页面切换影响 -->
     <Toast />
 
-    <!-- 返回顶部按钮 -->
     <BackToTop />
 
-    <!-- 自定义鼠标右键菜单 -->
     <CustomContextMenu />
 
-    <!-- 资源预加载组件 -->
     <ResourcePreloader />
 
-    <!-- SVG图标定义 -->
     <IconDefinitions />
   </div>
 </template>

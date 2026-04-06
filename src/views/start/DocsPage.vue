@@ -2,14 +2,14 @@
 
   <div class="docs-container page-shell">
 
-    <!-- 域名授权验证提示 - 如果不需要域名授权功能，移除此组件即可 -->
+    
 
 
     
 
     <div class="docs-inner page-inner page-stack">
 
-      <!-- 标题栏 -->
+      
 
       <div class="docs-header">
 
@@ -17,7 +17,7 @@
 
         
 
-        <!-- 搜索框 -->
+        
 
         <div class="search-wrapper">
 
@@ -53,7 +53,7 @@
 
 
 
-      <!-- 加载状态 -->
+      
 
       <div v-if="loading" class="docs-loading">
 
@@ -65,7 +65,7 @@
 
 
 
-      <!-- 错误提示 -->
+      
 
       <div v-else-if="error" class="docs-error">
 
@@ -79,11 +79,11 @@
 
 
 
-      <!-- 文档列表 -->
+      
 
       <div v-else-if="hasDocuments && Object.keys(filteredDocs).length > 0" class="docs-content">
 
-        <!-- 遍历每个分类 -->
+        
 
         <div v-for="(items, category) in filteredDocs" :key="category" class="doc-category">
 
@@ -119,7 +119,7 @@
 
 
 
-      <!-- 空状态 - 增强版 -->
+      
 
       <div v-else class="docs-empty">
 
@@ -127,13 +127,13 @@
 
         
 
-        <!-- 根据搜索状态显示不同提示 -->
+        
 
         <p v-if="searchQuery">{{ $t('docs.noSearchResults') }}</p>
 
         
 
-        <!-- 无文档时的语言切换提示 -->
+        
 
         <template v-else>
 
@@ -151,7 +151,7 @@
 
         
 
-        <!-- 搜索清除按钮 -->
+        
 
         <button v-if="searchQuery" @click="clearSearch" class="retry-button">{{ $t('docs.clearSearch') }}</button>
 

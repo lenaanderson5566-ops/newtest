@@ -5,7 +5,7 @@
         <IconChevronLeft :size="20" />
       </button>
 
-      <!-- 欢迎卡片 -->
+      
 
       <div class="welcome-card">
         <div class="card-header shop-title-header">
@@ -34,10 +34,10 @@
         </div>
       </div>
 
-      <!-- 订阅列表 -->
+      
 
       <div class="plans-wrapper">
-        <!-- 无结果提示 -->
+        
 
         <div
           class="no-plans-message"
@@ -54,7 +54,7 @@
           </button>
         </div>
 
-        <!-- 骨架屏加载动画 -->
+        
 
         <div
           class="dashboard-card"
@@ -144,7 +144,7 @@
             </button>
           </div>
 
-          <!-- 订阅卡片 修改内容 -->
+          
 
           <div
             class="plan-card desktop-plan-card"
@@ -196,7 +196,7 @@
             </div>
 
             <div class="card-body">
-              <!-- 价格区域 - 修改为显示支持的所有周期 -->
+              
 
               <div class="plan-price">
                 <div class="price-display">
@@ -218,10 +218,10 @@
                 <span class="btn-text">{{ getPurchaseButtonText(plan) }}</span>
               </button>
 
-              <!-- 订阅特性 -->
+              
 
               <div class="plan-features">
-                <!-- JSON格式内容 -->
+                
 
                 <template v-if="isJsonContent(plan.content)">
                   <div
@@ -242,7 +242,7 @@
                   </div>
                 </template>
 
-                <!-- HTML格式内容 -->
+                
 
                 <div v-else class="html-content" v-html="plan.content"></div>
               </div>
