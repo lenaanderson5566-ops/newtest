@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
 import { IconX } from '@tabler/icons-vue';
 
 export default {
@@ -96,15 +95,11 @@ export default {
   },
   emits: ['close', 'confirm'],
   setup(props, { emit }) {
-    const show = ref(false);
-
     const handleClose = () => {
-      show.value = false;
       emit('close');
     };
 
     const handleConfirm = () => {
-      show.value = false;
       emit('confirm');
     };
 
@@ -114,12 +109,7 @@ export default {
       }
     };
 
-    watch(() => props.showDialog, (newVal) => {
-      show.value = newVal;
-    }, { immediate: true });
-
     return {
-      show,
       handleClose,
       handleConfirm,
       handleOverlayClick
