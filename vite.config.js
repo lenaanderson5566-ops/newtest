@@ -1,12 +1,8 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import path from 'node:path';
 import fs from 'node:fs';
 import JavaScriptObfuscator from 'javascript-obfuscator';
-
-const isProd = process.env.NODE_ENV === 'production';
-const enableConfigJS = String(process.env.VITE_CONFIGJS ?? process.env.VUE_APP_CONFIGJS ?? 'false') === 'true';
-const enableObfuscation = String(process.env.VITE_OBFUSCATION ?? process.env.VUE_APP_OBFUSCATION ?? 'false') === 'true';
 
 const generateRandomFileName = (length = 8) => {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -19,9 +15,7 @@ const generateRandomFileName = (length = 8) => {
   return `${randowNumber}.${name}.js`;
 };
 
-const extraScriptFileName = isProd && enableConfigJS ? generateRandomFileName() : '';
-
-const extraConfigPlugin = () => ({
+const extraConfigPlugin = ({ isProd, enableConfigJS, enableObfuscation, extraScriptFileName }) => ({
   name: 'generate-extra-config-js',
   transformIndexHtml(html) {
     if (!isProd || !enableConfigJS) {
@@ -61,41 +55,52 @@ const extraConfigPlugin = () => ({
   }
 });
 
-export default defineConfig({
-  base: './',
-  publicDir: 'public',
-  plugins: [vue(), extraConfigPlugin()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src')
-    }
-  },
-  define: {
-    __VUE_OPTIONS_API__: true,
-    __VUE_PROD_DEVTOOLS__: false,
-    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@use "@/assets/styles/base/variables.scss" as *;`
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  const isProd = mode === 'production';
+  const enableConfigJS = String(env.VITE_CONFIGJS ?? env.VUE_APP_CONFIGJS ?? 'false') === 'true';
+  const enableObfuscation = String(env.VITE_OBFUSCATION ?? env.VUE_APP_OBFUSCATION ?? 'false') === 'true';
+  const extraScriptFileName = isProd && enableConfigJS ? generateRandomFileName() : '';
+
+  return {
+    base: './',
+    publicDir: 'public',
+    plugins: [
+      vue(),
+      extraConfigPlugin({ isProd, enableConfigJS, enableObfuscation, extraScriptFileName })
+    ],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src')
+      }
+    },
+    define: {
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: false,
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "@/assets/styles/base/variables.scss" as *;`
+        }
+      }
+    },
+    build: {
+      outDir: 'dist',
+      assetsDir: 'static',
+      sourcemap: false,
+      minify: 'esbuild',
+      esbuild: {
+        drop: ['console', 'debugger'],
+        legalComments: 'none',
+        charset: 'ascii'
+      }
+    },
+    server: {
+      hmr: {
+        overlay: false
       }
     }
-  },
-  build: {
-    outDir: 'dist',
-    assetsDir: 'static',
-    sourcemap: false,
-    minify: 'esbuild',
-    esbuild: {
-      drop: ['console', 'debugger'],
-      legalComments: 'none',
-      charset: 'ascii'
-    }
-  },
-  server: {
-    hmr: {
-      overlay: false
-    }
-  }
+  };
 });
