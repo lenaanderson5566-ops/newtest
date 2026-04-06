@@ -12,8 +12,9 @@
       
 
       <div class="docs-header">
-
-        <h1 class="docs-title">{{ $t('menu.start') }}</h1>
+        <div class="card-header shop-title-header">
+          <h2 class="card-title">{{ $t('menu.start') }}</h2>
+        </div>
 
         
 
@@ -295,23 +296,20 @@ onMounted(() => {
 
   margin-bottom: 24px;
 
-  
-
-  .docs-title {
-    @extend %typo-page-title;
-
+  .shop-title-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
     margin-bottom: 24px;
 
-    background: linear-gradient(45deg, var(--theme-color), var(--secondary-color));
-
-    -webkit-background-clip: text;
-
-    background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-
-    display: inline-block;
-
+    .card-title {
+      @extend %typo-section-title;
+      margin: 0;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      line-height: 1.25;
+    }
   }
 
 }
@@ -502,7 +500,7 @@ onMounted(() => {
 
   border-radius: $border-radius-sm;
 
-  background-color: #fff;
+  background-color: transparent;
 
   cursor: pointer;
 
