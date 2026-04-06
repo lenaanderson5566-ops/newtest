@@ -544,6 +544,7 @@ import IconCheck from '@/components/icons/IconCheck.vue';
 
 
 import { register, checkLoginStatus, getWebsiteConfig, sendEmailVerify } from '@/api/auth';
+import { getResponseData } from '@/api/request';
 
 
 
@@ -838,10 +839,11 @@ export default {
         }
 
         const response = await getWebsiteConfig();
+        const responseData = getResponseData(response);
 
-        if (response && response.data) {
+        if (responseData) {
 
-          Object.assign(config, response.data);
+          Object.assign(config, responseData);
 
 
 
@@ -1122,7 +1124,7 @@ export default {
 
 
 
-        if (response && response.data === true) {
+        if (getResponseData(response) === true) {
 
           codeSent.value = true;
 

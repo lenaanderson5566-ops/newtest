@@ -373,6 +373,7 @@ import IconEye from '@/components/icons/IconEye.vue';
 import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 
 import { resetPassword, sendEmailVerify, checkLoginStatus, getWebsiteConfig } from '@/api/auth';
+import { getResponseData } from '@/api/request';
 
 
 
@@ -719,12 +720,13 @@ export default {
         configLoading.value = true;
 
         const response = await getWebsiteConfig();
+        const responseData = getResponseData(response);
 
 
 
-        if (response && response.data) {
+        if (responseData) {
 
-          Object.assign(config, response.data);
+          Object.assign(config, responseData);
 
 
 
@@ -1196,7 +1198,7 @@ export default {
 
 
 
-        if (response && response.data === true) {
+        if (getResponseData(response) === true) {
 
           startCooldown();
 
@@ -1418,7 +1420,7 @@ export default {
 
 
 
-        if (response.data === true) {
+        if (getResponseData(response) === true) {
 
           showToast(response.message || t('auth.passwordResetSuccess'), 'success');
 

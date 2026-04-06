@@ -1,5 +1,5 @@
 ﻿
-import request from './request';
+import request, { getResponseData } from './request';
 import { pinia, useAppStore } from '@/store';
 import { updateUserLanguage, logoutCurrentSession } from './account/user';
 import { getDefaultRegisterLanguage } from '@/utils/userLanguage';
@@ -31,10 +31,7 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
       window.isUserLoggedIn = true;
       
       Promise.resolve().then(async () => {
-        try {
-          await initializeLanguageFromUserSettings();
-        } catch (e) {
-        }
+        await initializeLanguageFromUserSettings().catch(() => null);
 
         reloadMessages().catch(() => {
         });
@@ -52,16 +49,12 @@ export const handleLoginSuccess = (responseData, rememberMe) => {
 export const login = async (loginData) => {
   const { rememberMe, ...requestData } = loginData;
   
-  const response = await request({
+  const envelope = await request({
     url: '/passport/auth/login',
     method: 'post',
     data: requestData
   });
-  
-  let responseData = response;
-  if ((response && response.data) || (response && typeof response === 'object' && Object.prototype.hasOwnProperty.call(response, 'data'))) {
-    responseData = response.data;
-  }
+  const responseData = getResponseData(envelope);
   
   if (!responseData || !(responseData.token || responseData.auth_data)) {
     throw new Error('登录数据不完整');
@@ -93,42 +86,36 @@ export function register(data) {
     url: '/passport/auth/register',
     method: 'post',
     data: registerPayload
-  }).then(response => {
-    let responseData = response.data || response;
+  }).then((envelope) => {
+    const responseData = getResponseData(envelope);
     
-    if (responseData.token) {
+    if (responseData?.token) {
       useAppStore(pinia).login(responseData.token, { rememberMe: true });
       
       window.isUserLoggedIn = true;
     }
     
-    if (responseData.auth_data) {
+    if (responseData?.auth_data) {
       localStorage.setItem('auth_data', responseData.auth_data);
       sessionStorage.removeItem('auth_data');
     }
     
-    if (typeof responseData.is_admin !== 'undefined') {
+    if (typeof responseData?.is_admin !== 'undefined') {
       localStorage.setItem('is_admin', responseData.is_admin);
     }
 
     localStorage.setItem('language', registerLanguage);
 
-    try {
-      updateUserLanguage(registerLanguage).catch(() => {
-      });
-    } catch (error) {
-    }
+    updateUserLanguage(registerLanguage).catch(() => {
+    });
     
     setTimeout(async () => {
-      try {
-        const result = await reloadMessages();
-        
+      await reloadMessages().then(() => {
         window.dispatchEvent(new CustomEvent('languageChanged'));
-      } catch (error) {
-      }
+      }).catch(() => null);
     }, 100);
     
-    return response;
+    return envelope;
   });
 }
 
@@ -152,10 +139,7 @@ export function getUserInfo() {
 
 export const logout = async () => {
   try {
-    try {
-      await logoutCurrentSession();
-    } catch (apiError) {
-    }
+    await logoutCurrentSession().catch(() => null);
 
     _clearAllAuthData();
     
@@ -263,11 +247,8 @@ export const checkLoginStatus = () => {
     return false;
   }
   
-  try {
-    const storeAuth = useAppStore(pinia).isLoggedIn;
-    if (!storeAuth) {
-    }
-  } catch (e) {
+  const storeAuth = useAppStore(pinia).isLoggedIn;
+  if (!storeAuth) {
   }
   
   const userInfoStr = localStorage.getItem('userInfo');
@@ -343,10 +324,7 @@ const _clearAllAuthData = () => {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   });
   
-  try {
-    useAppStore(pinia).clearUser();
-  } catch (e) {
-  }
+  useAppStore(pinia).clearUser();
 };
 
 
@@ -391,15 +369,16 @@ export const checkUserLoginStatus = async () => {
   }
   
   try {
-    const response = await request({
+    const envelope = await request({
       url: '/user/checkLogin',
       method: 'GET',
       headers: {
         'Authorization': authData
       }
     });
+    const responseData = getResponseData(envelope);
     
-    if (response && response.data && response.data.is_login === true) {
+    if (responseData?.is_login === true) {
       window.isUserLoggedIn = true;
       return { isLoggedIn: true };
     } else {

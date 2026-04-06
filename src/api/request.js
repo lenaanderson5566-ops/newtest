@@ -38,6 +38,27 @@ const normalizeAuthData = (value) => {
   return trimmed;
 };
 
+/**
+ * 统一响应契约说明：
+ * - request(...) 成功时固定返回 `response.data`（即后端响应包，以下简称 envelope）
+ * - envelope 常见结构：{ data, message, ... }
+ * - 业务代码请通过下方辅助函数读取，避免在各处写分叉兼容逻辑
+ */
+export const getResponseEnvelope = (response) => {
+  if (response && typeof response === "object") {
+    return response;
+  }
+  return {};
+};
+
+export const getResponseData = (response) => {
+  const envelope = getResponseEnvelope(response);
+  if (Object.prototype.hasOwnProperty.call(envelope, "data")) {
+    return envelope.data;
+  }
+  return null;
+};
+
 const request = axios.create({
   baseURL: API_BASE_URL,
   timeout: 30000,
@@ -77,21 +98,18 @@ request.interceptors.request.use(
       delete config.headers?.authorization;
     }
 
-    try {
-      if (
-        CUSTOM_HEADERS_CONFIG &&
-        CUSTOM_HEADERS_CONFIG.enabled &&
-        CUSTOM_HEADERS_CONFIG.headers
-      ) {
-        const customHeaders = CUSTOM_HEADERS_CONFIG.headers;
-        for (const headerName in customHeaders) {
-          if (Object.prototype.hasOwnProperty.call(customHeaders, headerName)) {
-            const headerValue = customHeaders[headerName];
-            config.headers[headerName] = headerValue;
-          }
+    if (
+      CUSTOM_HEADERS_CONFIG &&
+      CUSTOM_HEADERS_CONFIG.enabled &&
+      CUSTOM_HEADERS_CONFIG.headers
+    ) {
+      const customHeaders = CUSTOM_HEADERS_CONFIG.headers;
+      for (const headerName in customHeaders) {
+        if (Object.prototype.hasOwnProperty.call(customHeaders, headerName)) {
+          const headerValue = customHeaders[headerName];
+          config.headers[headerName] = headerValue;
         }
       }
-    } catch (error) {
     }
 
     return config;
@@ -103,18 +121,14 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   (response) => {
-    try {
-      const res = response.data;
+    const res = response.data;
 
-      if (res && (res.message === "未登录或登陆已过期" || res.message === "Not logged in or session expired")) {
-        clearAuthDataAndRedirectToLogin();
-        return Promise.reject(new Error(res.message));
-      }
-
-      return res;
-    } catch (err) {
-      return Promise.reject(new Error("Failed to process response data"));
+    if (res && (res.message === "未登录或登陆已过期" || res.message === "Not logged in or session expired")) {
+      clearAuthDataAndRedirectToLogin();
+      return Promise.reject(new Error(res.message));
     }
+
+    return res;
   },
   (error) => {
 

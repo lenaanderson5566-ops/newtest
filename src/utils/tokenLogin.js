@@ -5,6 +5,7 @@ import { useToast } from '@/composables/useToast';
 import { useI18n } from 'vue-i18n';
 import NProgress from 'nprogress';
 import { tokenLogin, handleLoginSuccess } from '@/api/auth';
+import { getResponseData } from '@/api/request';
 import { handleRedirectPath } from '@/utils/redirectHandler';
 
 const initialUrlParams = {
@@ -14,27 +15,23 @@ const initialUrlParams = {
 };
 
 (function captureInitialUrlParams() {
-  try {
-    initialUrlParams.originalUrl = window.location.href;
-    
-    const hashPart = window.location.hash || '';
-    
-    if (hashPart.includes('?')) {
-      const queryPart = hashPart.split('?')[1];
-      if (queryPart) {
-        const params = new URLSearchParams(queryPart);
-        initialUrlParams.verifyToken = params.get('verify');
-        initialUrlParams.redirectPath = params.get('redirect');
-      }
+  initialUrlParams.originalUrl = window.location.href;
+  
+  const hashPart = window.location.hash || '';
+  
+  if (hashPart.includes('?')) {
+    const queryPart = hashPart.split('?')[1];
+    if (queryPart) {
+      const params = new URLSearchParams(queryPart);
+      initialUrlParams.verifyToken = params.get('verify');
+      initialUrlParams.redirectPath = params.get('redirect');
     }
-    
-    if (!initialUrlParams.verifyToken) {
-      const queryParams = new URLSearchParams(window.location.search);
-      initialUrlParams.verifyToken = queryParams.get('verify');
-      initialUrlParams.redirectPath = queryParams.get('redirect');
-    }
-    
-  } catch (error) {
+  }
+  
+  if (!initialUrlParams.verifyToken) {
+    const queryParams = new URLSearchParams(window.location.search);
+    initialUrlParams.verifyToken = queryParams.get('verify');
+    initialUrlParams.redirectPath = queryParams.get('redirect');
   }
 })();
 
@@ -81,12 +78,13 @@ export const handleTokenLogin = async (options = {}) => {
   NProgress.start();
   
   try {
-    const response = await tokenLogin(verifyToken, redirectPath);
-    
-    if (response.data && (response.data.token || response.data.auth_data)) {
-      showToast(response.message || t('auth.verifyTokenSuccess'), 'success');
+    const envelope = await tokenLogin(verifyToken, redirectPath);
+    const responseData = getResponseData(envelope);
+
+    if (responseData && (responseData.token || responseData.auth_data)) {
+      showToast(envelope?.message || t('auth.verifyTokenSuccess'), 'success');
       
-      const loginResult = handleLoginSuccess(response.data, false); 
+      const loginResult = handleLoginSuccess(responseData, false); 
       
       if (!loginResult.success) {
       }
