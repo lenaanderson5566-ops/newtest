@@ -40,7 +40,9 @@
   margin-bottom: 16px;
 
   .auth-logo {
-    margin-bottom: 6px;
+    margin-bottom: 4px;
+    transform: scale(0.85);
+    transform-origin: center;
   }
 
   .auth-title {
@@ -50,7 +52,7 @@
 
   .auth-subtitle {
     @extend %typo-body-text;
-    font-size: $font-size-md;
+    font-size: $font-size-sm;
     margin-bottom: 8px;
   }
 }
@@ -69,20 +71,20 @@
 }
 
 .auth-logo-text--lg {
-  font-size: clamp(24px, 2.4vw, 30px);
+  font-size: clamp(20px, 2vw, 26px);
 }
 
 .auth-logo-text--md {
-  font-size: clamp(19px, 1.9vw, 24px);
+  font-size: clamp(16px, 1.6vw, 20px);
 }
 
 @media (max-width: map.get($breakpoints, sm)) {
   .auth-logo-text--lg {
-    font-size: 22px;
+    font-size: 19px;
   }
 
   .auth-logo-text--md {
-    font-size: 19px;
+    font-size: 16px;
   }
 }
 
