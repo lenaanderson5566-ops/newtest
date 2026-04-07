@@ -25,6 +25,8 @@ export default {
     passwordTooShort: 'Mật khẩu phải có ít nhất 8 ký tự',
     passwordsDoNotMatch: 'Hai lần nhập mật khẩu không khớp',
     loginSuccess: 'Đăng nhập thành công',
+    loginTooManyAttempts: 'Bạn đã nhập sai mật khẩu quá nhiều lần. Vui lòng thử lại sau {minutes} phút.',
+    accountSuspended: 'Tài khoản của bạn đã bị khóa',
     loginFailed: 'Đăng nhập thất bại, vui lòng kiểm tra thông tin đăng nhập',
     registerSuccess: 'Đăng ký thành công',
     registerFailed: 'Đăng ký thất bại, vui lòng thử lại sau',

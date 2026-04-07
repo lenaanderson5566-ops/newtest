@@ -581,6 +581,12 @@ onMounted(fetchUserStatus);
   gap: 8px;
 }
 
+@media (max-width: 767.98px) {
+  .client-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .client-item {
   border: var(--border-width) solid var(--border-default);
   background: var(--color-bg-surface);

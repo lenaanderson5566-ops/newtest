@@ -27,6 +27,8 @@ export default {
     passwordTooShort: '비밀번호는 최소 8자 이상이어야 합니다',
     passwordsDoNotMatch: '입력한 비밀번호가 일치하지 않습니다',
     loginSuccess: '로그인 성공',
+    loginTooManyAttempts: '비밀번호 오류 횟수가 너무 많습니다. {minutes}분 후 다시 시도하세요.',
+    accountSuspended: '계정이 정지되었습니다',
     loginFailed: '로그인 실패, 자격 증명을 확인하세요',
     registerSuccess: '등록 성공',
     registerFailed: '등록 실패, 나중에 다시 시도하세요',

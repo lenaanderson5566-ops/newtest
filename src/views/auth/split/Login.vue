@@ -30,14 +30,9 @@
 
         <div class="auth-form-container" v-else>
           <div class="auth-header">
-            <div class="auth-logo">
-              <img
-                :src="logoPath"
-                alt="Logo"
-                @error="handleLogoError"
-                @click="goTo('/')"
-              />
-            </div>
+            <div class="auth-logo auth-logo-text auth-logo-text--md" @click="goTo('/')">
+          {{ SITE_CONFIG.siteName }}
+        </div>
             <h1 class="auth-title">{{ $t('auth.loginTitle') }}</h1>
             <p class="auth-subtitle">{{ $t('auth.loginSubtitle') }}</p>
           </div>
@@ -169,10 +164,6 @@ export default {
     const { showToast } = useToast();
     const { goTo } = useNavigator()
 
-    const logoPath = ref('./images/logo.png');
-    const handleLogoError = () => {
-      logoPath.value = '/images/logo.png';
-    };
 
     const formData = reactive({
       email: '',
@@ -335,10 +326,47 @@ export default {
           router.push('/dashboard');
         }, 300);
       } catch (error) {
-        showToast(error.response?.message || error.message || t('auth.loginFailed'), 'error');
+        showToast(resolveLoginErrorMessage(error), 'error');
       } finally {
         loading.value = false;
       }
+    };
+
+    const resolveLoginErrorMessage = (error) => {
+      const statusCode = error?.response?.status;
+      const responseMessage = String(error?.response?.data?.message || error?.response?.message || '').trim();
+
+      if (statusCode === 422) {
+        const fieldErrors = error?.response?.data?.errors;
+        const firstError = Array.isArray(fieldErrors?.email) ? fieldErrors.email[0]
+          : Array.isArray(fieldErrors?.password) ? fieldErrors.password[0]
+            : '';
+        const normalizedValidationError = String(firstError || responseMessage).toLowerCase();
+        if (normalizedValidationError.includes('email can not be empty')) return t('validation.emailRequired');
+        if (normalizedValidationError.includes('email format is incorrect')) return t('validation.emailInvalid');
+        if (normalizedValidationError.includes('password can not be empty')) return t('validation.passwordRequired');
+        if (normalizedValidationError.includes('password must be greater than 8')) return t('auth.passwordTooShort');
+        return t('auth.loginFailed');
+      }
+
+      const normalizedMessage = responseMessage.toLowerCase();
+      if (normalizedMessage.includes('incorrect email or password')) return t('auth.loginFailed');
+      if (normalizedMessage.includes('there are too many password errors')) {
+        const minuteMatch = responseMessage.match(/(\d+)/);
+        const minutes = minuteMatch?.[1] || '';
+        return t('auth.loginTooManyAttempts', { minutes });
+      }
+      if (normalizedMessage.includes('your account has been suspended')) return t('auth.accountSuspended');
+
+      const rawMessage = String(error?.message || '').toLowerCase();
+      if (rawMessage.includes('network')) return t('errors.networkError');
+      if (rawMessage.includes('timeout')) return t('errors.serverError');
+
+      if (statusCode === 403) return t('errors.forbidden');
+      if (statusCode === 404) return t('errors.notFound');
+      if (statusCode && statusCode >= 500) return t('errors.serverError');
+
+      return t('auth.loginFailed');
     };
 
     const getTimeBasedGreeting = () => {
@@ -361,9 +389,6 @@ export default {
       loading,
       showPassword,
       handleLogin,
-
-      logoPath,
-      handleLogoError,
       leftSideStyles,
       configLoading,
       showCaptchaModal,

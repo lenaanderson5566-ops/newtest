@@ -141,7 +141,20 @@ export default {
         captchaError: 'Lỗi xác thực, vui lòng thử lại',
         captchaLoading: 'Đang tải thành phần xác thực...',
         verifyTokenSuccess: 'Xác thực token thành công',
-        verifyTokenFailed: 'Xác thực token thất bại, vui lòng thử lại'
+        verifyTokenFailed: 'Xác thực token thất bại, vui lòng thử lại',
+        passwordStrength: 'Độ mạnh mật khẩu',
+
+        passwordStrengthWeak: 'Yếu',
+
+        passwordStrengthMedium: 'Trung bình',
+
+        passwordStrengthStrong: 'Mạnh',
+
+        passwordRuleMinLength: 'Ít nhất 8 ký tự',
+
+        passwordRuleAlphaNumericSuggested: 'Bao gồm chữ và số (khuyến nghị)',
+
+        passwordRuleSpecialSuggested: 'Bao gồm ký tự đặc biệt (khuyến nghị)',
     },
     validation: {
         required: '{field} không được để trống',

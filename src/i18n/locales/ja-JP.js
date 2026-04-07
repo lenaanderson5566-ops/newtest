@@ -134,7 +134,20 @@ export default {
     captchaError: '認証エラー。もう一度お試しください',
     captchaLoading: '認証コンポーネント読み込み中...',
     verifyTokenSuccess: 'トークン認証成功',
-    verifyTokenFailed: 'トークン認証失敗、もう一度お試しください'
+    verifyTokenFailed: 'トークン認証失敗、もう一度お試しください',
+    passwordStrength: 'パスワード強度',
+
+    passwordStrengthWeak: '弱い',
+
+    passwordStrengthMedium: '中',
+
+    passwordStrengthStrong: '強い',
+
+    passwordRuleMinLength: '8文字以上',
+
+    passwordRuleAlphaNumericSuggested: '英字と数字を含む（推奨）',
+
+    passwordRuleSpecialSuggested: '特殊文字を含む（推奨）',
   },
   validation: {
     required: '{field}は必須です',

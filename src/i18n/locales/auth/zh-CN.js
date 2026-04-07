@@ -27,6 +27,8 @@ export default {
     passwordTooShort: '密码长度至少为8个字符',
     passwordsDoNotMatch: '两次输入的密码不一致',
     loginSuccess: '登录成功',
+    loginTooManyAttempts: '密码错误次数过多，请在 {minutes} 分钟后重试。',
+    accountSuspended: '您的账号已被封禁',
     loginFailed: '登录失败，请检查您的登录信息',
     registerSuccess: '注册成功',
     registerFailed: '注册失败，请稍后重试',

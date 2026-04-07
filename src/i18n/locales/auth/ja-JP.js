@@ -27,6 +27,8 @@ export default {
     passwordTooShort: 'パスワードは最低8文字以上である必要があります',
     passwordsDoNotMatch: '入力したパスワードが一致しません',
     loginSuccess: 'ログイン成功',
+    loginTooManyAttempts: 'パスワードの誤入力回数が多すぎます。{minutes} 分後に再試行してください。',
+    accountSuspended: 'アカウントは停止されています',
     loginFailed: 'ログインに失敗しました、認証情報を確認してください',
     registerSuccess: '登録成功',
     registerFailed: '登録に失敗しました、しばらくしてから再度お試しください',
