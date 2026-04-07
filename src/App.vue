@@ -260,28 +260,43 @@ export default {
       }
     };
 
+    let currentUserInfoRequest = null;
     const loadCurrentUserInfo = async () => {
-      if (!route.meta.requiresAuth) return;
-      isUserInfoLoading.value = true;
-      hasResolvedUserInfo.value = false;
-      try {
-        const response = await getAccountUserInfo();
-        const apiUserData = response?.data;
-        if (apiUserData && typeof apiUserData === 'object') {
-          const normalizedEmail = String(apiUserData.email || apiUserData?.data?.email || '').trim();
-          const flattenedUserData = apiUserData?.data && typeof apiUserData.data === 'object'
-            ? { ...apiUserData, ...apiUserData.data }
-            : apiUserData;
-          const normalizedUserData = {
-            ...flattenedUserData,
-            email: normalizedEmail
-          };
-          store.setUser(normalizedUserData);
+      if (!route.meta.requiresAuth) return null;
+      if (currentUserInfoRequest) {
+        return currentUserInfoRequest;
+      }
+
+      currentUserInfoRequest = (async () => {
+        isUserInfoLoading.value = true;
+        hasResolvedUserInfo.value = false;
+        try {
+          const response = await getAccountUserInfo();
+          const apiUserData = response?.data;
+          if (apiUserData && typeof apiUserData === 'object') {
+            const normalizedEmail = String(apiUserData.email || apiUserData?.data?.email || '').trim();
+            const flattenedUserData = apiUserData?.data && typeof apiUserData.data === 'object'
+              ? { ...apiUserData, ...apiUserData.data }
+              : apiUserData;
+            const normalizedUserData = {
+              ...flattenedUserData,
+              email: normalizedEmail
+            };
+            store.setUser(normalizedUserData);
+          }
+        } catch (error) {
+        } finally {
+          isUserInfoLoading.value = false;
+          hasResolvedUserInfo.value = true;
         }
-      } catch (error) {
+
+        return store.userInfo;
+      })();
+
+      try {
+        return await currentUserInfoRequest;
       } finally {
-        isUserInfoLoading.value = false;
-        hasResolvedUserInfo.value = true;
+        currentUserInfoRequest = null;
       }
     };
 
@@ -340,6 +355,7 @@ export default {
 
     provide('clearCache', clearCache);
     provide('removeCachedRoute', removeCachedRoute);
+    provide('loadCurrentUserInfo', loadCurrentUserInfo);
 
     onMounted(() => {
       window.addEventListener('languageChanged', onLanguageChanged);
