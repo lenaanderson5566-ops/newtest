@@ -70,18 +70,20 @@ export default {
     const isDropdownOpen = ref(false);
     const avatarContainer = ref(null);
     const avatarInitial = computed(() => {
-      const rawEmail = (props.email || '').trim();
-      if (rawEmail) {
-        const localPart = rawEmail.split('@')[0] || rawEmail;
-        const fallbackTarget = localPart || rawEmail;
+      const rawEmail = String(props.email || '').trim();
+      const normalizedEmail = ['undefined', 'null'].includes(rawEmail.toLowerCase()) ? '' : rawEmail;
+      if (normalizedEmail) {
+        const localPart = normalizedEmail.split('@')[0] || normalizedEmail;
+        const fallbackTarget = localPart || normalizedEmail;
         const firstChar = [...fallbackTarget][0] || 'U';
 
         return firstChar.toUpperCase();
       }
 
-      const rawUsername = (props.username || '').trim();
-      if (rawUsername) {
-        const firstChar = [...rawUsername][0] || 'U';
+      const rawUsername = String(props.username || '').trim();
+      const normalizedUsername = ['undefined', 'null'].includes(rawUsername.toLowerCase()) ? '' : rawUsername;
+      if (normalizedUsername) {
+        const firstChar = [...normalizedUsername][0] || 'U';
         return firstChar.toUpperCase();
       }
 

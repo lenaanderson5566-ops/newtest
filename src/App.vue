@@ -263,9 +263,13 @@ export default {
       isUserInfoLoading.value = true;
       try {
         const response = await getAccountUserInfo();
-        const apiUserData = response?.data?.data && typeof response.data.data === 'object'
-          ? response.data.data
-          : response?.data;
+        const nestedData = response?.data?.data;
+        const directData = response?.data;
+        const apiUserData = (nestedData && typeof nestedData === 'object')
+          ? nestedData
+          : (directData && typeof directData === 'object')
+            ? directData
+            : (response && typeof response === 'object' ? response : null);
 
         if (apiUserData && typeof apiUserData === 'object') {
           const normalizedUserData = {
