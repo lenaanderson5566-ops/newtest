@@ -535,19 +535,23 @@ export default {
 
     const resolveLoginErrorMessage = (error) => {
       const statusCode = error?.response?.status;
+      const responseData = error?.response?.data;
       const responseMessage = String(
         error?.response?.data?.message
+        || (typeof responseData === 'string' ? responseData : '')
         || error?.response?.message
+        || error?.message
         || ''
       );
+      const normalizedMessage = responseMessage.toLowerCase();
 
-      if (responseMessage.includes('Incorrect email or password')) {
+      if (normalizedMessage.includes('incorrect email or password')) {
         return t('auth.loginInvalidCredentials');
       }
-      if (responseMessage.includes('too many password errors')) {
+      if (normalizedMessage.includes('too many password errors')) {
         return t('auth.loginTooManyAttempts');
       }
-      if (responseMessage.includes('account has been suspended')) {
+      if (normalizedMessage.includes('account has been suspended')) {
         return t('auth.loginAccountSuspended');
       }
 
