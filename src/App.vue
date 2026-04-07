@@ -151,7 +151,7 @@ export default {
     const isUserInfoLoading = ref(!!route.meta.requiresAuth);
     const hasResolvedUserInfo = ref(false);
     const isAvatarLoading = computed(() => (
-      route.meta.requiresAuth ? isUserInfoLoading.value : false
+      route.meta.requiresAuth ? (isUserInfoLoading.value || !hasResolvedUserInfo.value) : false
     ));
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
@@ -265,6 +265,7 @@ export default {
     const loadCurrentUserInfo = async () => {
       if (!route.meta.requiresAuth) return;
       isUserInfoLoading.value = true;
+      hasResolvedUserInfo.value = false;
       try {
         const response = await getAccountUserInfo();
         const apiUserData = response?.data;
@@ -277,17 +278,12 @@ export default {
             ...flattenedUserData,
             email: normalizedEmail
           };
-          if (normalizedEmail) {
-            store.setUser(normalizedUserData);
-            hasResolvedUserInfo.value = true;
-          }
+          store.setUser(normalizedUserData);
         }
       } catch (error) {
       } finally {
         isUserInfoLoading.value = false;
-        if (!hasResolvedUserInfo.value && store.userInfo?.email) {
-          hasResolvedUserInfo.value = true;
-        }
+        hasResolvedUserInfo.value = true;
       }
     };
 

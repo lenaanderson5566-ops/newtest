@@ -75,12 +75,19 @@ export default {
       if (normalizedEmail) {
         const localPart = normalizedEmail.split('@')[0] || normalizedEmail;
         const fallbackTarget = localPart || normalizedEmail;
-        const firstChar = [...fallbackTarget][0] || 'U';
+        const firstChar = [...fallbackTarget][0] || '';
 
         return firstChar.toUpperCase();
       }
 
-      return 'U';
+      const rawUsername = String(props.username || '').trim();
+      const normalizedUsername = ['undefined', 'null'].includes(rawUsername.toLowerCase()) ? '' : rawUsername;
+      if (normalizedUsername) {
+        const firstChar = [...normalizedUsername][0] || '';
+        return firstChar.toUpperCase();
+      }
+
+      return '';
     });
     
     const toggleDropdown = () => {
