@@ -334,36 +334,15 @@ export default {
 
     const resolveLoginErrorMessage = (error) => {
       const statusCode = error?.response?.status;
-      const responseData = error?.response?.data;
-      let parsedData = responseData;
+      const responseMessage = String(error?.response?.data?.message || '').trim();
 
-      if (typeof responseData === 'string') {
-        try {
-          parsedData = JSON.parse(responseData);
-        } catch (_) {
-          parsedData = responseData;
-        }
-      }
-
-      const responseMessage = String(
-        parsedData?.message
-        || parsedData?.msg
-        || parsedData?.error?.message
-        || parsedData?.data?.message
-        || (typeof responseData === 'string' ? responseData : '')
-        || error?.response?.message
-        || error?.message
-        || ''
-      );
-      const normalizedMessage = responseMessage.toLowerCase();
-
-      if (normalizedMessage.includes('incorrect email or password')) {
+      if (responseMessage === '邮箱或密码错误') {
         return t('auth.loginInvalidCredentials');
       }
-      if (normalizedMessage.includes('too many password errors')) {
+      if (responseMessage.includes('密码错误次数过多')) {
         return t('auth.loginTooManyAttempts');
       }
-      if (normalizedMessage.includes('account has been suspended')) {
+      if (responseMessage.includes('账号已被封禁') || responseMessage.includes('账号被封禁')) {
         return t('auth.loginAccountSuspended');
       }
 
