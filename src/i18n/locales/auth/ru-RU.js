@@ -27,6 +27,8 @@ export default {
     passwordTooShort: 'Пароль должен содержать не менее 8 символов',
     passwordsDoNotMatch: 'Введенные пароли не совпадают',
     loginSuccess: 'Вход выполнен успешно',
+    loginTooManyAttempts: 'Слишком много неверных попыток ввода пароля. Повторите через {minutes} минут.',
+    accountSuspended: 'Ваш аккаунт заблокирован',
     loginFailed: 'Ошибка входа, проверьте свои учетные данные',
     registerSuccess: 'Регистрация успешна',
     registerFailed: 'Ошибка регистрации, попробуйте позже',

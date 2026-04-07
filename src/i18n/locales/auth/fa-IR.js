@@ -27,6 +27,8 @@ export default {
     passwordTooShort: 'طول پسورد حداقل 8 حرف باشد',
     passwordsDoNotMatch: 'پسورد ها مطابقت ندارند',
     loginSuccess: 'ورود موفق',
+    loginTooManyAttempts: 'تعداد خطاهای رمز عبور بیش از حد مجاز است. لطفاً {minutes} دقیقه بعد دوباره تلاش کنید.',
+    accountSuspended: 'حساب شما مسدود شده است',
     loginFailed: 'ورود شکست خورد، اطلاعات را چک کنید',
     registerSuccess: 'ثبت نام موفق',
     registerFailed: 'ثبت نام شکست خورد، بعدا امتحان کنید',

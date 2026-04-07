@@ -27,6 +27,8 @@ export default {
     passwordTooShort: 'Password must be at least 8 characters long',
     passwordsDoNotMatch: 'Passwords do not match',
     loginSuccess: 'Signed in successfully',
+    loginTooManyAttempts: 'Too many incorrect password attempts. Please try again in {minutes} minutes.',
+    accountSuspended: 'Your account has been suspended',
     loginFailed: 'Sign-in failed, please check your credentials',
     registerSuccess: 'Registered successfully',
     registerFailed: 'Registration failed, please try again later',

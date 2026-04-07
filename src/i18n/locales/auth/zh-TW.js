@@ -27,6 +27,8 @@ export default {
     passwordTooShort: '密碼長度至少為8個字符',
     passwordsDoNotMatch: '兩次輸入的密碼不一致',
     loginSuccess: '登錄成功',
+    loginTooManyAttempts: '密碼錯誤次數過多，請在 {minutes} 分鐘後重試。',
+    accountSuspended: '您的帳號已被封禁',
     loginFailed: '登錄失敗，請檢查您的登錄資訊',
     registerSuccess: '註冊成功',
     registerFailed: '註冊失敗，請稍後重試',
