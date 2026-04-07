@@ -54,10 +54,6 @@ export default {
       type: String,
       default: ''
     },
-    username: {
-      type: String,
-      default: ''
-    },
     loading: {
       type: Boolean,
       default: false
@@ -77,13 +73,6 @@ export default {
         const fallbackTarget = localPart || normalizedEmail;
         const firstChar = [...fallbackTarget][0] || '';
 
-        return firstChar.toUpperCase();
-      }
-
-      const rawUsername = String(props.username || '').trim();
-      const normalizedUsername = ['undefined', 'null'].includes(rawUsername.toLowerCase()) ? '' : rawUsername;
-      if (normalizedUsername) {
-        const firstChar = [...normalizedUsername][0] || '';
         return firstChar.toUpperCase();
       }
 

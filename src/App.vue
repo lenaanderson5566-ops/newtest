@@ -20,7 +20,7 @@
         >
           <IconGift :size="18" />
         </button>
-        <UserAvatar :email="userEmail" :username="userDisplayName" :loading="isAvatarLoading" />
+        <UserAvatar :email="userEmail" :loading="isAvatarLoading" />
         </div>
       </div>
 
@@ -144,14 +144,12 @@ export default {
       const user = store.userInfo || {};
       return String(user.email || '').trim();
     });
-    const userDisplayName = computed(() => {
-      const user = store.userInfo || {};
-      return String(user.username || user.name || '').trim();
-    });
     const isUserInfoLoading = ref(!!route.meta.requiresAuth);
     const hasResolvedUserInfo = ref(false);
     const isAvatarLoading = computed(() => (
-      route.meta.requiresAuth ? (isUserInfoLoading.value || !hasResolvedUserInfo.value) : false
+      route.meta.requiresAuth
+        ? (isUserInfoLoading.value || !hasResolvedUserInfo.value || !userEmail.value)
+        : false
     ));
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
@@ -406,7 +404,6 @@ export default {
 
     return {
       userEmail,
-      userDisplayName,
       isUserInfoLoading,
       isAvatarLoading,
       siteConfig,
