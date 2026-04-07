@@ -3,7 +3,10 @@
 
 export function fetchKnowledgeList(language) {
   return request({
-    url: `/user/knowledge/fetch?language=${language}`,
+    url: '/user/knowledge/fetch',
+    params: {
+      lang: language
+    },
     method: 'get'
   }).then(response => {
     if (typeof response === 'object') {
@@ -19,7 +22,11 @@ export function fetchKnowledgeList(language) {
 
 export function fetchKnowledgeDetail(id, language) {
   return request({
-    url: `/user/knowledge/fetch?id=${id}&language=${language}`,
+    url: '/user/knowledge/fetch',
+    params: {
+      id,
+      lang: language
+    },
     method: 'get'
   }).then(response => {
     if (typeof response === 'object') {
@@ -31,4 +38,3 @@ export function fetchKnowledgeDetail(id, language) {
     throw error;
   });
 }
-
