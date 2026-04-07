@@ -1008,7 +1008,7 @@ export default {
       if (errorCode === 'AUTH_FORGET_EMAIL_REQUIRED') return { fieldErrors: { email: t('validation.emailRequired') }, toastMessage: '' };
       if (errorCode === 'AUTH_FORGET_EMAIL_FORMAT_INVALID') return { fieldErrors: { email: t('validation.emailInvalid') }, toastMessage: '' };
       if (errorCode === 'AUTH_FORGET_PASSWORD_REQUIRED') return { fieldErrors: { newPassword: t('validation.passwordRequired') }, toastMessage: '' };
-      if (errorCode === 'AUTH_FORGET_PASSWORD_TOO_SHORT') return { fieldErrors: { newPassword: t('auth.passwordTooShort') }, toastMessage: '' };
+      if (errorCode === 'AUTH_FORGET_PASSWORD_TOO_SHORT') return { fieldErrors: {}, toastMessage: '' };
       if (errorCode === 'AUTH_FORGET_EMAIL_CODE_REQUIRED') return { fieldErrors: { verificationCode: t('auth.codeRequired') }, toastMessage: '' };
       if (errorCode === 'AUTH_FORGET_EMAIL_CODE_INVALID') return { fieldErrors: { verificationCode: t('auth.codeInvalid') }, toastMessage: '' };
       if (errorCode === 'AUTH_FORGET_VALIDATION_FAILED' || errorCode === 'AUTH_FORGET_REQUEST_RATE_LIMITED' || errorCode === 'AUTH_FORGET_RESET_FAILED') return { fieldErrors: {}, toastMessage: t('auth.resetFailed') };
@@ -1216,7 +1216,9 @@ export default {
 
       const passwordValidation = validatePassword(formData.newPassword);
       if (!passwordValidation.valid) {
-        errors.newPassword = formData.newPassword ? t('auth.passwordTooShort') : t('auth.passwordRequired');
+        if (!formData.newPassword) {
+          errors.newPassword = t('auth.passwordRequired');
+        }
         isValid = false;
       }
 

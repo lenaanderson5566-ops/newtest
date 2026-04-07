@@ -1016,7 +1016,7 @@ export default {
       if (errorCode === 'AUTH_REGISTER_EMAIL_REQUIRED') return { fieldErrors: { email: t('validation.emailRequired') }, toastMessage: '' };
       if (errorCode === 'AUTH_REGISTER_EMAIL_FORMAT_INVALID') return { fieldErrors: { email: t('validation.emailInvalid') }, toastMessage: '' };
       if (errorCode === 'AUTH_REGISTER_PASSWORD_REQUIRED') return { fieldErrors: { password: t('validation.passwordRequired') }, toastMessage: '' };
-      if (errorCode === 'AUTH_REGISTER_PASSWORD_TOO_SHORT') return { fieldErrors: { password: t('auth.passwordTooShort') }, toastMessage: '' };
+      if (errorCode === 'AUTH_REGISTER_PASSWORD_TOO_SHORT') return { fieldErrors: {}, toastMessage: '' };
       if (errorCode === 'AUTH_REGISTER_INVITE_CODE_REQUIRED') return { fieldErrors: { inviteCode: t('auth.inviteCodeRequired') }, toastMessage: '' };
       if (errorCode === 'AUTH_REGISTER_INVITE_CODE_INVALID') return { fieldErrors: { inviteCode: t('auth.registerFailed') }, toastMessage: '' };
       if (errorCode === 'AUTH_REGISTER_EMAIL_CODE_REQUIRED') return { fieldErrors: { verificationCode: t('auth.codeRequired') }, toastMessage: '' };
@@ -1222,7 +1222,9 @@ export default {
 
       const passwordValidation = validatePassword(formData.password);
       if (!passwordValidation.valid) {
-        errors.password = formData.password ? t('auth.passwordTooShort') : t('auth.passwordRequired');
+        if (!formData.password) {
+          errors.password = t('auth.passwordRequired');
+        }
         isValid = false;
       }
 
