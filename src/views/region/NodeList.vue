@@ -771,7 +771,7 @@ onMounted(() => {
 
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  gap: 16px;
+  gap: 8px;
 
 }
 
@@ -785,7 +785,7 @@ onMounted(() => {
 
   align-items: center;
 
-  padding: 16px 16px;
+  padding: 8px 8px;
 
   border-radius: $border-radius-sm;
 
@@ -837,10 +837,7 @@ onMounted(() => {
     
 
     .node-name {
-
-      font-size: $font-size-md;
-
-      font-weight: $font-weight-semibold;
+      @extend %typo-body-text;
 
       margin: 0 0 4px;
 
