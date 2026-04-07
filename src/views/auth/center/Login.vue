@@ -23,20 +23,8 @@
 
       <div class="auth-header">
 
-        <div class="auth-logo">
-
-          <img
-
-            :src="logoPath"
-
-            alt="Logo"
-
-            @error="handleLogoError"
-
-            @click="goTo('/')"
-
-          />
-
+        <div class="auth-logo auth-logo-text auth-logo-text--lg" @click="goTo('/')">
+          {{ SITE_CONFIG.siteName }}
         </div>
 
         <h1 class="auth-title">{{ $t('auth.loginTitle') }}</h1>
@@ -241,7 +229,7 @@ import { validateEmail, validateRequired } from '@/utils/validators';
 
 import { handleTokenLogin, hasVerifyToken } from '@/utils/tokenLogin';
 
-import { AUTH_CONFIG } from '@/utils/baseConfig';
+import { AUTH_CONFIG, SITE_CONFIG } from '@/utils/baseConfig';
 
 import AuthPopup from '@/components/auth/AuthPopup.vue';
 
@@ -287,13 +275,6 @@ export default {
 
 
 
-    const logoPath = ref('./images/logo.png');
-
-    const handleLogoError = () => {
-
-      logoPath.value = '/images/logo.png';
-
-    };
 
 
 
@@ -566,9 +547,7 @@ export default {
 
 
 
-      logoPath,
-
-      handleLogoError,
+      SITE_CONFIG,
 
       showAuthPopup,
 

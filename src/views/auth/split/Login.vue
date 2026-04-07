@@ -30,14 +30,9 @@
 
         <div class="auth-form-container" v-else>
           <div class="auth-header">
-            <div class="auth-logo">
-              <img
-                :src="logoPath"
-                alt="Logo"
-                @error="handleLogoError"
-                @click="goTo('/')"
-              />
-            </div>
+            <div class="auth-logo auth-logo-text auth-logo-text--md" @click="goTo('/')">
+          {{ SITE_CONFIG.siteName }}
+        </div>
             <h1 class="auth-title">{{ $t('auth.loginTitle') }}</h1>
             <p class="auth-subtitle">{{ $t('auth.loginSubtitle') }}</p>
           </div>
@@ -169,10 +164,6 @@ export default {
     const { showToast } = useToast();
     const { goTo } = useNavigator()
 
-    const logoPath = ref('./images/logo.png');
-    const handleLogoError = () => {
-      logoPath.value = '/images/logo.png';
-    };
 
     const formData = reactive({
       email: '',
@@ -361,9 +352,6 @@ export default {
       loading,
       showPassword,
       handleLogin,
-
-      logoPath,
-      handleLogoError,
       leftSideStyles,
       configLoading,
       showCaptchaModal,

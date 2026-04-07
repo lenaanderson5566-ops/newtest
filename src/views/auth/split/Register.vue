@@ -64,21 +64,9 @@
 
           <div class="auth-header">
 
-            <div class="auth-logo">
-
-              <img
-
-                :src="logoPath"
-
-                alt="Logo"
-
-                @error="handleLogoError"
-
-                @click="goTo('/')"
-
-              />
-
-            </div>
+            <div class="auth-logo auth-logo-text auth-logo-text--md" @click="goTo('/')">
+          {{ SITE_CONFIG.siteName }}
+        </div>
 
             <h1 class="auth-title">{{ $t('auth.registerTitle') }}</h1>
 
@@ -681,13 +669,6 @@ export default {
 
 
 
-    const logoPath = ref('./images/logo.png');
-
-    const handleLogoError = () => {
-
-      logoPath.value = '/images/logo.png';
-
-    };
 
 
 
@@ -2151,11 +2132,6 @@ export default {
       handleEmailPrefixChange,
 
       inviteCodeFromUrl,
-
-
-      logoPath,
-
-      handleLogoError,
 
       captchaConfig,
 
