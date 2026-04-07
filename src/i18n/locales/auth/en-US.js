@@ -34,6 +34,7 @@ export default {
     loginInvalidRequest: 'Invalid login parameters',
     registerSuccess: 'Registered successfully',
     registerFailed: 'Registration failed, please try again later',
+    emailAlreadyRegisteredLogin: 'This email is already registered, please log in',
     resetSuccess: 'Reset link sent to your email',
     resetFailed: 'Password reset failed, please try again later',
     logoutSuccess: 'Signed out successfully',

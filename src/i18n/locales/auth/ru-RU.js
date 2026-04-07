@@ -34,6 +34,7 @@ export default {
     loginInvalidRequest: 'Некорректные параметры входа',
     registerSuccess: 'Регистрация успешна',
     registerFailed: 'Ошибка регистрации, попробуйте позже',
+    emailAlreadyRegisteredLogin: 'This email is already registered, please log in',
     resetSuccess: 'Ссылка для сброса отправлена на ваш email',
     resetFailed: 'Ошибка сброса пароля, попробуйте позже',
     logoutSuccess: 'Выход выполнен успешно',

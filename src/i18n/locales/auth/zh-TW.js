@@ -34,6 +34,7 @@ export default {
     loginInvalidRequest: '登入參數不正確',
     registerSuccess: '註冊成功',
     registerFailed: '註冊失敗，請稍後重試',
+    emailAlreadyRegisteredLogin: '該郵箱已被註冊，請直接登錄',
     resetSuccess: '重置鏈接已發送到您的電子郵箱',
     resetFailed: '重置密碼失敗，請稍後再試',
     logoutSuccess: '已成功退出登錄',

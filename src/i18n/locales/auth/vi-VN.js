@@ -32,6 +32,7 @@ export default {
     loginInvalidRequest: 'Tham số đăng nhập không hợp lệ',
     registerSuccess: 'Đăng ký thành công',
     registerFailed: 'Đăng ký thất bại, vui lòng thử lại sau',
+    emailAlreadyRegisteredLogin: 'This email is already registered, please log in',
     resetSuccess: 'Liên kết đặt lại đã được gửi đến email của bạn',
     resetFailed: 'Đặt lại mật khẩu thất bại, vui lòng thử lại sau',
     logoutSuccess: 'Đã đăng xuất thành công',

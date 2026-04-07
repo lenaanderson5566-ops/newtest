@@ -34,6 +34,7 @@ export default {
     loginInvalidRequest: 'ログインパラメータが正しくありません',
     registerSuccess: '登録成功',
     registerFailed: '登録に失敗しました、しばらくしてから再度お試しください',
+    emailAlreadyRegisteredLogin: 'This email is already registered, please log in',
     resetSuccess: 'リセットリンクをメールアドレスに送信しました',
     resetFailed: 'パスワードのリセットに失敗しました、しばらくしてから再度お試しください',
     logoutSuccess: 'ログアウト成功',

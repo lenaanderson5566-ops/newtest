@@ -1011,7 +1011,7 @@ export default {
       if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_FORMAT_INVALID') return { fieldErrors: { email: t('validation.emailInvalid') }, toastMessage: '' };
       if (errorCode === 'AUTH_SEND_VERIFY_RECAPTCHA_INVALID') return { fieldErrors: {}, toastMessage: t('auth.captchaRequired') };
       if (errorCode === 'AUTH_SEND_VERIFY_TOO_MANY_REQUESTS' || errorCode === 'AUTH_SEND_VERIFY_TOO_FREQUENT') return { fieldErrors: {}, toastMessage: t('auth.sendCodeFailed') };
-      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_ALREADY_REGISTERED') return { fieldErrors: { email: t('auth.registerFailed') }, toastMessage: '' };
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_ALREADY_REGISTERED') return { fieldErrors: { email: t('auth.emailAlreadyRegisteredLogin') }, toastMessage: '' };
       if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_NOT_REGISTERED') return { fieldErrors: { email: t('auth.sendCodeFailed') }, toastMessage: '' };
       if (errorCode === 'AUTH_SEND_VERIFY_VALIDATION_FAILED') return { fieldErrors: {}, toastMessage: t('auth.sendCodeFailed') };
 

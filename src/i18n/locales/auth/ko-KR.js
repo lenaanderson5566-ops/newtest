@@ -34,6 +34,7 @@ export default {
     loginInvalidRequest: '로그인 파라미터가 올바르지 않습니다',
     registerSuccess: '등록 성공',
     registerFailed: '등록 실패, 나중에 다시 시도하세요',
+    emailAlreadyRegisteredLogin: 'This email is already registered, please log in',
     resetSuccess: '재설정 링크를 이메일로 보냈습니다',
     resetFailed: '비밀번호 재설정 실패, 나중에 다시 시도하세요',
     logoutSuccess: '로그아웃 성공',

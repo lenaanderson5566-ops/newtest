@@ -34,6 +34,7 @@ export default {
     loginInvalidRequest: 'پارامترهای ورود نامعتبر است',
     registerSuccess: 'ثبت نام موفق',
     registerFailed: 'ثبت نام شکست خورد، بعدا امتحان کنید',
+    emailAlreadyRegisteredLogin: 'This email is already registered, please log in',
     resetSuccess: 'لینک بازنشانی به ایمیل شما ارسال شد',
     resetFailed: 'بازنشانی پسورد شکست خورد، بعدا امتحان کنید',
     logoutSuccess: 'خروج موفق',
