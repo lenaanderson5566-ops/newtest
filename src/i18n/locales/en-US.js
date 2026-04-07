@@ -133,7 +133,20 @@ export default {
         captchaError: 'Verification error, please try again',
         captchaLoading: 'Loading verification component...',
         verifyTokenSuccess: 'Token verification successful',
-        verifyTokenFailed: 'Token verification failed, please try again'
+        verifyTokenFailed: 'Token verification failed, please try again',
+        passwordStrength: 'Password Strength',
+
+        passwordStrengthWeak: 'Weak',
+
+        passwordStrengthMedium: 'Medium',
+
+        passwordStrengthStrong: 'Strong',
+
+        passwordRuleMinLength: 'At least 8 characters',
+
+        passwordRuleAlphaNumericSuggested: 'Includes letters and numbers (recommended)',
+
+        passwordRuleSpecialSuggested: 'Includes special characters (recommended)',
     },
     validation: {
         required: '{field} cannot be empty',
