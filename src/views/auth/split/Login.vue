@@ -335,8 +335,21 @@ export default {
     const resolveLoginErrorMessage = (error) => {
       const statusCode = error?.response?.status;
       const responseData = error?.response?.data;
+      let parsedData = responseData;
+
+      if (typeof responseData === 'string') {
+        try {
+          parsedData = JSON.parse(responseData);
+        } catch (_) {
+          parsedData = responseData;
+        }
+      }
+
       const responseMessage = String(
-        error?.response?.data?.message
+        parsedData?.message
+        || parsedData?.msg
+        || parsedData?.error?.message
+        || parsedData?.data?.message
         || (typeof responseData === 'string' ? responseData : '')
         || error?.response?.message
         || error?.message
@@ -369,7 +382,7 @@ export default {
 
       if (statusCode === 403) return t('errors.forbidden');
       if (statusCode === 404) return t('errors.notFound');
-      if (statusCode && statusCode >= 500) return t('errors.serverError');
+      if (statusCode && statusCode >= 500) return t('auth.loginFailed');
 
       const rawMessage = String(error?.message || '').toLowerCase();
       if (rawMessage.includes('network')) return t('errors.networkError');
