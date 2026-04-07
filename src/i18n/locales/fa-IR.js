@@ -69,7 +69,7 @@ export default {
     on: 'روشن',
     off: 'خاموش',
     copy: 'کپی',
-    viewDetails: 'نمایش جزئیات',
+    viewDetails: 'جزئیات',
     close: 'بستن',
     error_occurred: 'خطایی رخ داد، لطفا بعدا امتحان کنید',
     apiChecking: 'در حال بررسی دسترسی به API...',
@@ -707,8 +707,8 @@ profile: {
     },
     config_error: 'دریافت تنظیمات فروشگاه شکست خورد',
     popup: {
-      close_btn: 'درک کردم',
-      wait_close_btn: 'لطفا {seconds} ثانیه صبر کنید'
+      close_btn: 'باشه',
+      wait_close_btn: '{seconds}ثانیه صبر کنید'
     }
   },
   order: {
