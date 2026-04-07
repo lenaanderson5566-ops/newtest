@@ -535,17 +535,17 @@ export default {
 
     const resolveLoginErrorMessage = (error) => {
       const statusCode = error?.response?.status;
-      const responseMessage = String(error?.response?.data?.message || '').trim();
+      const errorCode = String(error?.response?.data?.code || '').trim();
 
-      if (responseMessage === '邮箱或密码错误') {
-        return t('auth.loginInvalidCredentials');
-      }
-      if (responseMessage.includes('密码错误次数过多')) {
-        return t('auth.loginTooManyAttempts');
-      }
-      if (responseMessage.includes('账号已被封禁') || responseMessage.includes('账号被封禁')) {
-        return t('auth.loginAccountSuspended');
-      }
+      if (errorCode === 'AUTH_LOGIN_INVALID_CREDENTIALS') return t('auth.loginInvalidCredentials');
+      if (errorCode === 'AUTH_LOGIN_PASSWORD_RETRY_LIMITED') return t('auth.loginTooManyAttempts');
+      if (errorCode === 'AUTH_LOGIN_ACCOUNT_SUSPENDED') return t('auth.loginAccountSuspended');
+
+      if (errorCode === 'AUTH_LOGIN_EMAIL_REQUIRED') return t('validation.emailRequired');
+      if (errorCode === 'AUTH_LOGIN_EMAIL_FORMAT_INVALID') return t('validation.emailInvalid');
+      if (errorCode === 'AUTH_LOGIN_PASSWORD_REQUIRED') return t('validation.passwordRequired');
+      if (errorCode === 'AUTH_LOGIN_PASSWORD_TOO_SHORT') return t('auth.passwordTooShort');
+      if (errorCode === 'AUTH_LOGIN_VALIDATION_FAILED') return t('auth.loginInvalidRequest');
 
       if (statusCode === 422) {
         const validationErrors = error?.response?.data?.errors || {};
