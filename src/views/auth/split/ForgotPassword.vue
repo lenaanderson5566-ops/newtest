@@ -1149,6 +1149,36 @@ export default {
 
 
 
+    const resolveSendCodeErrorMessage = (error) => {
+      const errorCode = String(error?.response?.data?.code || '').trim();
+
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_REQUIRED') return t('validation.emailRequired');
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_FORMAT_INVALID') return t('validation.emailInvalid');
+      if (errorCode === 'AUTH_SEND_VERIFY_VALIDATION_FAILED') return t('auth.sendCodeFailed');
+      if (errorCode === 'AUTH_SEND_VERIFY_TOO_MANY_REQUESTS' || errorCode === 'AUTH_SEND_VERIFY_TOO_FREQUENT') return t('auth.sendCodeFailed');
+      if (errorCode === 'AUTH_SEND_VERIFY_RECAPTCHA_INVALID') return t('auth.captchaRequired');
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_NOT_REGISTERED') return t('auth.sendCodeFailed');
+
+      return t('auth.sendCodeFailed');
+    };
+
+    const resolveResetErrorMessage = (error) => {
+      const errorCode = String(error?.response?.data?.code || '').trim();
+
+      if (errorCode === 'AUTH_FORGET_EMAIL_REQUIRED') return t('validation.emailRequired');
+      if (errorCode === 'AUTH_FORGET_EMAIL_FORMAT_INVALID') return t('validation.emailInvalid');
+      if (errorCode === 'AUTH_FORGET_PASSWORD_REQUIRED') return t('validation.passwordRequired');
+      if (errorCode === 'AUTH_FORGET_PASSWORD_TOO_SHORT') return t('auth.passwordTooShort');
+      if (errorCode === 'AUTH_FORGET_EMAIL_CODE_REQUIRED') return t('auth.codeRequired');
+      if (errorCode === 'AUTH_FORGET_EMAIL_CODE_INVALID') return t('auth.codeInvalid');
+      if (errorCode === 'AUTH_FORGET_VALIDATION_FAILED') return t('auth.resetFailed');
+      if (errorCode === 'AUTH_FORGET_REQUEST_RATE_LIMITED') return t('auth.resetFailed');
+      if (errorCode === 'AUTH_FORGET_EMAIL_NOT_REGISTERED') return t('auth.resetFailed');
+      if (errorCode === 'AUTH_FORGET_RESET_FAILED') return t('auth.resetFailed');
+
+      return t('auth.passwordResetFailed');
+    };
+
     const sendVerificationCodeWithCaptcha = async (captchaData) => {
 
       try {
@@ -1207,7 +1237,7 @@ export default {
 
       } catch (error) {
 
-        showToast(error.response?.message || error.message || t('auth.sendCodeFailed'), 'error');
+        showToast(resolveSendCodeErrorMessage(error), 'error');
 
       } finally {
 
@@ -1417,7 +1447,7 @@ export default {
 
       } catch (error) {
 
-        showToast(error.response?.message || error.message || t('auth.passwordResetFailed'), 'error');
+        showToast(resolveResetErrorMessage(error), 'error');
 
       } finally {
 

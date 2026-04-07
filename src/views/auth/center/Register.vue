@@ -1004,6 +1004,40 @@ export default {
 
 
 
+    const resolveSendCodeErrorMessage = (error) => {
+      const errorCode = String(error?.response?.data?.code || '').trim();
+
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_REQUIRED') return t('validation.emailRequired');
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_FORMAT_INVALID') return t('validation.emailInvalid');
+      if (errorCode === 'AUTH_SEND_VERIFY_VALIDATION_FAILED') return t('auth.sendCodeFailed');
+      if (errorCode === 'AUTH_SEND_VERIFY_TOO_MANY_REQUESTS' || errorCode === 'AUTH_SEND_VERIFY_TOO_FREQUENT') return t('auth.sendCodeFailed');
+      if (errorCode === 'AUTH_SEND_VERIFY_RECAPTCHA_INVALID') return t('auth.captchaRequired');
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_ALREADY_REGISTERED') return t('auth.registerFailed');
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_NOT_REGISTERED') return t('auth.sendCodeFailed');
+
+      return t('auth.sendCodeFailed');
+    };
+
+    const resolveRegisterErrorMessage = (error) => {
+      const errorCode = String(error?.response?.data?.code || '').trim();
+
+      if (errorCode === 'AUTH_REGISTER_EMAIL_REQUIRED') return t('validation.emailRequired');
+      if (errorCode === 'AUTH_REGISTER_EMAIL_FORMAT_INVALID') return t('validation.emailInvalid');
+      if (errorCode === 'AUTH_REGISTER_PASSWORD_REQUIRED') return t('validation.passwordRequired');
+      if (errorCode === 'AUTH_REGISTER_PASSWORD_TOO_SHORT') return t('auth.passwordTooShort');
+      if (errorCode === 'AUTH_REGISTER_INVITE_CODE_REQUIRED') return t('auth.inviteCodeRequired');
+      if (errorCode === 'AUTH_REGISTER_EMAIL_CODE_REQUIRED') return t('auth.codeRequired');
+      if (errorCode === 'AUTH_REGISTER_EMAIL_CODE_INVALID') return t('auth.codeInvalid');
+      if (errorCode === 'AUTH_REGISTER_RECAPTCHA_INVALID') return t('auth.captchaRequired');
+      if (errorCode === 'AUTH_REGISTER_VALIDATION_FAILED') return t('auth.registerFailed');
+      if (errorCode === 'AUTH_REGISTER_EMAIL_ALREADY_EXISTS') return t('auth.registerFailed');
+      if (errorCode === 'AUTH_REGISTER_INVITE_CODE_INVALID') return t('auth.registerFailed');
+      if (errorCode === 'AUTH_REGISTER_CLOSED') return t('auth.registerFailed');
+      if (errorCode === 'AUTH_REGISTER_FAILED') return t('auth.registerFailed');
+
+      return t('auth.registerFailed');
+    };
+
     const sendVerificationCodeWithCaptcha = async (captchaData) => {
 
       try {
@@ -1064,7 +1098,7 @@ export default {
 
       } catch (error) {
 
-        showToast(error.response?.message || error.message || t('auth.sendCodeFailed'), 'error');
+        showToast(resolveSendCodeErrorMessage(error), 'error');
 
       } finally {
 
@@ -1315,7 +1349,7 @@ export default {
 
       } catch (error) {
 
-        showToast(error.response?.message || error.message || t('auth.registerFailed'), 'error');
+        showToast(resolveRegisterErrorMessage(error), 'error');
 
         if (window.grecaptcha) {
 
