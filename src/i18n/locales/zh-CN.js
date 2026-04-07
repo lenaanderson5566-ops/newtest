@@ -134,7 +134,20 @@ export default {
         captchaError: '验证出错，请重试',
         captchaLoading: '正在加载验证组件...',
         verifyTokenSuccess: '令牌验证成功',
-        verifyTokenFailed: '令牌验证失败，请重试'
+        verifyTokenFailed: '令牌验证失败，请重试',
+        passwordStrength: '密码强度',
+
+        passwordStrengthWeak: '弱',
+
+        passwordStrengthMedium: '中',
+
+        passwordStrengthStrong: '强',
+
+        passwordRuleMinLength: '至少 8 位',
+
+        passwordRuleAlphaNumericSuggested: '包含字母和数字（建议）',
+
+        passwordRuleSpecialSuggested: '包含特殊字符（建议）',
     },
     validation: {
         required: '{field}不能为空',

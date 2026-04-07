@@ -134,7 +134,20 @@ export default {
     captchaError: 'Ошибка капчи, попробуйте снова',
     captchaLoading: 'Загрузка капчи...',
     verifyTokenSuccess: 'Проверка токена успешна',
-    verifyTokenFailed: 'Ошибка проверки токена, попробуйте снова'
+    verifyTokenFailed: 'Ошибка проверки токена, попробуйте снова',
+    passwordStrength: 'Надежность пароля',
+
+    passwordStrengthWeak: 'Слабый',
+
+    passwordStrengthMedium: 'Средний',
+
+    passwordStrengthStrong: 'Сильный',
+
+    passwordRuleMinLength: 'Не менее 8 символов',
+
+    passwordRuleAlphaNumericSuggested: 'Содержит буквы и цифры (рекомендуется)',
+
+    passwordRuleSpecialSuggested: 'Содержит спецсимволы (рекомендуется)',
   },
   validation: {
     required: '{field} не может быть пустым',

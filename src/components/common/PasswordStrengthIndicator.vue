@@ -85,9 +85,27 @@ const strengthText = computed(() => {
 .password-rule-tip {
   font-size: $font-size-sm;
   color: var(--color-text-tertiary);
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  span::before {
+    content: '○';
+    color: var(--color-text-tertiary);
+    font-size: 12px;
+    line-height: 1;
+  }
 }
 
 .password-rule-tip .met {
+  color: #22c55e;
+}
+
+.password-rule-tip .met::before {
+  content: '✓';
   color: #22c55e;
 }
 
