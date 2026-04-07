@@ -1121,35 +1121,33 @@ export default {
     const resolveSendCodeErrorMessage = (error) => {
       const errorCode = String(error?.response?.data?.code || '').trim();
 
-      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_REQUIRED') return t('validation.emailRequired');
-      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_FORMAT_INVALID') return t('validation.emailInvalid');
-      if (errorCode === 'AUTH_SEND_VERIFY_VALIDATION_FAILED') return t('auth.sendCodeFailed');
-      if (errorCode === 'AUTH_SEND_VERIFY_TOO_MANY_REQUESTS' || errorCode === 'AUTH_SEND_VERIFY_TOO_FREQUENT') return t('auth.sendCodeFailed');
-      if (errorCode === 'AUTH_SEND_VERIFY_RECAPTCHA_INVALID') return t('auth.captchaRequired');
-      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_ALREADY_REGISTERED') return t('auth.registerFailed');
-      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_NOT_REGISTERED') return t('auth.sendCodeFailed');
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_REQUIRED') return { fieldErrors: { email: t('validation.emailRequired') }, toastMessage: '' };
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_FORMAT_INVALID') return { fieldErrors: { email: t('validation.emailInvalid') }, toastMessage: '' };
+      if (errorCode === 'AUTH_SEND_VERIFY_RECAPTCHA_INVALID') return { fieldErrors: {}, toastMessage: t('auth.captchaRequired') };
+      if (errorCode === 'AUTH_SEND_VERIFY_TOO_MANY_REQUESTS' || errorCode === 'AUTH_SEND_VERIFY_TOO_FREQUENT') return { fieldErrors: {}, toastMessage: t('auth.sendCodeFailed') };
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_ALREADY_REGISTERED') return { fieldErrors: { email: t('auth.registerFailed') }, toastMessage: '' };
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_NOT_REGISTERED') return { fieldErrors: { email: t('auth.sendCodeFailed') }, toastMessage: '' };
+      if (errorCode === 'AUTH_SEND_VERIFY_VALIDATION_FAILED') return { fieldErrors: {}, toastMessage: t('auth.sendCodeFailed') };
 
-      return t('auth.sendCodeFailed');
+      return { fieldErrors: {}, toastMessage: t('auth.sendCodeFailed') };
     };
 
     const resolveRegisterErrorMessage = (error) => {
       const errorCode = String(error?.response?.data?.code || '').trim();
 
-      if (errorCode === 'AUTH_REGISTER_EMAIL_REQUIRED') return t('validation.emailRequired');
-      if (errorCode === 'AUTH_REGISTER_EMAIL_FORMAT_INVALID') return t('validation.emailInvalid');
-      if (errorCode === 'AUTH_REGISTER_PASSWORD_REQUIRED') return t('validation.passwordRequired');
-      if (errorCode === 'AUTH_REGISTER_PASSWORD_TOO_SHORT') return t('auth.passwordTooShort');
-      if (errorCode === 'AUTH_REGISTER_INVITE_CODE_REQUIRED') return t('auth.inviteCodeRequired');
-      if (errorCode === 'AUTH_REGISTER_EMAIL_CODE_REQUIRED') return t('auth.codeRequired');
-      if (errorCode === 'AUTH_REGISTER_EMAIL_CODE_INVALID') return t('auth.codeInvalid');
-      if (errorCode === 'AUTH_REGISTER_RECAPTCHA_INVALID') return t('auth.captchaRequired');
-      if (errorCode === 'AUTH_REGISTER_VALIDATION_FAILED') return t('auth.registerFailed');
-      if (errorCode === 'AUTH_REGISTER_EMAIL_ALREADY_EXISTS') return t('auth.registerFailed');
-      if (errorCode === 'AUTH_REGISTER_INVITE_CODE_INVALID') return t('auth.registerFailed');
-      if (errorCode === 'AUTH_REGISTER_CLOSED') return t('auth.registerFailed');
-      if (errorCode === 'AUTH_REGISTER_FAILED') return t('auth.registerFailed');
+      if (errorCode === 'AUTH_REGISTER_EMAIL_REQUIRED') return { fieldErrors: { email: t('validation.emailRequired') }, toastMessage: '' };
+      if (errorCode === 'AUTH_REGISTER_EMAIL_FORMAT_INVALID') return { fieldErrors: { email: t('validation.emailInvalid') }, toastMessage: '' };
+      if (errorCode === 'AUTH_REGISTER_PASSWORD_REQUIRED') return { fieldErrors: { password: t('validation.passwordRequired') }, toastMessage: '' };
+      if (errorCode === 'AUTH_REGISTER_PASSWORD_TOO_SHORT') return { fieldErrors: { password: t('auth.passwordTooShort') }, toastMessage: '' };
+      if (errorCode === 'AUTH_REGISTER_INVITE_CODE_REQUIRED') return { fieldErrors: { inviteCode: t('auth.inviteCodeRequired') }, toastMessage: '' };
+      if (errorCode === 'AUTH_REGISTER_INVITE_CODE_INVALID') return { fieldErrors: { inviteCode: t('auth.registerFailed') }, toastMessage: '' };
+      if (errorCode === 'AUTH_REGISTER_EMAIL_CODE_REQUIRED') return { fieldErrors: { verificationCode: t('auth.codeRequired') }, toastMessage: '' };
+      if (errorCode === 'AUTH_REGISTER_EMAIL_CODE_INVALID') return { fieldErrors: { verificationCode: t('auth.codeInvalid') }, toastMessage: '' };
+      if (errorCode === 'AUTH_REGISTER_EMAIL_ALREADY_EXISTS') return { fieldErrors: { email: t('auth.registerFailed') }, toastMessage: '' };
+      if (errorCode === 'AUTH_REGISTER_RECAPTCHA_INVALID') return { fieldErrors: {}, toastMessage: t('auth.captchaRequired') };
+      if (errorCode === 'AUTH_REGISTER_VALIDATION_FAILED' || errorCode === 'AUTH_REGISTER_IP_RATE_LIMITED' || errorCode === 'AUTH_REGISTER_EMAIL_SUFFIX_NOT_ALLOWED' || errorCode === 'AUTH_REGISTER_GMAIL_ALIAS_NOT_SUPPORTED' || errorCode === 'AUTH_REGISTER_CLOSED' || errorCode === 'AUTH_REGISTER_FAILED') return { fieldErrors: {}, toastMessage: t('auth.registerFailed') };
 
-      return t('auth.registerFailed');
+      return { fieldErrors: {}, toastMessage: t('auth.registerFailed') };
     };
 
     const sendVerificationCodeWithCaptcha = async (captchaData) => {
@@ -1211,8 +1209,11 @@ export default {
         }
 
       } catch (error) {
-
-        showToast(resolveSendCodeErrorMessage(error), 'error');
+        const { fieldErrors, toastMessage } = resolveSendCodeErrorMessage(error);
+        errors.email = fieldErrors.email || '';
+        if (toastMessage) {
+          showToast(toastMessage, 'error');
+        }
 
       } finally {
 
@@ -1462,8 +1463,14 @@ export default {
         }, 300);
 
       } catch (error) {
-
-        showToast(resolveRegisterErrorMessage(error), 'error');
+        const { fieldErrors, toastMessage } = resolveRegisterErrorMessage(error);
+        errors.email = fieldErrors.email || '';
+        errors.password = fieldErrors.password || '';
+        errors.verificationCode = fieldErrors.verificationCode || '';
+        errors.inviteCode = fieldErrors.inviteCode || '';
+        if (toastMessage) {
+          showToast(toastMessage, 'error');
+        }
 
         if (window.grecaptcha) {
 

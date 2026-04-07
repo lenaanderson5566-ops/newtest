@@ -528,8 +528,12 @@ export default {
         }, 300);
 
       } catch (error) {
-
-        showToast(resolveLoginErrorMessage(error), 'error');
+        const { fieldErrors, toastMessage } = resolveLoginError(error);
+        errors.email = fieldErrors.email || '';
+        errors.password = fieldErrors.password || '';
+        if (toastMessage) {
+          showToast(toastMessage, 'error');
+        }
 
       } finally {
 
@@ -539,19 +543,19 @@ export default {
 
     };
 
-    const resolveLoginErrorMessage = (error) => {
+    const resolveLoginError = (error) => {
       const statusCode = error?.response?.status;
       const errorCode = String(error?.response?.data?.code || '').trim();
 
-      if (errorCode === 'AUTH_LOGIN_INVALID_CREDENTIALS') return t('auth.loginInvalidCredentials');
-      if (errorCode === 'AUTH_LOGIN_PASSWORD_RETRY_LIMITED') return t('auth.loginTooManyAttempts');
-      if (errorCode === 'AUTH_LOGIN_ACCOUNT_SUSPENDED') return t('auth.loginAccountSuspended');
+      if (errorCode === 'AUTH_LOGIN_INVALID_CREDENTIALS') return { fieldErrors: {}, toastMessage: t('auth.loginInvalidCredentials') };
+      if (errorCode === 'AUTH_LOGIN_PASSWORD_RETRY_LIMITED') return { fieldErrors: {}, toastMessage: t('auth.loginTooManyAttempts') };
+      if (errorCode === 'AUTH_LOGIN_ACCOUNT_SUSPENDED') return { fieldErrors: {}, toastMessage: t('auth.loginAccountSuspended') };
 
-      if (errorCode === 'AUTH_LOGIN_EMAIL_REQUIRED') return t('validation.emailRequired');
-      if (errorCode === 'AUTH_LOGIN_EMAIL_FORMAT_INVALID') return t('validation.emailInvalid');
-      if (errorCode === 'AUTH_LOGIN_PASSWORD_REQUIRED') return t('validation.passwordRequired');
-      if (errorCode === 'AUTH_LOGIN_PASSWORD_TOO_SHORT') return t('auth.passwordTooShort');
-      if (errorCode === 'AUTH_LOGIN_VALIDATION_FAILED') return t('auth.loginInvalidRequest');
+      if (errorCode === 'AUTH_LOGIN_EMAIL_REQUIRED') return { fieldErrors: { email: t('validation.emailRequired') }, toastMessage: '' };
+      if (errorCode === 'AUTH_LOGIN_EMAIL_FORMAT_INVALID') return { fieldErrors: { email: t('validation.emailInvalid') }, toastMessage: '' };
+      if (errorCode === 'AUTH_LOGIN_PASSWORD_REQUIRED') return { fieldErrors: { password: t('validation.passwordRequired') }, toastMessage: '' };
+      if (errorCode === 'AUTH_LOGIN_PASSWORD_TOO_SHORT') return { fieldErrors: { password: t('auth.passwordTooShort') }, toastMessage: '' };
+      if (errorCode === 'AUTH_LOGIN_VALIDATION_FAILED') return { fieldErrors: {}, toastMessage: t('auth.loginInvalidRequest') };
 
       if (statusCode === 422) {
         const validationErrors = error?.response?.data?.errors || {};
@@ -559,22 +563,22 @@ export default {
           || validationErrors?.password?.[0]
           || '';
 
-        if (firstValidationError.includes('Email can not be empty')) return t('validation.emailRequired');
-        if (firstValidationError.includes('Email format is incorrect')) return t('validation.emailInvalid');
-        if (firstValidationError.includes('Password can not be empty')) return t('validation.passwordRequired');
-        if (firstValidationError.includes('Password must be greater than 8 digits')) return t('auth.passwordTooShort');
-        return t('auth.loginInvalidRequest');
+        if (firstValidationError.includes('Email can not be empty')) return { fieldErrors: { email: t('validation.emailRequired') }, toastMessage: '' };
+        if (firstValidationError.includes('Email format is incorrect')) return { fieldErrors: { email: t('validation.emailInvalid') }, toastMessage: '' };
+        if (firstValidationError.includes('Password can not be empty')) return { fieldErrors: { password: t('validation.passwordRequired') }, toastMessage: '' };
+        if (firstValidationError.includes('Password must be greater than 8 digits')) return { fieldErrors: { password: t('auth.passwordTooShort') }, toastMessage: '' };
+        return { fieldErrors: {}, toastMessage: t('auth.loginInvalidRequest') };
       }
 
-      if (statusCode === 403) return t('errors.forbidden');
-      if (statusCode === 404) return t('errors.notFound');
-      if (statusCode && statusCode >= 500) return t('auth.loginFailed');
+      if (statusCode === 403) return { fieldErrors: {}, toastMessage: t('errors.forbidden') };
+      if (statusCode === 404) return { fieldErrors: {}, toastMessage: t('errors.notFound') };
+      if (statusCode && statusCode >= 500) return { fieldErrors: {}, toastMessage: t('auth.loginFailed') };
 
       const rawMessage = String(error?.message || '').toLowerCase();
-      if (rawMessage.includes('network')) return t('errors.networkError');
-      if (rawMessage.includes('timeout')) return t('errors.serverError');
+      if (rawMessage.includes('network')) return { fieldErrors: {}, toastMessage: t('errors.networkError') };
+      if (rawMessage.includes('timeout')) return { fieldErrors: {}, toastMessage: t('errors.serverError') };
 
-      return t('auth.loginFailed');
+      return { fieldErrors: {}, toastMessage: t('auth.loginFailed') };
     };
 
     return {
