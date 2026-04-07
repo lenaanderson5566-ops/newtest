@@ -77,7 +77,7 @@ export default {
         on: 'Bật',
         off: 'Tắt',
         copy: 'Sao chép',
-        viewDetails: 'Xem chi tiết',
+        viewDetails: 'Chi tiết',
         close: 'Đóng',
         error_occurred: 'Có lỗi xảy ra, vui lòng thử lại sau',
         apiChecking: 'Đang kiểm tra tính khả dụng của API...',
@@ -709,8 +709,8 @@ profile: {
         },
         config_error: 'Lấy cấu hình cửa hàng thất bại',
         popup: {
-            close_btn: 'Tôi hiểu',
-            wait_close_btn: 'Vui lòng đợi {seconds} giây'
+            close_btn: 'OK',
+            wait_close_btn: 'Đợi {seconds}s'
         }
     },
     order: {

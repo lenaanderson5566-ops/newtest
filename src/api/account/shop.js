@@ -4,7 +4,10 @@ import { getCurrentLanguage } from '@/utils/language';
 
 export function fetchPlans(language = getCurrentLanguage()) {
   return request({
-    url: `/user/plan/fetch?language=${encodeURIComponent(language)}`,
+    url: '/user/plan/fetch',
+    params: {
+      lang: language
+    },
     method: 'get'
   });
 }
@@ -20,7 +23,11 @@ export function getCommConfig() {
 
 export function fetchPlanById(id, language = getCurrentLanguage()) {
   return request({
-    url: `/user/plan/fetch?id=${id}&language=${encodeURIComponent(language)}`,
+    url: '/user/plan/fetch',
+    params: {
+      id,
+      lang: language
+    },
     method: 'get'
   });
 }

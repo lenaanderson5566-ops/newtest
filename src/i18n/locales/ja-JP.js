@@ -69,7 +69,7 @@ export default {
     on: 'オン',
     off: 'オフ',
     copy: 'コピー',
-    viewDetails: '詳細を見る',
+    viewDetails: '詳細',
     close: '閉じる',
     error_occurred: 'エラーが発生しました。後で再試行してください',
     apiChecking: 'APIの可用性を確認中...',
@@ -270,7 +270,7 @@ export default {
     quickStart: 'クイックスタート',
     my: 'アカウント',
     shop: 'ストア',
-    subscription: 'サブスクリプション',
+    subscription: 'プラン',
     invite: '招待',
         referral: 'Referral',
     docs: 'ドキュメント',
@@ -707,8 +707,8 @@ profile: {
     },
     config_error: 'ストア設定取得失敗',
     popup: {
-      close_btn: '了解',
-      wait_close_btn: '{seconds}秒お待ちください'
+      close_btn: 'OK',
+      wait_close_btn: '{seconds}秒待機'
     }
   },
   order: {

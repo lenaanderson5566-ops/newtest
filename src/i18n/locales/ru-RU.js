@@ -69,7 +69,7 @@ export default {
     on: 'Вкл',
     off: 'Выкл',
     copy: 'Копировать',
-    viewDetails: 'Посмотреть детали',
+    viewDetails: 'Детали',
     close: 'Закрыть',
     error_occurred: 'Произошла ошибка, попробуйте позже',
     apiChecking: 'Проверка доступности API...',
@@ -707,8 +707,8 @@ profile: {
     },
     config_error: 'Ошибка загрузки конфигурации магазина',
     popup: {
-      close_btn: 'Понял',
-      wait_close_btn: 'Подождите {seconds} сек'
+      close_btn: 'OK',
+      wait_close_btn: 'Ждите {seconds} с'
     }
   },
   order: {

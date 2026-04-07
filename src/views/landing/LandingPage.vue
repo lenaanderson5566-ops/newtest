@@ -514,7 +514,7 @@ export default {
 .site-title {
   @extend %typo-section-title;
 
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 
   background: linear-gradient(to right, var(--theme-color), #a78bfa);
 
@@ -534,17 +534,17 @@ export default {
 
   justify-content: center;
 
-  gap: 16px;
+  gap: 14px;
 
   
 
   .site-logo-img {
 
-    height: 40px;
+    height: 34px;
 
-    width: 40px;
+    width: 34px;
 
-    border-radius: 10px;
+    border-radius: 8px;
 
     object-fit: cover;
 
@@ -553,11 +553,11 @@ export default {
 }
 
 .site-title--lg {
-  font-size: clamp(40px, 6vw, 64px);
+  font-size: clamp(34px, 5.1vw, 54px);
 }
 
 .site-title--md {
-  font-size: clamp(32px, 4.8vw, 50px);
+  font-size: clamp(27px, 4.1vw, 42px);
 }
 
 
@@ -565,6 +565,7 @@ export default {
 .landing-text {
   @extend %typo-page-title;
   font-weight: $font-weight-normal;
+  font-size: clamp(22px, 3.2vw, 36px);
 
   line-height: 1.5;
 
@@ -578,7 +579,7 @@ export default {
 
   @include down(md) {
 
-    font-size: $font-size-xl;
+    font-size: $font-size-lg;
 
   }
 
@@ -586,7 +587,7 @@ export default {
 
   @include down(xs) {
 
-    font-size: $font-size-md;
+    font-size: $font-size-sm;
 
   }
 

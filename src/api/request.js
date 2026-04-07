@@ -6,6 +6,7 @@ import {
 } from "@/utils/baseConfig";
 import { getAvailableApiUrl } from "@/utils/apiAvailabilityChecker";
 import { clearCachedLoginStatus, getAuthData, setUserLoggedInFlag } from "@/utils/authState";
+import { getCurrentLanguage } from "@/utils/language";
 
 const clearAuthDataAndRedirectToLogin = () => {
   const authKeys = [
@@ -96,7 +97,6 @@ const resolveRequestOrigin = (config) => {
   }
 };
 
-
 export const getResponseEnvelope = (response) => {
   if (response && typeof response === "object") {
     return response;
@@ -170,6 +170,16 @@ request.interceptors.request.use(
         }
       }
     }
+
+    const currentLanguage = getCurrentLanguage();
+    config.headers["Accept-Language"] = currentLanguage;
+
+    const normalizedParams = { ...(config.params || {}) };
+    const explicitLanguage = normalizedParams.lang || normalizedParams.language || normalizedParams.locale;
+    delete normalizedParams.language;
+    delete normalizedParams.locale;
+    normalizedParams.lang = explicitLanguage || currentLanguage;
+    config.params = normalizedParams;
 
     return config;
   },

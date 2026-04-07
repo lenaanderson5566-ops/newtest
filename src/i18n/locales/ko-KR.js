@@ -69,7 +69,7 @@ export default {
     on: '켜기',
     off: '끄기',
     copy: '복사',
-    viewDetails: '자세히 보기',
+    viewDetails: '상세',
     close: '닫기',
     error_occurred: '오류가 발생했습니다. 나중에 다시 시도하세요',
     apiChecking: 'API 가용성 확인 중...',
@@ -708,8 +708,8 @@ profile: {
     },
     config_error: '상점 구성 가져오기 실패',
     popup: {
-      close_btn: '알겠습니다',
-      wait_close_btn: '{seconds}초 기다리세요'
+      close_btn: '확인',
+      wait_close_btn: '{seconds}초 대기'
     }
   },
   order: {
