@@ -37,7 +37,7 @@
             <p class="auth-subtitle">{{ $t('auth.loginSubtitle') }}</p>
           </div>
 
-          <form class="auth-form" @submit.prevent="handleLogin">
+          <form class="auth-form" novalidate @submit.prevent="handleLogin">
             <div class="form-group">
               <label for="email">{{ $t('common.email') }} <span class="required">*</span></label>
               <div class="input-with-icon">
@@ -48,7 +48,6 @@
                   v-model="formData.email"
                   class="form-control"
                   :placeholder="$t('auth.emailPlaceholder')"
-                  required
                 />
               </div>
               <div v-if="errors.email" class="error-message">{{ errors.email }}</div>
@@ -64,7 +63,6 @@
                   v-model="formData.password"
                   class="form-control"
                   :placeholder="$t('auth.passwordPlaceholder')"
-                  required
                 />
                 <div class="password-toggle" @click="showPassword = !showPassword">
                   <IconEye v-if="!showPassword" />

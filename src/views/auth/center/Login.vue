@@ -35,7 +35,7 @@
 
 
 
-      <form class="auth-form" @submit.prevent="handleLogin">
+      <form class="auth-form" novalidate @submit.prevent="handleLogin">
 
         <div class="form-group">
 
@@ -56,8 +56,6 @@
               class="form-control"
 
               :placeholder="$t('auth.emailPlaceholder')"
-
-              required
 
             />
 
@@ -88,8 +86,6 @@
               class="form-control"
 
               :placeholder="$t('auth.passwordPlaceholder')"
-
-              required
 
             />
 
