@@ -2070,24 +2070,4 @@ export default {
   }
 }
 
-@include down(xs) {
-  .shop-container .plans-wrapper .mobile-plan-selector {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .shop-container .filter-toggle-container .filter-toggle-wrapper {
-    padding: 0;
-
-    .filter-option {
-      min-width: 56px;
-      height: 28px;
-      padding: 0 8px;
-
-      .option-text {
-        font-size: $font-size-xs;
-      }
-    }
-  }
-
-}
 </style>

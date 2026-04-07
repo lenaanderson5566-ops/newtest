@@ -547,6 +547,11 @@ onMounted(fetchUserStatus);
 }
 
 @include down(md) {
+  .system-grid,
+  .client-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .system-item {
     padding: map.get($spacers, 2) 24px map.get($spacers, 2) map.get($spacers, 2);
     min-height: 62px;

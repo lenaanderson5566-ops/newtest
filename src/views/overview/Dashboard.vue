@@ -334,6 +334,7 @@ import {
 } from 'vue';
 import {useRouter} from 'vue-router';
 import {useI18n} from 'vue-i18n';
+import { useAppStore } from '@/store';
 import {
   IconAlertTriangle,
   IconBox,
@@ -369,7 +370,7 @@ import {
   IconDatabaseOff
 } from '@tabler/icons-vue';
 import CommonDialog from '@/components/popup/CommonDialog.vue';
-import {getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
+import {getSubscribe, getUserConfig, getUserStats, setNextPeriod} from '@/api/overview/dashboard';
 import { getTrafficLog } from '@/api/account/trafficLog';
 import { fetchOrderList, cancelOrder } from '@/api/account/orderlist';
 import * as echarts from 'echarts';
@@ -419,6 +420,8 @@ export default {
   setup() {
     const {t, locale} = useI18n();
     const router = useRouter();
+    const store = useAppStore();
+    const loadCurrentUserInfo = inject('loadCurrentUserInfo', null);
     const { showToast } = useToast();
     const currencySymbol = ref('$');
     const hasPlan = ref(true);
@@ -524,53 +527,56 @@ export default {
     }
 
 
+    const applyUserInfo = (info) => {
+      if (!info || typeof info !== 'object') return;
+
+      accountStatus.value = resolveSubscriptionStatus(info);
+      userPlanId.value = info.plan_id;
+      hasPlan.value = info.plan_id !== null && info.plan_id !== undefined;
+
+      if (info.email) {
+        userStats.userEmail = info.email;
+      }
+      if (info.balance !== undefined) {
+        userBalance.value = info.balance;
+        updateAccountBalanceDisplay();
+      }
+
+      if (info.expired_at) {
+        userPlan.value.expireDate = formatDate(info.expired_at);
+        userPlan.value.expiredAt = Number(info.expired_at);
+        userPlan.value.isExpireDatePermanent = false;
+
+        const now = new Date();
+        const expiredDate = new Date(info.expired_at * 1000);
+        const diffTime = expiredDate - now;
+
+        if (diffTime <= 0) {
+          userStats.remainingDays = '0';
+          userStats.isRemainingDaysPermanent = false;
+        } else {
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          userStats.remainingDays = `${diffDays}`;
+          userStats.isRemainingDaysPermanent = false;
+        }
+      } else {
+        userPlan.value.expireDate = null;
+        userPlan.value.expiredAt = null;
+        userPlan.value.isExpireDatePermanent = true;
+        userStats.remainingDays = null;
+        userStats.isRemainingDaysPermanent = true;
+      }
+    };
+
     const fetchUserInfo = async () => {
       if (loading.userInfo === false && Object.keys(userPlan.value).length > 0) return;
 
       loading.userInfo = true;
       try {
-        const response = await getUserInfo();
-        if (response.data) {
-          const info = response.data;
-
-          accountStatus.value = resolveSubscriptionStatus(info);
-          userPlanId.value = info.plan_id;
-
-          hasPlan.value = info.plan_id !== null && info.plan_id !== undefined;
-
-          if (info.email) {
-            userStats.userEmail = info.email;
-          }
-          if (info.balance !== undefined) {
-            userBalance.value = info.balance;
-            updateAccountBalanceDisplay();
-          }
-
-          if (info.expired_at) {
-            userPlan.value.expireDate = formatDate(info.expired_at);
-            userPlan.value.expiredAt = Number(info.expired_at);
-            userPlan.value.isExpireDatePermanent = false;
-
-            const now = new Date();
-            const expiredDate = new Date(info.expired_at * 1000);
-            const diffTime = expiredDate - now;
-
-            if (diffTime <= 0) {
-              userStats.remainingDays = '0';
-              userStats.isRemainingDaysPermanent = false;
-            } else {
-              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-              userStats.remainingDays = `${diffDays}`;
-              userStats.isRemainingDaysPermanent = false;
-            }
-          } else {
-            userPlan.value.expireDate = null;
-            userPlan.value.expiredAt = null;
-            userPlan.value.isExpireDatePermanent = true;
-            userStats.remainingDays = null;
-            userStats.isRemainingDaysPermanent = true;
-          }
+        if (typeof loadCurrentUserInfo === 'function') {
+          await loadCurrentUserInfo();
         }
+        applyUserInfo(store.userInfo);
       } catch (error) {
         accountStatus.value = SUBSCRIPTION_STATUS.NEW;
       } finally {

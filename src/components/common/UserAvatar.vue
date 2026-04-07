@@ -54,10 +54,6 @@ export default {
       type: String,
       default: ''
     },
-    username: {
-      type: String,
-      default: ''
-    },
     loading: {
       type: Boolean,
       default: false
@@ -75,12 +71,12 @@ export default {
       if (normalizedEmail) {
         const localPart = normalizedEmail.split('@')[0] || normalizedEmail;
         const fallbackTarget = localPart || normalizedEmail;
-        const firstChar = [...fallbackTarget][0] || 'U';
+        const firstChar = [...fallbackTarget][0] || '';
 
         return firstChar.toUpperCase();
       }
 
-      return 'U';
+      return '';
     });
     
     const toggleDropdown = () => {

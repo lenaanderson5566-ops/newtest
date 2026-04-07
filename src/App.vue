@@ -20,7 +20,7 @@
         >
           <IconGift :size="18" />
         </button>
-        <UserAvatar :email="userEmail" :username="userDisplayName" :loading="isAvatarLoading" />
+        <UserAvatar :email="userEmail" :loading="isAvatarLoading" />
         </div>
       </div>
 
@@ -144,14 +144,12 @@ export default {
       const user = store.userInfo || {};
       return String(user.email || '').trim();
     });
-    const userDisplayName = computed(() => {
-      const user = store.userInfo || {};
-      return String(user.username || user.name || '').trim();
-    });
     const isUserInfoLoading = ref(!!route.meta.requiresAuth);
     const hasResolvedUserInfo = ref(false);
     const isAvatarLoading = computed(() => (
-      route.meta.requiresAuth ? (!hasResolvedUserInfo.value && isUserInfoLoading.value) : false
+      route.meta.requiresAuth
+        ? (isUserInfoLoading.value || !hasResolvedUserInfo.value || !userEmail.value)
+        : false
     ));
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
@@ -262,32 +260,43 @@ export default {
       }
     };
 
+    let currentUserInfoRequest = null;
     const loadCurrentUserInfo = async () => {
-      if (!route.meta.requiresAuth) return;
-      isUserInfoLoading.value = true;
-      try {
-        const response = await getAccountUserInfo();
-        const apiUserData = response?.data;
-        if (apiUserData && typeof apiUserData === 'object') {
-          const normalizedEmail = String(apiUserData.email || apiUserData?.data?.email || '').trim();
-          const flattenedUserData = apiUserData?.data && typeof apiUserData.data === 'object'
-            ? { ...apiUserData, ...apiUserData.data }
-            : apiUserData;
-          const normalizedUserData = {
-            ...flattenedUserData,
-            email: normalizedEmail
-          };
-          if (normalizedEmail) {
+      if (!route.meta.requiresAuth) return null;
+      if (currentUserInfoRequest) {
+        return currentUserInfoRequest;
+      }
+
+      currentUserInfoRequest = (async () => {
+        isUserInfoLoading.value = true;
+        hasResolvedUserInfo.value = false;
+        try {
+          const response = await getAccountUserInfo();
+          const apiUserData = response?.data;
+          if (apiUserData && typeof apiUserData === 'object') {
+            const normalizedEmail = String(apiUserData.email || apiUserData?.data?.email || '').trim();
+            const flattenedUserData = apiUserData?.data && typeof apiUserData.data === 'object'
+              ? { ...apiUserData, ...apiUserData.data }
+              : apiUserData;
+            const normalizedUserData = {
+              ...flattenedUserData,
+              email: normalizedEmail
+            };
             store.setUser(normalizedUserData);
-            hasResolvedUserInfo.value = true;
           }
-        }
-      } catch (error) {
-      } finally {
-        isUserInfoLoading.value = false;
-        if (!hasResolvedUserInfo.value && store.userInfo?.email) {
+        } catch (error) {
+        } finally {
+          isUserInfoLoading.value = false;
           hasResolvedUserInfo.value = true;
         }
+
+        return store.userInfo;
+      })();
+
+      try {
+        return await currentUserInfoRequest;
+      } finally {
+        currentUserInfoRequest = null;
       }
     };
 
@@ -346,6 +355,7 @@ export default {
 
     provide('clearCache', clearCache);
     provide('removeCachedRoute', removeCachedRoute);
+    provide('loadCurrentUserInfo', loadCurrentUserInfo);
 
     onMounted(() => {
       window.addEventListener('languageChanged', onLanguageChanged);
@@ -410,7 +420,6 @@ export default {
 
     return {
       userEmail,
-      userDisplayName,
       isUserInfoLoading,
       isAvatarLoading,
       siteConfig,
