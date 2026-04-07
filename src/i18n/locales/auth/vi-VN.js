@@ -32,6 +32,7 @@ export default {
     loginInvalidRequest: 'Tham số đăng nhập không hợp lệ',
     registerSuccess: 'Đăng ký thành công',
     registerFailed: 'Đăng ký thất bại, vui lòng thử lại sau',
+    emailAlreadyRegisteredLogin: 'Email này đã được đăng ký, vui lòng đăng nhập',
     resetSuccess: 'Liên kết đặt lại đã được gửi đến email của bạn',
     resetFailed: 'Đặt lại mật khẩu thất bại, vui lòng thử lại sau',
     logoutSuccess: 'Đã đăng xuất thành công',
@@ -43,6 +44,7 @@ export default {
     codeSent: 'Mã xác thực đã được gửi',
     checkSpam: 'Nếu không nhận được email trong thời gian dài, vui lòng kiểm tra thư mục spam',
     sendCodeFailed: 'Gửi mã xác thực thất bại',
+    sendCodeIfEmailRegistered: 'Nếu email này đã được đăng ký, chúng tôi sẽ gửi mã xác minh',
     popup: {
       close_btn: 'Tôi hiểu',
       wait_close_btn: 'Vui lòng đợi {seconds} giây'

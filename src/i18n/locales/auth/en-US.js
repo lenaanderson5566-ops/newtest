@@ -34,6 +34,7 @@ export default {
     loginInvalidRequest: 'Invalid login parameters',
     registerSuccess: 'Registered successfully',
     registerFailed: 'Registration failed, please try again later',
+    emailAlreadyRegisteredLogin: 'This email is already registered, please log in',
     resetSuccess: 'Reset link sent to your email',
     resetFailed: 'Password reset failed, please try again later',
     logoutSuccess: 'Signed out successfully',
@@ -45,6 +46,7 @@ export default {
     codeSent: 'Verification code sent',
     checkSpam: "If you don't receive the email, please check your spam folder",
     sendCodeFailed: 'Failed to send verification code',
+    sendCodeIfEmailRegistered: 'If this email is registered, we will send a verification code',
     popup: {
       close_btn: 'I understand',
       wait_close_btn: 'Please wait {seconds}s'

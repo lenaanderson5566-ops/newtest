@@ -75,7 +75,7 @@
 
 
 
-          <form class="auth-form" @submit.prevent="handleSubmit">
+          <form class="auth-form" novalidate @submit.prevent="handleSubmit">
 
             <div class="form-group">
 
@@ -1149,6 +1149,34 @@ export default {
 
 
 
+    const resolveSendCodeErrorMessage = (error) => {
+      const errorCode = String(error?.response?.data?.code || '').trim();
+
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_REQUIRED') return { fieldErrors: { email: t('validation.emailRequired') }, toastMessage: '' };
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_FORMAT_INVALID') return { fieldErrors: { email: t('validation.emailInvalid') }, toastMessage: '' };
+      if (errorCode === 'AUTH_SEND_VERIFY_RECAPTCHA_INVALID') return { fieldErrors: {}, toastMessage: t('auth.captchaRequired') };
+      if (errorCode === 'AUTH_SEND_VERIFY_TOO_MANY_REQUESTS' || errorCode === 'AUTH_SEND_VERIFY_TOO_FREQUENT') return { fieldErrors: {}, toastMessage: t('auth.sendCodeFailed') };
+      if (errorCode === 'AUTH_SEND_VERIFY_EMAIL_NOT_REGISTERED') return { fieldErrors: { email: t('auth.sendCodeIfEmailRegistered') }, toastMessage: '' };
+      if (errorCode === 'AUTH_SEND_VERIFY_VALIDATION_FAILED') return { fieldErrors: {}, toastMessage: t('auth.sendCodeFailed') };
+
+      return { fieldErrors: {}, toastMessage: t('auth.sendCodeFailed') };
+    };
+
+    const resolveResetErrorMessage = (error) => {
+      const errorCode = String(error?.response?.data?.code || '').trim();
+
+      if (errorCode === 'AUTH_FORGET_EMAIL_REQUIRED') return { fieldErrors: { email: t('validation.emailRequired') }, toastMessage: '' };
+      if (errorCode === 'AUTH_FORGET_EMAIL_FORMAT_INVALID') return { fieldErrors: { email: t('validation.emailInvalid') }, toastMessage: '' };
+      if (errorCode === 'AUTH_FORGET_PASSWORD_REQUIRED') return { fieldErrors: { newPassword: t('validation.passwordRequired') }, toastMessage: '' };
+      if (errorCode === 'AUTH_FORGET_PASSWORD_TOO_SHORT') return { fieldErrors: {}, toastMessage: '' };
+      if (errorCode === 'AUTH_FORGET_EMAIL_CODE_REQUIRED') return { fieldErrors: { verificationCode: t('auth.codeRequired') }, toastMessage: '' };
+      if (errorCode === 'AUTH_FORGET_EMAIL_CODE_INVALID') return { fieldErrors: { verificationCode: t('auth.codeInvalid') }, toastMessage: '' };
+      if (errorCode === 'AUTH_FORGET_VALIDATION_FAILED' || errorCode === 'AUTH_FORGET_REQUEST_RATE_LIMITED' || errorCode === 'AUTH_FORGET_RESET_FAILED') return { fieldErrors: {}, toastMessage: t('auth.resetFailed') };
+      if (errorCode === 'AUTH_FORGET_EMAIL_NOT_REGISTERED') return { fieldErrors: { email: t('auth.resetFailed') }, toastMessage: '' };
+
+      return { fieldErrors: {}, toastMessage: t('auth.passwordResetFailed') };
+    };
+
     const sendVerificationCodeWithCaptcha = async (captchaData) => {
 
       try {
@@ -1206,8 +1234,11 @@ export default {
         }
 
       } catch (error) {
-
-        showToast(error.response?.message || error.message || t('auth.sendCodeFailed'), 'error');
+        const { fieldErrors, toastMessage } = resolveSendCodeErrorMessage(error);
+        errors.email = fieldErrors.email || '';
+        if (toastMessage) {
+          showToast(toastMessage, 'error');
+        }
 
       } finally {
 
@@ -1345,7 +1376,9 @@ export default {
 
       const passwordValidation = validatePassword(formData.newPassword);
       if (!passwordValidation.valid) {
-        errors.newPassword = formData.newPassword ? t('auth.passwordTooShort') : t('auth.passwordRequired');
+        if (!formData.newPassword) {
+          errors.newPassword = t('auth.passwordRequired');
+        }
         isValid = false;
       }
 
@@ -1416,8 +1449,13 @@ export default {
         }
 
       } catch (error) {
-
-        showToast(error.response?.message || error.message || t('auth.passwordResetFailed'), 'error');
+        const { fieldErrors, toastMessage } = resolveResetErrorMessage(error);
+        errors.email = fieldErrors.email || '';
+        errors.verificationCode = fieldErrors.verificationCode || '';
+        errors.newPassword = fieldErrors.newPassword || '';
+        if (toastMessage) {
+          showToast(toastMessage, 'error');
+        }
 
       } finally {
 
@@ -2991,6 +3029,13 @@ export default {
 }
 
 .auth-divider {
+  margin-top: 4px;
+}
+
+.error-message {
+  display: block;
+  color: var(--error-color);
+  font-size: $font-size-xs;
   margin-top: 4px;
 }
 

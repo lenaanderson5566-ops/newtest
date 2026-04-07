@@ -34,6 +34,7 @@ export default {
     loginInvalidRequest: '登入參數不正確',
     registerSuccess: '註冊成功',
     registerFailed: '註冊失敗，請稍後重試',
+    emailAlreadyRegisteredLogin: '該郵箱已被註冊，請直接登錄',
     resetSuccess: '重置鏈接已發送到您的電子郵箱',
     resetFailed: '重置密碼失敗，請稍後再試',
     logoutSuccess: '已成功退出登錄',
@@ -45,6 +46,7 @@ export default {
     codeSent: '驗證碼已發送',
     checkSpam: '若長時間未收到郵件請您檢查垃圾郵件',
     sendCodeFailed: '驗證碼發送失敗',
+    sendCodeIfEmailRegistered: '如果該郵箱已註冊，我們將向其發送驗證碼',
     popup: {
       close_btn: '我知道了',
       wait_close_btn: '請等待 {seconds} 秒'

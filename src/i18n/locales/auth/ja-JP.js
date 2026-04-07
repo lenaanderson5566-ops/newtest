@@ -34,6 +34,7 @@ export default {
     loginInvalidRequest: 'ログインパラメータが正しくありません',
     registerSuccess: '登録成功',
     registerFailed: '登録に失敗しました、しばらくしてから再度お試しください',
+    emailAlreadyRegisteredLogin: 'このメールアドレスは既に登録されています。ログインしてください',
     resetSuccess: 'リセットリンクをメールアドレスに送信しました',
     resetFailed: 'パスワードのリセットに失敗しました、しばらくしてから再度お試しください',
     logoutSuccess: 'ログアウト成功',
@@ -45,6 +46,7 @@ export default {
     codeSent: '認証コードを送信しました',
     checkSpam: '長時間メールが届かない場合は、迷惑メールフォルダを確認してください',
     sendCodeFailed: '認証コードの送信に失敗しました',
+    sendCodeIfEmailRegistered: 'このメールアドレスが登録済みの場合、認証コードを送信します',
     popup: {
       close_btn: '理解しました',
       wait_close_btn: '{seconds}秒お待ちください'
