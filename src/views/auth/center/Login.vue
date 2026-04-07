@@ -523,7 +523,7 @@ export default {
 
       } catch (error) {
 
-        showToast(error.response?.message || error.message || t('auth.loginFailed'), 'error');
+        showToast(resolveLoginErrorMessage(error), 'error');
 
       } finally {
 
@@ -531,6 +531,19 @@ export default {
 
       }
 
+    };
+
+    const resolveLoginErrorMessage = (error) => {
+      const statusCode = error?.response?.status;
+      if (statusCode === 403) return t('errors.forbidden');
+      if (statusCode === 404) return t('errors.notFound');
+      if (statusCode && statusCode >= 500) return t('errors.serverError');
+
+      const rawMessage = String(error?.message || '').toLowerCase();
+      if (rawMessage.includes('network')) return t('errors.networkError');
+      if (rawMessage.includes('timeout')) return t('errors.serverError');
+
+      return t('auth.loginFailed');
     };
 
     return {
