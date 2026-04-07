@@ -2436,6 +2436,13 @@ export default {
   margin-top: 4px;
 }
 
+.error-message {
+  display: block;
+  color: var(--error-color);
+  font-size: $font-size-xs;
+  margin-top: 4px;
+}
+
 :deep(input[type="password"]::-ms-reveal),
 :deep(input[type="password"]::-ms-clear) {
   display: none;
