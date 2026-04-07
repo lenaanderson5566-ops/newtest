@@ -305,6 +305,9 @@ export default {
       if (!validateRequired(formData.password)) {
         errors.password = t('validation.passwordRequired');
         isValid = false;
+      } else if (formData.password.length < 8) {
+        errors.password = t('auth.passwordTooShort');
+        isValid = false;
       }
 
       return isValid;

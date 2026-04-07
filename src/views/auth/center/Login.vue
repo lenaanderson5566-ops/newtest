@@ -481,6 +481,12 @@ export default {
 
         isValid = false;
 
+      } else if (formData.password.length < 8) {
+
+        errors.password = t('auth.passwordTooShort');
+
+        isValid = false;
+
       }
 
 
