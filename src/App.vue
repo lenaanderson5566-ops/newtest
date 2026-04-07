@@ -151,7 +151,7 @@ export default {
     const isUserInfoLoading = ref(!!route.meta.requiresAuth);
     const hasResolvedUserInfo = ref(false);
     const isAvatarLoading = computed(() => (
-      route.meta.requiresAuth ? (!hasResolvedUserInfo.value && isUserInfoLoading.value) : false
+      route.meta.requiresAuth ? isUserInfoLoading.value : false
     ));
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
