@@ -20,7 +20,7 @@
         >
           <IconGift :size="18" />
         </button>
-        <UserAvatar :email="userEmail" :username="userDisplayName" :loading="isUserInfoLoading" />
+        <UserAvatar :email="userEmail" :username="userDisplayName" :loading="isAvatarLoading" />
         </div>
       </div>
 
@@ -149,6 +149,10 @@ export default {
       return String(user.username || user.name || '').trim();
     });
     const isUserInfoLoading = ref(!!route.meta.requiresAuth);
+    const hasResolvedUserInfo = ref(false);
+    const isAvatarLoading = computed(() => (
+      route.meta.requiresAuth ? (isUserInfoLoading.value || !hasResolvedUserInfo.value) : false
+    ));
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
 
@@ -261,6 +265,7 @@ export default {
     const loadCurrentUserInfo = async () => {
       if (!route.meta.requiresAuth) return;
       isUserInfoLoading.value = true;
+      hasResolvedUserInfo.value = false;
       try {
         const response = await getAccountUserInfo();
         const apiUserData = response?.data;
@@ -275,6 +280,7 @@ export default {
       } catch (error) {
       } finally {
         isUserInfoLoading.value = false;
+        hasResolvedUserInfo.value = true;
       }
     };
 
@@ -399,6 +405,7 @@ export default {
       userEmail,
       userDisplayName,
       isUserInfoLoading,
+      isAvatarLoading,
       siteConfig,
       currentYear,
       PROFILE_CONFIG,
