@@ -46,6 +46,7 @@ export default {
     codeSent: '인증 코드가 전송되었습니다',
     checkSpam: '장시간 이메일을 받지 못한 경우 스팸 메일함을 확인하세요',
     sendCodeFailed: '인증 코드 전송 실패',
+    sendCodeIfEmailRegistered: 'If this email is registered, we will send a verification code',
     popup: {
       close_btn: '이해했습니다',
       wait_close_btn: '{seconds}초 기다려주세요'

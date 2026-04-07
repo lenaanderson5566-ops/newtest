@@ -46,6 +46,7 @@ export default {
     codeSent: 'کد تایید ارسال شد',
     checkSpam: 'اگر ایمیل را دریافت نکردید، لطفا پوشه اسپم را بررسی کنید',
     sendCodeFailed: 'ارسال کد شکست خورد',
+    sendCodeIfEmailRegistered: 'If this email is registered, we will send a verification code',
     popup: {
       close_btn: 'متوجه شدم',
       wait_close_btn: 'لطفا {seconds} ثانیه صبر کنید'

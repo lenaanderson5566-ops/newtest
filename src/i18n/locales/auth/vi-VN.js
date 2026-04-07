@@ -44,6 +44,7 @@ export default {
     codeSent: 'Mã xác thực đã được gửi',
     checkSpam: 'Nếu không nhận được email trong thời gian dài, vui lòng kiểm tra thư mục spam',
     sendCodeFailed: 'Gửi mã xác thực thất bại',
+    sendCodeIfEmailRegistered: 'If this email is registered, we will send a verification code',
     popup: {
       close_btn: 'Tôi hiểu',
       wait_close_btn: 'Vui lòng đợi {seconds} giây'

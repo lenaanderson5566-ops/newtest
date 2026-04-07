@@ -46,6 +46,7 @@ export default {
     codeSent: '認証コードを送信しました',
     checkSpam: '長時間メールが届かない場合は、迷惑メールフォルダを確認してください',
     sendCodeFailed: '認証コードの送信に失敗しました',
+    sendCodeIfEmailRegistered: 'If this email is registered, we will send a verification code',
     popup: {
       close_btn: '理解しました',
       wait_close_btn: '{seconds}秒お待ちください'

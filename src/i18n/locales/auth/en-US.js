@@ -46,6 +46,7 @@ export default {
     codeSent: 'Verification code sent',
     checkSpam: "If you don't receive the email, please check your spam folder",
     sendCodeFailed: 'Failed to send verification code',
+    sendCodeIfEmailRegistered: 'If this email is registered, we will send a verification code',
     popup: {
       close_btn: 'I understand',
       wait_close_btn: 'Please wait {seconds}s'

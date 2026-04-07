@@ -46,6 +46,7 @@ export default {
     codeSent: 'Код подтверждения отправлен',
     checkSpam: 'Если вы не получили письмо в течение длительного времени, проверьте папку со спамом',
     sendCodeFailed: 'Ошибка отправки кода подтверждения',
+    sendCodeIfEmailRegistered: 'If this email is registered, we will send a verification code',
     popup: {
       close_btn: 'Понятно',
       wait_close_btn: 'Подождите {seconds} сек.'

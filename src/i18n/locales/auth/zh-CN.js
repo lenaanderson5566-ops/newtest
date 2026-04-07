@@ -46,6 +46,7 @@ export default {
     codeSent: '验证码已发送',
     checkSpam: '若长时间未收到邮件请您检查垃圾邮件',
     sendCodeFailed: '验证码发送失败',
+    sendCodeIfEmailRegistered: '如果该邮箱已注册，我们将向其发送验证码',
     popup: {
       close_btn: '我知道了',
       wait_close_btn: '请等待 {seconds} 秒'
