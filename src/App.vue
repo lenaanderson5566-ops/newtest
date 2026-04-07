@@ -151,7 +151,7 @@ export default {
     const isUserInfoLoading = ref(!!route.meta.requiresAuth);
     const hasResolvedUserInfo = ref(false);
     const isAvatarLoading = computed(() => (
-      route.meta.requiresAuth ? (isUserInfoLoading.value || !hasResolvedUserInfo.value) : false
+      route.meta.requiresAuth ? (!hasResolvedUserInfo.value && isUserInfoLoading.value) : false
     ));
     const unreadNoticeCount = ref(0);
     const hasUnreadNotice = computed(() => unreadNoticeCount.value > 0);
@@ -265,7 +265,6 @@ export default {
     const loadCurrentUserInfo = async () => {
       if (!route.meta.requiresAuth) return;
       isUserInfoLoading.value = true;
-      hasResolvedUserInfo.value = false;
       try {
         const response = await getAccountUserInfo();
         const apiUserData = response?.data;
