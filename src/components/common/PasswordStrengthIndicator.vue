@@ -2,13 +2,13 @@
   <div v-if="password" class="password-strength-indicator">
     <div class="password-rules">
       <div class="password-rule-tip">
-        <span :class="{ met: strengthMeta.minLengthMet }">{{ minLengthText }}</span>
+        <span :class="minLengthRuleClass">{{ minLengthText }}</span>
       </div>
       <div class="password-rule-tip">
-        <span :class="{ met: strengthMeta.alphaNumericMet }">{{ alphaNumericText }}</span>
+        <span :class="alphaNumericRuleClass">{{ alphaNumericText }}</span>
       </div>
       <div class="password-rule-tip">
-        <span :class="{ met: strengthMeta.specialCharMet }">{{ specialCharText }}</span>
+        <span :class="specialCharRuleClass">{{ specialCharText }}</span>
       </div>
     </div>
 
@@ -66,6 +66,16 @@ const strengthTextKey = computed(() => {
 const minLengthText = computed(() => t(props.minLengthKey));
 const alphaNumericText = computed(() => t(props.alphaNumericKey));
 const specialCharText = computed(() => t(props.specialCharKey));
+const minLengthRuleClass = computed(() => {
+  if (!props.password) return 'rule-pending';
+  return strengthMeta.value.minLengthMet ? 'rule-met' : 'rule-required-fail';
+});
+const alphaNumericRuleClass = computed(() => {
+  return strengthMeta.value.alphaNumericMet ? 'rule-met' : 'rule-pending';
+});
+const specialCharRuleClass = computed(() => {
+  return strengthMeta.value.specialCharMet ? 'rule-met' : 'rule-pending';
+});
 const strengthLabelText = computed(() => t(props.strengthLabelKey));
 const strengthText = computed(() => {
   return t(strengthTextKey.value);
@@ -100,13 +110,22 @@ const strengthText = computed(() => {
   }
 }
 
-.password-rule-tip .met {
+.password-rule-tip .rule-met {
   color: #22c55e;
 }
 
-.password-rule-tip .met::before {
+.password-rule-tip .rule-met::before {
   content: '✓';
   color: #22c55e;
+}
+
+.password-rule-tip .rule-required-fail {
+  color: var(--error-color);
+}
+
+.password-rule-tip .rule-required-fail::before {
+  content: '✕';
+  color: var(--error-color);
 }
 
 .password-strength {
