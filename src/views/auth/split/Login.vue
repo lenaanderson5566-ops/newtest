@@ -348,7 +348,7 @@ export default {
       if (errorCode === 'AUTH_LOGIN_EMAIL_REQUIRED') return { fieldErrors: { email: t('validation.emailRequired') }, toastMessage: '' };
       if (errorCode === 'AUTH_LOGIN_EMAIL_FORMAT_INVALID') return { fieldErrors: { email: t('validation.emailInvalid') }, toastMessage: '' };
       if (errorCode === 'AUTH_LOGIN_PASSWORD_REQUIRED') return { fieldErrors: { password: t('validation.passwordRequired') }, toastMessage: '' };
-      if (errorCode === 'AUTH_LOGIN_PASSWORD_TOO_SHORT') return { fieldErrors: { password: t('auth.passwordTooShort') }, toastMessage: '' };
+      if (errorCode === 'AUTH_LOGIN_PASSWORD_TOO_SHORT') return { fieldErrors: {}, toastMessage: t('auth.loginInvalidRequest') };
       if (errorCode === 'AUTH_LOGIN_VALIDATION_FAILED') return { fieldErrors: {}, toastMessage: t('auth.loginInvalidRequest') };
 
       if (statusCode === 422) {
@@ -360,7 +360,7 @@ export default {
         if (firstValidationError.includes('Email can not be empty')) return { fieldErrors: { email: t('validation.emailRequired') }, toastMessage: '' };
         if (firstValidationError.includes('Email format is incorrect')) return { fieldErrors: { email: t('validation.emailInvalid') }, toastMessage: '' };
         if (firstValidationError.includes('Password can not be empty')) return { fieldErrors: { password: t('validation.passwordRequired') }, toastMessage: '' };
-        if (firstValidationError.includes('Password must be greater than 8 digits')) return { fieldErrors: { password: t('auth.passwordTooShort') }, toastMessage: '' };
+        if (firstValidationError.includes('Password must be greater than 8 digits')) return { fieldErrors: {}, toastMessage: t('auth.loginInvalidRequest') };
         return { fieldErrors: {}, toastMessage: t('auth.loginInvalidRequest') };
       }
 
