@@ -134,7 +134,20 @@ export default {
     captchaError: '인증 오류, 다시 시도하세요',
     captchaLoading: '인증 컴포넌트 로딩 중...',
     verifyTokenSuccess: '토큰 인증 성공',
-    verifyTokenFailed: '토큰 인증 실패, 다시 시도하세요'
+    verifyTokenFailed: '토큰 인증 실패, 다시 시도하세요',
+    passwordStrength: '비밀번호 강도',
+
+    passwordStrengthWeak: '약함',
+
+    passwordStrengthMedium: '보통',
+
+    passwordStrengthStrong: '강함',
+
+    passwordRuleMinLength: '최소 8자',
+
+    passwordRuleAlphaNumericSuggested: '영문자와 숫자 포함 (권장)',
+
+    passwordRuleSpecialSuggested: '특수문자 포함 (권장)',
   },
   validation: {
     required: '{field}은(는) 필수 입력 항목입니다',

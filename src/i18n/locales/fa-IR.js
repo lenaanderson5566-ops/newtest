@@ -134,7 +134,20 @@ export default {
     captchaError: 'خطا در تایید، دوباره امتحان کنید',
     captchaLoading: 'در حال بارگذاری تایید...',
     verifyTokenSuccess: 'تایید توکن موفق',
-    verifyTokenFailed: 'تایید توکن شکست خورد، لطفا دوباره امتحان کنید'
+    verifyTokenFailed: 'تایید توکن شکست خورد، لطفا دوباره امتحان کنید',
+    passwordStrength: 'قدرت پسورد',
+
+    passwordStrengthWeak: 'ضعیف',
+
+    passwordStrengthMedium: 'متوسط',
+
+    passwordStrengthStrong: 'قوی',
+
+    passwordRuleMinLength: 'حداقل 8 کاراکتر',
+
+    passwordRuleAlphaNumericSuggested: 'شامل حروف و اعداد (پیشنهادی)',
+
+    passwordRuleSpecialSuggested: 'شامل کاراکتر خاص (پیشنهادی)',
   },
   validation: {
     required: '{field} نمی تواند خالی باشد',

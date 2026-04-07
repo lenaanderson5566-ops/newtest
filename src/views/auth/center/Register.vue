@@ -37,20 +37,8 @@
 
       <div class="auth-header">
 
-        <div class="auth-logo">
-
-          <img
-
-            :src="logoPath"
-
-            alt="Logo"
-
-            @error="handleLogoError"
-
-            @click="goTo('/')"
-
-          />
-
+        <div class="auth-logo auth-logo-text auth-logo-text--lg" @click="goTo('/')">
+          {{ SITE_CONFIG.siteName }}
         </div>
 
         <h1 class="auth-title">{{ $t('auth.registerTitle') }}</h1>
@@ -262,58 +250,7 @@
           </div>
 
           <span v-if="errors.password" class="error-message">{{ errors.password }}</span>
-
-          <div v-if="formData.password" class="password-rules">
-
-            <div class="password-rule-tip">
-
-              <IconCheck class="rule-icon" :class="passwordMinLengthMet ? 'met' : 'unmet'" />
-
-              <span :class="{ met: passwordMinLengthMet }">{{ $t('auth.passwordRuleMinLength') }}</span>
-
-            </div>
-
-            <div class="password-rule-tip">
-
-              <IconCheck class="rule-icon" :class="passwordAlphaNumericMet ? 'met' : 'unmet'" />
-
-              <span :class="{ met: passwordAlphaNumericMet }">{{ $t('auth.passwordRuleAlphaNumericSuggested') }}</span>
-
-            </div>
-
-            <div class="password-rule-tip">
-
-              <IconCheck class="rule-icon" :class="passwordSpecialCharMet ? 'met' : 'unmet'" />
-
-              <span :class="{ met: passwordSpecialCharMet }">{{ $t('auth.passwordRuleSpecialSuggested') }}</span>
-
-            </div>
-
-          </div>
-
-          <div v-if="formData.password" class="password-strength">
-
-            <div class="password-strength-label">
-
-              {{ $t('auth.passwordStrength') }}：{{ $t(passwordStrengthTextKey) }}
-
-            </div>
-
-            <div class="password-strength-bar">
-
-              <div
-
-                class="password-strength-fill"
-
-                :class="`strength-${passwordStrengthLevel}`"
-
-                :style="{ width: `${passwordStrengthPercent}%` }"
-
-              ></div>
-
-            </div>
-
-          </div>
+          <PasswordStrengthIndicator :password="formData.password" />
 
         </div>
 
@@ -521,7 +458,7 @@ import { useToast } from '@/composables/useToast';
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 
-import { isValidEmail, validatePassword, getPasswordStrengthMeta } from '@/utils/validators';
+import { isValidEmail, validatePassword } from '@/utils/validators';
 
 import IconMail from '@/components/icons/IconMail.vue';
 
@@ -540,7 +477,7 @@ import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 
-import IconCheck from '@/components/icons/IconCheck.vue';
+import PasswordStrengthIndicator from '@/components/common/PasswordStrengthIndicator.vue';
 
 
 import { register, checkLoginStatus, getWebsiteConfig, sendEmailVerify } from '@/api/auth';
@@ -550,7 +487,7 @@ import { getResponseData } from '@/api/request';
 
 
 
-import { CAPTCHA_CONFIG, AUTH_CONFIG } from '@/utils/baseConfig';
+import { CAPTCHA_CONFIG, AUTH_CONFIG, SITE_CONFIG } from '@/utils/baseConfig';
 
 import AuthPopup from '@/components/auth/AuthPopup.vue';
 
@@ -611,9 +548,7 @@ export default {
     IconEyeOff,
 
     IconChevronDown,
-
-    IconCheck,
-
+    PasswordStrengthIndicator,
     AuthPopup
 
   },
@@ -672,13 +607,6 @@ export default {
 
 
 
-    const logoPath = ref('./images/logo.png');
-
-    const handleLogoError = () => {
-
-      logoPath.value = '/images/logo.png';
-
-    };
 
 
 
@@ -804,24 +732,6 @@ export default {
 
 
     const showPassword = ref(false);
-    const passwordStrengthMeta = computed(() => getPasswordStrengthMeta(formData.password));
-    const passwordStrengthScore = computed(() => passwordStrengthMeta.value.score);
-    const passwordMinLengthMet = computed(() => passwordStrengthMeta.value.minLengthMet);
-    const passwordAlphaNumericMet = computed(() => passwordStrengthMeta.value.alphaNumericMet);
-    const passwordSpecialCharMet = computed(() => passwordStrengthMeta.value.specialCharMet);
-    const passwordStrengthLevel = computed(() => passwordStrengthMeta.value.level);
-
-    const passwordStrengthTextKey = computed(() => {
-
-      if (passwordStrengthLevel.value === 'weak') return 'auth.passwordStrengthWeak';
-
-      if (passwordStrengthLevel.value === 'medium') return 'auth.passwordStrengthMedium';
-
-      return 'auth.passwordStrengthStrong';
-
-    });
-
-    const passwordStrengthPercent = computed(() => passwordStrengthMeta.value.percent);
 
     const needCaptchaForEmailVerify = computed(() => {
 
@@ -2059,17 +1969,11 @@ export default {
 
       showPassword,
 
-      passwordMinLengthMet,
 
-      passwordAlphaNumericMet,
 
-      passwordSpecialCharMet,
 
-      passwordStrengthLevel,
 
-      passwordStrengthTextKey,
 
-      passwordStrengthPercent,
 
 
       config,
@@ -2090,9 +1994,7 @@ export default {
 
 
 
-      logoPath,
-
-      handleLogoError,
+      SITE_CONFIG,
 
       captchaConfig,
 
