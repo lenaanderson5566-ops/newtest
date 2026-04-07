@@ -34,7 +34,7 @@ export default {
     loginInvalidRequest: '로그인 파라미터가 올바르지 않습니다',
     registerSuccess: '등록 성공',
     registerFailed: '등록 실패, 나중에 다시 시도하세요',
-    emailAlreadyRegisteredLogin: 'This email is already registered, please log in',
+    emailAlreadyRegisteredLogin: '이미 등록된 이메일입니다. 바로 로그인해 주세요',
     resetSuccess: '재설정 링크를 이메일로 보냈습니다',
     resetFailed: '비밀번호 재설정 실패, 나중에 다시 시도하세요',
     logoutSuccess: '로그아웃 성공',
@@ -46,7 +46,7 @@ export default {
     codeSent: '인증 코드가 전송되었습니다',
     checkSpam: '장시간 이메일을 받지 못한 경우 스팸 메일함을 확인하세요',
     sendCodeFailed: '인증 코드 전송 실패',
-    sendCodeIfEmailRegistered: 'If this email is registered, we will send a verification code',
+    sendCodeIfEmailRegistered: '해당 이메일이 등록되어 있다면 인증 코드를 발송합니다',
     popup: {
       close_btn: '이해했습니다',
       wait_close_btn: '{seconds}초 기다려주세요'

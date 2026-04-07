@@ -34,7 +34,7 @@ export default {
     loginInvalidRequest: 'پارامترهای ورود نامعتبر است',
     registerSuccess: 'ثبت نام موفق',
     registerFailed: 'ثبت نام شکست خورد، بعدا امتحان کنید',
-    emailAlreadyRegisteredLogin: 'This email is already registered, please log in',
+    emailAlreadyRegisteredLogin: 'این ایمیل قبلاً ثبت شده است، لطفاً وارد شوید',
     resetSuccess: 'لینک بازنشانی به ایمیل شما ارسال شد',
     resetFailed: 'بازنشانی پسورد شکست خورد، بعدا امتحان کنید',
     logoutSuccess: 'خروج موفق',
@@ -46,7 +46,7 @@ export default {
     codeSent: 'کد تایید ارسال شد',
     checkSpam: 'اگر ایمیل را دریافت نکردید، لطفا پوشه اسپم را بررسی کنید',
     sendCodeFailed: 'ارسال کد شکست خورد',
-    sendCodeIfEmailRegistered: 'If this email is registered, we will send a verification code',
+    sendCodeIfEmailRegistered: 'اگر این ایمیل ثبت شده باشد، کد تأیید برای آن ارسال می‌شود',
     popup: {
       close_btn: 'متوجه شدم',
       wait_close_btn: 'لطفا {seconds} ثانیه صبر کنید'

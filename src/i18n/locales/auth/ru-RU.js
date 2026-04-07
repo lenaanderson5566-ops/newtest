@@ -34,7 +34,7 @@ export default {
     loginInvalidRequest: 'Некорректные параметры входа',
     registerSuccess: 'Регистрация успешна',
     registerFailed: 'Ошибка регистрации, попробуйте позже',
-    emailAlreadyRegisteredLogin: 'This email is already registered, please log in',
+    emailAlreadyRegisteredLogin: 'Этот email уже зарегистрирован, пожалуйста, войдите',
     resetSuccess: 'Ссылка для сброса отправлена на ваш email',
     resetFailed: 'Ошибка сброса пароля, попробуйте позже',
     logoutSuccess: 'Выход выполнен успешно',
@@ -46,7 +46,7 @@ export default {
     codeSent: 'Код подтверждения отправлен',
     checkSpam: 'Если вы не получили письмо в течение длительного времени, проверьте папку со спамом',
     sendCodeFailed: 'Ошибка отправки кода подтверждения',
-    sendCodeIfEmailRegistered: 'If this email is registered, we will send a verification code',
+    sendCodeIfEmailRegistered: 'Если этот email зарегистрирован, мы отправим на него код подтверждения',
     popup: {
       close_btn: 'Понятно',
       wait_close_btn: 'Подождите {seconds} сек.'
