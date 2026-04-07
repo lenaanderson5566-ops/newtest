@@ -35,7 +35,7 @@
 
     <div class="content-container">
 
-      <div class="site-title">
+      <div class="site-title" :class="siteConfig.showLogo ? 'site-title--md' : 'site-title--lg'">
 
         <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
 
@@ -550,6 +550,14 @@ export default {
 
   }
 
+}
+
+.site-title--lg {
+  font-size: clamp(40px, 6vw, 64px);
+}
+
+.site-title--md {
+  font-size: clamp(32px, 4.8vw, 50px);
 }
 
 
