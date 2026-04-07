@@ -263,18 +263,12 @@ export default {
       isUserInfoLoading.value = true;
       try {
         const response = await getAccountUserInfo();
-        const nestedData = response?.data?.data;
-        const directData = response?.data;
-        const apiUserData = (nestedData && typeof nestedData === 'object')
-          ? nestedData
-          : (directData && typeof directData === 'object')
-            ? directData
-            : (response && typeof response === 'object' ? response : null);
-
+        const apiUserData = response?.data;
         if (apiUserData && typeof apiUserData === 'object') {
+          const normalizedEmail = String(apiUserData.email || '').trim();
           const normalizedUserData = {
             ...apiUserData,
-            email: String(apiUserData.email || '').trim()
+            email: normalizedEmail
           };
           store.setUser(normalizedUserData);
         }

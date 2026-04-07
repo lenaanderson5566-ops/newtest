@@ -80,13 +80,6 @@ export default {
         return firstChar.toUpperCase();
       }
 
-      const rawUsername = String(props.username || '').trim();
-      const normalizedUsername = ['undefined', 'null'].includes(rawUsername.toLowerCase()) ? '' : rawUsername;
-      if (normalizedUsername) {
-        const firstChar = [...normalizedUsername][0] || 'U';
-        return firstChar.toUpperCase();
-      }
-
       return 'U';
     });
     
