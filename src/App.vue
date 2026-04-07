@@ -269,17 +269,25 @@ export default {
         const response = await getAccountUserInfo();
         const apiUserData = response?.data;
         if (apiUserData && typeof apiUserData === 'object') {
-          const normalizedEmail = String(apiUserData.email || '').trim();
+          const normalizedEmail = String(apiUserData.email || apiUserData?.data?.email || '').trim();
+          const flattenedUserData = apiUserData?.data && typeof apiUserData.data === 'object'
+            ? { ...apiUserData, ...apiUserData.data }
+            : apiUserData;
           const normalizedUserData = {
-            ...apiUserData,
+            ...flattenedUserData,
             email: normalizedEmail
           };
-          store.setUser(normalizedUserData);
+          if (normalizedEmail) {
+            store.setUser(normalizedUserData);
+            hasResolvedUserInfo.value = true;
+          }
         }
       } catch (error) {
       } finally {
         isUserInfoLoading.value = false;
-        hasResolvedUserInfo.value = true;
+        if (!hasResolvedUserInfo.value && store.userInfo?.email) {
+          hasResolvedUserInfo.value = true;
+        }
       }
     };
 
