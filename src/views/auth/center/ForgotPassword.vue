@@ -35,7 +35,7 @@
 
 
 
-      <form class="auth-form" @submit.prevent="handleSubmit">
+      <form class="auth-form" novalidate @submit.prevent="handleSubmit">
 
         <div class="form-group">
 

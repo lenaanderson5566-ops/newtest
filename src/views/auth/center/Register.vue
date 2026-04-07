@@ -49,7 +49,7 @@
 
 
 
-      <form class="auth-form" @submit.prevent="handleRegister">
+      <form class="auth-form" novalidate @submit.prevent="handleRegister">
 
         <div class="form-group">
 
@@ -80,8 +80,6 @@
                 @input="handleEmailPrefixChange"
 
                 :disabled="codeSent"
-
-                required
 
               />
 
@@ -145,8 +143,6 @@
 
               :disabled="codeSent"
 
-              required
-
             />
 
           </div>
@@ -180,8 +176,6 @@
                 v-model="formData.verificationCode"
 
                 :placeholder="$t('auth.codePlaceholder')"
-
-                required
 
               />
 
@@ -234,8 +228,6 @@
               v-model="formData.password"
 
               :placeholder="$t('auth.passwordPlaceholder')"
-
-              required
 
             />
 
