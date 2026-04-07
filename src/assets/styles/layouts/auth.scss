@@ -69,20 +69,20 @@
 }
 
 .auth-logo-text--lg {
-  font-size: clamp(30px, 3vw, 38px);
+  font-size: clamp(24px, 2.4vw, 30px);
 }
 
 .auth-logo-text--md {
-  font-size: clamp(24px, 2.4vw, 30px);
+  font-size: clamp(19px, 1.9vw, 24px);
 }
 
 @media (max-width: map.get($breakpoints, sm)) {
   .auth-logo-text--lg {
-    font-size: 28px;
+    font-size: 22px;
   }
 
   .auth-logo-text--md {
-    font-size: 24px;
+    font-size: 19px;
   }
 }
 
